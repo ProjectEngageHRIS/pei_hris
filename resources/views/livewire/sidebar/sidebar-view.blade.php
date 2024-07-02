@@ -4,7 +4,11 @@
         <div class="flex flex-row items-center">
             <!-- Menu Button when smaller than large screen -->
             <div class="relative inline-block text-left">
+                @if($role_id == 9)
                 <button class="pr-4 xl:hidden" id="barDropdownButton">
+                @else
+                <button class="pr-4 lg:hidden" id="barDropdownButton">
+                @endif
                     <svg class="size-8 text-customGray1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"/>
                     </svg>
@@ -49,6 +53,7 @@
                                     </div>
                                 </ul>
                             </div>
+                            @if($role_id == 9)
                             <div class="relative group">
                                 <div id="approveBDropdownButton" class="block px-4 py-2 text-sm text-gray-700 cursor-pointer hover:bg-customRed hover:text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -66,6 +71,7 @@
                                     </div>
                                 </ul>
                             </div>
+                            @endif
                             <a href="{{ route('PayrollTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5V5h14v-.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
@@ -96,7 +102,7 @@
             </div>
             <a href="{{route('EmployeeDashboard')}}">
                 <div class="flex item-center">
-                    <img src="{{ asset('assets\sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
+                    <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
                     <div class="flex flex-col">
                         <span class="text-sm text-customGray">Powered by</span>
                         <span class="text-lg font-semibold text-nowrap text-customRed">SL Groups</span>
@@ -105,7 +111,7 @@
             </a>
         </div>
         <!-- Center Section: Navigation Buttons -->
-        <div class="invisible xl:visible lg:static absolute min-h-fit left-0 top-[9%] w-auto flex items-center px-5">
+        <div class="hidden xl:flex xl:static absolute min-h-fit left-0 top-[9%] w-auto items-center px-5">
             <ul class="flex items-center gap-x-5">
                 <!-- Home Button -->
                 <a href="{{ route('EmployeeDashboard') }}" class="w-32">
@@ -148,7 +154,7 @@
                     </div>
                 </div>
                 <!-- Approval Button -->
-                @if($role_id == 10)
+                @if($role_id == 9)
                     <div class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px bg-navButton text-customGray h-114 hover:bg-customRed hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -186,9 +192,7 @@
                     <div id="tasksDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="py-1">
                             <a href="{{ route('TasksTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">My Tasks</a>
-                            <a href="{{ route('AssignedTasksTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Assigned Tasks</a>
-                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Assign a Task</a>
-                        
+                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Assign Tasks</a>
                         </div>
                     </div>
                 </div>
@@ -197,13 +201,13 @@
         <!-- Right Section: Notification and Profile Buttons -->
         <div class="flex item-center gap-x-3.5">
             <!-- Notification -->
-            <div class="relative inline-block text-left">
-                <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification" class="relative inline-flex items-center text-sm font-medium text-center text-customGray hover:text-customRed focus:outline-none dark:hover:text-white dark:text-customGray" type="button">
+            <div class="relative text-left items-center flex">
+                {{-- <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification" class="relative inline-flex items-center text-sm font-medium text-center text-customGray hover:text-customRed focus:outline-none dark:hover:text-white dark:text-customGray" type="button">
                     <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
                         <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/>
                     </svg>
                     <div class="absolute block w-5 h-5 text-white border-2 border-white rounded-full bg-customRed -top-1.5 start-3 dark:border-gray-900 text-[10px]">2</div>
-                </button>
+                </button> --}}
 
                 <!-- Dropdown menu -->
                 <div id="dropdownNotification" class="absolute right-0 z-10 hidden w-64 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-800 dark:divide-gray-700" aria-labelledby="dropdownNotificationButton">
