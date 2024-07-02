@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom style to maintain text color when select is disabled */
+.disabled-select:disabled {
+    background-color: #f9fafb; /* Match the bg-gray-50 color */
+    color: #000000; /* Match the text-gray-900 color */
+    opacity: 1; /* Ensure the text is fully opaque */
+}
