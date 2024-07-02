@@ -96,7 +96,7 @@
             </div>
             <a href="{{route('EmployeeDashboard')}}">
                 <div class="flex item-center">
-                    <img src="{{ asset('logo\sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
+                    <img src="{{ asset('assets\sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
                     <div class="flex flex-col">
                         <span class="text-sm text-customGray">Powered by</span>
                         <span class="text-lg font-semibold text-nowrap text-customRed">SL Groups</span>
@@ -148,7 +148,7 @@
                     </div>
                 </div>
                 <!-- Approval Button -->
-                @if($role_id == 9)
+                @if($role_id == 10)
                     <div class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px bg-navButton text-customGray h-114 hover:bg-customRed hover:text-white">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -186,7 +186,9 @@
                     <div id="tasksDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="py-1">
                             <a href="{{ route('TasksTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">My Tasks</a>
-                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Assign Tasks</a>
+                            <a href="{{ route('AssignedTasksTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Assigned Tasks</a>
+                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Assign a Task</a>
+                        
                         </div>
                     </div>
                 </div>
@@ -259,7 +261,7 @@
                         @endphp
                             <img class="w-8 h-8 rounded-full me-2" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="user photo">
                         @else
-                            <img class="w-8 h-8 rounded-full me-2" src="{{ asset( 'storage/photos/avatar/default.png') }}" alt="user photo"> 
+                            <img class="w-8 h-8 rounded-full me-2" src="{{ asset( 'assets/defaultuser.png') }}" alt="user photo"> 
                     @endif
                     {{$employee_name}}
                     

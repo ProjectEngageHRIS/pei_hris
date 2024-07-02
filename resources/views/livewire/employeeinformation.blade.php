@@ -33,7 +33,7 @@
                         src="data:image/gif;base64,{{ base64_encode($employee_image) }}"
                         alt="Employee Image"/>
                     @else   
-                        <img class="size-20 rounded-full" src="{{ asset( 'storage/photos/avatar/default.png') }}" alt="Employee Image"/> 
+                        <img class="size-20 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Employee Image"/> 
                     @endif
                     <div class="ml-8 text-left">
                         <h5 class="text-lg font-medium text-customGray1 text-nowrap">{{$first_name}} {{$middle_name}} {{$last_name}}</h5>

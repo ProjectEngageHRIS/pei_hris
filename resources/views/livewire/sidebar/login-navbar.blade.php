@@ -6,7 +6,7 @@
                      <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 16 12"> <path stroke="black" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h14M1 6h14M1 11h7"/> </svg>
                  </button> --}}
                 
-                <a href="#"><img src="{{ asset('storage/logo/sllogo.png') }}" id="plm-logo" style="height:100% height: auto; min-height: 30px; max-height: 75px;"  alt="PLM Logo">
+                <a href="#"><img src="{{ asset('assets\sllogo.png') }}" id="plm-logo" style="height:100% height: auto; min-height: 30px; max-height: 75px;"  alt="SL Logo">
                 </a>
                 
              </div>

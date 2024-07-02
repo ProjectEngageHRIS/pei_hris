@@ -44,7 +44,7 @@
                 {{-- <a href="{{ route('dashboard') }}" class="inline-block"> --}}
     
                    <div class="flex ">
-                    <img src="{{ asset('storage/logo/sllogo.png') }}" style="height: auto; max-height: 90px;" class="mr-2" alt="SL Logo">
+                    <img src="{{ asset('assets\sllogo.png') }}" style="height: auto; max-height: 90px;" class="mr-2" alt="SL Logo">
                     {{-- <img src="{{ asset('storage/plmlogo/plm.png') }}" style="height: auto; max-height: 75px;" alt="PLM Text"> --}}
                    </div>
                 {{-- </a> --}}
