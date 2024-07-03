@@ -18,7 +18,7 @@ class AttendanceSeeder extends Seeder
         $employee = Employee::first();
         $today = Carbon::today();
         $usedDates = collect(); // Collection to keep track of used dates
-        $employeeId = 202410048; // Starting employee ID
+        $employeeId = "SLE0001"; // Starting employee ID
         $recordCount = 275; // Number of records to create
         
         for ($i = 0; $i <= $recordCount; $i++) {
@@ -36,12 +36,37 @@ class AttendanceSeeder extends Seeder
 
             $attendanceId = $employeeId . str_pad($i, 4, '0', STR_PAD_LEFT);
         
-            $randomLate = rand(0, 1); // Random late status (0 or 1)
-            $randomHour1 = rand(0, 23); // Random hour (0 to 23)
-            $randomMinute1 = rand(0, 59); // Random minute (0 to 59)
+            $randomYear1 = rand(2020, 2024);
+            $randomMonth1 = rand(1, 12);
+            $randomDay1 = rand(1, 28); // to keep it simple, avoiding months with 30 or 31 days
+            $randomHour1 = rand(0, 23);
+            $randomMinute1 = rand(0, 59);
 
-            $randomHour2 = rand(0, 23); // Random hour (0 to 23)
-            $randomMinut2 = rand(0, 59); // Random minute (0 to 59)
+            // Generate random date, hour, and minute for time_out
+            $randomYear2 = rand(2020, 2024);
+            $randomMonth2 = rand(1, 12);
+            $randomDay2 = rand(1, 28);
+            $randomHour2 = rand(0, 23);
+            $randomMinute2 = rand(0, 59);
+
+            // Format date and time into datetime format
+            $timeIn = sprintf(
+                "%04d-%02d-%02d %02d:%02d:00",
+                $randomYear1,
+                $randomMonth1,
+                $randomDay1,
+                $randomHour1,
+                $randomMinute1
+            );
+
+            $timeOut = sprintf(
+                "%04d-%02d-%02d %02d:%02d:00",
+                $randomYear2,
+                $randomMonth2,
+                $randomDay2,
+                $randomHour2,
+                $randomMinute2
+            );
             
              // Randomly assign either 'overtime' or 'undertime' to be 1
             $overtime = rand(0, 1);
@@ -49,20 +74,21 @@ class AttendanceSeeder extends Seeder
 
             Dailytimerecord::create([
                 'employee_id' => $employeeId,
-                'attendance_id' => $attendanceId,
+                // 'attendance_id' => $attendanceId,
+                'type' => 'Completed',
                 'attendance_date' => $attendanceDate,
-                'job_id' => rand(1, 10),
-                'absent' => rand(1, 2),
+                // 'job_id' => rand(1, 10),
+                // 'absent' => rand(1, 2),
                 'overtime' => $overtime,
                 'undertime' => $undertime,
-                'cto' => rand(1, 2),
-                'lwop' => rand(1, 2),
-                'remarks' => 'remark',
-                'time_in' => sprintf("%02d:%02d", $randomHour1, $randomMinute1), // Format hour and minute
-                'time_out' => sprintf("%02d:%02d", $randomHour2, $randomMinute2), // Use same random time for time_out
-                'late' => $randomLate,
-                'sl_used' => rand(1, 2),
-                'vl_used' => rand(1, 2),
+                // 'cto' => rand(1, 2),
+                // 'lwop' => rand(1, 2),
+                // 'remarks' => 'remark',
+                'time_in' => $timeIn,
+                'time_out' => $timeOut,
+                'late' => rand(1,0),
+                // 'sl_used' => rand(1, 2),
+                // 'vl_used' => rand(1, 2),
                 'status' => 1,
             ]);
         }

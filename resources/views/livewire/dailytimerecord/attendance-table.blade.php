@@ -29,9 +29,101 @@
             </ol>
         </nav>
         <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Daily Time Record</h2>
+
         <div class="flex justify-end">
-            <button class="text-customRed bg-navButton mb-2  hover:bg-customRed hover:text-white font-medium rounded-8px text-sm px-5 py-2.5 me-2 shadow">Generate Record</button>
+            <button id="open-modal" class="text-customRed bg-navButton mb-2 hover:bg-customRed hover:text-white font-medium rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                Generate Record
+            </button>
         </div>
+        
+        <!-- Change Status Modal -->
+        <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
+            <div class="relative w-full max-w-md p-4">
+                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <!-- Modal header -->
+                    <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Change Status</h3>
+                        <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" id="close-modal">
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                            <span class="sr-only">Close modal</span>
+                        </button>
+                    </div>
+                    <!-- Modal body -->
+                    <div class="p-4 md:p-5">
+                        <form wire:submit.prevent="generateRecord" method="POST">
+                            <div class="grid grid-cols-1 gap-4 mb-4  ">
+
+                            <div  class="grid grid-cols-1 col-span-2 min-[902px]:grid-cols-2 gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700  ">
+                                <div id="start_date_container" class="w-full justify-center">
+                                    <label for="start_date"
+                                        class="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white ">Start Date<span class="text-red-600">*</span></label>
+                                    <input type="date" name="start_date" id="start_date" wire:model="start_date" 
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        required="" >
+                                    @error('start_date')
+                                        <div class="transition transform alert alert-danger text-sm"
+                                        x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
+                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
+                                    @enderror       
+                                </div>
+                                <div id="end_date_container" class="w-full justify-center">
+                                    <label for="end_date"
+                                        class="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white ">End Date<span class="text-red-600">*</span></label>
+                                    <input type="date" name="end_date" id="end_date" wire:model="end_date" 
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                        required="">
+                                    @error('end_date')
+                                        <div class="transition transform alert alert-danger text-sm"
+                                        x-data x-init="document.getElementById('end_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
+                                            <span class="text-red-500 text-xs" > {{$message}}</span>
+                                        </div> 
+                                    @enderror       
+                                </div>
+                            </div>
+                               
+                                <button type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
+                                    Update
+                                </button>
+                            </div>
+                    </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <script>
+
+            document.addEventListener('livewire:init', function () {
+                            Livewire.on('triggerClose', () => {
+                                closeModal();
+                            });
+                        });
+
+            document.getElementById('open-modal').addEventListener('click', function() {
+                const modal = document.getElementById('crud-modal');
+                modal.classList.remove('hidden');
+                modal.classList.add('flex');
+            });
+            
+            document.getElementById('close-modal').addEventListener('click', function() {
+                closeModal();
+            });
+            
+            // document.getElementById('update-button').addEventListener('click', function() {
+            //     closeModal();
+            // });
+            
+            function closeModal() {
+                const modal = document.getElementById('crud-modal');
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }
+        </script>
+        
+
     </div>
     <br>
     <div class="col-span-3 gap-4">
@@ -78,6 +170,8 @@
     </div>
     </div>
     <br>
+
+
     <!-- Modal toggle -->
     {{-- <div class="grid grid-cols-1 mb-4">
     <button data-modal-target="crud-modal" data-modal-toggle="crud-modal" class="block  text-white bg-indigo-800 hover:bg-indigo-900 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end" type="button">
@@ -132,7 +226,7 @@
         </div>
     </div>
     </div>   --}}
-    <script>
+    {{-- <script>
     $(document).ready(function() {
         $('.js-example-basic-multiple').select2({
             placeholder: 'Select an option',
@@ -148,7 +242,7 @@
             $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
         });
     });
-    </script>
+    </script> --}}
     <br>
     <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
         <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -374,7 +468,7 @@
     </div>
     </div>
     
-    <script>
+<script>
     const options = {
     chart: {
     height: "100%",
@@ -522,4 +616,5 @@
         })
     })
     
-    </script>
+</script>
+

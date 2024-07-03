@@ -11,6 +11,8 @@ use Livewire\WithPagination;
 use App\Models\Dailytimerecord;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\DailyTimeRecordExport;
 
 class AttendanceTable extends Component
 {
@@ -48,6 +50,10 @@ class AttendanceTable extends Component
     public $gender;
 
     public $currentHourMinuteSecond;
+
+    public $start_date;
+
+    public $end_date;
 
     protected $queryString = [
         'category',
@@ -205,6 +211,14 @@ class AttendanceTable extends Component
 
         // $this->data = array_values($this->weeklyCountsArray);
     
+    }
+
+    public function generateRecord(){
+
+        $this->dispatch('triggerClose');
+
+        return Excel::download(new DailyTimeRecordExport($this->start_date, $this->end_date), 'timekeeping.xlsx');
+
     }
 
     public function filter($filter){
