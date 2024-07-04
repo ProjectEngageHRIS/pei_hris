@@ -23,6 +23,7 @@ class EmployeeSeeder extends Seeder
                 'role_id' => rand(1, 10),
             ]);
         }
+        
         User::factory()->create([
             'employee_id' => 200000000,
             'email' => 'itproject@gmail.com',

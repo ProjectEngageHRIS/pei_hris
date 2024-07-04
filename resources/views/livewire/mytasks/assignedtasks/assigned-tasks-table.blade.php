@@ -234,10 +234,10 @@
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$my_task->application_date}}
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap" colspan="3">
+                                    <td class="px-6 py-4 text-center" colspan="3">
                                         {{$my_task->task_title}}
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap" colspan="3">
+                                    <td class="px-6 py-4 text-center" colspan="3">
                                         {{$my_task->assigned_task}}
                                     </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap" colspan="3">
