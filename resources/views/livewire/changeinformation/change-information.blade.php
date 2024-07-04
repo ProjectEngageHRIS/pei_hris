@@ -27,13 +27,13 @@
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Change Information Request</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Change Personal Information</h2>
     <section class="px-8 pb-24 bg-white rounded-lg ">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
-                <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 bg-white rounded-lg     ">
-                    <div class="grid w-full grid-cols-1 col-span-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow ">
+                <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 bg-white rounded-lg">
+                    <div class="grid w-full grid-cols-1 col-span-1 gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow ">
                         <h2 class="text-customRed"><b>Information</b></h2>
                         <div class="col-span-1 ">
                             <div class="grid grid-cols-1 col-span-3 gap-4 pb-4">
@@ -67,7 +67,7 @@
                             {{-- 1st Row --}}
                             <div class="grid grid-cols-1 items-start gap-4">
                                 {{-- 1 --}}
-                                <div class="grid grid-cols-1 items-center justify-center w-full bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 p-4" id="emp_image_container">
+                                <div class="grid grid-cols-1 items-center justify-center w-full " id="emp_image_container">
                                     <label for="emp_image"
                                         class="block text-sm font-medium text-gray-900 dark:text-white mb-4">Employee Photo<span class="text-red-600">*</span></label>
                                     <label for="emp_image" style="height: 128px;" class="relative p-1 flex flex-col items-center justify-center w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
@@ -115,7 +115,7 @@
                    <div class="col-span-2 bg-white rounded-lg ">
                         <h2 class="mb-4 text-customRed"><b>Other Information</b></h2>
                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
-                            <div class="grid grid-cols-1 col-span-2 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow ">
+                            <div class="grid grid-cols-1 col-span-2 gap-4 ">
                                 <div class="w-full" id="profile_summary_container">
                                     <label for="profile_summary"
                                         class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
@@ -132,98 +132,96 @@
                                         @enderror
                                 </div>
                             </div>
-                            <div class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow ">
-                                <div class="w-full" id="phone_container">
-                                    <label for="phonenumber"
-                                        class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                        Phone Number <span class="text-red-600">*</span></label>
-                                    <input type="text" name="phonenumber" id="phonenumber" wire:model="phone"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                            <div class="grid grid-cols-1 min-[902px]:grid-cols-2 col-span-2 gap-4">
+                                <div class="grid grid-cols-1 gap-4 ">
+                                    <div class="w-full" id="phone_container">
+                                        <label for="phonenumber"
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Phone Number <span class="text-red-600">*</span></label>
+                                        <input type="text" name="phonenumber" id="phonenumber" wire:model="phone"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                                                required="" >
+                                        @error('phone')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                x-data x-init="document.getElementById('phone_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phone_container').focus();">
+                                                <span class="text-xs text-red-500 "> {{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="w-full" id="gender_container">
+                                        <label for="sex"
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Sex (Male/M and Female/F Only)
+                                            <span class="text-red-600">*</span></label>
+                                        <input type="text" name="sex" id="sex" wire:model="gender"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
                                             required="" >
-                                    @error('phone')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                            x-data x-init="document.getElementById('phone_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phone_container').focus();">
-                                            <span class="text-xs text-red-500 "> {{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-
-                                <div class="w-full" id="gender_container">
-                                    <label for="sex"
-                                        class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                        Sex (Male/M and Female/F Only)
-                                        <span class="text-red-600">*</span></label>
-                                    <input type="text" name="sex" id="sex" wire:model="gender"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                                        @error('gender')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                x-data x-init="document.getElementById('gender_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('gender_container').focus();">
+                                                <span class="text-xs text-red-500 "> {{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="w-full" id="nickname_container">
+                                        <label for="nickname_status"
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Nickname <span class="text-red-600">*</span></label>
+                                        <input type="text" name="nickname" id="nickname"  wire:model="nickname"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
                                             required="" >
-                                    @error('gender')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                            x-data x-init="document.getElementById('gender_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('gender_container').focus();">
-                                            <span class="text-xs text-red-500 "> {{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-
-                                <div class="w-full" id="nickname_container">
-                                    <label for="nickname_status"
-                                        class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                        Nickname <span class="text-red-600">*</span></label>
-                                    <input type="text" name="nickname" id="nickname"  wire:model="nickname"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
-                                            required="" >
-                                    @error('nickname')
+                                        @error('nickname')
                                             <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('nickname_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('nickname_container').focus();">
                                                 <span class="text-xs text-red-500 "> {{$message}}</span>
                                             </div>
                                         @enderror
+                                    </div>
                                 </div>
-
-                            </div>
-                            <div class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow ">
-                                <div class="w-full" id="address_container">
-                                    <label for="address"
-                                        class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                        Present Address <span class="text-red-600">*</span></label>
-                                    <input type="text" name="address" id="address"  wire:model="address"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
-                                            required="" >
-                                    @error('address')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                x-data x-init="document.getElementById('address_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('address_container').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                </div>
-                                <div class="w-full" id="religion_container">
-                                    <label for="firstname"
-                                        class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                        Religion <span class="text-red-600">*</span></label>
-                                    <input type="text" name="religion" id="religion"  wire:model="religion"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
-                                            required="" >
-                                    @error('personal_email')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                x-data x-init="document.getElementById('religion_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('religion_container').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                </div>
-                                <div class="w-full" id="civil_status_container">
-                                    <label for="civil_status"
-                                        class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                        Civil Status <span class="text-red-600">*</span></label>
-                                    <input type="text" name="civil_status" id="civil_status"  wire:model="civil_status"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
-                                            required="" >
-                                    @error('civil_status')
+                                <div class="grid grid-cols-1 gap-4 ">
+                                    <div class="w-full" id="address_container">
+                                        <label for="address"
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Present Address <span class="text-red-600">*</span></label>
+                                        <input type="text" name="address" id="address"  wire:model="address"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                                                required="" >
+                                        @error('address')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('address_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('address_container').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                    </div>
+                                    <div class="w-full" id="religion_container">
+                                        <label for="firstname"
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Religion <span class="text-red-600">*</span></label>
+                                        <input type="text" name="religion" id="religion"  wire:model="religion"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                                                required="" >
+                                        @error('personal_email')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('religion_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('religion_container').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                    </div>
+                                    <div class="w-full" id="civil_status_container">
+                                        <label for="civil_status"
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Civil Status <span class="text-red-600">*</span></label>
+                                        <input type="text" name="civil_status" id="civil_status"  wire:model="civil_status"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                                                required="" >
+                                        @error('civil_status')
                                             <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('civil_status_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('civil_status_container').focus();">
                                                 <span class="text-xs text-red-500 "> {{$message}}</span>
                                             </div>
                                         @enderror
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                    </div>

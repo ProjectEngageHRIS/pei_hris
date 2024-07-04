@@ -22,7 +22,7 @@
         </nav>
         <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Leave Request</h2>
         
-        <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 w-full min-[450px]:w-1/3  lg:w-1/3">
+        {{-- <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 w-full min-[450px]:w-1/3  lg:w-1/3">
             <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
                 <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white whitespace-normal xl:whitespace-nowrap">Vacation Credits</h4>
                 <p class="font-semibold text-3xl text-customRed dark:text-gray-400">{{$vacationCredits ?? 0.00}}</p>
@@ -36,11 +36,25 @@
         
         <div class="flex justify-end">
             <button type="button" onclick="location.href='{{ route('LeaveRequestForm', ['type' => $type]) }}'"  class="text-customRed bg-white mb-8 hover:text-white hover:bg-customRed shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">Create Leave Request</button>
+        </div> --}}
+
+        <div class="flex flex-col gap-4 sm:flex-row">
+            <div class="flex flex-row w-full gap-4 justify-stretch">
+                <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:w-auto">
+                    <h4 class="mb-2 text-lg font-bold text-gray-900 text-nowrap">Vacation Credits</h4>
+                    <p class="text-3xl font-semibold text-customRed">{{$vacationCredits ?? 0.00}}</p>
+                </div>
+                <div class="w-full p-4 bg-white border border-gray-200 rounded-lg shadow sm:w-auto">
+                    <h4 class="mb-2 text-lg font-bold text-gray-900 text-nowrap">Sick Credits</h4>
+                    <p class="text-3xl font-semibold text-customRed">{{$sickCredits ?? 0.00}}</p>
+                </div>
+            </div>
+            <div class="flex flex-row-reverse self-end">
+                <button type="button" onclick="location.href='{{ route('LeaveRequestForm') }}'" class="text-customRed text-nowrap bg-white border-2 hover:bg-red-800 hover:text-white font-medium rounded-lg text-sm px-5 py-2.5">Create Leave Request</button>
+            </div>
         </div>
 
-        
-
-        <div class="shadow-md overflow-x-auto rounded-t-lg bg-white pb-4 w-full" >
+        <div class="shadow-md overflow-x-auto rounded-t-lg mt-4 bg-white pb-4 w-full" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
                 <div>
                     {{-- Date Filter --}}

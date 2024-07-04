@@ -19,11 +19,13 @@ class EmployeeSeeder extends Seeder
         foreach ($employees as $employee) {
             User::factory()->create([
                 'employee_id' => $employee->employee_id,
+                'email' => $employee->employee_email,
                 'role_id' => rand(1, 10),
             ]);
         }
         User::factory()->create([
             'employee_id' => 200000000,
+            'email' => 'itproject@gmail.com',
             'role_id' => 0,
         ]);
     }

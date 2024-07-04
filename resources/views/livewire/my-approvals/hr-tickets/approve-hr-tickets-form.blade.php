@@ -2103,7 +2103,6 @@
         </div>
     </section>
     
-    </div>
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', (event) => {

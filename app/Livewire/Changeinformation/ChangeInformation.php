@@ -315,6 +315,8 @@ class ChangeInformation extends Component
             // $imageData = file_get_contents($this->emp_image->getRealPath());
             // $employee->emp_image = base64_encode($imageData);
         }
+
+        
         // else{
         //     $employee->emp_image = $this->emp_image;
         // }

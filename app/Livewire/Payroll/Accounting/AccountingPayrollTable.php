@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Payroll;
+namespace App\Livewire\Payroll\Accounting;
 
 use Carbon\Carbon;
 use App\Models\Payroll;
@@ -8,7 +8,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Storage;
 
-class PayrollTable extends Component
+class AccountingPayrollTable extends Component
 {
     use WithPagination;
 
@@ -87,7 +87,7 @@ class PayrollTable extends Component
             $PayrollData = collect([]);
         }
 
-        return view('livewire.payroll.payroll-table', compact('PayrollData'));
+        return view('livewire.payroll.accounting.accounting-payroll-table', compact('PayrollData'));
         
     }
 
@@ -100,6 +100,4 @@ class PayrollTable extends Component
             abort(404);
         }
     }
-
-    
 }

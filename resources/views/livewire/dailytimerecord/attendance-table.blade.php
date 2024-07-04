@@ -30,7 +30,7 @@
         </nav>
         <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Daily Time Record</h2>
 
-        <div class="flex justify-end">
+        <div class="flex justify-end mt-4">
             <button id="open-modal" class="text-customRed bg-navButton mb-2 hover:bg-customRed hover:text-white font-medium rounded-8px text-sm px-5 py-2.5 me-2 shadow">
                 Generate Record
             </button>
@@ -310,55 +310,25 @@
                 </div>
             </div>
         </div>
-        <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right dark:text-gray-400">
-            <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
-                <tr>
-                    {{-- <th scope="col" class="p-4">
-                        <div class="flex items-center">
-                            <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                        </div>
-                    </th> --}}
-                    <th scope="col" class="px-6 py-3 text-center">
-                        No.
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Date
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Type
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Day of the Week
-                    </th>
-                    {{-- <th scope="col" class="px-6 py-3 text-center">
-                        Status
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Late\On-Time
-                    </th> --}}
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Time In
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Time Out
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Undertime
-                    </th>
-                    <th scope="col" class="px-6 py-3 text-center">
-                        Overtime
-                    </th>
-        
-        
-        
-                </tr>
-            </thead>
-            <div>
-                <div wire:ignore>
-                    <tbody class="pb-4">
-                    @if ($DtrData->isEmpty())
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
+        <div class="relative overflow-x-auto">
+            <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right ">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
+                    <tr>
+                        <th scope="col" class="px-6 py-3 text-center"> No. </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Date </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Type </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Day of the Week </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Time In </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Time Out </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Undertime </th>
+                        <th scope="col" class="px-6 py-3 text-center"> Overtime </th>
+                    </tr>
+                </thead>
+                <div>
+                    <div wire:ignore>
+                        <tbody class="pb-4">
+                            @if ($DtrData->isEmpty())
+                            <tr class="bg-white border-b hover:bg-gray-50 ">
                                 <th scope="col" colspan="8" class="justify-center" style="padding-bottom: 40px">
                                     <div class="flex justify-center " style="padding-top: 40px">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-5">
@@ -368,68 +338,49 @@
                                     </div>
                                 </th>
                             </tr>
-                    @else
-                        <div>
-                            @php
-                                $ctr = 0;
-                                $pageIndex = ($DtrData->currentpage() - 1) * $DtrData->perpage() + $ctr ;
-                            @endphp
-                        </div>
-                        @foreach ($DtrData as $index =>$data)
-                        <div>
-                            @php
-                                $ctr = $ctr + 1;
-                            @endphp
-                        </div>
-                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                {{-- <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                    </div>
-                                </td> --}}
-                                <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
+                            @else
+                            <div>
+                                @php
+                                    $ctr = 0;
+                                    $pageIndex = ($DtrData->currentpage() - 1) * $DtrData->perpage() + $ctr ;
+                                @endphp
+                            </div>
+                            @foreach ($DtrData as $index =>$data)
+                            <div>
+                                @php
+                                    $ctr = $ctr + 1;
+                                @endphp
+                            </div>
+                            <tr class="bg-white border-b hover:bg-gray-50 ">
+                                <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                     {{$pageIndex + $ctr}}
                                 </th>
-                                <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
-                                    <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen focus:ring-4 focus:outline-none focus:ring-red-300 me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
-                                        {{-- <svg class="grid w-6 h-6 grid-cols-1 text-xs text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 30 24">
-                                            <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
-                                            <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
-                                        </svg>     --}}
+                                <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
+                                    <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                         {{$data->attendance_date }}
                                     </span>
                                 </th>
-        
                                 @php
         
                                 @endphp
-                                {{-- <td class="px-6 py-4 text-center">
-                                    {{$data->status ? 'In' : 'Out'}}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{$data->late ? 'Late' : 'On-Time'}}
-                                </td> --}}
                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                     @if ($data->type == "Wholeday")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-green-500 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-red-300 me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-green-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                             {{$data->type}}
                                         </span>
                                     @elseif ($data->type == "Overtime")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-blue-500 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-red-300 me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-blue-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                             {{$data->type}}
                                         </span>
                                     @elseif ($data->type == "Undertime")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-red-500 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-red-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                             {{$data->type}}
                                         </span>
                                     @elseif ($data->type == "Half-Day")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg hover:bg-yellow-800 focus:ring-4 focus:outline-none focus:ring-red-300 me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                             {{$data->type}}
                                         </span>
                                     @endif
-        
-        
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     {{ Illuminate\Support\Carbon::parse($data->attendance_date)->format('l') }}
@@ -446,21 +397,14 @@
                                 <td class="px-6 py-4 text-center whitespace-nowrap">
                                     {{$data->overtime}}
                                 </td>
-        
-        
-                                    {{-- <a onclick="location.href='{{ route('ipcredit', ['index' =>$data->id]) }}'"  class="font-medium text-blue-600 cursor-pointer dark:text-blue-500 hover:underline">Edit</a> --}}
-                                    {{-- <a href="{{route('ipcredit',$data)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
-                                    {{-- <a wire:click="removeIpcr({{$data->id}})" class="font-medium text-red-600 cursor-pointer dark:text-red-500 hover:underline ms-3">Remove</a> --}}
                             </tr>
-                        @endforeach
-                    @endif
-                </tbody>
-        
-        
+                            @endforeach
+                        @endif
+                        </tbody>
+                    </div>
                 </div>
-        
-            </div>
-        </table>
+            </table>
+        </div>
         <div class="w-full p-4 overflow-x-auto bg-gray-100 rounded-b-lg">
             {{ $DtrData->links()}}
         </div>

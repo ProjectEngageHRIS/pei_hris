@@ -8,6 +8,9 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use App\Mail\LeaveRequestSubmitted;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\LeaveRequestConfirmation;
 use Illuminate\Support\Facades\Storage;
 
 class LeaveRequestForm extends Component
@@ -206,6 +209,16 @@ class LeaveRequestForm extends Component
         $leaverequestdata->reason = $this->reason;
 
         $leaverequestdata->save();
+
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
+            ->where('employee_id', $loggedInUser->employee_id)
+            ->first();
+
+        
+        // Send email to the supervisor
+        Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
+        Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
+
 
         $this->js("alert('Leave Request submitted!')"); 
 

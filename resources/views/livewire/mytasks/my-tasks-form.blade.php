@@ -11,96 +11,95 @@
         </li>
         <li>
             <div class="flex items-center">
-            <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('TasksTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">My Tasks</a>
+            <a href="{{route('TasksTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">My Tasks</a>
             </div>
         </li>
         <li aria-current="page">
             <div class="flex items-center">
-            <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Assign</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 dark:text-gray-400">Assign Task</span>
             </div>
         </li>
         </ol>
-    </nav> 
+    </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Assign Task</h2>
-    <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
-        <div class=" px-1 mx-auto pt-8">
+    <section class="px-8 pb-24 mt-10 bg-white rounded-lg dark:bg-gray-900">
+        <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
-                    <div class="block w-full col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                    <div class="block w-full col-span-3 bg-white rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                             {{-- Information field --}}
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                               <div class="grid grid-cols-1 gap-4 col-span-3 ">
-                                    <h2  class="text-red-700 font-bold">Information</h2>
+                               <div class="grid grid-cols-1 col-span-3 gap-4 ">
+                                    <h2  class="font-bold text-customRed">Information</h2>
 
-                                    <div  class=" ">
+                                    <div  class="">
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="firstname"
-                                                    class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">First name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">First name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
-                                                    class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Middle name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
-                                                    class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3">
                                             <div class="w-full">
                                                 <label for="department_name"
-                                                    class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Department Name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Department Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full">
                                                 <label for="email"
-                                                    class="block mb-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">Email <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Email <span class="text-red-600">*</span></label>
                                                 <input type="text" name="email" id="email"  value="{{$email}}"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                         </div>
                                     </div>
                                </div>
-                        
-                                
+
+
                             </div>
 
                             {{-- Leave Information --}}
-                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700  ">
-                                <h2 class="text-red-700 font-bold">Task Information</h2>
+                            <div class="grid w-full grid-cols-1 col-span-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+                                <h2 class="font-bold text-customRed">Task Information</h2>
                                 <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3">
                                     <div class="w-full">
                                         <label for="task_title"
-                                            class="block mb-2 whitespace-nowrap text-sm font-semibold text-gray-900 dark:text-white">Task Title <span class="text-red-600">*</span></label>
+                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">Task Title <span class="text-red-600">*</span></label>
                                         <input type="text" name="task_title" id="task_title"  wire:model="task_title"
-                                            class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             required="">
                                     </div>
                                     <div wire:ignore class="">
-                                        <label for="name" class="block mb-2 text-sm font-semibold  text-gray-900 dark:text-white">Target Employees<span class="text-red-600">*</span></label>
-                                        <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            <optgroup label="Employee Names" ></optgroup>
+                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target Employees<span class="text-red-600">*</span></label>
+                                        <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             @foreach($employeeNames as $name)
                                                <option value="{{$name}}">{{$name}}</option>
                                             @endforeach
@@ -108,74 +107,77 @@
                                     </div>
                                 </div>
                                 {{-- Date Of Filling --}}
-                                <div class="grid grid-cols-1 gap-4 col-span-3 ">
-                                {{-- <div class="grid grid-cols-1 gap-4 p-6 w-full bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 "> --}}
-                                    <div class="grid grid-cols-1 w-full col-span-3  ">
-                                        <div id="assigned_task_container" class="grid grid-cols-1  gap-4     ">
+                                <div class="grid grid-cols-1 col-span-3 gap-4 ">
+                                {{-- <div class="grid w-full grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 "> --}}
+                                    <div class="grid w-full grid-cols-1 col-span-3 ">
+                                        <div id="assigned_task_container" class="grid grid-cols-1 gap-4 ">
                                             <label for="assigned_task"
-                                            class="block text-sm font-semibold whitespace-nowrap text-gray-900 dark:text-white">Task<span class="text-red-600">*</span> (Max: 20000  characters only) </label>
+                                            class="block text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">Task Description
+                                            <span class="text-red-600">*</span> (Max: 20000  characters only) </label>
                                             <textarea type="text" rows="10" id="assigned_task" name="assigned_task" wire:model="assigned_task"
-                                                placeholder="Write your concern here. Maximum of 20000 characters only."   
+                                                placeholder="Write your concern here. Maximum of 20000 characters only."
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg ring-1 border-1 ring-gray-300 focus:border-customRed focus:ring-customRed  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </textarea>
-                                            @error('assigned_task')   
-                                                <div class="transition transform alert alert-danger text-sm"
+                                            @error('assigned_task')
+                                                <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('assigned_task_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assigned_task_container').focus();" >
-                                                        <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                </div> 
+                                                        <span class="text-xs text-red-500" > {{$message}}</span>
+                                                </div>
                                             @enderror
-                                        </div>  
+                                        </div>
                                     </div>
                                 </div>
                                 <div id="time_period_container" class="grid grid-cols-1 col-span-3 gap-4 ">
                                     <div class="grid grid-cols-1 min-[1052px]:grid-cols-2 gap-4 ">
                                         <div class="w-full">
                                             <label for="start_time"
-                                                class="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white ">Start Date/Time <span class="text-red-600">*</span></label>
-                                            <input type="datetime-local" name="start_time" id="start_time" wire:model.live="start_time" 
-                                                class="bg-gray border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start Date/Time
+                                                <span class="text-red-600">*</span></label>
+                                            <input type="datetime-local" name="start_time" id="start_time" wire:model.live="start_time"
+                                                class="bg-gray border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="">
                                             @error('start_time')
-                                                <div class="transition transform alert alert-danger text-sm"
+                                                <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('start_time_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_time_container').focus();" >
-                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                </div> 
-                                            @enderror       
+                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                </div>
+                                            @enderror
                                         </div>
                                         <div class="w-full" id="end_time_container">
                                             <label for="end_time"
-                                                class="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white">End Date/Time <span class="text-red-600">*</span></label>
-                                            <input type="datetime-local" name="end_time" id="end_time" wire:model.live="end_time" 
-                                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date/Time
+                                                <span class="text-red-600">*</span></label>
+                                            <input type="datetime-local" name="end_time" id="end_time" wire:model.live="end_time"
+                                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             required="">
-                                            @error('end_time')   
-                                                <div class="transition transform alert alert-danger text-sm"
+                                            @error('end_time')
+                                                <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('end_time_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_time_container').focus();" >
-                                                    <span class="text-red-500 text-xs" > {{$message}}</span>
-                                                </div> 
+                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                </div>
                                             @enderror
                                         </div>
                                     </div>
                                 </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </div>
                 </div>
-                <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center  text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px ">
-                    Assign Task
+                <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center rounded-8px text-customRed hover:bg-customRed hover:text-white bg-navButton rounded-3px shadow">
+                    Submit Concern
                 </button>
             </form>
         </div>
     </section>
-    
+
     </div>
 </div>
 
 <script>
     $(document).ready(function() {
-        
+
         $('.js-example-basic-multiple').select2({
             placeholder: 'Select an option',
             closeOnSelect: false,

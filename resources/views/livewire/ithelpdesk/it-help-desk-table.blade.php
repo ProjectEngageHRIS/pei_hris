@@ -15,12 +15,12 @@
                 <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('ItHelpDeskTable')}}" class="ms-1 text-sm font-semibold text-gray-900 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">It Helpdesk</a>
+                <a href="{{route('ItHelpDeskTable')}}" class="ms-1 text-sm font-semibold text-gray-900 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">IT Helpdesk</a>
                 </div>
             </li>
             </ol>
         </nav>
-        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">It Helpdesk</h2>
+        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">IT Helpdesk</h2>
         
         <div class="flex justify-end">
             <button type="button" onclick="location.href='{{ route('ItHelpDeskForm') }}'" class="text-customRed bg-white mb-8 hover:text-white hover:bg-customRed shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">Submit a Concern</button>
@@ -166,10 +166,10 @@
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
                                     <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
                                         <div class="flex justify-center " style="padding-top: 40px">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
-                                            <p class="text-customRed text-xl font-semibold items-center "> Nothing to show</p>
+                                            <p class="text-customRed text-xl font-semibold items-center  "> Nothing to show</p>
                                         </div>
                                     </th>
                                 </tr>

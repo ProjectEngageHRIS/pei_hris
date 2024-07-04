@@ -43,12 +43,14 @@ use App\Livewire\Ithelpdesk\ItHelpDeskUpdate;
 use App\Livewire\Studypermit\StudyPermitForm;
 use App\Livewire\Teachpermit\TeachPermitForm;
 use App\Livewire\Activities\ActivitiesGallery;
+use App\Livewire\Passwordchange\PasswordReset;
 use App\Livewire\Studypermit\StudyPermitTable;
 use App\Livewire\Teachpermit\TeachPermitTable;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\StudyPermitController;
 use App\Http\Controllers\TeachPermitController;
 use App\Livewire\Leaverequest\LeaveRequestForm;
+use App\Livewire\Passwordchange\PasswordChange;
 use App\Livewire\Studypermit\StudyPermitUpdate;
 use App\Livewire\Teachpermit\TeachPermitUpdate;
 use App\Livewire\Trainings\TrainingPreTestForm;
@@ -60,42 +62,46 @@ use App\Livewire\Dailytimerecord\AttendanceTable;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
+use App\Livewire\Payroll\Accounting\AddPayrollForm;
 use App\Livewire\Changeschedule\ChangeScheduleTable;
+use App\Livewire\Payroll\Accounting\AddPayrollTable;
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
+
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Http\Controllers\Auth\EmailVerificationController;
-
+use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
+use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
+use App\Livewire\Payroll\Accounting\AccountingPayrollTable;
 use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsForm;
+// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
+// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsForm;
 use App\Livewire\Creditsmonetization\CreditsMonetizationForm;
 use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsTable;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsTable;
 use App\Livewire\Creditsmonetization\CreditsMonetizationTable;
+// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
+// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Creditsmonetization\CreditsMonetizationUpdate;
 use App\Livewire\MyApprovals\Leaverequests\ApproveLeaverequestForm;
-// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
-// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitForm;
 use App\Livewire\Approverequests\Teachpermit\ApproveTeachPermitForm;
 use App\Livewire\MyApprovals\Leaverequests\ApproveLeaverequestTable;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitTable;
 use App\Livewire\Approverequests\Teachpermit\ApproveTeachPermitTable;
-// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
-// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentForm;
 use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\ChangeInformation\ApproveChangeInformationRequest;
-use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 
 /*
 |--------------------------------------------------------------------------
@@ -176,6 +182,13 @@ Route::middleware('auth')->group(function (){
 
     Route::get('/notifications', NotificationsTable::class)->name('NotificationsTable');
 });
+
+
+Route::middleware('auth')->group(function () {
+    Route::get('/change-password', PasswordChange::class)->name('password.change');
+});
+
+Route::get('/password-reset', PasswordReset::class)->name('PasswordReset');
 
 
 
@@ -428,6 +441,10 @@ Route::middleware('auth')->group(function (){
 Route::middleware('auth')->group(function (){
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 
+    Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
+
+    Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
+    
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");

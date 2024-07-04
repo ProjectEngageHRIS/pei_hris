@@ -36,6 +36,7 @@
                                 <ul id="requestBDropdownMenu" class="absolute top-0 z-10 hidden w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                     <div class="py-1">
                                         <a href="{{ route('LeaveRequestTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Leave Request</a>
+                                        <a href="{{ route('HrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">HR Tickets</a>
                                         <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Overtime Approval</a>
                                         <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Undertime Approval</a>
                                         <a href="{{ route('LeaveRequestTable', ['type' => 'adviseslip']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Advise Slip</a>
@@ -134,6 +135,7 @@
                     <div id="requestsDropdownMenu" class="absolute z-10 hidden w-40 mt-2 bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="py-1">
                             <a href="{{ route('LeaveRequestTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Leave Request</a>
+                            <a href="{{ route('HrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">HR Tickets</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Overtime Approval</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Undertime Approval</a>
                             <a href="{{ route('LeaveRequestTable', ['type' => 'adviseslip']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Advise Slip</a>
@@ -269,12 +271,12 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
                 </button>
-
+                
                 <!-- Dropdown menu -->
-                <div id="dropdownAvatarName" class="absolute right-0 z-10 hidden mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-customRed dark:divide-customRed top-12">
+                <div id="dropdownAvatarName" class="absolute right-0 z-10 hidden mt-2 origin-top-right bg-white divide-y divide-gray-300 rounded-lg shadow-lg w-44 dark:bg-customRed dark:divide-customRed top-12">
                     <div class="px-4 py-3 text-sm text-customGray1 dark:text-white">
                         <div class="font-medium">{{$department}}</div>
-                        <div class="truncate">{{$employee_id}}</div>
+                        <div class="truncate text-customRed">{{$employee_id}}</div>
                     </div>
                     <ul class="py-2 text-sm text-customGray1 dark:text-gray-200" aria-labelledby="dropdownAvatarNameButton">
                         <li>

@@ -15,12 +15,12 @@
                 <svg class="w-3 h-3 mx-1 text-gray-500 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('PayrollTable')}}" class="text-sm font-semibold ms-1 text-gray-00 hover:text-customRed md:ms-2 ">Payroll</a>
+                <a href="{{route('AccountingPayrollTable')}}" class="text-sm font-semibold ms-1 text-gray-00 hover:text-customRed md:ms-2 ">Accounting Payroll</a>
                 </div>
             </li>
             </ol>
         </nav>
-        <h2 class="mb-8 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Payroll</h2>
+        <h2 class="mb-8 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Accounting Payroll</h2>
 
         <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -93,6 +93,9 @@
                             No.
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
+                            Employee ID
+                         </th>
+                        <th scope="col" class="px-6 py-3 text-center">
                            Start Date
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
@@ -127,13 +130,15 @@
                             @php
                                 $ctr = $ctr + 1;
                             @endphp
-                            {{--  --}}
                                 <tr class="bg-white border-b hover:cursor-pointer hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                            {{$data->start_date}}
+                                        {{$data->employee_id}}
+                                    </th>
+                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
+                                        {{$data->start_date}}
                                     </th>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$data->end_date}}

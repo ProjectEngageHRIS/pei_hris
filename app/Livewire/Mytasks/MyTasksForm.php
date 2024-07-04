@@ -43,7 +43,7 @@ class MyTasksForm extends Component
         $this->department_name = $employeeRecord->department;
         $this->email = $employeeRecord->employee_email;
 
-        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->get();
+        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->where('employee_id', '!=', $loggedInUser->employee_id)->get();
         foreach($employees as $employee){
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
