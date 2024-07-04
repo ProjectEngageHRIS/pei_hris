@@ -84,7 +84,6 @@
                 <input type="text" id="table-search" wire:model.live="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search like: 2024-01-01 ">
             </div>
             </div>
-            </div>
             <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
                     <tr>
