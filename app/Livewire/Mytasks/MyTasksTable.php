@@ -73,6 +73,9 @@ class MyTasksTable extends Component
                 $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
                 $this->dateFilterName = "Last Year";
                 break;
+            default:
+                $this->dateFilterName = "All";
+                break;
         }
 
         switch ($this->status_filter) {
@@ -87,6 +90,9 @@ class MyTasksTable extends Component
             case '3':
                 $query->where('status', 'Declined');
                 $this->statusFilterName = "Declined";
+                break;
+            default:
+                $this->statusFilterName = "All";
                 break;
         }
 

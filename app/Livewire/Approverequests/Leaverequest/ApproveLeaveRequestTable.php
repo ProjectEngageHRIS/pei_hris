@@ -133,6 +133,9 @@ class ApproveLeaveRequestTable extends Component
                 $leaveRequestData->whereBetween('date_of_filling', [Carbon::today()->subYear(), Carbon::today()]);
                 $this->dateFilterName = "Last Year";
                 break;
+            default:
+                $this->dateFilterName = "All";
+                break;
         }
 
         switch ($this->status_filter) {
@@ -147,6 +150,9 @@ class ApproveLeaveRequestTable extends Component
             case '3':
                 $leaveRequestData->where('status', 'Declined');
                 $this->statusFilterName = "Declined";
+                break;
+            default:
+                $this->statusFilterName = "All";
                 break;
         }
 
