@@ -127,7 +127,7 @@
                                 $ctr = $ctr + 1;
                             @endphp
                             {{--  --}}
-                                <tr class="bg-white border-b hover:cursor-pointer hover:bg-gray-50 ">
+                                <tr class="bg-white border-b  hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
@@ -150,7 +150,7 @@
                                                     <a onclick="location.href='{{ route('PayrollPdf', ['date' => $data->start_date]) }}'" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
                                                 </li> --}}
                                                 <li>
-                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
+                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">Download Payroll</a>
                                                 </li>
                                             </ul>
                                         </div>

@@ -129,12 +129,14 @@
                             @php
                                 $ctr = $ctr + 1;
                             @endphp
-                                <tr class="bg-white border-b hover:cursor-pointer hover:bg-gray-50 ">
+                                <tr class="bg-white border-b  hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                        {{$data->employee_id}}
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-lg text-center text-gray-200 bg-customRed rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                            {{$data->employee_id}}
+                                        </span>
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
                                         {{$data->start_date}}
@@ -155,7 +157,7 @@
                                                     <a onclick="location.href='{{ route('PayrollPdf', ['date' => $data->start_date]) }}'" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
                                                 </li> --}}
                                                 <li>
-                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
+                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">Download Payroll</a>
                                                 </li>
                                             </ul>
                                         </div>

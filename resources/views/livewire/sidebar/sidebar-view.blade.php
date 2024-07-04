@@ -283,7 +283,7 @@
                             <a href="{{route('profile')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">My Profile</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Account Settings</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Change Password</a>
                         </li>
                         @if($role_id != 1)
                             <li>
