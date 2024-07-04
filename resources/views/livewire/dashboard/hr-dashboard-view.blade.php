@@ -55,7 +55,7 @@
       </div>
       <!-- Employee Table -->
       <div class="relative shadow-md">
-          <div class="flex items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg flex-row">
+          <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
               <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300  hover:bg-customRed hover:text-white focus:ring-1 font-medium rounded-lg text-sm px-3 py-1.5 focus:ring-customRed focus:border-customRed" type="button">
                   <span class="sr-only">Action button</span>
                   Action
@@ -84,7 +84,7 @@
                       <input type="text" id="table-search-users" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                   </div>
                   <!-- Filter Sidebar -->
-                  <div class="absolute right-8 rounded-lg hover:text-customRed">
+                  <div class="absolute rounded-lg right-8 hover:text-customRed">
                       <div x-data="{
                           filterOpen: false,
                           employeeTypeOpen: false,
@@ -117,12 +117,12 @@
                           }" class="relative">
   
                           <!-- Filter Icon Button -->
-                          <button @click="filterOpen = !filterOpen" class="right-1 flex items-center justify-center w-10 h-10">
+                          <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 right-1">
                               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                               </svg>
                           </button>
-                          <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute right-1 z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg"> 
+                          <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
                               <!-- Clear All Button -->
                               <div class="px-4 py-2">
                                   <button @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-blue-600 hover:text-blue-900">
@@ -325,9 +325,56 @@
                         </td>
                         <td>
                           <div class="flex flex-row p-2 space-x-4">
-                            <a href="#" class="font-medium text-yellow-400 hover:underline">View</a>
-                            <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
+                              <p class="font-medium text-yellow-400 hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">View</p>
+                              <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
                           </div>
+  
+                          <!-- Main modal -->
+                          <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                              <div class="relative w-full max-w-2xl max-h-full p-4">
+                              <!-- Modal content -->
+                              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                  <!-- Modal header -->
+                                  <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
+                                      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                        Employee Information
+                                      </h3>
+                                  <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                      </svg>
+                                      <span class="sr-only">Close modal</span>
+                                  </button>
+                                  </div>
+                                  <!-- Modal body -->
+                                  <div class="p-4 space-y-4 md:p-5">
+                                  <p class="text-base leading-relaxed text-customGray1 ">
+                                      Name: Neil Sims <br>
+                                      Employee Number: SLE0002  <br>
+                                      Department: HR and Admin  <br>
+                                      Company: SL Temps  <br>
+                                      Position: HR Assistant  <br>
+                                      Type: Internals  <br>
+                                      Joined Date: July 1, 2024  <br>
+                                      Gender: Male <br>
+                                      Contact Number: +1-231-682-0608 <br>
+                                      Birth Date: 1979-08-26 <br>
+                                      Email: fletcher19@yahoo.com  <br>
+                                      Address: 57363 Vita Oval Suite 043 East Keaton, VT 85356  <br>
+  
+                                  </p>
+  
+                                  </div>
+                                  <!-- Modal footer -->
+                                  <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
+                                  <button data-modal-hide="default-modal" type="button" class="text-white bg-customRed hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Download</button>
+                                  <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 ">Deactivate</button>
+                                  <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 ">Delete</button>
+                                  </div>
+                              </div>
+                              </div>
+                          </div>
+  
                         </td>
                     </tr>
                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">

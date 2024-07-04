@@ -635,34 +635,39 @@
                                                 {{-- @endforeach --}}
                                            @endif
 
-                                        @elseif($hrticket->type_of_request == "Reimbursements")
+                                        @elseif($hrticket->sub_type_of_request == "Reimbursements")
                                             <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}}
-                                        @elseif($hrticket->type_of_request == "Tools and Equipment")
+                                        @elseif($hrticket->sub_type_of_request == "Tools and Equipment")
                                             <span class="font-semibold text-gray-700">Equipment Type: </span>{{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br> 
-                                        @elseif($hrticket->type_of_request == "Cash Advance")
+                                        @elseif($hrticket->sub_type_of_request == "Cash Advance")
                                             <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{$hrticket->request_date}} <br>
                                             <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
-                                        @elseif($hrticket->type_of_request == "Liquidation")
+                                        @elseif($hrticket->sub_type_of_request == "Liquidation")
                                             <span class="font-semibold text-gray-700">Liquidation Coverage: </span>{{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
-                                        @elseif($hrticket->type_of_request == "Performance Monitoring Request")
+                                        @elseif($hrticket->sub_type_of_request == "Performance Monitoring Request")
                                             <span class="font-semibold text-gray-700">Type Of PE:</span> {{$hrticket->type_of_pe_hr_ops}} <br>
                                             <span class="font-semibold text-gray-700"> Account/Client: </span> {{$hrticket->account_client_hr_ops}} <br>
                                         
-                                        @elseif($hrticket->type_of_request == "Incident Report")
+                                        @elseif($hrticket->sub_type_of_request == "Incident Report")
                                             <span class="font-semibold text-gray-700"> Level of Offense:</span> {{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Incident Report:</span> {{$hrticket->purpose}} <br>
                                         
-                                        @elseif($hrticket->type_of_request == "Request for Issuance of Notice/Letter")
+                                        @elseif($hrticket->sub_type_of_request == "Request for Issuance of Notice/Letter")
                                             <span class="font-semibold text-gray-700">Type of Notice:</span> {{$hrticket->type_of_hrconcern}} <br>
-                                        
-                                        @elseif($hrticket->type_of_request== "Request for Employee Files")
+                                        @elseif($hrticket->sub_type_of_request == "Request for Quotation")
+                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
+                                            <span class="font-semibold text-gray-700">Purpose:</span> {{$hrticket->purpose}} <br>
+                                            <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
+                                        @elseif($hrticket->sub_type_of_request== "Request to Buy/Book/Avail Service")
+                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
+                                            <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
+                                        @elseif($hrticket->sub_type_of_request== "Request for Employee Files")
                                             <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br> 
                                             <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->document_requested}} <br>
-                                        
                                         @endif
                                     </td>
                                   

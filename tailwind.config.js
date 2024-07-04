@@ -17,7 +17,7 @@ module.exports = {
       xxl: '1536px',
     },
     colors: {
-      customGray: '#6B7280',
+      customGray: '#000000',
       navButton: '#FFFCFC',
       customGray1: '#494A4C',
       customRed: '#AC0C2E',

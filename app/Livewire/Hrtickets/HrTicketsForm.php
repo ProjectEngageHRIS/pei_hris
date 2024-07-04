@@ -101,7 +101,7 @@ class HrTicketsForm extends Component
     public function mount($type = null){
         $this->type = $type;
         $loggedInUser = auth()->user();
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name')
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name','employee_email', 'employee_id')
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->first(); 
                           

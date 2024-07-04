@@ -84,7 +84,6 @@
                 <input type="text" id="table-search" wire:model.live="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search like: 2024-01-01 ">
             </div>
             </div>
-            </div>
             <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
                     <tr>
@@ -128,7 +127,7 @@
                                 $ctr = $ctr + 1;
                             @endphp
                             {{--  --}}
-                                <tr class="bg-white border-b hover:cursor-pointer hover:bg-gray-50 ">
+                                <tr class="bg-white border-b  hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
@@ -151,7 +150,7 @@
                                                     <a onclick="location.href='{{ route('PayrollPdf', ['date' => $data->start_date]) }}'" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
                                                 </li> --}}
                                                 <li>
-                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
+                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">Download Payroll</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -169,5 +168,6 @@
                 {{ $PayrollData->links() }}
             </div>
         </div>
+</div>
 
 </div>
