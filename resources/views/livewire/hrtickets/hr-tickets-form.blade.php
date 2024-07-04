@@ -2078,11 +2078,81 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium shadow text-center text-customRed  hover:bg-customRed hover:text-white rounded-8px">
+                <button type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">
                     Submit HR Ticket
-            </button>
+                </button>
+                <!-- Loading screen -->
+                <div wire:loading wire:target="submit" class="load-over">
+                    <div wire:loading wire:target="submit" class="loading-overlay">
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="spinner"></div>
+                            <p>Submitting your HR Ticket...</p>
+                        </div>
+                    </div>
+                </div>
             </form>
-        </div>
     </section>
-    </div>
+    <style>
+        .load-over {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.8);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 40%;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            font-family: Arial, sans-serif;
+            color: #AC0C2E;
+            pointer-events: none; /* Makes sure the overlay is not interactable */
+        }
+
+        .spinner {
+            border: 8px solid rgba(172, 12, 46, 0.3);
+            border-top: 8px solid #AC0C2E;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-overlay p {
+            margin: 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <script>
+    // Add this script to hide the success alert after a delay
+    document.addEventListener('livewire:load', function () {
+        Livewire.hook('message.processed', (message, component) => {
+            if (message.updateQueue && message.updateQueue.includes('showSuccess')) {
+                setTimeout(() => {
+                    component.set('showSuccess', false);
+                }, 5000); // Adjust the delay (in milliseconds) as needed
+            }
+        });
+    });
+
+    </script>
 </div>
