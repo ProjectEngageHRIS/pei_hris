@@ -67,8 +67,7 @@ class ApproveLeaverequestForm extends Component
 
 
     public $deduct_to;
-
-
+    public $form_id;
 
     public function mount($index){
         $loggedInUser = auth()->user();
@@ -103,6 +102,8 @@ class ApproveLeaverequestForm extends Component
         // $this->current_position = $employeeRecord->current_position;
         // $this->salary = $employeeRecord->salary;
         // $this->is_faculty = $employeeRecord->is_faculty;
+
+        $this->form_id = $leaverequest->form_id;
 
         $this->application_date = $leaverequest->application_date;
         $this->mode_of_application = $leaverequest->mode_of_application;

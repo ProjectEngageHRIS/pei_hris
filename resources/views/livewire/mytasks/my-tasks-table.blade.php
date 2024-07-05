@@ -279,7 +279,7 @@
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('AssignedTasksView', ['index' => $my_task->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                                <a id="" onclick="location.href='{{ route('MyTasksView', ['index' => $my_task->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                             </li>
                                                     </ul>
                                                     <div class="py-2">
@@ -291,7 +291,7 @@
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                         <li>
-                                                            <a id="" onclick="location.href='{{ route('AssignedTasksView', ['index' => $my_task->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                            <a id="" onclick="location.href='{{ route('MyTasksView', ['index' => $my_task->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                         </li>
                                                     </ul>
                                                 </div>

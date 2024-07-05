@@ -98,13 +98,12 @@ class ApproveHrTicketsForm extends Component
 
     public $request_others;
 
+    public $form_id;
+
 
 
     public function mount($index){
-
-
         $loggedInUser = auth()->user();
-
         try {
             $hrticketdata = $this->editForm($index);
             // $this->authorize('update', [$hrticket]);
@@ -131,6 +130,7 @@ class ApproveHrTicketsForm extends Component
         // $dateToday = Carbon::now()->toDateString();
         // $this->date = $dateToday;
         $this->application_date = $hrticketdata->application_date;
+        $this->form_id = $hrticketdata->form_id;
 
         $this->type_of_ticket = $hrticketdata->type_of_ticket;
         $this->type_of_request = $hrticketdata->type_of_request;

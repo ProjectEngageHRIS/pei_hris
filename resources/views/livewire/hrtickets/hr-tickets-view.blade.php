@@ -250,7 +250,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                @if ($sub_type_of_request != null)
+                                {{-- @if ($sub_type_of_request != null) --}}
                                     <div class="col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                                         <p class="mb-4 font-bold text-customRed">Other Information</p>
                                         @if ($type_of_ticket == "HR Internal")
@@ -559,7 +559,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Purpose of Meeting (Request for Meeting)<span class="text-red-600">*</span></label>
                                                                 <div id="purpose" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     </textarea>
                                                                     @error('purpose')
                                                                         <div class="text-sm transition transform alert alert-danger"
@@ -580,7 +580,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Remittance Certificate<span class="text-red-600">*</span></label>
                                                                 <div id="type_of_hrconcern_container" class="grid grid-cols-1">
                                                                     <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         <option selected>Select</option>
                                                                         <option value="SSS">SSS</option>
                                                                         <option value="PHILHEALTH">PHILHEALTH</option>
@@ -597,7 +597,7 @@
                                                                 @if ($type_of_hrconcern == "Others")
                                                                     <div id="remittance_request_others_container" class="grid grid-cols-1">
                                                                         <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others"
-                                                                            class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                            class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         </textarea>
                                                                         @error('remittance_request_others')
                                                                             <div class="text-sm transition transform alert alert-danger"
@@ -613,7 +613,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Account Assigned<span class="text-red-600">*</span></label>
                                                                 <div id="request_assigned_container" class="grid grid-cols-1">
                                                                     <select name="request_assigned" wire:model.live="request_assigned"
-                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         <option selected>Select</option>
                                                                         <option value="PEI">PEI</option>
                                                                         <option value="SL TEMPS">SL TEMPS</option>
@@ -631,7 +631,7 @@
                                                                 @if ($request_assigned == "Others")
                                                                     <div id="request_others_container" class="grid grid-cols-1">
                                                                         <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others"
-                                                                            class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                            class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         </textarea>
                                                                         @error('request_extra')
                                                                             <div class="text-sm transition transform alert alert-danger"
@@ -648,7 +648,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white ">For what purpose?<span class="text-red-600">*</span></label>
                                                                 <div id="purpose" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     </textarea>
                                                                     @error('purpose')
                                                                         <div class="text-sm transition transform alert alert-danger"
@@ -684,7 +684,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Concern (GMR) <span class="text-red-600">*</span></label>
                                                                 <div id="type_of_hrconcern_container" class="grid grid-cols-1">
                                                                     <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         <option selected>Select</option>
                                                                         <option value="SSS Salary Loan for Approval">SSS Salary Loan for Approval</option>
                                                                         <option value="SSS Calamity Loan for Approval">SSS Calamity Loan for Approval</option>
@@ -709,7 +709,7 @@
                                                                     <span class="text-red-600">*</span> For SSS R1A and PHILHEALTH ER2, must be in Excel format.</label>
                                                                 <div id="request_link" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                     </textarea>
                                                                     @error('request_link')
@@ -730,7 +730,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Request (Messengerial)<span class="text-red-600">*</span></label>
                                                                 <div id="type_of_hrconcern_container" class="grid grid-cols-1 mb-144">
                                                                     <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         <option selected>Select</option>
                                                                         <option value="Send Document">Send Document</option>
                                                                         <option value="Pick-Up Document">Pick-Up Document</option>
@@ -747,7 +747,7 @@
                                                                 @if ($type_of_hrconcern == "Others")
                                                                     <div id="messengerial_other_type_container" class="grid grid-cols-1">
                                                                         <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type"
-                                                                            class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                            class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                         </textarea>
                                                                         @error('messengerial_other_type')
                                                                             <div class="text-sm transition transform alert alert-danger"
@@ -764,7 +764,7 @@
                                                                 </label>
                                                                 <div id="request_requested" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="request_requested" name="request_requested" wire:model="request_requested"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                     </textarea>
                                                                     @error('request_requested')
@@ -781,7 +781,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white">Contact Person <span class="text-red-600">*</span> </label>
                                                                 <div id="request_assigned" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="request_assigned" name="request_assigned" wire:model="request_assigned"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     </textarea>
                                                                     @error('request_assigned')
                                                                         <div class="text-sm transition transform alert alert-danger"
@@ -800,7 +800,7 @@
                                                                     class="block mb-2 text-sm font-medium text-customGray dark:text-white">Address of Destination (Messengerial)<span class="text-red-600">*</span> </label>
                                                                 <div id="request_extra" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="request_extra" name="request_extra" wire:model="request_extra"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     </textarea>
                                                                     @error('request_extra')
                                                                         <div class="text-sm transition transform alert alert-danger"
@@ -938,7 +938,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Request (Repairs and Maintenance)<span class="text-red-600">*</span></label>
                                                             <div id="type_of_hrconcern_container" class="grid grid-cols-1">
                                                                 <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     <option selected>Select</option>
                                                                     <option value="Electrical">Electrical</option>
                                                                     <option value="Plumbing">Plumbing</option>
@@ -962,7 +962,7 @@
                                                             @if ($type_of_hrconcern == "Others")
                                                                 <div id="messengerial_other_type_container" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type"
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     </textarea>
                                                                     @error('messengerial_other_type')
                                                                         <div class="text-sm transition transform alert alert-danger"
@@ -979,7 +979,7 @@
                                                             </label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" placeholder="Enter your answer here."
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                 </textarea>
                                                                 @error('purpose')
@@ -1089,7 +1089,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Room (Book a Meeting Room)<span class="text-red-600">*</span></label>
                                                             <div id="request_requested_container" class="grid grid-cols-1">
                                                                 <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     <option selected>Select</option>
                                                                     <option value="Training Room">Training Room</option>
                                                                     <option value="Villa Office">Villa Office</option>
@@ -1108,7 +1108,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Describe your purpose (Book a Meeting Room)<span class="text-red-600">*</span></label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('purpose')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1153,7 +1153,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Room (Book a Meeting Room)<span class="text-red-600">*</span></label>
                                                             <div id="request_requested_container" class="grid grid-cols-1">
                                                                 <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     <option selected>Select</option>
                                                                     <option value="Training Room">Training Room</option>
                                                                     <option value="Villa Office">Villa Office</option>
@@ -1172,7 +1172,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Describe your purpose (Book a Meeting Room)<span class="text-red-600">*</span></label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('purpose')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1195,7 +1195,7 @@
                                                                         </label>
                                                                         <div id="type_of_hrconcern" class="grid grid-cols-1">
                                                                             <textarea type="text" rows="2" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" placeholder="Enter your answer here."
-                                                                                class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                                class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                             </textarea>
                                                                             @error('type_of_hrconcern')
@@ -1212,7 +1212,7 @@
                                                                 </label>
                                                                 <div id="purpose" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" placeholder="Enter your answer here."
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                     </textarea>
                                                                     @error('purpose')
@@ -1229,7 +1229,7 @@
                                                                 </label>
                                                                 <div id="request_link" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="4" id="request_link" name="request_link" wire:model="request_link" placeholder="Enter your answer here."
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                     </textarea>
                                                                     @error('request_link')
@@ -1255,7 +1255,7 @@
                                                                 </label>
                                                                 <div id="type_of_hrconcern" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" placeholder="Enter your answer here."
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                     </textarea>
                                                                     @error('type_of_hrconcern')
@@ -1272,7 +1272,7 @@
                                                                 </label>
                                                                 <div id="request_link" class="grid grid-cols-1">
                                                                     <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="Enter your answer here."
-                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                     </textarea>
                                                                     @error('request_link')
@@ -1316,7 +1316,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Please describe the concern (Reimbursement)<span class="text-red-600">*</span></label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('purpose')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1333,7 +1333,7 @@
                                                                 <span class="text-red-600">*</span></label>
                                                             <div id="request_link" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="(payslips,timesheet.etc.)"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
 
                                                                 </textarea>
                                                                 @error('request_link')
@@ -1378,7 +1378,7 @@
                                                                         <label
                                                                             class="block mb-2 text-sm font-medium text-customGray dark:text-white">Equipment Type <span class="text-red-600">*</span></label>
                                                                         <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                             <option selected>Select</option>
                                                                             <option value="Laptop">Laptop</option>
                                                                             <option value="Printer">Printer</option>
@@ -1405,7 +1405,7 @@
                                                                             class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Equipment Type (If Chosen Others)<span class="text-red-600">*</span></label>
                                                                         <div id="purpose" class="grid grid-cols-1">
                                                                             <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                                class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                                class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                             </textarea>
                                                                             @error('purpose')
                                                                                 <div class="text-sm transition transform alert alert-danger"
@@ -1443,7 +1443,7 @@
                                                                         <label
                                                                             class="block mb-2 text-sm font-medium text-customGray dark:text-white">Equipment Type <span class="text-red-600">*</span></label>
                                                                         <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                             <option selected>Select</option>
                                                                             <option value="Laptop">Laptop</option>
                                                                             <option value="Printer">Printer</option>
@@ -1494,7 +1494,7 @@
                                                                 <span class="text-red-600">*</span></label>
                                                             <div id="request_link" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('request_link')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1515,7 +1515,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">CA Liquidation Coverage<span class="text-red-600">*</span></label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('purpose')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1532,7 +1532,7 @@
                                                                 <span class="text-red-600">*</span></label>
                                                             <div id="request_link" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="Share the link of your Email / Knox Approval below."
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('request_link')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1555,7 +1555,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Request (Leave)<span class="text-red-600">*</span></label>
                                                             <div id="type_of_pe_hr_ops_container" class="grid grid-cols-1">
                                                                 <select name="type_of_pe_hr_ops" wire:model.live="type_of_pe_hr_ops"
-                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     <option selected>Select</option>
                                                                     <option value="3rd Month">3rd Month</option>
                                                                     <option value="5th Month">5th Month</option>
@@ -1577,7 +1577,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Type of Request (Leave)<span class="text-red-600">*</span></label>
                                                             <div id="account_client_hr_opscontainer" class="grid grid-cols-1">
                                                                 <select name="account_client_hr_ops" wire:model.live="account_client_hr_ops"
-                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                     <option selected>Select</option>
                                                                     <option value="Option 1">Option 1</option>
                                                                     <option value="Option 2">Option 2</option>
@@ -1627,7 +1627,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Incident Report <span class="text-red-600">*</span></label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" placeholder="(Please write the description)"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('purpose')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1647,7 +1647,7 @@
                                                             <label
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white">Type of Notice <span class="text-red-600">*</span></label>
                                                             <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model.live="type_of_hrconcern"
-                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 <option selected>Select</option>
                                                                 <option value="End of Assignment">End of Assignment</option>
                                                                 <option value="Extension of Assignment/Project">Extension of Assignment/Project</option>
@@ -1672,7 +1672,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Purpose of Request (Employee Files)<span class="text-red-600">*</span></label>
                                                             <div id="purpose" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" placeholder="(Please write the description)"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('purpose')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1688,7 +1688,7 @@
                                                                 class="block mb-2 text-sm font-medium text-customGray dark:text-white ">Document/s Needed <span class="text-red-600">*</span></label>
                                                             <div id="request_requested" class="grid grid-cols-1">
                                                                 <textarea type="text" rows="5" id="request_requested" name="request_requested" wire:model="request_requested"
-                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled
+                                                                    class="block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 </textarea>
                                                                 @error('request_requested')
                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -1718,7 +1718,7 @@
                                         </div>
 
                                     </div>
-                                @endif
+                                {{-- @endif --}}
 
 
                             </div>
@@ -1726,133 +1726,8 @@
                         </div>
                     </div>
                 </div>
-                <!-- Change Status Button -->
-    <button data-modal-target="crud-modal" type="button" data-modal-toggle="crud-modal" class="inline-flex ml-4 items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed bg-navButton hover:bg-customRed hover:text-white shadow rounded-lg ring-1 ring-customRed dark:focus:ring-customRed hover:bg-primary-800">
-        Change Status
-    </button>
-
-    <!-- Change Status Modal -->
-    <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-        <div class="relative w-full max-w-md p-4">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <!-- Modal header -->
-                <div class="flex items-center justify-between p-4 border-b rounded-t dark:border-gray-600">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Change Status</h3>
-                    <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                        <span class="sr-only">Close modal</span>
-                    </button>
-                </div>
-                <!-- Modal body -->
-                <div class="p-4 md:p-5">
-                    <div class="grid grid-cols-1 gap-4 mb-4 ">
-                        <div>
-                            <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
-                            <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
-                                <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
-                                <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
-                            </select>
-                        </div>
-                        <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
-                            Update
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Popup Modal -->
-    <div id="popup-modal" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-        <div class="relative p-4 w-full max-w-md max-h-full">
-            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                    <span class="sr-only">Close modal</span>
-                </button>
-                <form wire:submit.prevent="submit" method="POST"  class="p-4 md:p-5">
-                    <div class="p-4 md:p-5 text-center">
-                        <svg class="mx-auto mb-4 text-gray-400 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                        </svg>
-                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to proceed</h3>
-                        <button type="submit" class="text-white bg-red-600 hover:bg-red-800  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                            Yes
-                        </button>
-                        <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
-
-    <div id="toast-success" tabindex="-1" class="hidden fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-center items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-            </svg>
-            <span class="sr-only">Check icon</span>
-        </div>
-        <div class="ms-3 text-sm font-normal">Status Updated Successfully.</div>
-        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-            <span class="sr-only">Close</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-            </svg>
-        </button>
-    </div>
-    
-
-
-                <!-- Modal -->
-
             </form>
         </div>
     </section>
     
 </div>
-<script>
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const updateButton = document.getElementById('updateButton');
-        const modal = document.getElementById('popup-modal');
-        const crud_modal = document.getElementById('crud-modal');
-
-        const closeModalButtons = document.querySelectorAll('[data-modal-hide="popup-modal"]');
-    
-        updateButton.addEventListener('click', (e) => {
-            e.preventDefault();
-            modal.classList.remove('hidden');
-            // crud_modal.classList.add('hidden');
-        });
-    
-        closeModalButtons.forEach((button) => {
-            button.addEventListener('click', () => {
-                modal.classList.add('hidden');
-            });
-        });
-    });
-
-
-    document.addEventListener('livewire:init', function () {
-        Livewire.on('triggerNotification', () => {
-            // Show the modal
-            const modal = document.getElementById('toast-success');
-            const pop_up_modal = document.getElementById('popup-modal');
-            const crud_modal = document.getElementById('crud-modal');
-            
-            if (modal) {
-                crud_modal.classList.add('hidden');
-                pop_up_modal.classList.add('hidden');
-                modal.classList.remove('hidden');
-            }
-        });
-    });
-</script>

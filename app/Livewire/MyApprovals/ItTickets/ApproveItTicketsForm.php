@@ -23,6 +23,9 @@ class ApproveItTicketsForm extends Component
     
     public $status; 
 
+    public $form_id;
+
+
     public function mount($index){
         $loggedInUser = auth()->user();
 
@@ -43,7 +46,10 @@ class ApproveItTicketsForm extends Component
         $this->last_name = $employeeRecord->last_name;
         $this->department_name = $employeeRecord->department;
         $this->email = $employeeRecord->employee_email;
+
+        $this->form_id = $it_ticket->form_id;
         $this->description = $it_ticket->description;
+
 
     }
 
