@@ -682,11 +682,11 @@
                                             @if ($hrticket->status != "Cancelled")
                                                 <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
                                                     <!-- Dropdown content -->
-                                                    {{-- <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                            <li>
-                                                                <a id="" onclick="location.href='{{ route('hrticketEdit', ['index' => $hrticket->form_id]) }}'"  class="block px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                            </li>
-                                                    </ul> --}}
+                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                        <li>
+                                                            <a  onclick="location.href='{{ route('HrTicketsView', ['index' => $hrticket->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                        </li>
+                                                    </ul>
                                                     <div class="py-2">
 
                                                         <a id="cancel_button_{{ $hrticket->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
@@ -698,9 +698,10 @@
                                                 <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    Nothing to show.
+                                                        <li>
+                                                            <a  onclick="location.href='{{ route('HrTicketsView', ['index' => $hrticket->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                        </li>
                                                     </ul>
-                                                
                                                 </div>
                                             @endif
                                     </td>

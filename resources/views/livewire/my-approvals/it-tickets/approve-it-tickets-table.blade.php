@@ -224,7 +224,7 @@
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$it_ticket->application_date}}
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap" colspan="3">
+                                    <td class="px-6 py-4 text-center " colspan="3">
                                         {{$it_ticket->description}}
                                     </td>
                                    

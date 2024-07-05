@@ -20,7 +20,7 @@ class ItTicketsFactory extends Factory
         $employee_id = "SLE0001";
         return [
         'application_date' => Carbon::now(),
-        'status' => $this->faker->randomElement(['open', 'closed', 'in progress']),
+        'status' => $this->faker->randomElement(['Completed', 'Pending', 'Report', 'Request to Complete', 'Cancelled']),
         'employee_id' => $employee_id,
         'description' => $this->faker->text(5000),
         'cancelled_at' => $this->faker->boolean ? $this->faker->dateTime : null,

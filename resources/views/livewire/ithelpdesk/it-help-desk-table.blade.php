@@ -242,11 +242,11 @@
                                             @if ($it_ticket->status != "Cancelled")
                                                 <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
                                                     <!-- Dropdown content -->
-                                                    {{-- <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('it_ticketEdit', ['index' => $it_ticket->form_id]) }}'"  class="block px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                             </li>
-                                                    </ul> --}}
+                                                    </ul>
                                                     <div class="py-2">
 
                                                         <a id="cancel_button_{{ $it_ticket->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
@@ -258,40 +258,41 @@
                                                 <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    Nothing to show.
+                                                        <li>
+                                                            <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                        </li>
                                                     </ul>
-                                                
                                                 </div>
                                             @endif
-                                        </td>
+                                    </td>
 
-                                        <div id="popup-modal_{{ $it_ticket->form_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-                                            <div class="relative p-4 w-full max-w-md max-h-full">
-                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
-                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    <div id="popup-modal_{{ $it_ticket->form_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
+                                        <div class="relative p-4 w-full max-w-md max-h-full">
+                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                    </svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                <div class="p-4 md:p-5">
+                                                    <div class="p-4 md:p-5 text-center">
+                                                        <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                         </svg>
-                                                        <span class="sr-only">Close modal</span>
-                                                    </button>
-                                                    <div class="p-4 md:p-5">
-                                                        <div class="p-4 md:p-5 text-center">
-                                                            <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                            </svg>
-                                                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
-                                                            <button wire:click="cancelForm('{{$it_ticket->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                                Yes
-                                                            </button>
-                                                            <button id="close_button" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                                                No
-                                                            </button>
-                                                        </div>
+                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
+                                                        <button wire:click="cancelForm('{{$it_ticket->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                            Yes
+                                                        </button>
+                                                        <button id="close_button" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                            No
+                                                        </button>
                                                     </div>
-                                    
                                                 </div>
+                                
                                             </div>
                                         </div>
+                                    </div>
 
                                         
                                         {{-- <td class="items-center px-6 py-4">

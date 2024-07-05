@@ -1,16 +1,14 @@
 <?php
 
-namespace App\Livewire\MyApprovals\ItTickets;
+namespace App\Livewire\Ithelpdesk;
 
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
-use Livewire\WithFileUploads;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class ApproveItTicketsForm extends Component
+class ItHelpDeskView extends Component
 {
-
     public $date;
     public $first_name;
     public $middle_name;
@@ -22,6 +20,8 @@ class ApproveItTicketsForm extends Component
     public $index;
     
     public $status; 
+    public $form_id;
+
 
     public function mount($index){
         $loggedInUser = auth()->user();
@@ -30,7 +30,7 @@ class ApproveItTicketsForm extends Component
             $it_ticket= $this->editForm($index);
             // $this->authorize('update', [$leaverequest]);
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('ApproveItTicketsTable'));
+            return redirect()->to(route('ItHelpDeskTable'));
             abort(404);
         }
         $this->index = $index;
@@ -43,7 +43,11 @@ class ApproveItTicketsForm extends Component
         $this->last_name = $employeeRecord->last_name;
         $this->department_name = $employeeRecord->department;
         $this->email = $employeeRecord->employee_email;
+
+        $this->form_id = $it_ticket->form_id;
+
         $this->description = $it_ticket->description;
+
 
     }
 
@@ -58,23 +62,8 @@ class ApproveItTicketsForm extends Component
         return $it_ticket ;
     }
 
-
-    public function submit(){
-        $it_ticket_data = Ittickets::where('form_id', $this->index)->first();
-
-        $it_ticket_data->status = $this->status;
-        // $this->js("alert('Leave Request Updated!')"); 
-
-        $this->dispatch('triggerNotification');
-
-        $it_ticket_data->update();
-
-        return redirect()->to(route('ApproveItHelpDeskTable'));
-    }
-
     public function render()
     {
-        return view('livewire.my-approvals.it-tickets.approve-it-tickets-form')->extends('components.layouts.app');
+        return view('livewire.ithelpdesk.it-help-desk-view');
     }
-   
 }

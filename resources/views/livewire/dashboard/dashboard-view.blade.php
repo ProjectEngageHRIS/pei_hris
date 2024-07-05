@@ -96,7 +96,7 @@
                     </div>
                     @if($activity->poster)
                         <div class="px-4 py-4">
-                            <img src="{{ asset(  $activity->poster) }}" alt="" class="mx-auto rounded-lg shadow-lg py-auto">
+                            <img src="{{ asset( 'storage/'. $activity->poster) }}" alt="" class="mx-auto rounded-lg shadow-lg py-auto">
                         </div>
                     @endif
                     <div class="my-4 border-t border-gray-300"></div>

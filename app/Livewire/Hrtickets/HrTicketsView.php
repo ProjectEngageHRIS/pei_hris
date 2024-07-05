@@ -1,17 +1,17 @@
 <?php
 
-namespace App\Livewire\MyApprovals\HrTickets;
+namespace App\Livewire\Hrtickets;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
-use Livewire\WithFileUploads;
-use Illuminate\Support\Facades\DB;
+use App\Models\Leaverequest;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class ApproveHrTicketsForm extends Component
+class HrTicketsView extends Component
 {
-    
+        
     public $employeeRecord;
     public $date;
     public $first_name;
@@ -98,11 +98,9 @@ class ApproveHrTicketsForm extends Component
 
     public $request_others;
 
-
+    public $form_id;
 
     public function mount($index){
-
-
         $loggedInUser = auth()->user();
 
         try {
@@ -130,6 +128,8 @@ class ApproveHrTicketsForm extends Component
         // $this->available_credits = $employeeRecord->sick_credits + $employeeRecord->vacation_credits;
         // $dateToday = Carbon::now()->toDateString();
         // $this->date = $dateToday;
+
+        $this->form_id = $hrticketdata->form_id;
         $this->application_date = $hrticketdata->application_date;
 
         $this->type_of_ticket = $hrticketdata->type_of_ticket;
@@ -281,10 +281,6 @@ class ApproveHrTicketsForm extends Component
                 $this->request_requested = $hrticketdata->request_requested;
             }
         }
-
-
-        
-
     }
 
     public function submit(){
@@ -325,250 +321,9 @@ class ApproveHrTicketsForm extends Component
         return $hrticket;
     }
 
-    // public function updated($keys){
-    //     if(in_array($keys, ['inclusive_start_date', 'inclusive_end_date'])){
-    //         $startDate = Carbon::parse($this->inclusive_start_date);
-    //         $endDate = Carbon::parse($this->inclusive_end_date);
-    //         $num_of_days_work_days_applied = $startDate->diffInDays($endDate);
-    //         // $num_of_hours_work_days_applied = $startDate->diffInHours($endDate);
-    //         $num_of_seconds_work_days_applied = $startDate->diffInMinutes($endDate);
-    //         // dd($num_of_seconds_work_days_applied);
-    //         if ($startDate->startOfDay() == $endDate->startOfDay()){
-    //             // $conversionValues = [
-    //             //     0.002, 0.004, 0.006, 0.008, 0.010, 0.012, 0.015, 0.017, 0.019, 0.021,
-    //             //     0.023, 0.025, 0.027, 0.029, 0.031, 0.033, 0.035, 0.037, 0.040, 0.042,
-    //             //     0.044, 0.046, 0.048, 0.050, 0.052, 0.054, 0.056, 0.058, 0.060, 0.062,
-    //             //     0.065, 0.067, 0.069, 0.071, 0.073, 0.075, 0.077, 0.079, 0.081, 0.083,
-    //             //     0.085, 0.087, 0.090, 0.092, 0.094, 0.096, 0.098, 0.100, 0.102, 0.104,
-    //             //     0.106, 0.108, 0.110, 0.112, 0.115, 0.117, 0.119, 0.121, 0.123, 0.125,
-    //             // ];
-    //             $days = $num_of_seconds_work_days_applied / 60;
-    //             if($days > 8){
-    //                 $days = 8;
-    //             }
-    //             // dd($seconds, $num_of_seconds_work_days_applied);
-    //             // $decimalPart = ($num_of_seconds_work_days_applied - floor($num_of_seconds_work_days_applied)) * 60;
-    //             $hoursLeave = $days * 0.125;
-                
-    //             // $this->$num_of_days_work_days_applied = number_format($hoursLeave , 3);
-    //             $this->num_of_days_work_days_applied = number_format($hoursLeave, 3);
-    //         }
-    //         else{
-    //             $dividedValue = $num_of_seconds_work_days_applied / 1440;
-    //             $this->num_of_days_work_days_applied = number_format($dividedValue, 3);
-    //         }
-    //     }
-
-    // }
-
-    
-    public function removeImage($item){
-        $this->$item = null;
-    }
-
-    // private function generateRefNumber(){
-    //     $today = date('Ymd');
-
-    //     $randomDigits = '';
-    //     for ($i = 0; $i < 5; $i++) {
-    //         $randomDigits .= random_int(0, 9); // More secure random number generation
-    //     }
-    //     // Combine the date and random digits
-    //     $referenceNumber = $today . $randomDigits;
-    //     return $referenceNumber;
-    //  }
-
-
-    // protected $rules = [
-    //     'mode_of_application' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
-    //     'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-    //     'type_of_leave_sub_category' => 'nullable|in:Others,Within the Philippines,Abroad,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave,In Hospital, Others',
-    //     'type_of_leave_description' => 'required_if:type_of_leave_sub_category,Others|min:10|max:500',
-    //     'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
-    //     'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
-    //     // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
-    //     'commutation' => 'required|in:not requested,requested',
-    //     'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120'
-    // ];
-
-    protected $validationAttributes = [
-        'mode_of_application' => 'Mode of Application',
-        'type_of_leave_others' => 'Others',
-        'type_of_leave_sub_category' => 'Sub Category',
-        'type_of_leave_description' => 'Leave Description',
-    ];
-
-
-    // public function submit(){
-    //     // foreach($this->rules as $rule => $validationRule){
-    //     //     $this->validate([$rule => $validationRule]);
-    //     //     $this->resetValidation();
-    //     // }   
-
-    //     // if (in_array($this->type_of_leave, ['Vacation Leave', 'Mandatory/Forced Leave', 'Sick Leave'])) {
-    //     //     $this->validate(['num_of_days_work_days_applied' => 'required|lte:available_credits',]);
-    //     // }
-        
-    //     $loggedInUser = auth()->user();
-
-    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
-
-    //     $hrticketdata->status = "Pending";
-    //     $hrticketdata->concerned_employee = $this->concerned_employee;
-
-    //     $hrticketdata->type_of_ticket = $this->type_of_ticket;
-    //     $hrticketdata->type_of_request = $this->type_of_request;
-    //     $hrticketdata->sub_type_of_request = $this->sub_type_of_request;
-
-
-    //     // $hrticketdata->supervisor_email = $this->supervisor_email;
-    //     // $hrticketdata->application_date = $this->application_date;
-    //     // $hrticketdata->mode_of_application = $this->mode_of_application;
-    //     // dd($this->mode_of_application == "Credit Leave");
-
-    //     # Hr Internal
-    //     if($this->type_of_ticket == "HR Internal"){
-    //         if($this->type_of_request == "HR"){
-    //             if($this->sub_type_of_request == "Certificate of Employment" || $this->sub_type_of_request == "Request for Consultation" ){
-    //                 $hrticketdata->purpose = $this->purpose;
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //             }
-    //             else if($this->sub_type_of_request == "HMO-related concerns" || $this->sub_type_of_request == "Leave concerns"){
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //                 $hrticketdata->request_link = $this->request_link;
-    //             }
-    //             else if($this->sub_type_of_request == "Payroll-related concerns"){
-    //                 $hrticketdata->request_date = $this->request_date;
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //                 $hrticketdata->request_link = $this->request_link;
-    //             }   
-    //         }
-    //         else if($this->type_of_request == "Office Admin"){
-    //             if($this->sub_type_of_request == "Certificate of Remittances"){
-    //                 if($this->type_of_hrconcern == "Others"){
-    //                     $hrticketdata->type_of_hrconcern = $this->remittance_request_others;
-    //                 } else {
-    //                     $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-
-    //                 }
-    //                 if($this->request_assigned == "Others"){
-    //                     $hrticketdata->request_assigned = $this->request_assigned_request_others;
-    //                 } else {
-    //                     $hrticketdata->request_assigned = $this->request_assigned;
-    //                 }
-    //                 $hrticketdata->purpose = $this->purpose;
-    //                 $hrticketdata->request_date = $this->request_date;
-    //             }
-    //             else if($this->sub_type_of_request == "Government-mandated benefits concern"){
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->request_link = $this->request_link;
-    //             }
-    //             else if($this->sub_type_of_request == "Messengerial"){
-    //                 if($this->type_of_hrconcern == "Others"){
-    //                     $hrticketdata->type_of_hrconcern = $this->messengerial_other_type;
-    //                 } else {
-    //                     $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 }
-    //                 $hrticketdata->request_requested = $this->request_requested;
-    //                 $hrticketdata->request_assigned = $this->request_assigned;
-    //                 $hrticketdata->request_extra = $this->request_extra;
-    //                 $hrticketdata->request_date = $this->request_date;
-    //             }
-    //             else if($this->sub_type_of_request == "Repairs/Maintenance"){
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //             }
-    //             else if($this->sub_type_of_request == "Book a Car"){
-    //                 $hrticketdata->request_date = $this->request_date;
-    //                 $hrticketdata->request_requested = $this->request_requested;
-    //                 $hrticketdata->account_client_hr_ops = $this->account_client_hr_ops;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //             }
-    //             else if($this->sub_type_of_request == "Book a Meeting Room"){
-    //                 $hrticketdata->request_date = $this->request_date;
-    //                 $hrticketdata->request_requested = $this->request_requested;
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //             }
-    //             else if($this->sub_type_of_request == "Office Supplies"){
-    //                 $hrticketdata->request_date = $this->request_date;
-    //                 $hrticketdata->request_requested = $this->request_requested;
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //             }
-    //         }
-    //         else if($this->type_of_request == "Procurement"){
-    //             if($this->sub_type_of_request == "Request for Quotation"){
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->purpose = $this->purpose;
-    //                 $hrticketdata->request_link = $this->request_link;
-    //             }
-    //             else if($this->sub_type_of_request == "Request to Buy/Book/Avail Service"){
-    //                 $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //                 $hrticketdata->request_link = $this->request_link;
-    //             }
-    //         }
-
-    //     }
-
-    //     # Internal Control
-    //     else if($this->type_of_ticket == "Internal Control"){
-    //         if($this->type_of_request == "Reimbursements"){
-    //             $hrticketdata->request_date = $this->request_date;
-    //             $hrticketdata->purpose = $this->purpose;
-    //             $hrticketdata->request_link = $this->request_link;
-    //         }
-    //         else if($this->type_of_request == "Tools and Equipment"){
-    //             $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //             $hrticketdata->condition_availability = $this->condition_availability;
-    //         }
-    //         else if($this->type_of_request == "Cash Advance"){
-    //             $hrticketdata->request_date = $this->request_date;
-    //             $hrticketdata->request_link = $this->request_link;
-    //         }
-    //         else if($this->type_of_request == "Liquidation"){
-    //             $hrticketdata->purpose = $this->purpose;
-    //             $hrticketdata->request_link = $this->request_link;
-    //         }
-    //     }
-
-    //     # HR Operations
-
-    //     else if($this->type_of_ticket == "HR Operations"){
-    //         if($this->type_of_request == "Performance Monitoring Request"){
-    //             $hrticketdata->type_of_pe_hr_ops = $this->type_of_pe_hr_ops;
-    //             $hrticketdata->account_client_hr_ops = $this->account_client_hr_ops;
-    //         }
-    //         else if($this->type_of_request == "Incident Report"){
-    //             $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //             $hrticketdata->purpose = $this->purpose;
-    //         }
-    //         else if($this->type_of_request == "Request for Issuance of Notice/Letter"){
-    //             $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
-    //         }
-    //         else if($this->type_of_request == "Request for Employee Files"){
-    //             $hrticketdata->purpose = $this->purpose;
-    //             $hrticketdata->request_requested = $this->request_requested;
-    //         }
-    //     }
-
-
-    //     $hrticketdata->update();
-
-    //     // $announcement = $this->type_of_ticket . 'HR Ticket submitted!';
-    //     $this->js("alert('HR Ticket Updated!')"); 
-
-    //     return redirect()->to(route('HrTicketsTable'));
-
-    // }
-
 
     public function render()
     {
-        return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-form')->extends('components.layouts.app');
+        return view('livewire.hrtickets.hr-tickets-view');
     }
-
-  
 }
