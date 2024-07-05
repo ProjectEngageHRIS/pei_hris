@@ -136,12 +136,13 @@
                         <div class="py-1">
                             <a href="{{ route('LeaveRequestTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Leave Request</a>
                             <a href="{{ route('HrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">HR Tickets</a>
+                            <a href="{{ route('ItHelpDeskTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">IT Helpdesk</a>
+                            <a href="{{ route('changeInformation') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Change Personal Information</a>
+                            <hr class="border-gray-400">
                             <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Overtime Approval</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Undertime Approval</a>
                             <a href="{{ route('LeaveRequestTable', ['type' => 'adviseslip']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Advise Slip</a>
-                            <a href="{{ route('changeInformation') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Change Personal Information</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'coe'])  }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Certificate of Employment</a>
-                            <a href="{{ route('ItHelpDeskTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">IT Helpdesk</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'procurement']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Procurement</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'internalcontrol']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Internal Audit</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'requestmeeting'])  }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Meeting Request</a>

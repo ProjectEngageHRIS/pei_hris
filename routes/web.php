@@ -11,6 +11,7 @@ use App\Livewire\Ipcr\IpcrUpdate;
 use App\Livewire\Opcr\OpcrUpdate;
 use App\Livewire\Employeeinformation;
 use App\Livewire\Mytasks\MyTasksForm;
+use App\Livewire\Mytasks\MyTasksView;
 use App\Livewire\Payroll\PayrollView;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Auth\Passwords\Email;
@@ -25,6 +26,7 @@ use App\Livewire\Trainings\TrainingForm;
 use App\Livewire\Trainings\TrainingView;
 use App\Livewire\Dashboard\DashboardView;
 use App\Livewire\Hrtickets\HrTicketsForm;
+use App\Livewire\Hrtickets\HrTicketsView;
 use App\Http\Controllers\VerifyController;
 use App\Livewire\Dashboard\LoginDashboard;
 use App\Livewire\Hrtickets\HrTicketsTable;
@@ -35,6 +37,7 @@ use App\Livewire\Activities\ActivitiesView;
 use App\Livewire\Dashboard\HrDashboardView;
 use App\Livewire\Hrtickets\HrTicketsUpdate;
 use App\Livewire\Ithelpdesk\ItHelpDeskForm;
+use App\Livewire\Ithelpdesk\ItHelpDeskView;
 use App\Livewire\Trainings\TrainingGallery;
 use App\Livewire\Ithelpdesk\ItHelpDeskTable;
 use App\Http\Controllers\PayrolPdfController;
@@ -68,28 +71,29 @@ use App\Livewire\Changeschedule\ChangeScheduleTable;
 use App\Livewire\Payroll\Accounting\AddPayrollTable;
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
+
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
-
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
+use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
+// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
+// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollTable;
-// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
-// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsForm;
+// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
+// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsForm;
 use App\Livewire\Creditsmonetization\CreditsMonetizationForm;
 use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsTable;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsTable;
-// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
-// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Creditsmonetization\CreditsMonetizationTable;
 use App\Livewire\Creditsmonetization\CreditsMonetizationUpdate;
 use App\Livewire\MyApprovals\Leaverequests\ApproveLeaverequestForm;
@@ -245,7 +249,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get("/leaverequest/view/{index}", LeaveRequestView::class)->name('LeaveRequestView');
 
-
     // Route::get("/leaverequest/pdf/{index}", [LeaveRequestController::class, 'turnToPdf'])->name('LeaveRequestPdf');
 
     Route::get("leaverequest/approverequests", ApproveLeaverequestTable::class)->name('ApproveLeaveRequestTable');
@@ -264,6 +267,9 @@ Route::middleware('auth')->group(function (){
 
     Route::get("/helpdesk/edit/{index}", ItHelpDeskUpdate::class)->name('ItHelpDeskUpdate');
 
+    Route::get("/helpdesk/view/{index}", ItHelpDeskView::class)->name('ItHelpDeskView');
+
+
     // Route::get("/studypermit/pdf/{index}", [StudyPermitController::class, 'turnToPdf'])->name('StudyPermitPdf');
 
     Route::get("/helpdesk/approverequests", ApproveItTicketsTable::class)->name('ApproveItHelpDeskTable');
@@ -280,7 +286,12 @@ Route::middleware('auth')->group(function (){
 
     Route::get("/mytasks/edit/{index}", MyTasksUpdate::class)->name('TasksUpdate');
 
+    Route::get("/mytasks/view/{index}", MyTasksView::class)->name('MyTasksView');
+
     Route::get("/assignedtasks", AssignedTasksTable::class)->name('AssignedTasksTable');
+
+    Route::get("/assignedtasks/view/{index}", AssignedTasksView::class)->name('AssignedTasksView');
+
 
 
     // Route::get("/studypermit/pdf/{index}", [StudyPermitController::class, 'turnToPdf'])->name('StudyPermitPdf');
@@ -371,6 +382,8 @@ Route::middleware('auth')->group(function (){
     Route::get("/hrtickets/form/{type?}", HrTicketsForm::class)->name('HrTicketsForm');
 
     Route::get("/hrtickets/edit/{index}", HrTicketsUpdate::class)->name('HrTicketsUpdate');
+
+    Route::get("/hrtickets/view/{index}", HrTicketsView::class)->name('HrTicketsView');
 
     Route::get("/hrtickets/approverequests", ApproveHrTicketsTable::class)->name('ApproveHrTicketsTable');
 

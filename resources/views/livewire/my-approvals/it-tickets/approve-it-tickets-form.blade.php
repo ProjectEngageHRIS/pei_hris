@@ -28,6 +28,8 @@
         </ol>
     </nav> 
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Update Concern</h2>
+    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
             <form wire:submit.prevent="submit" method="POST">

@@ -145,6 +145,12 @@ class ApproveHrTicketsTable extends Component
     
     }
 
+    public function getEmployeeName($employee_id){
+        $name = Employee::where('employee_id', $employee_id)->select('first_name', 'middle_name', 'last_name')->first();
+        return $name->first_name . ' ' . $name->middle_name . ' ' . $name->last_name;
+    }
+    
+
     public function cancelForm($index){
         // $HrTicketData = Hrticket::where('form_id', $index)->first();
         $dataToUpdate = ['status' => 'Cancelled',

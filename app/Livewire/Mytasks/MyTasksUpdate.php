@@ -12,13 +12,11 @@ use Illuminate\Auth\Access\AuthorizationException;
 class MyTasksUpdate extends Component
 {
     
-    // public $employeeRecord;
     public $date;
     public $first_name;
     public $middle_name;
     public $last_name;
     public $department_name;
-    // public $employee_id;
     public $description;
     public $email;
 
@@ -26,7 +24,6 @@ class MyTasksUpdate extends Component
 
     public $employeeNames = [];
     public $target_employees = [];
-
 
     public $task_title;
     public $assigned_task;
@@ -61,20 +58,26 @@ class MyTasksUpdate extends Component
         $this->last_name = $employeeRecord->last_name;
         $this->department_name = $employeeRecord->department;
         $this->email = $employeeRecord->employee_email;
+
         $selectedEmployees = [];
         $task->target_employees = json_decode($task->target_employees, true);
-        foreach($task->target_employees as $employee){
-            $employee_id = explode('| ', $employee);
-            $selectedEmployees[] = $employee_id[1];
-        }
+
         $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->get();
         foreach($employees as $employee){
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
         }
+        foreach($this->employeeNames as $employee){
+            $employee_id = explode('| ', $employee);
+            if(in_array($employee_id[1], $task->target_employees)){
+                $selectedEmployees[] = $employee;
+            }
+        }
 
+        $this->target_employees = $selectedEmployees;
+
+        
         $this->task_title = $task->task_title;
-        $this->target_employees = $task->target_employees;
         $this->assigned_task = $task->assigned_task;
         $this->start_time = $task->start_time;
         $this->end_time = $task->end_time;

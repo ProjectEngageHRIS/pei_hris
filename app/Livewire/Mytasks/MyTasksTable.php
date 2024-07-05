@@ -113,12 +113,12 @@ class MyTasksTable extends Component
         return $name->first_name . ' ' . $name->middle_name . ' ' . $name->last_name;
     }
 
-    public function removeForm($index){
-        //  Mytasks::where('form_id', $index)->first();
+    public function cancelForm($index){
         $dataToUpdate = ['status' => 'Cancelled',
                          'cancelled_at' => now()];
         // $this->authorize('delete', $leaveRequestData);
         Mytasks::where('form_id', $index)->update($dataToUpdate);
         return redirect()->route('TasksTable');
     }
+
 }

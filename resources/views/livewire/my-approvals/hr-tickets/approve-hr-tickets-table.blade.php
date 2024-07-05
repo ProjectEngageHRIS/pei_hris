@@ -162,6 +162,9 @@
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
+                            Employee Information
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
                             Date Applied
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
@@ -173,9 +176,7 @@
                         <th scope="col" class="px-6 py-3 text-center">
                             Request Type
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            Concern
-                        </th>
+
                         <th scope="col" class="px-6 py-3 text-center">
                             Ticket Info
                         </th>
@@ -251,6 +252,13 @@
                                         </span>
                                     </th>
                                     @endif
+                                    <td class="px-6 py-4  font-semibold text-center text-gray-900 whitespace-nowrap">
+                                        @php
+                                            $employee_name = $this->getEmployeeName($hrticket->employee_id);
+                                        @endphp
+                                        <span class="text-customRed">Name:</span> {{$employee_name}} <br>
+                                        <span class="text-customRed">ID: </span>{{$hrticket->employee_id}}
+                                    </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$hrticket->application_date}}
                                     </td>
@@ -263,14 +271,46 @@
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$hrticket->type_of_request}}
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                                    {{-- <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$hrticket->sub_type_of_request}}
-                                    </td>
+                                    </td> --}}
                                     <td class="px-6 py-4 text-center">
-                                        @if($hrticket->sub_type_of_request == "Certificate of Employment" || $hrticket->sub_type_of_request == "Request for Consultation" )
+                                       
+                                        @if($hrticket->type_of_request == "Reimbursements")
+                                            <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
+                                            <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
+                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}}
+                                        @elseif($hrticket->type_of_request == "Tools and Equipment")
+                                            <span class="font-semibold text-gray-700">Equipment Type: </span>{{$hrticket->type_of_hrconcern}} <br>
+                                            <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br> 
+                                        @elseif($hrticket->type_of_requestt == "Cash Advance")
+                                            <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{$hrticket->request_date}} <br>
+                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
+                                        @elseif($hrticket->type_of_request == "Liquidation")
+                                            <span class="font-semibold text-gray-700">Liquidation Coverage: </span>{{$hrticket->purpose}} <br>
+                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
+                                        @elseif($hrticket->type_of_request == "Performance Monitoring Request")
+                                            <span class="font-semibold text-gray-700">Type Of PE:</span> {{$hrticket->type_of_pe_hr_ops}} <br>
+                                            <span class="font-semibold text-gray-700"> Account/Client: </span> {{$hrticket->account_client_hr_ops}} <br>
+                                        @elseif($hrticket->type_of_request == "Incident Report")
+                                            <span class="font-semibold text-gray-700"> Level of Offense:</span> {{$hrticket->type_of_hrconcern}} <br>
+                                            <span class="font-semibold text-gray-700">Incident Report:</span> {{$hrticket->purpose}} <br>
+                                        @elseif($hrticket->type_of_request == "Request for Issuance of Notice/Letter")
+                                            <span class="font-semibold text-gray-700">Type of Notice:</span> {{$hrticket->type_of_hrconcern}} <br>
+                                        @elseif($hrticket->type_of_request == "Request for Quotation")
+                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
+                                            <span class="font-semibold text-gray-700">Purpose:</span> {{$hrticket->purpose}} <br>
+                                            <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
+                                        @elseif($hrticket->type_of_request == "Request to Buy/Book/Avail Service")
+                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
+                                            <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
+                                        @elseif($hrticket->type_of_request == "Request for Employee Files")
+                                            <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br> 
+                                            <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->document_requested}} <br>
+
+                                        @elseif($hrticket->sub_type_of_request == "Certificate of Employment" || $hrticket->sub_type_of_request == "Request for Consultation" )
                                             <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Type of COE </span> {{$hrticket->type_of_hrconcern}} 
-                                        
                                         @elseif($hrticket->sub_type_of_request == "HMO-related concerns" || $hrticket->sub_type_of_request == "Leave concerns")
                                             <span class="font-semibold text-gray-700">Type of Concern: </span>{{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
@@ -633,44 +673,9 @@
                                                     </div>
                                                 </div>
                                                 {{-- @endforeach --}}
-                                           @endif
-
-                                        @elseif($hrticket->sub_type_of_request == "Reimbursements")
-                                            <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
-                                            <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
-                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}}
-                                        @elseif($hrticket->sub_type_of_request == "Tools and Equipment")
-                                            <span class="font-semibold text-gray-700">Equipment Type: </span>{{$hrticket->type_of_hrconcern}} <br>
-                                            <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br> 
-                                        @elseif($hrticket->sub_type_of_request == "Cash Advance")
-                                            <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{$hrticket->request_date}} <br>
-                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
-                                        @elseif($hrticket->sub_type_of_request == "Liquidation")
-                                            <span class="font-semibold text-gray-700">Liquidation Coverage: </span>{{$hrticket->purpose}} <br>
-                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
-                                        @elseif($hrticket->sub_type_of_request == "Performance Monitoring Request")
-                                            <span class="font-semibold text-gray-700">Type Of PE:</span> {{$hrticket->type_of_pe_hr_ops}} <br>
-                                            <span class="font-semibold text-gray-700"> Account/Client: </span> {{$hrticket->account_client_hr_ops}} <br>
-                                        
-                                        @elseif($hrticket->sub_type_of_request == "Incident Report")
-                                            <span class="font-semibold text-gray-700"> Level of Offense:</span> {{$hrticket->type_of_hrconcern}} <br>
-                                            <span class="font-semibold text-gray-700">Incident Report:</span> {{$hrticket->purpose}} <br>
-                                        
-                                        @elseif($hrticket->sub_type_of_request == "Request for Issuance of Notice/Letter")
-                                            <span class="font-semibold text-gray-700">Type of Notice:</span> {{$hrticket->type_of_hrconcern}} <br>
-                                        @elseif($hrticket->sub_type_of_request == "Request for Quotation")
-                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
-                                            <span class="font-semibold text-gray-700">Purpose:</span> {{$hrticket->purpose}} <br>
-                                            <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
-                                        @elseif($hrticket->sub_type_of_request== "Request to Buy/Book/Avail Service")
-                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
-                                            <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
-                                        @elseif($hrticket->sub_type_of_request== "Request for Employee Files")
-                                            <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br> 
-                                            <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->document_requested}} <br>
+                                           @endif>
                                         @endif
                                     </td>
-                                  
                                     {{-- <td class="px-6 py-4 text-center">
                                         {{$hrticket->purpose}}
                                     </td> --}}
@@ -690,7 +695,7 @@
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $hrticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                <a onclick="location.href='{{ route('ApproveHrTicketsForm', ['index' => $hrticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                             </li>
                                                     </ul>
                                                     <div class="py-2">
@@ -704,7 +709,7 @@
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                         @if (is_null($hrticket->leave_form))                                                            
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $hrticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                <a id="" onclick="location.href='{{ route('ApproveHrTicketsForm', ['index' => $hrticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
 
                                                                 {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $hrticket->form_id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
                                                             </li>

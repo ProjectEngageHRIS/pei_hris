@@ -108,14 +108,12 @@ class AssignedTasksTable extends Component
         ]);
     }
 
-    public function removeForm($index){
-        //  Mytasks::where('form_id', $index)->first();
+    public function cancelForm($index){
         $dataToUpdate = ['status' => 'Cancelled',
                          'cancelled_at' => now()];
         // $this->authorize('delete', $leaveRequestData);
         Mytasks::where('form_id', $index)->update($dataToUpdate);
-        return redirect()->route('TasksTable');
+        return redirect()->route('AssignedTasksTable');
     }
 
-   
 }

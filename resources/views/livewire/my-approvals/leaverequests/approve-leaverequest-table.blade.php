@@ -15,32 +15,17 @@
                 <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-semibold text-gray-900 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Leave Request</a>
+                <a href="{{route('ApproveLeaveRequestTable')}}" class="ms-1 text-sm font-semibold text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Approve Leave Request</a>
                 </div>
             </li>
             </ol>
         </nav>
-        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Leave Request</h2>
-        
-        <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 w-full min-[450px]:w-1/3  lg:w-1/3">
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white whitespace-normal xl:whitespace-nowrap">Vacation Credits</h4>
-                <p class="font-semibold text-3xl text-customRed dark:text-gray-400">{{$vacationCredits ?? 0.00}}</p>
-            </div>
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white whitespace-normal xl:whitespace-nowrap">Sick Credits</h4>
-                <p class="font-semibold text-3xl text-customRed dark:text-gray-400">{{$sickCredits ?? 0.00}}</p>
-            </div>
-        </div>
-
+        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Leave Request</h2>
         
         <div class="flex justify-end">
             {{-- <button type="button" onclick="location.href='{{ route('LeaveRequestForm') }}'"  class="text-customRed bg-white mb-8 border-2 border-customRed hover:bg-red-800 hover:text-white  focus:ring-4 focus:ring-customRed focus:text-white focus:bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Leave Request</button> --}}
         </div>
         <br>
-
-
-        
 
         <div class="shadow-md overflow-x-auto rounded-t-lg bg-white pb-4 w-full" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -162,6 +147,9 @@
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
+                            Employee Information
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
                             Date Applied
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
@@ -242,6 +230,13 @@
                                         </span>
                                     </th>
                                     @endif
+                                    <td class="px-6 py-4  font-semibold text-center text-gray-900 whitespace-nowrap">
+                                        @php
+                                            $employee_name = $this->getEmployeeName($leaverequest->employee_id);
+                                        @endphp
+                                        <span class="text-customRed">Name:</span> {{$employee_name}} <br>
+                                        <span class="text-customRed">ID: </span>{{$leaverequest->employee_id}}
+                                    </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$leaverequest->application_date}}
                                     </td>

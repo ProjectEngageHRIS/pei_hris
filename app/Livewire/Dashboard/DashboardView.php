@@ -107,14 +107,14 @@ class DashboardView extends Component
                                     // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
                                     ->orderBy('inclusive_start_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
                                     ->take(5)
-                                    ->select('inclusive_start_date', 'inclusive_end_date')
+                                    ->select('inclusive_start_date', 'inclusive_end_date', 'form_id')
                                     ->get();
 
         $this->tasks = Mytasks::where('employee_id', $loggedInUser)
                             // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
                             ->orderBy('application_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
                             ->take(5)
-                            ->select('task_title')
+                            ->select('task_title', 'form_id')
                             ->get();
         // dd($this->leave_requests);
 

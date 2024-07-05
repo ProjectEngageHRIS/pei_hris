@@ -27,7 +27,9 @@
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">View Leave Request <span class="text-customRed"># {{$form_id}}</span> </h2>
+    <h2 class="mb-2 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">View Leave Request  </h2>
+    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    
     <section class="px-8 pb-8 mt-10 bg-white rounded-lg dark:bg-gray-900">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
