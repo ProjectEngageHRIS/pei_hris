@@ -15,6 +15,10 @@ class AttendanceSeeder extends Seeder
      */
     public function run(): void
     {
+
+        // $activities = Dailytimerecord::factory()->count(10)->create();
+
+
         $employee = Employee::first();
         $today = Carbon::today();
         $usedDates = collect(); // Collection to keep track of used dates

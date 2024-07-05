@@ -162,6 +162,9 @@
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
+                            Employee Information
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
                             Date Applied
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
@@ -173,9 +176,7 @@
                         <th scope="col" class="px-6 py-3 text-center">
                             Request Type
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            Concern
-                        </th>
+
                         <th scope="col" class="px-6 py-3 text-center">
                             Ticket Info
                         </th>
@@ -251,6 +252,13 @@
                                         </span>
                                     </th>
                                     @endif
+                                    <td class="px-6 py-4  font-semibold text-center text-gray-900 whitespace-nowrap">
+                                        @php
+                                            $employee_name = $this->getEmployeeName($hrticket->employee_id);
+                                        @endphp
+                                        <span class="text-customRed">Name:</span> {{$employee_name}} <br>
+                                        <span class="text-customRed">ID: </span>{{$hrticket->employee_id}}
+                                    </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$hrticket->application_date}}
                                     </td>
@@ -263,9 +271,9 @@
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$hrticket->type_of_request}}
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                                    {{-- <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$hrticket->sub_type_of_request}}
-                                    </td>
+                                    </td> --}}
                                     <td class="px-6 py-4 text-center">
                                        
                                         @if($hrticket->type_of_request == "Reimbursements")

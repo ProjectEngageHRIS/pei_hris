@@ -76,10 +76,13 @@ class DailyTimeRecordExport implements FromView
         // Calculate for the start month
         $startMonth = $start_date->format('F Y');
         $startDays = $start_date->copy()->endOfMonth()->diffInDays($start_date) + 1;
+        $startMonthStartDay = $start_date->day; // Get the day of the month
 
         $months[] = [
             'month_name' => $startMonth,
             'days_in_month' => $startDays,
+            'starting_day' => $startMonthStartDay ,
+
         ];
 
         // Calculate for the full months in between
@@ -87,9 +90,12 @@ class DailyTimeRecordExport implements FromView
         while ($currentDate->lessThanOrEqualTo($end_date->copy()->subMonth()->endOfMonth())) {
             $fullMonth = $currentDate->format('F Y');
             $daysInMonth = $currentDate->copy()->endOfMonth()->diffInDays($currentDate) + 1;
+            $currentMonthStartDay = $currentDate->day; // Get the day of the month
             $months[] = [
                 'month_name' => $fullMonth,
                 'days_in_month' => $daysInMonth,
+                'starting_day' => $currentMonthStartDay,
+
             ];
             $currentDate->addMonthNoOverflow(); // Move to the next month without overflow
         }
@@ -97,10 +103,13 @@ class DailyTimeRecordExport implements FromView
         // Calculate for the end month
         $endMonth = $end_date->format('F Y');
         $endDays = $end_date->diffInDays($end_date->copy()->startOfMonth()) + 1;
+        $endMonthStartDay = $end_date->copy()->startOfMonth()->day;
 
         $months[] = [
             'month_name' => $endMonth,
             'days_in_month' => $endDays,
+            'starting_day' => $endMonthStartDay,
+
         ];
 
         return view('exports.timekeeping', [

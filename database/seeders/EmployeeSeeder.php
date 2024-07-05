@@ -32,6 +32,7 @@ class EmployeeSeeder extends Seeder
             'last_name' => 'Mariano',
             'department' => 'SL SEARCH',
             'nickname' => 'Sonny',
+            'current_position' => 'President',
             'role_id' => 10 // Specific role ID for this employee
         ],
         [
@@ -40,6 +41,8 @@ class EmployeeSeeder extends Seeder
             'last_name' => 'Castro',
             'nickname' => 'Tin',
             'department' => 'PEI',
+            'current_position' => 'HR Head',
+
             'role_id' => 9 // Specific role ID for this employee
         ],
         [
@@ -47,6 +50,7 @@ class EmployeeSeeder extends Seeder
             'middle_name' => 'Chan',
             'last_name' => 'Baniqued',
             'nickname' => 'Chan',
+            'current_position' => 'ICT Specialist',
             'department' => 'PEI',
             'role_id' => 0 // Specific role ID for this employee
         ],
@@ -55,6 +59,7 @@ class EmployeeSeeder extends Seeder
             'middle_name' => 'Castillo',
             'last_name' => 'Dipasupil',
             'nickname' => 'Ria',
+            'current_position' => 'IT Specialist',
             'department' => 'PEI',
             'role_id' => 11 // Specific role ID for this employee
         ],
@@ -68,6 +73,8 @@ class EmployeeSeeder extends Seeder
                 'middle_name' => $specificEmployee['middle_name'],
                 'last_name' => $specificEmployee['last_name'],
                 'nickname' => $specificEmployee['nickname'],
+                'current_position' => $specificEmployee['current_position'],
+
                 'department' => $specificEmployee['department']
             ]);
 

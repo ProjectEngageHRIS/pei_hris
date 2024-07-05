@@ -204,7 +204,8 @@
                                         @php
                                             $employee_name = $this->getEmployeeName($my_task->employee_id);
                                         @endphp
-                                        {{$employee_name}}
+                                        <span class="text-customRed">Name:</span> {{$employee_name}} <br>
+                                        <span class="text-customRed">ID: </span>{{$my_task->employee_id}}
                                     </td>
                                     @if($my_task->status == "Pending")
                                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">

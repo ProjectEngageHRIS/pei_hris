@@ -25,10 +25,13 @@
         <th width="80px">Middle Name</th>
         <th width="80px">Date Hired</th>
         @foreach($months as $month)
-            @for ($i = $month['days_in_month']; $i <= $month['days_in_month']; $i++)
-            <th colspan="2" style="text-align: center;">
-                {{$i}}
-            </th>
+            @php
+                $ctr = $month['starting_day'] - 1;
+            @endphp
+            @for ($i = 0; $i < $month['days_in_month']; $i++)
+                <th colspan="2" style="text-align: center;">
+                    {{$ctr += 1}}
+                </th>
             @endfor
         @endforeach
     </tr>
