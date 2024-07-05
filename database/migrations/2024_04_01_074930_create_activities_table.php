@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('type');
             $table->string('subject');
             $table->longText('description');
-            $table->string('poster');
+            $table->string('poster')->nullable();
             $table->date('date');
             $table->time('start');
             $table->time('end');

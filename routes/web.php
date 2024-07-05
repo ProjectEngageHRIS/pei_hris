@@ -50,6 +50,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\StudyPermitController;
 use App\Http\Controllers\TeachPermitController;
 use App\Livewire\Leaverequest\LeaveRequestForm;
+use App\Livewire\Leaverequest\LeaveRequestView;
 use App\Livewire\Passwordchange\PasswordChange;
 use App\Livewire\Studypermit\StudyPermitUpdate;
 use App\Livewire\Teachpermit\TeachPermitUpdate;
@@ -70,8 +71,8 @@ use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
-use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 
+use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
@@ -80,16 +81,16 @@ use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollTable;
-use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsForm;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsForm;
 use App\Livewire\Creditsmonetization\CreditsMonetizationForm;
 use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsTable;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsTable;
-use App\Livewire\Creditsmonetization\CreditsMonetizationTable;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\Creditsmonetization\CreditsMonetizationTable;
 use App\Livewire\Creditsmonetization\CreditsMonetizationUpdate;
 use App\Livewire\MyApprovals\Leaverequests\ApproveLeaverequestForm;
 use App\Livewire\Approverequests\Studypermit\ApproveStudyPermitForm;
@@ -241,6 +242,9 @@ Route::middleware('auth')->group(function () {
     Route::get("/leaverequest/form/{type?}", LeaveRequestForm::class)->name('LeaveRequestForm');
 
     Route::get("/leaverequest/edit/{index}", LeaveRequestUpdate::class)->name('LeaveRequestEdit');
+
+    Route::get("/leaverequest/view/{index}", LeaveRequestView::class)->name('LeaveRequestView');
+
 
     // Route::get("/leaverequest/pdf/{index}", [LeaveRequestController::class, 'turnToPdf'])->name('LeaveRequestPdf');
 

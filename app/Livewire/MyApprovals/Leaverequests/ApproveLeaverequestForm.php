@@ -13,11 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveLeaverequestForm extends Component
 {
-    use WithFileUploads;
-    
-    // public Leaverequest $leaverequest;
 
-    // public $employeeRecord;
     public $date;
     public $first_name;
     public $middle_name;

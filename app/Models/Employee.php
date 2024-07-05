@@ -14,6 +14,12 @@ class Employee extends Model
 
     // protected $primaryKey = 'employee_id';
 
+    protected $primaryKey = 'employee_id'; // Specify your custom primary key
+
+    // If the primary key is not an incrementing integer, you also need to specify the key type
+    public $incrementing = false;
+    protected $keyType = 'string';
+
     protected $casts = [
         'college_id' => 'array',
         'department_id' => 'array',
