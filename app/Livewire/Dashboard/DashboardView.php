@@ -444,8 +444,10 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
+        // $activities = Activities::whereJsonContains('visible_to_list', $this->department)->paginate();
+        $activities = Activities::all();
+        // dd($activities);
 
-        $activities = Activities::whereJsonContains('visible_to_list', $this->department)->paginate();
 
         
 

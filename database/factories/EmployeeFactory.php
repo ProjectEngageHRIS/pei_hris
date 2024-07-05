@@ -12,7 +12,7 @@ class EmployeeFactory extends Factory
 {
     protected $model = Employee::class;
 
-    protected static $employeeCounter = 0;
+    protected static $employeeCounter = 1;
 
     /**
      * Define the model's default state.

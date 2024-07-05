@@ -259,14 +259,13 @@
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$leaverequest->mode_of_application}}
                                     </td>
-                                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                                    <td class="px-6 py-4 text-center whitespace-nowrap ">
                                         @if ($leaverequest->mode_of_application == "Credit Leave")
                                             <span class="text-gray-900 font-bold">Date Earned:</span> {{$leaverequest->inclusive_start_date}}
                                         @elseif ($leaverequest->mode_of_application == "Advise Slip")
                                             <span class="text-gray-900 font-bold">Date Requested:</span> {{$leaverequest->inclusive_start_date}} <br>
                                             <span class="text-gray-900 font-bold">Actual Schedule:</span> {{$leaverequest->inclusive_end_date}} <br>
                                             <span class="text-gray-900 font-bold">Purpose Type:</span> {{$leaverequest->purpose_type}} <br>
-                                            <span class="text-gray-900 font-bold">Reason: <br></span> {{$leaverequest->reason}} <br>
                                         @else
                                             
                                             <span class="text-gray-900 font-bold">Start Date:</span> {{$leaverequest->inclusive_start_date}} <br>
@@ -292,9 +291,7 @@
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('LeaveRequestEdit', ['index' => $leaverequest->form_id]) }}'"  class="block px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-
-                                                                {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->form_id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
+                                                                <a id="" onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                             </li>
                                                     </ul>
                                                     <div class="py-2">
@@ -305,11 +302,11 @@
                                                 </div>
                                             @else
                                                 <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                    <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    Nothing to show.
+                                                        <li>
+                                                            <a id="" onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->form_id]) }}'"  class="block px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                        </li>
                                                     </ul>
-                                                
                                                 </div>
                                             @endif
                                         
