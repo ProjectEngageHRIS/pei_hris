@@ -60,8 +60,7 @@
                                     <label for="start_date"
                                         class="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white ">Start Date<span class="text-red-600">*</span></label>
                                     <input type="date" name="start_date" id="start_date" wire:model="start_date" 
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        required="" >
+                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     @error('start_date')
                                         <div class="transition transform alert alert-danger text-sm"
                                         x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
@@ -74,7 +73,7 @@
                                         class="block  mb-2 text-sm font-semibold text-gray-900 dark:text-white ">End Date<span class="text-red-600">*</span></label>
                                     <input type="date" name="end_date" id="end_date" wire:model="end_date" 
                                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                        required="">
+                                        >
                                     @error('end_date')
                                         <div class="transition transform alert alert-danger text-sm"
                                         x-data x-init="document.getElementById('end_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
@@ -379,6 +378,10 @@
                                     @elseif ($data->type == "Half-Day")
                                         <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                             {{$data->type}}
+                                        </span>
+                                    @else
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-gray-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                            No Time Out
                                         </span>
                                     @endif
                                 </td>

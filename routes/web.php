@@ -9,6 +9,7 @@ use App\Livewire\Ipcr\IpcrTable;
 use App\Livewire\Opcr\OpcrTable;
 use App\Livewire\Ipcr\IpcrUpdate;
 use App\Livewire\Opcr\OpcrUpdate;
+use App\Livewire\AccountingDashboard;
 use App\Livewire\Employeeinformation;
 use App\Livewire\Mytasks\MyTasksForm;
 use App\Livewire\Mytasks\MyTasksView;
@@ -66,12 +67,13 @@ use App\Livewire\Dailytimerecord\AttendanceTable;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
+use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
 use App\Livewire\Changeschedule\ChangeScheduleTable;
 use App\Livewire\Payroll\Accounting\AddPayrollTable;
+
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
-
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
@@ -80,16 +82,16 @@ use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
-use App\Http\Controllers\Auth\EmailVerificationController;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollTable;
-use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsForm;
 use App\Livewire\MyApprovals\ItTickets\ApproveItTicketsForm;
 use App\Livewire\Creditsmonetization\CreditsMonetizationForm;
 use App\Livewire\MyApprovals\HrTickets\ApproveHrTicketsTable;
@@ -167,7 +169,7 @@ Route::middleware('auth')->group(function (){
     Route::get("/dashboard", LoginDashboard::class)->name('LoginDashboard');
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
-    Route::get("/accounting", DashboardView::class)->name('AccountingDashboard');
+    Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
 
 
 
@@ -454,6 +456,7 @@ Route::middleware('auth')->group(function (){
     Route::get("/dailytimerecord/pdf/{dates}", [AttendancePdfController::class, 'turnToPdf'])->name('AttendancePdf');
 
 });
+
 
 Route::middleware('auth')->group(function (){
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
