@@ -179,6 +179,7 @@ class DailyTimeRecordExport implements FromView, WithStyles
     {
         $start_date = Carbon::parse($this->start_date);
         $end_date = Carbon::parse($this->end_date);
+        $diff_in_days = $start_date->diffInDays($end_date) + 1;
         // $start_date = Carbon::parse('March 22, 2024');
         // $end_date = Carbon::parse('September 17, 2024');
         
@@ -307,6 +308,7 @@ class DailyTimeRecordExport implements FromView, WithStyles
             'dtrs' => $results,
             'employees' => $employees,
             'months' => $months,
+            'days' => $diff_in_days
         ]);
     }
 }
