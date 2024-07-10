@@ -192,7 +192,17 @@ class EmployeeFactory extends Factory
 
 
             // 'job_id' => $this->faker->numberBetween(1, 100),
-            'employee_type' => $this->faker->word,
+            'inside_department' => $this->faker->randomElement([
+                                                "HR and Admin", 
+                                                "Recruitment", 
+                                                "CXS", 
+                                                "Overseas Recruitment", 
+                                                "PEI/SL Temps DO-174", 
+                                                "Corporate Accounting and Finance", 
+                                                "Accounting Operations"
+                                            ]),
+
+            'employee_type' => $this->faker->randomElement(['INTERNALS', 'OJT', 'PEI-CSS', 'RAPID', 'RAPID MOBILITY', 'UPSKILLS']),
             // 'school_email' => $this->faker->unique()->safeEmail,
             
            
