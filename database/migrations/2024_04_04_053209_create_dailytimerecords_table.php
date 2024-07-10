@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('overtime', 8, 2)->nullable();
             $table->decimal('undertime', 8, 2)->nullable();
             $table->boolean('status')->nullable();
+            // $table->smallInteger('is_legal_special')
 
 
             

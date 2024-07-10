@@ -9,16 +9,19 @@ use App\Models\Dailytimerecord;
 use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
+use Maatwebsite\Excel\Events\AfterSheet;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class DailyTimeRecordExport implements FromView, WithStyles
+class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, WithEvents
 {
     protected $start_date;
     protected $end_date;
@@ -32,6 +35,20 @@ class DailyTimeRecordExport implements FromView, WithStyles
     public function failed(Throwable $exception): void
     {
         // handle failed export
+    }
+
+    public function chunkSize(): int
+    {
+        return 1000; // Adjust the chunk size based on your needs
+    }
+
+    public function registerEvents(): array
+    {
+        return array(
+            AfterSheet::class => function(AfterSheet $event) {
+                $event->sheet->getDelegate()->setAutoFilter('A2:' . $event->sheet->getDelegate()->getHighestColumn() . $event->sheet->getDelegate()->getHighestRow());
+            }
+        );
     }
 
 
@@ -67,6 +84,26 @@ class DailyTimeRecordExport implements FromView, WithStyles
                             'color' => ['argb' => '000000'],
                         ],
                     ],
+                    'font' => [
+                        'name' => 'Aptos Narrow',
+                        'bold' => true,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
+                $sheet->getStyle($currentColumn . '2')->applyFromArray([
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => Border::BORDER_THICK,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                    'font' => [
+                        'name' => 'Aptos Narrow',
+                        'bold' => true,
+                    ],
                     'alignment' => [
                         'horizontal' => Alignment::HORIZONTAL_CENTER,
                         'vertical' => Alignment::VERTICAL_CENTER,
@@ -81,10 +118,18 @@ class DailyTimeRecordExport implements FromView, WithStyles
                         ],
                     ],
                 ]);
+                $sheet->getStyle($currentColumn . '2')->applyFromArray([
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => Border::BORDER_THIN,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                ]);
             }
     
             // Apply styles to each cell in the column
-            for ($row = 1; $row <= $highestRow; $row++) {
+            for ($row = 3; $row <= $highestRow; $row++) { // Start from the 3rd row
                 $cell = $currentColumn . $row;
                 if (!in_array($currentColumnIndex, $skipColumns)) {
                     $sheet->getStyle($cell)->applyFromArray([
@@ -93,6 +138,9 @@ class DailyTimeRecordExport implements FromView, WithStyles
                                 'borderStyle' => Border::BORDER_THICK,
                                 'color' => ['argb' => '000000'],
                             ],
+                        ],
+                        'font' => [
+                            'name' => 'Aptos Narrow',
                         ],
                         'alignment' => [
                             'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -129,6 +177,26 @@ class DailyTimeRecordExport implements FromView, WithStyles
                         'color' => ['argb' => '000000'],
                     ],
                 ],
+                'font' => [
+                    'name' => 'Aptos Narrow',
+                    'bold' => true,
+                ],
+                'alignment' => [
+                    'horizontal' => Alignment::HORIZONTAL_CENTER,
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                ],
+            ]);
+            $sheet->getStyle($highestColumn . '2')->applyFromArray([
+                'borders' => [
+                    'outline' => [
+                        'borderStyle' => Border::BORDER_THICK,
+                        'color' => ['argb' => '000000'],
+                    ],
+                ],
+                'font' => [
+                    'name' => 'Aptos Narrow',
+                    'bold' => true,
+                ],
                 'alignment' => [
                     'horizontal' => Alignment::HORIZONTAL_CENTER,
                     'vertical' => Alignment::VERTICAL_CENTER,
@@ -143,10 +211,18 @@ class DailyTimeRecordExport implements FromView, WithStyles
                     ],
                 ],
             ]);
+            $sheet->getStyle($highestColumn . '2')->applyFromArray([
+                'borders' => [
+                    'outline' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                        'color' => ['argb' => '000000'],
+                    ],
+                ],
+            ]);
         }
     
         // Apply styles to each cell in the last column
-        for ($row = 1; $row <= $highestRow; $row++) {
+        for ($row = 3; $row <= $highestRow; $row++) { // Start from the 3rd row
             $cell = $highestColumn . $row;
             if (!in_array(Coordinate::columnIndexFromString($highestColumn), $skipColumns)) {
                 $sheet->getStyle($cell)->applyFromArray([
@@ -155,6 +231,9 @@ class DailyTimeRecordExport implements FromView, WithStyles
                             'borderStyle' => Border::BORDER_THICK,
                             'color' => ['argb' => '000000'],
                         ],
+                    ],
+                    'font' => [
+                        'name' => 'Aptos Narrow',
                     ],
                     'alignment' => [
                         'horizontal' => Alignment::HORIZONTAL_CENTER,
@@ -173,6 +252,10 @@ class DailyTimeRecordExport implements FromView, WithStyles
             }
         }
     }
+
+
+
+   
     
 
     public function view(): View
@@ -216,15 +299,18 @@ class DailyTimeRecordExport implements FromView, WithStyles
                         $timeIn = Carbon::parse($dtr->time_in)->format('M d, Y h:i A');
                         $timeOut = Carbon::parse($dtr->time_out)->format('M d, Y h:i A');
                     }
+                    $overtime = $dtr->overtime;
                 } else {
                     $timeIn = null;
                     $timeOut = null;
-                }
+                    $overtime = null;
 
+                }
                 // Add the formatted time to the array, or null if DTR doesn't exist
                 $employeeDtrs[$currentDate->toDateString()] = [
                     'time_in' => $timeIn,
                     'time_out' => $timeOut,
+                    'overtime' => $overtime,
                 ];
                 
                 // Move to the next date
@@ -237,10 +323,11 @@ class DailyTimeRecordExport implements FromView, WithStyles
                 'dtrs' => $employeeDtrs,
             ];
         }
+
         
         // Output the results (for debugging purposes)
         // dd($results);   
-        // dd($results[1]['dtrs']['2024-03-22']->time_in);
+        // dd($results[1]['dtrs']);
           // dd($results[1]['dtrs']['2024-03-22']->time_in);
 
 

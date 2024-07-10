@@ -88,7 +88,31 @@
                     <td align="center"></td>
                 @endif
             @endforeach
+            @php
+                $regularOt = 0;
+                foreach ($employeeData['dtrs'] as $day) {
+                    if ($day && isset($day['overtime'])) {
+                        $regularOt += $day['overtime'];
+                    }
+                }
+            @endphp
+            <td ></td>
             <td></td>
+            <td ></td>
+            <td></td>
+            @if($regularOt > 0)
+                <td style="background-color: #9BBB59">{{$regularOt}}</td>
+            @else
+                <td></td>
+
+            @endif
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td ></td>
+            <td></td>
+            <td ></td>
+
     
         </tr>
     @endforeach
