@@ -6,8 +6,8 @@ use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
-use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Storage;
+use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
 class HrDashboardView extends Component
 {

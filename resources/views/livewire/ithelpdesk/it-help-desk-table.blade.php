@@ -233,55 +233,38 @@
                                             {{-- <a href="{{route('ipcredit', $it_ticket)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
                                             {{-- <a wire:click="removeIpcr({{$it_ticket->id}})" class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a> --}}
 
-                                            <td class="items-center text-center py-4">
-                                                <button data-dropdown-toggle="dropdown{{$loop->index}}" class="dropdown-toggle inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                        <td class="items-center text-center py-4">
+                                                <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                                                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
                                                         <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                                     </svg>
                                                 </button>
-                                                <div class="dropdown-menu hidden top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                    <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                        <li>
-                                                            <a id="view_button_{{ $it_ticket->form_id }}" href="{{ route('ItHelpDeskView', ['index' => $it_ticket->form_id]) }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
-                                                        </li>
-                                                        @if ($it_ticket->status != "Cancelled")
+                                                @if ($it_ticket->status != "Cancelled")
+                                                    <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                                        <!-- Dropdown content -->
+                                                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                                <li>
+                                                                    <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                                </li>
+                                                        </ul>
+                                                        <div class="py-2">
+
+                                                            <a id="cancel_button_{{ $it_ticket->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
+
+                                                            {{-- <a id="cancel_button_{{ $it_ticket->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
+                                                        </div>
+                                                    </div>
+                                                @else
+                                                    <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                                        <!-- Dropdown content -->
+                                                        <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a id="cancel_button_{{ $it_ticket->form_id }}" href="#" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
+                                                                <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                             </li>
-                                                        @endif
-                                                    </ul>
-                                                </div>
-                                            </td>
-                                            
-                                            <script>
-                                                document.addEventListener("DOMContentLoaded", function() {
-                                                    const dropdownToggleButtons = document.querySelectorAll("[data-dropdown-toggle]");
-                                            
-                                                    dropdownToggleButtons.forEach(button => {
-                                                        // Read from localStorage to get initial state
-                                                        const dropdownId = button.getAttribute("data-dropdown-toggle");
-                                                        const dropdownMenu = document.getElementById(dropdownId).querySelector(".dropdown-menu");
-                                                        const isDropdownOpen = JSON.parse(localStorage.getItem(dropdownId)) || false;
-                                            
-                                                        if (isDropdownOpen) {
-                                                            dropdownMenu.classList.remove("hidden");
-                                                        } else {
-                                                            dropdownMenu.classList.add("hidden");
-                                                        }
-                                            
-                                                        // Toggle dropdown visibility on button click
-                                                        button.addEventListener("click", function() {
-                                                            const isOpen = !JSON.parse(localStorage.getItem(dropdownId));
-                                                            localStorage.setItem(dropdownId, isOpen);
-                                                            const dropdownMenu = document.getElementById(dropdownId).querySelector(".dropdown-menu");
-                                                            dropdownMenu.classList.toggle("hidden", !isOpen);
-                                                        });
-                                                    });
-                                                });
-                                            </script>
-                                            
-                                            
+                                                        </ul>
+                                                    </div>
+                                                @endif
+                                        </td>
 
                                         <div id="popup-modal_{{ $it_ticket->form_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
                                             <div class="relative p-4 w-full max-w-md max-h-full">
