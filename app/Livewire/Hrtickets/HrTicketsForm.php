@@ -9,6 +9,8 @@ use App\Models\Hrticket;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use App\Mail\HRTicketsConfirmation;
+use Illuminate\Support\Facades\Mail;
 
 class HrTicketsForm extends Component
 {
@@ -438,7 +440,12 @@ class HrTicketsForm extends Component
         $hrticketdata->save();
 
         // $announcement = $this->type_of_ticket . 'HR Ticket submitted!';
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
+        ->where('employee_id', $loggedInUser->employee_id)
+        ->first();
+
         $this->js("alert('HR Ticket submitted!')"); 
+        Mail::to($employeeRecord->employee_email)->send(new HRTicketsConfirmation($employeeRecord, $hrticketdata));
 
         return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
 
