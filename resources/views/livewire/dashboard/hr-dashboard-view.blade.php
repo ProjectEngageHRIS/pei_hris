@@ -188,15 +188,15 @@
                                             <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.Rapid" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RapidMobility" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.Upskills" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
                                         </div>
                                     {{-- @endforeach --}}
@@ -401,13 +401,11 @@
                                                             <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                         </li> --}}
                                                         <li>
-                                                            <p id="view_button_{{ $employee->form_id }}" class="font-medium text-yellow-400 hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">View</p>
+                                                            <p id="view_button_{{ $employee->employee_id }}" class="font-medium text-customRed cursor-pointer hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">View</p>
                                                         </li>
                                                 </ul>
                                                 <div class="py-2">
-
-                                                    <a id="cancel_button_{{ $employee->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
-
+                                                    <a id="cancel_button_{{ $employee->employee_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Deactivate</a>
                                                     {{-- <a id="cancel_button_{{ $employee->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
                                                 </div>
                                             </div>
@@ -423,7 +421,7 @@
                                         @endif
                                 </td>
 
-                                <div id="popup-modal_{{ $employee->form_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
+                                <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
                                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                             <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
@@ -452,7 +450,7 @@
                                 </div>
 
                                 
-                                <div id="view-modal_{{ $employee->form_id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50">
+                                <div id="view-modal_{{ $employee->employee_id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50">
                                     <div class="relative w-full max-w-2xl max-h-full p-4">
                                         <!-- Modal content -->
                                         <div class="relative bg-white rounded-lg shadow ">
@@ -472,6 +470,9 @@
                                             <div class="flex p-4 ml-2 md:p-5">
                                                 <!-- Right Picture Area -->
                                                 <div class="flex items-start justify-center mr-5 w-44">
+                                                    {{-- @php
+                                                        $employee_image = $this->getImage($employee->emp_image ?? null);
+                                                    @endphp --}}
                                                     @if($employee_image)
                                                         <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="Profile Picture">
                                                     @else
@@ -482,39 +483,39 @@
                                                 <div class="w-3/4 space-y-4">
                                                     <p class="flex items-center text-sm leading-relaxed text-customRed">
                                                         <span class="font-semibold">Employee Number:</span>
-                                                        <span class="ml-2">SLE0002</span>
+                                                        <span class="ml-2">{{$employee->employee_id}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                         <span class="font-semibold">Name:</span>
-                                                        <span class="ml-2">Neil Sims</span>
+                                                        <span class="ml-2">{{$employee->first_name}} {{$employee->middle_name}} {{$employee->last_name}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                         <span class="font-semibold">Department:</span>
-                                                        <span class="ml-2">HR and Admin</span>
+                                                        <span class="ml-2">{{$employee->inside_department}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                         <span class="font-semibold">Company:</span>
-                                                        <span class="ml-2">SL Temps</span>
+                                                        <span class="ml-2">{{$employee->department}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                         <span class="font-semibold">Position:</span>
-                                                        <span class="ml-2">HR Assistant</span>
+                                                        <span class="ml-2">{{$employee->current_position}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                         <span class="font-semibold">Type:</span>
-                                                        <span class="ml-2">Internals</span>
+                                                        <span class="ml-2">{{$employee->employee_type}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                         <span class="font-semibold">Joined Date:</span>
-                                                        <span class="ml-2">July 1, 2024</span>
+                                                        <span class="ml-2">{{$employee->start_of_employment}}</span>
                                                     </p>
                                                 </div>
                                             </div>
                                             <!-- Modal footer -->
                                             <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                                <button data-modal-hide="view-modal" type="button" class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Download</button>
+                                                <button data-modal-hide="view-modal" type="button" class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</button>
                                                 <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Deactivate</button>
-                                                <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Delete</button>
+                                                {{-- <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Delete</button> --}}
                                             </div>
                                         </div>
                                     </div>

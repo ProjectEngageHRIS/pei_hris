@@ -6,17 +6,14 @@ use Throwable;
 use Carbon\Carbon;
 use App\Models\Employee;
 use App\Models\Dailytimerecord;
-use Illuminate\Support\Collection;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Events\AfterSheet;
-use PhpOffice\PhpSpreadsheet\Style\Fill;
 use Maatwebsite\Excel\Concerns\WithEvents;
 use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
-use Maatwebsite\Excel\Concerns\FromCollection;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
@@ -42,14 +39,73 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
         return 1000; // Adjust the chunk size based on your needs
     }
 
+    // public function registerEvents(): array
+    // {
+    //     return [
+    //         AfterSheet::class => function(AfterSheet $event) {
+    //             $sheet = $event->sheet->getDelegate();
+                
+    //             // Determine the highest column and row in the worksheet
+    //             $highestColumn = $sheet->getHighestColumn();
+    //             $highestRow = $sheet->getHighestRow();
+                
+    //             // Assuming the start date and end date are provided
+    //             $startDate = $this->start_date; // Replace with your actual start date
+    //             $endDate = $this->end_date; // Replace with your actual end date
+    
+    //             // Calculate the start and end columns based on the dates
+    //             $startColumnIndex = Coordinate::columnIndexFromString('G'); // Column where your date columns start
+    //             $endColumnIndex = $startColumnIndex + (new \DateTime($endDate))->diff(new \DateTime($startDate))->days * 2 + 1; // Each day spans 2 columns
+                
+    //             $skipColumns = range($startColumnIndex, $endColumnIndex);
+    
+    //             // Build the auto filter range by excluding the date columns
+    //             $filterColumns = [];
+    //             $currentColumnIndex = 1;
+    
+    //             // Loop through each column until we reach the highest column
+    //             while ($currentColumnIndex <= Coordinate::columnIndexFromString($highestColumn)) {
+    //                 $currentColumn = Coordinate::stringFromColumnIndex($currentColumnIndex);
+    
+    //                 // Check if the column index is not in the skip list
+    //                 if (!in_array($currentColumnIndex, $skipColumns)) {
+    //                     $filterColumns[] = $currentColumn; // Only add column letter without row number
+    //                 }
+    //                 $currentColumnIndex++;
+    //             }
+    
+    //             // Determine the last column in the filter range
+    //             $endFilterColumn = end($filterColumns);
+    
+    //             // Construct the auto filter range
+    //             $startFilterColumn = 'A'; // Assuming the start of your data is from column A
+    //             $autoFilterRange = $startFilterColumn . '2:' . $endFilterColumn . '2'; // Assuming the header is in row 2
+                
+    //             // Apply auto filter
+    //             $sheet->setAutoFilter($autoFilterRange);
+    //         }
+    //     ];
+    // }
+
     public function registerEvents(): array
     {
-        return array(
+        return [
             AfterSheet::class => function(AfterSheet $event) {
-                $event->sheet->getDelegate()->setAutoFilter('A2:' . $event->sheet->getDelegate()->getHighestColumn() . $event->sheet->getDelegate()->getHighestRow());
-            }
-        );
+                $sheet = $event->sheet->getDelegate();
+    
+                // Set auto-filter from A3 to the highest column in row 3
+                $sheet->setAutoFilter('A3:' . $sheet->getHighestColumn() . '3');
+    
+                // Freeze columns A to F
+                $sheet->freezePane('G4'); // Assuming you want row 3 to be frozen and columns A to F to be sticky
+                // $sheet->setAutoSize(array(
+                //     'A', 'C'
+                // ));
+            },
+        ];
     }
+    
+    
 
 
     public function styles(Worksheet $sheet)
@@ -67,6 +123,7 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
         $endColumnIndex = $startColumnIndex + (new \DateTime($endDate))->diff(new \DateTime($startDate))->days * 2 + 1; // Each day spans 2 columns
     
         $skipColumns = range($startColumnIndex, $endColumnIndex);
+
     
         // Initialize the current column to "A"
         $currentColumnIndex = 1;
@@ -109,6 +166,22 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
                         'vertical' => Alignment::VERTICAL_CENTER,
                     ],
                 ]);
+                $sheet->getStyle($currentColumn . '3')->applyFromArray([
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => Border::BORDER_THICK,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                    'font' => [
+                        'name' => 'Aptos Narrow',
+                        'bold' => true,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
             } else {
                 $sheet->getStyle($currentColumn . '1')->applyFromArray([
                     'borders' => [
@@ -126,10 +199,26 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
                         ],
                     ],
                 ]);
+                $sheet->getStyle($currentColumn . '3')->applyFromArray([
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => Border::BORDER_THICK,
+                            'color' => ['argb' => '000000'],
+                        ],
+                    ],
+                    'font' => [
+                        'name' => 'Aptos Narrow',
+                        'bold' => true,
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
             }
     
             // Apply styles to each cell in the column
-            for ($row = 3; $row <= $highestRow; $row++) { // Start from the 3rd row
+            for ($row = 4; $row <= $highestRow; $row++) { // Start from the 3rd row
                 $cell = $currentColumn . $row;
                 if (!in_array($currentColumnIndex, $skipColumns)) {
                     $sheet->getStyle($cell)->applyFromArray([

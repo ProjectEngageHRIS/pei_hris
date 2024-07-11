@@ -10,29 +10,22 @@
     
         <thead >
         <tr>
-            <th colspan="6">
-            </th>
+            <th rowspan="2" colspan="6" style="text-align: center">Employee Information</th>
             @foreach ($months as $month)
             <th colspan="{{$month['days_in_month'] * 2}}"  style="text-align: center; border: 50px solid black" bgcolor="#ffffb3">
                 {{$month['month_name']}}
             </th>
-            <th rowspan="2" bgcolor="#ff9900" width="80px"> REMARKS</th>
-            <th width="80px"></th>
-            <th colspan="2">HOLIDAY</th>
-            <th colspan="3">OVERTIME</th>
-            <th colspan="2">RD OT</th>
-            <th width="80px"></th>
-            <th width="80px"></th>
             @endforeach
+            <th rowspan="2"  width="80px"></th>
+            <th rowspan="2" width="80px"></th>
+            <th rowspan="2" colspan="2" align="center">HOLIDAY</th>
+            <th rowspan="2" colspan="3" align="center">OVERTIME</th>
+            <th rowspan="2" colspan="2" align="center">RD OT</th>
+            <th rowspan="2" width="80px"></th>
+            <th rowspan="2" width="80px"></th>
     
         </tr>
         <tr>
-            <th width="100px">Employee No.</th>
-            <th width="90px">Company</th>
-            <th width="90px">Last Name</th>
-            <th width="90px">First Name</th>
-            <th width="90px">Middle Name</th>
-            <th width="90px">Date Hired</th>
             @foreach($months as $month)
                 @php
                     $ctr = $month['starting_day'] - 1;
@@ -44,30 +37,33 @@
                     </th>
                 @endfor
             @endforeach
-            {{-- <th width="90px">REMARKS</th> --}}
-            <th width="90px">TARDINESS</th>
-            <th width="120px">LEGAL HOLIDAY</th>
-            <th width="110px">SPECIAL HOLIDAY</th>
-            <th width="90px">REGULAR OT</th>
-            <th width="125px">LEGAL HOLIDAY OT</th>
-            <th width="130px">SPECIAL HOLIDAY OT</th>
-            <th width="90px">RD OT</th>
-            <th width="120px">RD HOLIDAY OT</th>
-            <th width="130px">NIGHT DIFFERENTIAL</th>
-            <th width="80px">BIRTHDAY</th>
         </tr>
-        
         <tr>
-            <th colspan="6">
-            </th>
+            <th width="120px">Employee No.</th>
+            <th width="105px">Company</th>
+            <th width="105px">Last Name</th>
+            <th width="105px">First Name</th>
+            <th width="120px">Middle Name</th>
+            <th width="105px">Date Hired</th>
             @for ($i = 1; $i <= $days; $i++)
-            <th  align="center">
-                Time-In
-            </th>
-            <th  align="center">
-                Time-Out
-            </th>
+                <th width="95px">
+                    Time-In
+                </th>
+                <th width="95px">
+                    Time-Out
+                </th>
             @endfor
+            <th bgcolor="#ff9900" width="100px"> REMARKS</th>
+            <th width="110px">TARDINESS</th>
+            <th width="135px">LEGAL HOLIDAY</th>
+            <th width="145px">SPECIAL HOLIDAY</th>
+            <th width="115px">REGULAR OT</th>
+            <th width="150px">LEGAL HOLIDAY OT</th>
+            <th width="160px">SPECIAL HOLIDAY OT</th>
+            <th width="90px">RD OT</th>
+            <th width="140px">RD HOLIDAY OT</th>
+            <th width="165px">NIGHT DIFFERENTIAL</th>
+            <th width="105px" >BIRTHDAY</th>
         </tr>
         </thead>
         <tbody>

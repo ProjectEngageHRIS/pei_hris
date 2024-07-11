@@ -15,12 +15,12 @@ class HrDashboardView extends Component
     public $gender = [];
 
     public $employeeTypesFilter = [
-        'Internals' => false,
+        'INTERNALS' => false,
         'OJT' => false,
         'PEI-CCS' => false,
-        'Rapid' => false,
-        'RapidMobility' => false,
-        'Upskills' => false,
+        'RAPID' => false,
+        'RAPIDMOBILITY' => false,
+        'UPSKILLS' => false,
     ];
 
     public $employeeTypeFilter;
@@ -102,10 +102,16 @@ class HrDashboardView extends Component
         // dump($this->employeeTypesFilter);
         $query = Employee::take(5);
 
-        if($this->employeeTypesFilter['Internals']){
-            $query->where('employee_type', 'Internals');
-
+        $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
+            return $this->employeeTypesFilter[$key];
+        });
+        
+        // Apply the whereIn filter if there are any types to filter
+        if (!empty($employeeTypes)) {
+            $query->whereIn('employee_type', $employeeTypes);
         }
+        
+
         // switch ($this->employeeTypeFilter) {
         //     case '1':
         //         $query->whereDate('application_date',  Carbon::today());
