@@ -261,9 +261,9 @@
                                         @endif
                                     </div>
                                 </div>
-                                {{-- @if ($sub_type_of_request != null) --}}
+                                @if ($type_of_ticket)
                                     <div class="col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                        <p class="mb-4 font-bold text-customRed ">Other Information</p>
+                                        <p class=" font-bold text-customRed ">Other Information</p>
                                         @if ($type_of_ticket == "HR Internal")
                                             @if ($type_of_request == "HR")
                                                 @if ($sub_type_of_request == "Certificate of Employment")
@@ -2051,27 +2051,27 @@
                                             @endif
                                         @endif
                                         <br>
-                                        <div class="col-span-3 mb-4 supervisor_email_container">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                                Name of Concerned Employee <span class="text-red-600">*</span>
-                                            </label>
-                                            <input
-                                                type="text"
-                                                wire:model="concerned_employee"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
-                                                placeholder="Name of Concerned Employee"
-                                                required
-                                            >
-                                            @error('concerned_employee')
-                                                <div class="text-sm transition transform alert alert-danger"
-                                                    x-data
-                                                    x-init="document.getElementById('supervisor_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supervisor_email_container').focus();">
-                                                    <span class="text-xs text-red-500">{{$message}}</span>
-                                                </div>
-                                            @enderror
-                                        </div>
+                                            <div class="col-span-3   p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                    Name of Concerned Employee <span class="text-red-600">*</span>
+                                                </label>
+                                                <input
+                                                    type="text"
+                                                    wire:model="concerned_employee"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                    placeholder="Name of Concerned Employee"
+                                                    required
+                                                >
+                                                @error('concerned_employee')
+                                                    <div class="text-sm transition transform alert alert-danger"
+                                                        x-data
+                                                        x-init="document.getElementById('supervisor_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supervisor_email_container').focus();">
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
                                     </div>
-                                {{-- @endif --}}
+                                @endif
                             </div>
                             </div>
                         </div>

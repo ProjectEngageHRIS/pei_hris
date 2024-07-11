@@ -39,7 +39,10 @@
             @if ($otpSent)
                 <form wire:submit.prevent="checkOtp">
                     <div class="mt-6">
+                    
                         <label class="block mb-2 text-xs font-medium leading-5 text-customGray1">Enter OTP that we've sent to your email</label>
+                        <label class="block mb-2 text-xs font-medium leading-5 text-customGray1">Please wait for 30 seconds before resending an OTP</label>
+
                         <label for="otp" class="block text-xs font-semibold leading-5 text-customGray1">
                             Enter OTP <span style="color:#AC0C2E">*</span>
                         </label>
@@ -48,23 +51,38 @@
                         <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     <button type="submit" style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md shadow bg-customRed">
                         Verify OTP
                     </button>
+                </form> 
+                <form wire:submit.prevent="resendOtp">
+                    <button id="resend-otp-button" type="submit" style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md shadow bg-customRed" onclick="startResendCountdown()" @if($resendDisabled) disabled @endif>
+                            Resend OTP
+                        @endif
+                    </button>
                 </form>
             @endif
-        @endif
+
 
         @if ($otpVerified)
             <form wire:submit.prevent="changePassword">
+        
                 <div class="mt-6">
+                <ul class="ml-3 list-disc" style="font-size: 0.7rem; color: #4A5568;">
+            <li>At least 8 characters long</li>
+            <li>At least one uppercase letter (A-Z)</li>
+            <li>At least one lowercase letter (a-z)</li>
+            <li>At least one number (0-9)</li>
+            <li>At least one special character (e.g., !, @, #, $)</li>
+        </ul>
                     <label for="password" class="block text-sm font-medium leading-5 text-gray-700">
                         New Password <span style="color:#AC0C2E">*</span>
                     </label>
+        
                     <input wire:model="password" type="password" id="password" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-blue transition duration-150 ease-in-out sm:text-sm sm:leading-5 custom-border @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
                     @error('password')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+                 
                     @enderror
                 </div>
 
@@ -83,18 +101,37 @@
     </div>
 </div>
 
-@push('scripts')
 <script>
     document.addEventListener('livewire:load', function () {
-        Livewire.on('otpSent', () => {
-            // Handle OTP sent event
-            console.log('OTP sent');
-        });
-
-        Livewire.on('otpVerified', () => {
-            // Handle OTP verified event
-            console.log('OTP verified');
-        });
+    Livewire.on('otpSent', () => {
+        // Handle OTP sent event
+        console.log('OTP sent');
+        startResendCountdown(); // Start the resend countdown after OTP is sent
     });
+
+    Livewire.on('otpVerified', () => {
+        // Handle OTP verified event
+        console.log('OTP verified');
+    });
+
+    // Function to handle countdown
+    function startResendCountdown() {
+        let countdown = 30;
+        const button = document.getElementById('resend-otp-button');
+        button.disabled = true; // Disable the button during countdown
+
+        const timer = setInterval(() => {
+            countdown--;
+            if (countdown >= 0) {
+                button.innerText = `Resend OTP (${countdown})`;
+            } else {
+                clearInterval(timer);
+                button.disabled = false; // Re-enable the button after countdown completes
+                button.innerText = 'Resend OTP';
+                Livewire.emit('resendOtp'); // Trigger Livewire event to start countdown
+            }
+        }, 1000);
+    }
+});
+
 </script>
-@endpush

@@ -70,10 +70,11 @@
     <div class="grid grid-cols-1 gap-4">
         @if ($activities->isEmpty())
             <div class="lg:w-full lg:max-w-xl pt-5 text-center pb-5 bg-white rounded-lg shadow-lg mb-10 lg:mt-[-45px] mt-[0px]">
-                <div class="flex flex-col items-start px-6 mb-2">
-                    <p class="mb-2 text-base font-semibold text-customGray1">Announcements</p>
+                <div class="flex flex-col items-start mb-2">
+                    {{-- <p class="mb-2 text-base font-semibold text-customGray1">Announcements</p>
                     <p class="mb-2 text-sm font-medium text-customGray">Company news and announcements</p>
-                    <p class="text-sm italic font-medium text-customGray">(No announcements have been posted yet)</p>
+                    <p class="text-sm italic font-medium text-customGray">(No announcements have been posted yet)</p> --}}
+                    <img class="border-4 border-white w-200 h-200 "src="{{ asset( 'assets/announcement.png') }}" alt="user photo">
                 </div>
 
             </div>
@@ -96,7 +97,7 @@
                     </div>
                     @if($activity->poster)
                         <div class="px-4 py-4">
-                            <img src="{{ asset( 'storage/'. $activity->poster) }}" alt="" class="mx-auto rounded-lg shadow-lg py-auto">
+                            <img src="{{ asset('storage/' . $activity->poster) }}" alt="" class="mx-auto rounded-lg shadow-lg py-auto">
                         </div>
                     @endif
                     <div class="my-4 border-t border-gray-300"></div>

@@ -1,5 +1,5 @@
 <div class="flex flex-col space-y-6">
-    <div class="flex flex-col items-stretch gap-4 md:flex-row justify-stretch md:justify-center">
+    <div wire:ignore class="flex flex-col items-stretch gap-4 md:flex-row justify-stretch md:justify-center">
           <!-- Employee Type -->
           <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
               <div class="flex items-start justify-between w-full">
@@ -56,28 +56,64 @@
       <!-- Employee Table -->
       <div class="relative shadow-md">
           <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
-              <button id="dropdownActionButton" data-dropdown-toggle="dropdownAction" class="inline-flex items-center text-gray-500 bg-white border border-gray-300  hover:bg-customRed hover:text-white focus:ring-1 font-medium rounded-lg text-sm px-3 py-1.5 focus:ring-customRed focus:border-customRed" type="button">
-                  <span class="sr-only">Action button</span>
-                  Action
-                  <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+             <!-- Add user button -->
+              <button wire:click="addEmployee" data-modal-toggle="authentication-modal" class="inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+                  Add user
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
+                      <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />
                   </svg>
               </button>
-              <!-- Dropdown menu -->
-              <div id="dropdownAction" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 ">
-                  <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownActionButton">
-                      <a href="#" class="block px-4 py-2 text-customGray1 hover:bg-customRed hover:text-white">Download Information</a>
-                      <a href="#" class="block px-4 py-2 text-customGray1 hover:bg-customRed hover:text-white">Deactivate Account</a>
-                  </ul>
-                  <div class="py-1">
-                      <a href="#" class="block px-4 py-2 text-sm text-customGray1 hover:bg-customRed hover:text-white">Delete User</a>
+              <!-- Main modal -->
+              <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                  <div class="relative w-full max-w-md max-h-full p-4">
+                      <!-- Modal content -->
+                      <div class="relative bg-white rounded-lg shadow ">
+                          <!-- Modal header -->
+                          <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 ">
+                              <h3 class="text-xl font-semibold text-gray-900 ">
+                                  Add new account
+                              </h3>
+                              <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="authentication-modal">
+                                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                  </svg>
+                                  <span class="sr-only">Close modal</span>
+                              </button>
+                          </div>
+                          <!-- Modal body -->
+                          <div class="p-4 md:p-5">
+                              <form class="space-y-4" action="#">
+                                  <div>
+                                      <label for="firstname" class="block mb-2 text-sm font-medium text-customGray1">First Name</label>
+                                      <input type="text" name="firstname" id="firstname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter First Name" required>
+                                  </div>
+                                  <div>
+                                      <label for="middlename" class="block mb-2 text-sm font-medium text-customGray1">Middle Name</label>
+                                      <input type="text" name="middlename" id="middlename" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Middle Name"/>
+                                  </div>
+                                  <div>
+                                      <label for="lastname" class="block mb-2 text-sm font-medium text-customGray1">Last Name</label>
+                                      <input type="text" name="lastname" id="lastname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Last Name" required />
+                                  </div>
+                                  <div>
+                                      <label for="email" class="block mb-2 text-sm font-medium text-customGray1">Employee ID</label>
+                                      <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Employee ID" required />
+                                  </div>
+                                  <div>
+                                      <label for="password" class="block mb-4 text-sm font-medium text-customGray1">Password</label>
+                                      <input type="password" name="password" id="password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " required />
+                                  </div>
+                                  <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Create account</button>
+                              </form>
+                          </div>
+                      </div>
                   </div>
               </div>
               <div class="flex flex-row pr-2">
                   <label for="table-search" class="sr-only">Search</label>
                   <div class="relative">
                       <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
-                          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                          <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                           </svg>
                       </div>
@@ -138,30 +174,32 @@
                                   </button>
                                   <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2 employeeTypeOpen">
                                       <hr class="my-4 border-gray-300">
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
-                                      </div>
+                                      {{-- @foreach($employeeTypesFilter as $type => $checked) --}}
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.Internals"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.PEI-CCS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
+                                        </div>
+                                    {{-- @endforeach --}}
                                   </div>
                               </div>
                               <!-- Department Dropdown Button -->
@@ -261,12 +299,9 @@
           <div class="overflow-x-auto rounded-b-lg">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100">
-                    <tr>
-                        <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed focus:ring-2">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
+                    <tr >
+                        <th scope="col" class="px-6 py-3 text-center">
+                            No.
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Name
@@ -291,257 +326,294 @@
                         </th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr class="bg-white border-b hover:bg-gray-50 ">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed focus:ring-2">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                            <div class="ps-3">
-                                <div class="text-base font-semibold">Neil Sims</div>
-                                <div class="font-normal text-gray-500">SLE0002</div>
-                            </div>
-                        </th>
-                        <td class="px-6 py-4">
-                            HR and Admin
-                        </td>
-                        <td class="px-6 py-4">
-                            SL Temps
-                        </td>
-                        <td class="px-6 py-4">
-                            HR Assistant
-                        </td>
-                        <td class="px-6 py-4">
-                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-yellow-900 bg-yellow-100 rounded-lg text-nowrap me-2">
-                                Internals
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            July 1, 2024
-                        </td>
-                        <td>
-                          <div class="flex flex-row p-2 space-x-4">
-                              <p class="font-medium text-yellow-400 hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">View</p>
-                              <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
-                          </div>
-  
-                          <!-- Main modal -->
-                          <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                              <div class="relative w-full max-w-2xl max-h-full p-4">
-                              <!-- Modal content -->
-                              <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                  <!-- Modal header -->
-                                  <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 dark:border-gray-600">
-                                      <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                        Employee Information
-                                      </h3>
-                                  <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
-                                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                      </svg>
-                                      <span class="sr-only">Close modal</span>
-                                  </button>
-                                  </div>
-                                  <!-- Modal body -->
-                                  <div class="p-4 space-y-4 md:p-5">
-                                  <p class="text-base leading-relaxed text-customGray1 ">
-                                      Name: Neil Sims <br>
-                                      Employee Number: SLE0002  <br>
-                                      Department: HR and Admin  <br>
-                                      Company: SL Temps  <br>
-                                      Position: HR Assistant  <br>
-                                      Type: Internals  <br>
-                                      Joined Date: July 1, 2024  <br>
-                                      Gender: Male <br>
-                                      Contact Number: +1-231-682-0608 <br>
-                                      Birth Date: 1979-08-26 <br>
-                                      Email: fletcher19@yahoo.com  <br>
-                                      Address: 57363 Vita Oval Suite 043 East Keaton, VT 85356  <br>
-  
-                                  </p>
-  
-                                  </div>
-                                  <!-- Modal footer -->
-                                  <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5 dark:border-gray-600">
-                                  <button data-modal-hide="default-modal" type="button" class="text-white bg-customRed hover:bg-red-900 focus:ring-4 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Download</button>
-                                  <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 ">Deactivate</button>
-                                  <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 ">Delete</button>
-                                  </div>
-                              </div>
-                              </div>
-                          </div>
-  
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed focus:ring-2">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                            <div class="ps-3">
-                                <div class="text-base font-semibold">Bonnie Green</div>
-                                <div class="font-normal text-gray-500">SLE0003</div>
-                            </div>
-                        </th>
-                        <td class="px-6 py-4">
-                            HR and Admin
-                        </td>
-                        <td class="px-6 py-4">
-                            WESEARCH
-                        </td>
-  
-                        <td class="px-6 py-4">
-                            Intern
-                        </td>
-                        <td class="px-6 py-4">
-                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-orange-900 bg-orange-100 rounded-lg text-nowrap me-2">
-                                OJT
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            July 1, 2024
-                        </td>
-                        <td>
-                          <div class="flex flex-row p-2 space-x-4">
-                            <a href="#" class="font-medium text-yellow-400 hover:underline">View</a>
-                            <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
-                          </div>
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed focus:ring-2">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                            <div class="ps-3">
-                                <div class="text-base font-semibold">Jese Leos</div>
-                                <div class="font-normal text-gray-500">SLE0004</div>
-                            </div>
-                        </th>
-                        <td class="px-6 py-4">
-                            HR and Admin
-                        </td>
-                        <td class="px-6 py-4">
-                            WESEARCH
-                        </td>
-  
-                        <td class="px-6 py-4">
-                            Intern
-                        </td>
-                        <td class="px-6 py-4">
-                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-green-900 bg-green-100 rounded-lg text-nowrap me-2">
-                                PEI-CCS
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            July 1, 2024
-                        </td>
-                        <td>
-                          <div class="flex flex-row p-2 space-x-4">
-                            <a href="#" class="font-medium text-yellow-400 hover:underline">View</a>
-                            <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
-                          </div>
-                        </td>
-                    </tr>
-                    <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed focus:ring-2">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                            <div class="ps-3">
-                                <div class="text-base font-semibold">Thomas Lean</div>
-                                <div class="font-normal text-gray-500">SLE0005</div>
-                            </div>
-                        </th>
-                        <td class="px-6 py-4">
-                            HR and Admin
-                        </td>
-                        <td class="px-6 py-4">
-                            WESEARCH
-                        </td>
-                        <td class="px-6 py-4">
-                            Intern
-                        </td>
-                        <td class="px-6 py-4">
-                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-blue-900 bg-blue-100 rounded-lg text-nowrap me-2">
-                                Rapid
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            July 1, 2024
-                        </td>
-                        <td>
-                          <div class="flex flex-row p-2 space-x-4">
-                            <a href="#" class="font-medium text-yellow-400 hover:underline">View</a>
-                            <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
-                          </div>
-                        </td>
-                    </tr>
-                    <tr class="bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-600">
-                        <td class="w-4 p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed focus:ring-2">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </td>
-                        <th scope="row" class="flex items-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                            <img class="w-10 h-10 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                            <div class="ps-3">
-                                <div class="text-base font-semibold">Leslie Livingston</div>
-                                <div class="font-normal text-gray-500">SLE0006</div>
-                            </div>
-                        </th>
-                        <td class="px-6 py-4">
-                            HR and Admin
-                        </td>
-                        <td class="px-6 py-4">
-                            WESEARCH
-                        </td>
-                        <td class="px-6 py-4">
-                            Intern
-                        </td>
-                        <td class="px-6 py-4">
-                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-pink-900 bg-pink-100 rounded-lg text-nowrap me-2">
-                                Upskills
-                            </span>
-                        </td>
-                        <td class="px-6 py-4">
-                            July 1, 2024
-                        </td>
-                        <td>
-                          <div class="flex flex-row p-2 space-x-4">
-                            <a href="#" class="font-medium text-yellow-400 hover:underline">View</a>
-                            <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
-                          </div>
-                        </td>
-                    </tr>
+                <tbody class="pb-4">
+
+                    @if ($EmployeeData->isEmpty())
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
+                                <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
+                                    <div class="flex justify-center " style="padding-top: 40px">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-5">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                        </svg>
+                                        <p class="text-customRed text-xl font-semibold items-center  "> Nothing to show</p>
+                                    </div>
+                                </th>
+                            </tr>
+                    @else
+                        @php
+                            $ctr = 0;
+                            $pageIndex = ($EmployeeData->currentpage() - 1) * $EmployeeData->perpage() + $ctr;
+                        @endphp
+                        @foreach ($EmployeeData as $index => $employee)
+                        @php
+                            $ctr = $ctr + 1;
+                        @endphp
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                {{-- <td class="w-4 p-4">
+                                    <div class="flex items-center">
+                                        <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                                    </div>
+                                </td> --}}
+                                <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    {{$pageIndex + $ctr}}
+                                </th>
+                                <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
+                                    @php
+                                        $employee_image = $this->getImage($employee->emp_image ?? null);
+                                    @endphp
+                                    @if($employee_image)
+                                            <img class="w-8 h-8 rounded-full" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="Profile Picture">
+                                    @else
+                                            <img class="w-8 h-8 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture"> 
+                                    @endif
+                                    <div class="ps-3">
+                                        <div class="text-base font-semibold">{{$employee->first_name}}  {{$employee->middle_name}} {{$employee->last_name}}</div>
+                                        <div class="font-normal text-gray-500">{{$employee->employee_id}}</div>
+                                    </div>
+                                </th>
+                                <td class="px-6 py-4 ">
+                                    {{$employee->inside_department}}
+                                </td>
+                                <td class="px-6 py-4  " >
+                                    {{$employee->department}}
+                                </td>
+                                <td class="px-6 py-4  " >
+                                    {{$employee->current_position}}
+                                </td>
+                                <td class="px-6 py-4  " >
+                                    {{$employee->employee_type}}
+                                </td>
+                                <td class="px-6 py-4  " >
+                                    {{$employee->start_of_employment}}
+                                </td>
+                                <td class="items-center text-center py-4">
+                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                            </svg>
+                                        </button>
+                                        @if ($employee->status != "Cancelled")
+                                            <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                                <!-- Dropdown content -->
+                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                        {{-- <li>
+                                                            <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                        </li> --}}
+                                                        <li>
+                                                            <p id="view_button_{{ $employee->employee_id }}" class="font-medium text-customRed cursor-pointer hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">View</p>
+                                                        </li>
+                                                </ul>
+                                                <div class="py-2">
+                                                    <a id="cancel_button_{{ $employee->employee_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Deactivate</a>
+                                                    {{-- <a id="cancel_button_{{ $employee->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
+                                                </div>
+                                            </div>
+                                        @else
+                                            <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                                <!-- Dropdown content -->
+                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                    <li>
+                                                        <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        @endif
+                                </td>
+
+                                <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
+                                    <div class="relative p-4 w-full max-w-md max-h-full">
+                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                            <div class="p-4 md:p-5">
+                                                <div class="p-4 md:p-5 text-center">
+                                                    <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                    </svg>
+                                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm Deactivation?</h3>
+                                                    <button wire:click="cancelForm('{{$employee->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                        Yes
+                                                    </button>
+                                                    <button data-modal-hide="popup-modal" id="close_button" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                        No
+                                                    </button>
+                                                </div>
+                                            </div>
+                            
+                                        </div>
+                                    </div>
+                                </div>
+
+                                
+                                <div id="view-modal_{{ $employee->employee_id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50">
+                                    <div class="relative w-full max-w-2xl max-h-full p-4">
+                                        <!-- Modal content -->
+                                        <div class="relative bg-white rounded-lg shadow ">
+                                            <!-- Modal header -->
+                                            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                                                <h3 class="text-xl font-semibold text-gray-900">
+                                                    Employee Information
+                                                </h3>
+                                                <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto" data-modal-hide="view-modal">
+                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                    </svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                            </div>
+                                            <!-- Modal body -->
+                                            <div class="flex p-4 ml-2 md:p-5">
+                                                <!-- Right Picture Area -->
+                                                <div class="flex items-start justify-center mr-5 w-44">
+                                                    {{-- @php
+                                                        $employee_image = $this->getImage($employee->emp_image ?? null);
+                                                    @endphp --}}
+                                                    @if($employee_image)
+                                                        <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="Profile Picture">
+                                                    @else
+                                                        <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="{{ asset('assets/defaultuser.png') }}" alt="Profile Picture">
+                                                    @endif
+                                                </div>
+                                                <!-- Left Content Area -->
+                                                <div class="w-3/4 space-y-4">
+                                                    <p class="flex items-center text-sm leading-relaxed text-customRed">
+                                                        <span class="font-semibold">Employee Number:</span>
+                                                        <span class="ml-2">{{$employee->employee_id}}</span>
+                                                    </p>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customGray1">
+                                                        <span class="font-semibold">Name:</span>
+                                                        <span class="ml-2">{{$employee->first_name}} {{$employee->middle_name}} {{$employee->last_name}}</span>
+                                                    </p>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customGray1">
+                                                        <span class="font-semibold">Department:</span>
+                                                        <span class="ml-2">{{$employee->inside_department}}</span>
+                                                    </p>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customGray1">
+                                                        <span class="font-semibold">Company:</span>
+                                                        <span class="ml-2">{{$employee->department}}</span>
+                                                    </p>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customGray1">
+                                                        <span class="font-semibold">Position:</span>
+                                                        <span class="ml-2">{{$employee->current_position}}</span>
+                                                    </p>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customGray1">
+                                                        <span class="font-semibold">Type:</span>
+                                                        <span class="ml-2">{{$employee->employee_type}}</span>
+                                                    </p>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customGray1">
+                                                        <span class="font-semibold">Joined Date:</span>
+                                                        <span class="ml-2">{{$employee->start_of_employment}}</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <!-- Modal footer -->
+                                            <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
+                                                <button data-modal-hide="view-modal" type="button" class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</button>
+                                                <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Deactivate</button>
+                                                {{-- <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Delete</button> --}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                    
+                                    {{-- <td class="items-center px-6 py-4">
+                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                            </svg>
+                                        </button>
+                                        <div class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                            <!-- Dropdown content -->
+                                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                <li>
+                                                    <a onclick="location.href='{{ route('LeaveRequestEdit', ['index' => $employee->id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                </li>
+                                                <li>
+                                                    <a onclick="location.href='{{ route('LeaveRequestPdf', ['index' => $employee->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
+                                                </li>
+                                            </ul>
+                                            <div class="py-2">
+                                                <a wire:click="removeLeaveRequest({{$employee->id}})" wire:confirm="Are you sure you want to delete this post?" class="block px-4 py-2 text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                                            </div>
+                                        </div>
+                                    </td> --}}
+                            </tr>
+
+                        
+                        @endforeach
+                    @endif
                 </tbody>
+
             </table>
           </div>
       </div>
   </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Select all cancel buttons and add event listeners
+
+        document.querySelectorAll('[id^="view_button_"]').forEach(viewButton => {
+        const modalId = 'view-modal_' + viewButton.getAttribute('id').substring(12); // Adjust substring length as per your ID format
+        const modal = document.getElementById(modalId);
+
+        viewButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        });
+    });
+
+    // Handle cancel buttons
+    document.querySelectorAll('[id^="cancel_button_"]').forEach(cancelButton => {
+        const modalId = 'popup-modal_' + cancelButton.getAttribute('id').substring(14); // Adjust substring length as per your ID format
+        const modal = document.getElementById(modalId);
+
+        cancelButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (modal) {
+                modal.classList.remove('hidden');
+            }
+        });
+    });
+
+        // Select all close modal buttons and add event listeners
+    document.querySelectorAll('[data-modal-hide="popup-modal"]').forEach(closeButton => {
+            closeButton.addEventListener('click', () => {
+                const modal = closeButton.closest('.fixed');
+                if (modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+
+    document.querySelectorAll('[data-modal-hide="view-modal"]').forEach(closeButton => {
+        closeButton.addEventListener('click', () => {
+            const modal = closeButton.closest('.fixed');
+            if (modal) {
+                modal.classList.add('hidden');
+            }
+        });
+    });
+
+    });
+
+    
+</script>
+
   
   <script>
   
       const getChartOptions1 = () => {
       return {
-          series: [20, 22, 14, 12, 12, 20],
+          series: @json($employee_type),
           colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5"],
           chart: {
           height: 420,
@@ -599,7 +671,7 @@
   
       const getChartOptions2 = () => {
       return {
-          series: [18, 20, 16, 14, 9, 15, 8],
+          series: @json($inside_department),
           colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
           chart: {
           height: 420,
@@ -657,7 +729,7 @@
   
       const getChartOptions3 = () => {
       return {
-          series: [18, 20, 16, 29, 17],
+          series: @json($department),
           colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
           chart: {
           height: 420,
@@ -715,7 +787,7 @@
   
       const getChartOptions4 = () => {
       return {
-          series: [25, 75],
+          series: @json($gender),
           colors: ["#45E5E7", "#E745A5"],
           chart: {
           height: 420,

@@ -298,16 +298,24 @@ class DashboardView extends Component
 
     public function checkOut()
     {
-        $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
-        $currentTime = Carbon::now();
-        $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+        $loggedInUser = auth()->user()->employee_id;
+
+        $current_time = Carbon::now();
+        $six_am_today = Carbon::today()->setHour(16);
+
+        if ($current_time->greaterThan($six_am_today)) {
+            $time = Dailytimerecord::where('attendance_date', $current_time)->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
+
+        } else {
+            $time = Dailytimerecord::where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
+
+        }
 
         if($time){
            if($time->time_out == Null){
 
-
                 $loggedInUser = auth()->user()->employee_id;
-                $dtr = Dailytimerecord::where('employee_id', $loggedInUser)->first();
+                $dtr = $time;
                 $dtr->employee_id = $loggedInUser;
         
                 $dtr->attendance_date = Carbon::today()->toDateString();
@@ -358,6 +366,7 @@ class DashboardView extends Component
             } 
                
         } else {
+
             // $this->js("alert('You have already checked out today! Try Again Tomorrow')");
             $this->dispatch('triggerDangerCheckOut');
 
