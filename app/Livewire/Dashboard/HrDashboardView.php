@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard;
 use Livewire\Component;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class HrDashboardView extends Component
 {
@@ -12,6 +13,20 @@ class HrDashboardView extends Component
     public $inside_department = [];
     public $department = [];
     public $gender = [];
+
+    public $employeeTypesFilter = [
+        'Internals' => false,
+        'OJT' => false,
+        'PEI-CCS' => false,
+        'Rapid' => false,
+        'RapidMobility' => false,
+        'Upskills' => false,
+    ];
+
+    public $employeeTypeFilter;
+    public $departmentTypeFilter;
+    public $companyFilter;
+    public $genderFilter;
 
     public function mount(){
         $combinedCounts = Employee::select(
@@ -68,13 +83,84 @@ class HrDashboardView extends Component
             $combinedCounts->MALE ?? 0,
             $combinedCounts->FEMALE ?? 0,
         ];
-
-
-
-
     }
+
+    public function addEmployee(){
+        return redirect()->to(route('EmployeesTable'));
+    }
+
+    public function getImage($emp_image){
+        if(!$emp_image){
+            return null;
+        }
+        $image = Storage::disk('local')->get($emp_image);
+        return $image;
+    }
+    
     public function render()
     {
-        return view('livewire.dashboard.hr-dashboard-view')->layout('components.layouts.hr-navbar');
+        // dump($this->employeeTypesFilter);
+        $query = Employee::take(5);
+
+        if($this->employeeTypesFilter['Internals']){
+            $query->where('employee_type', 'Internals');
+
+        }
+        // switch ($this->employeeTypeFilter) {
+        //     case '1':
+        //         $query->whereDate('application_date',  Carbon::today());
+        //         break;
+        //     case '2':
+        //         $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
+        //         $this->dateFilterName = "Last 7 Days";
+        //         break;
+        //     case '3':
+        //         $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
+        //         $this->dateFilterName = "Last 30 days";
+        //         break;
+        //     case '4':
+        //         $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
+        //         // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+        //         $this->dateFilterName = "Last 6 Months";
+        //         break;
+        //     case '5':
+        //         $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
+        //         $this->dateFilterName = "Last Year";
+        //         break;
+        //     default:
+        //         $this->dateFilterName = "All";
+        //         break;
+        // }
+
+        // switch ($this->status_filter) {
+        //     case '1':
+        //         $query->where('status',  'Approved');
+        //         $this->statusFilterName = "Approved";
+        //         break;
+        //     case '2':
+        //         $query->where('status', 'Pending');
+        //         $this->statusFilterName = "Pending";
+        //         break;
+        //     case '3':
+        //         $query->where('status', 'Declined');
+        //         $this->statusFilterName = "Declined";
+        //         break;
+        //     default:
+        //         $this->statusFilterName = "All";
+        //         break;
+        // }
+
+
+        // if(strlen($this->search) >= 1){
+        $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        // } else {
+        //     $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        // }
+
+
+        return view('livewire.dashboard.hr-dashboard-view', [
+            'EmployeeData' => $results,
+        ])->layout('components.layouts.hr-navbar');
+
     }
 }
