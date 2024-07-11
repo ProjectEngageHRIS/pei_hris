@@ -301,8 +301,6 @@ Route::middleware('auth')->group(function (){
 
     Route::get("/assignedtasks/view/{index}", AssignedTasksView::class)->name('AssignedTasksView');
 
-
-
     // Route::get("/studypermit/pdf/{index}", [StudyPermitController::class, 'turnToPdf'])->name('StudyPermitPdf');
 
     // Route::get("/studypermit/requests", ApproveStudyPermitTable::class)->name('ApproveStudyPermitTable');

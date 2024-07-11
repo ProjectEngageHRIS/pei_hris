@@ -1,7 +1,7 @@
 <div class="flex flex-col space-y-6">
     <div wire:ignore class="flex flex-col items-stretch gap-4 md:flex-row justify-stretch md:justify-center">
           <!-- Employee Type -->
-          <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
+          <div class="p-4  bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
               <div class="flex items-start justify-between w-full">
                   <div class="flex-col items-center">
                       <div class="flex items-center mb-1">
@@ -10,7 +10,7 @@
                   </div>
               </div>
               <!-- Employee Type Chart -->
-              <div class="py-6" id="pie-chart-1"></div>
+              <div class="py-6 w-full" id="pie-chart-1"></div>
           </div>
           <!-- Deparment -->
           <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
@@ -117,7 +117,7 @@
                               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                           </svg>
                       </div>
-                      <input type="text" id="table-search-users" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                      <input type="text" id="table-search-users" wire:model.live="search" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                   </div>
                   <!-- Filter Sidebar -->
                   <div class="absolute rounded-lg right-8 hover:text-customRed">
@@ -161,7 +161,7 @@
                           <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
                               <!-- Clear All Button -->
                               <div class="px-4 py-2">
-                                  <button @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-blue-600 hover:text-blue-900">
+                                  <button @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
                                       Clear All
                                   </button>
                               </div>
@@ -212,31 +212,31 @@
                                   <div x-show="departmentOpen" @click.away="departmentOpen = false" class="w-full mt-2 space-y-2 departmentOpen">
                                       <hr class="my-4 border-gray-300">
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.HR AND ADMIN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Overseas Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.PEI/SL Temps DO-174" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Corporate Accounting and Finance" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Accounting Operations" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
                                       </div>
                                   </div>
@@ -251,23 +251,23 @@
                                   <div x-show="companyOpen" @click.away="companyOpen = false" class="w-full mt-2 space-y-2 companyOpen">
                                       <hr class="my-4 border-gray-300">
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                          <input type="checkbox" wire:model.live="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                          <input type="checkbox" wire:model.live="departmentTypesFilter.SL SEARCH"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                          <input type="checkbox" wire:model.live="departmentTypesFilter.SL TEMPS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                          <input type="checkbox" wire:model.live="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                          <input type="checkbox" wire:model.live="departmentTypesFilter.PEI-UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
                                       </div>
                                   </div>
@@ -282,11 +282,11 @@
                                   <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
                                       <hr class="my-4 border-gray-300">
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                          <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
                                       </div>
                                       <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                          <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
                                           <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
                                       </div>
                                   </div>
@@ -306,7 +306,7 @@
                         <th scope="col" class="px-6 py-3">
                             Name
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 text-center">
                             Department
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -335,7 +335,7 @@
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                         </svg>
-                                        <p class="text-customRed text-xl font-semibold items-center  "> Nothing to show</p>
+                                        <p class="text-customRed text-xl font-semibold items-center"> Nothing to show</p>
                                     </div>
                                 </th>
                             </tr>
@@ -388,37 +388,36 @@
                                     {{$employee->start_of_employment}}
                                 </td>
                                 <td class="items-center text-center py-4">
-                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                    <div x-data="{ isOpen: false }" @click.away="isOpen = false">
+                                        <!-- Three dots button to toggle dropdown -->
+                                        <button @click="isOpen = !isOpen" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
                                                 <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                             </svg>
                                         </button>
-                                        @if ($employee->status != "Cancelled")
-                                            <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                        {{-- <li>
-                                                            <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
-                                                        </li> --}}
-                                                        <li>
-                                                            <p id="view_button_{{ $employee->employee_id }}" class="font-medium text-customRed cursor-pointer hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">View</p>
-                                                        </li>
-                                                </ul>
-                                                <div class="py-2">
-                                                    <a id="cancel_button_{{ $employee->employee_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Deactivate</a>
-                                                    {{-- <a id="cancel_button_{{ $employee->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
-                                                </div>
-                                            </div>
-                                        @else
-                                            <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                
+                                        <!-- Dropdown menu -->
+                                        <div x-show="isOpen" class="absolute right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                                            @if ($employee->status != "Cancelled")
                                                 <!-- Dropdown content -->
                                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                     <li>
-                                                        <a id="" onclick="location.href='{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}'"  class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="openModal('{{ $employee->employee_id }}')">View</a>
+                                                    </li>
+                                                    <li>
+                                                        <a id="cancel_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openDeactivateModal('{{ $employee->employee_id }}')">Deactivate</a>
                                                     </li>
                                                 </ul>
-                                            </div>
-                                        @endif
+                                            @else
+                                                <!-- Dropdown content -->
+                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                    <li>
+                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}">View</a>
+                                                    </li>
+                                                </ul>
+                                            @endif
+                                        </div>
+                                    </div>
                                 </td>
 
                                 <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
@@ -476,7 +475,7 @@
                                                     @if($employee_image)
                                                         <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="Profile Picture">
                                                     @else
-                                                        <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="{{ asset('assets/defaultuser.png') }}" alt="Profile Picture">
+                                                        <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="{{ asset('assets/nophoto.png') }}" alt="No Picture Yet Image">
                                                     @endif
                                                 </div>
                                                 <!-- Left Content Area -->
@@ -521,6 +520,7 @@
                                     </div>
                                 </div>
                                 
+                                
                                     
                                     {{-- <td class="items-center px-6 py-4">
                                         <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
@@ -549,13 +549,32 @@
                         @endforeach
                     @endif
                 </tbody>
-
             </table>
+            <div class="p-4 bg-gray-100 w-full rounded-b-lg">
+                    {{ $EmployeeData->links() }}
+                </div>
           </div>
       </div>
   </div>
 
-  <script>
+<script>
+    function openModal(employeeId) {
+        const modalId = 'view-modal_' + employeeId;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+
+    function openDeactivateModal(employeeId) {
+        const modalId = 'popup-modal_' + employeeId;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+
+
     document.addEventListener('DOMContentLoaded', () => {
         // Select all cancel buttons and add event listeners
 

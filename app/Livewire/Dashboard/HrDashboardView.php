@@ -4,11 +4,16 @@ namespace App\Livewire\Dashboard;
 
 use Livewire\Component;
 use App\Models\Employee;
+use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Storage;
 
 class HrDashboardView extends Component
 {
+
+    use WithPagination, WithoutUrlPagination;
+
     public $employee_type = [];
     public $inside_department = [];
     public $department = [];
@@ -23,10 +28,34 @@ class HrDashboardView extends Component
         'UPSKILLS' => false,
     ];
 
+    public $insideDepartmentTypesFilter = [
+        'HR AND ADMIN' => false,
+        'Recruitment' => false,
+        'CXS' => false,
+        'Overseas Recruitment' => false,
+        'PEI/SLTEMPSDO174' => false,
+        'CAF' => false,
+        'ACCOUNTING ' => false,
+    ];
+
+    public $departmentTypesFilter = [
+        'PEI' => false,
+        'SLSEARCH' => false,
+        'SLTEMPS' => false,
+        'WESEARCH' => false,
+        'PEI-UPSKILLS' => false,
+    ];
+
+    public $genderTypesFilter = [
+        'MALE' => false,
+        'FEMALE' => false,
+    ];
+
     public $employeeTypeFilter;
     public $departmentTypeFilter;
     public $companyFilter;
     public $genderFilter;
+    public $search;
 
     public function mount(){
         $combinedCounts = Employee::select(
@@ -85,6 +114,16 @@ class HrDashboardView extends Component
         ];
     }
 
+    // public function search()
+    // {
+    //     $this->resetPage();
+    // }
+
+    // public function updatingSearch()
+    // {
+    //     $this->resetPage();
+    // }
+
     public function addEmployee(){
         return redirect()->to(route('EmployeesTable'));
     }
@@ -100,68 +139,61 @@ class HrDashboardView extends Component
     public function render()
     {
         // dump($this->employeeTypesFilter);
-        $query = Employee::take(5);
+        $query = Employee::query();
 
+        // Employee Type Filter
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
             return $this->employeeTypesFilter[$key];
         });
         
-        // Apply the whereIn filter if there are any types to filter
         if (!empty($employeeTypes)) {
             $query->whereIn('employee_type', $employeeTypes);
         }
+
+        // Inside Department Filter
+        $insideDepartmentTypes = array_filter(array_keys($this->insideDepartmentTypesFilter), function($key) {
+            return $this->insideDepartmentTypesFilter[$key];
+        });
+        
+        if (!empty($insideDepartmentTypes)) {
+            $query->whereIn('inside_department', $insideDepartmentTypes);
+        }
+        // dump($insideDepartmentTypes);
+
+        // Department Filter
+        $departmentTypes = array_filter(array_keys($this->departmentTypesFilter), function($key) {
+            return $this->departmentTypesFilter[$key];
+        });
+        
+        if (!empty($departmentTypes)) {
+            $query->whereIn('department', $departmentTypes);
+        }
+
+        // Department Filter
+        $genderTypes = array_filter(array_keys($this->genderTypesFilter), function($key) {
+            return $this->genderTypesFilter[$key];
+        });
+        
+        if (!empty($genderTypes)) {
+            $query->whereIn('gender', $genderTypes);
+        }
         
 
-        // switch ($this->employeeTypeFilter) {
-        //     case '1':
-        //         $query->whereDate('application_date',  Carbon::today());
-        //         break;
-        //     case '2':
-        //         $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
-        //         $this->dateFilterName = "Last 7 Days";
-        //         break;
-        //     case '3':
-        //         $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
-        //         $this->dateFilterName = "Last 30 days";
-        //         break;
-        //     case '4':
-        //         $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-        //         // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
-        //         $this->dateFilterName = "Last 6 Months";
-        //         break;
-        //     case '5':
-        //         $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
-        //         $this->dateFilterName = "Last Year";
-        //         break;
-        //     default:
-        //         $this->dateFilterName = "All";
-        //         break;
-        // }
-
-        // switch ($this->status_filter) {
-        //     case '1':
-        //         $query->where('status',  'Approved');
-        //         $this->statusFilterName = "Approved";
-        //         break;
-        //     case '2':
-        //         $query->where('status', 'Pending');
-        //         $this->statusFilterName = "Pending";
-        //         break;
-        //     case '3':
-        //         $query->where('status', 'Declined');
-        //         $this->statusFilterName = "Declined";
-        //         break;
-        //     default:
-        //         $this->statusFilterName = "All";
-        //         break;
-        // }
-
-
-        // if(strlen($this->search) >= 1){
-        $results = $query->orderBy('created_at', 'desc')->paginate(5);
-        // } else {
-        //     $results = $query->orderBy('created_at', 'desc')->paginate(5);
-        // }
+        if(strlen($this->search) >= 1){
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('first_name', 'like', '%' . $term . '%')
+                      ->orWhere('last_name', 'like', '%' . $term . '%')
+                      ->orWhere('department', 'like', '%' . $term . '%')
+                      ->orWhere('current_position', 'like', '%' . $term . '%')
+                      ->orWhere('employee_type', 'like', '%' . $term . '%')
+                      ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                }
+            })->orderBy('created_at', 'desc')->paginate(5);
+        } else {
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        }
 
 
         return view('livewire.dashboard.hr-dashboard-view', [
