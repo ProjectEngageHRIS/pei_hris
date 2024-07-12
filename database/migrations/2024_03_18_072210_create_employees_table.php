@@ -19,7 +19,6 @@ return new class extends Migration
             $table->string('nickname', 20)->nullable();
             $table->string('department', 50)->nullable();
             $table->string('inside_department', 100)->nullable();
-
             $table->string('employee_type',  50);
             $table->string('home_address');
             $table->string('provincial_address')->nullable();
@@ -30,7 +29,7 @@ return new class extends Migration
             $table->string('current_position');
             $table->text('profile_summary')->nullable();
             $table->string('high_school_school', 100);
-            $table->string('high_school_course', 100);
+            // $table->string('high_school_course', 100);
             $table->string('high_school_date_graduated', 100);
             $table->string('college_school', 100);
             $table->string('college_course', 100);
@@ -66,8 +65,6 @@ return new class extends Migration
             $table->decimal('vacation_credits')->nullable();
             $table->decimal('sick_credits')->nullable();
             $table->boolean('active');
-
-
 
 
             $table->string('personal_email', 100);

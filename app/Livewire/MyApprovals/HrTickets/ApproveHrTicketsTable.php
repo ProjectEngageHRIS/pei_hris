@@ -116,7 +116,7 @@ class ApproveHrTicketsTable extends Component
 
         return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
             'HrTicketData' => $results,
-        ]);
+        ])->layout('components.layouts.hr-navbar');
     }
 
     public function download($reference_num){

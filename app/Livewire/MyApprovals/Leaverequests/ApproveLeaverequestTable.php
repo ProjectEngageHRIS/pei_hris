@@ -100,7 +100,7 @@ class ApproveLeaverequestTable extends Component
 
         return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
             'LeaveRequestData' => $results,
-        ]);
+        ])->layout('components.layouts.hr-navbar');
     }
 
     public function download($reference_num){

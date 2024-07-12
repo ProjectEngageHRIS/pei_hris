@@ -426,6 +426,6 @@ class ApproveChangeInformationForm extends Component
     
     public function render()
     {
-        return view('livewire.my-approvals.change-information.approve-change-information-form');
+        return view('livewire.my-approvals.change-information.approve-change-information-form')->layout('components.layouts.hr-navbar');
     }
 }

@@ -251,6 +251,8 @@ class AttendanceTable extends Component
     protected $rules = [
         'dateChosen' => 'required|max:3',
     ];
+
+    
     public function submit(){
         $countArray = count($this->dateChosen);
         if($countArray > 12 or $countArray < 1){
@@ -262,7 +264,7 @@ class AttendanceTable extends Component
 
     public function render()
     {
-       $loggedInUser = auth()->user();
+        $loggedInUser = auth()->user();
         $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id);
         
         switch ($this->filter) {
@@ -295,11 +297,17 @@ class AttendanceTable extends Component
             $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
         }
     
-        return view('livewire.dailytimerecord.attendance-table', [
-            'DtrData' => $results,
-            'data' => $this->filter($this->filter),
-
-        ]);
+        if(in_array($loggedInUser->role_id, [6,7,8,9])){
+            return view('livewire.dailytimerecord.attendance-table', [
+                'DtrData' => $results,
+                'data' => $this->filter($this->filter),
+            ])->layout('components.layouts.hr-navbar');
+        } else {
+                return view('livewire.dailytimerecord.attendance-table', [
+                    'DtrData' => $results,
+                    'data' => $this->filter($this->filter),
+                ]);
+        }
 
 
       

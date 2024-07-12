@@ -2,10 +2,15 @@
 
 namespace App\Livewire\Ithelpdesk;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
+use App\Mail\ItTicketRequest;
 use Livewire\WithFileUploads;
+use App\Mail\ItTicketsConfirmation;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ItHelpDeskForm extends Component
 {
@@ -126,25 +131,32 @@ class ItHelpDeskForm extends Component
         $itticket->status = "Pending";
         $itticket->description = $this->description;
         $itticket->save();
+        
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department',  'employee_email')
+        ->where('employee_id', $loggedInUser->employee_id)
+        ->first(); 
 
-        $this->js("alert('Concern submitted!')"); 
+        Mail::to($employeeRecord->employee_email)->send(new ItTicketsConfirmation($employeeRecord, $itticket));
 
+        $ItEmployee = Employee::where('employee_id', 'SLE0004')->first();
 
+        if ($ItEmployee) {
+            Mail::to($ItEmployee->employee_email)->send(new ItTicketRequest($employeeRecord, $ItEmployee, $itticket));
+        } else {
+            Log::error('IT email not found for employee_id SLE0004');
+            $this->addError('email', 'IT email not found');
+        }
+
+        $this->dispatch('triggerNotification');
+
+    
         return redirect()->to(route('ItHelpDeskTable'));
 
     }
 
-    // public function updateNumOfDays($start_date, $end_date){
-    //     dd($start_date);
-     
-    // }
     public function render()
     {
         return view('livewire.ithelpdesk.it-help-desk-form')->extends('components.layouts.app');
     }
 
-    // public function render()
-    // {
-    //     return view('livewire.ithelpdesk.it-help-desk-form');
-    // }
 }

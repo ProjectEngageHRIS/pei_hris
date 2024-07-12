@@ -59,8 +59,6 @@ class EmployeeFactory extends Factory
                 'name' => $this->faker->firstName,
                 'address' => $this->faker->address,
                 'phone_number' => $this->faker->phoneNumber,
-
-
             ];
         }
 

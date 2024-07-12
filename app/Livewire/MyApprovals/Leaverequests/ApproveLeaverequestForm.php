@@ -262,7 +262,7 @@ class ApproveLeaverequestForm extends Component
     
     public function render()
     {
-        return view('livewire.my-approvals.leaverequests.approve-leaverequest-form')->extends('components.layouts.app');
+        return view('livewire.my-approvals.leaverequests.approve-leaverequest-form')->layout('components.layouts.hr-navbar');
     }
 
 }

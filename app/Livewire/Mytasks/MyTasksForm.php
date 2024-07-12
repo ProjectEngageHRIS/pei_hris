@@ -6,11 +6,14 @@ use Carbon\Carbon;
 use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
+use App\Mail\TaskRequestSubmitted;
+use Illuminate\Support\Facades\Mail;
 
 class MyTasksForm extends Component
 {
-    
+    public $assignee;
     public $date;
+    public $my_task;
     public $first_name;
     public $middle_name;
     public $last_name;
@@ -96,8 +99,18 @@ class MyTasksForm extends Component
 
         $task->save();
 
-        $this->js("alert('Task Assigned!')"); 
+        $assignee= Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
+        ->where('employee_id', $loggedInUser->employee_id)
+        ->first();
 
+
+        $targetEmployees = Employee::whereIn('employee_id', $employeeIds)->get();
+
+        foreach ($targetEmployees as $targetEmployee) {
+            Mail::to($targetEmployee->employee_email)->send(new TaskRequestSubmitted($assignee, $targetEmployee, $task));
+        }
+
+        $this->dispatch('triggerNotification');
 
         return redirect()->to(route('TasksTable'));
 

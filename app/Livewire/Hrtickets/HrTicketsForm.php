@@ -437,8 +437,7 @@ class HrTicketsForm extends Component
 
         $hrticketdata->save();
 
-        // $announcement = $this->type_of_ticket . 'HR Ticket submitted!';
-        $this->js("alert('HR Ticket submitted!')"); 
+        $this->dispatch('triggerNotification');
 
         return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
 

@@ -21,11 +21,15 @@
             </ol>
         </nav>
         <h2 class="mb-10 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Employees</h2>
+
+        <div class="flex justify-end">
+            <button type="button" onclick="location.href='{{ route('EmployeesForm') }}'" class="text-customRed bg-white mb-8 hover:text-white hover:bg-customRed shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">Add an Employee</button>
+        </div>
       <!-- Employee Table -->
       <div class="relative shadow-md">
           <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
              <!-- Add user button -->
-              <button wire:click="addEmployee" data-modal-toggle="authentication-modal" class="inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+              <button  data-modal-toggle="authentication-modal" class="inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
                   Add user
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
                       <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />

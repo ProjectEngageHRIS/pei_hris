@@ -567,7 +567,7 @@ class ApproveHrTicketsForm extends Component
 
     public function render()
     {
-        return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-form')->extends('components.layouts.app');
+        return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-form')->layout('components.layouts.hr-navbar');
     }
 
   
