@@ -109,16 +109,13 @@ class AttendanceTable extends Component
             }
         }
 
-
         $loggedInUser = auth()->user()->employee_id;
-        $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select( 'sick_credits', 'vacation_credits', 'first_name', 'gender')->first();
-        $collegeName = DB::table('colleges')->where('college_id', $employeeInformation->college_id)->value('college_name');
-        $collegeIds = $employeeInformation->college_id;
-        $this->firstName = $employeeInformation->first_name;
-        $this->vacationCredits = $employeeInformation->vacation_credits;
-        $this->sickCredits = $employeeInformation->sick_credits;
-        $this->gender = $employeeInformation->gender;
+        // $employeeInformation = Employee::where('employee_id', $loggedInUser)
+        //                         ->select( 'sick_credits', 'vacation_credits', 'first_name', 'gender')->first();
+        // $this->firstName = $employeeInformation->first_name;
+        // $this->vacationCredits = $employeeInformation->vacation_credits;
+        // $this->sickCredits = $employeeInformation->sick_credits;
+        // $this->gender = $employeeInformation->gender;
         // $this->activities = Activities::where(function ($query) use ($collegeIds) {
         //         foreach ($collegeIds  as $college) {
         //         $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
@@ -132,27 +129,27 @@ class AttendanceTable extends Component
         //     }
         // })->get();
 
-        $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
-        $currentTime = Carbon::now();
-        // Set the start and end times for each period
-        $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
-        $afternoonStart = Carbon::createFromTime(12, 0, 0); // 12:00 PM (noon)
-        $eveningStart = Carbon::createFromTime(18, 0, 0); // 6:00 PM
+        // $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
+        // $currentTime = Carbon::now();
+        // // Set the start and end times for each period
+        // $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
+        // $afternoonStart = Carbon::createFromTime(12, 0, 0); // 12:00 PM (noon)
+        // $eveningStart = Carbon::createFromTime(18, 0, 0); // 6:00 PM
 
-        // Compare the current time with the defined periods
-        if ($currentTime->between($morningStart, $afternoonStart)) {
-            // Current time is in the morning
-            $this->period = 'Morning';
-        } elseif ($currentTime->between($afternoonStart, $eveningStart)) {
-            // Current time is in the afternoon
-            $this->period = 'Afternoon';
-        } else {
-            // Current time is in the evening
-            $this->period = 'Evening';
-        }
-        $currentYear = Carbon::now()->year;
-        $currentMonth = Carbon::now()->month;
-        $currentDay = Carbon::now()->day;
+        // // Compare the current time with the defined periods
+        // if ($currentTime->between($morningStart, $afternoonStart)) {
+        //     // Current time is in the morning
+        //     $this->period = 'Morning';
+        // } elseif ($currentTime->between($afternoonStart, $eveningStart)) {
+        //     // Current time is in the afternoon
+        //     $this->period = 'Afternoon';
+        // } else {
+        //     // Current time is in the evening
+        //     $this->period = 'Evening';
+        // }
+        // $currentYear = Carbon::now()->year;
+        // $currentMonth = Carbon::now()->month;
+        // $currentDay = Carbon::now()->day;
 
         // Query to get the attendance count for each month in the current year
         $monthlyCounts = Dailytimerecord::select(
@@ -265,7 +262,13 @@ class AttendanceTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user();
-        $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id);
+        $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id)
+                                ->select('attendance_date',
+                                         'type',
+                                         'time_in',
+                                         'time_out',
+                                         'overtime',
+                                         'undertime');
         
         switch ($this->filter) {
             case '1':
