@@ -71,14 +71,19 @@ class LeaveRequestView extends Component
         try {
             $leaverequest = $this->editLeaveRequest($index);
             // $this->authorize('update', [$leaverequest]);
+            if (is_null($leaverequest)) {
+                return redirect()->to(route('LeaveRequestTable'));
+            }
         } catch (AuthorizationException $e) {
             return redirect()->to(route('LeaveRequestTable'));
             abort(404);
         }
 
+        
+
         $this->index = $index;
         
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position', 'salary', 'vacation_credits', 'sick_credits', 'is_faculty')
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position',)
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->first();   
 
@@ -116,12 +121,11 @@ class LeaveRequestView extends Component
     public function editLeaveRequest($index){
         // $leaverequest =  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $leaverequest =  Leaverequest::where('employee_id', auth()->user()->employee_id)->find($index);
-        
+        $leaverequest =  Leaverequest::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
         if(!$leaverequest || $leaverequest->employee_id != $loggedInUser){
-            return False;
+            return ;
         }
-        // $this->leaverequest = $leaverequest;
+
         return $leaverequest;
     }
 

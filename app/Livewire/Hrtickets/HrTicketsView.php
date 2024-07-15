@@ -106,13 +106,16 @@ class HrTicketsView extends Component
         try {
             $hrticketdata = $this->editForm($index);
             // $this->authorize('update', [$hrticket]);
+            if (is_null($hrticketdata)) {
+                return redirect()->to(route('HrTicketsTable'));
+            }
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('LeaveRequestTable'));
+            return redirect()->to(route('HrTicketsTable'));
             abort(404);
         }
 
         $this->index = $index;
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'employee_email', 'employee_id', 'current_position', 'salary', 'vacation_credits', 'sick_credits')
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'employee_email', 'employee_id', 'current_position',)
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->first(); 
                           
@@ -312,10 +315,10 @@ class HrTicketsView extends Component
     public function editForm($index){
         // $hrticket=  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $hrticket= Hrticket::where('employee_id', $loggedInUser)->find($index);
+        $hrticket= Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
         
         if(!$hrticket || $hrticket->employee_id != $loggedInUser){
-            return False;
+            return ;
         }
         // $this->hrticket= $hrticket;
         return $hrticket;

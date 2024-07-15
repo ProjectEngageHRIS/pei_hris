@@ -52,18 +52,7 @@ class SidebarView extends Component
         $this->employeeName = $employee->first_name. ' ' . $employee->middle_name . ' ' . $employee->last_name;
         $this->employeeEmail = $loggedInUser->email;
 
-        // $loggedInEmployeeData = Employee::where('employee_id', $loggedInUser->employee_id)->first();
-        // $this->head = explode(',', $employee->is_department_head_or_dean[0] ?? ' ') ?? [];
-        foreach($employee->is_department_head as $department_head){
-            if($department_head == 1){
-                $this->departmentHeadId = 1;
-            }
-        }
-        foreach($employee->is_college_head as $college_head){
-            if($college_head == 1){
-                $this->collegeDeanId = 1;
-            }
-        }
+
 
         $this->role = $loggedInUser->role_id;
         $this->employee_id = $loggedInUser->employee_id;

@@ -27,8 +27,11 @@ class ItHelpDeskView extends Component
         $loggedInUser = auth()->user();
 
         try {
-            $it_ticket= $this->editForm($index);
+            $it_ticket = $this->editForm($index);
             // $this->authorize('update', [$leaverequest]);
+            if (is_null($it_ticket)) {
+                return redirect()->to(route('LeaveRequestTable'));
+            }
         } catch (AuthorizationException $e) {
             return redirect()->to(route('ItHelpDeskTable'));
             abort(404);
@@ -54,10 +57,10 @@ class ItHelpDeskView extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->find($index);
+        $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
         
         if(!$it_ticket|| $it_ticket->employee_id != $loggedInUser){
-            return False;
+            return ;
         }
         return $it_ticket ;
     }

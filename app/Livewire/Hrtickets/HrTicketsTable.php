@@ -45,7 +45,7 @@ class HrTicketsTable extends Component
         $this->type = $type;
         $loggedInUser = auth()->user()->employee_id;
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select('department_id', 'sick_credits', 'vacation_credits')->first();
+                                ->select( 'sick_credits', 'vacation_credits')->first();
 
         $this->vacationCredits = $employeeInformation->vacation_credits;
         $this->sickCredits = $employeeInformation->sick_credits;
@@ -150,14 +150,18 @@ class HrTicketsTable extends Component
     }
 
     public function cancelForm($index){
-        $this->dispatch('triggerConfirmation');
+        // $this->dispatch('triggerConfirmation');
 
-        $HrTicketData = Hrticket::where('form_id', $index)->first();
-        if($HrTicketData){
-            $dataToUpdate = ['status' => 'Cancelled',
-            'cancelled_at' => now()];
-            // $this->authorize('delete', $leaveRequestData);
-            Hrticket::where('form_id', $index)->update($dataToUpdate);
+        $employee_id = auth()->user()->employee_id;
+
+        $data = Hrticket::where('employee_id', $employee_id)
+                        ->where('uuid', $index)
+                        ->select('form_id', 'status', 'cancelled_at') 
+                        ->first();
+        if($data){
+            $data->status = "Cancelled";
+            $data->cancelled_at = now();
+            $data->update();
         }
         return redirect()->route('HrTicketsTable', ['type' => $this->type]);
 

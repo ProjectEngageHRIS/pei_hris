@@ -59,8 +59,6 @@ class EmployeeFactory extends Factory
                 'name' => $this->faker->firstName,
                 'address' => $this->faker->address,
                 'phone_number' => $this->faker->phoneNumber,
-
-
             ];
         }
 
@@ -165,7 +163,7 @@ class EmployeeFactory extends Factory
             'landline_number' => $this->faker->phoneNumber,
             'gender' => $this->faker->randomElement(['Male', 'Female']),
             'high_school_school' => $this->faker->sentence(1), // Generate a random high school name
-            'high_school_course' => $this->faker->sentence(2), // Generate a random high school course
+            // 'high_school_course' => $this->faker->sentence(2), // Generate a random high school course
             'high_school_date_graduated' => $this->faker->date(), // Generate a random date for high school graduation
             'college_school' => $this->faker->sentence(2), // Generate a random college name
             'college_course' => $this->faker->sentence(2), // Generate a random college course
@@ -208,42 +206,42 @@ class EmployeeFactory extends Factory
            
             'name_of_mother' => $this->faker->firstName ,
             'name_of_father' => $this->faker->firstName ,
-            'college_id' => $collegeids,
-            'department_id' => $departmentids,
-            'is_department_head' => $is_department_head,
-            'is_college_head' =>  $is_college_head,
+            // 'college_id' => $collegeids,
+            // 'department_id' => $departmentids,
+            // 'is_department_head' => $is_department_head,
+            // 'is_college_head' =>  $is_college_head,
             
 
             'personal_email' => $this->faker->unique()->safeEmail,
-            'phone' => $this->faker->phoneNumber,
-            'address' => $this->faker->address,
+            // 'phone' => $this->faker->phoneNumber,
+            // 'address' => $this->faker->address,
             'start_of_employment' => $this->faker->date(),
             'end_of_employment' => $this->faker->optional()->date(),
             'employee_history' => json_encode($employeeHistory),
             'vacation_credits' => $this->faker->optional()->randomFloat(2, 0, 30),
             'sick_credits' => $this->faker->optional()->randomFloat(2, 0, 30),
-            'study_available_units' => $this->faker->optional()->numberBetween(0, 12),
-            'teach_available_units' => $this->faker->optional()->numberBetween(0, 12),
+            // 'study_available_units' => $this->faker->optional()->numberBetween(0, 12),
+            // 'teach_available_units' => $this->faker->optional()->numberBetween(0, 12),
             'current_position' => $this->faker->jobTitle,
-            'is_faculty' => $this->faker->boolean,
-            'salary' => $this->faker->randomFloat(2, 30000, 200000),
-            'cto' => $this->faker->randomFloat(2, 0, 100),
+            // 'is_faculty' => $this->faker->boolean,
+            // 'salary' => $this->faker->randomFloat(2, 30000, 200000),
+            // 'cto' => $this->faker->randomFloat(2, 0, 100),
             'active' => $this->faker->boolean,
             
-            // Documents
-            // 'emp_image' => $this->faker->optional()->imageUrl(),
-            'emp_diploma' => $this->faker->boolean ? 1 : 0,
-            'emp_tor' => $this->faker->boolean ? 1 : 0,
-            'emp_cert_of_trainings_seminars' => $this->faker->boolean ? 1 : 0,
-            'emp_auth_copy_of_csc_or_prc' => $this->faker->boolean ? 1 : 0,
-            'emp_auth_copy_of_prc_board_rating' => $this->faker->boolean ? 1 : 0,
-            'emp_med_certif' => $this->faker->boolean ? 1 : 0,
-            'emp_nbi_clearance' => $this->faker->boolean ? 1 : 0,
-            'emp_psa_birth_certif' => $this->faker->boolean ? 1 : 0,
-            'emp_psa_marriage_certif' => $this->faker->boolean ? 1 : 0,
-            'emp_service_record_from_other_govt_agency' => $this->faker->boolean ? 1 : 0,
-            'emp_approved_clearance_prev_employer' => $this->faker->boolean ? 1 : 0,
-            'other_documents' => $this->faker->boolean ? 1 : 0,
+            // // Documents
+            // // 'emp_image' => $this->faker->optional()->imageUrl(),
+            // 'emp_diploma' => $this->faker->boolean ? 1 : 0,
+            // 'emp_tor' => $this->faker->boolean ? 1 : 0,
+            // 'emp_cert_of_trainings_seminars' => $this->faker->boolean ? 1 : 0,
+            // 'emp_auth_copy_of_csc_or_prc' => $this->faker->boolean ? 1 : 0,
+            // 'emp_auth_copy_of_prc_board_rating' => $this->faker->boolean ? 1 : 0,
+            // 'emp_med_certif' => $this->faker->boolean ? 1 : 0,
+            // 'emp_nbi_clearance' => $this->faker->boolean ? 1 : 0,
+            // 'emp_psa_birth_certif' => $this->faker->boolean ? 1 : 0,
+            // 'emp_psa_marriage_certif' => $this->faker->boolean ? 1 : 0,
+            // 'emp_service_record_from_other_govt_agency' => $this->faker->boolean ? 1 : 0,
+            // 'emp_approved_clearance_prev_employer' => $this->faker->boolean ? 1 : 0,
+            // 'other_documents' => $this->faker->boolean ? 1 : 0,
         ];
     }
 }

@@ -56,6 +56,14 @@
         background-color: rgb(54 47 120 / var(--tw-bg-opacity));
         color:white;
     }
+    /* select{
+        background-color: #AC0C2E;
+    } */
+    /* option:hover{
+        color: white;
+        background-color: #AC0C2E;
+    } */
+    
     /* .hoverindigo{
         --tw-bg-opacity: 1;
         background-color: #FFFFFF;

@@ -49,7 +49,7 @@ class LeaveRequestFactory extends Factory
         ];
 
         return [
-            'employee_id' => 'SLE0001',
+            'employee_id' => 'SLE0002',
             'status' => $this->faker->randomElement(['reviewing', 'approved', 'denied']),
             'supervisor_email' => $this->faker->randomElement($emails),
             'application_date' => $this->faker->date(),

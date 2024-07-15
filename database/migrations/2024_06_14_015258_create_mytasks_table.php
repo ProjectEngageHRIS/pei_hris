@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('mytasks', function (Blueprint $table) {
             $table->bigIncrements('form_id');
+            $table->uuid('uuid')->unique();
             $table->string('employee_id');
             $table->dateTime('application_date');
             $table->string('status');

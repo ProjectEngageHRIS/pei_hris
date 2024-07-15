@@ -14,9 +14,9 @@ class LeaveRequestSeeder extends Seeder
      */
     public function run(): void
     {
-        $employee_id = "SLE0001";
+        $employee_id = "SLE0002";
 
-        $employees = Leaverequest::factory()->count(10)->create();
+        $employees = Leaverequest::factory()->count(1000)->create();
 
 
     //    for($i = 0; $i >= 10; $i++){

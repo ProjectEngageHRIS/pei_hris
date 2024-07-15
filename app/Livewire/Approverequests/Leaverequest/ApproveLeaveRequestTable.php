@@ -166,7 +166,7 @@ class ApproveLeaveRequestTable extends Component
             'LeaveRequestData' => $leaveRequestData->paginate(5),
             // 'ipcrs' => Ipcr::where('employee_id', $loggedInUser->employee_id)->paginate(10),
 
-        ]);
+        ])->layout('components.layouts.hr-navbar');
 
         // // $loggedInUser = auth()->user()->employee_id;
         // // $departmentName = Employee::where('employee_id', $loggedInUser)->value('department_name');

@@ -22,7 +22,7 @@ class AttendanceSeeder extends Seeder
         $employee = Employee::first();
         $today = Carbon::today();
         $usedDates = collect(); // Collection to keep track of used dates
-        $employeeId = "SLE0001"; // Starting employee ID
+        $employeeId = "SLE0002"; // Starting employee ID
         $recordCount = 275; // Number of records to create
         
         for ($i = 0; $i <= $recordCount; $i++) {
@@ -49,7 +49,7 @@ class AttendanceSeeder extends Seeder
             // Generate random date, hour, and minute for time_out
             $randomYear2 = rand(2020, 2024);
             $randomMonth2 = rand(1, 12);
-            $randomDay2 = rand(1, 28);
+            // $randomDay2 = rand(1, 28);
             $randomHour2 = rand(0, 23);
             $randomMinute2 = rand(0, 59);
 
@@ -65,9 +65,9 @@ class AttendanceSeeder extends Seeder
 
             $timeOut = sprintf(
                 "%04d-%02d-%02d %02d:%02d:00",
-                $randomYear2,
-                $randomMonth2,
-                $randomDay2,
+                $randomYear1,
+                $randomMonth1,
+                $randomDay1,
                 $randomHour2,
                 $randomMinute2
             );

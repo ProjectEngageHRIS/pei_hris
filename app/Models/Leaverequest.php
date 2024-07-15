@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Leaverequest extends Model
 {
@@ -11,6 +13,13 @@ class Leaverequest extends Model
 
     protected $primaryKey = 'form_id';
 
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
 
     protected $fillable = [
         'employee_id',
@@ -26,23 +35,5 @@ class Leaverequest extends Model
         'inclusive_end_date',
         'commutation',
         'commutation_signature_of_appli',
-        
-        // Approve requests
-        'total_earned_vaca',
-        'less_this_appli_vaca',
-        'balance_vaca',
-        'total_earned_sick',
-        'less_this_appli_sick',
-        'balance_sick',
-        'as_of_filling',
-        'auth_off_sig_a',
-        'status',
-        'status_description',
-        'auth_off_sig_b',
-        'days_with_pay',
-        'days_without_pay',
-        'others',
-        'disapprove_reason',
-        'auth_off_sig_c&&d'
     ];
 }

@@ -66,7 +66,7 @@ class LeaveRequestForm extends Component
     public function mount($type = null){
         $this->type = $type;
         $loggedInUser = auth()->user();
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position', 'salary', 'vacation_credits', 'sick_credits')
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position', 'vacation_credits', 'sick_credits')
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->first(); 
                           
@@ -205,7 +205,6 @@ class LeaveRequestForm extends Component
         }
         // dd($leaverequestdata->earned_description , $this->earned_description);
         
-
         $leaverequestdata->reason = $this->reason;
 
         $leaverequestdata->save();
@@ -215,13 +214,11 @@ class LeaveRequestForm extends Component
             ->first();
 
         
-        // Send email to the supervisor
-        Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
-        Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
+        // // Send email to the supervisor
+        // Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
+        // Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
 
-
-        $this->js("alert('Leave Request submitted!')"); 
-
+        $this->dispatch('triggerNotification');
 
         return redirect()->to(route('LeaveRequestTable'));
 

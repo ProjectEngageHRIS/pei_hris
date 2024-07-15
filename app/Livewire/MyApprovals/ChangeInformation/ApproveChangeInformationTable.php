@@ -103,7 +103,7 @@ class ApproveChangeInformationTable extends Component
 
         return view('livewire.my-approvals.change-information.approve-change-information-table', [
             'ChangeInfoData' => $results,
-        ]);
+        ])->layout('components.layouts.hr-navbar');
     }
 
     public function removeForm($index){

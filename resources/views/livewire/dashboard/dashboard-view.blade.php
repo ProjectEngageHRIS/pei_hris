@@ -69,18 +69,15 @@
     <!-- Center Container -->
     <div class="grid grid-cols-1 gap-4">
         @if ($activities->isEmpty())
-            <div class="lg:w-full lg:max-w-xl pt-5 text-center pb-5 bg-white rounded-lg shadow-lg mb-10 lg:mt-[-45px] mt-[0px]">
+            <div class="xl:w-128 pt-5 text-center pb-5 bg-white rounded-lg shadow-lg mb-10 xl:mt-[-45px] mt-[0px]">
                 <div class="flex flex-col items-start mb-2">
-                    {{-- <p class="mb-2 text-base font-semibold text-customGray1">Announcements</p>
-                    <p class="mb-2 text-sm font-medium text-customGray">Company news and announcements</p>
-                    <p class="text-sm italic font-medium text-customGray">(No announcements have been posted yet)</p> --}}
                     <img class="border-4 border-white w-200 h-200 "src="{{ asset( 'assets/announcement.png') }}" alt="user photo">
                 </div>
 
             </div>
         @else
             @foreach ($activities as $activity)
-                <div class="lg:w-full lg:max-w-xl pt-5 text-center bg-white rounded-lg shadow-lg mb-10 lg:mt-[-45px] mt-[0px]">
+                <div class="xl:w-full xl:max-w-xl pt-5 text-center bg-white rounded-lg shadow-lg mb-10 xl:mt-[-45px] mt-[0px]">
                     <div class="flex items-center px-6 mb-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 mr-2 text-customGray1">
                             <path d="M5.85 3.5a.75.75 0 0 0-1.117-1 9.719 9.719 0 0 0-2.348 4.876.75.75 0 0 0 1.479.248A8.219 8.219 0 0 1 5.85 3.5ZM19.267 2.5a.75.75 0 1 0-1.118 1 8.22 8.22 0 0 1 1.987 4.124.75.75 0 0 0 1.48-.248A9.72 9.72 0 0 0 19.266 2.5Z" />
