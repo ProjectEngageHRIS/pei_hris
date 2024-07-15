@@ -379,7 +379,7 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
                 $dtr = $employeeDtrGroup ? $employeeDtrGroup->firstWhere('attendance_date', $currentDate->toDateString()) : null;
                 
                 if ($dtr) {
-                    $sameDay = Carbon::parse($dtr->time_in)->isSameMonth(Carbon::parse($dtr->time_out));
+                    $sameDay = Carbon::parse($dtr->time_in)->isSameDay(Carbon::parse($dtr->time_out));
         
                     if ($sameDay) {
                         $timeIn = Carbon::parse($dtr->time_in)->format('h:i A');

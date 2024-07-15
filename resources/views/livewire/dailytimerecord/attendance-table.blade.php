@@ -32,12 +32,12 @@
         <div id="date-range-picker" class="flex-col items-center hidden p-5 bg-white rounded-lg shadow-lg">
             <div class="flex w-full mb-4">
                 <div class="w-1/2 pr-2">
-                    <label for="start-date" class="block text-sm font-medium text-customGray1">Start Date</label>
-                    <input type="date" id="start-date" class="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-customRed focus:border-customRed">
+                    <label for="start-date"  class="block text-sm font-medium text-customGray1">Start Date</label>
+                    <input type="date" id="start-date" wire:model="start_date" class="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-customRed focus:border-customRed">
                 </div>
                 <div class="w-1/2 pl-2">
                     <label for="end-date" class="block text-sm font-medium text-customGray1">End Date</label>
-                    <input type="date" id="end-date" class="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-customRed focus:border-customRed">
+                    <input type="date" id="end-date" wire:model="end_date" class="block w-full p-2 mt-1 border border-gray-300 rounded-md focus:ring-customRed focus:border-customRed">
                 </div>
             </div>
             <div class="flex justify-end w-full mb-4">

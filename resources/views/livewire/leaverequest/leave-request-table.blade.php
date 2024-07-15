@@ -234,21 +234,45 @@
                                         @endif
                                     </td>
                                     <td class="items-center py-4 text-center">
-
+                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                            </svg>
+                                        </button>
                                             @if ($leaverequest->status != "Cancelled")
-                                            <a id="cancel_button_{{ $leaverequest->form_id }}" class="flex items-center justify-center gap-2 py-2 cursor-pointer text-customRed hover:text-red-500">
-                                                Cancel
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4">
-                                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm2.78-4.22a.75.75 0 0 1-1.06 0L8 9.06l-1.72 1.72a.75.75 0 1 1-1.06-1.06L6.94 8 5.22 6.28a.75.75 0 0 1 1.06-1.06L8 6.94l1.72-1.72a.75.75 0 1 1 1.06 1.06L9.06 8l1.72 1.72a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" />
-                                                </svg>
-                                            </a>
+                                                <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                                    <!-- Dropdown content -->
+                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                        @if (is_null($leaverequest->leave_form))                                                            
+                                                            <li>
+                                                                <a id="" onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+
+                                                                {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->uuid]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                    <div class="py-2">
+                                                        <a id="cancel_button_{{ $leaverequest->uuid }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
+
+                                                        {{-- <a id="cancel_button_{{ $hrticket->uuid }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
+                                                    </div>
+                                                </div>
                                             @else
-                                                <p class="py-2 text-sm text-gray-400">
-                                                Nothing to show
-                                                </p>
+                                                <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                                    <!-- Dropdown content -->
+                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                        @if (is_null($leaverequest->leave_form))                                                            
+                                                            <li>
+                                                                <a id="" onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+
+                                                                {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->uuid]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
+                                                            </li>
+                                                        @endif
+                                                    </ul>
+                                                </div>
                                             @endif
                                     </td>
-                                        <div id="popup-modal_{{ $leaverequest->form_id }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                        <div id="popup-modal_{{ $leaverequest->uuid }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                             <div class="relative w-full max-w-md max-h-full p-4">
                                                 <div class="relative bg-white rounded-lg shadow ">
                                                     <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="popup-modal">
@@ -263,7 +287,7 @@
                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                             </svg>
                                                             <h3 class="mb-5 text-lg font-normal text-gray-500 ">Confirm cancellation?</h3>
-                                                            <button wire:click="removeLeaveRequest('{{$leaverequest->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                            <button wire:click="removeLeaveRequest('{{$leaverequest->uuid}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                 Yes
                                                             </button>
                                                             <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  ">No</button>

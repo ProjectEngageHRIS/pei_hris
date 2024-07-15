@@ -176,8 +176,8 @@ Route::get('/verify', [VerifyController::class, 'verify'])
 Route::middleware('auth')->group(function (){
     Route::get("/dashboard", LoginDashboard::class)->name('LoginDashboard');
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
-    Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
-    // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
+    // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
+    Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
 
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
 

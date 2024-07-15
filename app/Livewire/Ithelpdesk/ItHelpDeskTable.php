@@ -38,15 +38,6 @@ class ItHelpDeskTable extends Component
         $this->resetPage();
     }
 
-    public function mount(){
-        $loggedInUser = auth()->user()->employee_id;
-        $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select('department_id', 'sick_credits', 'vacation_credits')->first();
-
-        $this->vacationCredits = $employeeInformation->vacation_credits;
-        $this->sickCredits = $employeeInformation->sick_credits;
-    }
-
     public function render()
     {
         $loggedInUser = auth()->user();
@@ -111,11 +102,18 @@ class ItHelpDeskTable extends Component
     }
 
     public function cancelForm($index){
-        $leaveRequestData = Ittickets::where('form_id', $index)->first();
-        $dataToUpdate = ['status' => 'Cancelled',
-                         'cancelled_at' => now()];
-        // $this->authorize('delete', $leaveRequestData);
-        Ittickets::where('form_id', $index)->update($dataToUpdate);
+
+        $employee_id = auth()->user()->employee_id;
+        $data = Ittickets::where('employee_id', $employee_id)
+                                    ->where('uuid', $index)
+                                    ->select('form_id', 'status', 'cancelled_at') 
+                                    ->first();
+        if ($data) {
+            $data->status = "Cancelled";
+            $data->cancelled_at = now();
+            $data->update();
+        }
+        
         return redirect()->route('ItHelpDeskTable');
     }
 }

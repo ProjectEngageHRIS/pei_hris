@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('leaverequests', function (Blueprint $table) {
             $table->bigIncrements('form_id');
+            $table->ulid('ulid')->unique();
             $table->string('employee_id');
             $table->string('status')->default('reviewing');
             $table->string('supervisor_email', 100)->nullable();

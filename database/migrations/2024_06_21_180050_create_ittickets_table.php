@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('ittickets', function (Blueprint $table) {
             $table->bigIncrements('form_id');
+            $table->uuid('uuid')->unique();
             $table->date('application_date')->default(now());
             $table->string('status', 20);
             $table->string('employee_id');

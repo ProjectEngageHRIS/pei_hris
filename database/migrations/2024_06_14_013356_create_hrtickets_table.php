@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('hrtickets', function (Blueprint $table) {
             $table->bigIncrements('form_id');
+            $table->uuid('uuid')->unique();
             $table->string('employee_id');
             // $table->string('reference_num')->primary();
             $table->string('status', 20);

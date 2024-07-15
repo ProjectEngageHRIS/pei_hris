@@ -57,7 +57,7 @@ class ItHelpDeskView extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->find($index);
+        $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
         
         if(!$it_ticket|| $it_ticket->employee_id != $loggedInUser){
             return ;

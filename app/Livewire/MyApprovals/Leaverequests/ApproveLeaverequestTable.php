@@ -37,14 +37,14 @@ class ApproveLeaverequestTable extends Component
         $this->resetPage();
     }
 
-    public function mount(){
-        $loggedInUser = auth()->user()->employee_id;
-        $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select('department_id', 'sick_credits', 'vacation_credits')->first();
+    // public function mount(){
+    //     $loggedInUser = auth()->user()->employee_id;
+    //     $employeeInformation = Employee::where('employee_id', $loggedInUser)
+    //                             ->select('sick_credits', 'vacation_credits')->first();
 
-        $this->vacationCredits = $employeeInformation->vacation_credits;
-        $this->sickCredits = $employeeInformation->sick_credits;
-    }
+    //     $this->vacationCredits = $employeeInformation->vacation_credits;
+    //     $this->sickCredits = $employeeInformation->sick_credits;
+    // }
 
     public function render()
     {
@@ -103,31 +103,31 @@ class ApproveLeaverequestTable extends Component
         ])->layout('components.layouts.hr-navbar');
     }
 
-    public function download($reference_num){
-        $leaveRequestData = Leaverequest::where('reference_num', $reference_num)->first();
-        $image = base64_decode($leaveRequestData->leave_form);
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $contentType = $finfo->buffer($image);
-        // dd($contentType);
-        switch($contentType){
-            case "application/pdf":
-                $fileName = "leaverequest.pdf";
-                break;
-            case "image/jpeg":
-                $fileName = "leaverequest.jpg";
-                break;
-            case "image/png":
-                $fileName = "leaverequest.png";
-                break;
-            default:
-                abort(404);
-        }
-        return Response::make($image, 200, [
-            'Content-Type' => $contentType,
-            'Content-Disposition' => 'attachment; filename="'.$fileName.'"'
-        ]);
+    // public function download($reference_num){
+    //     $leaveRequestData = Leaverequest::where('reference_num', $reference_num)->first();
+    //     $image = base64_decode($leaveRequestData->leave_form);
+    //     $finfo = new finfo(FILEINFO_MIME_TYPE);
+    //     $contentType = $finfo->buffer($image);
+    //     // dd($contentType);
+    //     switch($contentType){
+    //         case "application/pdf":
+    //             $fileName = "leaverequest.pdf";
+    //             break;
+    //         case "image/jpeg":
+    //             $fileName = "leaverequest.jpg";
+    //             break;
+    //         case "image/png":
+    //             $fileName = "leaverequest.png";
+    //             break;
+    //         default:
+    //             abort(404);
+    //     }
+    //     return Response::make($image, 200, [
+    //         'Content-Type' => $contentType,
+    //         'Content-Disposition' => 'attachment; filename="'.$fileName.'"'
+    //     ]);
     
-    }
+    // }
 
 
     public function getEmployeeName($employee_id){
@@ -136,7 +136,7 @@ class ApproveLeaverequestTable extends Component
     }
     
     public function removeLeaveRequest($index){
-        $leaveRequestData = Leaverequest::where('form_id', $index)->first();
+        // $leaveRequestData = Leaverequest::where('form_id', $index)->first();
         $dataToUpdate = ['status' => 'Cancelled',
                          'cancelled_at' => now()];
         // $this->authorize('delete', $leaveRequestData);

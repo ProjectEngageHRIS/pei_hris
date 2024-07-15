@@ -139,11 +139,16 @@ class LeaveRequestTable extends Component
     // }
 
     public function removeLeaveRequest($index){
-        $leaveRequestData = Leaverequest::where('form_id', $index)->first();
-        $dataToUpdate = ['status' => 'Cancelled',
-                         'cancelled_at' => now()];
-        // $this->authorize('delete', $leaveRequestData);
-        Leaverequest::where('form_id', $index)->update($dataToUpdate);
+        $employee_id = auth()->user()->employee_id;
+        $leaveRequestData = Leaverequest::where('employee_id', $employee_id)
+                                    ->where('uuid', $index)
+                                    ->select('form_id', 'status', 'cancelled_at') 
+                                    ->first();
+        if ($leaveRequestData) {
+            $leaveRequestData->status = "Cancelled";
+            $leaveRequestData->cancelled_at = now();
+            $leaveRequestData->update();
+        }
         return redirect()->route('LeaveRequestTable');
     }
 }

@@ -695,7 +695,7 @@
                                                     <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a onclick="location.href='{{ route('ApproveHrTicketsForm', ['index' => $hrticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                <a onclick="location.href='{{ route('ApproveHrTicketsForm', ['index' => $hrticket->uuid]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                             </li>
                                                     </ul>
                                                     <div class="py-2">
@@ -709,7 +709,7 @@
                                                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                         @if (is_null($hrticket->leave_form))                                                            
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('ApproveHrTicketsForm', ['index' => $hrticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                <a id="" onclick="location.href='{{ route('ApproveHrTicketsForm', ['index' => $hrticket->uuid]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
 
                                                                 {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $hrticket->form_id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
                                                             </li>
