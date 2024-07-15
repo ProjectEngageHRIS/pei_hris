@@ -71,10 +71,15 @@ class LeaveRequestView extends Component
         try {
             $leaverequest = $this->editLeaveRequest($index);
             // $this->authorize('update', [$leaverequest]);
+            if (is_null($leaverequest)) {
+                return redirect()->to(route('LeaveRequestTable'));
+            }
         } catch (AuthorizationException $e) {
             return redirect()->to(route('LeaveRequestTable'));
             abort(404);
         }
+
+        
 
         $this->index = $index;
         
@@ -117,11 +122,10 @@ class LeaveRequestView extends Component
         // $leaverequest =  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
         $leaverequest =  Leaverequest::where('employee_id', auth()->user()->employee_id)->find($index);
-        
         if(!$leaverequest || $leaverequest->employee_id != $loggedInUser){
-            return False;
+            return ;
         }
-        // $this->leaverequest = $leaverequest;
+
         return $leaverequest;
     }
 

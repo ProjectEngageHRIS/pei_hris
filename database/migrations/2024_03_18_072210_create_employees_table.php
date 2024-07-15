@@ -68,31 +68,33 @@ return new class extends Migration
 
 
             $table->string('personal_email', 100);
-            $table->string('address');
+            // $table->string('address');
 
-            $table->integer('study_available_units')->nullable();
-            $table->integer('teach_available_units')->nullable();
-            $table->boolean('is_faculty');                         
-            $table->decimal('salary', 10, 2);
-            $table->decimal('cto', 8, 2);
-            $table->json('college_id')->nullable();
-            $table->json('department_id')->nullable();
-            $table->json('is_college_head')->nullable();
-            $table->json('is_department_head')->nullable();
-            $table->string('phone');
+            // $table->integer('study_available_units')->nullable();
+            // $table->integer('teach_available_units')->nullable();
+            // $table->boolean('is_faculty');                         
+            // $table->decimal('salary', 10, 2);
+            // $table->decimal('cto', 8, 2);
+            // $table->json('college_id')->nullable();
+            // $table->json('department_id')->nullable();
+            // $table->json('is_college_head')->nullable();
+            // $table->json('is_department_head')->nullable();
+            // $table->string('phone');
+
+
             // $table->binary('emp_image')->nullable();
-            $table->boolean('emp_diploma')->nullable();
-            $table->boolean('emp_tor')->nullable();
-            $table->boolean('emp_cert_of_trainings_seminars')->nullable();
-            $table->boolean('emp_auth_copy_of_csc_or_prc')->nullable();
-            $table->boolean('emp_auth_copy_of_prc_board_rating')->nullable();
-            $table->boolean('emp_med_certif')->nullable(); 
-            $table->boolean('emp_nbi_clearance')->nullable();
-            $table->boolean('emp_psa_birth_certif')->nullable();
-            $table->boolean('emp_psa_marriage_certif')->nullable();
-            $table->boolean('emp_service_record_from_other_govt_agency')->nullable();
-            $table->boolean('emp_approved_clearance_prev_employer')->nullable();
-            $table->boolean('other_documents')->nullable();
+            // $table->boolean('emp_diploma')->nullable();
+            // $table->boolean('emp_tor')->nullable();
+            // $table->boolean('emp_cert_of_trainings_seminars')->nullable();
+            // $table->boolean('emp_auth_copy_of_csc_or_prc')->nullable();
+            // $table->boolean('emp_auth_copy_of_prc_board_rating')->nullable();
+            // $table->boolean('emp_med_certif')->nullable(); 
+            // $table->boolean('emp_nbi_clearance')->nullable();
+            // $table->boolean('emp_psa_birth_certif')->nullable();
+            // $table->boolean('emp_psa_marriage_certif')->nullable();
+            // $table->boolean('emp_service_record_from_other_govt_agency')->nullable();
+            // $table->boolean('emp_approved_clearance_prev_employer')->nullable();
+            // $table->boolean('other_documents')->nullable();
 
             // Account Creation
 

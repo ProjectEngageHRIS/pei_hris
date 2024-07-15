@@ -550,9 +550,9 @@
                     @endif
                 </tbody>
             </table>
-            <div class="p-4 bg-gray-100 w-full rounded-b-lg">
-                    {{ $EmployeeData->links() }}
-                </div>
+            <div class="p-4 bg-gray-100 w-full rounded-b-lg " wire:scroll>
+                    {{ $EmployeeData->links(data : ['scrollTo' => False]) }}
+            </div>
           </div>
       </div>
   </div>
@@ -684,7 +684,21 @@
           axisBorder: {
               show: false,
           },
+          animations: {
+            enabled: false,
+            easing: 'easeinout',
+            speed: 800,
+            animateGradually: {
+                enabled: true,
+                delay: 150
+            },
+            dynamicAnimation: {
+                enabled: true,
+                speed: 350
+            }
+        }
           },
+
       }
       }
   

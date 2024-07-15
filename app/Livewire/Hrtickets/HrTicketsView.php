@@ -106,8 +106,11 @@ class HrTicketsView extends Component
         try {
             $hrticketdata = $this->editForm($index);
             // $this->authorize('update', [$hrticket]);
+            if (is_null($hrticketdata)) {
+                return redirect()->to(route('HrTicketsTable'));
+            }
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('LeaveRequestTable'));
+            return redirect()->to(route('HrTicketsTable'));
             abort(404);
         }
 
@@ -315,7 +318,7 @@ class HrTicketsView extends Component
         $hrticket= Hrticket::where('employee_id', $loggedInUser)->find($index);
         
         if(!$hrticket || $hrticket->employee_id != $loggedInUser){
-            return False;
+            return ;
         }
         // $this->hrticket= $hrticket;
         return $hrticket;

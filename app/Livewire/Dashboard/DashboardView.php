@@ -96,7 +96,7 @@ class DashboardView extends Component
 
         $loggedInUser = auth()->user()->employee_id;
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select('college_id', 'sick_credits', 'vacation_credits', 'first_name', 'middle_name', 'last_name', 'gender', 'current_position', 'department', 'emp_image')->first();
+                                ->select('sick_credits', 'vacation_credits', 'first_name', 'middle_name', 'last_name', 'gender', 'current_position', 'department', 'emp_image')->first();
         $employeeInformation->middle_name = $employeeInformation->middle_name ?? " ";
         $this->employee_name = $employeeInformation->first_name . ' ' .  $employeeInformation->middle_name . ' ' .  $employeeInformation->last_name;
         $this->position = $employeeInformation->current_position;

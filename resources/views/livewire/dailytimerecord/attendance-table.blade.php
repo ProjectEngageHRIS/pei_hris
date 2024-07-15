@@ -130,7 +130,7 @@
         </div>
     </div>
 </div>
-<div class="relative overflow-x-auto">
+<div id="data-table" class="relative overflow-x-auto">
     <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right ">
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
             <tr>
@@ -229,8 +229,8 @@
         </div>
     </table>
 </div>
-<div class="w-full p-4 overflow-x-auto bg-gray-100 rounded-b-lg">
-    {{ $DtrData->links()}}
+<div  class="w-full p-4 overflow-x-auto bg-gray-100 rounded-b-lg">
+    {{ $DtrData->links(data : ['scrollTo' => '#data-table'])}}
 </div>
 
 <script>

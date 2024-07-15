@@ -5,6 +5,7 @@ namespace App\Livewire\Mytasks;
 use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class MyTasksView extends Component
 {
@@ -35,10 +36,14 @@ class MyTasksView extends Component
         try {
             $task = $this->editForm($index);
             // $this->authorize('update', [$leaverequest]);
+            if (is_null( $task)) {
+                return redirect()->to(route('TasksTable'));
+            }
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('LeaveRequestTable'));
+            return redirect()->to(route('TasksTable'));
             abort(404);
         }
+
         $this->index = $index;
 
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department',  'employee_email')
@@ -84,10 +89,10 @@ class MyTasksView extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $task =  Mytasks::where('employee_id', auth()->user()->employee_id)->find($index);
+        $task = Mytasks::where('employee_id', auth()->user()->employee_id)->find($index);
         
-        if(!$task|| $task->employee_id != $loggedInUser){
-            return False;
+        if(!$task || $task->employee_id != $loggedInUser){
+            return ;
         }
         return $task ;
     }
@@ -95,6 +100,16 @@ class MyTasksView extends Component
     
     public function render()
     {
+        // try {
+        //     $task = $this->editForm($this->index);
+        //     if (is_null( $task)) {
+        //         redirect()->to(route('TasksTable'));
+        //     }
+        // } catch (AuthorizationException $e) {
+        //     redirect()->to(route('TasksTable'));
+        //     abort(404);
+        // }
+
         return view('livewire.mytasks.my-tasks-view');
     }
 }
