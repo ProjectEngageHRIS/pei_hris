@@ -64,6 +64,7 @@ return new class extends Migration
             $table->date('end_of_employment')->nullable();
             $table->decimal('vacation_credits')->nullable();
             $table->decimal('sick_credits')->nullable();
+            $table->string('payroll_status', 50)->nullable();
             $table->boolean('active');
 
 

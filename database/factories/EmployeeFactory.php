@@ -227,6 +227,7 @@ class EmployeeFactory extends Factory
             // 'salary' => $this->faker->randomFloat(2, 30000, 200000),
             // 'cto' => $this->faker->randomFloat(2, 0, 100),
             'active' => $this->faker->boolean,
+            'payroll_status' => $this->faker->randomElement(['Awaiting Approval', 'Approved', 'Overdue', 'Draft'])
             
             // // Documents
             // // 'emp_image' => $this->faker->optional()->imageUrl(),
