@@ -54,7 +54,7 @@
           </div>
       </div>
       <!-- Employee Table -->
-      <div class="relative shadow-md">
+      <div class="relative overflow-x-auto shadow-md">
           <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
              <!-- Add user button -->
               <a href="{{route('EmployeesTable')}}" data-modal-toggle="authentication-modal" class="inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
@@ -296,7 +296,7 @@
                   </div>
               </div>
           </div>
-          <div class="overflow-x-auto rounded-b-lg">
+          <div class=" rounded-b-lg">
             <table class="w-full text-sm text-left text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr >
@@ -306,7 +306,7 @@
                         <th scope="col" class="px-6 py-3">
                             Name
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3">
                             Department
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -321,7 +321,7 @@
                         <th scope="col" class="px-6 py-3">
                             Joined Date
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 " >
                             Action/s
                         </th>
                     </tr>
@@ -388,7 +388,7 @@
                                     {{$employee->start_of_employment}}
                                 </td>
                                 <td class="items-center text-center py-4">
-                                    <div x-data="{ isOpen: false }" @click.away="isOpen = false">
+                                    <div x-data="{ isOpen: false }" @click.away="isOpen = false" class="">
                                         <!-- Three dots button to toggle dropdown -->
                                         <button @click="isOpen = !isOpen" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
@@ -423,7 +423,7 @@
                                 <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
                                     <div class="relative p-4 w-full max-w-md max-h-full">
                                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                            <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                            <button type="button" @click="hideDeactivateModal('{{ $employee->employee_id }}')"  data-modal-hide="popup-modal" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" >
                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                 </svg>
@@ -438,7 +438,7 @@
                                                     <button wire:click="cancelForm('{{$employee->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                         Yes
                                                     </button>
-                                                    <button data-modal-hide="popup-modal" id="close_button" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                    <button @click="hideDeactivateModal('{{ $employee->employee_id }}')" data-modal-hide="popup-modal" id="close_button" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                                         No
                                                     </button>
                                                 </div>
@@ -458,7 +458,7 @@
                                                 <h3 class="text-xl font-semibold text-gray-900">
                                                     Employee Information
                                                 </h3>
-                                                <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto" data-modal-hide="view-modal">
+                                                <button type="button" onclick="hideViewModal('{{ $employee->employee_id }}')" data-modal-hide="view-modal_{{ $employee->employee_id }}" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                     </svg>
@@ -560,14 +560,36 @@
 <script>
     function openModal(employeeId) {
         const modalId = 'view-modal_' + employeeId;
+        alert(modalId)
         const modal = document.getElementById(modalId);
         if (modal) {
             modal.classList.remove('hidden');
         }
     }
 
+    function hideViewModal(employeeId) {
+        const modalId = 'view-modal_' + employeeId;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        } else {
+            console.error(`Modal with id ${modalId} does not exist.`);
+        }
+    }
+
+    function hideDeactivateModal(employeeId) {
+        const modalId = 'popup-modal_' + employeeId;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        } else {
+            console.error(`Modal with id ${modalId} does not exist.`);
+        }
+    }
+
     function openDeactivateModal(employeeId) {
         const modalId = 'popup-modal_' + employeeId;
+        alert(modalId)
         const modal = document.getElementById(modalId);
         if (modal) {
             modal.classList.remove('hidden');

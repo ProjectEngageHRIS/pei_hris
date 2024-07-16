@@ -286,10 +286,10 @@ class ApproveHrTicketsForm extends Component
     }
 
     public function submit(){
-        $hrticketdata = Hrticket::where('uuid', $this->form_number)->first();
+        $hrticketdata = Hrticket::where('uuid', $this->index)->first();
 
         $hrticketdata->status = $this->status;
-        // $this->js("alert('HR Ticket Status Updated!')"); 
+
         $hrticketdata->update();
 
         $this->dispatch('triggerNotification');
@@ -299,18 +299,18 @@ class ApproveHrTicketsForm extends Component
 
     }
 
-    public function decline(){
-        $hrticketdata = Hrticket::where('form_id', $this->ticket_number)->first();
+    // public function decline(){
+    //     $hrticketdata = Hrticket::where('form_id', $this->ticket_number)->first();
 
-        $hrticketdata->status = "Declined";
+    //     $hrticketdata->status = "Declined";
 
-        $hrticketdata->update();
+    //     $hrticketdata->update();
 
-        $this->dispatch('triggerNotification');
+    //     $this->dispatch('triggerNotification');
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+    //     return redirect()->to(route('ApproveHrTicketsTable'));
 
-    }
+    // }
 
 
     public function editForm($index){

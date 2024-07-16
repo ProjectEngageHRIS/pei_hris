@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Support\Str;
 use Spatie\MediaLibrary\HasMedia;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
@@ -11,6 +12,14 @@ class ChangeInformation extends Model
 {
     use HasFactory;
     protected $primaryKey = 'form_id';
+
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->uuid = Str::uuid();
+        });
+    }
 
     protected $casts = [
         'employee_history' => 'array',

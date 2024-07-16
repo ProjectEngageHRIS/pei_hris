@@ -38,15 +38,6 @@ class ApproveItTicketsTable extends Component
         $this->resetPage();
     }
 
-    public function mount(){
-        $loggedInUser = auth()->user()->employee_id;
-        $employeeInformation = Employee::where('employee_id', $loggedInUser)
-                                ->select('department_id', 'sick_credits', 'vacation_credits')->first();
-
-        $this->vacationCredits = $employeeInformation->vacation_credits;
-        $this->sickCredits = $employeeInformation->sick_credits;
-    }
-
     public function render()
     {
         $loggedInUser = auth()->user();

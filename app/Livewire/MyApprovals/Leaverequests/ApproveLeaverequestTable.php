@@ -140,7 +140,7 @@ class ApproveLeaverequestTable extends Component
         $dataToUpdate = ['status' => 'Cancelled',
                          'cancelled_at' => now()];
         // $this->authorize('delete', $leaveRequestData);
-        Leaverequest::where('form_id', $index)->update($dataToUpdate);
+        Leaverequest::where('uuid', $index)->update($dataToUpdate);
         return redirect()->route('ApproveLeaveRequestTable');
     }
 

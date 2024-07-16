@@ -186,30 +186,30 @@
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     @if($leaverequest->status == "Pending")
-                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg me-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1 text-white">
-                                                <path fill-rule="evenodd" d="M1 8a7 7 0 1 1 14 0A7 7 0 0 1 1 8Zm7.75-4.25a.75.75 0 0 0-1.5 0V8c0 .414.336.75.75.75h3.25a.75.75 0 0 0 0-1.5h-2.5v-3.5Z" clip-rule="evenodd" />
-                                            </svg>
+                                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <span  class="text-gray-200 text-xs bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-amber-300 dark:hover:bg-amber-600 dark:focus:ring-amber-800">
+                                            <svg class="grid grid-cols-1 text-xs w-6 h-6 text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
+                                                <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                                                <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
+                                            </svg>    
                                             {{ $leaverequest->status }} &nbsp;
                                         </span>
-
                                     </th>
                                     @elseif($leaverequest->status == "Approved")
-                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen me-2">
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1 text-white">
-                                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm3.844-8.791a.75.75 0 0 0-1.188-.918l-3.7 4.79-1.649-1.833a.75.75 0 1 0-1.114 1.004l2.25 2.5a.75.75 0 0 0 1.15-.043l4.25-5.5Z" clip-rule="evenodd" />
+                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            <span  class="text-gray-200 text-xs bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                                <svg class="w-6 h-6 text-white mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                                                 </svg>
                                                 {{ $leaverequest->status }} &nbsp;
                                             </span>
                                         </th>
                                     @else
-                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customRed me-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 mr-1 text-white">
-                                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm2.78-4.22a.75.75 0 0 1-1.06 0L8 9.06l-1.72 1.72a.75.75 0 1 1-1.06-1.06L6.94 8 5.22 6.28a.75.75 0 0 1 1.06-1.06L8 6.94l1.72-1.72a.75.75 0 1 1 1.06 1.06L9.06 8l1.72 1.72a.75.75 0 0 1 0 1.06Z" clip-rule="evenodd" />
-                                            </svg>
+                                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <span  class="text-gray-200 text-xs bg-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
+                                            <svg class="w-6 h-6 text-white mr-1 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"  >
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                            </svg>   
                                             {{ $leaverequest->status }}
                                         </span>
                                     </th>
@@ -233,70 +233,61 @@
                                             <span class="font-medium text-gray-700">End Date:</span> {{$leaverequest->inclusive_end_date}}
                                         @endif
                                     </td>
+
+                                    
                                     <td class="items-center py-4 text-center">
-                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-                                            @if ($leaverequest->status != "Cancelled")
-                                                <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                    <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                        @if (is_null($leaverequest->leave_form))                                                            
-                                                            <li>
-                                                                <a id="" onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
-
-                                                                {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->uuid]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
-                                                            </li>
-                                                        @endif
+                                        <div class="top-0" x-data="{ isOpen: false }" @click.away="isOpen = false">
+                                            <!-- Three dots button to toggle dropdown -->
+                                            <button @click="isOpen = !isOpen; adjustDropdownPosition('{{ $loop->index }}')" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                                </svg>
+                                            </button>
+                                            <!-- Dropdown menu -->
+                                            <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute mt-2 z-40 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{ $loop->index }}">
+                                                <!-- Dropdown content -->
+                                                    <ul class="py-2 text-sm divide-y-2 text-gray-700 dark:text-gray-200">
+                                                        <li>
+                                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                        </li>
                                                     </ul>
+                                                @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Approved" )
                                                     <div class="py-2">
-                                                        <a id="cancel_button_{{ $leaverequest->uuid }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
-
-                                                        {{-- <a id="cancel_button_{{ $hrticket->uuid }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
+                                                        <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
                                                     </div>
-                                                </div>
-                                            @else
-                                                <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                    <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                        @if (is_null($leaverequest->leave_form))                                                            
-                                                            <li>
-                                                                <a id="" onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                @endif
 
-                                                                {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->uuid]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
-                                                            </li>
-                                                        @endif
-                                                    </ul>
-                                                </div>
-                                            @endif
-                                    </td>
-                                        <div id="popup-modal_{{ $leaverequest->uuid }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
-                                            <div class="relative w-full max-w-md max-h-full p-4">
-                                                <div class="relative bg-white rounded-lg shadow ">
-                                                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="popup-modal">
-                                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                        </svg>
-                                                        <span class="sr-only">Close modal</span>
-                                                    </button>
-                                                    <div class="p-4 md:p-5">
-                                                        <div class="p-4 text-center md:p-5">
-                                                            <svg class="w-12 h-12 mx-auto mb-4 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                            </svg>
-                                                            <h3 class="mb-5 text-lg font-normal text-gray-500 ">Confirm cancellation?</h3>
-                                                            <button wire:click="removeLeaveRequest('{{$leaverequest->uuid}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                                Yes
-                                                            </button>
-                                                            <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  ">No</button>
-                                                        </div>
-                                                    </div>
-
-                                                </div>
                                             </div>
                                         </div>
+                                    </td>
+                                    
+                                    <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                        <div class="relative w-full max-w-md max-h-full p-4">
+                                            <div class="relative bg-white rounded-lg shadow ">
+                                                <button type="button" @click="closeCancelModal('{{ $loop->index }}')"  class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="popup-modal">
+                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                    </svg>
+                                                    <span class="sr-only">Close modal</span>
+                                                </button>
+                                                <div class="p-4 md:p-5">
+                                                    <div class="p-4 text-center md:p-5">
+                                                        <svg class="w-12 h-12 mx-auto mb-4 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                        </svg>
+                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 ">Confirm cancellation?</h3>
+                                                        <button wire:click="removeLeaveRequest('{{$leaverequest->uuid}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                            Yes
+                                                        </button>
+                                                        <button type="button" @click="closeCancelModal('{{ $loop->index }}')" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  ">No</button>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+
+
                                 </tr>
                             @endforeach
                         @endif
@@ -313,6 +304,36 @@
 </div>
 
 <script>
+
+    function adjustDropdownPosition(index) {
+        const dropdown = document.getElementById('dropdown' + index);
+        if (dropdown) {
+            const rect = dropdown.getBoundingClientRect();
+            const isLeftAligned = rect.right > window.innerWidth;
+            dropdown.classList.toggle('left-10', isLeftAligned);
+            dropdown.classList.toggle('right-10', !isLeftAligned);
+        }
+    }
+
+    
+    function closeCancelModal(index) {
+        const modalId = 'popup-modal_' + index;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        } else {
+            console.error(`Modal with id ${modalId} does not exist.`);
+        }
+    }
+
+    function openCancelModal(index) {
+        const modalId = 'popup-modal_' + index;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         // Select all cancel buttons and add event listeners
         document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {

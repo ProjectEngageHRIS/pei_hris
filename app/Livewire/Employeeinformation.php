@@ -64,11 +64,11 @@ class Employeeinformation extends Component
         $employee = Employee::where('employee_id', $loggedInUser->employee_id)->first(); // Replace $employee_id with the actual employee ID\
         
         $this->employeeImage = $employee->emp_image;
-        $departmentName = DB::table('departments')->where('department_id', $employee->department_id[0])->value('department_name');
-        $collegeName = DB::table('colleges')->where('college_id', $employee->college_id[0])->value('college_name');
+        // $departmentName = DB::table('departments')->where('department_id', $employee->department_id[0])->value('department_name');
+        // $collegeName = DB::table('colleges')->where('college_id', $employee->college_id[0])->value('college_name');
 
-        $this->departmentName = $departmentName;
-        $this->collegeName = $collegeName;
+        // $this->departmentName = $departmentName;
+        // $this->collegeName = $collegeName;
         $this->nickname = $employee->nickname;
         // $this->employeeRecord = Employee::where('employee_id', $loggedInUser->employee_id)->first();
         $this->first_name = $employee->first_name;
