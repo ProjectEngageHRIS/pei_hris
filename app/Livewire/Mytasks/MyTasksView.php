@@ -89,8 +89,7 @@ class MyTasksView extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $task = Mytasks::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
-        
+        $task = Mytasks::whereJsonContains('target_employees', auth()->user()->employee_id)->where('uuid', $index)->first();
         if(!$task || $task->employee_id != $loggedInUser){
             return ;
         }

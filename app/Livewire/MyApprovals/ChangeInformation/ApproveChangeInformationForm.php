@@ -133,7 +133,7 @@ class ApproveChangeInformationForm extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $changeInfoData =  ChangeInformation::where('form_id', $this->index)->first();
+        $changeInfoData =  ChangeInformation::where('uuid', $this->index)->first();
         
         if(!$changeInfoData || $changeInfoData->employee_id != $loggedInUser){
             return False;
@@ -143,21 +143,21 @@ class ApproveChangeInformationForm extends Component
     }
 
 
-    private function generateRefNumber(){
-         $characters = '0123456789';
-         $randomNumber = '';
-         for ($i = 0; $i < rand(10, 15); $i++) {
-             $randomNumber .= $characters[rand(0, strlen($characters) - 1)];
-         }
+    // private function generateRefNumber(){
+    //      $characters = '0123456789';
+    //      $randomNumber = '';
+    //      for ($i = 0; $i < rand(10, 15); $i++) {
+    //          $randomNumber .= $characters[rand(0, strlen($characters) - 1)];
+    //      }
  
-         // Get the current year
-         $currentYear = date('Y');
+    //      // Get the current year
+    //      $currentYear = date('Y');
  
-         // Concatenate the date and random number
-         $result = $currentYear . $randomNumber;
+    //      // Concatenate the date and random number
+    //      $result = $currentYear . $randomNumber;
  
-         return $result;
-     }
+    //      return $result;
+    //  }
 
 
     public function removeArrayImage($index, $request, $insideIndex = null){
@@ -263,45 +263,11 @@ class ApproveChangeInformationForm extends Component
         
     ];
 
-    protected $validationAttributes = [
-        'employeeHistory' => 'Employee History',
-        'employeeHistory.*.name_of_company' => 'Name of Company/Organization',
-        'employeeHistory.*.prev_position' => 'Position',
-        'employeeHistory.*.end_date' => 'Finished Date',
-        'employeeHistory.*.start_date' => 'Start Date',
-        'emp_image' => 'Employee Image',
-        // 'emp_diploma' => 'Employee Diploma',
-        // 'emp_tor' => 'Employee TOR',
-        // 'emp_cert_of_trainings_seminars' => 'Employee Certificate of Trainings Seminars',
-        // 'emp_auth_copy_of_csc_or_prc' => 'Employee Auth Copy of CSC or PRC',
-        // 'emp_auth_copy_of_prc_board_rating' => 'Employee Auth Copy of PRC Board Rating',
-        // 'emp_med_certif' => 'Employee Medical Certificate',
-        // 'emp_nbi_clearance' => 'Employee NBI Clearance',
-        // 'emp_psa_birth_certif' => 'Employee PSA Birth Certificate',
-        // 'emp_psa_marriage_certif' => 'Employee PSA Marriage Certificate',
-        // 'emp_service_record_from_other_govt_agency' => 'Employee Service Record from Other Govt Agency',
-        // 'emp_approved_clearance_prev_employer' => 'Employee Approved Clearance from Previous Employer',
-        // 'other_documents' => 'Other Documents'
-    ];
 
-    // protected $messages = [
-    //     'emp_diploma.*' => 'The Employee Diploma must be less than 3',
-    //     'emp_tor.*' => 'The Employee TOR must be less than 3',
-    //     'emp_cert_of_trainings_seminars.*' => 'The Employee Certificate of Trainings/Seminars must be less than 3',
-    //     'emp_auth_copy_of_csc_or_prc.*' => 'The Employee Authorization Copy of CSC or PRC must be less than 3',
-    //     'emp_auth_copy_of_prc_board_rating.*' => 'The Employee Authorization Copy of PRC Board Rating must be less than 3',
-    //     'emp_med_certif.*' => 'The Employee Medical Certificate must be less than 3',
-    //     'emp_nbi_clearance.*' => 'The Employee NBI Clearance must be less than 3',
-    //     'emp_psa_birth_certif.*' => 'The Employee PSA Birth Certificate must be less than 3',
-    //     'emp_psa_marriage_certif.*' => 'The Employee PSA Marriage Certificate must be less than 3',
-    //     'emp_service_record_from_other_govt_agency.*' => 'The Employee Service Record from Other Government Agency must be less than 3',
-    //     'emp_approved_clearance_prev_employer.*' => 'The Employee Approved Clearance from Previous Employer must be less than 3',
-    //     'other_documents.*' => 'Other documents must be less than 5'
-    // ];
-
+   
     public function submit(){
         if($this->status == "Approved"){
-            $changeInformationStatus = ChangeInformation::where('form_id', $this->index)->first();
+            $changeInformationStatus = ChangeInformation::where('uuid', $this->index)->first();
             $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
             $employee->first_name = $this->first_name;
             $employee->middle_name = $this->middle_name;
@@ -313,9 +279,8 @@ class ApproveChangeInformationForm extends Component
             // $employee->age = $this->age;
             $employee->gender = $this->gender;
             $employee->personal_email = $this->personal_email;
-            $employee->phone = $this->phone;
-            // $employee->birth_date = $this->birth_date;
-            $employee->address = $this->address;
+            $employee->phone_number = $this->phone;
+            $employee->home_address = $this->address;
 
 
             
@@ -388,13 +353,13 @@ class ApproveChangeInformationForm extends Component
                 'gender' => $employee->gender,
                 'civil_status' => $employee->civil_status,
                 'religion' => $employee->religion,
-                'phone'  => $employee->phone,
+                'phone_number'  => $employee->phone_number,
                 'birth_date' => $employee->birth_date,
-                'address' => $employee->address,
+                'home_address' => $employee->home_address,
                 'nickname' => $employee->nickname,
                 'employee_history' => $employee->employee_history,
                 'emp_image' => $employee->emp_image,
-                'other_documents' => json_encode($employee->other_documents, true),
+                // 'other_documents' => json_encode($employee->other_documents, true),
                 'updated_at' => now(),
             ];
 
@@ -412,7 +377,7 @@ class ApproveChangeInformationForm extends Component
         }
         
 
-        $changeInformationStatus = ChangeInformation::where('form_id', $this->index)
+        $changeInformationStatus = ChangeInformation::where('uuid', $this->index)
                                                         ->update(['Status' => $this->status,
                                                                 'updated_at' => now() ]);
 

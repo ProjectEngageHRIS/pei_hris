@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('change_information', function (Blueprint $table) {
             $table->bigIncrements('form_id');
+            $table->uuid('uuid')->unique();
             $table->dateTime('application_date');
             $table->string('employee_id');
             $table->string('status');
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->string('civil_status', 20)->nullable();
             $table->string('phone');
             // $table->date('birth_date');
-            $table->string('address');
+            $table->text('address');
             $table->json('employee_history')->nullable();
             $table->text('profile_summary')->nullable();
 

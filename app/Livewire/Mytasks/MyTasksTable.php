@@ -109,7 +109,7 @@ class MyTasksTable extends Component
         $dataToUpdate = ['status' => 'Cancelled',
                          'cancelled_at' => now()];
         // $this->authorize('delete', $leaveRequestData);
-        Mytasks::where('form_id', $index)->update($dataToUpdate);
+        Mytasks::where('uuid', $index)->update($dataToUpdate);
         return redirect()->route('TasksTable');
     }
 

@@ -243,45 +243,34 @@
                                         {{-- <a href="{{route('ipcredit', $it_ticket)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
                                         {{-- <a wire:click="removeIpcr({{$it_ticket->id}})" class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a> --}}
 
-                                    <td class="items-center text-center py-4">
-                                            <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                                </svg>
-                                            </button>
-                                            @if ($it_ticket->status != "Cancelled")
-                                                <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                        <td class="items-center text-center py-4">
+                                            <div class="top-0" x-data="{ isOpen: false }" @click.away="isOpen = false">
+                                                <button @click="isOpen = !isOpen; adjustDropdownPosition('{{ $loop->index }}')"class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
+                                                        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
+                                                    </svg>
+                                                </button>
+                                                <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute mt-2 z-40 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{ $loop->index }}">
                                                     <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
+                                                        <ul class="py-2 text-sm divide-y-2 text-gray-700 dark:text-gray-200">
                                                             <li>
-                                                                <a id="" onclick="location.href='{{ route('ApproveItHelpDeskForm', ['index' => $it_ticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                                <a onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                             </li>
-                                                    </ul>
-                                                    <div class="py-2">
-                                                        <a id="cancel_button_{{ $it_ticket->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
-
-                                                    </div>
+                                                        </ul>
+                                                    @if ($it_ticket->status != "Cancelled" && $it_ticket->status != "Approved" )
+                                                        <div class="py-2">
+                                                            <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
+                                                        </div>
+                                                    @endif
+    
                                                 </div>
-                                            @else
-                                                <div class="hidden  top-0 right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                    <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                        @if (is_null($it_ticket->leave_form))                                                            
-                                                            <li>
-                                                                <a id="" onclick="location.href='{{ route('ApproveItHelpDeskForm', ['index' => $it_ticket->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-
-                                                                {{-- <a onclick="location.href='{{ route('it_ticketsUpdate', ['index' => $it_ticket->form_id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
-                                                            </li>
-                                                        @endif
-                                                    </ul>
-                                                </div>
-                                            @endif
+                                            </div>
                                         </td>
 
-                                        <div id="popup-modal_{{ $it_ticket->form_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
+                                        <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
                                             <div class="relative p-4 w-full max-w-md max-h-full">
                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                    <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                                    <button type="button" @click="closeCancelModal('{{ $loop->index }}')"  class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                         </svg>
@@ -293,10 +282,12 @@
                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                             </svg>
                                                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
-                                                            <button wire:click="cancelForm('{{$it_ticket->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                            <button wire:click="cancelForm('{{$it_ticket->uuid}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                 Yes
                                                             </button>
-                                                            <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                            <button id="close_button" @click="closeCancelModal('{{ $loop->index }}')" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                                No
+                                                            </button>
                                                         </div>
                                                     </div>
                                     
@@ -349,6 +340,34 @@
 </div>
 
 <script>
+    
+    function adjustDropdownPosition(index) {
+        const dropdown = document.getElementById('dropdown' + index);
+        if (dropdown) {
+            const rect = dropdown.getBoundingClientRect();
+            const isLeftAligned = rect.right > window.innerWidth;
+            dropdown.classList.toggle('left-10', isLeftAligned);
+            dropdown.classList.toggle('right-10', !isLeftAligned);
+        }
+    }
+
+    
+    function closeCancelModal(index) {
+        const modalId = 'popup-modal_' + index;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+
+    function openCancelModal(index) {
+        const modalId = 'popup-modal_' + index;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+    
     document.addEventListener('DOMContentLoaded', () => {
         // Select all cancel buttons and add event listeners
         document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {

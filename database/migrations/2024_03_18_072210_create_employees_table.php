@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('department', 50)->nullable();
             $table->string('inside_department', 100)->nullable();
             $table->string('employee_type',  50);
-            $table->string('home_address');
-            $table->string('provincial_address')->nullable();
+            $table->text('home_address');
+            $table->text('provincial_address')->nullable();
             $table->tinyText('phone_number', 20);
             $table->string('landline_number', 30)->nullable();
             $table->string('employee_email', 100)->nullable();

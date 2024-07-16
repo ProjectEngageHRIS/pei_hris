@@ -27,12 +27,12 @@
         </div>
         <br>
 
-        <div class="shadow-md overflow-x-auto rounded-t-lg bg-white pb-4 w-full" >
+        <div class="w-full pb-4 mt-4 overflow-x-auto bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
                 <div>
                     {{-- Date Filter --}}
                     <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                        <svg class="w-3 h-3 dark:text-gray-400 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                             </svg>
                         {{$dateFilterName}}
@@ -42,42 +42,36 @@
                     </button>
 
                     <!-- Dropdown menu -->
-                    <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                    <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="0" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> &nbsp; All </input>
-                                    {{-- <label for="date_filter-radio-example-1" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300" >All</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="0" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> &nbsp; All </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="1" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white hover focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">  &nbsp; Last day </input>
-                                    {{-- <label for="date_filter-radio-example-1" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300" >Last day</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="1" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white hover focus:ring-customRed focus:ring-2 ">  &nbsp; Last day </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input checked="" id="date_filter-radio-example-2" type="radio" wire:model.live="date_filter" value="2" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">  &nbsp; Last 7 days </input>
-                                    {{-- <label for="date_filter-radio-example-2" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Last 7 days</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                    <input checked="" id="date_filter-radio-example-2" type="radio" wire:model.live="date_filter" value="2" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 7 days </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input id="date_filter-radio-example-3" type="radio" wire:model.live="date_filter" value="3" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">  &nbsp; Last 30 days </input>
-                                    {{-- <label for="date_filter-radio-example-3" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Last 30 days</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                    <input id="date_filter-radio-example-3" type="radio" wire:model.live="date_filter" value="3" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 30 days </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input id="date_filter-radio-example-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">  &nbsp; Last 6 Monthss </input>
-                                    {{-- <label for="date_filter-radio-example-4" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Last 6 Months</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                    <input id="date_filter-radio-example-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 6 Monthss </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input id="date_filter-radio-example-5" type="radio" wire:model.live="date_filter" value="5" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">  &nbsp; Last Year </input>
-                                    {{-- <label for="date_filter-radio-example-5" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Last year</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                    <input id="date_filter-radio-example-5" type="radio" wire:model.live="date_filter" value="5" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last Year </input>
                                 </div>
                             </li>
                         </ul>
@@ -85,7 +79,7 @@
 
                     {{-- Status Filter --}}
                     <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class=" z-50 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                        <svg class="w-3 h-3 dark:text-gray-400 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                             </svg>
                         {{$statusFilterName}}
@@ -94,30 +88,26 @@
                         </svg>
                     </button>
                     <!-- Dropdown menu -->
-                    <div id="statusDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownRadioButton">
+                    <div id="statusDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-200 hover:text-customGray1">
-                                    <input id="status_filter-radio-example-1" type="radio" wire:model.live="status_filter" value="0" name="status_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> &nbsp; All </input>
-                                    {{-- <label for="status_filter-radio-example-1" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300" >All</label> --}}
+                                    <input id="status_filter-radio-example-1" type="radio" wire:model.live="status_filter" value="0" name="status_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2 "> &nbsp; All </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customGreen hover:text-white dark:hover:bg-gray-600">
-                                    <input id="status_filter-radio-example-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> &nbsp; Approved </input>
-                                    {{-- <label for="status_filter-radio-example-1" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300" >Approved</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customGreen hover:text-white ">
+                                    <input id="status_filter-radio-example-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> &nbsp; Approved </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-500 hover:text-white dark:hover:bg-gray-600">
-                                    <input checked="" id="status_filter-radio-example-2" type="radio" wire:model.live="status_filter" value="2" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> &nbsp; Pending </input>
-                                    {{-- <label for="status_filter-radio-example-2" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Pending</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-500 hover:text-white ">
+                                    <input checked="" id="status_filter-radio-example-2" type="radio" wire:model.live="status_filter" value="2" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2 "> &nbsp; Pending </input>
                                 </div>
                             </li>
                             <li>
-                                <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customRed hover:text-white dark:hover:bg-gray-600">
-                                    <input id="status_filter-radio-example-3" type="radio" wire:model.live="status_filter" value="3" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-customRed ring-2 ring-white focus:ring-customRed dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"> &nbsp; Declined </input>
-                                    {{-- <label for="status_filter-radio-example-3" class="w-full text-sm font-medium text-gray-900 rounded ms-2 dark:text-gray-300">Declined</label> --}}
+                                <div class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customRed hover:text-white ">
+                                    <input id="status_filter-radio-example-3" type="radio" wire:model.live="status_filter" value="3" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> &nbsp; Declined </input>
                                 </div>
                             </li>
                         </ul>
@@ -126,28 +116,19 @@
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
-                        <svg class="w-5 h-5 text-gray-900 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                        <svg class="w-5 h-5 text-gray-900 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                     </div>
-                    <input type="text" id="table-search" wire:model.live="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed dark:bg-customGray dark:border-customGray border-text dark:placeholder-customGray dark:text-white dark:focus:ring-customRed dark:focus:border-customRed" placeholder="Search like: 2024-01-01 ">
+                    <input type="text" id="table-search" wire:model.live="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed border-text " placeholder="Search like: 2024-01-01 ">
                 </div>
             </div>
-            <table class="w-full h-fit text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 pb-4" style="overflow-y:hidden;" >
-                <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
+            <table class="w-full pb-4 text-sm text-left text-gray-500 h-fit rtl:text-right " style="overflow-y:hidden;" >
+                <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
                     <tr>
-                        {{-- <th scope="col" class="p-4">
-                            <div class="flex items-center">
-                                <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                <label for="checkbox-all-search" class="sr-only">checkbox</label>
-                            </div>
-                        </th> --}}
                         <th scope="col" class="px-6 py-3 text-center">
                             No.
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             Status
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            Employee Information
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
                             Date Applied
@@ -159,26 +140,21 @@
                             Leave Details
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                            Reason
+                            Action
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            Actions
-                        </th>
-                        
                     </tr>
                 </thead>
                 <div>
                     <div>
-                        <tbody class="pb-4">
-
+                        <tbody wire:poll.10s class="pb-4">
                         @if ($LeaveRequestData->isEmpty())
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
-                                    <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
+                                <tr class="bg-white border-b hover:bg-gray-50 ">
+                                    <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
                                         <div class="flex justify-center " style="padding-top: 40px">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                             </svg>
-                                            <p class="text-customRed text-xl font-semibold items-center "> Nothing to show</p>
+                                            <p class="items-center text-xl font-semibold text-customRed "> Nothing to show</p>
                                         </div>
                                     </th>
                                 </tr>
@@ -191,14 +167,8 @@
                             @php
                                 $ctr = $ctr + 1;
                             @endphp
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    {{-- <td class="w-4 p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td> --}}
-                                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                <tr class="bg-white border-b hover:bg-gray-50 ">
+                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     @if($leaverequest->status == "Pending")
@@ -230,13 +200,6 @@
                                         </span>
                                     </th>
                                     @endif
-                                    <td class="px-6 py-4  font-semibold text-center text-gray-900 whitespace-nowrap">
-                                        @php
-                                            $employee_name = $this->getEmployeeName($leaverequest->employee_id);
-                                        @endphp
-                                        <span class="text-customRed">Name:</span> {{$employee_name}} <br>
-                                        <span class="text-customRed">ID: </span>{{$leaverequest->employee_id}}
-                                    </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         {{$leaverequest->application_date}}
                                     </td>
@@ -245,125 +208,79 @@
                                     </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         @if ($leaverequest->mode_of_application == "Credit Leave")
-                                            <span class="text-gray-900 font-bold">Date Earned:</span> {{$leaverequest->inclusive_start_date}}
+                                            <span class="font-medium text-gray-700">Date Earned:</span> {{$leaverequest->inclusive_start_date}}
                                         @elseif ($leaverequest->mode_of_application == "Advise Slip")
-                                            <span class="text-gray-900 font-bold">Date Requested:</span> {{$leaverequest->inclusive_start_date}} <br>
-                                            <span class="text-gray-900 font-bold">Actual Schedule:</span> {{$leaverequest->inclusive_end_date}} <br>
-                                            <span class="text-gray-900 font-bold">Purpose Type:</span> {{$leaverequest->purpose_type}} <br>
-                                            <span class="text-gray-900 font-bold">Reason: <br></span> {{$leaverequest->reason}} <br>
+                                            <span class="font-medium text-gray-700">Date Requested:</span> {{$leaverequest->inclusive_start_date}} <br>
+                                            <span class="font-medium text-gray-700">Actual Schedule:</span> {{$leaverequest->inclusive_end_date}} <br>
+                                            <span class="font-medium text-gray-700">Purpose Type:</span> {{$leaverequest->purpose_type}} <br>
+                                            <span class="font-medium text-gray-700">Reason: <br></span> {{$leaverequest->reason}} <br>
                                         @else
-                                            
-                                            <span class="text-gray-900 font-bold">Start Date:</span> {{$leaverequest->inclusive_start_date}} <br>
-                                            <span class="text-gray-900 font-bold">End Date:</span> {{$leaverequest->inclusive_end_date}}
+                                            <span class="font-medium text-gray-700">Start Date:</span> {{$leaverequest->inclusive_start_date}} <br>
+                                            <span class="font-medium text-gray-700">End Date:</span> {{$leaverequest->inclusive_end_date}}
                                         @endif
                                     </td>
-                                    <td class="px-6 py-4 text-center">
-                                        {{$leaverequest->reason}}
-                                    </td>
-                                
-                                    {{-- <a onclick="location.href='{{ route('ipcredit', ['index' => $leaverequest->id]) }}'"  class="cursor-pointer font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
-                                        {{-- <a href="{{route('ipcredit', $leaverequest)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
-                                        {{-- <a wire:click="removeIpcr({{$leaverequest->id}})" class="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline ms-3">Remove</a> --}}
 
-                                    <td class="items-center text-center py-4">
-                                            <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
+                                    
+                                    <td class="items-center py-4 text-center">
+                                        <div class="top-0" x-data="{ isOpen: false }" @click.away="isOpen = false">
+                                            <!-- Three dots button to toggle dropdown -->
+                                            <button @click="isOpen = !isOpen; adjustDropdownPosition('{{ $loop->index }}')" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                                                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
                                                     <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                                 </svg>
                                             </button>
-                                        @if ($leaverequest->status != "Cancelled")
-                                            <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
+                                            <!-- Dropdown menu -->
+                                            <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute mt-2 z-40 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{ $loop->index }}">
                                                 <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    @if (is_null($leaverequest->leave_form))                                                            
+                                                    <ul class="py-2 text-sm divide-y-2 text-gray-700 dark:text-gray-200">
                                                         <li>
-                                                            <a id="" onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $leaverequest->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-
-                                                            {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->form_id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
+                                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                         </li>
-                                                    @endif
-                                                </ul>
-                                                <div class="py-2">
-                                                    <a id="cancel_button_{{ $leaverequest->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a>
+                                                    </ul>
+                                                @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Approved" )
+                                                    <div class="py-2">
+                                                        <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
+                                                    </div>
+                                                @endif
 
-                                                    {{-- <a id="cancel_button_{{ $hrticket->form_id }}"  class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Cancel</a> --}}
-                                                </div>
                                             </div>
-                                        @else
-                                            <div class="hidden  top-0 right-0 mt-2 z-50 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    @if (is_null($leaverequest->leave_form))                                                            
-                                                        <li>
-                                                            <a id="" onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $leaverequest->form_id]) }}'"  class="block cursor-pointer px-4 py-2 cursorpointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-
-                                                            {{-- <a onclick="location.href='{{ route('HrTicketsUpdate', ['index' => $leaverequest->form_id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a> --}}
-                                                        </li>
-                                                    @endif
-                                                </ul>
-                                            </div>
-                                        @endif
+                                        </div>
                                     </td>
-                                    <div id="popup-modal_{{ $leaverequest->form_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-                                        <div class="relative p-4 w-full max-w-md max-h-full">
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                                    
+                                    <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                        <div class="relative w-full max-w-md max-h-full p-4">
+                                            <div class="relative bg-white rounded-lg shadow ">
+                                                <button type="button" @click="closeCancelModal('{{ $loop->index }}')"  class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="popup-modal">
                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                     </svg>
                                                     <span class="sr-only">Close modal</span>
                                                 </button>
                                                 <div class="p-4 md:p-5">
-                                                    <div class="p-4 md:p-5 text-center">
-                                                        <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                    <div class="p-4 text-center md:p-5">
+                                                        <svg class="w-12 h-12 mx-auto mb-4 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                         </svg>
-                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
-                                                        <button wire:click="removeLeaveRequest('{{$leaverequest->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 ">Confirm cancellation?</h3>
+                                                        <button wire:click="removeLeaveRequest('{{$leaverequest->uuid}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                             Yes
                                                         </button>
-                                                        <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                        <button type="button" @click="closeCancelModal('{{ $loop->index }}')" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  ">No</button>
                                                     </div>
                                                 </div>
-                                
+
                                             </div>
                                         </div>
                                     </div>
 
-                                        
-                                        {{-- <td class="items-center px-6 py-4">
-                                            <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                                </svg>
-                                            </button>
-                                            <div class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    <li>
-                                                        <a onclick="location.href='{{ route('LeaveRequestEdit', ['index' => $leaverequest->id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                    </li>
-                                                    <li>
-                                                        <a onclick="location.href='{{ route('LeaveRequestPdf', ['index' => $leaverequest->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
-                                                    </li>
-                                                </ul>
-                                                <div class="py-2">
-                                                    <a wire:click="removeLeaveRequest({{$leaverequest->id}})" wire:confirm="Are you sure you want to delete this post?" class="block px-4 py-2 text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                                </div>
-                                            </div>
-                                        </td> --}}
+
                                 </tr>
-                            
                             @endforeach
                         @endif
                         </tbody>
-
-                            
                     </div>
-                   
                 </div>
             </table>
-
         </div>
         <div class="p-4 bg-gray-100 w-full rounded-b-lg">
             {{ $LeaveRequestData->links() }}
@@ -375,6 +292,35 @@
 </div>
 
 <script>
+    function adjustDropdownPosition(index) {
+        const dropdown = document.getElementById('dropdown' + index);
+        if (dropdown) {
+            const rect = dropdown.getBoundingClientRect();
+            const isLeftAligned = rect.right > window.innerWidth;
+            dropdown.classList.toggle('left-0', isLeftAligned);
+            dropdown.classList.toggle('right-0', !isLeftAligned);
+        }
+    }
+
+    
+    function closeCancelModal(index) {
+        const modalId = 'popup-modal_' + index;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        } else {
+            console.error(`Modal with id ${modalId} does not exist.`);
+        }
+    }
+
+    function openCancelModal(index) {
+        const modalId = 'popup-modal_' + index;
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
         // Select all cancel buttons and add event listeners
         document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {

@@ -70,9 +70,9 @@ class ChangeInformation extends Component
         // $this->age = number_format($employee->age, 0);
         $this->gender = $employee->gender;
         $this->personal_email = $employee->personal_email;
-        $this->phone = $employee->phone;
+        $this->phone = $employee->phone_number;
         // $this->birth_date = $employee->birth_date;
-        $this->address = $employee->address;
+        $this->address = $employee->home_address;
         $this->nickname = $employee->nickname;
         $this->civil_status = $employee->civil_status;
         $this->profile_summary = $employee->profile_summary;
