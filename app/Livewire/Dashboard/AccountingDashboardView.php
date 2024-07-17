@@ -24,8 +24,8 @@ class AccountingDashboardView extends Component
         'Recruitment' => false,
         'CXS' => false,
         'Overseas Recruitment' => false,
-        'PEI/SLTEMPSDO174' => false,
-        'CAF' => false,
+        'PEI/SL Temps DO-174' => false,
+        'Corporate Accounting and Finance' => false,
         'ACCOUNTING ' => false,
     ];
 
@@ -135,7 +135,7 @@ class AccountingDashboardView extends Component
         
         if (!empty($insideDepartmentTypes)) {
             $query->whereIn('inside_department', $insideDepartmentTypes);
-        }
+        } 
         // // dump($insideDepartmentTypes);
 
         // // Department Filter
