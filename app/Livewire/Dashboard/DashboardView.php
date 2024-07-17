@@ -396,8 +396,6 @@ class DashboardView extends Component
         return redirect()->to(route('LeaveRequestTable'));
     }
 
-
-
     public function filter($filter){
         if($filter == 'weekly'){
             return [332, 321, 54, 32, 32];

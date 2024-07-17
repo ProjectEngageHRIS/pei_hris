@@ -56,6 +56,16 @@ class AccountingDashboardView extends Component
 
     public $payroll_status;
 
+    public function search()
+    {
+        $this->resetPage();
+    }
+
+    public function updatingSearch()
+    {
+        $this->resetPage();
+    }
+
 
     public function clearAllFilters()
     {
@@ -97,8 +107,8 @@ class AccountingDashboardView extends Component
         $employee =  Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
         $employee->payroll_status = $this->payroll_status;
         $employee->update();
-        $this->js("alert('Payroll Status Updated!')"); 
-        return;
+        $this->dispatch('triggerSuccessCheckIn');
+        // return $this->dispatch('triggerSuccessCheckIn');
     }
 
 

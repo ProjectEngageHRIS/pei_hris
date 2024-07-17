@@ -334,7 +334,6 @@
             Livewire.on('triggerSuccessCheckIn', () => {
                 const toastContainer = document.getElementById('toast-container-checkin');
                 const modal = document.getElementById('toast-success-checkin');
-
                 if (toastContainer) {
                     toastContainer.classList.remove('hidden');
                     setTimeout(() => {

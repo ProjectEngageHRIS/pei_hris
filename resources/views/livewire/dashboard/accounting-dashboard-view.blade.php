@@ -19,10 +19,13 @@
                 departmentOpen: false,
                 companyOpen: false,
                 statusOpen: false,
+                genderOpen: false,
                 employeeTypeCount: 0,
                 departmentCount: 0,
                 companyCount: 0,
                 statusCount: 0,
+                genderCount: 0,
+
                 updateEmployeeTypeCount() {
                     this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
                 },
@@ -41,6 +44,8 @@
                     this.departmentCount = 0;
                     this.companyCount = 0;
                     this.statusCount = 0;
+                    this.genderCount = 0;
+
                 }
                 }">
 
@@ -234,7 +239,7 @@
                                 <input type="text" name="comp" id="comp" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Company" required />
                             </div>
 
-                            <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Create account</button>
+                            <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button>
                         </form>
                     </div>
                 </div>
@@ -455,12 +460,14 @@
                                                         <option value="Draft">Draft</option>
                                                     </select>
                                                 </div>
-        
-                                                <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Create account</button>
+                                                
+                                                <button type="submit" data-modal-hide="profile-modal{{$loop->index}}" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Create account</button>
+                                                
                                             </form>
                                         </div>
                                     </div>
                                 </div>
+                                
                             </div>
                                 <button class="text-red-500 hover:text-red-700">
                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
@@ -472,90 +479,27 @@
                     </div>
                 @endforeach
             @endif
-            {{-- <div class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
-                <div class="flex justify-between">
-                    <h2 class="font-semibold text-gray-900 text-md text-nowrap">Lim Jaebeom</h2>
-                    <span class="px-2 py-1 text-xs text-yellow-500 bg-yellow-100 rounded-8px text-nowrap">PEI</span>
-                </div>
-                <div class="text-sm text-gray-700">
-                    <p class="text-xs"><strong>Employee ID:</strong> SLE0001</p>
-                    <p class="text-xs"><strong>Department:</strong> IT Support</p>
-                    <p class="text-xs"><strong>Employee Type:</strong> Internals</p>
-                    <p class="text-xs"><strong>Latest Payroll Date:</strong> 7/12/2024</p>
-                </div>
-                <hr class="my-1 border-gray-300">
-                <div class="flex justify-between">
-                    <span class="text-xs font-semibold text-red-500">Status: Overdue</span>
-                    <div class="flex space-x-2">
-                        <button class="text-blue-500 hover:text-blue-700">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
-                                <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
-                            </svg>
-                        </button>
-                        <button class="text-red-500 hover:text-red-700">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
-                                <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
+
+
+
+        </div>
+    </div>
+
+    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center  w-full h-full bg-gray-800 bg-opacity-50">
+        <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                </svg>
+                <span class="sr-only">Check icon</span>
             </div>
-            <div class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
-                <div class="flex justify-between">
-                    <h2 class="font-semibold text-gray-900 text-md text-nowrap">Jackson Wang</h2>
-                    <span class="px-2 py-1 text-xs text-orange-500 bg-orange-100 rounded">SL Search</span>
-                </div>
-                <div class="text-sm text-gray-700">
-                    <p class="text-xs"><strong>Employee ID:</strong> SLE0001</p>
-                    <p class="text-xs"><strong>Department:</strong> IT Support</p>
-                    <p class="text-xs"><strong>Employee Type:</strong> Internals</p>
-                    <p class="text-xs"><strong>Latest Payroll Date:</strong> 7/12/2024</p>
-                </div>
-                <hr class="my-1 border-gray-300">
-                <div class="flex justify-between">
-                    <span class="text-xs font-semibold text-green-400">Status: Approved</span>
-                    <div class="flex space-x-2">
-                        <button class="text-blue-500 hover:text-blue-700">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
-                                <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
-                            </svg>
-                        </button>
-                        <button class="text-red-500 hover:text-red-700">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
-                                <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
-                <div class="flex justify-between">
-                    <h2 class="font-semibold text-gray-900 text-md text-nowrap">Mark Tuan</h2>
-                    <span class="px-2 py-1 text-xs text-pink-500 bg-pink-100 rounded">PEI-UPSKILLS</span>
-                </div>
-                <div class="text-sm text-gray-700">
-                    <p class="text-xs"><strong>Emmployee ID:</strong> SLE0001</p>
-                    <p class="text-xs"><strong>Department:</strong> IT Support</p>
-                    <p class="text-xs"><strong>Employee Type:</strong> Internals</p>
-                    <p class="text-xs"><strong>Latest Payroll Date:</strong> 7/12/2024</p>
-                </div>
-                <hr class="my-1 border-gray-300">
-                <div class="flex justify-between">
-                    <span class="text-xs font-semibold text-gray-400">Status: Draft</span>
-                    <div class="flex space-x-2">
-                        <button class="text-blue-500 hover:text-blue-700">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
-                                <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
-                            </svg>
-                        </button>
-                        <button class="text-red-500 hover:text-red-700">
-                            <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
-                                <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"></path>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-            </div> --}}
+            <div class="text-sm font-normal ms-3">Payroll Updated!</div>
+            <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="toast-container-checkin" aria-label="Close">
+                <span class="sr-only">Close</span>
+                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
         </div>
     </div>
 
@@ -563,6 +507,31 @@
 </div>
 
  <script>
+
+    document.addEventListener('livewire:init', function () {
+        Livewire.on('triggerSuccessCheckIn', () => {
+            const toastContainer = document.getElementById('toast-container-checkin');
+            // const modal = document.getElementById('toast-success-checkin');
+            if (toastContainer) {
+                // toastContainer.classList.add('flex');
+                setTimeout(() => {
+                    toastContainer.classList.remove('hidden');
+                }, 10); // Hide after 5 seconds
+                setTimeout(() => {
+                    toastContainer.classList.add('hidden');
+                }, 3000); // Hide after 5 seconds
+            }
+        });
+    });
+
+    const closeToastButtonCheckIn = document.getElementById('close-toast-checkin');
+        closeToastButtonCheckIn.addEventListener('click', () => {
+            const closeToastButtonCheckIn = document.getElementById('toast-container-checkin');
+            if (closeToastButtonCheckIn) {
+                closeToastButtonCheckIn.classList.add('hidden');
+            }
+    });
+
     document.getElementById('open-modal').addEventListener('click', function() {
         document.getElementById('default-modal').classList.remove('hidden');
         document.getElementById('default-modal').classList.add('flex');
