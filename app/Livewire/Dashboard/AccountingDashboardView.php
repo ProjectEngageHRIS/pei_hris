@@ -7,13 +7,14 @@ use Carbon\Carbon;
 use App\Models\Payroll;
 use Livewire\Component;
 use App\Models\Employee;
+use Livewire\WithPagination;
 use Livewire\WithFileUploads;
-use Livewire\WithoutUrlPagination;
+use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
 class AccountingDashboardView extends Component
 {
 
-    use WithoutUrlPagination, WithFileUploads;
+    use WithPagination, WithoutUrlPagination;
 
 
     public $employeeTypesFilter = [
@@ -133,6 +134,7 @@ class AccountingDashboardView extends Component
             $payrolls = Payroll::where('year', $this->yearFilter)
                                         ->where('month', $this->monthFilter)
                                         ->whereBetween('start_date', [$startOfMonth, $middleOfMonth])
+                                        ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
                                         ->get();
         } else {
 
@@ -140,9 +142,10 @@ class AccountingDashboardView extends Component
             $endOfMonth = $startOfMonth->copy()->endOfMonth();
 
             $payrolls = Payroll::where('year', $this->yearFilter)
-                                        ->where('month', $this->monthFilter)
-                                        ->whereBetween('start_date', [$middleOfMonth, $endOfMonth])
-                                        ->get();
+                                ->where('month', $this->monthFilter)
+                                ->whereBetween('start_date', [$middleOfMonth, $endOfMonth])
+                                ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
+                                ->get();
         }
      
 
@@ -212,6 +215,8 @@ class AccountingDashboardView extends Component
 
     }
 
+    
+ 
 
     public function render()
     {
@@ -271,9 +276,9 @@ class AccountingDashboardView extends Component
                       ->orWhere('employee_type', 'like', '%' . $term . '%')
                       ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                 }
-            })->orderBy('created_at', 'desc')->paginate(5);
+            })->orderBy('created_at', 'desc')->paginate(6);
         } else {
-            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->paginate(6);
         }
 
         // $results = $query->orderBy('created_at', 'desc')->where('first_name', 'dsjdak')->paginate(5);
@@ -281,6 +286,6 @@ class AccountingDashboardView extends Component
         return view('livewire.dashboard.accounting-dashboard-view', [
             'EmployeeData' => $results, 
             // 'Payrolls' => $payrolls,
-        ])->layout('components.layouts.accounting-navbar');
+        ])->layout('components.layouts.hr-navbar');
     }
 }

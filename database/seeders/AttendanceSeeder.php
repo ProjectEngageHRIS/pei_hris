@@ -22,7 +22,7 @@ class AttendanceSeeder extends Seeder
         $employee = Employee::first();
         $today = Carbon::today();
         $usedDates = collect(); // Collection to keep track of used dates
-        $employeeId = "SLE0002"; // Starting employee ID
+        $employeeId = "SLE0001"; // Starting employee ID
         $recordCount = 275; // Number of records to create
         
         for ($i = 0; $i <= $recordCount; $i++) {
