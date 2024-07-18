@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('start_date');
             $table->date('end_date');
             $table->string('target_employee');
-            $table->string('payroll_picture');
+            $table->text('payroll_picture');
             // $table->decimal('basic_pay', 10, 2);
             // $table->decimal('tardiness', 10, 2);
             // $table->integer('absences');

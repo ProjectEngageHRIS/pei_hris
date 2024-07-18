@@ -3,12 +3,18 @@
 namespace App\Livewire\Dashboard;
 
 use DateTime;
+use Carbon\Carbon;
 use App\Models\Payroll;
 use Livewire\Component;
 use App\Models\Employee;
+use Livewire\WithFileUploads;
+use Livewire\WithoutUrlPagination;
 
 class AccountingDashboardView extends Component
 {
+
+    use WithoutUrlPagination, WithFileUploads;
+
 
     public $employeeTypesFilter = [
         'INTERNALS' => false,
@@ -55,16 +61,21 @@ class AccountingDashboardView extends Component
     public $payrollMap;
 
     public $payroll_status;
+    public $start_date;
+    public $end_date;
+    public $payroll_picture;
 
-    public function search()
-    {
-        $this->resetPage();
-    }
+    public $showWarning = False;
 
-    public function updatingSearch()
-    {
-        $this->resetPage();
-    }
+    // public function search()
+    // {
+    //     $this->resetPage();
+    // }
+
+    // public function updatingSearch()
+    // {
+    //     $this->resetPage();
+    // }
 
 
     public function clearAllFilters()
@@ -91,7 +102,7 @@ class AccountingDashboardView extends Component
                             ->get();
 
         // Create a map of employee_id to payroll
-        $payrollMap = $payrolls->keyBy('employee_id');
+        $payrollMap = $payrolls->keyBy('target_employee');
 
         // dd($payrollMap->has("SLE0002"));
 
@@ -104,11 +115,52 @@ class AccountingDashboardView extends Component
     }
 
     public function submit($employee_id){
-        $employee =  Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
+        $employee = Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
         $employee->payroll_status = $this->payroll_status;
         $employee->update();
         $this->dispatch('triggerSuccessCheckIn');
         // return $this->dispatch('triggerSuccessCheckIn');
+    }
+
+    protected $rules = [
+        'start_date' => 'required',
+        'end_date' => 'required',
+        'payroll_picture' => 'required',
+    ];
+
+    public function validatePayrollData(){
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            $this->resetValidation();
+        }   
+        $this->showWarning = True;
+    }
+
+    public function addPayroll($employee_id){
+        // dd($this->start_date, $this->end_date, $this->payroll_picture);
+        $loggedInUser = auth()->user()->employee_id;
+        // foreach($this->rules as $rule => $validationRule){
+        //     $this->validate([$rule => $validationRule]);
+        //     $this->resetValidation();
+        // }   
+        $payroll = new Payroll();
+        $payroll->employee_id = $loggedInUser;
+        $payroll->target_employee = $employee_id;
+        $start_date = Carbon::parse($this->start_date);
+        $payroll->month =  $start_date->month;
+        $payroll->year =  $start_date->year;
+        $payroll->start_date = $this->start_date;
+        $payroll->end_date = $this->end_date;
+        $payroll->payroll_picture = $this->payroll_picture;
+        $payroll->save();
+
+        $this->showWarning = False;
+
+
+        $this->dispatch('triggerSuccess');
+
+
+
     }
 
 
@@ -117,7 +169,7 @@ class AccountingDashboardView extends Component
         $this->payrollMap = $this->getPayrollData();
         $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
-        $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status');
+        $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
 
         // Employee Type Filter
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
