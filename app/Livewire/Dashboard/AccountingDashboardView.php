@@ -65,7 +65,7 @@ class AccountingDashboardView extends Component
     public $end_date;
     public $payroll_picture;
 
-    public $showWarning = False;
+    // public $showWarning = False;
 
     // public function search()
     // {
@@ -128,13 +128,13 @@ class AccountingDashboardView extends Component
         'payroll_picture' => 'required',
     ];
 
-    public function validatePayrollData(){
-        foreach($this->rules as $rule => $validationRule){
-            $this->validate([$rule => $validationRule]);
-            $this->resetValidation();
-        }   
-        $this->showWarning = True;
-    }
+    // public function validatePayrollData(){
+    //     foreach($this->rules as $rule => $validationRule){
+    //         $this->validate([$rule => $validationRule]);
+    //         $this->resetValidation();
+    //     }   
+    //     $this->showWarning = True;
+    // }
 
     public function addPayroll($employee_id){
         // dd($this->start_date, $this->end_date, $this->payroll_picture);
@@ -153,9 +153,6 @@ class AccountingDashboardView extends Component
         $payroll->end_date = $this->end_date;
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
-
-        $this->showWarning = False;
-
 
         $this->dispatch('triggerSuccess');
 

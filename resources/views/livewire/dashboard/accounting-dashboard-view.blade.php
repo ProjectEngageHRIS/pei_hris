@@ -395,7 +395,7 @@
                                     <span class="text-xs font-semibold text-gray-900">Status: {{$employee->payroll_status}}</span>
 
                                 @endif
-                                <div x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, warningbutton: $wire.entangle('showWarning')  }">
+                                <div x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openWarningButton: false  }">
                                     <div class="flex space-x-2">
                                         <!-- Edit user button -->
                                         <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
@@ -461,135 +461,223 @@
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                               </svg>
                                         </button>
-                                        <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
-                                            <!-- Backdrop -->
-                                            <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                            <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
-                                                <!-- Modal content -->
-                                                <div class="relative bg-white rounded-lg shadow">
-                                                    <!-- Modal header -->
-                                                    <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                        <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> <br> For The Month of <span class="text-customRed font-semibold">{{$currentMonthName}} {{$currentYear}}</span> </h3>
-                                                        <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
-                                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                            </svg>
-                                                            <span class="sr-only">Close modal</span>
-                                                        </button>
-                                                    </div>
-                                                    <!-- Modal body -->
-                                                    <div class="p-4 xl:p-5">
-                                                        <form class="space-y-4" wire:submit.prevent="validatePayrollData" method="POST">
-                                                        <div class="grid grid-cols-2 gap-4" >
-                                                                <div>
-                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                        @if($payroll_exists == False)
+                                            <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                <!-- Backdrop -->
+                                                <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
+                                                <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                    <!-- Modal content -->
+                                                    <div class="relative bg-white rounded-lg shadow">
+                                                        <!-- Modal header -->
+                                                        <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
+                                                            <h3 class="text-xl font-semibold text-gray-900">Add Payroll For Month of <span class="text-customRed font-semibold">{{$currentMonthName}}</span> </h3>
+                                                            <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                </svg>
+                                                                <span class="sr-only">Close modal</span>
+                                                            </button>
+                                                        </div>
+                                                        <!-- Modal body -->
+                                                        <div class="p-4 xl:p-5">
+                                                            <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')" method="POST">
+                                                                @csrf
+                                                                <div class="grid grid-cols-2 gap-4" >
+                                                                        <div>
+                                                                            <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
+                                                                            <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                        </div>
+                                                                        <div>
+                                                                            
+                                                                            <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
+                                                                            <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                        </div>
+                                                                        <div class="col-span-2">
+                                                                            <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                                                            <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
+                                                                        </div>
+                                                                        
                                                                 </div>
-                                                                <div>
-                                                                    
-                                                                    <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                                                    <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                <hr class="border-gray-700">
+                                                                <div class="grid grid-cols-2 gap-4">
+                                                                        <div class="w-full">
+                                                                            <label for="start_date"
+                                                                                class="block mb-2 text-sm font-medium text-customGray1">Start Date
+                                                                                <span class="text-red-600">*</span></label>
+                                                                            <input type="date" name="start_date" id="start_date" wire:model="start_date"
+                                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
+                                                                                required="">
+                                                                            @error('start_date')
+                                                                                <div class="text-sm transition transform alert alert-danger"
+                                                                                x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
+                                                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                                </div>
+                                                                            @enderror
+                                                                        </div>
+                                                                        <div class="w-full" id="end_date_container">
+                                                                            <label for="end_date"
+                                                                                class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
+                                                                                <span class="text-red-600">*</span></label>
+                                                                            <input type="date" name="end_date" id="end_date" wire:model="end_date"
+                                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
+                                                                            required="">
+                                                                            @error('end_date')
+                                                                                <div class="text-sm transition transform alert alert-danger"
+                                                                                x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
+                                                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                                </div>
+                                                                            @enderror
+                                                                        </div>
                                                                 </div>
-                                                                <div class="col-span-2">
-                                                                    <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
-                                                                    <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
+                                                                <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
+                                                                    {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
+                                                                    <label for="payroll_picture"
+                                                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                                                        <span class="text-red-600">*</span></label>
+                                                                    <div id="payroll_picture" class="grid grid-cols-1">
+                                                                        <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
+                                                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                                        </textarea>
+                                                                        @error('payroll_picture')
+                                                                            <div class="text-sm transition transform alert alert-danger"
+                                                                                x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
+                                                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                </div>
+                                                                <button @click="openWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                                                
+                                                                <div x-show="openWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                                    <div class="relative w-full max-w-md max-h-full p-4">
+                                                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                            <button @click="openWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                                </svg>
+                                                                                <span class="sr-only">Close modal</span>
+                                                                            </button>
+                                                                                <div class="p-4 text-center md:p-5">
+                                                                                    <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                                                    </svg>
+                                                                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                                                    <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                                        <li>Verify the file exists and can be accessed.</li>
+                                                                                        <li>Ensure the employee's email has been added as a viewer.</li>
+                                                                                        <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                                                        <li>Review and modify these rules if necessary.</li>
+                                                                                    </ul>
+                                                                                    <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                                                    
+                                                                                    <button @click="openAddPayrollModal = false; openWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                        Yes
+                                                                                    </button>
+                                                                                    <button @click="openWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                </div>
+                                                                        </div>
+                                                                    </div>
                                                                 </div>
                                                                 
+                                                            </form>
                                                         </div>
-                                                        <hr class="border-gray-700">
-                                                        <div class="grid grid-cols-2 gap-4">
-                                                                <div class="w-full">
-                                                                    <label for="start_date"
-                                                                        class="block mb-2 text-sm font-medium text-customGray1">Start Date
-                                                                        <span class="text-red-600">*</span></label>
-                                                                    <input type="date" name="start_date" id="start_date" wire:model.live="start_date"
-                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                        required="">
-                                                                    @error('start_date')
-                                                                        <div class="text-sm transition transform alert alert-danger"
-                                                                        x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
-                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                        </div>
-                                                                    @enderror
-                                                                </div>
-                                                                <div class="w-full" id="end_date_container">
-                                                                    <label for="end_date"
-                                                                        class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
-                                                                        <span class="text-red-600">*</span></label>
-                                                                    <input type="date" name="end_date" id="end_date" wire:model.live="end_date"
-                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                    required="">
-                                                                    @error('end_date')
-                                                                        <div class="text-sm transition transform alert alert-danger"
-                                                                        x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
-                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                        </div>
-                                                                    @enderror
-                                                                </div>
-                                                        </div>
-
-                                                        <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
-                                                            {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
-                                                            <label for="payroll_picture"
-                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
-                                                                <span class="text-red-600">*</span></label>
-                                                            <div id="payroll_picture" class="grid grid-cols-1">
-                                                                <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
-                                                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                                </textarea>
-                                                                @error('payroll_picture')
-                                                                    <div class="text-sm transition transform alert alert-danger"
-                                                                        x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
-                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                    </div>
-                                                                @enderror
-                                                            </div>
-                                                        </div>
-                                                            <button type="submit" class="w-full text-white focus:cursor-progress bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
-
-                                                            {{-- <button type="submit"  class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button> --}}
-                                                        </form>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        @else
+                                            <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                <!-- Backdrop -->
+                                                <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
+                                                <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                    <!-- Modal content -->
+                                                    <div class="relative bg-white rounded-lg shadow">
+                                                        <!-- Modal header -->
+                                                        <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
+                                                            <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> <br> For The Month of <span class="text-customRed font-semibold">{{$currentMonthName}} {{$currentYear}}</span> </h3>
+                                                            <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                </svg>
+                                                                <span class="sr-only">Close modal</span>
+                                                            </button>
+                                                        </div>
+                                                        <!-- Modal body -->
+                                                        <div class="p-4 xl:p-5">
+                                                            <form class="space-y-4" wire:submit.prevent="validatePayrollData" method="POST">
+                                                            <div class="grid grid-cols-2 gap-4" >
+                                                                    <div>
+                                                                        <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
+                                                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                    </div>
+                                                                    <div>
+                                                                        
+                                                                        <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
+                                                                        <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                    </div>
+                                                                    <div class="col-span-2">
+                                                                        <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                                                        <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
+                                                                    </div>
+                                                                    
+                                                            </div>
+                                                            <hr class="border-gray-700">
+                                                            <div class="grid grid-cols-2 gap-4">
+                                                                    <div class="w-full">
+                                                                        <label for="start_date"
+                                                                            class="block mb-2 text-sm font-medium text-customGray1">Start Date
+                                                                            <span class="text-red-600">*</span></label>
+                                                                        <input type="date" name="start_date" id="start_date" wire:model.live="start_date"
+                                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
+                                                                            required="">
+                                                                        @error('start_date')
+                                                                            <div class="text-sm transition transform alert alert-danger"
+                                                                            x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
+                                                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                                    <div class="w-full" id="end_date_container">
+                                                                        <label for="end_date"
+                                                                            class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
+                                                                            <span class="text-red-600">*</span></label>
+                                                                        <input type="date" name="end_date" id="end_date" wire:model.live="end_date"
+                                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
+                                                                        required="">
+                                                                        @error('end_date')
+                                                                            <div class="text-sm transition transform alert alert-danger"
+                                                                            x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
+                                                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                            </div>
+                                                                        @enderror
+                                                                    </div>
+                                                            </div>
 
-                                    <div x-show="warningbutton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
-                                        <div class="relative w-full max-w-md max-h-full p-4">
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                <button @click="warningbutton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                    </svg>
-                                                    <span class="sr-only">Close modal</span>
-                                                </button>
-                                                <form wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')" method="POST"  class="p-4 md:p-5">
-                                                    <div class="p-4 text-center md:p-5">
-                                                        <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                        </svg>
-                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                        <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
-                                                            <li>Verify the file exists and can be accessed.</li>
-                                                            <li>Ensure the employee's email has been added as a viewer.</li>
-                                                            <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
-                                                            <li>Review and modify these rules if necessary.</li>
-                                                        </ul>
-                                                        <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
-                                                        
-                                                        <button @click="openAddPayrollModal = false; openWarningButton = false " type="submit" class="text-white focus:cursor-progress bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                            Yes
-                                                        </button>
-                                                        <button @click="warningbutton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium  text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                            <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
+                                                                {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
+                                                                <label for="payroll_picture"
+                                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                                                    <span class="text-red-600">*</span></label>
+                                                                <div id="payroll_picture" class="grid grid-cols-1">
+                                                                    <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
+                                                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                                    </textarea>
+                                                                    @error('payroll_picture')
+                                                                        <div class="text-sm transition transform alert alert-danger"
+                                                                            x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
+                                                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                        </div>
+                                                                    @enderror
+                                                                </div>
+                                                            </div>
+                                                                <button type="submit" @click="openWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                                            </form>
+                                                        </div>
                                                     </div>
-                                                </form>
-                            
+                                                </div>
                                             </div>
-                                        </div>
+                                        @endif
                                     </div>
                                 </div>
-                               
                             </div>
                         </div>
                     @endforeach
