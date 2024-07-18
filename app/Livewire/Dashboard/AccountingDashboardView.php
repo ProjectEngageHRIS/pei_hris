@@ -65,6 +65,11 @@ class AccountingDashboardView extends Component
     public $end_date;
     public $payroll_picture;
 
+    public $halfOfMonthFilter;
+    public $monthFilter;
+    public $yearFilter;
+
+
     // public $showWarning = False;
 
     // public function search()
@@ -76,6 +81,14 @@ class AccountingDashboardView extends Component
     // {
     //     $this->resetPage();
     // }
+
+    public function mount(){
+
+        $date = Carbon::now();
+        $this->halfOfMonthFilter = "1st Half";
+        $this->monthFilter = $date->format('F');
+        $this->yearFilter = $date->format('Y');
+    }
 
 
     public function clearAllFilters()
@@ -91,15 +104,52 @@ class AccountingDashboardView extends Component
 
     // }
 
-    public function getPayrollData()
-    {
-        // Fetch all payrolls for the current year and month
-        $this->currentYear = 2024;
-        $this->currentMonth = 7;
+    public $monthMap = [
+        'January' => 1,
+        'February' => 2,
+        'March' => 3,
+        'April' => 4,
+        'May' => 5,
+        'June' => 6,
+        'July' => 7,
+        'August' => 8,
+        'September' => 9,
+        'October' => 10,
+        'November' => 11,
+        'December' => 12,
+    ];
 
-        $payrolls = Payroll::where('year', $this->currentYear)
-                            ->where('month', $this->currentMonth)
-                            ->get();
+    public function getPayrollData()
+    {   
+        $monthNumber = $this->monthMap[$this->monthFilter];
+
+        $startOfMonth = Carbon::create($this->yearFilter, $monthNumber, 1);
+
+        if($this->halfOfMonthFilter == "1st Half"){
+
+
+            $middleOfMonth = $startOfMonth->copy()->day(15);
+
+            $payrolls = Payroll::where('year', $this->yearFilter)
+                                        ->where('month', $this->monthFilter)
+                                        ->whereBetween('start_date', [$startOfMonth, $middleOfMonth])
+                                        ->get();
+        } else {
+
+            $middleOfMonth = $startOfMonth->copy()->day(16);
+            $endOfMonth = $startOfMonth->copy()->endOfMonth();
+
+            $payrolls = Payroll::where('year', $this->yearFilter)
+                                        ->where('month', $this->monthFilter)
+                                        ->whereBetween('start_date', [$middleOfMonth, $endOfMonth])
+                                        ->get();
+        }
+     
+
+        // $payrolls = Payroll::where('year', $this->yearFilter)
+        //                     ->where('month', $this->monthFilter)
+        //                     ->get();
+
 
         // Create a map of employee_id to payroll
         $payrollMap = $payrolls->keyBy('target_employee');
@@ -109,10 +159,14 @@ class AccountingDashboardView extends Component
         return $payrollMap;
     }
 
-    public function getMonthName($monthNumber)
-    {
-        return DateTime::createFromFormat('!m', $monthNumber)->format('F');
+    public function halfOfTheMonth($number){
+
     }
+
+    // public function getMonthName($monthNumber)
+    // {
+    //     return DateTime::createFromFormat('!m', $monthNumber)->format('F');
+    // }
 
     public function submit($employee_id){
         $employee = Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
@@ -147,7 +201,7 @@ class AccountingDashboardView extends Component
         $payroll->employee_id = $loggedInUser;
         $payroll->target_employee = $employee_id;
         $start_date = Carbon::parse($this->start_date);
-        $payroll->month =  $start_date->month;
+        $payroll->month =  $start_date->format('F');
         $payroll->year =  $start_date->year;
         $payroll->start_date = $this->start_date;
         $payroll->end_date = $this->end_date;
@@ -156,17 +210,17 @@ class AccountingDashboardView extends Component
 
         $this->dispatch('triggerSuccess');
 
-
-
     }
 
 
     public function render()
     {
         $this->payrollMap = $this->getPayrollData();
-        $this->currentMonthName = $this->getMonthName($this->currentMonth);
+        // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
+
+       
 
         // Employee Type Filter
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {

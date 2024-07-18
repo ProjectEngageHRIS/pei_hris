@@ -1,5 +1,148 @@
 <div>
+    <div class="flex flex-row gap-4 items-center">
+        <div class="rounded-lg hover:text-customRed">
+            <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
+                <div>
+                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
+                        <span x-text="selectedhalfOfMonth ? selectedhalfOfMonth : 'Select'"></span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
+                    <div class="py-1">
+                        <a href="#" @click.prevent="selectedhalfOfMonth = '1st Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">1st Half</a>
+                        <a href="#" @click.prevent="selectedhalfOfMonth = '2nd Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2nd Half</a>
+                    </div>
+                </div>
+                <input type="hidden" id="halfOfMonthFilter" name="halfOfMonthFilter" wire:model.live="halfOfMonthFilter" x-model="selectedhalfOfMonth" required>
+            </div>
+        </div>
+
+        <div class="rounded-lg hover:text-customRed">
+            <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
+                <div>
+                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
+                        <span x-text="selectedMonth ? selectedMonth : 'Select'"></span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
+                    <div class="py-1">
+                        <a href="#" @click.prevent="selectedMonth = 'January'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">January </a>
+                        <a href="#" @click.prevent="selectedMonth = 'February'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">February</a>
+                        <a href="#" @click.prevent="selectedMonth = 'March'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">March</a>
+                        <a href="#" @click.prevent="selectedMonth = 'April'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">April</a>
+                        <a href="#" @click.prevent="selectedMonth = 'May'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">May</a>
+                        <a href="#" @click.prevent="selectedMonth = 'June'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">June</a>
+                        <a href="#" @click.prevent="selectedMonth = 'July'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">July</a>
+                        <a href="#" @click.prevent="selectedMonth = 'August'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">August</a>
+                        <a href="#" @click.prevent="selectedMonth = 'September'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">September</a>
+                        <a href="#" @click.prevent="selectedMonth = 'October'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">October</a>
+                        <a href="#" @click.prevent="selectedMonth = 'November'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">November</a>
+                        <a href="#" @click.prevent="selectedMonth = 'December'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">December</a>
+                    </div>
+                </div>
+                <input type="hidden" id="monthFilter" name="monthFilter" wire:model.live="monthFilter" x-model="selectedMonth" required>
+            </div>
+        </div>
+
+        <div class="rounded-lg hover:text-customRed">
+            <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
+                <div>
+                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
+                        <span x-text="selectedYear ? selectedYear : 'Select'"></span>
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                    </button>
+                </div>
+                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
+                    <div class="py-1">
+                        <a href="#" @click.prevent="selectedYear = '2024'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2024 </a>
+                        <a href="#" @click.prevent="selectedYear = '2023'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2023</a>
+                        <a href="#" @click.prevent="selectedYear = '2022'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2022</a>
+                        <a href="#" @click.prevent="selectedYear = '2021'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2021</a>
+                        <a href="#" @click.prevent="selectedYear = '2020'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2020</a>
+                        <a href="#" @click.prevent="selectedYear = '2019'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2019</a>
+                        <a href="#" @click.prevent="selectedYear = '2018'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2018</a>
+                        <a href="#" @click.prevent="selectedYear = '2017'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2017</a>
+                        <a href="#" @click.prevent="selectedYear = '2016'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2016</a>
+                        <a href="#" @click.prevent="selectedYear = '2015'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2015</a>
+                        <a href="#" @click.prevent="selectedYear = '2014'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2014</a>
+                        <a href="#" @click.prevent="selectedYear = '2013'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2013</a>
+                    </div>
+                </div>
+                <input type="hidden" id="yearFilter" name="yearFilter" wire:model.live="yearFilter" x-model="selectedYear" required>
+            </div>
+        </div>
+
+        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="load-over z-50">
+            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="loading-overlay">
+                <div class="flex flex-col justify-center items-center">
+                    <div class="spinner"></div>
+                    <p>Updating Table...</p>
+                </div>
+            </div>
+        </div>
+        <style>
+            .load-over {
+                position: fixed;
+                background: rgba(255, 255, 255, 0.8);
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .loading-overlay {
+                position: fixed;
+                top: 40%;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                font-family: Arial, sans-serif;
+                color: #AC0C2E;
+                pointer-events: none; /* Makes sure the overlay is not interactable */
+            }
+    
+            .spinner {
+                border: 8px solid rgba(172, 12, 46, 0.3);
+                border-top: 8px solid #AC0C2E;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 1s linear infinite;
+                margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+            }
+    
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+    
+            .loading-overlay p {
+                margin: 0;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        </style>
+    </div>
+
+
     <div class="flex items-center justify-end mb-4">
+        
         <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only "></label>
         
         <div class="flex flex-row pr-2 relative">
@@ -374,7 +517,7 @@
                                 @php
                                     $payroll_exists = $payrollMap->has($employee->employee_id);
                                 @endphp
-                                <p class="text-xs"><strong>Payroll Issued? ({{$currentMonthName}} {{$currentYear}}):</strong>
+                                <p class="text-xs"><strong>Payroll Issued? ({{$monthFilter}} {{$yearFilter}}):</strong>
                                     <span class="{{ $payroll_exists ? 'text-green-500' : 'text-red-500' }}">
                                         {{ $payroll_exists ? 'Yes' : 'No' }}
                                     </span>
@@ -395,7 +538,7 @@
                                     <span class="text-xs font-semibold text-gray-900">Status: {{$employee->payroll_status}}</span>
 
                                 @endif
-                                <div x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openWarningButton: false  }">
+                                <div x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
                                     <div class="flex space-x-2">
                                         <!-- Edit user button -->
                                         <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
@@ -450,7 +593,7 @@
                                                                     <option value="Draft">Draft</option>
                                                                 </select>
                                                             </div>
-                                                            <button type="submit" @click="openPayrollEditModal = false" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Create account</button>
+                                                            <button type="submit" @click="openPayrollEditModal = false" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Account</button>
                                                         </form>
                                                     </div>
                                                 </div>
@@ -546,12 +689,12 @@
                                                                         @enderror
                                                                     </div>
                                                                 </div>
-                                                                <button @click="openWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                                                <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
                                                                 
-                                                                <div x-show="openWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                                <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                     <div class="relative w-full max-w-md max-h-full p-4">
                                                                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                                            <button @click="openWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                            <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                                                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                                 </svg>
@@ -570,10 +713,10 @@
                                                                                     </ul>
                                                                                     <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
                                                                                     
-                                                                                    <button @click="openAddPayrollModal = false; openWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                    <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                         Yes
                                                                                     </button>
-                                                                                    <button @click="openWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                    <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
                                                                                 </div>
                                                                         </div>
                                                                     </div>
@@ -603,7 +746,10 @@
                                                         </div>
                                                         <!-- Modal body -->
                                                         <div class="p-4 xl:p-5">
-                                                            <form class="space-y-4" wire:submit.prevent="validatePayrollData" method="POST">
+                                                            {{-- <form class="space-y-4" wire:submit.prevent="validatePayrollData" method="POST"> --}}
+                                                                {{-- @csrf --}}
+                                                            <div class="space-y-4">
+
                                                             <div class="grid grid-cols-2 gap-4" >
                                                                     <div>
                                                                         <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
@@ -626,7 +772,7 @@
                                                                         <label for="start_date"
                                                                             class="block mb-2 text-sm font-medium text-customGray1">Start Date
                                                                             <span class="text-red-600">*</span></label>
-                                                                        <input type="date" name="start_date" id="start_date" wire:model.live="start_date"
+                                                                        <input type="date" name="start_date" id="start_date" value="{{$payrollMap->get($employee->employee_id)->start_date}}" disabled
                                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
                                                                             required="">
                                                                         @error('start_date')
@@ -640,7 +786,7 @@
                                                                         <label for="end_date"
                                                                             class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
                                                                             <span class="text-red-600">*</span></label>
-                                                                        <input type="date" name="end_date" id="end_date" wire:model.live="end_date"
+                                                                        <input type="date" name="end_date" id="end_date" value="{{$payrollMap->get($employee->employee_id)->end_date}}" disabled
                                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
                                                                         required="">
                                                                         @error('end_date')
@@ -652,25 +798,25 @@
                                                                     </div>
                                                             </div>
 
-                                                            <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
-                                                                {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
-                                                                <label for="payroll_picture"
-                                                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
-                                                                    <span class="text-red-600">*</span></label>
+                                                            <div id="payroll_picture_container" class="grid grid-cols-1 rounded-lg shadow">
+                                                                <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                                    Payroll Photo Link <span class="text-red-600">*</span>
+                                                                </label>
                                                                 <div id="payroll_picture" class="grid grid-cols-1">
-                                                                    <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
-                                                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                                    </textarea>
+                                                                    <textarea type="text" rows="3" id="payroll_picture" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
                                                                     @error('payroll_picture')
                                                                         <div class="text-sm transition transform alert alert-danger"
-                                                                            x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
-                                                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                            x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();">
+                                                                            <span class="text-xs text-red-500">{{ $message }}</span>
                                                                         </div>
                                                                     @enderror
                                                                 </div>
                                                             </div>
-                                                                <button type="submit" @click="openWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
-                                                            </form>
+                                                            
+                                                            <button wire:click="deletePayroll" @click="openAddWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
+                                                            {{-- </form> --}}
+                                                        </div>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -731,7 +877,7 @@
         }
     }
 
-    // function openWarningButton(index) {
+    // function openAddWarningButton(index) {
     //     const warningModalId = 'warning-pop-up_' + index;
     //     if (warningModalId ) {
     //         warningModalId.classList.remove('hidden')

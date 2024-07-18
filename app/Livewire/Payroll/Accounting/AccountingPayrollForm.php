@@ -88,7 +88,7 @@ class AccountingPayrollForm extends Component
             $payroll->payroll_picture = $this->payroll_picture->store('photos/payroll/' . $payroll->target_employee, 'local');
         }
         $start_date = Carbon::parse($this->start_date);
-        $payroll->month =  $start_date->month;
+        $payroll->month = $start_date->format('F');;
         $payroll->year =  $start_date->year;
 
         $payroll->save();
