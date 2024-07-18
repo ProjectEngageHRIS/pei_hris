@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Accountingnotes;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Payroll;
@@ -69,6 +70,10 @@ class AccountingDashboardView extends Component
     public $halfOfMonthFilter;
     public $monthFilter;
     public $yearFilter;
+
+
+    # Notes
+    public $note;
 
 
     // public $showWarning = False;
@@ -215,6 +220,14 @@ class AccountingDashboardView extends Component
 
     }
 
+    public function addNote(){
+        $note = new Accountingnotes();
+        $note->employee_id = auth()->user()->employee_id;
+        $note->note = $this->note;
+        $note->save();
+        $this->dispatch('triggerSuccess');
+    }
+
     
  
 
@@ -224,6 +237,7 @@ class AccountingDashboardView extends Component
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
+        $notes = Accountingnotes::select('note')->paginate(5);
 
        
 
@@ -285,6 +299,7 @@ class AccountingDashboardView extends Component
 
         return view('livewire.dashboard.accounting-dashboard-view', [
             'EmployeeData' => $results, 
+            'NotesData' => $notes,
             // 'Payrolls' => $payrolls,
         ])->layout('components.layouts.hr-navbar');
     }

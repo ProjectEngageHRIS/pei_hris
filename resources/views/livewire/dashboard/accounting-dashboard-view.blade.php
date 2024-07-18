@@ -418,6 +418,8 @@
                             <!-- Modal content -->
                             <div class="relative bg-white rounded-lg shadow">
                                 <!-- Modal header -->
+                                <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
+
                                 <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
                                     <h3 class="text-xl font-semibold text-gray-900">
                                         Add new note
@@ -431,26 +433,50 @@
                                 </div>
                                 <!-- Modal body -->
                                 <div class="p-4 space-y-4 md:p-5">
-                                    <textarea class="w-full h-40 p-2 border rounded-lg focus:ring-2 focus:border-customRed focus:ring-customRed" placeholder="Type your note here..."></textarea>
+                                    <textarea class="w-full h-40 p-2 border rounded-lg focus:ring-2 focus:border-customRed focus:ring-customRed" wire:model="note" placeholder="Type your note here..."></textarea>
                                 </div>
                                 <!-- Modal footer -->
                                 <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                    <button data-modal-hide="default-modal" type="button" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
+                                    <button type="submit" data-modal-hide="default-modal" type="button" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
                                     <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
                                 </div>
+                                </form>
                             </div>
                         </div>
                     </div>
 
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #1</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
+                    @if ($NotesData->isEmpty())
+                    <tr class="bg-white border-b hover:bg-gray-50 ">
+                        <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
+                            <div class="flex justify-center " style="padding-top: 40px">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                </svg>
+                                <p class="items-center text-xl font-semibold text-customRed "> Nothing to show</p>
+                            </div>
+                        </th>
+                    </tr>
+                    @else
+                        @php
+                            $ctr = 0;
+                            $pageIndex = ($NotesData->currentpage() - 1) * $NotesData->perpage() + $ctr;
+                        @endphp
+                        @foreach ($NotesData as $index => $note)
+                        @php
+                            $ctr = $ctr + 1;
+                        @endphp
+
+                        <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
+                            <span>• #{{$ctr}} - {{$note->note}}</span>
+                            <button class="p-2">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
+                                <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
+                            </svg>
+                            </button>
+                        </div>
+                        @endforeach
+                    @endif
+                    {{-- <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
                         <span>• Note #2</span>
                         <button class="p-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
@@ -481,7 +507,7 @@
                             <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
                         </svg>
                         </button>
-                    </div>
+                    </div> --}}
                 </div>
             </div>
         </div>
