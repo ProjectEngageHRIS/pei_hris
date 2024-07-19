@@ -1,9 +1,9 @@
 <div class="main-content">
-    <div class="p-4 rounded-lg dark:border-gray-700">
+    <div class="p-4 rounded-lg ">
         <nav class="flex mb-4" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
             <li class="inline-flex items-center">
-                <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
+                <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed ">
                 <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                 </svg>
@@ -15,17 +15,12 @@
                 <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('ApproveLeaveRequestTable')}}" class="text-sm font-semibold text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Approve Leave Request</a>
+                <a href="{{route('ApproveLeaveRequestTable')}}" class="text-sm font-semibold text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Approve Leave Request</a>
                 </div>
             </li>
             </ol>
         </nav>
-        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Leave Request</h2>
-
-        <div class="flex justify-end">
-            {{-- <button type="button" onclick="location.href='{{ route('LeaveRequestForm') }}'"  class="text-customRed bg-white mb-8 border-2 border-customRed hover:bg-red-800 hover:text-white  focus:ring-4 focus:ring-customRed focus:text-white focus:bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Leave Request</button> --}}
-        </div>
-        <br>
+        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Approve Leave Request</h2>
 
         <div class="w-full pb-4 mt-4 overflow-x-auto bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -172,9 +167,9 @@
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     @if($leaverequest->status == "Pending")
-                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-amber-700 me-2 dark:bg-amber-300 dark:hover:bg-amber-600 dark:focus:ring-amber-800">
-                                            <svg class="grid w-6 h-6 grid-cols-1 text-xs text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
+                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-amber-700 me-2 ">
+                                            <svg class="grid w-6 h-6 grid-cols-1 text-xs text-gray-200 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
                                                 <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
                                                 <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
                                             </svg>
@@ -182,18 +177,18 @@
                                         </span>
                                     </th>
                                     @elseif($leaverequest->status == "Approved")
-                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
-                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-green-700 rounded-lg me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                                <svg class="w-6 h-6 mr-1 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
+                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-green-700 rounded-lg me-2 ">
+                                                <svg class="w-6 h-6 mr-1 text-white " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                                                 </svg>
                                                 {{ $leaverequest->status }} &nbsp;
                                             </span>
                                         </th>
                                     @else
-                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-red-700 rounded-lg me-2 dark:bg-red-300 dark:hover:bg-red-600 dark:focus:ring-red-800">
-                                            <svg class="w-6 h-6 mr-1 text-white dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"  >
+                                    <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-red-700 rounded-lg me-2 ">
+                                            <svg class="w-6 h-6 mr-1 text-white " xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"  >
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
                                             </svg>
                                             {{ $leaverequest->status }}
@@ -223,7 +218,7 @@
 
                                     <td class="items-center justify-center gap-2 py-4 text-center">
                                         <!-- Edit Button -->
-                                        <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-400 cursor-pointer hover:text-green-600">
+                                        <a onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-400 cursor-pointer hover:text-green-600">
                                             Approve
                                         </a>
                                         <!-- Cancel Button -->
