@@ -106,7 +106,7 @@
             </a>
         </div>
         <!-- Center Section: Navigation Buttons -->
-        <div class="invisible xl:visible lg:static absolute min-h-fit left-0 top-[9%] w-auto flex items-center px-5">
+        <div class="invisible xl:visible xl:static absolute min-h-fit left-0 top-[9%] w-auto flex items-center px-5">
             <ul class="flex items-center gap-x-5">
                 <!-- Home Button -->
                 <a href="{{ route('EmployeeDashboard') }}" class="w-32">
@@ -198,7 +198,6 @@
         </div>
         <!-- Right Section: Notification and Profile Buttons -->
         <div class="flex item-center gap-x-3.5">
-
             <!-- Profile Icon -->
             <div class="relative inline-block text-left">
                 <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="relative flex items-center text-sm font-medium rounded-full text-customGray1 pe-1 hover:text-customRed  md:me-0 focus:ring-4 focus:ring-gray-100  " type="button">
