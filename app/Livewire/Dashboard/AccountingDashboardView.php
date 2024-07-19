@@ -180,7 +180,7 @@ class AccountingDashboardView extends Component
         $employee = Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
         $employee->payroll_status = $this->payroll_status;
         $employee->update();
-        $this->dispatch('triggerSuccessCheckIn');
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
         // return $this->dispatch('triggerSuccessCheckIn');
     }
 
@@ -216,7 +216,7 @@ class AccountingDashboardView extends Component
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
 
-        $this->dispatch('triggerSuccess');
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
     }
 
@@ -225,7 +225,7 @@ class AccountingDashboardView extends Component
         $note->employee_id = auth()->user()->employee_id;
         $note->note = $this->note;
         $note->save();
-        $this->dispatch('triggerSuccess');
+        $this->dispatch('triggerSuccess', ['message' => 'Note Added!']);
     }
 
     
@@ -237,7 +237,7 @@ class AccountingDashboardView extends Component
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
-        $notes = Accountingnotes::select('note')->paginate(5);
+        $notes = Accountingnotes::select('note')->simplePaginate(5, ['*'], 'commentsPage');
 
        
 
@@ -301,6 +301,6 @@ class AccountingDashboardView extends Component
             'EmployeeData' => $results, 
             'NotesData' => $notes,
             // 'Payrolls' => $payrolls,
-        ])->layout('components.layouts.hr-navbar');
+        ])->layout('components.layouts.accounting-navbar');
     }
 }

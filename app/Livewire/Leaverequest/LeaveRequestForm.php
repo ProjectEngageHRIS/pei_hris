@@ -143,35 +143,32 @@ class LeaveRequestForm extends Component
      }
 
 
-    // protected $rules = [
-    //     'mode_of_application' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
-    //     'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-    //     'type_of_leave_sub_category' => 'nullable|in:Others,Within the Philippines,Abroad,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave,In Hospital, Others',
-    //     'type_of_leave_description' => 'required_if:type_of_leave_sub_category,Others|min:10|max:500',
-    //     'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
-    //     'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
-    //     // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
-    //     'commutation' => 'required|in:not requested,requested',
-    //     'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120'
-    // ];
+     protected $rules = [
+        'mode_of_application' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
+        'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
+        'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
+        'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
+        'num_of_days_work_days_applied' => 'required|lte:available_credits',
+        'supervisor_email' => 'required|email',
+        'deduct_to'=> 'required|string|max:255',
+        'reason' => 'required|string|min:10|max:500',
+    ];
 
     protected $validationAttributes = [
         'mode_of_application' => 'Mode of Application',
         'type_of_leave_others' => 'Others',
-        'type_of_leave_sub_category' => 'Sub Category',
-        'type_of_leave_description' => 'Leave Description',
+        'deduct_to'=> 'Deduct to', 
+        'inclusive_start_date' => 'Inclusive Start Date',
+        'inclusive_end_date' => 'Inclusive End Date',
+        'num_of_days_work_days_applied' => 'Number of Days Applied',
+        'supervisor_email' => 'Supervisor Email',
+        'reason' => 'Reason for Leave',
     ];
 
 
     public function submit(){
-        // foreach($this->rules as $rule => $validationRule){
-        //     $this->validate([$rule => $validationRule]);
-        //     $this->resetValidation();
-        // }   
+        $this->validate();
 
-        // if (in_array($this->type_of_leave, ['Vacation Leave', 'Mandatory/Forced Leave', 'Sick Leave'])) {
-        //     $this->validate(['num_of_days_work_days_applied' => 'required|lte:available_credits',]);
-        // }
         
         $loggedInUser = auth()->user();
 

@@ -96,14 +96,26 @@
                                         <input type="text" name="task_title" id="task_title"  wire:model="task_title"
                                             class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             required="">
+                                            @error('task_title')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('assigned_task_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assigned_task_container').focus();" >
+                                                        <span class="text-xs text-red-500" > {{$message}}</span>
+                                                </div>
+                                            @enderror
                                     </div>
                                     <div wire:ignore class="">
                                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target Employees<span class="text-red-600">*</span></label>
-                                        <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        <select multiple style="width:100%; background:gray;" wire:model="target_employees" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                                             @foreach($employeeNames as $name)
                                                <option value="{{$name}}">{{$name}}</option>
                                             @endforeach
                                         </select>
+                                        @error('target_employees')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('assigned_task_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('assigned_task_container').focus();" >
+                                                        <span class="text-xs text-red-500" > {{$message}}</span>
+                                                </div>
+                                            @enderror
                                     </div>
                                 </div>
                                 {{-- Date Of Filling --}}

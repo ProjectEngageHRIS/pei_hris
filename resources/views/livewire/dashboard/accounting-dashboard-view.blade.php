@@ -448,11 +448,11 @@
                     @if ($NotesData->isEmpty())
                     <tr class="bg-white border-b hover:bg-gray-50 ">
                         <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
-                            <div class="flex justify-center " style="padding-top: 40px">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                            <div class="flex justify-center ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="size-5 mr-1" style="margin-top: 3px;">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
-                                <p class="items-center text-xl font-semibold text-customRed "> Nothing to show</p>
+                                <p class="items-center text-base font-semibold text-customRed "> Nothing to show</p>
                             </div>
                         </th>
                     </tr>
@@ -476,6 +476,9 @@
                         </div>
                         @endforeach
                     @endif
+                    <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
+                        {{ $NotesData->links(data : ['scrollTo' => False]) }}
+                    </div>
                     {{-- <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
                         <span>• Note #2</span>
                         <button class="p-2">
@@ -867,7 +870,7 @@
         
     </div>
 
-    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center  w-full h-full bg-gray-800 bg-opacity-50">
+    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center w-full h-full bg-gray-800 bg-opacity-50">
         <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -875,7 +878,7 @@
                 </svg>
                 <span class="sr-only">Check icon</span>
             </div>
-            <div class="text-sm font-normal ms-3">Payroll Updated!</div>
+            <div id="toast-message-checkin" class="text-sm font-normal ms-3">Updated</div>
             <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="toast-container-checkin" aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -918,11 +921,11 @@
     // }
 
     document.addEventListener('livewire:init', function () {
-        Livewire.on('triggerSuccess', () => {
+        Livewire.on('triggerSuccess', (event) => {
             const toastContainer = document.getElementById('toast-container-checkin');
+            let toastMessage = document.getElementById('toast-message-checkin');
             // const modal = document.getElementById('toast-success-checkin');
-            if (toastContainer) {
-                // toastContainer.classList.add('flex');
+            if (toastContainer && toastMessage) {
                 setTimeout(() => {
                     toastContainer.classList.remove('hidden');
                 }, 10); // Hide after 5 seconds
