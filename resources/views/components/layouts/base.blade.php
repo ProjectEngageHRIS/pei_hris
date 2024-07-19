@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="icon" type="image/x-icon" href="{{asset('logo\sllogo.png')}}">
+        <link rel="icon" type="image/x-icon" href="{{asset('assets\sllogo.png')}}">
         @hasSection('title')
 
             <title>@yield('title') - {{ config('app.name') }}</title>
