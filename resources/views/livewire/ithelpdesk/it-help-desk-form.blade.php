@@ -27,34 +27,34 @@
         </ol>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Submit Concern</h2>
-    <form wire:submit.prevent="submit" method="POST" class="p-8 mt-10 bg-white rounded-lg flex flex-col gap-4">
+    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         @csrf
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
-            <h2 class="font-bold text-customRed">Information</h2>
+            <h2 class="font-bold text-customRed">Personal Information</h2>
             <div class="grid grid-cols-1 min-[902px]:grid-cols-6 gap-4">
                 <div class="col-span-1 min-[902px]:col-span-2">
-                    <label for="firstname" class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-500">First name</label>
+                    <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">First name</label>
                     <input type="text" name="firstname" id="firstname" value="{{$first_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-2">
-                    <label for="middlename" class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-500">Middle name</label>
+                    <label for="middlename" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Middle name</label>
                     <input type="text" name="middlename" id="middlename" value="{{$middle_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-2">
-                    <label for="lastname" class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-500">Last name</label>
+                    <label for="lastname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Last name</label>
                     <input type="text" name="lastname" id="lastname"  value="{{$last_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-3">
-                    <label for="department_name" class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-500">Department Name</label>
+                    <label for="department_name" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Department Name</label>
                     <input type="text" name="department_name" id="department_name"  value="{{$department_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-3">
-                    <label for="email" class="block mb-2 text-sm font-medium whitespace-nowrap text-gray-500">Email</label>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Email</label>
                     <input type="text" name="email" id="email"  value="{{$email}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
@@ -63,7 +63,7 @@
         <hr class="my-2 border-gray-300">
         {{-- Concern Information --}}
         <div class="flex flex-col gap-4">
-            <h2 class="font-bold text-red-700">Concern Information <span class="text-base text-gray-900">(Max: 5000 Characters only) </span><span class="text-base text-customRed">*</span> </h2>
+            <h2 class="font-bold text-customRed">Concern Information <span class="text-base text-red-700">*</span> </h2>
             <div id="description_container">
                 <textarea type="text" rows="10" id="description" name="description" wire:model="description" maxlength="5000"
                     placeholder="Write your concern here. Maximum of 5000 characters only."
@@ -79,13 +79,17 @@
         </div>
         <div class="grid grid-cols-2 justify-items-end">
             <button type="submit" class="col-span-1 col-start-2 inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                    <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
+                </svg>
                 Submit Concern
             </button>
         </div>
+
         <!-- Loading screen -->
         <div wire:loading wire:target="submit" class="load-over">
             <div wire:loading wire:target="submit" class="loading-overlay">
-                <div class="flex flex-col justify-center items-center">
+                <div class="flex flex-col items-center justify-center">
                     <div class="spinner"></div>
                     <p>Submitting your Concern...</p>
                 </div>
