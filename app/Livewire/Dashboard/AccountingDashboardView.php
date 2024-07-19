@@ -228,6 +228,15 @@ class AccountingDashboardView extends Component
         $this->dispatch('triggerSuccess', ['message' => 'Note Added!']);
     }
 
+    public function deleteNote($id){
+        $note = Accountingnotes::where('id', $id)->first();
+        if($note){
+            $note->deleted_at = now();
+            $note->update();
+            $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
+        }
+    }
+
     
  
 
@@ -237,7 +246,7 @@ class AccountingDashboardView extends Component
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
-        $notes = Accountingnotes::select('note')->simplePaginate(5, ['*'], 'commentsPage');
+        $notes = Accountingnotes::select('note', 'id')->whereNull('deleted_at')->simplePaginate(10, ['*'], 'commentsPage');
 
        
 

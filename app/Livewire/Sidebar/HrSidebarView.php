@@ -5,6 +5,7 @@ namespace App\Livewire\Sidebar;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\Attributes\Locked;
+use Illuminate\Support\Facades\Storage;
 
 class HrSidebarView extends Component
 {
@@ -74,9 +75,11 @@ class HrSidebarView extends Component
         return redirect()->to(route('HrTicketsTable'));
     }
 
-
+    public function getImage(){
+        $image = Storage::disk('local')->get($this->employeeImage);
+        return $image;
+    }
     
-
     public function render()
     {
         return view('livewire.sidebar.hr-sidebar-view');

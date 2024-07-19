@@ -80,8 +80,8 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="load-over z-50">
-            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="loading-overlay">
+        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote" class="load-over z-50">
+            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote" class="loading-overlay">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Updating Table...</p>
@@ -467,18 +467,21 @@
                         @endphp
 
                         <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                            <span>• #{{$ctr}} - {{$note->note}}</span>
-                            <button class="p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                                <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                            </svg>
+                            <span>• #{{$pageIndex + $ctr}} - {{$note->note}}</span>
+                            <button id="delete-note" class="p-2" wire:click.prevent="deleteNote({{$note->id}})">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
+                                    <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
+                                </svg>
                             </button>
                         </div>
                         @endforeach
+                        @if ($NotesData->count() > 10)
+                        <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
+                            {{ $NotesData->links(data : ['scrollTo' => False]) }}
+                        </div>
+                        @endif
                     @endif
-                    <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
-                        {{ $NotesData->links(data : ['scrollTo' => False]) }}
-                    </div>
+                   
                     {{-- <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
                         <span>• Note #2</span>
                         <button class="p-2">
