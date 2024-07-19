@@ -360,14 +360,12 @@
                         <div class="p-4 md:p-5">
                             <div class="grid grid-cols-1 gap-4 mb-4 ">
                                 <div>
-                                    <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
                                     <select id="category" wire:model="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                        <option selected value="Null">Select</option>
+                                        <option selected value="Null">Select Status</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
                                         {{-- <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option> --}}
-                                        {{-- <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option> --}}
                                     </select>
                                 </div>
                                 <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton border shadow text-customRed hover:bg-customRed hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">

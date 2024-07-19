@@ -404,8 +404,8 @@
                             <div class="p-4 md:p-5">
                                 <div class="grid grid-cols-1 gap-4 mb-4 ">
                                     <div>
-                                        <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 ">Status</label>
                                         <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5   ">
+                                            <option selected value="Null">Select Status</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
@@ -413,7 +413,7 @@
                                             <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
                                         </select>
                                     </div>
-                                    <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center    justify-self-end">
+                                    <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white shadow border font-medium rounded-lg text-sm px-5 py-2.5 text-center    justify-self-end">
                                         Update
                                     </button>
                                 </div>

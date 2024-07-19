@@ -225,8 +225,8 @@
 
                                     <td class="items-center justify-center gap-2 py-4 space-x-2 text-center">
                                         <!-- Edit Button -->
-                                        <a onclick="location.href='{{ route('ApproveChangeInformationForm', ['index' => $change_info->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-green-400 cursor-pointer hover:text-green-600">
-                                            Approve
+                                        <a onclick="location.href='{{ route('ApproveChangeInformationForm', ['index' => $change_info->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600">
+                                            Edit
                                         </a>
                                         <!-- Cancel Button -->
                                         @if ($change_info->status != "Cancelled" && $change_info->status != "Approved")
