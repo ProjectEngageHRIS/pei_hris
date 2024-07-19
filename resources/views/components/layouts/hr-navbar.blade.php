@@ -10,7 +10,7 @@
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
         <link rel="icon" type="image/x-icon" href="{{asset('logo\sllogo.png')}}">
-        <title>Employee Portal</title>
+        <title>Human Resource Portal</title>
         @vite(['resources/css/app.css','resources/js/app.js'])
     </head>
     <style>
