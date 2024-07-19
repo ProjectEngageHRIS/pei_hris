@@ -126,7 +126,7 @@ class AccountingDashboardView extends Component
     ];
 
     public function getPayrollData()
-    {   
+    {
         $monthNumber = $this->monthMap[$this->monthFilter];
 
         $startOfMonth = Carbon::create($this->yearFilter, $monthNumber, 1);
@@ -152,7 +152,7 @@ class AccountingDashboardView extends Component
                                 ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
                                 ->get();
         }
-     
+
 
         // $payrolls = Payroll::where('year', $this->yearFilter)
         //                     ->where('month', $this->monthFilter)
@@ -194,7 +194,7 @@ class AccountingDashboardView extends Component
     //     foreach($this->rules as $rule => $validationRule){
     //         $this->validate([$rule => $validationRule]);
     //         $this->resetValidation();
-    //     }   
+    //     }
     //     $this->showWarning = True;
     // }
 
@@ -204,7 +204,7 @@ class AccountingDashboardView extends Component
         // foreach($this->rules as $rule => $validationRule){
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
-        // }   
+        // }
         $payroll = new Payroll();
         $payroll->employee_id = $loggedInUser;
         $payroll->target_employee = $employee_id;
@@ -228,8 +228,8 @@ class AccountingDashboardView extends Component
         $this->dispatch('triggerSuccess');
     }
 
-    
- 
+
+
 
     public function render()
     {
@@ -239,13 +239,13 @@ class AccountingDashboardView extends Component
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
         $notes = Accountingnotes::select('note')->paginate(5);
 
-       
+
 
         // Employee Type Filter
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
             return $this->employeeTypesFilter[$key];
         });
-        
+
         if (!empty($employeeTypes)) {
             $query->whereIn('employee_type', $employeeTypes);
         }
@@ -254,17 +254,17 @@ class AccountingDashboardView extends Component
         $insideDepartmentTypes = array_filter(array_keys($this->insideDepartmentTypesFilter), function($key) {
             return $this->insideDepartmentTypesFilter[$key];
         });
-        
+
         if (!empty($insideDepartmentTypes)) {
             $query->whereIn('inside_department', $insideDepartmentTypes);
-        } 
+        }
         // // dump($insideDepartmentTypes);
 
         // // Department Filter
         $departmentTypes = array_filter(array_keys($this->departmentTypesFilter), function($key) {
             return $this->departmentTypesFilter[$key];
         });
-        
+
         if (!empty($departmentTypes)) {
             $query->whereIn('department', $departmentTypes);
         }
@@ -273,11 +273,11 @@ class AccountingDashboardView extends Component
         $genderTypes = array_filter(array_keys($this->genderTypesFilter), function($key) {
             return $this->genderTypesFilter[$key];
         });
-        
+
         if (!empty($genderTypes)) {
             $query->whereIn('gender', $genderTypes);
         }
-        
+
 
         if(strlen($this->search) >= 1){
             $searchTerms = explode(' ', $this->search);
@@ -298,9 +298,9 @@ class AccountingDashboardView extends Component
         // $results = $query->orderBy('created_at', 'desc')->where('first_name', 'dsjdak')->paginate(5);
 
         return view('livewire.dashboard.accounting-dashboard-view', [
-            'EmployeeData' => $results, 
+            'EmployeeData' => $results,
             'NotesData' => $notes,
             // 'Payrolls' => $payrolls,
-        ])->layout('components.layouts.hr-navbar');
+        ])->layout('components.layouts.accounting-navbar');
     }
 }
