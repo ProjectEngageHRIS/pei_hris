@@ -16,30 +16,30 @@ class LoginDashboard extends Component
 
 
 
-    public function mount(){
-        $role_id = auth()->user()->role_id;
-        if(in_array($role_id, [6,7,8,9])){
-            $this->is_hr = True;
-            return redirect()->to(route('HumanResourceDashboard'));
-        }
-        if(in_array($role_id, [4, 5])){
-            $this->is_supervisor = True;
-        }
-        if(in_array($role_id, [3])){
-            $this->is_accounting = True;
-            return redirect()->to(route('AccountingDashboard'));
+    // public function mount(){
+    //     $role_id = auth()->user()->role_id;
+    //     if(in_array($role_id, [6,7,8,9])){
+    //         $this->is_hr = True;
+    //         return redirect()->to(route('HumanResourceDashboard'));
+    //     }
+    //     if(in_array($role_id, [4, 5])){
+    //         $this->is_supervisor = True;
+    //     }
+    //     if(in_array($role_id, [3])){
+    //         $this->is_accounting = True;
+    //         return redirect()->to(route('AccountingDashboard'));
 
-        }
-        if(in_array($role_id, [11])){
-            $this->is_it = True;
-        }
-        if(in_array($role_id, [10])){
-            $this->is_president = True;
-            return redirect()->to(route('EmployeeDashboard'));
-        }
+    //     }
+    //     if(in_array($role_id, [11])){
+    //         $this->is_it = True;
+    //     }
+    //     if(in_array($role_id, [10])){
+    //         $this->is_president = True;
+    //         return redirect()->to(route('EmployeeDashboard'));
+    //     }
 
-        return redirect()->to(route('LoginDashboard'));
-    }
+    //     return redirect()->to(route('LoginDashboard'));
+    // }
 
     public function employeePortal(){
         $loggedInUser = auth()->user();
@@ -67,7 +67,7 @@ class LoginDashboard extends Component
         $loggedInUser = auth()->user();
         if(!$loggedInUser){
             if($loggedInUser->role_id != 1){
-                return redirect()->to(route('LoginDashboard'));
+                return redirect()->to(route('AccountingDashboard'));
             }
         }
 

@@ -59,6 +59,14 @@ class HrDashboardView extends Component
     public $genderFilter;
     public $search;
 
+    public function clearAllFilters()
+    {
+        $this->employeeTypesFilter = [];
+        $this->insideDepartmentTypesFilter = [];
+        $this->departmentTypesFilter = [];
+        $this->genderTypesFilter = [];
+    }
+
     
     public function updatingSearch()
     {

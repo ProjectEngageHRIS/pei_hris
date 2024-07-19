@@ -16,7 +16,7 @@
                     {{-- <img class="w-20 h-20 border-4 border-white rounded-full" src="{{asset('assets/header.png')}}" alt="Profile Icon"> --}}
             </div>
             <div class="pl-5 mb-2 text-left">
-                <h2 class="text-xl font-semibold text-customGray1">{{$employee_name}}</h2>
+                <h2 class="text-xl font-semibold text-customGray1">Good {{$period}}, {{$employee_name}}</h2>
             </div>
             <div class="px-5 pb-5 text-sm text-left text-customGray1">
                 <p>{{$position}}, {{$department}}</p>
@@ -334,7 +334,6 @@
             Livewire.on('triggerSuccessCheckIn', () => {
                 const toastContainer = document.getElementById('toast-container-checkin');
                 const modal = document.getElementById('toast-success-checkin');
-
                 if (toastContainer) {
                     toastContainer.classList.remove('hidden');
                     setTimeout(() => {

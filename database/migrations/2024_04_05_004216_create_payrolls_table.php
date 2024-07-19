@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('payrolls', function (Blueprint $table) {
             $table->string('employee_id');
             $table->bigIncrements('payroll_id');
+            $table->string('month', 20)->default(now()->format('M'));
+            $table->string('year', 8)->default(now()->format('Y'));
             $table->date('start_date');
             $table->date('end_date');
             $table->string('target_employee');
-            $table->string('payroll_picture');
+            $table->text('payroll_picture');
             // $table->decimal('basic_pay', 10, 2);
             // $table->decimal('tardiness', 10, 2);
             // $table->integer('absences');

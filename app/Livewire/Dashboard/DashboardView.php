@@ -98,7 +98,7 @@ class DashboardView extends Component
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
                                 ->select('sick_credits', 'vacation_credits', 'first_name', 'middle_name', 'last_name', 'gender', 'current_position', 'department', 'emp_image')->first();
         $employeeInformation->middle_name = $employeeInformation->middle_name ?? " ";
-        $this->employee_name = $employeeInformation->first_name . ' ' .  $employeeInformation->middle_name . ' ' .  $employeeInformation->last_name;
+        $this->employee_name = $employeeInformation->first_name . ' ' ;
         $this->position = $employeeInformation->current_position;
         $this->department = $employeeInformation->department;
         $this->employeeImage = $employeeInformation->emp_image;
@@ -142,25 +142,26 @@ class DashboardView extends Component
         //     }
         // })->get();
 
-    //     $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
-    //     // $this->currentHourMinuteSecond = Carbon::now();
-    //     $currentTime = Carbon::now();
-    //     // Set the start and end times for each period
-    //     $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
-    //     $afternoonStart = Carbon::createFromTime(12, 0, 0); // 12:00 PM (noon)
-    //     $eveningStart = Carbon::createFromTime(18, 0, 0); // 6:00 PM
+        $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
+        // $this->currentHourMinuteSecond = Carbon::now();
+        $currentTime = Carbon::now();
+        // Set the start and end times for each period
+        $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
+        $afternoonStart = Carbon::createFromTime(12, 0, 0); // 12:00 PM (noon)
+        $eveningStart = Carbon::createFromTime(18, 0, 0); // 6:00 PM
 
-    //     // Compare the current time with the defined periods
-    //     if ($currentTime->between($morningStart, $afternoonStart)) {
-    //         // Current time is in the morning
-    //         $this->period = 'Morning';
-    //     } elseif ($currentTime->between($afternoonStart, $eveningStart)) {
-    //         // Current time is in the afternoon
-    //         $this->period = 'Afternoon';
-    //     } else {
-    //         // Current time is in the evening
-    //         $this->period = 'Evening';
-    //     }
+        // Compare the current time with the defined periods
+        if ($currentTime->between($morningStart, $afternoonStart)) {
+            // Current time is in the morning
+            $this->period = 'Morning';
+        } elseif ($currentTime->between($afternoonStart, $eveningStart)) {
+            // Current time is in the afternoon
+            $this->period = 'Afternoon';
+        } else {
+            // Current time is in the evening
+            $this->period = 'Evening';
+        }
+        
     //     // dd($this->period);
     //     $currentYear = Carbon::now()->year;
     //     $currentMonth = Carbon::now()->month;
@@ -394,8 +395,6 @@ class DashboardView extends Component
         $this->js("alert('You have checked in!')");
         return redirect()->to(route('LeaveRequestTable'));
     }
-
-
 
     public function filter($filter){
         if($filter == 'weekly'){

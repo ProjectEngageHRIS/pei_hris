@@ -8,3 +8,7 @@
     color: #000000; /* Match the text-gray-900 color */
     opacity: 1; /* Ensure the text is fully opaque */
 }
+
+[x-cloak] { 
+    display: none !important;
+}

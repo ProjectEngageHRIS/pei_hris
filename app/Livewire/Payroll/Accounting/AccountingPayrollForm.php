@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Payroll\Accounting;
 
+use Carbon\Carbon;
 use App\Models\Payroll;
 use Livewire\Component;
 use App\Models\Employee;
@@ -37,7 +38,7 @@ class AccountingPayrollForm extends Component
         $this->middle_name = $employeeRecord->middle_name;
         $this->last_name = $employeeRecord->last_name;
         $this->department_name = $employeeRecord->department;
-        $this->email = $employeeRecord->employee_email;
+        // $this->email = $employeeRecord->employee_email;
 
         // $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->where('employee_id', '!=', $loggedInUser->employee_id)->get();
         $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->get();
@@ -86,6 +87,9 @@ class AccountingPayrollForm extends Component
             $this->validate(['payroll_picture' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
             $payroll->payroll_picture = $this->payroll_picture->store('photos/payroll/' . $payroll->target_employee, 'local');
         }
+        $start_date = Carbon::parse($this->start_date);
+        $payroll->month = $start_date->format('F');;
+        $payroll->year =  $start_date->year;
 
         $payroll->save();
 

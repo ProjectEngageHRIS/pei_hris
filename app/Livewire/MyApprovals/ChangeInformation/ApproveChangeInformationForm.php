@@ -184,6 +184,9 @@ class ApproveChangeInformationForm extends Component
     }
 
     public function getImage($item){
+        if($item){
+            
+        }
         $image = Storage::disk('local')->get($this->$item);
         return $image;
     }
