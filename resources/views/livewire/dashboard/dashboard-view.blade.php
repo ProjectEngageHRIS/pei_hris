@@ -121,20 +121,20 @@
                 <hr class="my-4 border-gray-300">
 
                 @if ($tasks->isEmpty())
-                    <p class="text-sm text-center text-customGray">No pending tasks</p>
+                    <p class="text-sm text-center text-gray-700">No pending tasks</p>
                 @else
                     <div class="px-4">
                         @foreach ($tasks as $index => $task)
-                            <div class="grid grid-cols-12 items-start my-2 gap-y-2">
+                            <div class="grid items-start grid-cols-12 my-2 gap-y-2">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="col-span-1 size-6 text-customRed">
                                     <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
                                 </svg>
-                              <a class="col-span-11 ml-4 text-sm text-justify text-customRed line-clamp-3 hover:underline" href="{{ route('MyTasksView', ['index' => $task['form_id']]) }}"> <p >{{ $task->task_title }}</p> </a> 
+                              <a class="col-span-11 ml-4 text-sm text-justify text-customRed line-clamp-3 hover:underline" href="{{ route('MyTasksView', ['index' => $task['form_id']]) }}"> <p >{{ $task->task_title }}</p> </a>
                             </div>
                         @endforeach
                     </div>
-                    <a href="{{ route('TasksTable') }}" class="-mb-4 flex flex-row-reverse w-auto  text-sm font-medium p-4 text-customRed hover:underline"> View all </a>
+                    <a href="{{ route('TasksTable') }}" class="flex flex-row-reverse w-auto p-4 -mb-4 text-sm font-medium text-customRed hover:underline"> View all </a>
                 @endif
             </div>
         </div>
@@ -167,7 +167,7 @@
                 <hr class="my-4 border-gray-300">
 
                 @if ($leave_requests->isEmpty())
-                    <p class="text-sm text-center text-customGray">No pending leaves</p>
+                    <p class="text-sm text-center text-gray-700">No pending leaves</p>
                 @else
                     <div class="flex flex-col items-center mr-5">
                         @foreach ($leave_requests as $request)
@@ -176,8 +176,8 @@
                                     <path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
                                     <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
                                 </svg>
-                                <a  class="ml-2 flex" href="{{route('LeaveRequestView', ['index' => $request->form_id])}}">
-                                    <p class=" text-xs text-center text-customRed">{{ $request->inclusive_start_date }}</p>
+                                <a  class="flex ml-2" href="{{route('LeaveRequestView', ['index' => $request->form_id])}}">
+                                    <p class="text-xs text-center text-customRed">{{ $request->inclusive_start_date }}</p>
                                     <span class="text-xs text-center text-customRed">-</span>
                                     <p class="text-xs text-center text-customRed">{{ $request->inclusive_end_date }}</p>
                                 </a>
@@ -191,8 +191,8 @@
 
         <div id="warning_pop_up" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
             <div class="relative w-full max-w-md max-h-full p-4">
-                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                    <button id="close-warning_pop_up_x" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                <div class="relative bg-white rounded-lg shadow ">
+                    <button id="close-warning_pop_up_x" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center " data-modal-hide="popup-modal">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -200,14 +200,14 @@
                     </button>
                     <form wire:submit.prevent="checkOut" method="POST"  class="p-4 md:p-5">
                         <div class="p-4 text-center md:p-5">
-                            <svg class="w-12 h-12 mx-auto mb-4 text-orange-300 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <svg class="w-12 h-12 mx-auto mb-4 text-orange-300 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                             </svg>
-                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you certain about checking out?</h3>
-                            <button type="submit" class="text-white bg-orange-400 hover:bg-orange-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 ">Are you certain about checking out?</h3>
+                            <button type="submit" class="text-white bg-orange-400 hover:bg-orange-700  font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                 Yes
                             </button>
-                            <button id="close-warning_pop_up_cancel" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                            <button id="close-warning_pop_up_cancel" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100    ">No</button>
                         </div>
                     </form>
 
@@ -216,15 +216,15 @@
         </div>
 
         <div id="toast-container-checkin" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
-            <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 " role="alert">
+                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                     </svg>
                     <span class="sr-only">Check icon</span>
                 </div>
                 <div class="text-sm font-normal ms-3">Checked in successfully!</div>
-                <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8   " data-dismiss-target="#toast-success" aria-label="Close">
                     <span class="sr-only">Close</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -234,15 +234,15 @@
         </div>
 
         <div id="toast-container-checkout" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
-            <div id="toast-success" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <div id="toast-success" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 " role="alert">
+                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                     </svg>
                     <span class="sr-only">Check icon</span>
                 </div>
                 <div class="text-sm font-normal ms-3">Checked out successfully!</div>
-                <button id="close-toast-checkout" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                <button id="close-toast-checkout" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8   " data-dismiss-target="#toast-success" aria-label="Close">
                     <span class="sr-only">Close</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -251,38 +251,21 @@
             </div>
         </div>
 
-        <div id="toast-danger" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
+        <div id="toast-danger" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 " role="alert">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg ">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
                 </svg>
                 <span class="sr-only">Error icon</span>
             </div>
             <div class="text-sm font-normal ms-3">You have already checked in. Try again tomorrow!</div>
-            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8   " data-dismiss-target="#toast-success" aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                 </svg>
             </button>
         </div>
-        {{-- <div id="toast-warning" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
-                </svg>
-                <span class="sr-only">Warning icon</span>
-            </div>
-            <div class="text-sm font-normal ms-3">You Have Already Checked In. Try Again Tomorrow</div>
-            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
-        </div> --}}
-
-
 
     </div>
 
@@ -301,13 +284,10 @@
         document.addEventListener('DOMContentLoaded', (event) => {
             const updateButton = document.getElementById('check_out');
             const warning_modal = document.getElementById('warning_pop_up');
-            // const crud_modal = document.getElementById('crud-modal');
-            // const closeModalButtons = document.querySelectorAll('[data-modal-hide="popup-modal"]');
+
 
             updateButton.addEventListener('click', (e) => {
-                // e.preventDefault();
                 warning_modal.classList.remove('hidden');
-                // crud_modal.classList.add('hidden');
             });
         });
 
@@ -375,45 +355,5 @@
                         closeToastButtonCheckOut.classList.add('hidden');
                     }
         });
-
-
-        // const closeToastButton = document.getElementById('close-toast');
-        //     closeToastButton.addEventListener('click', () => {
-        //             const toastContainer = document.getElementById('toast-container-checkout');
-        //             if (toastContainer) {
-        //                 toastContainer.classList.add('hidden');
-        //             }
-        // });
-
-
-
-
-
-        // Livewire.on('triggerDangerCheckIn', () => {
-        //     // Show the modale
-        //     const modal = document.getElementById('toast-danger');
-        //     if (modal) {
-        //         modal.classList.remove('hidden');
-
-        //         setTimeout(() => {
-        //         modal.classList.add('hidden');
-        //         }, 5000); // 5000 milliseconds = 5 seconds
-
-        //     }
-        // });
-
-        // Livewire.on('triggerWarning', () => {
-        //     // Show the modale
-        //     const modal = document.getElementById('toast-success');
-        //     if (modal) {
-        //         modal.classList.remove('hidden');
-
-        //         setTimeout(() => {
-        //         modal.classList.add('hidden');
-        //         }, 5000); // 5000 milliseconds = 5 seconds
-
-        //     }
-        // });
-
 
     </script>
