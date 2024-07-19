@@ -11,63 +11,63 @@
         </li>
         <li>
             <div class="flex items-center">
-            <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Leave Request</a>
+            <a href="{{route('LeaveRequestTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Leave Request</a>
             </div>
         </li>
         <li aria-current="page">
             <div class="flex items-center">
-            <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+            <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Create</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 dark:text-gray-400">Create Leave Request</span>
             </div>
         </li>
         </ol>
-    </nav> 
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Create a new Leave Request</h2>
-    <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
-        <div class=" px-1 mx-auto pt-8">
+    </nav>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Create Leave Request</h2>
+    <section class="px-8 pb-24 mt-10 bg-white rounded-lg dark:bg-gray-900">
+        <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
                 {{-- Information field --}}
-                <h2 class="font-bold text-customRed">Information</h2>
+                <h2 class="font-bold text-customRed">Personal Information</h2>
                 <div class="mt-2 grid grid-cols-1 gap-4 min-[902px]:grid-cols-6">
                     <div class="col-span-1 min-[902px]:col-span-2">
                         <label for="firstname"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">First name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">First name</label>
                         <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                     <div class="col-span-1 min-[902px]:col-span-2">
                         <label for="middlename"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Middle name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Middle name</label>
                         <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                     <div class="col-span-1 min-[902px]:col-span-2">
                         <label for="lastname"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Last name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Last name</label>
                         <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                     <div class="col-span-1 min-[902px]:col-span-3">
                         <label for="department_name"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Department Name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Department Name</label>
                         <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
-                            class="bg-gray-50 shadow-inner border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                     <div class="col-span-1 min-[902px]:col-span-3">
                         <label for="employee_id"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Employee ID <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Employee ID</label>
                         <input type="text" name="" id="employee_id"  value="{{$employee_id}}"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                 </div>
@@ -76,11 +76,9 @@
                 <h2 class="font-bold text-customRed">Leave Information</h2>
                 <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
                     <div class="col-span-1">
-                        <label for="application_date" class="block mb-2 text-sm font-medium text-customGray ">Date of Filing
-                            <span class="text-red-600">*</span>
-                        </label>
+                        <label for="application_date" class="block mb-2 text-sm font-medium text-gray-500 ">Date of Filing</label>
                         <input type="date" wire:model="application_date"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                             placeholder="Date of Filling" disabled>
                     </div>
                     <div class="col-span-1">
@@ -113,7 +111,7 @@
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option value="" selected>Select</option>
                             <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
-{{-- 
+{{--
                             <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                             <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
                             <option value="esalvador@projectengage.com.ph">esalvador@projectengage.com.ph</option>
@@ -277,9 +275,9 @@
                             <div id="leavecredits_container" class="col-span-1 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
                                 <h2 class="col-span-1 min-[902px]:col-span-3 font-bold text-customRed">Leave Credits</h2>
                                 <div class="col-span-1">
-                                    <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-customGray ">Number of Days <span class="text-red-600">*</span></label>
+                                    <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-gray-500 ">Number of Days</label>
                                     <input type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
-                                        class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                        class="bg-gray-50 border font-bold border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                         disabled>
                                     @error('num_of_days_work_days_applied')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
@@ -288,9 +286,9 @@
                                     @enderror
                                 </div>
                                 <div class="col-span-1">
-                                    <label for="available_credits" class="block mb-2 text-sm font-medium text-customGray ">Available Credits <span class="text-red-600">*</span></label>
+                                    <label for="available_credits" class="block mb-2 text-sm font-medium text-gray-500 ">Available Credits</label>
                                     <input type="number" name="available_credits" id="available_credits" wire:model="available_credits"
-                                        class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                        class="bg-gray-50 border font-bold border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                         disabled>
                                     @error('available_credits')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
@@ -319,7 +317,7 @@
                         <hr class="my-4 border-gray-300">
                     @endif
                     <div id="reason_container">
-                        <label for="reason" class="block font-bold whitespace-nowrap text-customRed">Reason of Filing
+                        <label for="reason" class="block font-bold whitespace-nowrap text-customRed">Reason for Filing
                             <span class="text-gray-900"><span class="text-red-600">*</span>
                         </label>
                         <textarea type="text" rows="10" id="reason" name="reason" wire:model="reason"
@@ -332,7 +330,7 @@
                             </div>
                         @enderror
                     </div>
-                   
+
                 @endif
                 <button type="submit" class="inline-flex items-center shadow float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
@@ -343,7 +341,7 @@
                 <!-- Loading screen -->
                 <div wire:loading wire:target="submit" class="load-over">
                     <div wire:loading wire:target="submit" class="loading-overlay">
-                        <div class="flex flex-col justify-center items-center">
+                        <div class="flex flex-col items-center justify-center">
                             <div class="spinner"></div>
                             <p>Submitting your Leave Request...</p>
                         </div>
@@ -384,7 +382,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            
+
             display: flex;
             justify-content: center;
             align-items: center;
