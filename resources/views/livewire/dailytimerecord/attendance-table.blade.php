@@ -88,7 +88,7 @@
 <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
     <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
         <div>
-            <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:ring-customRed focus:border-customRed font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
+            <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:bg-customRed focus:ring-customRed focus:text-white font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
                 <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                 </svg>
@@ -100,7 +100,7 @@
             <!-- Dropdown menu -->
             <div id="dropdownRadio" class="z-10 hidden w-40 mt-1 bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                    <div class="flex items-center p-2 rounded bg-navButton text-activeButton hover:bg-customRed hover:text-white">
+                    <div class="flex items-center p-2 rounded bg-navButton text-gray-900n hover:bg-customRed hover:text-white">
                         <input id="filter-radio-example-0" type="radio" wire:model.live="filter" value="0" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2"> &nbsp; All </input>
                     </div>
                     <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
@@ -185,23 +185,23 @@
                         @endphp
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             @if ($data->type == "Wholeday")
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-green-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-green-800 bg-green-300 rounded-lg me-2">
                                     {{$data->type}}
                                 </span>
                             @elseif ($data->type == "Overtime")
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-blue-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-blue-800 bg-blue-300 rounded-lg me-2">
                                     {{$data->type}}
                                 </span>
                             @elseif ($data->type == "Undertime")
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-red-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-red-800 bg-red-300 rounded-lg me-2">
                                     {{$data->type}}
                                 </span>
                             @elseif ($data->type == "Half-Day")
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-yellow-800 bg-yellow-300 rounded-lg me-2">
                                     {{$data->type}}
                                 </span>
                             @else
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-gray-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-800 bg-gray-300 rounded-lg me-2">
                                     No Time Out
                                 </span>
                             @endif
