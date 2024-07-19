@@ -28,7 +28,7 @@
         </ol>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Apply For HR Ticket</h2>
-    <form wire:submit.prevent="submit" method="POST" class="p-8 mt-10 bg-white rounded-lg flex flex-col gap-4">
+    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         @csrf
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
@@ -65,7 +65,7 @@
         {{-- Leave Information --}}
         <div class="flex flex-col gap-4">
             <h2 class="font-bold text-customRed">Ticket Information</h2>
-            <div class="grid grid-cols-1 lg:grid-cols-4 gap-4">
+            <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
                 <div class="col-span-2">
                     <label for="application_date" class="block mb-2 text-sm font-medium text-gray-500">Date of Filing</label>
                     <input type="date" wire:model="application_date" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
@@ -223,7 +223,7 @@
             <div class="flex flex-col gap-4">
                 <h2 class="font-bold text-customRed">Other Information</h2>
                 @if ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Certificate of Employment")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request (CoE)
                                 <span class="text-red-600">*</span>
@@ -242,7 +242,7 @@
                             <label for="type_of_request" class="block mb-2 text-sm font-medium text-gray-900">Commutation
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 bg-gray-50 rounded-lg border border-gray-300">
+                            <div class="grid w-full grid-cols-2 p-4 border border-gray-300 rounded-lg bg-gray-50">
                                 <div>
                                     <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="with_compensation" wire:model="type_of_hrconcern" value="With Compensation">
                                     <label for="with_compensation" class="text-sm font-medium">With Compensation</label>
@@ -261,9 +261,9 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-related concerns")
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900  ">Type of Concern (HMO)
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900 ">Type of Concern (HMO)
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
@@ -284,7 +284,7 @@
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900  ">Describe your concern (HMO)
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900 ">Describe your concern (HMO)
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
@@ -300,7 +300,7 @@
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900  ">Paste the link related to your concern (HMO)
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900 ">Paste the link related to your concern (HMO)
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
@@ -317,7 +317,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Payroll-related concerns")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Payroll Date
                                 <span class="text-red-600">*</span>
@@ -386,7 +386,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Leave concerns")
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Leave)
                                 <span class="text-red-600">*</span>
@@ -442,7 +442,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Request for Consultation")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Leave)
                                 <span class="text-red-600">*</span>
@@ -481,9 +481,9 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Request for a Meeting")
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
-                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900  ">Date of Meeting (Request for Meeting)
+                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date of Meeting (Request for Meeting)
                                 <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
@@ -532,7 +532,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Certificate of Remittances")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Remittance Certificate
                                 <span class="text-red-600">*</span>
@@ -627,7 +627,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-mandated benefits concern")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of Concern (GMR)
                                 <span class="text-red-600">*</span>
@@ -669,7 +669,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Messengerial")
-                    <div class="grid grid-cols-1 lg:grid-cols-6 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-6">
                         <div class="col-span-1 lg:col-span-2">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900"> Type of Request (Messengerial)
                                 <span class="text-red-600">*</span>
@@ -759,8 +759,8 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Repairs/Maintenance")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                        <div class="p-4 border border-gray-200 rounded-lg shadow col-span-1 lg:col-span-2 grid grid-cols-5 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                        <div class="grid grid-cols-5 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow lg:col-span-2">
                             <ul class="col-span-1">
                                 <h1>1. Electrical Issues Checklist</h1>
                                 <li> <span class="text-customRed">◦ </span> Malfunctioning outlets or switches</li>
@@ -899,7 +899,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Book a Car")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Departure (Book a Car)
                                 <span class="text-red-600">*</span>
@@ -954,7 +954,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Book a Meeting Room")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date (Book a Meeting Room)
                                 <span class="text-red-600">*</span>
@@ -1014,7 +1014,7 @@
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Office Supplies")
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-y-4 gap-x-8">
-                        <div class="col-span-1 grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 col-span-1 gap-4">
                             <div id="supplies_request.ballpen_black_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_black" class="text-sm font-medium text-gray-900">Ballpen Black</label>
@@ -1172,7 +1172,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-span-1 grid grid-cols-1 gap-4">
+                        <div class="grid grid-cols-1 col-span-1 gap-4">
                             <div id="supplies_request.calculator_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.calculator" class="text-sm font-medium text-gray-900">Calculator</label>
@@ -1332,7 +1332,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Procurement" && $sub_type_of_request == "Request for Quotation")
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Specifications (Quotation)
                                 <span class="text-red-600">*</span><br> <span class="text-gray-500 font-base">(Please make sure to include the complete details such as color, size, code, etc.) </span>
@@ -1380,7 +1380,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Procurement" && $sub_type_of_request == "Request to Buy/Book/Avail Service")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Product/Service Specifications (Procurement)
                                 <span class="text-red-600">*</span>
@@ -1413,7 +1413,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Reimbursements")
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Cut-Off Date
                                 <span class="text-red-600">*</span>
@@ -1458,12 +1458,12 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Tools and Equipment")
-                    <div class="flex flex-col lg:flex-row justify-between gap-4">
+                    <div class="flex flex-col justify-between gap-4 lg:flex-row">
                         <div id="type_of_hrconcern_container" class="w-full">
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 bg-gray-50 rounded-lg border border-gray-300">
+                            <div class="grid w-full grid-cols-2 p-4 border border-gray-300 rounded-lg bg-gray-50">
                                 <div>
                                     <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="condition_availability" id="new" wire:model="condition_availability" value="New">
                                     <label for="New" class="text-sm font-medium">New</label>
@@ -1523,7 +1523,7 @@
                         @endif
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Cash Advance")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date of Cash Advance Request
                                 <span class="text-red-600">*</span>
@@ -1553,7 +1553,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Liquidation")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">CA Liquidation Coverage
                                 <span class="text-red-600">*</span>
@@ -1586,7 +1586,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Operations" && $type_of_request == "Performance Monitoring Request")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="type_of_pe_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Leave)
                                 <span class="text-red-600">*</span></label>
@@ -1625,12 +1625,12 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Operations" && $type_of_request == "Incident Report")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_hrconcerns" class="block mb-2 text-sm font-medium text-gray-900">Level of Offense
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-3 p-4 bg-gray-50 rounded-lg border border-gray-300">
+                            <div class="grid w-full grid-cols-3 p-4 border border-gray-300 rounded-lg bg-gray-50">
                                 <div>
                                     <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="High" id="new" wire:model="type_of_hrconcern" value="High">
                                     <label for="High" class="text-sm font-medium">High</label>
@@ -1687,7 +1687,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Operations" && $type_of_request == "Request for Employee Files")
-                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request (Employee Files)
                                 <span class="text-red-600">*</span>
@@ -1735,21 +1735,32 @@
             </div>
             <div class="grid grid-cols-2 justify-items-end">
                 <button type="submit" class="col-span-1 col-start-2 inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                        <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
+                    </svg>
                     Submit HR Ticket
                 </button>
             </div>
+            {{-- <div class="grid grid-cols-2 justify-items-end">
+                <button type="submit" class="col-span-1 col-start-2 inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                        <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
+                    </svg>
+                    Submit Concern
+                </button>
+            </div> --}}
         @endif
         <!-- Loading screen -->
         <div wire:loading wire:target="submit" class="load-over">
             <div wire:loading wire:target="submit" class="loading-overlay">
-                <div class="flex flex-col justify-center items-center">
+                <div class="flex flex-col items-center justify-center">
                     <div class="spinner"></div>
                     <p>Submitting your HR Ticket...</p>
                 </div>
             </div>
         </div>
 
-        <div id="toast-success" tabindex="-1" class="fixed inset-0 z-50 items-center hidden justify-center w-full h-full bg-gray-800 bg-opacity-50">
+        <div id="toast-success" tabindex="-1" class="fixed inset-0 z-50 items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
             <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert">
                 <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg">
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
