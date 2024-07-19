@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\DB;
 class HrTicketsForm extends Component
 {
     use WithFileUploads;
-    
+
     public $employeeRecord;
     public $date;
     public $first_name;
@@ -98,13 +98,21 @@ class HrTicketsForm extends Component
 
     public $request_others;
 
+    public function resetTypeOfRequest(){
+        $this->reset(['type_of_request']);
+    }
+
+    public function resetSubTypeOfRequest(){
+        $this->reset(['sub_type_of_request']);
+    }
+
     public function mount($type = null){
         $this->type = $type;
         $loggedInUser = auth()->user();
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name','employee_email', 'employee_id')
                                     ->where('employee_id', $loggedInUser->employee_id)
-                                    ->first(); 
-                          
+                                    ->first();
+
 
         // $departmentName = DB::table('departments')->where('department_id', $employeeRecord->department_id[0])->value('department_name');
         $this->available_credits = $employeeRecord->vacation_credits + $employeeRecord->sick_credits;
@@ -201,7 +209,7 @@ class HrTicketsForm extends Component
                 // dd($seconds, $num_of_seconds_work_days_applied);
                 // $decimalPart = ($num_of_seconds_work_days_applied - floor($num_of_seconds_work_days_applied)) * 60;
                 $hoursLeave = $days * 0.125;
-                
+
                 // $this->$num_of_days_work_days_applied = number_format($hoursLeave , 3);
                 $this->num_of_days_work_days_applied = number_format($hoursLeave, 3);
             }
@@ -213,7 +221,7 @@ class HrTicketsForm extends Component
 
     }
 
-    
+
     public function removeImage($item){
         $this->$item = null;
     }
@@ -255,14 +263,14 @@ class HrTicketsForm extends Component
         // foreach($this->rules as $rule => $validationRule){
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
-        // }   
+        // }
 
         // if (in_array($this->type_of_leave, ['Vacation Leave', 'Mandatory/Forced Leave', 'Sick Leave'])) {
         //     $this->validate(['num_of_days_work_days_applied' => 'required|lte:available_credits',]);
         // }
 
         // dd($this->supplies_request);
-        
+
         $loggedInUser = auth()->user();
 
         $hrticketdata = new Hrticket();
@@ -296,7 +304,7 @@ class HrTicketsForm extends Component
                     $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
                     $hrticketdata->purpose = $this->purpose;
                     $hrticketdata->request_link = $this->request_link;
-                }   
+                }
                 else if($this->sub_type_of_request == "Request for a Meeting"){
                     $hrticketdata->request_date = $this->request_date;
                     $hrticketdata->purpose = $this->purpose;
@@ -337,7 +345,7 @@ class HrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Repairs/Maintenance"){
                     $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
                     $hrticketdata->purpose = $this->purpose;
-                }  
+                }
                 else if($this->sub_type_of_request == "Book a Car"){
                     $hrticketdata->request_date = $this->request_date;
                     $hrticketdata->request_requested = $this->request_requested;
@@ -368,7 +376,7 @@ class HrTicketsForm extends Component
                     $hrticketdata->request_link = $this->request_link;
                 }
             }
-          
+
             // else if($this->type_of_request == "Book a Meeting Room"){
             //     if($this->sub_type_of_request == "Request for Quotation"){
             //         $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
@@ -445,7 +453,7 @@ class HrTicketsForm extends Component
 
     // public function updateNumOfDays($start_date, $end_date){
     //     dd($start_date);
-     
+
     // }
     public function render()
     {
