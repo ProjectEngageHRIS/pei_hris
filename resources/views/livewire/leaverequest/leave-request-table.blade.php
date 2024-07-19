@@ -234,28 +234,17 @@
 
 
                                     <td class="items-center py-4 text-center">
-                                        <div class="top-0" x-data="{ isOpen: false }" @click.away="isOpen = false">
-                                            <!-- Three dots button to toggle dropdown -->
-                                            <button @click="isOpen = !isOpen; adjustDropdownPosition('{{ $loop->index }}')" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 " type="button">
-                                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                                </svg>
-                                            </button>
-                                            <!-- Dropdown menu -->
-                                            <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute z-40 mt-2 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 " id="dropdown{{ $loop->index }}">
-                                                <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm text-gray-700 divide-y-2 ">
-                                                        <li>
-                                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 ">View</a>
-                                                        </li>
-                                                    </ul>
-                                                @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Approved" )
-                                                    <div class="py-2">
-                                                        <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 text-black cursor-pointer hover:bg-red-600 hover:text-white " @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
-                                                    </div>
-                                                @endif
-
-                                            </div>
+                                        <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
+                                            <!-- View Button -->
+                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
+                                                View
+                                            </a>
+                                            <!-- Cancel Button -->
+                                            @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Approved" )
+                                                <a id="cancel_button_{{ $loop->index }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600 " @click="openCancelModal('{{ $loop->index }}')">
+                                                    Cancel
+                                                </a>
+                                            @endif
                                         </div>
                                     </td>
 
