@@ -301,14 +301,15 @@ class DashboardView extends Component
     {
         $loggedInUser = auth()->user()->employee_id;
 
-        $current_time = Carbon::now();
+        $current_time = Carbon::today();
         $six_am_today = Carbon::today()->setHour(16);
+        // $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); 
 
         if ($current_time->greaterThan($six_am_today)) {
-            $time = Dailytimerecord::where('attendance_date', $current_time)->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
+            $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
 
         } else {
-            $time = Dailytimerecord::where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
+            $time = Dailytimerecord::where('employee_id', $loggedInUser)->orderBy('attendance_date', 'desc')->first(); // assuming 'attendance_date' is stored as a date only
 
         }
 
@@ -321,7 +322,7 @@ class DashboardView extends Component
         
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_out = Carbon::now()->toDateTimeString();
-                // $dtr->time_out = "2024-06-21 12:59:59";
+                $dtr->time_in = "2024-07-19 7:59:59";
 
 
                 $timeIn = Carbon::parse($dtr->time_in);
@@ -334,30 +335,59 @@ class DashboardView extends Component
                 $seconds = $differenceInSeconds % 60;
 
                 $standardWorkMinutes =  540;
+                $onePM = Carbon::today()->setHour(13)->setMinute(0)->setSecond(0);
 
-                if ($hours >= 10) {
-                    $dtr->type = 'Overtime';
-                    $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->overtime = $overtime / 60;
-                    $dtr->undertime = 0;
-                } elseif ($hours >= 9) {
-                    $dtr->type = 'Wholeday';
-                    $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->overtime = $overtime / 60;
-                    $dtr->undertime = 0;
-                } elseif ($hours >= 5) {
-                    $dtr->type = 'Half-Day';
-                    $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->undertime = $undertime / 60;
-                    $dtr->overtime = 0;
-                } elseif ($hours <= 5) {
-                    $dtr->type = 'Undertime';
-                    $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->undertime = $undertime / 60;
-                    $dtr->overtime = 0;
-                    // dd($dtr->undertime, $dtr->overtime);
+                if($timeIn->greaterThan($onePM)){
+                    if ($hours >= 10) {
+                        $dtr->type = 'Overtime';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = $overtime / 60;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 9) {
+                        $dtr->type = 'Wholeday';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = $overtime / 60;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 5) {
+                        $dtr->type = 'Half-Day';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = $undertime / 60;
+                        $dtr->overtime = 0;
+                    } elseif ($hours <= 5) {
+                        $dtr->type = 'Undertime';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = $undertime / 60;
+                        $dtr->overtime = 0;
+                        // dd($dtr->undertime, $dtr->overtime);
+                    } else {
+                        $dtr->type = 'Undefined';
+                    }
                 } else {
-                    $dtr->type = 'Undefined';
+                    if ($hours >= 10) {
+                        $dtr->type = 'Overtime';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = ($overtime - 60) / 60 ;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 9) {
+                        $dtr->type = 'Wholeday';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = ($overtime - 60) / 60 ;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 5) {
+                        $dtr->type = 'Half-Day';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = ($undertime- 60) / 60 ;
+                        $dtr->overtime = 0;
+                    } elseif ($hours <= 5) {
+                        $dtr->type = 'Undertime';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = ($undertime- 60) / 60;
+                        $dtr->overtime = 0;
+                        // dd($dtr->undertime, $dtr->overtime);
+                    } else {
+                        $dtr->type = 'Undefined';
+                    }
+
                 }
 
                 $dtr->update();

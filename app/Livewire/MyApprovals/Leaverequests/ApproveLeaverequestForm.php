@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
+use App\Models\Dailytimerecord;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -104,6 +105,7 @@ class ApproveLeaverequestForm extends Component
         // $this->is_faculty = $employeeRecord->is_faculty;
 
         $this->form_id = $leaverequest->form_id;
+        $this->status = $leaverequest->status;
 
         $this->application_date = $leaverequest->application_date;
         $this->mode_of_application = $leaverequest->mode_of_application;
@@ -141,6 +143,73 @@ class ApproveLeaverequestForm extends Component
 
     public function submit(){
         $leaverequesdata = Leaverequest::where('uuid', $this->index)->first();
+        if (!$leaverequesdata) {
+            // Handle case where leave request is not found
+            return;
+        }
+        $startDate = Carbon::parse($leaverequesdata->inclusive_start_date)->toDateString();
+        $endDate = Carbon::parse($leaverequesdata->inclusive_end_date)->toDateString();
+        
+        $dailyRecords = Dailytimerecord::whereDate('attendance_date', '>=', $startDate)
+            ->whereDate('attendance_date', '<=', $endDate)
+            ->where('employee_id', $leaverequesdata->employee_id)
+            ->get();
+
+        foreach($dailyRecords as $record){
+            if($record->type  == "Completed" || $record->type == "Overtime"){
+                return $this->dispatch('triggerErrorNotification');
+            }
+        }
+        
+
+    
+        if($leaverequesdata != "Completed" && $this->status != "Overtime"){
+            $startDate = \Carbon\Carbon::parse($leaverequesdata->inclusive_start_date);
+            $endDate = \Carbon\Carbon::parse($leaverequesdata->inclusive_end_date);
+        
+            $currentDate = $startDate;
+            $dailyLeaveRecords = [];
+        
+            while ($currentDate <= $endDate) {
+                $isStartDay = $currentDate->isSameDay($startDate);
+                $isEndDay = $currentDate->isSameDay($endDate);
+        
+                if ($isStartDay && $isEndDay) {
+                    // Leave starts and ends on the same day (half day)
+                    // Assume if leave starts and ends on the same day, it's a half day
+                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
+                } elseif ($isStartDay) {
+                    // Partial leave on the start day (half day)
+                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
+                } elseif ($isEndDay) {
+                    // Partial leave on the end day (half day)
+                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
+                } else {
+                    // Full leave day
+                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 8, 'minutes' => 0]; // Assuming a full day is 8 hours
+                }
+        
+                $currentDate->addDay();
+            }
+        
+            foreach ($dailyLeaveRecords as $record) {
+                $dailyRecord = Dailytimerecord::where('attendance_date', $record['date'])
+                    ->where('employee_id', $leaverequesdata->employee_id)
+                    ->first();
+        
+                if ($dailyRecord) {
+                    if($record['hours'] == 8){
+                        $dailyRecord->type = $leaverequesdata->mode_of_application . ' Full-Day' ; 
+                    } else {
+                        $dailyRecord->type = $leaverequesdata->mode_of_application . '  Half-Day'; 
+                    }
+                    $dailyRecord->update();
+                }
+            }
+        } else {
+            dd('test');
+        }
+        dd($this->status);
 
         $leaverequesdata->status = $this->status;
 

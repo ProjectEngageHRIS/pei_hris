@@ -234,7 +234,7 @@
                                                 <!-- Dropdown content -->
                                                     <ul class="py-2 text-sm divide-y-2 text-gray-700 dark:text-gray-200">
                                                         <li>
-                                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
+                                                            <a onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $leaverequest->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                                         </li>
                                                     </ul>
                                                 @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Approved" )

@@ -112,15 +112,15 @@ document.addEventListener('DOMContentLoaded', function () {
 
   }, false);
 
-  // Cursor wait button functionality
-  document.getElementById('navButton').addEventListener('click', function() {
-    this.classList.add('cursor-wait');
-    this.disabled = true;
+  // // Cursor wait button functionality
+  // document.getElementById('navButton').addEventListener('click', function() {
+  //   this.classList.add('cursor-wait');
+  //   this.disabled = true;
 
-    setTimeout(() => {
-        this.classList.remove('cursor-wait');
-        this.disabled = false;
-    }, 10000);
-  });
+  //   setTimeout(() => {
+  //       this.classList.remove('cursor-wait');
+  //       this.disabled = false;
+  //   }, 10000);
+  // });
 
 });

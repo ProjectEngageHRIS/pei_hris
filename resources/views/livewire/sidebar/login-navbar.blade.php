@@ -31,14 +31,6 @@
                         <div class="font-medium">{{$department}}</div>
                         <div class="truncate text-customRed">{{$employee_id}}</div>
                     </div>
-                    <ul class="py-2 text-sm text-customGray1 dark:text-gray-200" aria-labelledby="dropdownAvatarNameButton">
-                        <li>
-                            <a href="{{route('EmployeeDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Employee Portal</a>
-                        </li>
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Account Settings</a>
-                        </li>
-                    </ul>
                     <div class="py-2">
                         <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-customGray1 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Sign out</a>
                     </div>

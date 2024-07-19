@@ -200,6 +200,10 @@
                                 <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                     {{$data->type}}
                                 </span>
+                            @elseif ($data->type == "Half-Day")
+                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                    {{$data->type}}
+                                </span>
                             @else
                                 <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-gray-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                     No Time Out
