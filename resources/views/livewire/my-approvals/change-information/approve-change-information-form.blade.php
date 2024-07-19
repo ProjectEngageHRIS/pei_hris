@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('profile')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Profile</a>
+            <a href="{{route('ApproveChangeInformationTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Approve Change Information</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,12 +22,12 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 hover:text-customRed ">Change Personal Information</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 hover:text-customRed ">Approve Change Information Form</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Change Information Request</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Approve Change Information Form</h2>
     <section class="px-8 pb-24 bg-white rounded-lg ">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
@@ -329,26 +329,21 @@
                         @enderror
                     </div>
                 </div>
-
-            {{-- <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center rounded-8px text-customRed bg-navButton  hover:bg-customRed hover:text-white shadow">
-                    Submit Change Information
-            </button> --}}
             <hr class="mt-2">
             <div>
-                <button data-modal-target="crud-modal" type="button" data-modal-toggle="crud-modal"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center rounded-8px text-customRed bg-navButton  hover:bg-customRed hover:text-white shadow">
+                <button data-modal-target="crud-modal" type="button" data-modal-toggle="crud-modal"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center rounded-8px text-white bg-customRed  hover:bg-red-600 hover:text-white shadow">
                     Change Status
                 </button>
 
             </div>
             <!-- Change Status Modal -->
-            <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
+            <div id="crud-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                 <div class="relative w-full max-w-md p-4">
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <!-- Modal header -->
-                        <div class=" border-b rounded-t dark:border-gray-600">
+                        <div class="border-b rounded-t dark:border-gray-600">
                            <div class="flex items-center justify-between p-4">
                                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Change Status</h3> <br>
-                                {{-- <p class="text-lg font-semibold text-gray-500 dark:text-white">Note: Selecting Approved will proceed to change the info in database</p> --}}
                                 <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -375,7 +370,7 @@
                                         {{-- <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option> --}}
                                     </select>
                                 </div>
-                                <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
+                                <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton border shadow text-customRed hover:bg-customRed hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
                                     Update
                                 </button>
                             </div>
@@ -383,10 +378,10 @@
                     </div>
                 </div>
             </div>
-        
+
             <!-- Popup Modal -->
-            <div id="popup-modal" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-                <div class="relative p-4 w-full max-w-md max-h-full">
+            <div id="popup-modal" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                <div class="relative w-full max-w-md max-h-full p-4">
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                         <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -395,8 +390,8 @@
                             <span class="sr-only">Close modal</span>
                         </button>
                         <form wire:submit.prevent="submit" method="POST"  class="p-4 md:p-5">
-                            <div class="p-4 md:p-5 text-center">
-                                <svg class="mx-auto mb-4 text-amber-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <div class="p-4 text-center md:p-5">
+                                <svg class="w-12 h-12 mx-auto mb-4 text-amber-600 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                 </svg>
                                 <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to proceed</h3>
@@ -406,19 +401,19 @@
                                 <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
                             </div>
                         </form>
-        
+
                     </div>
                 </div>
             </div>
-        
-            <div id="toast-success" tabindex="-1" class="hidden fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-center items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
+
+            <div id="toast-success" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
                 <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                     </svg>
                     <span class="sr-only">Check icon</span>
                 </div>
-                <div class="ms-3 text-sm font-normal">Status Updated Successfully.</div>
+                <div class="text-sm font-normal ms-3">Status Updated Successfully.</div>
                 <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
                     <span class="sr-only">Close</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -447,13 +442,13 @@
         const crud_modal = document.getElementById('crud-modal');
 
         const closeModalButtons = document.querySelectorAll('[data-modal-hide="popup-modal"]');
-    
+
         updateButton.addEventListener('click', (e) => {
             e.preventDefault();
             modal.classList.remove('hidden');
             // crud_modal.classList.add('hidden');
         });
-    
+
         closeModalButtons.forEach((button) => {
             button.addEventListener('click', () => {
                 modal.classList.add('hidden');
@@ -468,7 +463,7 @@
             const modal = document.getElementById('toast-success');
             const pop_up_modal = document.getElementById('popup-modal');
             const crud_modal = document.getElementById('crud-modal');
-            
+
             if (modal) {
                 crud_modal.classList.add('hidden');
                 pop_up_modal.classList.add('hidden');
