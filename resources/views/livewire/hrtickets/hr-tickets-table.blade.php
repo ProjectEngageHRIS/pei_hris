@@ -20,27 +20,11 @@
             </li>
             </ol>
         </nav>
-        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">HR Ticketing</h2>
-
-        {{-- <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 w-full min-[450px]:w-1/3  lg:w-1/3">
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 whitespace-normal dark:text-white xl:whitespace-nowrap">Vacation Credits</h4>
-                <p class="text-3xl font-semibold text-red-600 dark:text-gray-400">{{$vacationCredits ?? 0.00}}</p>
-            </div>
-            <div class="p-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                <h4 class="mb-2 text-lg font-bold tracking-tight text-gray-900 whitespace-normal dark:text-white xl:whitespace-nowrap">Sick Credits</h4>
-                <p class="text-3xl font-semibold text-red-600 dark:text-gray-400">{{$sickCredits ?? 0.00}}</p>
-            </div>
-        </div> --}}
-
+        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">HR Tickets</h2>
 
         <div class="flex justify-end">
-            <button type="button" onclick="location.href='{{ route('HrTicketsForm', ['type' => $type]) }}'"  class="text-customRed bg-white mb-8 hover:text-white hover:bg-customRed shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">Apply for HR Ticket</button>
-
-            {{-- <button type="button" onclick="location.href='{{ route('HrTicketsForm') }}'" class="text-white   mb-8 bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Apply a Hr Ticket</button> --}}
+            <button type="button" onclick="location.href='{{ route('HrTicketsForm', ['type' => $type]) }}'"  class="text-white bg-customRed mb-8 hover:text-white hover:bg-red-600 shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 ">Apply for HR Ticket</button>
         </div>
-
-
 
         <div class="w-full pb-4 overflow-x-auto bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -261,14 +245,14 @@
                                         {{$hrticket->type_of_request}}
                                     </td>
                                     <td class="px-6 py-4 text-center">
-                                       
+
                                         @if($hrticket->type_of_request == "Reimbursements")
                                             <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}}
                                         @elseif($hrticket->type_of_request == "Tools and Equipment")
                                             <span class="font-semibold text-gray-700">Equipment Type: </span>{{$hrticket->type_of_hrconcern}} <br>
-                                            <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br> 
+                                            <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br>
                                         @elseif($hrticket->type_of_request == "Cash Advance")
                                             <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{$hrticket->request_date}} <br>
                                             <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
@@ -284,29 +268,29 @@
                                         @elseif($hrticket->type_of_request == "Request for Issuance of Notice/Letter")
                                             <span class="font-semibold text-gray-700">Type of Notice:</span> {{$hrticket->type_of_hrconcern}} <br>
                                         @elseif($hrticket->type_of_request == "Request for Quotation")
-                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
+                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Purpose:</span> {{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
                                         @elseif($hrticket->type_of_request == "Request to Buy/Book/Avail Service")
-                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
+                                            <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
                                         @elseif($hrticket->type_of_request == "Request for Employee Files")
-                                            <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br> 
+                                            <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->document_requested}} <br>
 
                                         @elseif($hrticket->sub_type_of_request == "Certificate of Employment" || $hrticket->sub_type_of_request == "Request for Consultation" )
                                             <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br>
-                                            <span class="font-semibold text-gray-700">Type of COE </span> {{$hrticket->type_of_hrconcern}} 
+                                            <span class="font-semibold text-gray-700">Type of COE </span> {{$hrticket->type_of_hrconcern}}
                                         @elseif($hrticket->sub_type_of_request == "HMO-related concerns" || $hrticket->sub_type_of_request == "Leave concerns")
                                             <span class="font-semibold text-gray-700">Type of Concern: </span>{{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
-                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} 
-                                        
+                                            <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}}
+
                                         @elseif($hrticket->sub_type_of_request == "Payroll-related concerns")
                                             <span class="font-semibold text-gray-700">Payroll Date: </span>{{$hrticket->request_date}} <br>
                                             <span class="font-semibold text-gray-700">Type of Concern: </span>    {{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>    {{$hrticket->purpose }} <br>
-                                            <span class="font-semibold text-gray-700">Link Related: </span>    {{$hrticket->request_link }} 
+                                            <span class="font-semibold text-gray-700">Link Related: </span>    {{$hrticket->request_link }}
 
 
                                         @elseif($hrticket->sub_type_of_request == "Certificate of Remittances")
@@ -347,7 +331,7 @@
                                                     // dd();
                                                 @endphp
                                                 {{-- @foreach ($supplies_request as $name =>  $request) --}}
-                                                   
+
                                                 <div class="">
                                                     @php $ctr_request = 0; @endphp
                                                     <div class="grid grid-cols-3 gap-2 font-semibold">
@@ -355,8 +339,8 @@
                                                         <div class="col-span-1">Name</div>
                                                         <div class="col-span-1">Quantity</div>
                                                     </div>
-                                                
-                                                    <div class="flex flex-col space-y-2 mt-2">
+
+                                                    <div class="flex flex-col mt-2 space-y-2">
                                                         @if($supplies_request['ballpen_black'] > 0)
                                                             @php $ctr_request += 1; @endphp
                                                             <div class="grid grid-cols-3 gap-2">
@@ -365,7 +349,7 @@
                                                                 <div class="col-span-1">{{ $supplies_request['ballpen_black'] }}</div>
                                                             </div>
                                                         @endif
-                                                
+
                                                         @if($supplies_request['ballpen_blue'] > 0)
                                                             @php $ctr_request += 1; @endphp
                                                             <div class="grid grid-cols-3 gap-2">
@@ -374,7 +358,7 @@
                                                                 <div class="col-span-1">{{ $supplies_request['ballpen_blue'] }}</div>
                                                             </div>
                                                         @endif
-                                                
+
                                                         @if($supplies_request['ballpen_red'] > 0)
                                                             @php $ctr_request += 1; @endphp
                                                             <div class="grid grid-cols-3 gap-2">
@@ -383,7 +367,7 @@
                                                                 <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
                                                             </div>
                                                         @endif
-                                                
+
                                                         @if($supplies_request['ballpen_red'] > 0)
                                                             @php $ctr_request += 1; @endphp
                                                             <div class="grid grid-cols-3 gap-2">
@@ -427,7 +411,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
+
                                                 @if($supplies_request['correction_tape'] > 0)
                                                             @php $ctr_request += 1; @endphp
                                                             <div class="grid grid-cols-3 gap-2">
@@ -471,7 +455,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                                
+
                                                 @if($supplies_request['s_brown_exp_folder'] > 0)
                                                             @php $ctr_request += 1; @endphp
                                                             <div class="grid grid-cols-3 gap-2">
@@ -678,16 +662,16 @@
                                                     <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
                                                 </svg>
                                             </button>
-                                            <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute mt-2 z-40 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{ $loop->index }}">
+                                            <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute z-40 mt-2 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{ $loop->index }}">
                                                 <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm divide-y-2 text-gray-700 dark:text-gray-200">
+                                                    <ul class="py-2 text-sm text-gray-700 divide-y-2 dark:text-gray-200">
                                                         <li>
-                                                            <a onclick="location.href='{{ route('HrTicketsView', ['index' => $hrticket->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
+                                                            <a onclick="location.href='{{ route('HrTicketsView', ['index' => $hrticket->uuid]) }}'" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
                                                         </li>
                                                     </ul>
                                                 @if ($hrticket->status != "Cancelled" && $hrticket->status != "Approved" )
                                                     <div class="py-2">
-                                                        <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
+                                                        <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 text-black cursor-pointer hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
                                                     </div>
                                                 @endif
 
@@ -696,8 +680,8 @@
                                         </div>
                                     </td>
 
-                                    <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-                                        <div class="relative p-4 w-full max-w-md max-h-full">
+                                    <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                        <div class="relative w-full max-w-md max-h-full p-4">
                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                 <button type="button" @click="closeCancelModal('{{ $loop->index }}')"  class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -706,8 +690,8 @@
                                                     <span class="sr-only">Close modal</span>
                                                 </button>
                                                 <div class="p-4 md:p-5">
-                                                    <div class="p-4 md:p-5 text-center">
-                                                        <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                    <div class="p-4 text-center md:p-5">
+                                                        <svg class="w-12 h-12 mx-auto mb-4 text-red-600 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                         </svg>
                                                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
@@ -719,7 +703,7 @@
                                                         </button>
                                                     </div>
                                                 </div>
-                                
+
                                             </div>
                                         </div>
                                     </div>
@@ -775,7 +759,7 @@
         }
     }
 
-    
+
     function closeCancelModal(index) {
         const modalId = 'popup-modal_' + index;
         const modal = document.getElementById(modalId);
