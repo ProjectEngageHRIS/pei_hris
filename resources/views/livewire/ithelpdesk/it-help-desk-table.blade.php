@@ -22,20 +22,10 @@
         </nav>
         <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">IT Helpdesk</h2>
 
-
-        <button type="button" onclick="location.href='{{ route('ItHelpDeskForm') }}'" class="text-white bg-customRed mb-8 hover:text-white hover:bg-red-600 shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
-                <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
-            </svg>
-            Submit a Concern
-        </button>
-
-        {{-- <button type="submit" class="inline-flex items-center shadow float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
-                <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
-            </svg>
-            Submit Form
-        </button> --}}
+        <div class="flex justify-end">
+            <button type="button" onclick="location.href='{{ route('ItHelpDeskForm') }}'" class="text-white bg-customRed mb-8 hover:text-white hover:bg-red-600 shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 ">
+                Submit a Concern</button>
+        </div>
 
         <div class="w-full pb-4 overflow-x-auto bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -218,28 +208,17 @@
                                         <td class="px-6 py-4 text-center " colspan="3">
                                             {{$it_ticket->description}}
                                         </td>
-                                        <td class="items-center py-4 text-center">
-                                            <div class="top-0" x-data="{ isOpen: false }" @click.away="isOpen = false">
-                                                <button @click="isOpen = !isOpen; adjustDropdownPosition('{{ $loop->index }}')" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 " type="button">
-                                                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                        <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                                    </svg>
-                                                </button>
-                                                <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute z-40 mt-2 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 " id="dropdown{{ $loop->index }}">
-                                                    <!-- Dropdown content -->
-                                                        <ul class="py-2 text-sm text-gray-700 divide-y-2 ">
-                                                            <li>
-                                                                <a onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->uuid]) }}'" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 ">View</a>
-                                                            </li>
-                                                        </ul>
-                                                    @if ($it_ticket->status != "Cancelled" && $it_ticket->status != "Approved" )
-                                                        <div class="py-2">
-                                                            <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 text-black cursor-pointer hover:bg-red-600 hover:text-white " @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
-                                                        </div>
-                                                    @endif
-
-                                                </div>
-                                            </div>
+                                        <td class="flex items-center justify-center py-4 space-x-2 text-center">
+                                            <!-- View Button -->
+                                            <a onclick="location.href='{{ route('ItHelpDeskView', ['index' => $it_ticket->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600">
+                                                View
+                                            </a>
+                                            <!-- Cancel Button -->
+                                            @if ($it_ticket->status != "Cancelled" && $it_ticket->status != "Approved" )
+                                                <a id="cancel_button_{{ $loop->index }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600 " @click="openCancelModal('{{ $loop->index }}')">
+                                                    Cancel
+                                                </a>
+                                            @endif
                                         </td>
 
                                         <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
