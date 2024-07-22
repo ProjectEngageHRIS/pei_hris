@@ -200,14 +200,18 @@
                                 <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                     {{$data->type}}
                                 </span>
-                            @elseif ($data->type == "Half-Day")
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
-                                    {{$data->type}}
-                                </span>
                             @else
-                                <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-gray-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
-                                    {{$data->type}}
-                                </span>
+                                {{-- @dd($data->late) --}}
+                                @if ($data->late == 1)
+                                    <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-customRed rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                        Late & {{$data->type ?? 'No Time Out'}}
+                                    </span>
+                                @else
+                                    <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-gray-500 rounded-lg focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
+                                        {{$data->type ?? 'No Time Out'}}
+                                    </span>
+                                @endif
+
                             @endif
                         </td>
                         <td class="px-6 py-4 text-center">

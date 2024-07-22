@@ -268,7 +268,8 @@ class AttendanceTable extends Component
                                          'time_in',
                                          'time_out',
                                          'overtime',
-                                         'undertime');
+                                         'undertime',
+                                         'late');
         
         switch ($this->filter) {
             case '1':

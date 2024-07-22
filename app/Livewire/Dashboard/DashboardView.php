@@ -267,18 +267,20 @@ class DashboardView extends Component
     {
 
         $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
-        $allowedCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
+        $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
         $currentTime = Carbon::now();
 
 
-        if ($currentTime->greaterThanOrEqualTo($allowedCheckInTime)) {
+        if ($currentTime->greaterThanOrEqualTo($startOfCheckInTime)) {
             $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
-    
             if (!$time) {
                 $dtr = new Dailytimerecord();
                 $dtr->employee_id = auth()->user()->employee_id;
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_in = Carbon::now()->toDateTimeString();
+                $lateCheckerParse = Carbon::parse($dtr->time_in);
+                $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0); 
+                if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
 
@@ -323,7 +325,7 @@ class DashboardView extends Component
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_out = Carbon::now()->toDateTimeString();
                 $dtr->time_in = "2024-07-21 7:59:59";
-                $dtr->time_out = "2024-07-21 9:59:59";
+                $dtr->time_out = "2024-07-21  9:59:59";
 
                 $timeIn = Carbon::parse($dtr->time_in);
                 $timeOut = Carbon::parse($dtr->time_out);
