@@ -62,6 +62,9 @@ class LeaveRequestForm extends Component
     public $type;
     public $deduct_to;
 
+    public $leaveRequestTimeFrame;
+
+
 
     public function mount($type = null){
         $this->type = $type;
@@ -87,6 +90,7 @@ class LeaveRequestForm extends Component
         if($type = "adviseslip"){
             $this->mode_of_application = "Advise Slip";
         }
+        $this->leaveRequestTimeFrame[] = ['start_date' => '', 'end_date' => '', 'full_half' => ''];
     }
 
     public function updated($keys){
@@ -125,6 +129,15 @@ class LeaveRequestForm extends Component
 
     }
 
+    public function addleaveRequestTimeFrame(){
+        $this->leaveRequestTimeFrame[] = ['start_date' => '', 'end_date' => '', 'full_half' => ''];
+    }
+
+    public function removeHistory($index){
+        unset($this->leaveRequestTimeFrame[$index]);
+        $this->leaveRequestTimeFrame = array_values($this->leaveRequestTimeFrame);
+        // $this->dispatch('update-employee-history', [json_encode($this->leaveRequestTimeFrame, true)]);
+    }
     
     public function removeImage($item){
         $this->$item = null;

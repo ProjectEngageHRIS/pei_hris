@@ -63,6 +63,8 @@ class DashboardView extends Component
 
     public $tasks;
 
+    public $leaveIndicator = False;
+
 
 
     public function search()
@@ -116,6 +118,11 @@ class DashboardView extends Component
                             ->take(5)
                             ->select('task_title', 'form_id')
                             ->get();
+
+        $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
+        if($leaveIndicator->type != null){
+            $this->leaveIndicator = $leaveIndicator->type;
+        }
         // dd($this->leave_requests);
 
 
@@ -142,7 +149,7 @@ class DashboardView extends Component
         //     }
         // })->get();
 
-        $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
+        // $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
         // $this->currentHourMinuteSecond = Carbon::now();
         $currentTime = Carbon::now();
         // Set the start and end times for each period

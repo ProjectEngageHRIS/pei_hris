@@ -30,34 +30,38 @@
                         <p id="current-time" class="px-20 text-sm text-customGray1 font-regular">{{ now('Asia/Manila')->format('g:i:s A') }}</p>
                         <hr class="my-4 border-gray-300">
                     </div>
+                    <div class="flex justify-center w-full px-4 mb-4">
+                        <p class=" text-base text-center ">You are currently on <br> <span class="font-semibold text-customRed"> {{$leaveIndicator}}</span>. <br> It is recommended to not  <br> time in and out  <br> during the period </p>
+                    </div>
+            
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
                         <button wire:click.prevent="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeInFlag) disabled @endif>
+                            @if($timeInFlag ) disabled @endif>
                             Time In
                         </button>
                         <button id="check_out" type="submit" class="flex items-center justify-center px-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeOutFlag) disabled @endif>
+                            @if($timeOutFlag ) disabled @endif>
                             Time Out
                         </button>
                     </div>
                 </div>
-            </div>
-            <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
-                <div class="">
-                    <p class="text-sm font-medium text-customGray1">Time In:</p>
-                    <p class="text-sm font-medium text-customRed">{{$timeIn ?? "N/A"}} </p>
                 </div>
-                <div class="">
-                    <p class="text-sm font-medium text-customGray1">Time Out:</p>
-                    <p class="text-sm font-medium text-customRed">{{$timeOut ?? "N/A"}}</p>
-                </div>
-                <div class="items-center col-span-2 mt-6">
+                <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
                     <div class="">
-                        <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
-                        <p class="text-sm font-medium text-customRed">{{$currentTimeIn ?? "N/A"}}</p>
+                        <p class="text-sm font-medium text-customGray1">Time In:</p>
+                        <p class="text-sm font-medium text-customRed">{{$timeIn ?? "N/A"}} </p>
+                    </div>
+                    <div class="">
+                        <p class="text-sm font-medium text-customGray1">Time Out:</p>
+                        <p class="text-sm font-medium text-customRed">{{$timeOut ?? "N/A"}}</p>
+                    </div>
+                    <div class="items-center col-span-2 mt-6">
+                        <div class="">
+                            <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
+                            <p class="text-sm font-medium text-customRed">{{$currentTimeIn ?? "N/A"}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="flex items-center mb-6 px-15">
                 <a href="{{ route('AttendanceTable') }}" class="w-full">
                     <button class="flex items-center px-3 ml-2 text-sm font-medium shadow bg-navButton w-58 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"> Generate Daily Log Record </button>

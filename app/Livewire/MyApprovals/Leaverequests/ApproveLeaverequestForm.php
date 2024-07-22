@@ -70,6 +70,8 @@ class ApproveLeaverequestForm extends Component
     public $deduct_to;
     public $form_id;
 
+    public $full_half;
+
     public function mount($index){
         $loggedInUser = auth()->user();
 
@@ -142,11 +144,17 @@ class ApproveLeaverequestForm extends Component
 
 
     public function submit(){
+        $loggedInUser = auth()->user()->role_id;
+        if($loggedInUser != 9 && $loggedInUser != 10){
+            return;
+        }
+
         $leaverequestdata = Leaverequest::where('uuid', $this->index)->first();
         if (!$leaverequestdata) {
             // Handle case where leave request is not found
             return;
         }
+        
         $startDate = Carbon::parse($leaverequestdata->inclusive_start_date)->toDateString();
         $endDate = Carbon::parse($leaverequestdata->inclusive_end_date)->toDateString();
         
@@ -167,21 +175,33 @@ class ApproveLeaverequestForm extends Component
         
             $currentDate = $startDate;
             $dailyLeaveRecords = [];
+
+
+            $startOfHalfDay = Carbon::today()->setTime(1, 00, 0); 
+
         
             while ($currentDate <= $endDate) {
                 $isStartDay = $currentDate->isSameDay($startDate);
+
                 $isEndDay = $currentDate->isSameDay($endDate);
         
                 if ($isStartDay && $isEndDay) {
                     // Leave starts and ends on the same day (half day)
                     // Assume if leave starts and ends on the same day, it's a half day
                     $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
-                } elseif ($isStartDay) {
+                    dd('test1');
+                }
+                 elseif ($isStartDay) {
                     // Partial leave on the start day (half day)
-                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
-                } elseif ($isEndDay) {
+                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition\
+                    dd('test2');
+                    
+                } 
+                elseif ($isEndDay) {
                     // Partial leave on the end day (half day)
                     $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
+                    dd('test3');
+
                 } else {
                     // Full leave day
                     $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 8, 'minutes' => 0]; // Assuming a full day is 8 hours
@@ -212,9 +232,7 @@ class ApproveLeaverequestForm extends Component
                     } else {
                         $newDailyRecord->type = $leaverequestdata->mode_of_application . '  Half-Day'; 
                     }   
-
                     $newDailyRecord->save();
-
                 }
             }
         } else {
@@ -224,6 +242,9 @@ class ApproveLeaverequestForm extends Component
 
 
         $leaverequestdata->status = $this->status;
+        $leaverequestdata->status = $this->status;
+        $leaverequestdata->status = $this->status;
+
 
         $leaverequestdata->update();
 

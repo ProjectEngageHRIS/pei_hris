@@ -21,14 +21,16 @@ return new class extends Migration
             $table->string('mode_of_application', 20)->nullable();
             $table->dateTime('inclusive_start_date')->nullable();
             $table->dateTime('inclusive_end_date')->nullable();
+            $table->string('full_or_half', 20)->nullable();
             $table->string('deduct_to', 20)->nullable();
             $table->decimal('num_of_days_work_days_applied')->nullable();
             $table->date('date_earned')->nullable();
             $table->text('earned_description')->nullable();
             $table->text('purpose_type')->nullable();
             $table->text('reason');
+            $table->boolean('approved_by_hr')->default(false);
+            $table->boolean('approved_by_president')->default(false);
             $table->dateTime('cancelled_at')->nullable();
-
 
             // Not Needed 
             // Details of application

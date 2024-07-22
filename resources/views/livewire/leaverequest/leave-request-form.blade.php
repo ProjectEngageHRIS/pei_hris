@@ -246,31 +246,56 @@
                     @elseif ($mode_of_application == "Vacation Leave" || $mode_of_application == "Sick Leave" || $mode_of_application == "Maternity Leave"
                         || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave" || $mode_of_application == "Others")
                         <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-2 gap-4">
-                            <div class="col-span-1 grid grid-cols-1 min-[902px]:grid-cols-2 gap-4">
-                                <h2 class="col-span-1 min-[902px]:col-span-2 font-bold text-customRed">Leave Request Time Frame</h2>
-                                <div class="col-span-1">
-                                    <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date/Time
-                                        <span class="text-red-600">*</span>
-                                    </label>
-                                    <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                        class="bg-gray border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
-                                        required="">
-                                    @error('inclusive_start_date')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
+                            <div class="col-span-1 grid grid-cols-1  gap-4">
+                                <h2 class="col-span-1 whitespace-nowrap font-bold text-customRed">Leave Request Time Frame</h2>
+                                <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 ">
+                                    <div class="col-span-1">
+                                        <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date/Time
+                                            <span class="text-red-600">*</span>
+                                        </label>
+                                        <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
+                                            class="bg-gray border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                            required="">
+                                        @error('inclusive_start_date')
+                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
+                                        <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
+                                            required="">
+                                        @error('inclusive_end_date')
+                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-span-1">
+                                        <div id="full_half_container" class="col-span-1">
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full on Start or End Day
+                                                <span class="text-red-600">*</span>
+                                            </label>
+                                            <select id="purpose_type" name="full_half" wire:model="full_half"
+                                                class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                                <option value="" selected>Select</option>
+                                                <option value="Start Full">Full Day on Start Day</option>
+                                                <option value="End Full">Full Day on End Day</option>
+                                                <option value="Both Full">Full Day on Both Day</option>
+                                                <option value="Start Half">Half Day on Start Day</option>
+                                                <option value="End Half">Half Day on End Day</option>
+                                                <option value="Both Half">Half Day on Both Day</option>
+                                            </select>
+                                            @error('full_half')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                x-data x-init="document.getElementById('full_half_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('full_half_container').focus();" >
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
                                         </div>
-                                    @enderror
-                                </div>
-                                <div class="col-span-1">
-                                    <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
-                                    <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
-                                        required="">
-                                    @error('inclusive_end_date')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
+                                    </div>
                                 </div>
                             </div>
                             {{-- Available Credits --}}

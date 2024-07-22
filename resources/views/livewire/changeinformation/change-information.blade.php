@@ -297,10 +297,10 @@
                                 </div>
                             </div>
                         </div>
-                    @php
-                        $ctr += 1;
-                    @endphp
-                    @endforeach
+                        @php
+                            $ctr += 1;
+                        @endphp
+                        @endforeach
                         @endif
                         <script>
                             document.addEventListener('livewire:init', () => {
