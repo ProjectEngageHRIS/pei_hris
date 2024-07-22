@@ -146,7 +146,7 @@ class LeaveRequestForm extends Component
      protected $rules = [
         'mode_of_application' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
         'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-        'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
+        // 'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
         'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
         'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'supervisor_email' => 'required|email',

@@ -142,17 +142,17 @@ class ApproveLeaverequestForm extends Component
 
 
     public function submit(){
-        $leaverequesdata = Leaverequest::where('uuid', $this->index)->first();
-        if (!$leaverequesdata) {
+        $leaverequestdata = Leaverequest::where('uuid', $this->index)->first();
+        if (!$leaverequestdata) {
             // Handle case where leave request is not found
             return;
         }
-        $startDate = Carbon::parse($leaverequesdata->inclusive_start_date)->toDateString();
-        $endDate = Carbon::parse($leaverequesdata->inclusive_end_date)->toDateString();
+        $startDate = Carbon::parse($leaverequestdata->inclusive_start_date)->toDateString();
+        $endDate = Carbon::parse($leaverequestdata->inclusive_end_date)->toDateString();
         
         $dailyRecords = Dailytimerecord::whereDate('attendance_date', '>=', $startDate)
             ->whereDate('attendance_date', '<=', $endDate)
-            ->where('employee_id', $leaverequesdata->employee_id)
+            ->where('employee_id', $leaverequestdata->employee_id)
             ->get();
 
         foreach($dailyRecords as $record){
@@ -161,9 +161,9 @@ class ApproveLeaverequestForm extends Component
             }
         }
         
-        if($leaverequesdata != "Completed" && $this->status != "Overtime"){
-            $startDate = \Carbon\Carbon::parse($leaverequesdata->inclusive_start_date);
-            $endDate = \Carbon\Carbon::parse($leaverequesdata->inclusive_end_date);
+        if($leaverequestdata != "Completed"){
+            $startDate = Carbon::parse($leaverequestdata->inclusive_start_date);
+            $endDate = Carbon::parse($leaverequestdata->inclusive_end_date);
         
             $currentDate = $startDate;
             $dailyLeaveRecords = [];
@@ -192,26 +192,40 @@ class ApproveLeaverequestForm extends Component
         
             foreach ($dailyLeaveRecords as $record) {
                 $dailyRecord = Dailytimerecord::where('attendance_date', $record['date'])
-                    ->where('employee_id', $leaverequesdata->employee_id)
+                    ->where('employee_id', $leaverequestdata->employee_id)
                     ->first();
         
                 if ($dailyRecord) {
                     if($record['hours'] == 8){
-                        $dailyRecord->type = $leaverequesdata->mode_of_application . ' Full-Day' ; 
+                        $dailyRecord->type = $leaverequestdata->mode_of_application . ' Full-Day' ; 
                     } else {
-                        $dailyRecord->type = $leaverequesdata->mode_of_application . '  Half-Day'; 
+                        $dailyRecord->type = $leaverequestdata->mode_of_application . '  Half-Day'; 
                     }
                     $dailyRecord->update();
+                } else {
+                    $newDailyRecord = new Dailytimerecord();
+                    $newDailyRecord->employee_id = $leaverequestdata->employee_id;
+                    $newDailyRecord->attendance_date = $record['date'];
+
+                    if($record['hours'] == 8){
+                        $newDailyRecord->type = $leaverequestdata->mode_of_application . ' Full-Day' ; 
+                    } else {
+                        $newDailyRecord->type = $leaverequestdata->mode_of_application . '  Half-Day'; 
+                    }   
+
+                    $newDailyRecord->save();
+
                 }
             }
         } else {
             dd('test');
         }
-        // dd($this->status);
 
-        $leaverequesdata->status = $this->status;
 
-        $leaverequesdata->update();
+
+        $leaverequestdata->status = $this->status;
+
+        $leaverequestdata->update();
 
         return $this->dispatch('triggerNotification');
 

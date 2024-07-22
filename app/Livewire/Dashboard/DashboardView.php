@@ -322,8 +322,8 @@ class DashboardView extends Component
         
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_out = Carbon::now()->toDateTimeString();
-                $dtr->time_in = "2024-07-20 7:59:59";
-                $dtr->time_out = "2024-07-20 9:59:59";
+                $dtr->time_in = "2024-07-21 7:59:59";
+                $dtr->time_out = "2024-07-21 9:59:59";
 
                 $timeIn = Carbon::parse($dtr->time_in);
                 $timeOut = Carbon::parse($dtr->time_out);
