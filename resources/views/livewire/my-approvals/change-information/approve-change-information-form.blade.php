@@ -231,7 +231,7 @@
                         @if ($employeeHistory)
                         @foreach ($employeeHistory as $index => $history)
                         <div class="bg-white rounded-lg ">
-                            <ul class="text-sm font-medium text-left text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 dark:border-gray-700 dark:text-gray-400 dark:bg-gray-800" id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                            <ul class="text-sm font-medium text-left text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
                                 <li class="p-4 font-bold text-gray-900 float-bold">
                                     <span>No. {{$index + 1 }} </span>
                                 </li>
@@ -339,12 +339,12 @@
             <!-- Change Status Modal -->
             <div id="crud-modal" tabindex="-1" aria-hidden="true" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                 <div class="relative w-full max-w-md p-4">
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                    <div class="relative bg-white rounded-lg shadow ">
                         <!-- Modal header -->
-                        <div class="border-b rounded-t dark:border-gray-600">
+                        <div class="border-b rounded-t ">
                            <div class="flex items-center justify-between p-4">
-                                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Change Status</h3> <br>
-                                <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="crud-modal">
+                                <h3 class="text-lg font-semibold text-gray-900 ">Change Status</h3> <br>
+                                <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto " data-modal-toggle="crud-modal">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                     </svg>
@@ -353,14 +353,14 @@
                            </div>
                         </div>
                         <div class="p-4">
-                            <p class="text-sm font-semibold text-gray-500 dark:text-white">Note: Selecting "Approved" will update the information in the database.</p>
+                            <p class="text-sm font-semibold text-gray-500 ">Note: Selecting "Approved" will update the information in the database.</p>
 
                         </div>
                         <!-- Modal body -->
                         <div class="p-4 md:p-5">
                             <div class="grid grid-cols-1 gap-4 mb-4 ">
                                 <div>
-                                    <select id="category" wire:model="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                    <select id="category" wire:model="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5  ">
                                         <option selected value="Null">Select Status</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
@@ -368,7 +368,7 @@
                                         {{-- <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option> --}}
                                     </select>
                                 </div>
-                                <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton border shadow text-customRed hover:bg-customRed hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
+                                <button id="updateButton" type="submit" class="inline-flex items-center bg-navButton border shadow text-customRed hover:bg-customRed hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-self-end">
                                     Update
                                 </button>
                             </div>
@@ -380,8 +380,8 @@
             <!-- Popup Modal -->
             <div id="popup-modal" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                 <div class="relative w-full max-w-md max-h-full p-4">
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="popup-modal">
+                    <div class="relative bg-white rounded-lg shadow ">
+                        <button type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="popup-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -389,14 +389,14 @@
                         </button>
                         <form wire:submit.prevent="submit" method="POST"  class="p-4 md:p-5">
                             <div class="p-4 text-center md:p-5">
-                                <svg class="w-12 h-12 mx-auto mb-4 text-amber-600 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <svg class="w-12 h-12 mx-auto mb-4 text-amber-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                 </svg>
-                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you sure you want to proceed</h3>
-                                <button type="submit" class="text-white bg-amber-600 hover:bg-amber-800  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                <h3 class="mb-5 text-lg font-normal text-gray-500 ">Are you sure you want to proceed</h3>
+                                <button type="submit" class="text-white bg-amber-600 hover:bg-amber-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                     Yes
                                 </button>
-                                <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                <button type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 ">No</button>
                             </div>
                         </form>
 
@@ -404,15 +404,15 @@
                 </div>
             </div>
 
-            <div id="toast-success" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+            <div id="toast-success" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 " role="alert">
+                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">
                     <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                         <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                     </svg>
                     <span class="sr-only">Check icon</span>
                 </div>
                 <div class="text-sm font-normal ms-3">Status Updated Successfully.</div>
-                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
+                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 " data-dismiss-target="#toast-success" aria-label="Close">
                     <span class="sr-only">Close</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>

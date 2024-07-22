@@ -25,7 +25,7 @@
         <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
             <div>
-                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:ring-customRed focus:border-customRed font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
+                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:ring-customRed focus:bg-customRed focus:text-white font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
                     <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                         </svg>
@@ -98,7 +98,7 @@
                             End Date
                          </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                            Actions
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -127,7 +127,7 @@
                                 $ctr = $ctr + 1;
                             @endphp
                             {{--  --}}
-                                <tr class="bg-white border-b  hover:bg-gray-50 ">
+                                <tr class="bg-white border-b hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
@@ -138,21 +138,11 @@
                                         {{$data->end_date}}
                                     </td>
                                     <td wire:ignore class="items-center py-4 text-center">
-                                        <button wire:ignore  data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 " type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-                                        <div class="top-0 right-0 z-10 hidden mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 " id="dropdown{{$loop->index}}">
-                                            <!-- Dropdown content -->
-                                            <ul class="py-2 text-sm text-gray-700 ">
-                                                {{-- <li>
-                                                    <a onclick="location.href='{{ route('PayrollPdf', ['date' => $data->start_date]) }}'" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
-                                                </li> --}}
-                                                <li>
-                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">Download Payroll</a>
-                                                </li>
-                                            </ul>
+                                        <div class="flex items-center justify-center space-x-2">
+                                            <!-- Download Payroll Button -->
+                                            <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="inline-flex items-center px-4 py-2 text-sm font-medium cursor-pointer text-customGreen hover:text-green-700">
+                                                Download Payroll
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>
