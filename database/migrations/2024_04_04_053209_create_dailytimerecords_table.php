@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('employee_id');
             $table->date('attendance_date')->default(now());
             $table->string('type', 50)->nullable();
-            $table->dateTime('time_in');
+            $table->dateTime('time_in')->nullable();
             $table->dateTime('time_out')->nullable();
             $table->boolean('late')->nullable();
             $table->decimal('overtime', 8, 2)->nullable();

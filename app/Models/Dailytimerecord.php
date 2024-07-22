@@ -18,7 +18,6 @@ class Dailytimerecord extends Model
     protected $fillable = [
         'employee_id',
         'attendance_date',
-        'attendance_details',
-        'attendance_type',
+        'type',
     ];
 }
