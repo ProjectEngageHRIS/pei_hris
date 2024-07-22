@@ -211,9 +211,9 @@ class LeaveRequestForm extends Component
             ->first();
 
         
-        // Send email to the supervisor
-        Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
-        Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
+        // // Send email to the supervisor
+        // Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
+        // Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
 
         $this->dispatch('triggerNotification');
 

@@ -80,9 +80,9 @@ class ApproveLeaverequestForm extends Component
 
         try {
             $leaverequest = $this->editLeaveRequest($index);
-            $this->authorize('update', [$leaverequest]);
+            // $this->authorize('update', [$leaverequest]);
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('LeaveRequestTable'));
+            return redirect()->to(route('ApproveLeaveRequestTable'));
             abort(404);
         }
 
@@ -130,9 +130,9 @@ class ApproveLeaverequestForm extends Component
     public function editLeaveRequest($index){
         // $leaverequest =  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $leaverequest =  Leaverequest::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
+        $leaverequest =  Leaverequest::where('uuid', $index)->first();
         
-        if(!$leaverequest || $leaverequest->employee_id != $loggedInUser){
+        if(!$leaverequest){
             return False;
         }
         // $this->leaverequest = $leaverequest;
@@ -156,13 +156,11 @@ class ApproveLeaverequestForm extends Component
             ->get();
 
         foreach($dailyRecords as $record){
-            if($record->type  == "Completed" || $record->type == "Overtime"){
+            if($record->type  == "Wholeday" || $record->type == "Overtime"){
                 return $this->dispatch('triggerErrorNotification');
             }
         }
         
-
-    
         if($leaverequesdata != "Completed" && $this->status != "Overtime"){
             $startDate = \Carbon\Carbon::parse($leaverequesdata->inclusive_start_date);
             $endDate = \Carbon\Carbon::parse($leaverequesdata->inclusive_end_date);
@@ -209,15 +207,15 @@ class ApproveLeaverequestForm extends Component
         } else {
             dd('test');
         }
-        dd($this->status);
+        // dd($this->status);
 
         $leaverequesdata->status = $this->status;
 
         $leaverequesdata->update();
 
-        $this->dispatch('triggerNotification');
+        return $this->dispatch('triggerNotification');
 
-        return redirect()->to(route('ApproveLeaveRequestTable'));
+        // return redirect()->to(route('ApproveLeaveRequestTable'));
     }
     
     public function render()

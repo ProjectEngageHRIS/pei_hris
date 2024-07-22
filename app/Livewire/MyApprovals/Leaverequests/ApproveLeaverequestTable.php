@@ -50,7 +50,8 @@ class ApproveLeaverequestTable extends Component
     {
         $loggedInUser = auth()->user();
 
-        $query = Leaverequest::where('employee_id', $loggedInUser->employee_id);
+        $query = Leaverequest::query();
+
 
         switch ($this->date_filter) {
             case '1':

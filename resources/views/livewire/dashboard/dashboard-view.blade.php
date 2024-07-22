@@ -210,7 +210,6 @@
                             <button id="close-warning_pop_up_cancel" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -266,6 +265,8 @@
                 </svg>
             </button>
         </div>
+
+        
         {{-- <div id="toast-warning" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -354,9 +355,8 @@
         document.addEventListener('livewire:init', function () {
             Livewire.on('triggerSuccessCheckOut', () => {
                 const toastContainer = document.getElementById('toast-container-checkout');
-                const modal = document.getElementById('toast-success-checkout');
-                 const warning_modal = document.getElementById('warning_pop_up');
-
+                // const modal = document.getElementById('toast-success-checkout');
+                const warning_modal = document.getElementById('warning_pop_up');
 
                 if (toastContainer) {
                     toastContainer.classList.remove('hidden');
