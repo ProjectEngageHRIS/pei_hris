@@ -36,65 +36,64 @@
                     <div class="block w-full col-span-3 bg-white rounded-lg dark:bg-gray-800 dark:border-gray-700 ">
                         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                             {{-- Information field --}}
-                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3">
                                <div class="grid grid-cols-1 col-span-3 gap-4 ">
-                                    <h2  class="font-bold text-customRed">Information</h2>
+                                    <h2  class="font-bold text-customRed">Employee Information</h2>
 
                                     <div  class="">
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="firstname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">First name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">First name </label>
                                                 <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Middle name </label>
                                                 <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Last name</label>
                                                 <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3">
                                             <div class="w-full">
                                                 <label for="department_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Department Name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Department Name </label>
                                                 <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full">
                                                 <label for="email"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Email <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Email Address</label>
                                                 <input type="text" name="email" id="email"  value="{{$email}}"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     required="" disabled>
                                             </div>
                                         </div>
                                     </div>
+                                    <hr class="my-4 border-gray-300 ">
                                </div>
-
-
                             </div>
 
                             {{-- Leave Information --}}
-                            <div class="grid w-full grid-cols-1 col-span-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 ">
+                            <div class="grid w-full grid-cols-1 col-span-3 gap-4 ">
                                 <h2 class="font-bold text-customRed">Task Information</h2>
                                 <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3">
                                     <div class="w-full">
                                         <label for="task_title"
                                             class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">Task Title <span class="text-red-600">*</span></label>
                                         <input type="text" name="task_title" id="task_title"  wire:model="task_title"
-                                            class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                            class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             required="">
                                     </div>
                                     <div wire:ignore class="">
@@ -113,10 +112,10 @@
                                         <div id="assigned_task_container" class="grid grid-cols-1 gap-4 ">
                                             <label for="assigned_task"
                                             class="block text-sm font-medium text-gray-900 whitespace-nowrap dark:text-white">Task Description
-                                            <span class="text-red-600">*</span> (Max: 20000  characters only) </label>
+                                            <span class="text-red-600">*</span> </label>
                                             <textarea type="text" rows="10" id="assigned_task" name="assigned_task" wire:model="assigned_task"
                                                 placeholder="Write your concern here. Maximum of 20000 characters only."
-                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg ring-1 border-1 ring-gray-300 focus:border-customRed focus:ring-customRed  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                class="block p-2.5 w-full text-sm shadow-inner text-gray-900 bg-gray-50 rounded-lg ring-1 border-1 ring-gray-300 focus:border-customRed focus:ring-customRed  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                             </textarea>
                                             @error('assigned_task')
                                                 <div class="text-sm transition transform alert alert-danger"
@@ -134,7 +133,7 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Start Date/Time
                                                 <span class="text-red-600">*</span></label>
                                             <input type="datetime-local" name="start_time" id="start_time" wire:model.live="start_time"
-                                                class="bg-gray border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="">
                                             @error('start_time')
                                                 <div class="text-sm transition transform alert alert-danger"
@@ -148,7 +147,7 @@
                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">End Date/Time
                                                 <span class="text-red-600">*</span></label>
                                             <input type="datetime-local" name="end_time" id="end_time" wire:model.live="end_time"
-                                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                             required="">
                                             @error('end_time')
                                                 <div class="text-sm transition transform alert alert-danger"
@@ -165,13 +164,13 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">
+                <button type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white shadow hover:bg-red-600 hover:text-white bg-customRed rounded-8px">
                     Assign Task
                 </button>
                 <!-- Loading screen -->
                 <div wire:loading wire:target="submit" class="load-over">
                     <div wire:loading wire:target="submit" class="loading-overlay">
-                        <div class="flex flex-col justify-center items-center">
+                        <div class="flex flex-col items-center justify-center">
                             <div class="spinner"></div>
                             <p>Assigning your Task...</p>
                         </div>
@@ -213,7 +212,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            
+
             display: flex;
             justify-content: center;
             align-items: center;
