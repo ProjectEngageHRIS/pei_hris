@@ -101,14 +101,14 @@
                                                 <label for="application_date"
                                                     class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Date of Filing </label>
                                                 <input type="date" wire:model="application_date"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    class="bg-gray-50 border shadow-inner border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     placeholder="Date of Filling" required disabled>
                                             </div>
                                             <div>
                                                 <label
                                                         class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Leave Type </label>
-                                                    <select id="mode_of_application" name="mode_of_application" wire:model.live="mode_of_application"
-                                                        class="disabled-select bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+                                                    <select style="color: #6B7280;" id="mode_of_application" name="mode_of_application" wire:model.live="mode_of_application"
+                                                        class="disabled-select shadow-inner bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                         <option selected>Select</option>
                                                         <option value="Vacation Leave">Vacation Leave</option>
                                                         <option value="Sick Leave">Sick Leave</option>
@@ -129,8 +129,8 @@
                                             <div class="supervisor_email_container">
                                                 <label
                                                         class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Email of Supervisor </label>
-                                                    <select id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
-                                                        class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+                                                    <select style="color: #6B7280;" id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
+                                                        class="disabled-select bg-gray-50 border shadow-inner border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                         <option selected>Select </option>
                                                         <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                                                         <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
@@ -171,7 +171,7 @@
                                                     <label for="inclusive_start_date"
                                                         class="block mb-2 text-sm font-medium text-gray-500 dark:text-white ">Date</label>
                                                     <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
-                                                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                        class="bg-gray-50 border shadow-inner border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                         disabled>
                                                     @error('date_earned')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -187,7 +187,7 @@
                                                     <div id="earned_description" class="grid grid-cols-1" >
                                                         <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
                                                             placeholder="Write additional information here. Maximum of 200 characters only"
-                                                            class=" block p-2.5 w-full text-sm text-gray-500 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed " disabled>
+                                                            class=" block p-2.5 w-full shadow-inner text-sm text-gray-500 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed " disabled>
                                                         </textarea>
                                                         @error('earned_description')
                                                             <div class="text-sm transition transform alert alert-danger"
@@ -210,7 +210,7 @@
                                                         <label for="inclusive_start_date"
                                                             class="block mb-2 text-sm font-medium text-gray-500 dark:text-white ">Date Requested </label>
                                                         <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                                            class="bg-gray border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            class="bg-gray-50 border  border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             disabled>
                                                         @error('inclusive_start_date')
                                                             <div class="text-sm transition transform alert alert-danger"
@@ -235,8 +235,8 @@
                                                     <div id="purpose_type_container">
                                                         <label
                                                                 class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Purpose </label>
-                                                            <select id="purpose_type" name="purpose_type" wire:model="purpose_type"
-                                                                class="disabled-select bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+                                                            <select style="color: #6B7280;" id="purpose_type" name="purpose_type" wire:model="purpose_type"
+                                                                class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 <option selected>Select </option>
                                                                 <option value="Interview Candidate">Interview Candidate</option>
                                                                 <option value="Meeting with a Valued Client">Meeting with a Valued Client</option>
@@ -256,8 +256,8 @@
                                                         <label
                                                                 class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Deduct to?
 
-                                                            <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                                                class="disabled-select bg-gray-50 border border-gray-300 mt-2 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
+                                                            <select style="color: #6B7280;" id="purpose_type" name="deduct_to" wire:model="deduct_to"
+                                                                class="disabled-select shadow-inner bg-gray-50 border border-gray-300 mt-2 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                                 <option selected>Select </option>
                                                                 <option value="Salary">Salary</option>
                                                                 <option value="Credits">Credits</option>
@@ -284,7 +284,7 @@
                                                     <label for="inclusive_start_date"
                                                         class="block mb-2 text-sm font-medium text-gray-500 dark:text-white ">Start Date/Time </label>
                                                     <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                                        class="bg-gray border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                         disabled>
                                                     @error('inclusive_start_date')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -343,7 +343,7 @@
                                                     <label
                                                             class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Deduct to?
                                                             </label>
-                                                        <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
+                                                        <select style="color: #6B7280;" id="purpose_type" name="deduct_to" wire:model="deduct_to"
                                                             class="disabled-select bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                             <option selected>Select </option>
                                                             <option value="Salary">Salary</option>
