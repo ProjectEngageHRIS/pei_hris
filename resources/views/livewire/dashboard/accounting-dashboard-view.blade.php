@@ -1,16 +1,16 @@
 <div>
-    <div class="flex flex-row gap-4 items-center">
+    <div class="flex flex-row items-center gap-4">
         <div class="rounded-lg hover:text-customRed">
-            <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
+            <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                 <div>
-                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium border shadow rounded-8px bg-navButton text-customRed hover:bg-customRed hover:text-white focus:ring-customRed focus:bg-customRed focus:text-white ">
                         <span x-text="selectedhalfOfMonth ? selectedhalfOfMonth : 'Select'"></span>
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                 </div>
-                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
+                <div x-show="open" class="absolute z-10 mt-2 space-y-2 bg-white w-fit ">
                     <div class="py-1">
                         <a href="#" @click.prevent="selectedhalfOfMonth = '1st Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">1st Half</a>
                         <a href="#" @click.prevent="selectedhalfOfMonth = '2nd Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2nd Half</a>
@@ -21,16 +21,16 @@
         </div>
 
         <div class="rounded-lg hover:text-customRed">
-            <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
+            <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                 <div>
-                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium shadow rounded-8px bg-navButton text-customRed hover:bg-customRed hover:text-white focus:ring-customRed focus:bg-customRed focus:text-white ">
                         <span x-text="selectedMonth ? selectedMonth : 'Select'"></span>
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                 </div>
-                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
+                <div x-show="open" class="absolute z-10 mt-2 space-y-2 bg-white border rounded shadow-lg w-fit">
                     <div class="py-1">
                         <a href="#" @click.prevent="selectedMonth = 'January'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">January </a>
                         <a href="#" @click.prevent="selectedMonth = 'February'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">February</a>
@@ -51,16 +51,16 @@
         </div>
 
         <div class="rounded-lg hover:text-customRed">
-            <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
+            <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                 <div>
-                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
+                    <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium shadow rounded-8px bg-navButton text-customRed hover:bg-customRed hover:text-white focus:ring-customRed focus:bg-customRed focus:text-white ">
                         <span x-text="selectedYear ? selectedYear : 'Select'"></span>
                         <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                         </svg>
                     </button>
                 </div>
-                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
+                <div x-show="open" class="absolute z-10 mt-2 space-y-2 bg-white border rounded shadow-lg w-fit">
                     <div class="py-1">
                         <a href="#" @click.prevent="selectedYear = '2024'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2024 </a>
                         <a href="#" @click.prevent="selectedYear = '2023'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2023</a>
@@ -80,9 +80,9 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="load-over z-50">
+        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="z-50 load-over">
             <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="loading-overlay">
-                <div class="flex flex-col justify-center items-center">
+                <div class="flex flex-col items-center justify-center">
                     <div class="spinner"></div>
                     <p>Updating Table...</p>
                 </div>
@@ -103,7 +103,7 @@
                 left: 0;
                 width: 100%;
                 height: 100%;
-                
+
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -112,7 +112,7 @@
                 color: #AC0C2E;
                 pointer-events: none; /* Makes sure the overlay is not interactable */
             }
-    
+
             .spinner {
                 border: 8px solid rgba(172, 12, 46, 0.3);
                 border-top: 8px solid #AC0C2E;
@@ -122,7 +122,7 @@
                 animation: spin 1s linear infinite;
                 margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
             }
-    
+
             @keyframes spin {
                 0% {
                     transform: rotate(0deg);
@@ -131,7 +131,7 @@
                     transform: rotate(360deg);
                 }
             }
-    
+
             .loading-overlay p {
                 margin: 0;
                 font-size: 18px;
@@ -142,10 +142,10 @@
 
 
     <div class="flex items-center justify-end mb-4">
-        
+
         <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only "></label>
-        
-        <div class="flex flex-row pr-2 relative">
+
+        <div class="relative flex flex-row pr-2">
             <label for="table-search" class="sr-only">Search</label>
             <div class="">
                 <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
@@ -153,7 +153,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" wire:model.live="search" id="table-search-users" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 w-full max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                <input type="text" wire:model.live="search" id="table-search-users" class="block w-full text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
             </div>
             <!-- Filter Sidebar -->
             <div class="absolute rounded-lg right-3 hover:text-customRed" x-data="{
@@ -162,12 +162,12 @@
                 departmentOpen: false,
                 companyOpen: false,
                 statusOpen: false,
-                genderOpen: false,
+
                 employeeTypeCount: 0,
                 departmentCount: 0,
                 companyCount: 0,
                 statusCount: 0,
-                genderCount: 0,
+
 
                 updateEmployeeTypeCount() {
                     this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
@@ -187,14 +187,13 @@
                     this.departmentCount = 0;
                     this.companyCount = 0;
                     this.statusCount = 0;
-                    this.genderCount = 0;
 
                 }
                 }">
 
                 <!-- Filter Icon Button -->
-                <button @click="filterOpen = !filterOpen" class="size-10 right-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
+                <button @click="filterOpen = !filterOpen" class="right-0 size-10">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-4 h-4 ml-3 text-customGray hover:text-customRed">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                     </svg>
                 </button>
@@ -312,22 +311,31 @@
                             </div>
                         </div>
                     </div>
-                    <!-- Gender Dropdown Button -->
+                    <!-- Status Dropdown Button -->
+                     <!-- Connect status backend -->
                     <div class="px-2 pb-2">
-                        <button @click="genderOpen = !genderOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                            Gender
+                        <button @click="statusOpen = !statusOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                            Status
                             <span class="float-right">&#9662;</span>
-                            <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
+                            <span x-show="statusCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="statusCount"></span>
                         </button>
-                        <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
+                        <div x-show="statusOpen" @click.away="statusOpen = false" class="w-full mt-2 space-y-2 statusOpen">
                             <hr class="my-4 border-gray-300">
                             <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
+                                <input type="checkbox" wire:model.live="statusTypesFilter.AApproval" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updatestatusCount">
+                                <label class="ml-2 text-xs font-medium text-customGray1">Awaiting Approval</label>
                             </div>
                             <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
+                                <input type="checkbox" wire:model.live="statusTypesFilter.Approved"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updatestatusCount">
+                                <label class="ml-2 text-xs font-medium text-customGray1">Approved</label>
+                            </div>
+                            <div class="flex items-center px-4 py-2">
+                                <input type="checkbox" wire:model.live="statusTypesFilter.Overdue"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updatestatusCount">
+                                <label class="ml-2 text-xs font-medium text-customGray1">Overdue</label>
+                            </div>
+                            <div class="flex items-center px-4 py-2">
+                                <input type="checkbox" wire:model.live="statusTypesFilter.Draft"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updatestatusCount">
+                                <label class="ml-2 text-xs font-medium text-customGray1">Draft</label>
                             </div>
                         </div>
                     </div>
@@ -362,8 +370,12 @@
                     <div class="p-4 xl:p-5">
                         <form class="space-y-4" action="#">
                             <div>
-                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
+                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">First Name</label>
+                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter First Name" required>
+                            </div>
+                            <div>
+                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Last Name</label>
+                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Last Name" required>
                             </div>
                             <div>
                                 <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
@@ -382,7 +394,7 @@
                                 <input type="text" name="comp" id="comp" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Company" required />
                             </div>
 
-                            <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button>
+                            <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-600  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Add Account</button>
                         </form>
                     </div>
                 </div>
@@ -397,8 +409,7 @@
                 <h2 class="mx-4 mb-4 text-base font-semibold text-customGray1">Quick Links</h2>
                 <p class="truncate"><a href="https://picpa.com.ph/" class="px-2 text-xs font-medium text-blue-600 hover:underline ms-2 hover:text-blue-800">• Philippine Institute of Certified Public Accountants</a></p>
                 <p class="truncate"><a href="https://picpa.com.ph/" class="px-2 text-xs font-medium text-blue-600 hover:underline ms-2 hover:text-blue-800">• Philippine Institute of Certified Public Accountants</a></p>
-                <p class="truncate"><a href="https://picpa.com.ph/" class="px-2 text-xs font-medium text-blue-600 hover:underline ms-2 hover:text-blue-800">• Philippine Institute of Certified Public Accountants</a></p>
-                <p class="truncate"><a href="https://picpa.com.ph/" class="px-2 text-xs font-medium text-blue-600 hover:underline ms-2 hover:text-blue-800">• Philippine Institute of Certified Public Accountants</a></p>
+
             </div>
             <!-- Notes Section -->
             <div class="w-full bg-white rounded-lg shadow-lg">
@@ -467,7 +478,7 @@
                         @endphp
 
                         <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                            <span>• #{{$ctr}} - {{$note->note}}</span>
+                            <span>#{{$ctr}} - {{$note->note}}</span>
                             <button class="p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
                                 <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
@@ -476,46 +487,14 @@
                         </div>
                         @endforeach
                     @endif
-                    {{-- <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #2</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #3</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #4</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #5</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div> --}}
                 </div>
             </div>
         </div>
         <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 shadow-lg h-fit rounded-8px">
             <div>
-                <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100  h-fit rounded-8px sm:grid-cols-2 ">
+                <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 h-fit rounded-8px sm:grid-cols-2 ">
                     @if (count($EmployeeData) === 0)
-                    <div  class="w-full flex py-10  col-span-2 justify-center items-center bg-white rounded-lg shadow-lg gap-4 text-customGray1">
+                    <div  class="flex items-center justify-center w-full col-span-2 gap-4 py-10 bg-white rounded-lg shadow-lg text-customGray1">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 text-customRed">
                             <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
                         </svg>
@@ -550,7 +529,6 @@
                                                 {{ $payroll_exists ? 'Yes' : 'No' }}
                                             </span>
                                         </p>
-                                        {{-- <p class="text-xs"><strong>Latest Payroll D    ate:</strong> 7/12/2024</p> --}}
                                     </div>
                                     <hr class="my-1 border-gray-300">
                                     <div class="flex items-center justify-between">
@@ -569,7 +547,7 @@
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
                                             <div class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" class="inline-flex items-center mt-1 text-gray-500 hover:text-red-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
@@ -578,14 +556,14 @@
                                                 <div x-show="openPayrollEditModal && currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
                                                     <div x-show="openPayrollEditModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                        
-                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+
+                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-md max-h-full ">
                                                         <!-- Modal content -->
                                                         <div class="relative bg-white rounded-lg shadow">
                                                             <!-- Modal header -->
                                                             <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
                                                                 <h3 class="text-xl font-semibold text-gray-900">Edit Account Details</h3>
-                                                                <button @click="openPayrollEditModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <button @click="openPayrollEditModal = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                     </svg>
@@ -596,24 +574,28 @@
                                                             <div class="p-4 xl:p-5">
                                                                 <form class="space-y-4" wire:submit.prevent="submit('{{ $employee->employee_id }}')" method="POST">
                                                                     <div>
-                                                                        <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-400">First Name</label>
+                                                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 shadow-inner text-gray-400 text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                                                        <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                        <label for="fullname" class="block mb-2 text-sm font-medium text-gray-400">Last Name</label>
+                                                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 shadow-inner text-gray-400 text-sm rounded-lg w-full p-2.5" value="{{ $employee->last_name }}" disabled>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Type</label>
-                                                                        <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->inside_department }}" disabled>
+                                                                        <label for="enum" class="block mb-2 text-sm font-medium text-gray-400">Employee Number</label>
+                                                                        <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-gray-400  shadow-inner text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="dept" class="block mb-2 text-sm font-medium text-customGray1">Department</label>
-                                                                        <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->department }}" disabled>
+                                                                        <label for="etype" class="block mb-2 text-sm font-medium text-gray-400">Employee Type</label>
+                                                                        <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-gray-400 shadow-inner text-sm rounded-lg w-full p-2.5" value="{{ $employee->inside_department }}" disabled>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
-                                                                        <select name="status" id="status" wire:model="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                        <label for="dept" class="block mb-2 text-sm font-medium text-gray-400">Department</label>
+                                                                        <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-gray-400 shadow-inner text-sm rounded-lg w-full p-2.5" value="{{ $employee->department }}" disabled>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label for="status" class="block mb-2 text-sm font-medium text-gray-900 ">Status</label>
+                                                                        <select name="status" id="status" wire:model="payroll_status" class="bg-gray-50 border border-gray-300 shadow-inner  text-gray-900 text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                             <option value="" selected>Select Status</option>
                                                                             <option value="Awaiting Approval">Awaiting Approval</option>
                                                                             <option value="Approved">Approved</option>
@@ -627,22 +609,22 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'" class="text-red-500 hover:text-red-700">
+                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'" class="text-gray-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For Month of <span class="text-customRed font-semibold">{{$currentMonthName}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="font-semibold text-customRed">{{$currentMonthName}}</span> </h3>
+                                                                    <button @click="openAddPayrollModal = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -655,21 +637,29 @@
                                                                         @csrf
                                                                         <div class="grid grid-cols-2 gap-4" >
                                                                                 <div>
-                                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-gray-400">First Name</label>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-gray-400 shadow-inner text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
                                                                                 </div>
                                                                                 <div>
-                                                                                    
-                                                                                    <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                                                                    <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-gray-400">Last Name</label>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-gray-400 shadow-inner text-sm rounded-lg w-full p-2.5" value="{{ $employee->last_name }}" disabled>
+                                                                                </div>
+                                                                                <div>
+                                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-gray-400">Department Name</label>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-gray-400 shadow-inner text-sm rounded-lg w-full p-2.5" value="{{ $employee->department }}" disabled>
+                                                                                </div>
+                                                                                <div>
+
+                                                                                    <label for="enum" class="block mb-2 text-sm font-medium text-gray-400">Employee Number</label>
+                                                                                    <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-gray-400 text-sm shadow-inner  rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
                                                                                 </div>
                                                                                 <div class="col-span-2">
-                                                                                    <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
-                                                                                    <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
+                                                                                    <label for="etype" class="block mb-2 text-sm font-medium text-gray-400">Employee Email</label>
+                                                                                    <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-gray-400 text-sm shadow-inner rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
                                                                                 </div>
-                                                                                
+
                                                                         </div>
-                                                                        <hr class="border-gray-700">
+                                                                        <hr class="border-gray-300">
                                                                         <div class="grid grid-cols-2 gap-4">
                                                                                 <div class="w-full">
                                                                                     <label for="start_date"
@@ -700,7 +690,7 @@
                                                                                     @enderror
                                                                                 </div>
                                                                         </div>
-                                                                        <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
+                                                                        <div id="payroll_picture_container"  class="grid grid-cols-1 rounded-lg shadow ">
                                                                             {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
                                                                             <label for="payroll_picture"
                                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
@@ -718,8 +708,8 @@
                                                                             </div>
                                                                         </div>
                                                                         <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
-                                                                        
-                                                                        <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+
+                                                                        <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
                                                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                                                     <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -733,14 +723,14 @@
                                                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                             </svg>
                                                                                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                                                            <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                                            <ul class="pl-5 mb-5 text-sm text-left text-gray-600 list-disc dark:text-gray-300">
                                                                                                 <li>Verify the file exists and can be accessed.</li>
                                                                                                 <li>Ensure the employee's email has been added as a viewer.</li>
                                                                                                 <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
                                                                                                 <li>Review and modify these rules if necessary.</li>
                                                                                             </ul>
-                                                                                            <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
-                                                                                            
+                                                                                            <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="font-semibold text-customGreen">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="font-semibold text-customRed">implications</span> of proceeding.</p>
+
                                                                                             <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                                 Yes
                                                                                             </button>
@@ -749,14 +739,14 @@
                                                                                 </div>
                                                                             </div>
                                                                         </div>
-                                                                        
+
                                                                     </form>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
                                                         <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
@@ -764,8 +754,8 @@
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> <br> For The Month of <span class="text-customRed font-semibold">{{$currentMonthName}} {{$currentYear}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> <br> For The Month of <span class="font-semibold text-customRed">{{$currentMonthName}} {{$currentYear}}</span> </h3>
+                                                                    <button @click="openAddPayrollModal = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -784,7 +774,7 @@
                                                                                 <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
                                                                             </div>
                                                                             <div>
-                                                                                
+
                                                                                 <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
                                                                                 <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
                                                                             </div>
@@ -792,7 +782,7 @@
                                                                                 <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
                                                                                 <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
                                                                             </div>
-                                                                            
+
                                                                     </div>
                                                                     <hr class="border-gray-700">
                                                                     <div class="grid grid-cols-2 gap-4">
@@ -840,7 +830,7 @@
                                                                             @enderror
                                                                         </div>
                                                                     </div>
-                                                                    
+
                                                                     <button wire:click="deletePayroll" @click="openAddWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
                                                                     {{-- </form> --}}
                                                                 </div>
@@ -858,16 +848,16 @@
                     @endif
             </div>
 
-            <div class="p-4 bg-gray-100 w-full rounded-b-lg " wire:scroll>
+            <div class="w-full p-4 bg-gray-100 rounded-b-lg " wire:scroll>
                 {{ $EmployeeData->links(data : ['scrollTo' => False]) }}
             </div>
         </div>
-          
+
         </div>
-        
+
     </div>
 
-    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center  w-full h-full bg-gray-800 bg-opacity-50">
+    <div id="toast-container-checkin" tabindex="-1" class="fixed inset-0 z-50 items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
         <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
