@@ -514,17 +514,17 @@
                                         @elseif ($employee->department == "SL TEMPS")
                                             <span class="px-2 py-1 text-xs bg-green-100 rounded-8px text-customGreen text-nowrap">SL Temps</span>
                                         @else
-                                            <span class="px-2 py-1 text-xs bg-gray-100 rounded-8px text-customGray text-nowrap">No Company</span>
+                                            <span class="px-2 py-1 text-xs text-gray-700 bg-gray-100 rounded-8px text-nowrap">No Company</span>
                                         @endif
                                     </div>
                                     <div class="text-sm text-gray-700">
-                                        <p class="text-xs"><strong>Employee ID:</strong> {{$employee->employee_id}} </p>
-                                        <p class="text-xs"><strong>Department:</strong> {{$employee->inside_department}}</p>
-                                        <p class="text-xs"><strong>Employee Type:</strong> {{$employee->employee_type}}</p>
+                                        <p class="text-xs">Employee ID: {{$employee->employee_id}} </p>
+                                        <p class="text-xs">Department: {{$employee->inside_department}}</p>
+                                        <p class="text-xs">Employee Type:{{$employee->employee_type}}</p>
                                         @php
                                             $payroll_exists = $payrollMap->has($employee->employee_id);
                                         @endphp
-                                        <p class="text-xs"><strong>Payroll Issued? ({{$monthFilter}} {{$yearFilter}}):</strong>
+                                        <p class="text-xs">Payroll Issued? ({{$monthFilter}} {{$yearFilter}}):
                                             <span class="{{ $payroll_exists ? 'text-green-500' : 'text-red-500' }}">
                                                 {{ $payroll_exists ? 'Yes' : 'No' }}
                                             </span>
@@ -535,11 +535,11 @@
                                         @if($employee->payroll_status == "Awaiting Approval")
                                             <span class="text-xs font-semibold text-yellow-400 text-nowrap">Status: Awaiting Approval</span>
                                         @elseif($employee->payroll_status == "Approved")
-                                            <span class="text-xs font-semibold text-green-400">Status: Approved</span>
+                                            <span class="text-xs font-semibold text-customGreen">Status: Approved</span>
                                         @elseif($employee->payroll_status == "Draft")
-                                            <span class="text-xs font-semibold text-gray-400">Status: Draft</span>
+                                            <span class="text-xs font-semibold text-gray-500">Status: Draft</span>
                                         @elseif ($employee->payroll_status == "Overdue")
-                                            <span class="text-xs font-semibold text-red-500">Status: Overdue</span>
+                                            <span class="text-xs font-semibold text-customRed">Status: Overdue</span>
                                         @else
                                             <span class="text-xs font-semibold text-gray-900">Status: {{$employee->payroll_status}}</span>
 
