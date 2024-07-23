@@ -145,9 +145,9 @@ class ApproveLeaverequestForm extends Component
 
     public function submit(){
         $loggedInUser = auth()->user()->role_id;
-        if($loggedInUser != 9 && $loggedInUser != 10){
-            return;
-        }
+        // if($loggedInUser != 9 && $loggedInUser != 10){
+        //     return;
+        // }
 
         $leaverequestdata = Leaverequest::where('uuid', $this->index)->first();
         if (!$leaverequestdata) {
@@ -168,89 +168,101 @@ class ApproveLeaverequestForm extends Component
                 return $this->dispatch('triggerErrorNotification');
             }
         }
+
+        $leaveDayOption = $leaverequestdata->full_or_half;
         
-        if($leaverequestdata != "Completed"){
+        if ($leaverequestdata) {
             $startDate = Carbon::parse($leaverequestdata->inclusive_start_date);
             $endDate = Carbon::parse($leaverequestdata->inclusive_end_date);
         
-            $currentDate = $startDate;
+            // Clone the start date to use for iteration
+            $currentDate = $startDate->copy();
             $dailyLeaveRecords = [];
-
-
-            $startOfHalfDay = Carbon::today()->setTime(1, 00, 0); 
-
         
             while ($currentDate <= $endDate) {
                 $isStartDay = $currentDate->isSameDay($startDate);
-
                 $isEndDay = $currentDate->isSameDay($endDate);
         
-                if ($isStartDay && $isEndDay) {
-                    // Leave starts and ends on the same day (half day)
-                    // Assume if leave starts and ends on the same day, it's a half day
-                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
-                    dd('test1');
-                }
-                 elseif ($isStartDay) {
-                    // Partial leave on the start day (half day)
-                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition\
-                    dd('test2');
-                    
-                } 
-                elseif ($isEndDay) {
-                    // Partial leave on the end day (half day)
-                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 4, 'minutes' => 0]; // or adjust according to your half-day definition
-                    dd('test3');
-
+                // Determine the type for the start day
+                if ($isStartDay) {
+                    if (in_array($leaveDayOption, ['Start Full', 'Both Full'])) {
+                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                    } elseif (in_array($leaveDayOption, ['End Full', 'End Half'])) {
+                        if ($leaveDayOption == 'End Full') {
+                            $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                        } else {
+                            $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                        }
+                    } elseif (in_array($leaveDayOption, ['Start Half', 'Both Half'])) {
+                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                    }
+                } elseif ($isEndDay) {
+                    if (in_array($leaveDayOption, ['End Full', 'Both Full'])) {
+                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                    } elseif (in_array($leaveDayOption, ['Start Full', 'Start Half'])) {
+                        if ($leaveDayOption == 'Start Full') {
+                            $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                        } else {
+                            $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                        }
+                    } elseif (in_array($leaveDayOption, ['End Half', 'Both Half'])) {
+                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                    }
                 } else {
-                    // Full leave day
-                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'hours' => 8, 'minutes' => 0]; // Assuming a full day is 8 hours
+                    // Full leave day for dates in between start and end
+                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
                 }
         
+                // Debugging output
+                // dump($currentDate->format('Y-m-d'), $isStartDay, $isEndDay, $startDate->format('Y-m-d'), $endDate->format('Y-m-d'));
+        
+                // Move to the next day
                 $currentDate->addDay();
             }
         
+            // Final debugging output
             foreach ($dailyLeaveRecords as $record) {
                 $dailyRecord = Dailytimerecord::where('attendance_date', $record['date'])
                     ->where('employee_id', $leaverequestdata->employee_id)
                     ->first();
         
                 if ($dailyRecord) {
-                    if($record['hours'] == 8){
-                        $dailyRecord->type = $leaverequestdata->mode_of_application . ' Full-Day' ; 
-                    } else {
-                        $dailyRecord->type = $leaverequestdata->mode_of_application . '  Half-Day'; 
-                    }
+                    $dailyRecord->type = $record['type'];
                     $dailyRecord->update();
                 } else {
                     $newDailyRecord = new Dailytimerecord();
                     $newDailyRecord->employee_id = $leaverequestdata->employee_id;
                     $newDailyRecord->attendance_date = $record['date'];
-
-                    if($record['hours'] == 8){
-                        $newDailyRecord->type = $leaverequestdata->mode_of_application . ' Full-Day' ; 
-                    } else {
-                        $newDailyRecord->type = $leaverequestdata->mode_of_application . '  Half-Day'; 
-                    }   
+                    $newDailyRecord->type = $record['type'];
                     $newDailyRecord->save();
                 }
             }
         } else {
-            dd('test');
+            return $this->dispatch('triggerErrorNotification');
+        }
+        
+        $leaverequestdata->status = $this->status;
+        
+        if($loggedInUser == 9 || $loggedInUser == 10){
+            if($loggedInUser == 9) {
+                if($this->status == "Completed"){
+                    $leaverequestdata->approved_by_hr = 1;
+                }
+            }
+            if($loggedInUser == 10) {
+                if($this->status == "Completed"){
+                    $leaverequestdata->approved_by_president = 1;
+                }
+            }
+            $leaverequestdata->update();
+            return $this->dispatch('triggerNotification');
         }
 
+        else {
+            return $this->dispatch('triggerErrorNotification');
+        }
 
-
-        $leaverequestdata->status = $this->status;
-        $leaverequestdata->status = $this->status;
-        $leaverequestdata->status = $this->status;
-
-
-        $leaverequestdata->update();
-
-        return $this->dispatch('triggerNotification');
-
-        // return redirect()->to(route('ApproveLeaveRequestTable'));
+        return redirect()->to(route('ApproveLeaveRequestTable'));
     }
     
     public function render()

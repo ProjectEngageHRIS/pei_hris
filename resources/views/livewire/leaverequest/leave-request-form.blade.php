@@ -253,7 +253,7 @@
                                         <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date/Time
                                             <span class="text-red-600">*</span>
                                         </label>
-                                        <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
+                                        <input type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
                                             class="bg-gray border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                             required="">
                                         @error('inclusive_start_date')
@@ -264,7 +264,7 @@
                                     </div>
                                     <div class="col-span-1">
                                         <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
-                                        <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                        <input type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
                                             required="">
                                         @error('inclusive_end_date')
@@ -278,14 +278,14 @@
                                             <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full on Start or End Day
                                                 <span class="text-red-600">*</span>
                                             </label>
-                                            <select id="purpose_type" name="full_half" wire:model="full_half"
+                                            <select id="purpose_type" name="full_half" wire:model.live="full_half"
                                                 class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                 <option value="" selected>Select</option>
-                                                <option value="Start Full">Full Day on Start Day</option>
-                                                <option value="End Full">Full Day on End Day</option>
+                                                <option value="Start Full">Full Day on Start Day || Half Day on End Day</option>
+                                                <option value="End Full">Full Day on End Day || Half Day on Start Day</option>
                                                 <option value="Both Full">Full Day on Both Day</option>
-                                                <option value="Start Half">Half Day on Start Day</option>
-                                                <option value="End Half">Half Day on End Day</option>
+                                                <option value="Start Half">Half Day on Start Day || Full Day on End Day </option>
+                                                <option value="End Half">Half Day on End Day || Full Day on Start Day </option>
                                                 <option value="Both Half">Half Day on Both Day</option>
                                             </select>
                                             @error('full_half')
