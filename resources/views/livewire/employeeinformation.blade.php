@@ -7,33 +7,33 @@
                 </svg> Home
             </a>
             <div class="flex items-center">
-                <svg class="size-3 mx-1 text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <svg class="mx-1 text-gray-400 size-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('profile')}}" class="text-sm font-semibold text-gray-800 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Profile</a>
+                <a href="{{route('profile')}}" class="text-sm font-semibold text-gray-800 ms-1 hover:text-customRed md:ms-2 ">Profile</a>
             </div>
         </ol>
     </nav>
-    <div class="flex flex-col lg:flex-row gap-4 justify-stretch items-stretch">
-        <div class="flex flex-col gap-y-4 w-full">
+    <div class="flex flex-col items-stretch gap-4 lg:flex-row justify-stretch">
+        <div class="flex flex-col w-full gap-y-4">
             <div class="w-full bg-white border-gray-800 rounded-lg shadow border-10">
-                <a href="{{route('changeInformation')}}" class="justify-end float-right px-4 py-4 block text-sm font-semibold text-center ">
-                    <svg class="size-5 text-gray-800 hover:text-customRed" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <a href="{{route('changeInformation')}}" class="justify-end block float-right px-4 py-4 text-sm font-semibold text-center ">
+                    <svg class="text-gray-800 size-5 hover:text-customRed" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                         <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-12.15 12.15a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32L19.513 8.2Z"/>
                     </svg>
                 </a>
-                <div class="p-4 flex flex-row items-center overflow-hidden">
+                <div class="flex flex-row items-center p-4 overflow-hidden">
                     @if(is_null($employeeImage) == False)
                     @php
                         $employee_image = $this->getImage();
                     @endphp
-                    {{-- <img src="data:image/gif;base64,{{ base64_encode($emp_image) }}" alt="Image Description" class="w-full h-full object-contain">  --}}
+                    {{-- <img src="data:image/gif;base64,{{ base64_encode($emp_image) }}" alt="Image Description" class="object-contain w-full h-full">  --}}
                     <img
-                        class="size-20 rounded-full" 
+                        class="rounded-full size-20"
                         src="data:image/gif;base64,{{ base64_encode($employee_image) }}"
                         alt="Employee Image"/>
-                    @else   
-                        <img class="size-20 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Employee Image"/> 
+                    @else
+                        <img class="rounded-full size-20" src="{{ asset( 'assets/defaultuser.png') }}" alt="Employee Image"/>
                     @endif
                     <div class="ml-8 text-left">
                         <h5 class="text-lg font-medium text-customGray1 text-nowrap">{{$first_name}} {{$middle_name}} {{$last_name}}</h5>
@@ -41,9 +41,9 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col w-full justify-stretch items-stretch">
+            <div class="flex flex-col items-stretch w-full justify-stretch">
                 <div class="text-sm font-medium text-center text-gray-500 bg-white border border-b rounded-t-lg">
-                    <ul class="flex flex-wrap -mb-px gap-2">
+                    <ul class="flex flex-wrap gap-2 -mb-px">
                         <a href="#" wire:click.prevent="setTab('Summary')" class="inline-block p-4 border-b-2 border-transparent rounded-t-lg  {{ $filter === 'Summary' ?  'text-customRed border-b-2 border-customRed rounded-t-lg active ' : 'hover:text-customRed hover:border-customRed ' }}" >Summary</a>
                         <a href="#" wire:click.prevent="setTab('PersonalInfo')"  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg  {{ $filter === 'PersonalInfo' ?  'text-customRed border-b-2 border-customRed rounded-t-lg active ' : 'hover:text-customRed hover:border-customRed' }}">Information</a>
                         <a href="#" wire:click.prevent="setTab('History')"  class="inline-block p-4 border-b-2 border-transparent rounded-t-lg {{ $filter === 'History' ?  'text-customRed border-b-2 border-customRed rounded-t-lg active ' : 'hover:text-customRed hover:border-customRed ' }}">History</a>
@@ -51,13 +51,13 @@
                     </ul>
                 </div>
                 @if ($filter == "Summary")
-                    <div class="flex flex-col mb-2 py-6 px-8 border items-left justify-left border-gray-200 rounded-b-lg shadow-sm bg-white">
+                    <div class="flex flex-col px-8 py-6 mb-2 bg-white border border-gray-200 rounded-b-lg shadow-sm items-left justify-left">
                         <h3 class="text-base font-semibold text-customRed"> Summary Profile: </h3>
-                        <p class="mt-4 text-sm font-medium indent-8 text-customGray1 text-justify" >{{$profile_summary}}</p>
+                        <p class="mt-4 text-sm font-medium text-justify indent-8 text-customGray1" >{{$profile_summary}}</p>
                     </div>
                 @elseif($filter == "PersonalInfo")
-                    <div class="flex flex-col mb-2 py-6 px-8 border items-left justify-left border-gray-200 rounded-b-lg shadow-sm bg-white">
-                        <h3 class="text-base font-semibold text-customRed mb-4"> Employee Information: </h3>
+                    <div class="flex flex-col px-8 py-6 mb-2 bg-white border border-gray-200 rounded-b-lg shadow-sm items-left justify-left">
+                        <h3 class="mb-4 text-base font-semibold text-customRed"> Employee Information: </h3>
                         <div class="flex flex-col lg:flex-row gap-x-10 text-wrap gap-y-4">
                             <div class="flex flex-col gap-y-4">
                                 <p class="text-sm font-medium text-customGray1"><b class="text-sm font-lg text-customGray1 ">Gender:</b> {{$gender}}</p>
@@ -70,7 +70,7 @@
                                 <p class="text-sm font-medium text-customGray1"><b class="text-sm font-lg text-customGray1 ">Age:</b> {{number_format($age, 0)}}</p>
                                 <p class="text-sm font-medium text-customGray1"><b class="text-sm font-lg text-customGray1 ">Email:</b> {{$employee_email}}</p>
                                 <p class="text-sm font-medium text-customGray1"><b class="text-sm font-lg text-customGray1 ">Address:</b> {{$address}}</p>
-                            </div>  
+                            </div>
                             <div class="flex flex-col gap-y-4">
                                 <p class="text-sm font-medium text-customGray1"><b class="text-sm font-lg text-customGray1 ">Department Name:</b> {{$department}}</p>
                                 <p class="text-sm font-medium text-customGray1"><b class="text-sm font-lg text-customGray1 ">Employee Type:</b> {{$employee_type}}</p>
@@ -80,11 +80,11 @@
                         </div>
                     </div>
                 @elseif ($filter == "History")
-                    <div class="flex flex-col mb-2 py-6 px-8 border items-left justify-left border-gray-200 rounded-b-lg shadow-sm bg-white">
+                    <div class="flex flex-col px-8 py-6 mb-2 bg-white border border-gray-200 rounded-b-lg shadow-sm items-left justify-left">
                         <h3 class="text-base font-semibold text-customRed "> Employee History: </h3>
                         @if ($employeeHistory)
                             @foreach ($employeeHistory as $index => $record)
-                                <p class="my-4 text-justify text-sm font-medium text-customGray1">□ {{$record->prev_position}} @ {{$record->name_of_company}} | From {{$record->start_date}} To {{$record->end_date}}</p>
+                                <p class="my-4 text-sm font-medium text-justify text-customGray1">□ {{$record->prev_position}} @ {{$record->name_of_company}} | From {{$record->start_date}} To {{$record->end_date}}</p>
                             @endforeach
                         @else
                             <div class="text-gray-800">
@@ -96,82 +96,85 @@
                         <p class="my-4 text-justify"><b class="text-sm font-medium text-customGray1">□ High School @ <span class="text-sm font-medium text-customGray1">{{$hs_educational_history['school']}}</span> - <span class="text-sm font-medium text-customGray1">{{$hs_educational_history['course']}}</span> | From {{$hs_educational_history['year_graduated']}} To {{$record->end_date}} </b> </p>
                     </div>
                 @else
-                    <div class="flex flex-col mb-2 py-6 px-8 border items-left justify-left border-gray-200 rounded-b-lg shadow-sm bg-white">
-                        <h3 class="text-base font-semibold text-customRed">Performance: </h3>
+                    <div class="flex flex-col px-8 py-6 mb-2 bg-white border border-gray-200 rounded-b-lg shadow-sm items-left justify-left">
                         @if ($employee_performance)
                             <div class="ml-4">
-                                <h5 class="text-base text-gray-900 font-base dark:text-white">3rd Month: </h5>
+                                <h5 class="text-base font-semibold text-gray-900 ">3rd Month: </h5>
                                 @foreach ($employee_performance as $index => $record)
-                                    <p class="my-4"><b>{{$index + 1}}. <span class="text-customGray1">
+                                <p class="my-4"><b>□ <span class="text-customGray1">
                                     @if ($record->third_month_status == "Completed")
-                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen me-2">
+                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white rounded-lg bg-customGreen me-2">
                                             {{$record->third_month_status}}
                                         </span>
                                         @elseif ($record->third_month_status == "Half-Baked")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg me-2">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-yellow-500 rounded-lg me-2">
                                             {{$record->third_month_status}}
                                         </span>
                                         @elseif ($record->third_month_status == "Pending")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGray me-2">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-gray-500 rounded-lg me-2">
                                             {{$record->third_month_status}}
                                         </span>
                                         @else
-                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customRed me-2">
+                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white rounded-lg bg-customRed me-2">
                                             {{$record->third_month_status}}
                                         </span>
                                         @endif
                                         </span> - <a href="{{$record->third_month}}" class="text-sm font-medium text-customGray1">{{$record->third_month}}</a> <br></b> </p>
-                                    @endforeach
+
+                                        @endforeach
+                                        <hr class="my-4 border-gray-300 ">
                                         <div class="ml-4">
-                                            <h5 class="text-base font-medium text-gray-900 dark:text-white">5th Month: </h5>
+                                            <h5 class="text-base font-semibold text-gray-900 ">5th Month: </h5>
                                             @foreach ($employee_performance as $index => $record)
                                             <p class="my-4"><b>□ <span class="text-customGray1">
                                             @if ($record->fifth_month_status == "Completed")
-                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen me-2">
+                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white rounded-lg bg-customGreen me-2">
                                                 {{$record->fifth_month_status}}
                                             </span>
                                             @elseif ($record->fifth_month_status == "Half-Baked")
-                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg me-2">
+                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-yellow-500 rounded-lg me-2">
                                                 {{$record->fifth_month_status}}
                                             </span>
                                             @elseif ($record->fifth_month_status == "Pending")
-                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGray me-2">
+                                            <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-gray-500 rounded-lg me-2">
                                                 {{$record->fifth_month_status}}
                                             </span>
                                             @else
-                                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customRed me-2">
+                                            <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white rounded-lg bg-customRed me-2">
                                                 {{$record->fifth_month_status}}
                                             </span>
                                             @endif
                                     </span> - <a href="{{$record->fifth_month}}" class="text-sm font-medium text-customGray1">{{$record->fifth_month}}</a> <br></b> </p>
                                     @endforeach
+                                    <hr class="my-4 border-gray-300 ">
                                         </div>
                                     <div class="ml-4">
-                                    <h5 class="text-base font-medium text-gray-900 dark:text-white">Annual: </h5>
-                                    @foreach ($employee_performance as $index => $record)
+                                        <h5 class="text-base font-semibold text-gray-900 ">Annual: </h5>
+                                        @foreach ($employee_performance as $index => $record)
                                     <p class="my-4"><b>□ <span class="text-customGray1">
                                     @if ($record->annual_status == "Completed")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen me-2">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white rounded-lg bg-customGreen me-2">
                                             {{$record->annual_status}}
                                         </span>
                                     @elseif ($record->annual_status == "Half-Baked")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-yellow-500 rounded-lg me-2">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-yellow-500 rounded-lg me-2">
                                             {{$record->annual_status}}
                                         </span>
                                     @elseif ($record->annual_status == "Pending")
-                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGray me-2">
+                                        <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white bg-gray-500 rounded-lg me-2">
                                             {{$record->annual_status}}
                                         </span>
                                     @else
-                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customRed me-2">
+                                        <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-white rounded-lg bg-customRed me-2">
                                             {{$record->annual_status}}
                                         </span>
                                     @endif
                                     </span> - <a href="{{$record->annual}}" class="text-sm font-medium text-customGray1">{{$record->annual}}</a> <br></b> </p>
                                     @endforeach
+                                    <hr class="my-4 border-gray-300 ">
                                 </div>
                                 <div class="ml-4">
-                                    <h5 class="text-base font-medium text-gray-customGray1 dark:text-white">Improvement Plan: </h5>
+                                    <h5 class="text-base font-medium text-gray-customGray1 ">Improvement Plan: </h5>
                                     @foreach ($employee_performance as $index => $record)
                                     <p class="my-4"><b>□ <span class="text-sm font-medium text-customGray1">
                                     </span>  <a href="{{$record->improvement_plan}}" class="text-sm font-medium text-customGray1">{{$record->improvement_plan}}</a> <br></b> </p>
@@ -186,7 +189,7 @@
                 @endif
             </div>
         </div>
-        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+        <div class="p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 ">
             <div class="flex items-center justify-between mb-4">
                 <p class="text-lg font-bold text-customRed" style="word-break: break-all; overflow-wrap: break-word;">Submitted Documents</p>
             </div>
@@ -194,7 +197,7 @@
                 <ul role="list" class="divide-y divide-customGray">
                     @if ($employeeImage)
                     <li class="py-1 sm:py-2">
-                        <a target="_blank" href="{{route('downloadFile', ['file' => 'photo'])}}" class="text-sm font-medium truncate text-customGray dark:text-white">
+                        <a target="_blank" href="{{route('downloadFile', ['file' => 'photo'])}}" class="text-sm font-medium truncate text-customGray ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 text-customGray" >
@@ -220,7 +223,7 @@
                     @endif
                     @if ($empDiploma)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 ">
@@ -236,10 +239,10 @@
                     @endif
                     @if ($emp_tor)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    <svg class="w-6 h-6 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Zm2 0V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm-1 9a1 1 0 1 0-2 0v2a1 1 0 1 0 2 0v-2Zm2-5a1 1 0 0 1 1 1v6a1 1 0 1 1-2 0v-6a1 1 0 0 1 1-1Zm4 4a1 1 0 1 0-2 0v3a1 1 0 1 0 2 0v-3Z" clip-rule="evenodd"/>
                                     </svg>
                                 </div>
@@ -250,7 +253,7 @@
                     @endif
                     @if ($empCertOfTrainingsSeminars)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 ">
@@ -264,7 +267,7 @@
                     @endif
                     @if ($empAuthCopyOfCscOrPrc)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-6 h-6 ">
@@ -278,10 +281,10 @@
                     @endif
                     @if ($empAuthCopyOfPrcBoardRating)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M18 14a1 1 0 1 0-2 0v2h-2a1 1 0 1 0 0 2h2v2a1 1 0 1 0 2 0v-2h2a1 1 0 1 0 0-2h-2v-2Z" clip-rule="evenodd"/>
                                         <path fill-rule="evenodd" d="M15.026 21.534A9.994 9.994 0 0 1 12 22C6.477 22 2 17.523 2 12S6.477 2 12 2c2.51 0 4.802.924 6.558 2.45l-7.635 7.636L7.707 8.87a1 1 0 0 0-1.414 1.414l3.923 3.923a1 1 0 0 0 1.414 0l8.3-8.3A9.956 9.956 0 0 1 22 12a9.994 9.994 0 0 1-.466 3.026A2.49 2.49 0 0 0 20 14.5h-.5V14a2.5 2.5 0 0 0-5 0v.5H14a2.5 2.5 0 0 0 0 5h.5v.5c0 .578.196 1.11.526 1.534Z" clip-rule="evenodd"/>
                                     </svg>
@@ -293,10 +296,10 @@
                     @endif
                     @if($empMedCertif)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M4 4a1 1 0 0 1 1-1h14a1 1 0 1 1 0 2v14a1 1 0 1 1 0 2H5a1 1 0 1 1 0-2V5a1 1 0 0 1-1-1Zm5 2a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-1Zm-5 4a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1H9Zm5 0a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 0 0-1-1h-1Zm-3 4a2 2 0 0 0-2 2v3h2v-3h2v3h2v-3a2 2 0 0 0-2-2h-2Z" clip-rule="evenodd"/>
                                         </svg>
 
@@ -311,10 +314,10 @@
 
                     @if ($empNBIClearance)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M11.644 3.066a1 1 0 0 1 .712 0l7 2.666A1 1 0 0 1 20 6.68a17.694 17.694 0 0 1-2.023 7.98 17.406 17.406 0 0 1-5.402 6.158 1 1 0 0 1-1.15 0 17.405 17.405 0 0 1-5.403-6.157A17.695 17.695 0 0 1 4 6.68a1 1 0 0 1 .644-.949l7-2.666Zm4.014 7.187a1 1 0 0 0-1.316-1.506l-3.296 2.884-.839-.838a1 1 0 0 0-1.414 1.414l1.5 1.5a1 1 0 0 0 1.366.046l4-3.5Z" clip-rule="evenodd"/>
                                         </svg>
 
@@ -330,10 +333,10 @@
 
                     @if ($empPSABirthCertif)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                    <svg class="w-6 h-6 text-gray-800 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                                         <path fill-rule="evenodd" d="M7 2a2 2 0 0 0-2 2v1a1 1 0 0 0 0 2v1a1 1 0 0 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a1 1 0 1 0 0 2v1a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H7Zm3 8a3 3 0 1 1 6 0 3 3 0 0 1-6 0Zm-1 7a3 3 0 0 1 3-3h2a3 3 0 0 1 3 3 1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1Z" clip-rule="evenodd"/>
                                         </svg>
 
@@ -348,10 +351,10 @@
 
                     @if($empPSAMarriageCertif)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    {{ svg('bxs-church', ['class' => 'w-6 h-6 text-gray-800 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white']) }}
+                                    {{ svg('bxs-church', ['class' => 'w-6 h-6 text-gray-800 transition duration-75  group-hover:text-gray-900 ']) }}
                                 </div>
                                 <div class="flex-1 min-w-0 text-sm font-medium truncate text-customGray1">
                                     PSA Marriage Certificate
@@ -363,10 +366,10 @@
 
                     @if($empServiceRecordFromOtherGovtAgency)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    {{ svg('bxs-receipt', ['class' => 'w-6 h-6 text-gray-800 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white']) }}
+                                    {{ svg('bxs-receipt', ['class' => 'w-6 h-6 text-gray-800 transition duration-75  group-hover:text-gray-900 ']) }}
                                 </div>
                                 <div class="flex-1 min-w-0 text-sm font-medium truncate text-customGray1">
                                     Service Record from other Government Agency
@@ -377,10 +380,10 @@
                     @endif
                     @if($empApprovedClearancePrevEmployer)
                     <li class="py-1 sm:py-2">
-                        <span class="text-sm font-medium truncate text-customGray1 dark:text-white">
+                        <span class="text-sm font-medium truncate text-customGray1 ">
                             <div class="flex items-center ml-4">
                                 <div class="flex-shrink-0 mr-2"> <!-- This ensures the SVG icon won't shrink -->
-                                    {{ svg('bxs-user-check', ['class' => 'w-6 h-6 text-gray-800 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white']) }}
+                                    {{ svg('bxs-user-check', ['class' => 'w-6 h-6 text-gray-800 transition duration-75  group-hover:text-gray-900 ']) }}
                                 </div>
                                 <div class="flex-1 min-w-0 text-sm font-medium truncate text-customGray1">
                                     Approved Clearance from Previous Employer
