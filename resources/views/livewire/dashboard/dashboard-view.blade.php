@@ -30,9 +30,12 @@
                         <p id="current-time" class="px-20 text-sm text-customGray1 font-regular">{{ now('Asia/Manila')->format('g:i:s A') }}</p>
                         <hr class="my-4 border-gray-300">
                     </div>
+                    @if ($leaveIndicator)
+                        
                     <div class="flex justify-center w-full px-4 mb-4">
                         <p class=" text-base text-center ">You are currently on <br> <span class="font-semibold text-customRed"> {{$leaveIndicator}}</span>. <br> It is recommended to not  <br> time in and out  <br> during the period </p>
                     </div>
+                    @endif
             
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
                         <button wire:click.prevent="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"

@@ -120,8 +120,10 @@ class DashboardView extends Component
                             ->get();
 
         $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
-        if($leaveIndicator->type != null){
-            $this->leaveIndicator = $leaveIndicator->type;
+        if($leaveIndicator){
+            if($leaveIndicator->type != null){
+                $this->leaveIndicator = $leaveIndicator->type;
+            }
         }
         // dd($this->leave_requests);
 

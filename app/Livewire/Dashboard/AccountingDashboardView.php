@@ -205,6 +205,7 @@ class AccountingDashboardView extends Component
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
+
         $payroll = new Payroll();
         $payroll->employee_id = $loggedInUser;
         $payroll->target_employee = $employee_id;
@@ -215,6 +216,10 @@ class AccountingDashboardView extends Component
         $payroll->end_date = $this->end_date;
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
+
+        $employee = Employee::where('employee_id', $employee_id)->first();
+        $employee->payroll_status = "Approved";
+        $employee->update();
 
         $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
@@ -247,8 +252,6 @@ class AccountingDashboardView extends Component
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
         $notes = Accountingnotes::select('note', 'id')->whereNull('deleted_at')->simplePaginate(10, ['*'], 'commentsPage');
-
-       
 
         // Employee Type Filter
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
