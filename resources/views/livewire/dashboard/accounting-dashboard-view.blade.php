@@ -691,13 +691,12 @@
                                                                                 </div>
                                                                         </div>
                                                                         <div id="payroll_picture_container"  class="grid grid-cols-1 rounded-lg shadow ">
-                                                                            {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
                                                                             <label for="payroll_picture"
-                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                                                                class="block mb-2 text-sm font-medium text-gray-900 ">Payroll Photo Link
                                                                                 <span class="text-red-600">*</span></label>
                                                                             <div id="payroll_picture" class="grid grid-cols-1">
                                                                                 <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
-                                                                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
                                                                                 </textarea>
                                                                                 @error('payroll_picture')
                                                                                     <div class="text-sm transition transform alert alert-danger"
@@ -711,30 +710,30 @@
 
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
-                                                                                <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                                                    <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                                <div class="relative bg-white rounded-lg shadow ">
+                                                                                    <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center ">
                                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                                         </svg>
                                                                                         <span class="sr-only">Close modal</span>
                                                                                     </button>
                                                                                         <div class="p-4 text-center md:p-5">
-                                                                                            <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                                                            <svg class="w-12 h-12 mx-auto mb-4 text-customRed " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                             </svg>
-                                                                                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                                                            <ul class="pl-5 mb-5 text-sm text-left text-gray-600 list-disc dark:text-gray-300">
+                                                                                            <h3 class="mb-5 text-lg font-normal text-gray-500 ">Before proceeding, please ensure the following:</h3>
+                                                                                            <ul class="pl-5 mb-5 text-sm text-left text-gray-600 list-disc ">
                                                                                                 <li>Verify the file exists and can be accessed.</li>
                                                                                                 <li>Ensure the employee's email has been added as a viewer.</li>
                                                                                                 <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
                                                                                                 <li>Review and modify these rules if necessary.</li>
                                                                                             </ul>
-                                                                                            <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="font-semibold text-customGreen">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="font-semibold text-customRed">implications</span> of proceeding.</p>
+                                                                                            <p class="mb-5 text-sm text-gray-600 ">By clicking <span class="font-semibold text-customGreen">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="font-semibold text-customRed">implications</span> of proceeding.</p>
 
-                                                                                            <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                            <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                                 Yes
                                                                                             </button>
-                                                                                            <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                            <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 ">No</button>
                                                                                         </div>
                                                                                 </div>
                                                                             </div>
@@ -817,11 +816,11 @@
                                                                     </div>
 
                                                                     <div id="payroll_picture_container" class="grid grid-cols-1 rounded-lg shadow">
-                                                                        <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                                        <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 ">
                                                                             Payroll Photo Link <span class="text-red-600">*</span>
                                                                         </label>
                                                                         <div id="payroll_picture" class="grid grid-cols-1">
-                                                                            <textarea type="text" rows="3" id="payroll_picture" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
+                                                                            <textarea type="text" rows="3" id="payroll_picture" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed "> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
                                                                             @error('payroll_picture')
                                                                                 <div class="text-sm transition transform alert alert-danger"
                                                                                     x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();">
@@ -858,15 +857,15 @@
     </div>
 
     <div id="toast-container-checkin" tabindex="-1" class="fixed inset-0 z-50 items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
-        <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
+        <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 " role="alert">
+            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg ">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                 </svg>
                 <span class="sr-only">Check icon</span>
             </div>
             <div class="text-sm font-normal ms-3">Payroll Updated!</div>
-            <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="toast-container-checkin" aria-label="Close">
+            <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 " data-dismiss-target="toast-container-checkin" aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -899,13 +898,6 @@
             modal.classList.add('flex');
         }
     }
-
-    // function openAddWarningButton(index) {
-    //     const warningModalId = 'warning-pop-up_' + index;
-    //     if (warningModalId ) {
-    //         warningModalId.classList.remove('hidden')
-    //     }
-    // }
 
     document.addEventListener('livewire:init', function () {
         Livewire.on('triggerSuccess', () => {
