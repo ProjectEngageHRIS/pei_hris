@@ -44,48 +44,48 @@
         <div class="w-full pb-4 mt-4 overflow-x-auto bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
                 <div>
-                    {{-- Date Filter --}}
-                    <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                        <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-                            </svg>
-                        {{$dateFilterName}}
-                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                   {{-- Date Filter --}}
+                   <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                    <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                         </svg>
-                    </button>
+                    {{$dateFilterName}}
+                    <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                    </svg>
+                </button>
 
                     <!-- Dropdown menu -->
                     <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
                         <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="0" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> &nbsp; All </input>
+                                    <input id="date_filter-radio-example-0" type="radio" wire:model.live="date_filter" value="0" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-example-0" class="cursor-pointer"> &nbsp; All </label> </input>
                                 </div>
                             </li>
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="1" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white hover focus:ring-customRed focus:ring-2 ">  &nbsp; Last day </input>
+                                    <input id="date_filter-radio-example-1" type="radio" wire:model.live="date_filter" value="1" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white hover focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-example-1" class="cursor-pointer"> &nbsp;  Today </label> </input>
                                 </div>
                             </li>
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input checked="" id="date_filter-radio-example-2" type="radio" wire:model.live="date_filter" value="2" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 7 days </input>
+                                    <input checked="" id="date_filter-radio-example-2" type="radio" wire:model.live="date_filter" value="2" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-example-2" class="cursor-pointer"> &nbsp; This Week </label> </input>
                                 </div>
                             </li>
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-example-3" type="radio" wire:model.live="date_filter" value="3" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 30 days </input>
+                                    <input id="date_filter-radio-example-3" type="radio" wire:model.live="date_filter" value="3" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="date_filter-radio-example-3" class="cursor-pointer"> &nbsp; This Month </label></input>
                                 </div>
                             </li>
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-example-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 6 Monthss </input>
+                                    <input id="date_filter-radio-example-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-example-4" class="cursor-pointer"> &nbsp; Last 6 Months </label> </input>
                                 </div>
                             </li>
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-example-5" type="radio" wire:model.live="date_filter" value="5" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last Year </input>
+                                    <input id="date_filter-radio-example-5" type="radio" wire:model.live="date_filter" value="5" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="date_filter-radio-example-5" class="cursor-pointer"> &nbsp; This Year</label>  </input>
                                 </div>
                             </li>
                         </ul>
@@ -236,28 +236,17 @@
 
                                     
                                     <td class="items-center py-4 text-center">
-                                        <div class="top-0" x-data="{ isOpen: false }" @click.away="isOpen = false">
-                                            <!-- Three dots button to toggle dropdown -->
-                                            <button @click="isOpen = !isOpen; adjustDropdownPosition('{{ $loop->index }}')" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                    <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                                </svg>
-                                            </button>
-                                            <!-- Dropdown menu -->
-                                            <div x-show="isOpen" :class="{ 'left-0': isLeftAligned, 'right-0': !isLeftAligned }" class="absolute mt-2 z-40 bg-white divide-y divide-gray-300 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{ $loop->index }}">
-                                                <!-- Dropdown content -->
-                                                    <ul class="py-2 text-sm divide-y-2 text-gray-700 dark:text-gray-200">
-                                                        <li>
-                                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="block cursor-pointer px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">View</a>
-                                                        </li>
-                                                    </ul>
-                                                @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Approved" )
-                                                    <div class="py-2">
-                                                        <a id="cancel_button_{{ $loop->index }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openCancelModal('{{ $loop->index}}')">Cancel</a>
-                                                    </div>
-                                                @endif
-
-                                            </div>
+                                        <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
+                                            <!-- View Button -->
+                                            <a onclick="location.href='{{ route('LeaveRequestView', ['index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
+                                                View
+                                            </a>
+                                            <!-- Cancel Button -->
+                                            @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Completed" )
+                                                <a id="cancel_button_{{ $loop->index }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600 " @click="openCancelModal('{{ $loop->index }}')">
+                                                    Cancel
+                                                </a>
+                                            @endif
                                         </div>
                                     </td>
                                     

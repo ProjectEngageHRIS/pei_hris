@@ -61,21 +61,20 @@ class LeaveRequestTable extends Component
                 $this->dateFilterName = "Today";
                 break;
             case '2':
-                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
-                $this->dateFilterName = "Last 7 Days";
+                $query->where('application_date', '>=', Carbon::today()->startOfWeek());
+                $this->dateFilterName = "This Week";
                 break;
             case '3':
-                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
-                $this->dateFilterName = "Last 30 days";
+                $query->where('application_date', '>=', Carbon::today()->subMonth());
+                $this->dateFilterName = "This Month";
                 break;
             case '4':
-                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-                // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+                $query->where('application_date', '>=', Carbon::today()->subMonths(6));
                 $this->dateFilterName = "Last 6 Months";
                 break;
             case '5':
-                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
-                $this->dateFilterName = "Last Year";
+                $query->where('application_date', '>=', Carbon::today()->subYear());
+                $this->dateFilterName = "This Year";
                 break;
             default:
                 $this->dateFilterName = "All";
