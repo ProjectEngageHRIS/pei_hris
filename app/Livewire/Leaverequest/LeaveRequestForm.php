@@ -175,7 +175,7 @@ class LeaveRequestForm extends Component
         'full_half' => 'required',
         // 'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
         'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
-        'num_of_days_work_days_applied' => 'required|lte:available_credits',
+        // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'supervisor_email' => 'required|email',
         'deduct_to'=> 'required|string|max:255',
         'reason' => 'required|string|min:10|max:500',
