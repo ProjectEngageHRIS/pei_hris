@@ -1,7 +1,7 @@
 <div class="flex flex-col space-y-6">
     <div wire:ignore class="flex flex-col items-stretch gap-4 md:flex-row justify-stretch md:justify-center">
           <!-- Employee Type -->
-          <div class="p-4  bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
+          <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
               <div class="flex items-start justify-between w-full">
                   <div class="flex-col items-center">
                       <div class="flex items-center mb-1">
@@ -10,7 +10,7 @@
                   </div>
               </div>
               <!-- Employee Type Chart -->
-              <div class="py-6 w-full" id="pie-chart-1"></div>
+              <div class="w-full py-6" id="pie-chart-1"></div>
           </div>
           <!-- Deparment -->
           <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
@@ -24,10 +24,10 @@
               <!-- Department Chart -->
               <div class="py-6" id="pie-chart-2"></div>
           </div>
-  
+
           <!-- Company -->
           <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
-  
+
               <div class="flex items-start justify-between w-full">
                   <div class="flex-col items-center">
                       <div class="flex items-center mb-1">
@@ -38,10 +38,10 @@
               <!-- Company Chart -->
               <div class="py-6" id="pie-chart-3"></div>
           </div>
-  
+
           <!-- Gender -->
           <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
-  
+
               <div class="flex items-start justify-between w-full">
                   <div class="flex-col items-center">
                       <div class="flex items-center mb-1">
@@ -151,10 +151,10 @@
                               this.genderCount = 0;
                           }
                           }" class="relative">
-  
+
                           <!-- Filter Icon Button -->
                           <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 right-1">
-                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
+                              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 22 22" strokeWidth={1.5} stroke="currentColor" class="w-4 h-4 ml-3 text-customGray hover:text-customRed">
                                   <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                               </svg>
                           </button>
@@ -296,8 +296,8 @@
                   </div>
               </div>
           </div>
-          <div class=" rounded-b-lg">
-            <table class="w-full text-sm text-left text-gray-500">
+          <div class="rounded-b-lg ">
+            <table class="w-full text-sm text-center text-gray-500">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                     <tr >
                         <th scope="col" class="px-6 py-3 text-center">
@@ -330,12 +330,12 @@
 
                     @if ($EmployeeData->isEmpty())
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
-                                <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
+                                <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
                                     <div class="flex justify-center " style="padding-top: 40px">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-5">
                                             <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                         </svg>
-                                        <p class="text-customRed text-xl font-semibold items-center"> Nothing to show</p>
+                                        <p class="items-center text-xl font-semibold text-customRed"> Nothing to show</p>
                                     </div>
                                 </th>
                             </tr>
@@ -349,13 +349,8 @@
                             $ctr = $ctr + 1;
                         @endphp
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                {{-- <td class="w-4 p-4">
-                                    <div class="flex items-center">
-                                        <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                    </div>
-                                </td> --}}
-                                <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
+
+                                <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                     {{$pageIndex + $ctr}}
                                 </th>
                                 <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap ">
@@ -365,63 +360,50 @@
                                     @if($employee_image)
                                             <img class="w-8 h-8 rounded-full" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="Profile Picture">
                                     @else
-                                            <img class="w-8 h-8 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture"> 
+                                            <img class="w-8 h-8 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
                                     @endif
                                     <div class="ps-3">
                                         <div class="text-base font-semibold">{{$employee->first_name}}  {{$employee->middle_name}} {{$employee->last_name}}</div>
-                                        <div class="font-normal text-gray-500">{{$employee->employee_id}}</div>
+                                        <div class="font-normal text-left text-gray-500">{{$employee->employee_id}}</div>
                                     </div>
                                 </th>
                                 <td class="px-6 py-4 ">
                                     {{$employee->inside_department}}
                                 </td>
-                                <td class="px-6 py-4  " >
+                                <td class="px-6 py-4 " >
                                     {{$employee->department}}
                                 </td>
-                                <td class="px-6 py-4  " >
+                                <td class="px-6 py-4 " >
                                     {{$employee->current_position}}
                                 </td>
-                                <td class="px-6 py-4  " >
+                                <td class="px-6 py-4 " >
                                     {{$employee->employee_type}}
                                 </td>
-                                <td class="px-6 py-4  " >
+                                <td class="px-6 py-4 " >
                                     {{$employee->start_of_employment}}
                                 </td>
-                                <td class="items-center text-center py-4">
-                                    <div x-data="{ isOpen: false }" @click.away="isOpen = false" class="">
-                                        <!-- Three dots button to toggle dropdown -->
-                                        <button @click="isOpen = !isOpen" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-                                
-                                        <!-- Dropdown menu -->
-                                        <div x-show="isOpen" class="absolute right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                            @if ($employee->status != "Cancelled")
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    <li>
-                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="openModal('{{ $employee->employee_id }}')">View</a>
-                                                    </li>
-                                                    <li>
-                                                        <a id="cancel_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openDeactivateModal('{{ $employee->employee_id }}')">Deactivate</a>
-                                                    </li>
-                                                </ul>
-                                            @else
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    <li>
-                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}">View</a>
-                                                    </li>
-                                                </ul>
-                                            @endif
-                                        </div>
+                                <td class="items-center py-4 text-center">
+                                    <div class="flex items-center justify-center space-x-2">
+                                        @if ($employee->status != "Cancelled")
+                                            <!-- View Button -->
+                                            <a id="view_button_{{ $employee->employee_id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 " @click="openModal('{{ $employee->employee_id }}')">
+                                                View
+                                            </a>
+                                            <!-- Deactivate Button -->
+                                            <a id="cancel_button_{{ $employee->employee_id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600" @click="openDeactivateModal('{{ $employee->employee_id }}')">
+                                                Deactivate
+                                            </a>
+                                        @else
+                                            <!-- View Button for Cancelled Employee -->
+                                            <a id="view_button_{{ $employee->employee_id }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 " href="{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}">
+                                                View
+                                            </a>
+                                        @endif
                                     </div>
                                 </td>
 
-                                <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-                                    <div class="relative p-4 w-full max-w-md max-h-full">
+                                <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                    <div class="relative w-full max-w-md max-h-full p-4">
                                         <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                             <button type="button" @click="hideDeactivateModal('{{ $employee->employee_id }}')"  data-modal-hide="popup-modal" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" >
                                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -430,8 +412,8 @@
                                                 <span class="sr-only">Close modal</span>
                                             </button>
                                             <div class="p-4 md:p-5">
-                                                <div class="p-4 md:p-5 text-center">
-                                                    <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                <div class="p-4 text-center md:p-5">
+                                                    <svg class="w-12 h-12 mx-auto mb-4 text-red-600 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                     </svg>
                                                     <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm Deactivation?</h3>
@@ -443,13 +425,13 @@
                                                     </button>
                                                 </div>
                                             </div>
-                            
+
                                         </div>
                                     </div>
                                 </div>
 
-                                
-                                <div id="view-modal_{{ $employee->employee_id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50">
+
+                                <div id="view-modal_{{ $employee->employee_id }}" tabindex="-1" aria-hidden="true" class="fixed inset-0 z-50 flex items-center justify-center hidden overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                     <div class="relative w-full max-w-2xl max-h-full p-4">
                                         <!-- Modal content -->
                                         <div class="relative bg-white rounded-lg shadow ">
@@ -519,9 +501,9 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                
-                                    
+
+
+
                                     {{-- <td class="items-center px-6 py-4">
                                         <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
                                             <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
@@ -545,12 +527,12 @@
                                     </td> --}}
                             </tr>
 
-                        
+
                         @endforeach
                     @endif
                 </tbody>
             </table>
-            <div class="p-4 bg-gray-100 w-full rounded-b-lg " wire:scroll>
+            <div class="w-full p-4 bg-gray-100 rounded-b-lg " wire:scroll>
                     {{ $EmployeeData->links(data : ['scrollTo' => False]) }}
             </div>
           </div>
@@ -646,12 +628,12 @@
 
     });
 
-    
+
 </script>
 
-  
+
   <script>
-  
+
       const getChartOptions1 = () => {
       return {
           series: @json($employee_type),
@@ -723,7 +705,7 @@
 
       }
       }
-  
+
       const getChartOptions2 = () => {
       return {
           series: @json($inside_department),
@@ -781,7 +763,7 @@
           },
       }
       }
-  
+
       const getChartOptions3 = () => {
       return {
           series: @json($department),
@@ -839,7 +821,7 @@
           },
       }
       }
-  
+
       const getChartOptions4 = () => {
       return {
           series: @json($gender),
@@ -897,26 +879,25 @@
           },
       }
       }
-  
+
       if (document.getElementById("pie-chart-1") && typeof ApexCharts !== 'undefined') {
       const chart = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
       chart.render();
       }
-  
+
       if (document.getElementById("pie-chart-2") && typeof ApexCharts !== 'undefined') {
       const chart = new ApexCharts(document.getElementById("pie-chart-2"), getChartOptions2());
       chart.render();
       }
-  
+
       if (document.getElementById("pie-chart-3") && typeof ApexCharts !== 'undefined') {
       const chart = new ApexCharts(document.getElementById("pie-chart-3"), getChartOptions3());
       chart.render();
       }
-  
+
       if (document.getElementById("pie-chart-4") && typeof ApexCharts !== 'undefined') {
       const chart = new ApexCharts(document.getElementById("pie-chart-4"), getChartOptions4());
       chart.render();
       }
-  
+
   </script>
-  
