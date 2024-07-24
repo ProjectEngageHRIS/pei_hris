@@ -32,62 +32,61 @@
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
-                <div class="block w-full gap-4 p-6 sm:grid-cols-3 sm:gap-6">
+                <div class="block w-full gap-4 sm:grid-cols-3 sm:gap-6">
                     <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                         {{-- Information field --}}
-                        <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow ">
+                        <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 ">
                             <div class="grid grid-cols-1 col-span-3 gap-4 ">
-                                <h2 class="font-bold text-customRed">Information</h2>
+                                <h2 class="font-bold text-customRed">Personal Information</h2>
                                 <div>
                                     <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                         <div class="w-full ">
-                                            <label for="firstname" class="block mb-2 text-sm font-medium whitespace-nowrap text-customGray dark:text-white">First name <span class="text-red-600">*</span></label>
+                                            <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">First name <span class="text-red-600">*</span></label>
                                             <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                         <div class="w-full ">
                                             <label for="middlename"
-                                                class="block mb-2 text-sm font-medium whitespace-nowrap text-customGray dark:text-white">Middle name <span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Middle name <span class="text-red-600">*</span></label>
                                             <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                         <div class="w-full">
                                             <label for="lastname"
-                                                class="block mb-2 text-sm font-medium whitespace-nowrap text-customGray dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
                                             <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                     </div>
                                     <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3">
                                         <div class="w-full">
                                             <label for="department_name"
-                                                class="block mb-2 text-sm font-medium whitespace-nowrap text-customGray dark:text-white">Department Name <span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Department Name <span class="text-red-600">*</span></label>
                                             <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                         <div class="w-full">
                                             <label for="email"
-                                                class="block mb-2 text-sm font-medium whitespace-nowrap text-customGray dark:text-white">Email <span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Email Address<span class="text-red-600">*</span></label>
                                             <input type="text" name="email" id="email"  value="{{$email}}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                     </div>
                                 </div>
+                                <hr class="my-4 border-gray-300">
                             </div>
                         </div>
                         {{-- Concern Information --}}
-                        <div class="grid w-full grid-cols-1 col-span-3 p-6 bg-white border border-gray-200 rounded-lg shadow">
-                            <h2 class="font-bold text-red-700">Concern Information <span class="text-base text-gray-900">(Max: 5000 Characters only)</span> </h2>
-                            <div id="description_container" class="p-6 space-y-6 bg-white">
-
+                        <div class="grid w-full grid-cols-1 col-span-3 ">
+                            <h2 class="font-bold text-customRed">Concern Information</h2>
+                            <div id="description_container" class="mt-5">
                                 <textarea type="text" rows="10" id="description" name="description" wire:model="description"
-                                    placeholder="Write your concern here. Maximum of 5000 characters only."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg ring-1 border border-gray-200 ring-gray-300 focus:border-customRed focus:ring-customRed">
+                                    class="block p-2.5 w-full text-sm shadow-inner text-gray-500 bg-gray-50 rounded-lg ring-1 border border-gray-200 ring-gray-300 focus:border-customRed focus:ring-customRed" >
                                 </textarea>
                                 @error('description')
                                     <div class="text-sm transition transform alert alert-danger"

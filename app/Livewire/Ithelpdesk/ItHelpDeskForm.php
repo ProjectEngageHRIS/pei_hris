@@ -125,16 +125,16 @@ class ItHelpDeskForm extends Component
         ->where('employee_id', $loggedInUser->employee_id)
         ->first(); 
 
-        Mail::to($employeeRecord->employee_email)->send(new ItTicketsConfirmation($employeeRecord, $itticket));
+        // Mail::to($employeeRecord->employee_email)->send(new ItTicketsConfirmation($employeeRecord, $itticket));
 
-        $ItEmployee = Employee::where('employee_id', 'SLE0004')->first();
+        // $ItEmployee = Employee::where('employee_id', 'SLE0004')->first();
 
-        if ($ItEmployee) {
-            Mail::to($ItEmployee->employee_email)->send(new ItTicketRequest($employeeRecord, $ItEmployee, $itticket));
-        } else {
-            Log::error('IT email not found for employee_id SLE0004');
-            $this->addError('email', 'IT email not found');
-        }
+        // if ($ItEmployee) {
+        //     Mail::to($ItEmployee->employee_email)->send(new ItTicketRequest($employeeRecord, $ItEmployee, $itticket));
+        // } else {
+        //     Log::error('IT email not found for employee_id SLE0004');
+        //     $this->addError('email', 'IT email not found');
+        // }
 
         $this->dispatch('triggerNotification');
 

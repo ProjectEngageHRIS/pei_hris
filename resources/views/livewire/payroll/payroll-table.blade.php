@@ -25,7 +25,7 @@
         <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
             <div>
-                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:ring-customRed focus:border-customRed font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
+                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:ring-customRed focus:bg-customRed focus:text-white font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
                     <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                         </svg>
@@ -92,13 +92,13 @@
                             No.
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                           Start Date
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            End Date
+                            Phase
                          </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                            Actions
+                           Month -Year
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -127,21 +127,21 @@
                                 $ctr = $ctr + 1;
                             @endphp
                             {{--  --}}
-                                <tr class="bg-white border-b  hover:bg-gray-50 ">
+                                <tr class="bg-white border-b hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                            {{$data->start_date}}
+                                            {{$data->phase}}
                                     </th>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
-                                        {{$data->end_date}}
+                                        {{$data->month}}  {{$data->year}}
                                     </td>
-                                    <td class="items-center py-4 text-center">
-                                        <div class="flex items-center justify-center space-x-2" >
+                                     <td class="items-center py-4 text-center">
+                                        <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
                                             <!-- View Button -->
-                                            <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
-                                                View
+                                            <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-customGreen cursor-pointer hover:text-yellow-600 ">
+                                                View Payroll
                                             </a>
                                         </div>
                                     </td>
@@ -155,7 +155,7 @@
 
             </table>
             <div class="w-full p-4 bg-gray-100 rounded-b-lg">
-                {{ $PayrollData->links(data: ['scrollTo' => false]) }}
+                {{ $PayrollData->links() }}
             </div>
         </div>
 </div>

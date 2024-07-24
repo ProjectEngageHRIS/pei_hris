@@ -123,6 +123,8 @@ class AccountingDashboardView extends Component
         $this->payroll_phase = $this->halfOfMonthFilter;
         $this->payroll_month = $this->monthFilter;
         $this->payroll_year = $this->yearFilter;
+        $this->payrollMap = $this->getPayrollData();
+        $this->payrollStatusesMap = $this->getPayrollStatuses();
 
     }
 
@@ -261,8 +263,9 @@ class AccountingDashboardView extends Component
         $payroll->save();
 
         $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
-                                        ->where('month', $payroll->month)
-                                        ->where('year', $payroll->year)
+                                        ->where('phase',  $this->payroll_phase)
+                                        ->where('month',  $this->payroll_month)
+                                        ->where('year',   $this->payroll_year)
                                         ->select('month', 'year', 'employee_id', 'status')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
@@ -273,6 +276,48 @@ class AccountingDashboardView extends Component
             $payroll_status->month = $payroll->month;
             // if($start_date->day  15) $payroll->month_phase = '1st Half'
             
+        }        
+
+        $payroll_status->status = "Approved";
+        $payroll_status->save();
+
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+
+    }
+
+
+
+    public function editPayroll($employee_id){
+        // dd($this->start_date, $this->end_date, $this->payroll_picture);
+        $loggedInUser = auth()->user()->employee_id;
+        // foreach($this->rules as $rule => $validationRule){
+        //     $this->validate([$rule => $validationRule]);
+        //     $this->resetValidation();
+        // }   
+        dd($this->payrollMap);
+        dd($this->payroll_picture);
+
+        $payroll = Payroll::where('target_employee', $employee_id)
+                            ->where('phase',  $this->payroll_phase)
+                            ->where('month',  $this->payroll_month)
+                            ->where('year',   $this->payroll_year)
+                            ->select('month', 'year', 'employee_id', 'status')->first();
+
+        $payroll->employee_id = $loggedInUser;
+        $payroll->payroll_picture = $this->payroll_picture;
+        $payroll->update();
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('month', $payroll->month)
+                                        ->where('year', $payroll->year)
+                                        ->select('month', 'year', 'employee_id', 'status')->first();
+        if(!$payroll_status_data){
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->phase = $payroll->phase;
+            $payroll_status->year = $payroll->year;
+            $payroll_status->month = $payroll->month;
         }        
 
         $payroll_status->status = "Approved";
@@ -411,6 +456,7 @@ class AccountingDashboardView extends Component
             'EmployeeData' => $results, 
             'NotesData' => $notes,
             'PayrollStatus' => $payroll_statuses,
+            'payrollMap' => $this->payrollMap,
             // 'Payrolls' => $payrolls,
         ])->layout('components.layouts.accounting-navbar');
     }

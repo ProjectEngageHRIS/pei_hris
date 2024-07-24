@@ -80,8 +80,8 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote" class="load-over z-50">
-            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote" class="loading-overlay">
+        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="load-over z-50">
+            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Updating Table...</p>
@@ -450,7 +450,7 @@
                                                 </ul>
                                                 <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
                                                 
-                                                <button @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                <button id="addWarningButton1" @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                     Yes
                                                 </button>
                                                 <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
@@ -686,7 +686,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"   wire:click="resetAddField" class="text-red-500 hover:text-red-700">
+                                               
+                                                @php
+                                                    $employee_payroll = null;
+                                                    if($payroll_exists) $employee_payroll = $payrollMap->get($employee->employee_id);
+                                                @endphp
+                                               
+                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"    class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
@@ -801,7 +807,7 @@
                                                                                             </ul>
                                                                                             <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
                                                                                             
-                                                                                            <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                            <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                                 Yes
                                                                                             </button>
                                                                                             <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
@@ -834,9 +840,8 @@
                                                                 </div>
                                                                 <!-- Modal body -->
                                                                 <div class="p-4 xl:p-5">
-                                                                    {{-- <form class="space-y-4" wire:submit.prevent="validatePayrollData" method="POST"> --}}
-                                                                        {{-- @csrf --}}
-                                                                    <div class="space-y-4">
+                                                                    <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
+                                                                        @csrf
 
                                                                     <div class="grid grid-cols-2 gap-4" >
                                                                             <div>
@@ -857,6 +862,7 @@
                                                                     <hr class="border-gray-700">
                                                                     @php
                                                                         $payroll_details = $payrollMap->get($employee->employee_id);
+                                                                        // $this->payroll_picture = trim($payrollMap->get($employee->employee_id)->payroll_picture);
                                                                     @endphp
                                                                     <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
                                                                         <div>
@@ -879,12 +885,12 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div id="payroll_picture_container" class="grid grid-cols-1 rounded-lg shadow">
+                                                                    <div id="payroll_picture_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg shadow">
                                                                         <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                                             Payroll Photo Link <span class="text-red-600">*</span>
                                                                         </label>
                                                                         <div id="payroll_picture" class="grid grid-cols-1">
-                                                                            <textarea type="text" rows="3" id="payroll_picture" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
+                                                                            <textarea type="text" rows="3" id="payroll_picture" wire:model.defer="payroll_picture" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
                                                                             @error('payroll_picture')
                                                                                 <div class="text-sm transition transform alert alert-danger"
                                                                                     x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();">
@@ -893,10 +899,45 @@
                                                                             @enderror
                                                                         </div>
                                                                     </div>
+
+                                                                   <div class="grid grid-cols-2 gap-4">
+                                                                    <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payroll</button>
                                                                     
                                                                     <button wire:click="deletePayroll" @click="openAddWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
-                                                                    {{-- </form> --}}
-                                                                </div>
+                                                                   </div>
+                                                                        
+                                                                    <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                                        <div class="relative w-full max-w-md max-h-full p-4">
+                                                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                                <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                                    </svg>
+                                                                                    <span class="sr-only">Close modal</span>
+                                                                                </button>
+                                                                                    <div class="p-4 text-center md:p-5">
+                                                                                        <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                                                        </svg>
+                                                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                                                        <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                                            <li>Verify the file exists and can be accessed.</li>
+                                                                                            <li>Ensure the employee's email has been added as a viewer.</li>
+                                                                                            <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                                                            <li>Review and modify these rules if necessary.</li>
+                                                                                        </ul>
+                                                                                        <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                                                        
+                                                                                        <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                            Yes
+                                                                                        </button>
+                                                                                        <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    </form>
 
                                                                 </div>
                                                             </div>
