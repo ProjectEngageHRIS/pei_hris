@@ -212,6 +212,17 @@ class AccountingDashboardView extends Component
         // return $this->dispatch('triggerSuccessCheckIn');
     }
 
+    public function resetEditField(){
+        $this->payroll_status = null;
+    }
+
+    
+    public function resetAddField(){
+        $this->start_date = null;
+        $this->end_date = null;
+        $this->payroll_picture = null;
+    }
+
     protected $rules = [
         'start_date' => 'required',
         'end_date' => 'required',
@@ -284,9 +295,20 @@ class AccountingDashboardView extends Component
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
 
-        $employee = Employee::where('employee_id', $employee_id)->first();
-        $employee->payroll_status = "Approved";
-        $employee->update();
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('month', $payroll->month)
+                                        ->where('year', $payroll->year)
+                                        ->select('month', 'year', 'employee_id', 'status')->first();
+        if(!$payroll_status_data){
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->year = $payroll->year;
+            $payroll_status->month = $payroll->month;
+        }        
+
+        $payroll_status->status = "Approved";
+        $payroll_status->save();
 
         $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
@@ -317,7 +339,8 @@ class AccountingDashboardView extends Component
         $this->payrollMap = $this->getPayrollData();
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
-        $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
+        $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'employee_email');
+        $payroll_statuses = PayrollStatus::all();
         $notes = Accountingnotes::select('note', 'id')->whereNull('deleted_at')->simplePaginate(10, ['*'], 'commentsPage');
 
         // Employee Type Filter
@@ -379,6 +402,7 @@ class AccountingDashboardView extends Component
         return view('livewire.dashboard.accounting-dashboard-view', [
             'EmployeeData' => $results, 
             'NotesData' => $notes,
+            'PayrollStatus' => $payroll_statuses,
             // 'Payrolls' => $payrolls,
         ])->layout('components.layouts.accounting-navbar');
     }

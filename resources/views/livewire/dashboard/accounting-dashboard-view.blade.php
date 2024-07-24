@@ -654,7 +654,7 @@
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
                                             <div class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" @click.outside="openPayrollEditModal = false"  wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
@@ -698,7 +698,7 @@
                                                                     </div>
                                                                     <div>
                                                                         <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
-                                                                        <select name="status" id="status" wire:model="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                        <select name="status" id="status" wire:model.change="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                             <option value="" selected>Select Status</option>
                                                                             <option value="Awaiting Approval">Awaiting Approval</option>
                                                                             <option value="Approved">Approved</option>
@@ -712,7 +712,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'" class="text-red-500 hover:text-red-700">
+                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"  @click.outside="openAddPayrollModal = false" wire:click="resetAddField" class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
@@ -727,7 +727,7 @@
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Add Payroll For Month of <span class="text-customRed font-semibold">{{$currentMonthName}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="openAddPayrollModal = false"   type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
