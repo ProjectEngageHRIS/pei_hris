@@ -337,9 +337,11 @@
         <!-- Add user button -->
         <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
             Add Payroll
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
-                <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-2">
+                <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
+              </svg>
+              
+              
         </button>
         <!-- Main modal -->
         <div wire:ignore.self id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -635,17 +637,26 @@
                                     </div>
                                     <hr class="my-1 border-gray-300">
                                     <div class="flex items-center justify-between">
-                                        @if($employee->payroll_status == "Awaiting Approval")
-                                            <span class="text-xs font-semibold text-yellow-400 text-nowrap">Status: Awaiting Approval</span>
-                                        @elseif($employee->payroll_status == "Approved")
-                                            <span class="text-xs font-semibold text-green-400">Status: Approved</span>
-                                        @elseif($employee->payroll_status == "Draft")
-                                            <span class="text-xs font-semibold text-gray-400">Status: Draft</span>
-                                        @elseif ($employee->payroll_status == "Overdue")
-                                            <span class="text-xs font-semibold text-red-500">Status: Overdue</span>
-                                        @else
-                                            <span class="text-xs font-semibold text-gray-900">Status: {{$employee->payroll_status}}</span>
-
+                                        @php
+                                            $payrollStatus = $payrollStatusesMap->has($employee->employee_id);
+                                        @endphp
+                                        @if($payrollStatus)
+                                            @php
+                                                $status = $payrollStatusesMap->get($employee->employee_id)->status
+                                            @endphp
+                                            @if($status == "Awaiting Approval")
+                                                <span class="text-xs font-semibold text-yellow-400 text-nowrap">Status: Awaiting Approval</span>
+                                            @elseif($status == "Approved")
+                                                <span class="text-xs font-semibold text-green-400">Status: Approved</span>
+                                            @elseif($status == "Draft")
+                                                <span class="text-xs font-semibold text-gray-400">Status: Draft</span>
+                                            @elseif ($status == "Overdue")
+                                                <span class="text-xs font-semibold text-red-500">Status: Overdue</span>
+                                            @else
+                                                <span class="text-xs font-semibold text-gray-900">Status: Hasn't Progressed</span>
+                                            @endif
+                                        @else 
+                                                <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
                                             <div class="flex space-x-2">

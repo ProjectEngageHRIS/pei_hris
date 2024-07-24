@@ -90,6 +90,8 @@ class AccountingDashboardView extends Component
 
     public $payroll_year;
 
+    public $payrollStatusesMap;
+
 
     // public $showWarning = False;
 
@@ -162,20 +164,11 @@ class AccountingDashboardView extends Component
 
     public function getPayrollData()
     {   
-        $monthNumber = $this->monthMap[$this->monthFilter];
-
-        $startOfMonth = Carbon::create($this->yearFilter, $monthNumber, 1);
-
-
-
-
-            $middleOfMonth = $startOfMonth->copy()->day(15);
-
-            $payrolls = Payroll::where('year', $this->yearFilter)
-                                        ->where('month', $this->monthFilter)
-                                        ->where('phase', $this->halfOfMonthFilter)
-                                        ->select('month', 'year', 'phase', 'target_employee', 'payroll_picture')
-                                        ->get();
+        $payrolls = Payroll::where('year', $this->yearFilter)
+                                    ->where('month', $this->monthFilter)
+                                    ->where('phase', $this->halfOfMonthFilter)
+                                    ->select('month', 'year', 'phase', 'target_employee', 'payroll_picture')
+                                    ->get();
 
         // $payrolls = Payroll::where('year', $this->yearFilter)
         //                     ->where('month', $this->monthFilter)
@@ -190,8 +183,14 @@ class AccountingDashboardView extends Component
         return $payrollMap;
     }
 
-    public function getPayrollStatues(){
-
+    public function getPayrollStatuses(){
+        $payroll_statuses = PayrollStatus::where('year', $this->yearFilter)
+                                    ->where('month', $this->monthFilter)
+                                    ->where('phase', $this->halfOfMonthFilter)
+                                    ->select('month', 'year', 'phase', 'target_employee', 'status')
+                                    ->get();
+        $payrollStatusesMap = $payroll_statuses->keyBy('target_employee');
+        return $payrollStatusesMap;
     }
 
     public function halfOfTheMonth($number){
@@ -215,7 +214,6 @@ class AccountingDashboardView extends Component
         $this->payroll_status = null;
     }
 
-    
     public function resetAddField(){
         $this->start_date = null;
         $this->end_date = null;
@@ -337,6 +335,7 @@ class AccountingDashboardView extends Component
     public function render()
     {
         $this->payrollMap = $this->getPayrollData();
+        $this->payrollStatusesMap = $this->getPayrollStatuses();
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'employee_email');
