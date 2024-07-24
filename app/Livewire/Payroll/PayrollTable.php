@@ -41,7 +41,7 @@ class PayrollTable extends Component
     {
         $loggedInUser = auth()->user();
 
-        $query = Payroll::where('employee_id', $loggedInUser->employee_id);
+        $query = Payroll::where('target_employee', $loggedInUser->employee_id)->select('target_employee', 'start_date', 'end_date');
         switch ($this->filter) {
             case '1':
                 $query->whereDate('start_date',  Carbon::today());
@@ -91,14 +91,13 @@ class PayrollTable extends Component
         
     }
 
-    public function downloadPayroll($payroll_id){
-        $file_path = Payroll::select('payroll_picture')->where('payroll_id', $payroll_id)->first();
-         // Check if the file exists
-        if (Storage::disk('local')->exists($file_path->payroll_picture)) {
-            return Storage::disk('local')->download($file_path->payroll_picture);
-        } else {
-            abort(404);
-        }
+    public function redirectToPayroll($payroll_id){
+        $payroll = Payroll::where('payroll_id', 'target_employee', 'payroll_picture')->first();
+        $loggedInUser = auth()->user()->role_id;
+        if($payroll->target_employee != $loggedInUser) return redirect()->to(route('PayrollTable'));
+        else return redirect()->to($payroll->payroll_picture);
+
+
     }
 
     

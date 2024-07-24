@@ -321,10 +321,9 @@ class DashboardView extends Component
 
         } else {
             $time = Dailytimerecord::where('employee_id', $loggedInUser)->orderBy('attendance_date', 'desc')->first(); // assuming 'attendance_date' is stored as a date only
-
         }
 
-        if($time){
+        if($time->type == null){
            if($time->time_out == Null){
 
                 $loggedInUser = auth()->user()->employee_id;
@@ -466,9 +465,10 @@ class DashboardView extends Component
 
     public function render()
     {
-        $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first();
-    
-        if ($time) {
+        $loggedInUser = auth()->user()->employee_id;
+
+        $time = Dailytimerecord::where('employee_id', $loggedInUser)->where('attendance_date', now()->toDateString())->select('type','employee_id','time_in', 'time_out')->first();
+        if ($time && $time->type == null) {
             // Calculate the difference based on whether time_out is null or not
             if (is_null($time->time_out)) {
                 $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
@@ -493,14 +493,7 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
-        // $activities = Activities::whereJsonContains('visible_to_list', $this->department)->paginate();
         $activities = Activities::all();
-        // dd($activities);
-
-
-        
-
-
         
         return view('livewire.dashboard.dashboard-view', [
             // 'data' => $this->filter($this->filter),
