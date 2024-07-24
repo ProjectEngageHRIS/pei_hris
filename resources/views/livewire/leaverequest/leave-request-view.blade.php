@@ -357,9 +357,11 @@
                                                         @enderror
                                                 </div>
                                             </div>
+
                                         </div>
-                                        <hr class="my-4 border-gray-300">
+
                                     </div>
+                                    <hr class="my-4 border-gray-300">
                                 @endif
 
                                 <div id="reason_container" class="grid grid-cols-1 col-span-3 gap-5">
