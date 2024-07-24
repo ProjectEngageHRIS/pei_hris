@@ -46,39 +46,39 @@
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="firstname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First name</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">First name</label>
                                                 <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
-                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Middle name </label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Middle name </label>
                                                 <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
-                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Last name </label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Last name </label>
                                                 <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
-                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                                     required="" disabled>
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3">
                                             <div class="w-full">
                                                 <label for="department_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Department Name </label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Department Name </label>
                                                 <input type="text" name="department_name" id="department_name"  value="{{$department_name}}"
-                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                                     required="" disabled>
                                             </div>
                                             <div class="w-full">
                                                 <label for="employee_id"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Employee ID </label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Employee ID </label>
                                                 <input type="text" name="" id="employee_id"  value="{{$employee_id}}"
-                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                                                     required="" disabled>
                                             </div>
                                         </div>
@@ -99,16 +99,16 @@
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 w-full gap-4 ">
                                             <div class="w-full ">
                                                 <label for="application_date"
-                                                    class="block mb-2 text-sm font-medium text-customGray ">Date of Filing</label>
+                                                    class="block mb-2 text-sm font-medium text-gray-500 ">Date of Filing</label>
                                                 <input type="date" wire:model="application_date"
-                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                    class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                     placeholder="Date of Filling" required disabled>
                                             </div>
                                             <div>
                                                 <label
-                                                        class="block mb-2 text-sm font-medium text-customGray ">Leave Type </label>
-                                                    <select id="mode_of_application" name="mode_of_application" wire:model.live="mode_of_application"
-                                                        class="disabled-select bg-gray-50 border shadow-inner border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">Leave Type </label>
+                                                    <select style="color: #6B7280;" id="mode_of_application" name="mode_of_application" wire:model.live="mode_of_application"
+                                                        class="disabled-select bg-gray-50 border shadow-inner border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
                                                         <option selected>Select</option>
                                                         <option value="Vacation Leave">Vacation Leave</option>
                                                         <option value="Sick Leave">Sick Leave</option>
@@ -128,9 +128,9 @@
                                             </div>
                                             <div class="supervisor_email_container">
                                                 <label
-                                                        class="block mb-2 text-sm font-medium text-customGray ">Email of Supervisor </label>
-                                                    <select id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
-                                                        class="disabled-select bg-gray-50 border shadow-inner border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">Email of Supervisor </label>
+                                                    <select style="color: #6B7280;" id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
+                                                        class="disabled-select bg-gray-50 border shadow-inner border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
                                                         <option selected>Select </option>
                                                         <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                                                         <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
@@ -164,14 +164,14 @@
                                 @if ($mode_of_application == "Credit Leave")
                                 {{-- Time Frame --}}
                                     <div class="col-span-3">
-                                        <div class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow ">
+                                        <div class="grid grid-cols-1 gap-4 ">
                                             <p class="font-bold text-customRed">Credit Leave Description </p>
                                             <div id="date_earned_container" class="grid grid-cols-1 col-span-2 min-[902px]:grid-cols-2 gap-4 ">
                                                 <div class="justify-center w-full">
                                                     <label for="inclusive_start_date"
-                                                        class="block mb-2 text-sm font-medium text-customGray ">Date</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">Date</label>
                                                     <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                        class="bg-gray-50 border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                         disabled>
                                                     @error('date_earned')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -183,11 +183,11 @@
                                                 {{-- Available Credits --}}
                                                 <div id="date_description_container" class="grid grid-cols-1 ">
                                                     <label for="earned_description"
-                                                        class="block mb-2 text-sm font-medium text-customGray " >Date Earned Description</label>
+                                                        class="block mb-2 text-sm font-medium text-gray-500" >Date Earned Description</label>
                                                     <div id="earned_description" class="grid grid-cols-1" >
                                                         <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
                                                             placeholder="Write additional information here. Maximum of 200 characters only"
-                                                            class=" block p-2.5 w-full text-sm text-customGray bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed " disabled>
+                                                            class=" block p-2.5 w-full text-sm text-gray-500  bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed " disabled>
                                                         </textarea>
                                                         @error('earned_description')
                                                             <div class="text-sm transition transform alert alert-danger"
@@ -209,9 +209,9 @@
                                                 <div class="grid grid-cols-1 min-[1052px]:grid-cols-4 gap-4 ">
                                                     <div class="w-full ">
                                                         <label for="inclusive_start_date"
-                                                            class="block mb-2 text-sm font-medium text-customGray ">Date Requested </label>
+                                                            class="block mb-2 text-sm font-medium text-gray-500 ">Date Requested </label>
                                                         <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                                            class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                            class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                             disabled>
                                                         @error('inclusive_start_date')
                                                             <div class="text-sm transition transform alert alert-danger"
@@ -222,9 +222,9 @@
                                                     </div>
                                                     <div class="w-full ">
                                                         <label for="inclusive_end_date"
-                                                            class="block mb-2 text-sm font-medium text-customGray ">Actual Schedule </label>
+                                                            class="block mb-2 text-sm font-medium text-gray-500 ">Actual Schedule </label>
                                                         <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
-                                                            class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                            class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                             disabled>
                                                         @error('inclusive_end_date')
                                                             <div class="text-sm transition transform alert alert-danger"
@@ -235,9 +235,9 @@
                                                     </div>
                                                     <div id="purpose_type_container">
                                                         <label
-                                                                class="block mb-2 text-sm font-medium text-customGray ">Purpose </label>
-                                                            <select id="purpose_type" name="purpose_type" wire:model="purpose_type"
-                                                                class="disabled-select bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
+                                                                class="block mb-2 text-sm font-medium text-gray-500 ">Purpose </label>
+                                                            <select style="color: #6B7280;" id="purpose_type" name="purpose_type" wire:model="purpose_type"
+                                                                class="disabled-select bg-gray-50 border border-gray-300 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
                                                                 <option selected>Select </option>
                                                                 <option value="Interview Candidate">Interview Candidate</option>
                                                                 <option value="Meeting with a Valued Client">Meeting with a Valued Client</option>
@@ -255,10 +255,10 @@
                                                     </div>
                                                     <div id="deduct_to_container" >
                                                         <label
-                                                                class="block mb-2 text-sm font-medium text-customGray ">Deduct to?
+                                                                class="block mb-2 text-sm font-medium text-gray-500 ">Deduct to?
 
-                                                            <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                                                class="disabled-select bg-gray-50 border border-gray-300 mt-2 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
+                                                            <select style="color: #6B7280;" id="purpose_type" name="deduct_to" wire:model="deduct_to"
+                                                                class="disabled-select bg-gray-50 border border-gray-300 mt-2 shadow-inner text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
                                                                 <option selected>Select </option>
                                                                 <option value="Salary">Salary</option>
                                                                 <option value="Credits">Credits</option>
@@ -277,14 +277,14 @@
                                     </div>
                                 @else
                                     <div class="grid grid-cols-1 gap-4 min-[902px]:grid-cols-2 col-span-3">
-                                        <div id="time_period_container" class="grid grid-cols-1 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow ">
+                                        <div id="time_period_container" class="grid grid-cols-1 gap-4 ">
                                             <h2 class="font-bold text-customRed">Leave Request Time Frame</h2>
                                             <div class="grid grid-cols-1 min-[1052px]:grid-cols-2 gap-4 ">
                                                 <div class="w-full">
                                                     <label for="inclusive_start_date"
-                                                        class="block mb-2 text-sm font-medium text-customGray ">Start Date/Time </label>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">Start Date/Time </label>
                                                     <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                                        class="bg-gray border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                        class="bg-gray border border-gray-300 shadow-inner text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                         disabled>
                                                     @error('inclusive_start_date')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -295,9 +295,9 @@
                                                 </div>
                                                 <div class="w-full">
                                                     <label for="inclusive_end_date"
-                                                        class="block mb-2 text-sm font-medium text-customGray ">End Date/Time </label>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">End Date/Time </label>
                                                     <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
-                                                        class="bg-gray-50 border border-gray-300 shadow-inner text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                        class="bg-gray-50 border border-gray-300 shadow-inner text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                         disabled>
                                                     @error('inclusive_end_date')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -309,14 +309,14 @@
                                             </div>
                                         </div>
                                         {{-- Available Credits --}}
-                                        <div id="leavecredits_container" class="grid grid-cols-1 gap-5 p-6 bg-white border border-gray-200 rounded-lg shadow ">
+                                        <div id="leavecredits_container" class="grid grid-cols-1 gap-5 ">
                                             <h2 class="font-bold text-red-700">Leave Credits</h2>
                                             <div class="grid grid-cols-1 gap-4 min-[1052px]:grid-cols-3">
                                                 <div class="w-full">
                                                     <label for="numOfWorkDays"
-                                                        class="block mb-2 text-sm font-medium text-customGray ">Number of Days </label>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">Number of Days </label>
                                                     <input type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
-                                                        class="bg-gray-50 border font-bold shadow-inner border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                        class="bg-gray-50 border font-bold shadow-inner border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                             disabled>
                                                     @error('num_of_days_work_days_applied')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -328,9 +328,9 @@
 
                                                 <div class="w-full">
                                                     <label for="available_credits"
-                                                        class="block mb-2 text-sm font-medium text-customGray ">Available Credits </label>
+                                                        class="block mb-2 text-sm font-medium text-gray-500 ">Available Credits </label>
                                                     <input type="number" name="available_credits" id="available_credits" wire:model="available_credits"
-                                                        class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                                        class="bg-gray-50 border font-bold border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                                         disabled>
                                                     @error('available_credits')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -341,10 +341,10 @@
                                                 </div>
                                                 <div id="deduct_to_container" class="">
                                                     <label
-                                                            class="block mb-2 text-sm font-medium text-customGray ">Deduct to?
+                                                            class="block mb-2 text-sm font-medium text-gray-500 ">Deduct to?
                                                             </label>
-                                                        <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                                            class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
+                                                        <select style="color: #6B7280;" id="purpose_type" name="deduct_to" wire:model="deduct_to"
+                                                            class="disabled-select bg-gray-50 border border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " disabled>
                                                             <option selected>Select </option>
                                                             <option value="Salary">Salary</option>
                                                             <option value="Credits">Credits</option>
@@ -357,9 +357,11 @@
                                                         @enderror
                                                 </div>
                                             </div>
+
                                         </div>
-                                        <hr class="my-4 border-gray-300">
+
                                     </div>
+                                    <hr class="my-4 border-gray-300">
                                 @endif
 
                                 <div id="reason_container" class="grid grid-cols-1 col-span-3 gap-5 ">
@@ -367,7 +369,7 @@
                                     class="block font-bold whitespace-nowrap text-customRed ">Reason for Filing</label>
                                     <textarea type="text" rows="10" id="reason" name="reason" wire:model="reason"
                                         placeholder="Write your reason of filling here. Maximum of 500 only."
-                                        class="block p-2.5 w-full text-sm text-customGray bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed " disabled>
+                                        class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed " disabled>
                                     </textarea>
                                     @error('reason')
                                         <div class="text-sm transition transform alert alert-danger"

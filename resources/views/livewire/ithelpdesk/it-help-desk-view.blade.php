@@ -88,7 +88,7 @@
                             <h2 class="font-bold text-customRed">Concern Information</h2>
                             <div id="description_container" class="mt-5">
                                 <textarea type="text" rows="10" id="description" name="description" wire:model="description"
-                                    class="block p-2.5 w-full text-sm shadow-inner text-gray-500 bg-gray-50 rounded-lg ring-1 border border-gray-200 ring-gray-300 focus:border-customRed focus:ring-customRed">
+                                    class="block p-2.5 w-full text-sm shadow-inner text-gray-500 bg-gray-50 rounded-lg ring-1 border border-gray-200 ring-gray-300 focus:border-customRed focus:ring-customRed" disabled>
                                 </textarea>
                                 @error('description')
                                     <div class="text-sm transition transform alert alert-danger"
