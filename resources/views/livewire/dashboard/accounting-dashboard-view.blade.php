@@ -558,39 +558,6 @@
                         </div>
                         @endif
                     @endif
-                   
-                    {{-- <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #2</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #3</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #4</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #5</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -661,7 +628,7 @@
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
                                             <div class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" @click.outside="openPayrollEditModal = false"  wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
@@ -719,7 +686,7 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"  @click.outside="openAddPayrollModal = false" wire:click="resetAddField" class="text-red-500 hover:text-red-700">
+                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"   wire:click="resetAddField" class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
@@ -728,12 +695,12 @@
                                                     <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For Month of <span class="text-customRed font-semibold">{{$currentMonthName}}</span> </h3>
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false"   type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -762,35 +729,35 @@
                                                                                 
                                                                         </div>
                                                                         <hr class="border-gray-700">
-                                                                        <div class="grid grid-cols-2 gap-4">
-                                                                                <div class="w-full">
-                                                                                    <label for="start_date"
-                                                                                        class="block mb-2 text-sm font-medium text-customGray1">Start Date
-                                                                                        <span class="text-red-600">*</span></label>
-                                                                                    <input type="date" name="start_date" id="start_date" wire:model="start_date"
-                                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                        required="">
-                                                                                    @error('start_date')
-                                                                                        <div class="text-sm transition transform alert alert-danger"
-                                                                                        x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
-                                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                        </div>
-                                                                                    @enderror
-                                                                                </div>
-                                                                                <div class="w-full" id="end_date_container">
-                                                                                    <label for="end_date"
-                                                                                        class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
-                                                                                        <span class="text-red-600">*</span></label>
-                                                                                    <input type="date" name="end_date" id="end_date" wire:model="end_date"
-                                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                    required="">
-                                                                                    @error('end_date')
-                                                                                        <div class="text-sm transition transform alert alert-danger"
-                                                                                        x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
-                                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                        </div>
-                                                                                    @enderror
-                                                                                </div>
+                                                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                            <div>
+                                                                                <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                                                                <select name="status" id="phase" wire:model="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                    <option value="">Select Phase</option>
+                                                                                    <option value="1st Half" {{ (now()->format('j') <= 15) ? 'selected' : '' }}>1st Half</option>
+                                                                                    <option value="2nd Half" {{ (now()->format('j') > 15) ? 'selected' : '' }}>2nd Half</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            
+                                                                            <div>
+                                                                                <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                                                                <select name="status" id="month" wire:model="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                    <option value="" selected>Select Month</option>
+                                                                                    @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
+                                                                                        <option value="{{ $month }}" {{ ($month === now()->format('F')) ? 'selected' : 'selected' }}>{{ $month }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            
+                                                                            <div>
+                                                                                <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                                                                <select name="status" id="year" wire:model="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                    <option value="" selected>Select Year</option>
+                                                                                    @foreach(range(date('Y'), 2000) as $year)
+                                                                                        <option value="{{ $year }}" {{ ($year == date('Y')) ? 'selected' : '' }}>{{ $year }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                         <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
                                                                             {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
@@ -852,12 +819,12 @@
                                                     <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> <br> For The Month of <span class="text-customRed font-semibold">{{$currentMonthName}} {{$currentYear}}</span> </h3>
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -888,35 +855,28 @@
                                                                             
                                                                     </div>
                                                                     <hr class="border-gray-700">
-                                                                    <div class="grid grid-cols-2 gap-4">
-                                                                            <div class="w-full">
-                                                                                <label for="start_date"
-                                                                                    class="block mb-2 text-sm font-medium text-customGray1">Start Date
-                                                                                    <span class="text-red-600">*</span></label>
-                                                                                <input type="date" name="start_date" id="start_date" value="{{$payrollMap->get($employee->employee_id)->start_date}}" disabled
-                                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                    required="">
-                                                                                @error('start_date')
-                                                                                    <div class="text-sm transition transform alert alert-danger"
-                                                                                    x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
-                                                                                        <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                    </div>
-                                                                                @enderror
-                                                                            </div>
-                                                                            <div class="w-full" id="end_date_container">
-                                                                                <label for="end_date"
-                                                                                    class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
-                                                                                    <span class="text-red-600">*</span></label>
-                                                                                <input type="date" name="end_date" id="end_date" value="{{$payrollMap->get($employee->employee_id)->end_date}}" disabled
-                                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                required="">
-                                                                                @error('end_date')
-                                                                                    <div class="text-sm transition transform alert alert-danger"
-                                                                                    x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
-                                                                                        <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                    </div>
-                                                                                @enderror
-                                                                            </div>
+                                                                    @php
+                                                                        $payroll_details = $payrollMap->get($employee->employee_id);
+                                                                    @endphp
+                                                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                        <div>
+                                                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                                                            <select name="status" id="status" disabled class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <option value="" selected>{{$payroll_details->phase}}</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                                                            <select name="status" id="status" disabled class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <option value="" selected>{{$payroll_details->month}}</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                                                            <select name="status" id="status" disabled  class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <option value="" selected>{{$payroll_details->year}}</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
 
                                                                     <div id="payroll_picture_container" class="grid grid-cols-1 rounded-lg shadow">

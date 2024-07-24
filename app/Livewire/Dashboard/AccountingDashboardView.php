@@ -112,7 +112,7 @@ class AccountingDashboardView extends Component
         $this->monthFilter = $date->format('F');
         $this->yearFilter = $date->format('Y');        
         $loggedInUser = auth()->user()->employee_id;
-        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->where('employee_id', $loggedInUser)->get();
+        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->where('employee_id', '!=', $loggedInUser)->get();
         foreach($employees as $employee){
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
@@ -120,6 +120,9 @@ class AccountingDashboardView extends Component
         }
         $this->selectedEmployee = reset($this->employeeNames);
         $this->selectedEmployeeEmail = reset($this->employeeEmails);
+        $this->payroll_phase = $this->halfOfMonthFilter;
+        $this->payroll_month = $this->monthFilter;
+        $this->payroll_year = $this->yearFilter;
 
     }
 
@@ -143,6 +146,11 @@ class AccountingDashboardView extends Component
         if($keys == "selectedEmployee"){
             $parts = explode(' | ', $this->selectedEmployee);
             $this->selectedEmployeeEmail = $this->employeeEmails[$parts[1]];
+        }
+        if(in_array($keys, ['payroll_phase', 'payroll_month', 'payroll_year', 'yearFilter', 'monthFilter', 'halfOfMonthFilter'])){
+            $this->payroll_phase = $this->halfOfMonthFilter;
+            $this->payroll_month = $this->monthFilter;
+            $this->payroll_year = $this->yearFilter;
         }
     }
 
@@ -246,9 +254,9 @@ class AccountingDashboardView extends Component
         $payroll->employee_id = $loggedInUser;
         $parts = explode(' | ', $this->selectedEmployee);
         $payroll->target_employee = $parts[1];
-        $payroll->phase =  $this->payroll_phase;
-        $payroll->month =  $this->payroll_month;
-        $payroll->year =  $this->payroll_year;
+        $payroll->phase = $this->payroll_phase;
+        $payroll->month = $this->payroll_month;
+        $payroll->year = $this->payroll_year;
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
 
@@ -285,11 +293,9 @@ class AccountingDashboardView extends Component
         $payroll = new Payroll();
         $payroll->employee_id = $loggedInUser;
         $payroll->target_employee = $employee_id;
-        $start_date = Carbon::parse($this->start_date);
-        $payroll->month =  $start_date->format('F');
-        $payroll->year =  $start_date->year;
-        $payroll->start_date = $this->start_date;
-        $payroll->end_date = $this->end_date;
+        $payroll->phase = $this->payroll_phase;
+        $payroll->month = $this->payroll_month;
+        $payroll->year = $this->payroll_year;
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
 
@@ -301,8 +307,11 @@ class AccountingDashboardView extends Component
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
             $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->phase = $payroll->phase;
             $payroll_status->year = $payroll->year;
             $payroll_status->month = $payroll->month;
+            // if($start_date->day  15) $payroll->month_phase = '1st Half'
+            
         }        
 
         $payroll_status->status = "Approved";
