@@ -335,15 +335,15 @@
             </div>
         </div>
         <!-- Add user button -->
-        <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
+        <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
             Add Payroll
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
                 <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />
             </svg>
         </button>
         <!-- Main modal -->
-        <div wire:ignore.self id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-md max-h-full p-4">
+        <div wire:ignore.self id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-lg max-h-full p-4">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow ">
                     <!-- Modal header -->
@@ -351,7 +351,7 @@
                         <h3 class="text-xl font-semibold text-gray-900 ">
                             Add new Payroll
                         </h3>
-                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="authentication-modal">
+                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -377,38 +377,34 @@
 
                             <hr class="border-gray-700">
 
-                            <div class="grid grid-cols-2 gap-4">
-                                <div class="w-full">
-                                    <label for="start_date"
-                                        class="block mb-2 text-sm font-medium text-customGray1">Start Date
-                                        <span class="text-red-600">*</span></label>
-                                    <input type="date" name="start_date" id="start_date" wire:model="start_date"
-                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                        required="">
-                                    @error('start_date')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                        x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
-                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                        </div>
-                                    @enderror
+                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                <div>
+                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                    <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option value="" selected>Select Phase</option>
+                                        <option value="1st Half">1st Half</option>
+                                        <option value="2nd Half">2nd Half</option>
+                                    </select>
                                 </div>
-                                <div class="w-full" id="end_date_container">
-                                    <label for="end_date"
-                                        class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
-                                        <span class="text-red-600">*</span></label>
-                                    <input type="date" name="end_date" id="end_date" wire:model="end_date"
-                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                    required="">
-                                    @error('end_date')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                        x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
-                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                        </div>
-                                    @enderror
+                                <div>
+                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                    <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option value="" selected>Select Month</option>
+                                        @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
+                                            <option value="{{ $month }}">{{ $month }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                    <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option value="" selected>Select Year</option>
+                                        @foreach(range(2000, date('Y')) as $year)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
-
-
 
                             <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
                                 {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
@@ -452,7 +448,7 @@
                                                 </ul>
                                                 <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
                                                 
-                                                <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                <button @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                     Yes
                                                 </button>
                                                 <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>

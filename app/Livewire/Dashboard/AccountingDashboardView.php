@@ -84,6 +84,12 @@ class AccountingDashboardView extends Component
 
     public $selectedEmployee;
 
+    public $payroll_phase;
+
+    public $payroll_month;
+
+    public $payroll_year;
+
 
     // public $showWarning = False;
 
@@ -103,7 +109,8 @@ class AccountingDashboardView extends Component
         $this->halfOfMonthFilter = "1st Half";
         $this->monthFilter = $date->format('F');
         $this->yearFilter = $date->format('Y');        
-        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->get();
+        $loggedInUser = auth()->user()->employee_id;
+        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->where('employee_id', $loggedInUser)->get();
         foreach($employees as $employee){
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
@@ -159,28 +166,16 @@ class AccountingDashboardView extends Component
 
         $startOfMonth = Carbon::create($this->yearFilter, $monthNumber, 1);
 
-        if($this->halfOfMonthFilter == "1st Half"){
+
 
 
             $middleOfMonth = $startOfMonth->copy()->day(15);
 
             $payrolls = Payroll::where('year', $this->yearFilter)
                                         ->where('month', $this->monthFilter)
-                                        ->whereBetween('start_date', [$startOfMonth, $middleOfMonth])
-                                        ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
+                                        ->where('phase', $this->halfOfMonthFilter)
+                                        ->select('month', 'year', 'phase', 'target_employee', 'payroll_picture')
                                         ->get();
-        } else {
-
-            $middleOfMonth = $startOfMonth->copy()->day(16);
-            $endOfMonth = $startOfMonth->copy()->endOfMonth();
-
-            $payrolls = Payroll::where('year', $this->yearFilter)
-                                ->where('month', $this->monthFilter)
-                                ->whereBetween('start_date', [$middleOfMonth, $endOfMonth])
-                                ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
-                                ->get();
-        }
-     
 
         // $payrolls = Payroll::where('year', $this->yearFilter)
         //                     ->where('month', $this->monthFilter)
@@ -193,6 +188,10 @@ class AccountingDashboardView extends Component
         // dd($payrollMap->has("SLE0002"));
 
         return $payrollMap;
+    }
+
+    public function getPayrollStatues(){
+
     }
 
     public function halfOfTheMonth($number){
@@ -249,11 +248,9 @@ class AccountingDashboardView extends Component
         $payroll->employee_id = $loggedInUser;
         $parts = explode(' | ', $this->selectedEmployee);
         $payroll->target_employee = $parts[1];
-        $start_date = Carbon::parse($this->start_date);
-        $payroll->month =  $start_date->format('F');
-        $payroll->year =  $start_date->year;
-        $payroll->start_date = $this->start_date;
-        $payroll->end_date = $this->end_date;
+        $payroll->phase =  $this->payroll_phase;
+        $payroll->month =  $this->payroll_month;
+        $payroll->year =  $this->payroll_year;
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
 
@@ -265,8 +262,11 @@ class AccountingDashboardView extends Component
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
             $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->phase = $payroll->phase;
             $payroll_status->year = $payroll->year;
             $payroll_status->month = $payroll->month;
+            // if($start_date->day  15) $payroll->month_phase = '1st Half'
+            
         }        
 
         $payroll_status->status = "Approved";

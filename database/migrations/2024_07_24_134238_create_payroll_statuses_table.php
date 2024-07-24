@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('employee_id', 10);
             $table->string('target_employee', 10);
+            $table->string('phase', 10);
             // $table->string('payroll_id', 20);
             $table->string('status', 50);
             $table->string('month', 20)->default(now()->format('M'));
