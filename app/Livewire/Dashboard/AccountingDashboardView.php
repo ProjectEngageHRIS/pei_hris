@@ -213,11 +213,32 @@ class AccountingDashboardView extends Component
     // }
 
     public function submit($employee_id){
-        $employee = Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
-        $employee->payroll_status = $this->payroll_status;
-        $employee->update();
-        $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
-        // return $this->dispatch('triggerSuccessCheckIn');
+        $loggedInUser = auth()->user()->employee_id;
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $employee_id)
+                ->where('phase',  $this->payroll_phase)
+                ->where('month',  $this->payroll_month)
+                ->where('year',   $this->payroll_year)
+                ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+
+        if(!$payroll_status_data){
+            dd('test1');
+
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $employee_id;
+            $payroll_status->phase = $this->payroll_phase;
+            $payroll_status->month = $this->payroll_month;
+            $payroll_status->year = $this->payroll_year;
+            $payroll_status->status = $this->payroll_status;
+            $payroll_status->save();
+            return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
+        }        
+
+        $payroll_status_data->status = $this->payroll_status;
+        $payroll_status_data->update();
+
+        return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
     }
 
     public function resetEditField(){
@@ -266,7 +287,7 @@ class AccountingDashboardView extends Component
                                         ->where('phase',  $this->payroll_phase)
                                         ->where('month',  $this->payroll_month)
                                         ->where('year',   $this->payroll_year)
-                                        ->select('month', 'year', 'employee_id', 'status')->first();
+                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
@@ -275,7 +296,6 @@ class AccountingDashboardView extends Component
             $payroll_status->year = $payroll->year;
             $payroll_status->month = $payroll->month;
             // if($start_date->day  15) $payroll->month_phase = '1st Half'
-            
         }        
 
         $payroll_status->status = "Approved";
@@ -310,7 +330,7 @@ class AccountingDashboardView extends Component
         $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
                                         ->where('month', $payroll->month)
                                         ->where('year', $payroll->year)
-                                        ->select('month', 'year', 'employee_id', 'status')->first();
+                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
@@ -347,7 +367,7 @@ class AccountingDashboardView extends Component
         $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
                                         ->where('month', $payroll->month)
                                         ->where('year', $payroll->year)
-                                        ->select('month', 'year', 'employee_id', 'status')->first();
+                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;

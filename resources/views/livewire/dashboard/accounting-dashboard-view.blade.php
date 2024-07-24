@@ -671,8 +671,8 @@
                                                                         <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->department }}" disabled>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
-                                                                        <select name="status" id="status" wire:model.change="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                        <label for="payroll_status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
+                                                                        <select name="payroll_status" id="status" wire:model.change="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                             <option value="" selected>Select Status</option>
                                                                             <option value="Awaiting Approval">Awaiting Approval</option>
                                                                             <option value="Approved">Approved</option>
