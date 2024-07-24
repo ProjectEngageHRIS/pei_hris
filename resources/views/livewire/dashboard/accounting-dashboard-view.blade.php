@@ -336,20 +336,20 @@
         </div>
         <!-- Add user button -->
         <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
-            Add user
+            Add Payroll
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
                 <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />
             </svg>
         </button>
         <!-- Main modal -->
-        <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div wire:ignore.self id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
             <div class="relative w-full max-w-md max-h-full p-4">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow ">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            Add new account
+                            Add new Payroll
                         </h3>
                         <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="authentication-modal">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -359,31 +359,110 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-4 xl:p-5">
-                        <form class="space-y-4" action="#">
+                    <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
+                        <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
                             <div>
-                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
+                                <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
+                                <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                    <option>Select </option>
+                                    @foreach($employeeNames as $name)
+                                        <option value="{{$name}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
-                                <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Employee Number" required/>
-                            </div>
-                            <div>
-                                <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Type</label>
-                                <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Employee Type" required />
-                            </div>
-                            <div>
-                                <label for="dept" class="block mb-2 text-sm font-medium text-customGray1">Department</label>
-                                <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Department" required />
-                            </div>
-                            <div>
-                                <label for="comp" class="block mb-2 text-sm font-medium text-customGray1">Company</label>
-                                <input type="text" name="comp" id="comp" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Company" required />
+                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                <input type="text" name="fullname" id="fullname" disabled value="{{$selectedEmployeeEmail}}" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
                             </div>
 
-                            <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button>
+                            <hr class="border-gray-700">
+
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="w-full">
+                                    <label for="start_date"
+                                        class="block mb-2 text-sm font-medium text-customGray1">Start Date
+                                        <span class="text-red-600">*</span></label>
+                                    <input type="date" name="start_date" id="start_date" wire:model="start_date"
+                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
+                                        required="">
+                                    @error('start_date')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
+                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                                <div class="w-full" id="end_date_container">
+                                    <label for="end_date"
+                                        class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
+                                        <span class="text-red-600">*</span></label>
+                                    <input type="date" name="end_date" id="end_date" wire:model="end_date"
+                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
+                                    required="">
+                                    @error('end_date')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
+                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+
+
+                            <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
+                                {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
+                                <label for="payroll_picture"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                    <span class="text-red-600">*</span></label>
+                                <div id="payroll_picture" class="grid grid-cols-1">
+                                    <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </textarea>
+                                    @error('payroll_picture')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
+                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                            {{-- <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button> --}}
+                            <div x-show="openAddWarningButton" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                <div class="relative w-full max-w-md max-h-full p-4">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                            <div class="p-4 text-center md:p-5">
+                                                <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                </svg>
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                    <li>Verify the file exists and can be accessed.</li>
+                                                    <li>Ensure the employee's email has been added as a viewer.</li>
+                                                    <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                    <li>Review and modify these rules if necessary.</li>
+                                                </ul>
+                                                <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                
+                                                <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                    Yes
+                                                </button>
+                                                <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
@@ -723,6 +802,7 @@
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
+
                                                                         <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
                                                                         
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">

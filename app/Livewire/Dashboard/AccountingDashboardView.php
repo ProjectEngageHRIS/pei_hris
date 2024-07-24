@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Accountingnotes;
+use App\Models\PayrollStatus;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Payroll;
@@ -75,6 +76,14 @@ class AccountingDashboardView extends Component
     # Notes
     public $note;
 
+    public $employeeNames = [];
+
+    public $employeeEmails = [];
+
+    public $selectedEmployeeEmail;
+
+    public $selectedEmployee;
+
 
     // public $showWarning = False;
 
@@ -93,8 +102,18 @@ class AccountingDashboardView extends Component
         $date = Carbon::now();
         $this->halfOfMonthFilter = "1st Half";
         $this->monthFilter = $date->format('F');
-        $this->yearFilter = $date->format('Y');
+        $this->yearFilter = $date->format('Y');        
+        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->get();
+        foreach($employees as $employee){
+            $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
+            $this->employeeNames[] = $fullName;
+            $this->employeeEmails[$employee->employee_id] = $employee->employee_email;
+        }
+        $this->selectedEmployee = reset($this->employeeNames);
+        $this->selectedEmployeeEmail = reset($this->employeeEmails);
+
     }
+
 
 
     public function clearAllFilters()
@@ -109,6 +128,15 @@ class AccountingDashboardView extends Component
     //     $payrolls = Payroll::query()->where('year', $this->currentYear)->where('month', $this->currentMonth)->get();
 
     // }
+
+
+    public function updated($keys){
+        if($keys == "selectedEmployee"){
+            $parts = explode(' | ', $this->selectedEmployee);
+            $this->selectedEmployeeEmail = $this->employeeEmails[$parts[1]];
+        }
+    }
+
 
     public $monthMap = [
         'January' => 1,
@@ -197,6 +225,45 @@ class AccountingDashboardView extends Component
     //     }   
     //     $this->showWarning = True;
     // }
+
+    public function addTargetPayroll(){
+
+        $loggedInUser = auth()->user()->employee_id;
+        // foreach($this->rules as $rule => $validationRule){
+        //     $this->validate([$rule => $validationRule]);
+        //     $this->resetValidation();
+        // }   
+
+        $payroll = new Payroll();
+        $payroll->employee_id = $loggedInUser;
+        $parts = explode(' | ', $this->selectedEmployee);
+        $payroll->target_employee = $parts[1];
+        $start_date = Carbon::parse($this->start_date);
+        $payroll->month =  $start_date->format('F');
+        $payroll->year =  $start_date->year;
+        $payroll->start_date = $this->start_date;
+        $payroll->end_date = $this->end_date;
+        $payroll->payroll_picture = $this->payroll_picture;
+        $payroll->save();
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('month', $payroll->month)
+                                        ->where('year', $payroll->year)
+                                        ->select('month', 'year', 'employee_id', 'status')->first();
+        if(!$payroll_status_data){
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->year = $payroll->year;
+            $payroll_status->month = $payroll->month;
+        }        
+
+        $payroll_status->status = "Approved";
+        $payroll_status->save();
+
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+
+    }
 
     public function addPayroll($employee_id){
         // dd($this->start_date, $this->end_date, $this->payroll_picture);

@@ -121,7 +121,7 @@ class DashboardView extends Component
 
         $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
         if($leaveIndicator){
-            if($leaveIndicator->type != null){
+            if(!in_array($leaveIndicator->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day'])){
                 $this->leaveIndicator = $leaveIndicator->type;
             }
         }
@@ -313,17 +313,17 @@ class DashboardView extends Component
         $loggedInUser = auth()->user()->employee_id;
 
         $current_time = Carbon::today();
-        $six_am_today = Carbon::today()->setHour(16);
+        $six_am_today = Carbon::today()->setHour(6);
         // $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); 
-
-        if ($current_time->greaterThan($six_am_today)) {
+        if (now()->greaterThan($six_am_today)) {
             $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
-
         } else {
             $time = Dailytimerecord::where('employee_id', $loggedInUser)->orderBy('attendance_date', 'desc')->first(); // assuming 'attendance_date' is stored as a date only
         }
 
+        
         if($time->type == null){
+
            if($time->time_out == Null){
 
                 $loggedInUser = auth()->user()->employee_id;
@@ -400,6 +400,7 @@ class DashboardView extends Component
 
                 }
 
+
                 $dtr->update();
 
                 // $this->js("alert('You have already checked out!");
@@ -415,12 +416,6 @@ class DashboardView extends Component
     
     
     }
-
-        
-
-
-        
-
     public function leaveRequest(){
         $dtr = new Dailytimerecord();
 
@@ -468,7 +463,7 @@ class DashboardView extends Component
         $loggedInUser = auth()->user()->employee_id;
 
         $time = Dailytimerecord::where('employee_id', $loggedInUser)->where('attendance_date', now()->toDateString())->select('type','employee_id','time_in', 'time_out')->first();
-        if ($time && $time->type == null) {
+        if ($time && in_array($time->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day'])) {
             // Calculate the difference based on whether time_out is null or not
             if (is_null($time->time_out)) {
                 $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
