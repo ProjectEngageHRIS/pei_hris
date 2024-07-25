@@ -625,7 +625,7 @@
                                         @else 
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
-                                        <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
+                                        <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')   }">
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
                                                 <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
@@ -692,7 +692,7 @@
                                                     if($payroll_exists) $employee_payroll = $payrollMap->get($employee->employee_id);
                                                 @endphp
                                                
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"    class="text-red-500 hover:text-red-700">
+                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'; payrollPicture = ''; " class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
@@ -707,7 +707,7 @@
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false"   type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -907,10 +907,12 @@
                                                                             document.querySelectorAll('[id^=payroll_picture_]').forEach(textarea => {
                                                                                 textarea.addEventListener('input', function() {
                                                                                     let component = Livewire.find(textarea.closest('[wire\\:id]').getAttribute('wire:id'));
-                                                                                    let value = textarea.value.trim(); // Get the textarea value and trim whitespace
-                                                                                    let wrappedValue = `${value}`; // Wrap the value in backticks
+                                                                                    if(textarea.value){
+                                                                                        let value = textarea.value.trim(); // Get the textarea value and trim whitespace
+                                                                                        let wrappedValue = `${textarea.value}`; // Wrap the value in backticks
 
-                                                                                    component.set('payroll_picture', wrappedValue); // Pass wrapped value to Livewire component
+                                                                                        component.set('payroll_picture', wrappedValue); // Pass wrapped value to Livewire component
+                                                                                    }
                                                                                 });
                                                                             });
                                                                         });
@@ -971,7 +973,7 @@
                                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                     </svg>
                                                                                     <h3 class="mb-5 text-lg font-normal text-gray-500">Confirm cancellation?</h3>
-                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
+                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')"  @click="openAddPayrollModal = false; openAddWarningButton = false " class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
                                                                                     <button type="button" @click="openCancelPrompt = false" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100">No</button>
                                                                                 </div>
                                                                             </div>

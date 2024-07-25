@@ -177,6 +177,7 @@ class AccountingDashboardView extends Component
         $payrolls = Payroll::where('year', $this->yearFilter)
                                     ->where('month', $this->monthFilter)
                                     ->where('phase', $this->halfOfMonthFilter)
+                                    ->whereNull('deleted_at')
                                     ->select('month', 'year', 'phase', 'target_employee', 'payroll_picture')
                                     ->get();
 
@@ -197,6 +198,7 @@ class AccountingDashboardView extends Component
         $payroll_statuses = PayrollStatus::where('year', $this->yearFilter)
                                     ->where('month', $this->monthFilter)
                                     ->where('phase', $this->halfOfMonthFilter)
+                                    ->whereNull('deleted_at')
                                     ->select('month', 'year', 'phase', 'target_employee', 'status')
                                     ->get();
         $payrollStatusesMap = $payroll_statuses->keyBy('target_employee');
@@ -219,11 +221,10 @@ class AccountingDashboardView extends Component
                 ->where('phase',  $this->payroll_phase)
                 ->where('month',  $this->payroll_month)
                 ->where('year',   $this->payroll_year)
+                ->whereNull('deleted_at')
                 ->select('month', 'year', 'employee_id', 'status', 'id')->first();
 
         if(!$payroll_status_data){
-            dd('test1');
-
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
             $payroll_status->target_employee = $employee_id;
@@ -293,6 +294,7 @@ class AccountingDashboardView extends Component
                                         ->where('phase',  $this->payroll_phase)
                                         ->where('month',  $this->payroll_month)
                                         ->where('year',   $this->payroll_year)
+                                        ->whereNull('deleted_at')
                                         ->select('month', 'year', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
@@ -327,6 +329,7 @@ class AccountingDashboardView extends Component
                             ->where('phase',  $this->payroll_phase)
                             ->where('month',  $this->payroll_month)
                             ->where('year',   $this->payroll_year)
+                            ->whereNull('deleted_at')
                             ->select('month', 'year', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
 
         if($payroll){
@@ -338,9 +341,11 @@ class AccountingDashboardView extends Component
 
 
         $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('phase', $payroll->phase)
                                         ->where('month', $payroll->month)
                                         ->where('year', $payroll->year)
-                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+                                        ->whereNull('deleted_at')
+                                        ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
@@ -369,6 +374,8 @@ class AccountingDashboardView extends Component
         //     $this->resetValidation();
         // }   
 
+        // dd($this->payroll_picture);
+
         $payroll = new Payroll();
         $payroll->employee_id = $loggedInUser;
         $payroll->target_employee = $employee_id;
@@ -383,7 +390,8 @@ class AccountingDashboardView extends Component
                                         ->where('month', $payroll->month)
                                         ->where('phase', $payroll->phase)
                                         ->where('year', $payroll->year)
-                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+                                        ->whereNull('deleted_at')
+                                        ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
             $payroll_status->employee_id = $loggedInUser;
@@ -401,7 +409,7 @@ class AccountingDashboardView extends Component
 
         $payroll_status_data->status = "Approved";
         $payroll_status_data->update();
-        $payroll->save();
+        $payroll->update();
 
         return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
@@ -415,13 +423,16 @@ class AccountingDashboardView extends Component
                             ->where('phase',  $this->payroll_phase)
                             ->where('month',  $this->payroll_month)
                             ->where('year',   $this->payroll_year)
-                            ->select('month', 'year', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
+                            ->whereNull('deleted_at')
+                            ->select('month', 'year', 'phase', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
 
 
         $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                            ->where('phase', $payroll->phase)
                             ->where('month', $payroll->month)
                             ->where('year', $payroll->year)
-                            ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+                            ->whereNull('deleted_at')
+                            ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
 
         if($payroll_status_data && $payroll){
             $payroll_status_data->employee_id = $loggedInUser;
@@ -465,7 +476,7 @@ class AccountingDashboardView extends Component
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
         $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'employee_email');
-        $payroll_statuses = PayrollStatus::all();
+        $payroll_statuses = PayrollStatus::whereNotNull('deleted_at')->get();
         $notes = Accountingnotes::select('note', 'id')->whereNull('deleted_at')->simplePaginate(10, ['*'], 'commentsPage');
 
         // Employee Type Filter
