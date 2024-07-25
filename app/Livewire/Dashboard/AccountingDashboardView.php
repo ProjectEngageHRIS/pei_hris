@@ -332,7 +332,8 @@ class AccountingDashboardView extends Component
         if($payroll){
             $payroll->employee_id = $loggedInUser;
             $payroll->payroll_picture = $this->payroll_picture;
-            $payroll->update();
+        } else {
+            dump('Error');
         }
 
 
@@ -349,10 +350,11 @@ class AccountingDashboardView extends Component
             $payroll_status->month = $payroll->month;
             $payroll_status_data->status = "Approved";
             $payroll_status_data->save();
-            
-        }  else {
+            $payroll->update();
+        } else {
             $payroll_status_data->status = "Approved";
             $payroll_status_data->update();
+            $payroll->update();
         }
 
         return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
@@ -374,11 +376,12 @@ class AccountingDashboardView extends Component
         $payroll->month = $this->payroll_month;
         $payroll->year = $this->payroll_year;
         $payroll->payroll_picture = $this->payroll_picture;
-        $payroll->save();
+        // $payroll->save();
 
 
         $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
                                         ->where('month', $payroll->month)
+                                        ->where('phase', $payroll->phase)
                                         ->where('year', $payroll->year)
                                         ->select('month', 'year', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
@@ -391,33 +394,19 @@ class AccountingDashboardView extends Component
             // if($start_date->day  15) $payroll->month_phase = '1st Half'
             $payroll_status->status = "Approved";
             $payroll_status->save();
+            $payroll->save();
+
             return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
-            
         }        
 
         $payroll_status_data->status = "Approved";
         $payroll_status_data->update();
+        $payroll->save();
 
         return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
     }
 
-    public function addNote(){
-        $note = new Accountingnotes();
-        $note->employee_id = auth()->user()->employee_id;
-        $note->note = $this->note;
-        $note->save();
-        $this->dispatch('triggerSuccess', ['message' => 'Note Added!']);
-    }
-
-    public function deleteNote($id){
-        $note = Accountingnotes::where('id', $id)->first();
-        if($note){
-            $note->deleted_at = now();
-            $note->update();
-            $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
-        }
-    }
 
     public function deletePayroll($employee_id){
 
@@ -437,9 +426,9 @@ class AccountingDashboardView extends Component
         if($payroll_status_data && $payroll){
             $payroll_status_data->employee_id = $loggedInUser;
             $payroll_status_data->deleted_at = now();
-            $payroll_status_data->update();
             $payroll->employee_id = $loggedInUser;
             $payroll->deleted_at = now();
+            $payroll_status_data->update();
             $payroll->update();
         } else {
             dump('Error');
@@ -447,6 +436,23 @@ class AccountingDashboardView extends Component
 
         return $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
          
+    }
+
+    public function addNote(){
+        $note = new Accountingnotes();
+        $note->employee_id = auth()->user()->employee_id;
+        $note->note = $this->note;
+        $note->save();
+        $this->dispatch('triggerSuccess', ['message' => 'Note Added!']);
+    }
+
+    public function deleteNote($id){
+        $note = Accountingnotes::where('id', $id)->first();
+        if($note){
+            $note->deleted_at = now();
+            $note->update();
+            $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
+        }
     }
 
     
