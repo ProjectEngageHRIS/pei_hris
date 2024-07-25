@@ -563,7 +563,7 @@
         </div>
         <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 shadow-lg h-fit rounded-8px">
             <div>
-                <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100  h-fit rounded-8px sm:grid-cols-2 ">
+                <div  class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100  h-fit rounded-8px sm:grid-cols-2 ">
                     @if (count($EmployeeData) === 0)
                     <div  class="w-full flex py-10  col-span-2 justify-center items-center bg-white rounded-lg shadow-lg gap-4 text-customGray1">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 text-customRed">
@@ -573,7 +573,7 @@
                     </div>
                     @else
                         @foreach ($EmployeeData as $employee )
-                                <div class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
+                                <div  class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
                                     <div class="flex justify-between">
                                         <h2 class="font-semibold text-gray-900 text-md text-nowrap">{{$employee->first_name}} {{$employee->middle_name  }} {{$employee->last_name}}</h2>
                                         @if ($employee->department == "PEI")
@@ -626,7 +626,7 @@
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
-                                            <div class="flex space-x-2">
+                                            <div   class="flex space-x-2">
                                                 <!-- Edit user button -->
                                                 <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
@@ -634,7 +634,7 @@
                                                     </svg>
                                                 </button>
                                                 <!-- Main modal -->
-                                                <div x-show="openPayrollEditModal && currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
+                                                <div wire:transition x-show="openPayrollEditModal && currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
                                                     <div x-show="openPayrollEditModal" class="fixed inset-0 bg-black opacity-50"></div>
                                         
@@ -698,7 +698,7 @@
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                    <div wire:transition x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
                                                         <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
@@ -822,7 +822,7 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                    <div wire:transition x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
                                                         <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
