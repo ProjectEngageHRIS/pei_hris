@@ -80,8 +80,8 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="load-over z-50">
-            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter" class="loading-overlay">
+        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="load-over z-50">
+            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Updating Table...</p>
@@ -335,23 +335,25 @@
             </div>
         </div>
         <!-- Add user button -->
-        <button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
-            Add user
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
-                <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />
-            </svg>
+        <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
+            Add Payroll
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-2">
+                <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
+              </svg>
+              
+              
         </button>
         <!-- Main modal -->
-        <div id="authentication-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-md max-h-full p-4">
+        <div wire:ignore.self id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative w-full max-w-lg max-h-full p-4">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow ">
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            Add new account
+                            Add new Payroll
                         </h3>
-                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="authentication-modal">
+                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -359,31 +361,106 @@
                         </button>
                     </div>
                     <!-- Modal body -->
-                    <div class="p-4 xl:p-5">
-                        <form class="space-y-4" action="#">
+                    <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
+                        <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
                             <div>
-                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
+                                <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
+                                <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                    <option>Select </option>
+                                    @foreach($employeeNames as $name)
+                                        <option value="{{$name}}">{{$name}}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
-                                <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Employee Number" required/>
-                            </div>
-                            <div>
-                                <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Type</label>
-                                <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Employee Type" required />
-                            </div>
-                            <div>
-                                <label for="dept" class="block mb-2 text-sm font-medium text-customGray1">Department</label>
-                                <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Department" required />
-                            </div>
-                            <div>
-                                <label for="comp" class="block mb-2 text-sm font-medium text-customGray1">Company</label>
-                                <input type="text" name="comp" id="comp" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 " placeholder="Enter Company" required />
+                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                <input type="text" name="fullname" id="fullname" disabled value="{{$selectedEmployeeEmail}}" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
                             </div>
 
-                            <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button>
+                            <hr class="border-gray-700">
+
+                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                <div>
+                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                    <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option value="" selected>Select Phase</option>
+                                        <option value="1st Half">1st Half</option>
+                                        <option value="2nd Half">2nd Half</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                    <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option value="" selected>Select Month</option>
+                                        @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
+                                            <option value="{{ $month }}">{{ $month }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                    <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option value="" selected>Select Year</option>
+                                        @foreach(range(2000, date('Y')) as $year)
+                                            <option value="{{ $year }}">{{ $year }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
+                                {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
+                                <label for="payroll_picture"
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                    <span class="text-red-600">*</span></label>
+                                <div id="payroll_picture" class="grid grid-cols-1">
+                                    <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                    </textarea>
+                                    @error('payroll_picture')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
+                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+
+                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                            {{-- <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button> --}}
+                            <div x-show="openAddWarningButton" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                <div class="relative w-full max-w-md max-h-full p-4">
+                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                        <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                            <div class="p-4 text-center md:p-5">
+                                                <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                </svg>
+                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                    <li>Verify the file exists and can be accessed.</li>
+                                                    <li>Ensure the employee's email has been added as a viewer.</li>
+                                                    <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                    <li>Review and modify these rules if necessary.</li>
+                                                </ul>
+                                                <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                
+                                                <button id="addWarningButton1" @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                    Yes
+                                                </button>
+                                                <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
+
+
                     </div>
                 </div>
             </div>
@@ -448,11 +525,11 @@
                     @if ($NotesData->isEmpty())
                     <tr class="bg-white border-b hover:bg-gray-50 ">
                         <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
-                            <div class="flex justify-center " style="padding-top: 40px">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                            <div class="flex justify-center ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="size-5 mr-1" style="margin-top: 3px;">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
-                                <p class="items-center text-xl font-semibold text-customRed "> Nothing to show</p>
+                                <p class="items-center text-base font-semibold text-customRed "> Nothing to show</p>
                             </div>
                         </th>
                     </tr>
@@ -467,47 +544,20 @@
                         @endphp
 
                         <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                            <span>• #{{$ctr}} - {{$note->note}}</span>
-                            <button class="p-2">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                                <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                            </svg>
+                            <span>• #{{$pageIndex + $ctr}} - {{$note->note}}</span>
+                            <button id="delete-note" class="p-2" wire:click.prevent="deleteNote({{$note->id}})">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
+                                    <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
+                                </svg>
                             </button>
                         </div>
                         @endforeach
+                        @if ($NotesData->count() > 10)
+                        <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
+                            {{ $NotesData->links(data : ['scrollTo' => False]) }}
+                        </div>
+                        @endif
                     @endif
-                    {{-- <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #2</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #3</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #4</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                        <span>• Note #5</span>
-                        <button class="p-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                            <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                        </svg>
-                        </button>
-                    </div> --}}
                 </div>
             </div>
         </div>
@@ -554,22 +604,31 @@
                                     </div>
                                     <hr class="my-1 border-gray-300">
                                     <div class="flex items-center justify-between">
-                                        @if($employee->payroll_status == "Awaiting Approval")
-                                            <span class="text-xs font-semibold text-yellow-400 text-nowrap">Status: Awaiting Approval</span>
-                                        @elseif($employee->payroll_status == "Approved")
-                                            <span class="text-xs font-semibold text-green-400">Status: Approved</span>
-                                        @elseif($employee->payroll_status == "Draft")
-                                            <span class="text-xs font-semibold text-gray-400">Status: Draft</span>
-                                        @elseif ($employee->payroll_status == "Overdue")
-                                            <span class="text-xs font-semibold text-red-500">Status: Overdue</span>
-                                        @else
-                                            <span class="text-xs font-semibold text-gray-900">Status: {{$employee->payroll_status}}</span>
-
+                                        @php
+                                            $payrollStatus = $payrollStatusesMap->has($employee->employee_id);
+                                        @endphp
+                                        @if($payrollStatus)
+                                            @php
+                                                $status = $payrollStatusesMap->get($employee->employee_id)->status
+                                            @endphp
+                                            @if($status == "Awaiting Approval")
+                                                <span class="text-xs font-semibold text-yellow-400 text-nowrap">Status: Awaiting Approval</span>
+                                            @elseif($status == "Approved")
+                                                <span class="text-xs font-semibold text-green-400">Status: Approved</span>
+                                            @elseif($status == "Draft")
+                                                <span class="text-xs font-semibold text-gray-400">Status: Draft</span>
+                                            @elseif ($status == "Overdue")
+                                                <span class="text-xs font-semibold text-red-500">Status: Overdue</span>
+                                            @else
+                                                <span class="text-xs font-semibold text-gray-900">Status: Hasn't Progressed</span>
+                                            @endif
+                                        @else 
+                                                <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false  }">
                                             <div class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
@@ -612,8 +671,8 @@
                                                                         <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->department }}" disabled>
                                                                     </div>
                                                                     <div>
-                                                                        <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
-                                                                        <select name="status" id="status" wire:model="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                        <label for="payroll_status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
+                                                                        <select name="payroll_status" id="status" wire:model.change="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                             <option value="" selected>Select Status</option>
                                                                             <option value="Awaiting Approval">Awaiting Approval</option>
                                                                             <option value="Approved">Approved</option>
@@ -627,7 +686,13 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'" class="text-red-500 hover:text-red-700">
+                                               
+                                                @php
+                                                    $employee_payroll = null;
+                                                    if($payroll_exists) $employee_payroll = $payrollMap->get($employee->employee_id);
+                                                @endphp
+                                               
+                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'"    class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
@@ -636,13 +701,13 @@
                                                     <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For Month of <span class="text-customRed font-semibold">{{$currentMonthName}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
+                                                                    <button @click="openAddPayrollModal = false"   type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -670,35 +735,35 @@
                                                                                 
                                                                         </div>
                                                                         <hr class="border-gray-700">
-                                                                        <div class="grid grid-cols-2 gap-4">
-                                                                                <div class="w-full">
-                                                                                    <label for="start_date"
-                                                                                        class="block mb-2 text-sm font-medium text-customGray1">Start Date
-                                                                                        <span class="text-red-600">*</span></label>
-                                                                                    <input type="date" name="start_date" id="start_date" wire:model="start_date"
-                                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                        required="">
-                                                                                    @error('start_date')
-                                                                                        <div class="text-sm transition transform alert alert-danger"
-                                                                                        x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
-                                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                        </div>
-                                                                                    @enderror
-                                                                                </div>
-                                                                                <div class="w-full" id="end_date_container">
-                                                                                    <label for="end_date"
-                                                                                        class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
-                                                                                        <span class="text-red-600">*</span></label>
-                                                                                    <input type="date" name="end_date" id="end_date" wire:model="end_date"
-                                                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                    required="">
-                                                                                    @error('end_date')
-                                                                                        <div class="text-sm transition transform alert alert-danger"
-                                                                                        x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
-                                                                                            <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                        </div>
-                                                                                    @enderror
-                                                                                </div>
+                                                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                            <div>
+                                                                                <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                                                                <select name="status" id="phase" wire:model="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                    <option value="">Select Phase</option>
+                                                                                    <option value="1st Half" {{ (now()->format('j') <= 15) ? 'selected' : '' }}>1st Half</option>
+                                                                                    <option value="2nd Half" {{ (now()->format('j') > 15) ? 'selected' : '' }}>2nd Half</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            
+                                                                            <div>
+                                                                                <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                                                                <select name="status" id="month" wire:model="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                    <option value="" selected>Select Month</option>
+                                                                                    @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
+                                                                                        <option value="{{ $month }}" {{ ($month === now()->format('F')) ? 'selected' : 'selected' }}>{{ $month }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
+                                                                            
+                                                                            <div>
+                                                                                <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                                                                <select name="status" id="year" wire:model="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                    <option value="" selected>Select Year</option>
+                                                                                    @foreach(range(date('Y'), 2000) as $year)
+                                                                                        <option value="{{ $year }}" {{ ($year == date('Y')) ? 'selected' : '' }}>{{ $year }}</option>
+                                                                                    @endforeach
+                                                                                </select>
+                                                                            </div>
                                                                         </div>
                                                                         <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
                                                                             {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
@@ -717,6 +782,7 @@
                                                                                 @enderror
                                                                             </div>
                                                                         </div>
+
                                                                         <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
                                                                         
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
@@ -741,7 +807,7 @@
                                                                                             </ul>
                                                                                             <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
                                                                                             
-                                                                                            <button @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                            <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                                 Yes
                                                                                             </button>
                                                                                             <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
@@ -759,12 +825,12 @@
                                                     <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> <br> For The Month of <span class="text-customRed font-semibold">{{$currentMonthName}} {{$currentYear}}</span> </h3>
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -774,9 +840,8 @@
                                                                 </div>
                                                                 <!-- Modal body -->
                                                                 <div class="p-4 xl:p-5">
-                                                                    {{-- <form class="space-y-4" wire:submit.prevent="validatePayrollData" method="POST"> --}}
-                                                                        {{-- @csrf --}}
-                                                                    <div class="space-y-4">
+                                                                    <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
+                                                                        @csrf
 
                                                                     <div class="grid grid-cols-2 gap-4" >
                                                                             <div>
@@ -795,43 +860,37 @@
                                                                             
                                                                     </div>
                                                                     <hr class="border-gray-700">
-                                                                    <div class="grid grid-cols-2 gap-4">
-                                                                            <div class="w-full">
-                                                                                <label for="start_date"
-                                                                                    class="block mb-2 text-sm font-medium text-customGray1">Start Date
-                                                                                    <span class="text-red-600">*</span></label>
-                                                                                <input type="date" name="start_date" id="start_date" value="{{$payrollMap->get($employee->employee_id)->start_date}}" disabled
-                                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                    required="">
-                                                                                @error('start_date')
-                                                                                    <div class="text-sm transition transform alert alert-danger"
-                                                                                    x-data x-init="document.getElementById('start_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_date_container').focus();" >
-                                                                                        <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                    </div>
-                                                                                @enderror
-                                                                            </div>
-                                                                            <div class="w-full" id="end_date_container">
-                                                                                <label for="end_date"
-                                                                                    class="block mb-2 text-sm font-medium text-customGray1">End Date/Time
-                                                                                    <span class="text-red-600">*</span></label>
-                                                                                <input type="date" name="end_date" id="end_date" value="{{$payrollMap->get($employee->employee_id)->end_date}}" disabled
-                                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                                                                required="">
-                                                                                @error('end_date')
-                                                                                    <div class="text-sm transition transform alert alert-danger"
-                                                                                    x-data x-init="document.getElementById('end_date_container_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('end_date_container').focus();" >
-                                                                                        <span class="text-xs text-red-500" > {{$message}}</span>
-                                                                                    </div>
-                                                                                @enderror
-                                                                            </div>
+                                                                    @php
+                                                                        $payroll_details = $payrollMap->get($employee->employee_id);
+                                                                        // $this->payroll_picture = trim($payrollMap->get($employee->employee_id)->payroll_picture);
+                                                                    @endphp
+                                                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                        <div>
+                                                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                                                            <select name="status" id="status" disabled class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <option value="" selected>{{$payroll_details->phase}}</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                                                            <select name="status" id="status" disabled class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <option value="" selected>{{$payroll_details->month}}</option>
+                                                                            </select>
+                                                                        </div>
+                                                                        <div>
+                                                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                                                            <select name="status" id="status" disabled  class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <option value="" selected>{{$payroll_details->year}}</option>
+                                                                            </select>
+                                                                        </div>
                                                                     </div>
 
-                                                                    <div id="payroll_picture_container" class="grid grid-cols-1 rounded-lg shadow">
+                                                                    <div id="payroll_picture_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg shadow">
                                                                         <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                                             Payroll Photo Link <span class="text-red-600">*</span>
                                                                         </label>
                                                                         <div id="payroll_picture" class="grid grid-cols-1">
-                                                                            <textarea type="text" rows="3" id="payroll_picture" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
+                                                                            <textarea type="text" rows="3" id="payroll_picture" wire:model.defer="payroll_picture" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
                                                                             @error('payroll_picture')
                                                                                 <div class="text-sm transition transform alert alert-danger"
                                                                                     x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();">
@@ -840,10 +899,45 @@
                                                                             @enderror
                                                                         </div>
                                                                     </div>
+
+                                                                   <div class="grid grid-cols-2 gap-4">
+                                                                    <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payroll</button>
                                                                     
                                                                     <button wire:click="deletePayroll" @click="openAddWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
-                                                                    {{-- </form> --}}
-                                                                </div>
+                                                                   </div>
+                                                                        
+                                                                    <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                                        <div class="relative w-full max-w-md max-h-full p-4">
+                                                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                                                <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                                    </svg>
+                                                                                    <span class="sr-only">Close modal</span>
+                                                                                </button>
+                                                                                    <div class="p-4 text-center md:p-5">
+                                                                                        <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                                                        </svg>
+                                                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                                                        <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                                            <li>Verify the file exists and can be accessed.</li>
+                                                                                            <li>Ensure the employee's email has been added as a viewer.</li>
+                                                                                            <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                                                            <li>Review and modify these rules if necessary.</li>
+                                                                                        </ul>
+                                                                                        <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                                                        
+                                                                                        <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                            Yes
+                                                                                        </button>
+                                                                                        <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                    </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    
+                                                                    </form>
 
                                                                 </div>
                                                             </div>
@@ -867,7 +961,7 @@
         
     </div>
 
-    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center  w-full h-full bg-gray-800 bg-opacity-50">
+    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center w-full h-full bg-gray-800 bg-opacity-50">
         <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -875,7 +969,7 @@
                 </svg>
                 <span class="sr-only">Check icon</span>
             </div>
-            <div class="text-sm font-normal ms-3">Payroll Updated!</div>
+            <div id="toast-message-checkin" class="text-sm font-normal ms-3">Updated</div>
             <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="toast-container-checkin" aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -918,11 +1012,11 @@
     // }
 
     document.addEventListener('livewire:init', function () {
-        Livewire.on('triggerSuccess', () => {
+        Livewire.on('triggerSuccess', (event) => {
             const toastContainer = document.getElementById('toast-container-checkin');
+            let toastMessage = document.getElementById('toast-message-checkin');
             // const modal = document.getElementById('toast-success-checkin');
-            if (toastContainer) {
-                // toastContainer.classList.add('flex');
+            if (toastContainer && toastMessage) {
                 setTimeout(() => {
                     toastContainer.classList.remove('hidden');
                 }, 10); // Hide after 5 seconds

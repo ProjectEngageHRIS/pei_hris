@@ -35,5 +35,8 @@ class Leaverequest extends Model
         'inclusive_end_date',
         'commutation',
         'commutation_signature_of_appli',
+        'approved_by_hr',
+        'approved_by_president',
+
     ];
 }

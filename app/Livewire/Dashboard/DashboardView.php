@@ -63,6 +63,8 @@ class DashboardView extends Component
 
     public $tasks;
 
+    public $leaveIndicator = False;
+
 
 
     public function search()
@@ -116,6 +118,13 @@ class DashboardView extends Component
                             ->take(5)
                             ->select('task_title', 'form_id')
                             ->get();
+
+        $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
+        if($leaveIndicator){
+            if(!in_array($leaveIndicator->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day'])){
+                $this->leaveIndicator = $leaveIndicator->type;
+            }
+        }
         // dd($this->leave_requests);
 
 
@@ -142,7 +151,7 @@ class DashboardView extends Component
         //     }
         // })->get();
 
-        $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
+        // $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
         // $this->currentHourMinuteSecond = Carbon::now();
         $currentTime = Carbon::now();
         // Set the start and end times for each period
@@ -267,18 +276,20 @@ class DashboardView extends Component
     {
 
         $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
-        $allowedCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
+        $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
         $currentTime = Carbon::now();
 
 
-        if ($currentTime->greaterThanOrEqualTo($allowedCheckInTime)) {
+        if ($currentTime->greaterThanOrEqualTo($startOfCheckInTime)) {
             $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
-    
             if (!$time) {
                 $dtr = new Dailytimerecord();
                 $dtr->employee_id = auth()->user()->employee_id;
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_in = Carbon::now()->toDateTimeString();
+                $lateCheckerParse = Carbon::parse($dtr->time_in);
+                $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0); 
+                if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
 
@@ -301,18 +312,18 @@ class DashboardView extends Component
     {
         $loggedInUser = auth()->user()->employee_id;
 
-        $current_time = Carbon::now();
-        $six_am_today = Carbon::today()->setHour(16);
-
-        if ($current_time->greaterThan($six_am_today)) {
-            $time = Dailytimerecord::where('attendance_date', $current_time)->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
-
+        $current_time = Carbon::today();
+        $six_am_today = Carbon::today()->setHour(6);
+        // $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); 
+        if (now()->greaterThan($six_am_today)) {
+            $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
         } else {
-            $time = Dailytimerecord::where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
-
+            $time = Dailytimerecord::where('employee_id', $loggedInUser)->orderBy('attendance_date', 'desc')->first(); // assuming 'attendance_date' is stored as a date only
         }
 
-        if($time){
+        
+        if($time->type == null){
+
            if($time->time_out == Null){
 
                 $loggedInUser = auth()->user()->employee_id;
@@ -321,8 +332,8 @@ class DashboardView extends Component
         
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_out = Carbon::now()->toDateTimeString();
-                // $dtr->time_out = "2024-06-21 12:59:59";
-
+                $dtr->time_in = "2024-07-21 7:59:59";
+                $dtr->time_out = "2024-07-21  9:59:59";
 
                 $timeIn = Carbon::parse($dtr->time_in);
                 $timeOut = Carbon::parse($dtr->time_out);
@@ -334,31 +345,61 @@ class DashboardView extends Component
                 $seconds = $differenceInSeconds % 60;
 
                 $standardWorkMinutes =  540;
+                $onePM = Carbon::today()->setHour(13)->setMinute(0)->setSecond(0);
 
-                if ($hours >= 10) {
-                    $dtr->type = 'Overtime';
-                    $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->overtime = $overtime / 60;
-                    $dtr->undertime = 0;
-                } elseif ($hours >= 9) {
-                    $dtr->type = 'Wholeday';
-                    $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->overtime = $overtime / 60;
-                    $dtr->undertime = 0;
-                } elseif ($hours >= 5) {
-                    $dtr->type = 'Half-Day';
-                    $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->undertime = $undertime / 60;
-                    $dtr->overtime = 0;
-                } elseif ($hours <= 5) {
-                    $dtr->type = 'Undertime';
-                    $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                    $dtr->undertime = $undertime / 60;
-                    $dtr->overtime = 0;
-                    // dd($dtr->undertime, $dtr->overtime);
+                if($timeIn->greaterThan($onePM)){
+                    if ($hours >= 10) {
+                        $dtr->type = 'Overtime';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = $overtime / 60;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 9) {
+                        $dtr->type = 'Wholeday';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = $overtime / 60;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 5) {
+                        $dtr->type = 'Half-Day';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = $undertime / 60;
+                        $dtr->overtime = 0;
+                    } elseif ($hours <= 5) {
+                        $dtr->type = 'Undertime';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = $undertime / 60;
+                        $dtr->overtime = 0;
+                        // dd($dtr->undertime, $dtr->overtime);
+                    } else {
+                        $dtr->type = 'Undefined';
+                    }
                 } else {
-                    $dtr->type = 'Undefined';
+                    if ($hours >= 10) {
+                        $dtr->type = 'Overtime';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = ($overtime - 60) / 60 ;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 9) {
+                        $dtr->type = 'Wholeday';
+                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->overtime = ($overtime - 60) / 60 ;
+                        $dtr->undertime = 0;
+                    } elseif ($hours >= 5) {
+                        $dtr->type = 'Half-Day';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = ($undertime- 60) / 60 ;
+                        $dtr->overtime = 0;
+                    } elseif ($hours <= 5) {
+                        $dtr->type = 'Undertime';
+                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                        $dtr->undertime = ($undertime- 60) / 60;
+                        $dtr->overtime = 0;
+                        // dd($dtr->undertime, $dtr->overtime);
+                    } else {
+                        $dtr->type = 'Undefined';
+                    }
+
                 }
+
 
                 $dtr->update();
 
@@ -375,12 +416,6 @@ class DashboardView extends Component
     
     
     }
-
-        
-
-
-        
-
     public function leaveRequest(){
         $dtr = new Dailytimerecord();
 
@@ -425,9 +460,10 @@ class DashboardView extends Component
 
     public function render()
     {
-        $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first();
-    
-        if ($time) {
+        $loggedInUser = auth()->user()->employee_id;
+
+        $time = Dailytimerecord::where('employee_id', $loggedInUser)->where('attendance_date', now()->toDateString())->select('type','employee_id','time_in', 'time_out')->first();
+        if ($time && in_array($time->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day'])) {
             // Calculate the difference based on whether time_out is null or not
             if (is_null($time->time_out)) {
                 $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
@@ -452,14 +488,7 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
-        // $activities = Activities::whereJsonContains('visible_to_list', $this->department)->paginate();
         $activities = Activities::all();
-        // dd($activities);
-
-
-        
-
-
         
         return view('livewire.dashboard.dashboard-view', [
             // 'data' => $this->filter($this->filter),

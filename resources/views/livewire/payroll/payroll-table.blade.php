@@ -24,58 +24,183 @@
 
         <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
-            <div>
-                <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:ring-customRed focus:border-customRed font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
-                    <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
+                <div>
+
+                    {{-- Phase Filter --}}
+                    <button id="dropdownRadioButton" data-dropdown-toggle="phaseDropdown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                        <svg class="w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="m13.001 19.927 2.896 1.773c1.52.93 3.405-.442 2.992-2.179l-1.06-4.452 3.468-2.978c1.353-1.162.633-3.382-1.142-3.525L15.603 8.2l-1.754-4.226A1.973 1.973 0 0 0 13 3v16.927ZM10.999 3c-.36.205-.663.53-.848.974L8.397 8.2l-4.552.366c-1.775.143-2.495 2.363-1.142 3.525l3.468 2.978-1.06 4.452c-.413 1.737 1.472 3.11 2.992 2.178l2.896-1.773V3Z"/>
+                          </svg>
+                          
+                          
+                        {{$phaseFilterName}}
+                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                         </svg>
-                    <span class="">{{$filterName}}</span>
-                    <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                    </svg>
-                </button>
-                <!-- Dropdown menu -->
-                <div id="dropdownRadio" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                    <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                                <input id="filter-radio-example-1" type="radio" wire:model.live="filter" value="0" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed focus:ring-customRed focus:ring-2 ">
-                                <label for="filter-radio-example-1" class="w-full text-sm font-medium text-gray-900 rounded ms-2 " >All</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                                <input id="filter-radio-example-1" type="radio" wire:model.live="filter" value="1" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed focus:ring-customRed focus:ring-2 ">
-                                <label for="filter-radio-example-1" class="w-full text-sm font-medium text-gray-900 rounded ms-2 " >Last day</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                                <input checked="" id="filter-radio-example-2" type="radio" wire:model.live="filter" value="2" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed focus:ring-customRed focus:ring-2 ">
-                                <label for="filter-radio-example-2" class="w-full text-sm font-medium text-gray-900 rounded ms-2 ">Last 7 days</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                                <input id="filter-radio-example-3" type="radio" wire:model.live="filter" value="3" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed focus:ring-customRed focus:ring-2 ">
-                                <label for="filter-radio-example-3" class="w-full text-sm font-medium text-gray-900 rounded ms-2 ">Last 30 days</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                                <input id="filter-radio-example-4" type="radio" wire:model.live="filter" value="4" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed focus:ring-customRed focus:ring-2 ">
-                                <label for="filter-radio-example-4" class="w-full text-sm font-medium text-gray-900 rounded ms-2 ">Last 6 Months</label>
-                            </div>
-                        </li>
-                        <li>
-                            <div class="flex items-center p-2 rounded hover:bg-gray-100 ">
-                                <input id="filter-radio-example-5" type="radio" wire:model.live="filter" value="5" name="filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed focus:ring-customRed focus:ring-2 ">
-                                <label for="filter-radio-example-5" class="w-full text-sm font-medium text-gray-900 rounded ms-2 ">Last year</label>
-                            </div>
-                        </li>
-                    </ul>
+                    </button>
+
+                    <!-- Phase Dropdown menu -->
+                    <div id="phaseDropdown" class="z-50 hidden w-48 mt-2  bg-white divide-y divide-gray-100 rounded-lg shadow" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
+                            <li>
+                                <label for="phaseFilter-radio-0" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="phaseFilter-radio-0" type="radio" wire:model.live="phaseFilter" value="0" name="phaseFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="phaseFilter-radio-0" class="cursor-pointer"> &nbsp; All </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="phaseFilter-radio-1" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="phaseFilter-radio-1" type="radio" wire:model.live="phaseFilter" value="1" name="phaseFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="phaseFilter-radio-1" class="cursor-pointer"> &nbsp; 1st Half </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="phaseFilter-radio-2" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="phaseFilter-radio-2" type="radio" wire:model.live="phaseFilter" value="2" name="phaseFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="phaseFilter-radio-2" class="cursor-pointer"> &nbsp; 2nd Half </label>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {{-- Month Filter --}}
+                    <button id="dropdownRadioButton" data-dropdown-toggle="monthDropdown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                        <svg class="w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" clip-rule="evenodd"/>
+                        </svg>
+                          
+                          
+                        {{$monthFilterName}}
+                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+
+                    <!-- Month Dropdown menu -->
+                    <div id="monthDropdown" class="z-50 hidden w-48 mt-2 max-h-60 overflow-y-scroll bg-white divide-y divide-gray-100 rounded-lg shadow" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
+                            <li>
+                                <label for="monthFilter-radio-12" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-12" type="radio" wire:model.live="monthFilter" value="12" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-12" class="cursor-pointer"> &nbsp; All </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-0" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-0" type="radio" wire:model.live="monthFilter" value="0" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-0" class="cursor-pointer"> &nbsp; January </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-1" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-1" type="radio" wire:model.live="monthFilter" value="1" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-1" class="cursor-pointer"> &nbsp; February </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-2" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-2" type="radio" wire:model.live="monthFilter" value="2" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-2" class="cursor-pointer"> &nbsp; March </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-3" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-3" type="radio" wire:model.live="monthFilter" value="3" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-3" class="cursor-pointer"> &nbsp; April </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-4" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-4" type="radio" wire:model.live="monthFilter" value="4" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-4" class="cursor-pointer"> &nbsp; May </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-5" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-5" type="radio" wire:model.live="monthFilter" value="5" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-5" class="cursor-pointer"> &nbsp; June </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-6" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-6" type="radio" wire:model.live="monthFilter" value="6" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-6" class="cursor-pointer"> &nbsp; July </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-7" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-7" type="radio" wire:model.live="monthFilter" value="7" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-7" class="cursor-pointer"> &nbsp; August </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-8" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-8" type="radio" wire:model.live="monthFilter" value="8" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-8" class="cursor-pointer"> &nbsp; September </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-9" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-9" type="radio" wire:model.live="monthFilter" value="9" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-9" class="cursor-pointer"> &nbsp; October </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-10" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-10" type="radio" wire:model.live="monthFilter" value="10" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-10" class="cursor-pointer"> &nbsp; November </label>
+                                </label>
+                            </li>
+                            <li>
+                                <label for="monthFilter-radio-11" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="monthFilter-radio-11" type="radio" wire:model.live="monthFilter" value="11" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="monthFilter-radio-11" class="cursor-pointer"> &nbsp; December </label>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+
+                    {{-- Year Filter --}}
+                    <button id="dropdownRadioButton" data-dropdown-toggle="yearDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                        <svg class="w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
+                        </svg>
+                          
+                          
+                        {{$yearFilterName}}
+                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+
+                    <!-- Dropdown menu -->
+                    <div id="yearDropDown" class="z-50 hidden w-48 mt-2 max-h-60 overflow-y-scroll bg-white divide-y divide-gray-100 rounded-lg shadow" data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top">
+                        <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
+                            <!-- All option -->
+                            <li>
+                                <label for="yearFilter-radio-all" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                    <input id="yearFilter-radio-all" type="radio" wire:model.live="yearFilter" value="all" name="yearFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <label for="yearFilter-radio-all" class="cursor-pointer"> &nbsp; All </label>
+                                </label>
+                            </li>
+                            <!-- Dynamic years -->
+                            <?php
+                            $currentYear = 2024; // Set to the current year or desired starting year
+                            for ($year = $currentYear; $year >= 1999; $year--) {
+                                echo '<li>
+                                        <label for="yearFilter-radio-' . $year . '" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
+                                            <input id="yearFilter-radio-' . $year . '" type="radio" wire:model.live="yearFilter" value="' . $year . '" name="yearFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                            <label for="yearFilter-radio-' . $year . '" class="cursor-pointer"> &nbsp; ' . $year . ' </label>
+                                        </label>
+                                    </li>';
+                            }
+                            ?>
+                        </ul>
+                    </div>
+
+
+                    
                 </div>
-            </div>
             <label for="table-search" class="sr-only">Search</label>
             <div class="relative">
                 <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
@@ -92,13 +217,13 @@
                             No.
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                           Start Date
-                        </th>
-                        <th scope="col" class="px-6 py-3 text-center">
-                            End Date
+                            Phase
                          </th>
                         <th scope="col" class="px-6 py-3 text-center">
-                            Actions
+                           Month -Year
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
+                            Action
                         </th>
                     </tr>
                 </thead>
@@ -127,32 +252,22 @@
                                 $ctr = $ctr + 1;
                             @endphp
                             {{--  --}}
-                                <tr class="bg-white border-b  hover:bg-gray-50 ">
+                                <tr class="bg-white border-b hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
                                     </th>
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
-                                            {{$data->start_date}}
+                                            {{$data->phase}}
                                     </th>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
-                                        {{$data->end_date}}
+                                        {{$data->month}}  {{$data->year}}
                                     </td>
-                                    <td wire:ignore class="items-center py-4 text-center">
-                                        <button wire:ignore  data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 " type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-                                        <div class="top-0 right-0 z-10 hidden mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 " id="dropdown{{$loop->index}}">
-                                            <!-- Dropdown content -->
-                                            <ul class="py-2 text-sm text-gray-700 ">
-                                                {{-- <li>
-                                                    <a onclick="location.href='{{ route('PayrollPdf', ['date' => $data->start_date]) }}'" class="block px-4 py-2 hover:bg-gray-100 ">PDF</a>
-                                                </li> --}}
-                                                <li>
-                                                    <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="block px-4 py-2 hover:bg-gray-100 ">Download Payroll</a>
-                                                </li>
-                                            </ul>
+                                     <td class="items-center py-4 text-center">
+                                        <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
+                                            <!-- View Button -->
+                                            <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-customGreen cursor-pointer hover:text-yellow-600 ">
+                                                View Payroll
+                                            </a>
                                         </div>
                                     </td>
                                 </tr>

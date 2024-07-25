@@ -12,7 +12,7 @@
 
     <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 
-    <link rel="icon" type="image/x-icon" href="{{asset('logo\sllogo.png')}}">
+    <link rel="icon" type="image/x-icon" href="{{asset('assets\sllogo.png')}}">
     <title>Employee Portal</title>
     @vite(['resources/css/app.css','resources/js/app.js'])
     {{-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/habibmhamadi/multi-select-tag@2.0.1/dist/css/multi-select-tag.css"> --}}

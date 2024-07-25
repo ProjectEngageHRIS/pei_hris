@@ -58,7 +58,7 @@ class ApproveHrTicketsTable extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user();
+        $loggedInUser = auth()->user()->role_id;
 
         $query = Hrticket::query();
 
@@ -114,9 +114,16 @@ class ApproveHrTicketsTable extends Component
             $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
         }
 
-        return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
-            'HrTicketData' => $results,
-        ])->layout('components.layouts.hr-navbar');
+        if($loggedInUser == 10){
+            return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
+                'HrTicketData' => $results,
+            ]);
+        } else {
+            return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
+                'HrTicketData' => $results,
+            ])->layout('components.layouts.hr-navbar');
+        }
+
     }
 
     public function download($reference_num){

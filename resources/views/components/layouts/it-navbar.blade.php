@@ -56,7 +56,7 @@
 
     @section('body')
         <header>
-            @livewire('sidebar.hr-sidebar-view')
+            @livewire('sidebar.it-navbar-view')
         </header>
         <main>
             <div class="p-8 main-content">

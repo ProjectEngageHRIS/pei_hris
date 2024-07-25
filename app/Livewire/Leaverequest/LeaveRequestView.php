@@ -65,6 +65,8 @@ class LeaveRequestView extends Component
 
     public $deduct_to;
 
+    public $full_half;
+
     public function mount($index){
         $loggedInUser = auth()->user();
 
@@ -106,6 +108,7 @@ class LeaveRequestView extends Component
         $this->num_of_days_work_days_applied = $leaverequest->num_of_days_work_days_applied;
         $this->inclusive_start_date = $leaverequest->inclusive_start_date;
         $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+        $this->full_half = $leaverequest->full_or_half;
         $this->date_earned = $leaverequest->date_earned;
         $this->earned_description = $leaverequest->earned_description;
         $this->commutation = $leaverequest->commutation;

@@ -3,6 +3,7 @@
 namespace App\Livewire\Dashboard;
 
 use App\Models\Accountingnotes;
+use App\Models\PayrollStatus;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Payroll;
@@ -75,6 +76,22 @@ class AccountingDashboardView extends Component
     # Notes
     public $note;
 
+    public $employeeNames = [];
+
+    public $employeeEmails = [];
+
+    public $selectedEmployeeEmail;
+
+    public $selectedEmployee;
+
+    public $payroll_phase;
+
+    public $payroll_month;
+
+    public $payroll_year;
+
+    public $payrollStatusesMap;
+
 
     // public $showWarning = False;
 
@@ -93,8 +110,24 @@ class AccountingDashboardView extends Component
         $date = Carbon::now();
         $this->halfOfMonthFilter = "1st Half";
         $this->monthFilter = $date->format('F');
-        $this->yearFilter = $date->format('Y');
+        $this->yearFilter = $date->format('Y');        
+        $loggedInUser = auth()->user()->employee_id;
+        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->where('employee_id', '!=', $loggedInUser)->get();
+        foreach($employees as $employee){
+            $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
+            $this->employeeNames[] = $fullName;
+            $this->employeeEmails[$employee->employee_id] = $employee->employee_email;
+        }
+        $this->selectedEmployee = reset($this->employeeNames);
+        $this->selectedEmployeeEmail = reset($this->employeeEmails);
+        $this->payroll_phase = $this->halfOfMonthFilter;
+        $this->payroll_month = $this->monthFilter;
+        $this->payroll_year = $this->yearFilter;
+        $this->payrollMap = $this->getPayrollData();
+        $this->payrollStatusesMap = $this->getPayrollStatuses();
+
     }
+
 
 
     public function clearAllFilters()
@@ -109,6 +142,20 @@ class AccountingDashboardView extends Component
     //     $payrolls = Payroll::query()->where('year', $this->currentYear)->where('month', $this->currentMonth)->get();
 
     // }
+
+
+    public function updated($keys){
+        if($keys == "selectedEmployee"){
+            $parts = explode(' | ', $this->selectedEmployee);
+            $this->selectedEmployeeEmail = $this->employeeEmails[$parts[1]];
+        }
+        if(in_array($keys, ['payroll_phase', 'payroll_month', 'payroll_year', 'yearFilter', 'monthFilter', 'halfOfMonthFilter'])){
+            $this->payroll_phase = $this->halfOfMonthFilter;
+            $this->payroll_month = $this->monthFilter;
+            $this->payroll_year = $this->yearFilter;
+        }
+    }
+
 
     public $monthMap = [
         'January' => 1,
@@ -127,32 +174,11 @@ class AccountingDashboardView extends Component
 
     public function getPayrollData()
     {   
-        $monthNumber = $this->monthMap[$this->monthFilter];
-
-        $startOfMonth = Carbon::create($this->yearFilter, $monthNumber, 1);
-
-        if($this->halfOfMonthFilter == "1st Half"){
-
-
-            $middleOfMonth = $startOfMonth->copy()->day(15);
-
-            $payrolls = Payroll::where('year', $this->yearFilter)
-                                        ->where('month', $this->monthFilter)
-                                        ->whereBetween('start_date', [$startOfMonth, $middleOfMonth])
-                                        ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
-                                        ->get();
-        } else {
-
-            $middleOfMonth = $startOfMonth->copy()->day(16);
-            $endOfMonth = $startOfMonth->copy()->endOfMonth();
-
-            $payrolls = Payroll::where('year', $this->yearFilter)
-                                ->where('month', $this->monthFilter)
-                                ->whereBetween('start_date', [$middleOfMonth, $endOfMonth])
-                                ->select('month', 'year','start_date', 'target_employee', 'payroll_picture')
-                                ->get();
-        }
-     
+        $payrolls = Payroll::where('year', $this->yearFilter)
+                                    ->where('month', $this->monthFilter)
+                                    ->where('phase', $this->halfOfMonthFilter)
+                                    ->select('month', 'year', 'phase', 'target_employee', 'payroll_picture')
+                                    ->get();
 
         // $payrolls = Payroll::where('year', $this->yearFilter)
         //                     ->where('month', $this->monthFilter)
@@ -167,6 +193,16 @@ class AccountingDashboardView extends Component
         return $payrollMap;
     }
 
+    public function getPayrollStatuses(){
+        $payroll_statuses = PayrollStatus::where('year', $this->yearFilter)
+                                    ->where('month', $this->monthFilter)
+                                    ->where('phase', $this->halfOfMonthFilter)
+                                    ->select('month', 'year', 'phase', 'target_employee', 'status')
+                                    ->get();
+        $payrollStatusesMap = $payroll_statuses->keyBy('target_employee');
+        return $payrollStatusesMap;
+    }
+
     public function halfOfTheMonth($number){
 
     }
@@ -177,11 +213,42 @@ class AccountingDashboardView extends Component
     // }
 
     public function submit($employee_id){
-        $employee = Employee::where('employee_id', $employee_id)->select('employee_id', 'payroll_status')->first();
-        $employee->payroll_status = $this->payroll_status;
-        $employee->update();
-        $this->dispatch('triggerSuccessCheckIn');
-        // return $this->dispatch('triggerSuccessCheckIn');
+        $loggedInUser = auth()->user()->employee_id;
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $employee_id)
+                ->where('phase',  $this->payroll_phase)
+                ->where('month',  $this->payroll_month)
+                ->where('year',   $this->payroll_year)
+                ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+
+        if(!$payroll_status_data){
+            dd('test1');
+
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $employee_id;
+            $payroll_status->phase = $this->payroll_phase;
+            $payroll_status->month = $this->payroll_month;
+            $payroll_status->year = $this->payroll_year;
+            $payroll_status->status = $this->payroll_status;
+            $payroll_status->save();
+            return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
+        }        
+
+        $payroll_status_data->status = $this->payroll_status;
+        $payroll_status_data->update();
+
+        return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
+    }
+
+    public function resetEditField(){
+        $this->payroll_status = null;
+    }
+
+    public function resetAddField(){
+        $this->start_date = null;
+        $this->end_date = null;
+        $this->payroll_picture = null;
     }
 
     protected $rules = [
@@ -198,6 +265,88 @@ class AccountingDashboardView extends Component
     //     $this->showWarning = True;
     // }
 
+    public function addTargetPayroll(){
+
+        $loggedInUser = auth()->user()->employee_id;
+        // foreach($this->rules as $rule => $validationRule){
+        //     $this->validate([$rule => $validationRule]);
+        //     $this->resetValidation();
+        // }   
+
+        $payroll = new Payroll();
+        $payroll->employee_id = $loggedInUser;
+        $parts = explode(' | ', $this->selectedEmployee);
+        $payroll->target_employee = $parts[1];
+        $payroll->phase = $this->payroll_phase;
+        $payroll->month = $this->payroll_month;
+        $payroll->year = $this->payroll_year;
+        $payroll->payroll_picture = $this->payroll_picture;
+        $payroll->save();
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('phase',  $this->payroll_phase)
+                                        ->where('month',  $this->payroll_month)
+                                        ->where('year',   $this->payroll_year)
+                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+        if(!$payroll_status_data){
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->phase = $payroll->phase;
+            $payroll_status->year = $payroll->year;
+            $payroll_status->month = $payroll->month;
+            // if($start_date->day  15) $payroll->month_phase = '1st Half'
+        }        
+
+        $payroll_status->status = "Approved";
+        $payroll_status->save();
+
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+
+    }
+
+
+
+    public function editPayroll($employee_id){
+        // dd($this->start_date, $this->end_date, $this->payroll_picture);
+        $loggedInUser = auth()->user()->employee_id;
+        // foreach($this->rules as $rule => $validationRule){
+        //     $this->validate([$rule => $validationRule]);
+        //     $this->resetValidation();
+        // }   
+        dd($this->payrollMap);
+        dd($this->payroll_picture);
+
+        $payroll = Payroll::where('target_employee', $employee_id)
+                            ->where('phase',  $this->payroll_phase)
+                            ->where('month',  $this->payroll_month)
+                            ->where('year',   $this->payroll_year)
+                            ->select('month', 'year', 'employee_id', 'status')->first();
+
+        $payroll->employee_id = $loggedInUser;
+        $payroll->payroll_picture = $this->payroll_picture;
+        $payroll->update();
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('month', $payroll->month)
+                                        ->where('year', $payroll->year)
+                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+        if(!$payroll_status_data){
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->phase = $payroll->phase;
+            $payroll_status->year = $payroll->year;
+            $payroll_status->month = $payroll->month;
+        }        
+
+        $payroll_status->status = "Approved";
+        $payroll_status->save();
+
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+
+    }
+
     public function addPayroll($employee_id){
         // dd($this->start_date, $this->end_date, $this->payroll_picture);
         $loggedInUser = auth()->user()->employee_id;
@@ -205,18 +354,35 @@ class AccountingDashboardView extends Component
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
+
         $payroll = new Payroll();
         $payroll->employee_id = $loggedInUser;
         $payroll->target_employee = $employee_id;
-        $start_date = Carbon::parse($this->start_date);
-        $payroll->month =  $start_date->format('F');
-        $payroll->year =  $start_date->year;
-        $payroll->start_date = $this->start_date;
-        $payroll->end_date = $this->end_date;
+        $payroll->phase = $this->payroll_phase;
+        $payroll->month = $this->payroll_month;
+        $payroll->year = $this->payroll_year;
         $payroll->payroll_picture = $this->payroll_picture;
         $payroll->save();
 
-        $this->dispatch('triggerSuccess');
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                        ->where('month', $payroll->month)
+                                        ->where('year', $payroll->year)
+                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+        if(!$payroll_status_data){
+            $payroll_status = new PayrollStatus();
+            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->target_employee = $payroll->target_employee;
+            $payroll_status->phase = $payroll->phase;
+            $payroll_status->year = $payroll->year;
+            $payroll_status->month = $payroll->month;
+            // if($start_date->day  15) $payroll->month_phase = '1st Half'
+            
+        }        
+
+        $payroll_status->status = "Approved";
+        $payroll_status->save();
+
+        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
     }
 
@@ -225,7 +391,16 @@ class AccountingDashboardView extends Component
         $note->employee_id = auth()->user()->employee_id;
         $note->note = $this->note;
         $note->save();
-        $this->dispatch('triggerSuccess');
+        $this->dispatch('triggerSuccess', ['message' => 'Note Added!']);
+    }
+
+    public function deleteNote($id){
+        $note = Accountingnotes::where('id', $id)->first();
+        if($note){
+            $note->deleted_at = now();
+            $note->update();
+            $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
+        }
     }
 
     
@@ -234,12 +409,12 @@ class AccountingDashboardView extends Component
     public function render()
     {
         $this->payrollMap = $this->getPayrollData();
+        $this->payrollStatusesMap = $this->getPayrollStatuses();
         // $this->currentMonthName = $this->getMonthName($this->currentMonth);
 
-        $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'payroll_status', 'employee_email');
-        $notes = Accountingnotes::select('note')->paginate(5);
-
-       
+        $query = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'inside_department', 'department', 'employee_type', 'gender', 'employee_email');
+        $payroll_statuses = PayrollStatus::all();
+        $notes = Accountingnotes::select('note', 'id')->whereNull('deleted_at')->simplePaginate(10, ['*'], 'commentsPage');
 
         // Employee Type Filter
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
@@ -300,7 +475,9 @@ class AccountingDashboardView extends Component
         return view('livewire.dashboard.accounting-dashboard-view', [
             'EmployeeData' => $results, 
             'NotesData' => $notes,
+            'PayrollStatus' => $payroll_statuses,
+            'payrollMap' => $this->payrollMap,
             // 'Payrolls' => $payrolls,
-        ])->layout('components.layouts.hr-navbar');
+        ])->layout('components.layouts.accounting-navbar');
     }
 }

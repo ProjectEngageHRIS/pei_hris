@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('employee_id');
             $table->text('note');
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

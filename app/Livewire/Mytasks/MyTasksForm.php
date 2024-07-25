@@ -49,23 +49,58 @@ class MyTasksForm extends Component
 
     }
 
-    // protected $rules = [
-    //     'mode_of_application' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
-    //     'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-    //     'type_of_leave_sub_category' => 'nullable|in:Others,Within the Philippines,Abroad,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave,In Hospital, Others',
-    //     'type_of_leave_assigned_task' => 'required_if:type_of_leave_sub_category,Others|min:10|max:500',
-    //     'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
-    //     'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
-    //     // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
-    //     'commutation' => 'required|in:not requested,requested',
-    //     'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120'
-    // ];
+    protected function rules()
+    {
+        return [
+            'target_employees' => [
+                'required', 
+                'array', 
+                'min:1', 
+                function ($attribute, $value, $fail) {
+                    foreach ($value as $employee) {
+                        if (!in_array($employee, $this->employeeNames)) {
+                            $fail('The selected ' . $attribute . ' is invalid.');
+                        }
+                        if (!is_string($employee) || strlen($employee) < 3) {
+                            $fail('Each ' . $attribute . ' must be an array and at least 1 array.');
+                        }
+                    }
+                }
+            ],
+            'task_title' => [
+                'required', 
+                'string', 
+                'min:4'
+            ],
+            'assigned_task' => [
+                'required', 
+                'string', 
+                'min:5',
+                'max:20000'
+            ],
+            'start_time' => [
+                'required', 
+                'date',
+                function ($attribute, $value, $fail) {
+                    if (isset($this->end_time) && strtotime($value) >= strtotime($this->end_time)) {
+                        $fail('The ' . $attribute . ' must be before the end time.');
+                    }
+                }
+            ],
+            'end_time' => [
+                'required', 
+                'date',
+                function ($attribute, $value, $fail) {
+                    if (isset($this->start_time) && strtotime($value) <= strtotime($this->start_time)) {
+                        $fail('The ' . $attribute . ' must be after the start time.');
+                    }
+                }
+            ],
+        ];
+    }
 
     protected $validationAttributes = [
-        'mode_of_application' => 'Mode of Application',
-        'type_of_leave_others' => 'Others',
-        'type_of_leave_sub_category' => 'Sub Category',
-        'type_of_leave_assigned_task' => 'Leave Description',
+        'target_employees' => 'Target Employees',
     ];
 
 
@@ -78,6 +113,9 @@ class MyTasksForm extends Component
         // if (in_array($this->type_of_leave, ['Vacation Leave', 'Mandatory/Forced Leave', 'Sick Leave'])) {
         //     $this->validate(['num_of_days_work_days_applied' => 'required|lte:available_credits',]);
         // }
+
+        $this->validate();
+
         
         $loggedInUser = auth()->user();
 
@@ -99,16 +137,16 @@ class MyTasksForm extends Component
 
         $task->save();
 
-        $assignee= Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
+        $assignee = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
         ->where('employee_id', $loggedInUser->employee_id)
         ->first();
 
 
         $targetEmployees = Employee::whereIn('employee_id', $employeeIds)->get();
 
-        foreach ($targetEmployees as $targetEmployee) {
-            Mail::to($targetEmployee->employee_email)->send(new TaskRequestSubmitted($assignee, $targetEmployee, $task));
-        }
+        // foreach ($targetEmployees as $targetEmployee) {
+        //     Mail::to($targetEmployee->employee_email)->send(new TaskRequestSubmitted($assignee, $targetEmployee, $task));
+        // }
 
         $this->dispatch('triggerNotification');
 

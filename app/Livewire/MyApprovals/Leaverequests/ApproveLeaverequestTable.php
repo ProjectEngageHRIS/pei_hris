@@ -48,9 +48,10 @@ class ApproveLeaverequestTable extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user();
+        $loggedInUser = auth()->user()->role_id;
 
-        $query = Leaverequest::where('employee_id', $loggedInUser->employee_id);
+        $query = Leaverequest::query();
+
 
         switch ($this->date_filter) {
             case '1':
@@ -98,9 +99,17 @@ class ApproveLeaverequestTable extends Component
             $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
         }
 
-        return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
-            'LeaveRequestData' => $results,
-        ])->layout('components.layouts.hr-navbar');
+        
+        if($loggedInUser == 10){
+            return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
+                'LeaveRequestData' => $results,
+            ]);
+        } else {
+            return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
+                'LeaveRequestData' => $results,
+            ])->layout('components.layouts.hr-navbar');
+        }
+       
     }
 
     // public function download($reference_num){

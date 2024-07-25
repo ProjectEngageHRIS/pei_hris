@@ -268,7 +268,9 @@ class AttendanceTable extends Component
                                          'time_in',
                                          'time_out',
                                          'overtime',
-                                         'undertime');
+                                         'undertime',
+                                         'late',
+                                         );
         
         switch ($this->filter) {
             case '1':
@@ -276,29 +278,41 @@ class AttendanceTable extends Component
                 $this->filterName = "Today";
                 break;
             case '2':
-                $query->whereBetween('attendance_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
-                $this->filterName = "Last 7 Days";
+                $query->where('attendance_date', '>=', Carbon::today()->startOfWeek());
+                $this->filterName = "This week";
                 break;
             case '3':
-                $query->whereBetween('attendance_date', [Carbon::today()->subDays(30), Carbon::today()]);
-                $this->filterName = "Last 30 days";
+                $query->where('attendance_date', '>=', Carbon::today()->subMonth());
+                $this->filterName = "This Month";
                 break;
             case '4':
-                $query->whereBetween('attendance_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-                $this->filterName = "Last 6 Months";
+                $query->where('attendance_date', '>=', Carbon::today()->subMonths(6));
+                $this->filterName = "These 6 Months";
                 break;
             case '5':
-                $query->whereBetween('attendance_date', [Carbon::today()->subYear(), Carbon::today()]);
-                    $this->filterName = "Last Year";
+                $query->where('attendance_date', '>=', Carbon::today()->subYear());
+                    $this->filterName = "This Year";
                 break;
+            default:
+                $this->filterName = "All";
+                break;
+
         }
 
 
-        if(strlen($this->search) >= 1){
-            $results = $query->where('attendance_date', 'like', '%' . $this->search . '%')->orderBy('attendance_date', 'desc')->paginate(5);
+        if (strlen($this->search) >= 1) {
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('attendance_date', 'like', '%' . $term . '%')
+                      ->orWhere('type', 'like', '%' . $term . '%');
+                    // Add other fields if needed
+                }
+            })->orderBy('attendance_date', 'desc')->paginate(5);
         } else {
             $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
         }
+
     
         if(in_array($loggedInUser->role_id, [6,7,8,9])){
             return view('livewire.dailytimerecord.attendance-table', [

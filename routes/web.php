@@ -38,6 +38,7 @@ use App\Http\Controllers\ProfileController;
 use App\Livewire\Activities\ActivitiesForm;
 use App\Livewire\Activities\ActivitiesView;
 use App\Livewire\Dashboard\HrDashboardView;
+use App\Livewire\Dashboard\ItDashboardView;
 use App\Livewire\Hrtickets\HrTicketsUpdate;
 use App\Livewire\Ithelpdesk\ItHelpDeskForm;
 use App\Livewire\Ithelpdesk\ItHelpDeskView;
@@ -70,8 +71,8 @@ use App\Livewire\Dailytimerecord\AttendanceTable;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
-use App\Livewire\Dashboard\AccountingDashboardView;
 
+use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
 use App\Livewire\Changeschedule\ChangeScheduleTable;
@@ -81,16 +82,16 @@ use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
-use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
-use App\Http\Controllers\Auth\EmailVerificationController;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
@@ -178,6 +179,8 @@ Route::middleware('auth')->group(function (){
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
+    Route::get("/it", ItDashboardView::class)->name('ItDashboard');
+
 
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
 

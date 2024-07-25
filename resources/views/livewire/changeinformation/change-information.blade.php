@@ -147,15 +147,19 @@
                                         @enderror
                                     </div>
                                     <div class="w-full" id="gender_container">
-                                        <label for="sex"
-                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            Sex (Male/M and Female/F only)
-                                        <input type="text" name="sex" id="sex" wire:model="gender"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
+                                        <label for="sex" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            Sex
+                                        </label>
+                                        <select name="sex" id="sex" wire:model="gender"
+                                                class="bg-gray-50 mt-2 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                            <option value="" disabled>Select Sex</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
                                         @error('gender')
                                             <div class="text-sm transition transform alert alert-danger"
-                                                x-data x-init="document.getElementById('gender_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('gender_container').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                 x-data x-init="document.getElementById('gender_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('gender_container').focus();">
+                                                <span class="text-xs text-red-500"> {{$message}}</span>
                                             </div>
                                         @enderror
                                     </div>
@@ -201,15 +205,22 @@
                                             @enderror
                                     </div>
                                     <div class="w-full" id="civil_status_container">
-                                        <label for="civil_status"
-                                            class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            Civil Status</label>
-                                        <input type="text" name="civil_status" id="civil_status"  wire:model="civil_status"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
+                                        <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            Civil Status
+                                        </label>
+                                        <select name="civil_status" id="civil_status" wire:model="civil_status"
+                                                class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                            <option value="" disabled>Select Civil Status</option>
+                                            <option value="single">Single</option>
+                                            <option value="married">Married</option>
+                                            <option value="widowed">Widowed</option>
+                                            <option value="divorced">Divorced</option>
+                                            <option value="separated">Separated</option>
+                                        </select>
                                         @error('civil_status')
                                             <div class="text-sm transition transform alert alert-danger"
-                                                x-data x-init="document.getElementById('civil_status_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('civil_status_container').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                 x-data x-init="document.getElementById('civil_status_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('civil_status_container').focus();">
+                                                <span class="text-xs text-red-500"> {{$message}}</span>
                                             </div>
                                         @enderror
                                     </div>
@@ -297,10 +308,10 @@
                                 </div>
                             </div>
                         </div>
-                    @php
-                        $ctr += 1;
-                    @endphp
-                    @endforeach
+                        @php
+                            $ctr += 1;
+                        @endphp
+                        @endforeach
                         @endif
                         <script>
                             document.addEventListener('livewire:init', () => {

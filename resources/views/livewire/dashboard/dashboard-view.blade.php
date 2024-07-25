@@ -30,34 +30,41 @@
                         <p id="current-time" class="px-20 text-sm text-customGray1 font-regular">{{ now('Asia/Manila')->format('g:i:s A') }}</p>
                         <hr class="my-4 border-gray-300">
                     </div>
+                    @if ($leaveIndicator)
+                        
+                    <div class="flex justify-center w-full px-4 mb-4">
+                        <p class=" text-base text-center ">You are currently on <br> <span class="font-semibold text-customRed"> {{$leaveIndicator}}</span>. <br> It is recommended to not  <br> time in and out  <br> during the period </p>
+                    </div>
+                    @endif
+            
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
                         <button wire:click.prevent="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeInFlag) disabled @endif>
+                            @if($timeInFlag ) disabled @endif>
                             Time In
                         </button>
                         <button id="check_out" type="submit" class="flex items-center justify-center px-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeOutFlag) disabled @endif>
+                            @if($timeOutFlag ) disabled @endif>
                             Time Out
                         </button>
                     </div>
                 </div>
-            </div>
-            <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
-                <div class="">
-                    <p class="text-sm font-medium text-customGray1">Time In:</p>
-                    <p class="text-sm font-medium text-customRed">{{$timeIn ?? "N/A"}} </p>
                 </div>
-                <div class="">
-                    <p class="text-sm font-medium text-customGray1">Time Out:</p>
-                    <p class="text-sm font-medium text-customRed">{{$timeOut ?? "N/A"}}</p>
-                </div>
-                <div class="items-center col-span-2 mt-6">
+                <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
                     <div class="">
-                        <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
-                        <p class="text-sm font-medium text-customRed">{{$currentTimeIn ?? "N/A"}}</p>
+                        <p class="text-sm font-medium text-customGray1">Time In:</p>
+                        <p class="text-sm font-medium text-customRed">{{$timeIn ?? "N/A"}} </p>
+                    </div>
+                    <div class="">
+                        <p class="text-sm font-medium text-customGray1">Time Out:</p>
+                        <p class="text-sm font-medium text-customRed">{{$timeOut ?? "N/A"}}</p>
+                    </div>
+                    <div class="items-center col-span-2 mt-6">
+                        <div class="">
+                            <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
+                            <p class="text-sm font-medium text-customRed">{{$currentTimeIn ?? "N/A"}}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
             <div class="flex items-center mb-6 px-15">
                 <a href="{{ route('AttendanceTable') }}" class="w-full">
                     <button class="flex items-center px-3 ml-2 text-sm font-medium shadow bg-navButton w-58 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"> Generate Daily Log Record </button>
@@ -210,7 +217,6 @@
                             <button id="close-warning_pop_up_cancel" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -266,6 +272,8 @@
                 </svg>
             </button>
         </div>
+
+        
         {{-- <div id="toast-warning" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -354,9 +362,8 @@
         document.addEventListener('livewire:init', function () {
             Livewire.on('triggerSuccessCheckOut', () => {
                 const toastContainer = document.getElementById('toast-container-checkout');
-                const modal = document.getElementById('toast-success-checkout');
-                 const warning_modal = document.getElementById('warning_pop_up');
-
+                // const modal = document.getElementById('toast-success-checkout');
+                const warning_modal = document.getElementById('warning_pop_up');
 
                 if (toastContainer) {
                     toastContainer.classList.remove('hidden');

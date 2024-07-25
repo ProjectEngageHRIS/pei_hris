@@ -4,6 +4,7 @@ namespace App\Livewire\Sidebar;
 
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Storage;
 
 class AccountingNavbarView extends Component
 {
@@ -45,6 +46,7 @@ class AccountingNavbarView extends Component
         $this->personal_email = $employee->personal_email;
         $this->department = $employee->department;
 
+        // dd($employee);
         // dd($this->role);
         $this->employeeImage = $employee->emp_image;
         $this->employeeName = $employee->first_name. ' ' . $employee->middle_name . ' ' . $employee->last_name;
@@ -55,6 +57,11 @@ class AccountingNavbarView extends Component
         $this->employee_id = $loggedInUser->employee_id;
         // dd($this->departmentHeadId, $this->collegeDeanId, $this->role);
 
+    }
+
+    public function getImage(){
+        $image = Storage::disk('local')->get($this->employeeImage);
+        return $image;
     }
 
     public function hrtickets(){
