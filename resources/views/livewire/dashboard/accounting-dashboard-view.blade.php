@@ -890,21 +890,39 @@
                                                                         <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                                             Payroll Photo Link <span class="text-red-600">*</span>
                                                                         </label>
-                                                                        <div id="payroll_picture" class="grid grid-cols-1">
-                                                                            <textarea type="text" rows="3" id="payroll_picture" disabled class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"> {{ trim($payrollMap->get($employee->employee_id)->payroll_picture ?? '') }} </textarea>
+                                                                        <div class="grid grid-cols-1">
+                                                                            <textarea id="payroll_picture_{{$loop->index}}" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ e(trim($payrollMap->get($employee->employee_id)->payroll_picture) ?? '') }}</textarea>
                                                                             @error('payroll_picture')
                                                                                 <div class="text-sm transition transform alert alert-danger"
-                                                                                    x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();">
+                                                                                    x-data x-init="document.getElementById('payroll_picture_container{{$loop->index}}').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container{{$loop->index}}').focus();">
                                                                                     <span class="text-xs text-red-500">{{ $message }}</span>
                                                                                 </div>
                                                                             @enderror
                                                                         </div>
                                                                     </div>
                                                                     
+
+                                                                    <script>
+                                                                        document.addEventListener('DOMContentLoaded', () => {
+                                                                            document.querySelectorAll('[id^=payroll_picture_]').forEach(textarea => {
+                                                                                textarea.addEventListener('input', function() {
+                                                                                    let component = Livewire.find(textarea.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                                    let value = textarea.value.trim(); // Get the textarea value and trim whitespace
+                                                                                    let wrappedValue = `${value}`; // Wrap the value in backticks
+
+                                                                                    component.set('payroll_picture', wrappedValue); // Pass wrapped value to Livewire component
+                                                                                });
+                                                                            });
+                                                                        });
+                                                                    </script>
+                                                                    
     
                                                                     <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go to Payroll</button>
 
-                                                                    <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
+                                                                    <div class="grid grid-cols-2 gap-4">
+                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payroll</button>
+                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
+                                                                    </div>
                                                                         
                                                                     <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                         <div class="relative w-full max-w-md max-h-full p-4">

@@ -321,7 +321,7 @@ class AccountingDashboardView extends Component
         //     $this->resetValidation();
         // }   
 
-        // dd($this->payroll_picture);
+        
 
         $payroll = Payroll::where('target_employee', $employee_id)
                             ->where('phase',  $this->payroll_phase)
