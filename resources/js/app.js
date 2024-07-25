@@ -1,5 +1,7 @@
 // import './bootstrap';
 import 'flowbite';
+import { initFlowbite } from 'flowbite';
+
 window.addEventListener('app:scroll-to', (ev) => {
     ev.stopPropagation();
   
@@ -111,6 +113,19 @@ document.addEventListener('DOMContentLoaded', function () {
     } catch {}
 
   }, false);
+
+
+Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
+    succeed(({ snapshot, effect }) => {
+        queueMicrotask(() => {
+            initFlowbite();
+        })
+    })
+})
+
+document.addEventListener('livewire:navigated', () => {
+    initFlowbite();
+})
 
   // // Cursor wait button functionality
   // document.getElementById('navButton').addEventListener('click', function() {

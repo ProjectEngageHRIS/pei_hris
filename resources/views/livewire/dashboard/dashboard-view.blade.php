@@ -39,11 +39,11 @@
             
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
                         <button wire:click.prevent="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeInFlag ) disabled @endif>
+                            @if($timeInFlag ) disabled style="cursor: not-allowed;" @endif>
                             Time In
                         </button>
                         <button id="check_out" type="submit" class="flex items-center justify-center px-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeOutFlag ) disabled @endif>
+                            @if($timeOutFlag ) disabled style="cursor: not-allowed;" @endif>
                             Time Out
                         </button>
                     </div>
