@@ -839,7 +839,7 @@
                                                                     </button>
                                                                 </div>
                                                                 <!-- Modal body -->
-                                                                <div class="p-4 xl:p-5">
+                                                                <div class="p-4 xl:p-5" x-data="{openCancelPrompt: false}">
                                                                     <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
                                                                         @csrf
 
@@ -900,10 +900,11 @@
                                                                             @enderror
                                                                         </div>
                                                                     </div>
+                                                                    
     
                                                                     <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go to Payroll</button>
 
-                                                                    <button wire:click="deletePayroll('{{$employee->employee_id}}')" @click="openAddWarningButton = true;" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
+                                                                    <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
                                                                         
                                                                     <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                         <div class="relative w-full max-w-md max-h-full p-4">
@@ -932,6 +933,29 @@
                                                                                         </button>
                                                                                         <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
                                                                                     </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+
+                                                                    <div  x-show="openCancelPrompt" id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                                                                        <div class="relative w-full max-w-md max-h-full p-4">
+                                                                            <div class="relative bg-white rounded-lg shadow">
+                                                                                <!-- Close button -->
+                                                                                <button type="button" @click="openCancelPrompt = false" class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+                                                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                                                    </svg>
+                                                                                    <span class="sr-only">Close modal</span>
+                                                                                </button>
+                                                                                <!-- Modal content -->
+                                                                                <div class="p-4 text-center">
+                                                                                    <svg class="w-12 h-12 mx-auto mb-4 text-red-600" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                                                    </svg>
+                                                                                    <h3 class="mb-5 text-lg font-normal text-gray-500">Confirm cancellation?</h3>
+                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
+                                                                                    <button type="button" @click="openCancelPrompt = false" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100">No</button>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>

@@ -419,6 +419,36 @@ class AccountingDashboardView extends Component
         }
     }
 
+    public function deletePayroll($employee_id){
+
+        $loggedInUser = auth()->user()->employee_id;
+        $payroll = Payroll::where('target_employee', $employee_id)
+                            ->where('phase',  $this->payroll_phase)
+                            ->where('month',  $this->payroll_month)
+                            ->where('year',   $this->payroll_year)
+                            ->select('month', 'year', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
+
+
+        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                            ->where('month', $payroll->month)
+                            ->where('year', $payroll->year)
+                            ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+
+        if($payroll_status_data && $payroll){
+            $payroll_status_data->employee_id = $loggedInUser;
+            $payroll_status_data->deleted_at = now();
+            $payroll_status_data->update();
+            $payroll->employee_id = $loggedInUser;
+            $payroll->deleted_at = now();
+            $payroll->update();
+        } else {
+            dump('Error');
+        }
+
+        return $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
+         
+    }
+
     
  
 
