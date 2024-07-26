@@ -159,7 +159,9 @@ class PasswordReset extends Component
         if ($user) {
             $user->password = Hash::make($this->password);
             $user->save();
+            Auth::logoutOtherDevices($user->password);
             changePassword::dispatch($user->email, $user->employee_id);
+
 
             // Send email notification
             Mail::to($user->email)->send(new PasswordChanged($user));

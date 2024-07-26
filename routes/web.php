@@ -136,7 +136,7 @@ Route::get('/', function(){
 // Route::get('/onboarding', EmployeeOnboardingForm::class)->name('EmployeeOnboarding');
 
 
-Route::middleware('guest')->group(function () {
+Route::middleware('throttle:api')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
  
