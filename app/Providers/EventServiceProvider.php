@@ -2,10 +2,15 @@
 
 namespace App\Providers;
 
+use App\Events\changePassword;
+use App\Events\otpInputAttempt;
+use App\Events\ResetPasswordSendOtp;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Events\ResetPasswordSendOtpSuccessful;
+use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -27,6 +32,19 @@ class EventServiceProvider extends ServiceProvider
         // ],
         \Illuminate\Auth\Events\Failed::class => [
             \App\Listeners\LoginActivityListener::class.'@failed',
+        ],
+        ResetPasswordSendOtp::class => [
+            \App\Listeners\LoginActivityListener::class.'@changePasswordOtpFailed',
+        ],
+        ResetPasswordSendOtpSuccessful::class => [
+            \App\Listeners\LoginActivityListener::class.'@changePasswordOtpSuccessful',
+        ],
+        otpInputAttempt::class => [
+            \App\Listeners\LoginActivityListener::class.'@otpAttempt'
+        ],
+        changePassword::class => [
+            \App\Listeners\LoginActivityListener::class.'@changedPassword'
+
         ],
         // \Illuminate\Auth\Events\PasswordReset::class => [
         //     \App\Listeners\LoginActivityListener::class.'@passwordReset',

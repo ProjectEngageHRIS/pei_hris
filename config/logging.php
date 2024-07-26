@@ -122,6 +122,21 @@ return [
             'path' => storage_path('logs/loginalerts.log'),
             'level' => 'info',
         ],
+        'failedotpsend' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/changepasswordotp/failedotpsendalerts.log'),
+            'level' => 'info',
+        ],
+        'successfulotpsend' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/changepasswordotp/successfulotpsendalerts.log'),
+            'level' => 'info',
+        ],
+        'passwordchanged' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/changepasswordotp/passwordchanged.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];
