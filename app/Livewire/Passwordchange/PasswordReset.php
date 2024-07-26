@@ -61,27 +61,27 @@ class PasswordReset extends Component
     }
 
     public function startCountdown()
-{
-    $this->otpSent = true;
-    $this->countdown = 30; // Countdown timer in seconds
-    $this->countdownTimer();
-
-}
-
-public function countdownTimer()
-{
-    $this->resendDisabled = true; // Enable resend button after countdown ends
-
-    if ($this->countdown > 0) {
-        $this->countdown--;
-        $this->dispatch('countdown', ['count' => $this->countdown]);
-        // Delay for  handled
-        $this->resendDisabled = true; // Enable resend button after countdown ends
-        $this->resendDisabled = false; // Enable resend button after countdown ends
-
+    {
+        $this->otpSent = true;
+        $this->countdown = 30; // Countdown timer in seconds
+        $this->countdownTimer();
 
     }
-}
+
+    public function countdownTimer()
+    {
+        $this->resendDisabled = true; // Enable resend button after countdown ends
+
+        if ($this->countdown > 0) {
+            $this->countdown--;
+            $this->dispatch('countdown', ['count' => $this->countdown]);
+            // Delay for  handled
+            $this->resendDisabled = true; // Enable resend button after countdown ends
+            $this->resendDisabled = false; // Enable resend button after countdown ends
+
+
+        }
+    }
 
     public function resendOtp()
     {
