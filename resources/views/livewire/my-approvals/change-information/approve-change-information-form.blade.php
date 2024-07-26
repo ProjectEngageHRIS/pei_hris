@@ -354,7 +354,7 @@
                         <div class="p-4 md:p-5">
                             <div class="grid grid-cols-1 gap-4 mb-4 ">
                                 <div>
-                                    <select id="category" wire:model="status" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5  ">
+                                    <select id="category" wire:model="status" required class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5  ">
                                         <option selected value="Null">Select Status</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                         <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
