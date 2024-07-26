@@ -73,7 +73,7 @@
                 </div>
                 <div class="col-span-2">
                     <label class="block mb-2 text-sm font-medium text-gray-900">Ticket Type
-                        <span class="text-customRed">*</span>
+                        <span class="text-red-600">*</span>
                     </label>
                     <select id="type_of_ticket" name="type_of_ticket" wire:model.live="type_of_ticket" id="type_of_ticket_container" required wire:change="resetTypeOfRequest"
                         class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -83,15 +83,16 @@
                         <option value="HR Operations">HR Operations</option>
                     </select>
                     @error('type_of_ticket')
-                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_ticket_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_ticket_container').focus();">
+                        <div class="text-sm transition transform alert alert-danger"
+                        x-data x-init="document.getElementById('type_of_ticket_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_ticket_container').focus();">
                             <span class="text-xs text-red-500">{{$message}}</span>
                         </div>
                     @enderror
                 </div>
                 @if ($type_of_ticket == "HR Operations")
                     <div id="type_of_request_container" class="col-span-2 lg:col-start-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900">Type of Request (HR Operations)
-                            <span class="text-customRed">*</span>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Type of HR Operations Request
+                            <span class="text-red-600">*</span>
                         </label>
                         <select name="type_of_request" wire:model.live="type_of_request" required wire:change="resetSubTypeOfRequest"
                             class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -102,15 +103,16 @@
                             <option value="Request for Employee Files">Request for Employee Files</option>
                         </select>
                         @error('type_of_request')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_request_container').focus();">
+                            <div class="text-sm transition transform alert alert-danger"
+                            x-data x-init="document.getElementById('type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_request_container').focus();">
                                 <span class="text-xs text-red-500">{{$message}}</span>
                             </div>
                         @enderror
                     </div>
                 @elseif ($type_of_ticket == "Internal Control")
                     <div id="type_of_request_container" class="col-span-2 lg:col-start-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Internal Control)
-                            <span class="text-customRed">*</span>
+                        <label class="block mb-2 text-sm font-medium text-gray-900">Type of Internal Control Request
+                            <span class="text-red-600">*</span>
                         </label>
                         <select name="type_of_request" wire:model.live="type_of_request" required wire:change="resetSubTypeOfRequest"
                             class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:customRed focus:ring-customRed focus:border-customRed w-full p-2.5">
@@ -128,8 +130,8 @@
                     </div>
                 @elseif ($type_of_ticket == "HR Internal")
                     <div id="type_of_request_container" class="col-span-2">
-                        <label class="block mb-2 text-sm font-medium text-gray-900"> Type of Request (HR Internal)
-                            <span class="text-customRed">*</span>
+                        <label class="block mb-2 text-sm font-medium text-gray-900"> Type of HR Internal Request
+                            <span class="text-red-600">*</span>
                         </label>
                         <select name="type_of_request" wire:model.live="type_of_request" required wire:change="resetSubTypeOfRequest"
                             class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -139,15 +141,16 @@
                             <option value="Procurement">Procurement</option>
                         </select>
                         @error('type_of_request')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_request_container').focus();">
+                            <div class="text-sm transition transform alert alert-danger"
+                            x-data x-init="document.getElementById('type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_request_container').focus();">
                                 <span class="text-xs text-red-500">{{$message}}</span>
                             </div>
                         @enderror
                     </div>
                     @if ($type_of_request == "Office Admin")
                         <div id="sub_type_of_request_container" class="col-span-2">
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Requests (Admin)
-                                <span class="text-customRed">*</span>
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Admin Requests
+                                <span class="text-red-600">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -161,15 +164,16 @@
                                 <option value="Office Supplies">Office Supplies</option>
                             </select>
                             @error('sub_type_of_request')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('sub_type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sub_type_of_request_container').focus();">
+                                <div class="text-sm transition transform alert alert-danger"
+                                x-data x-init="document.getElementById('sub_type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sub_type_of_request_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                         </div>
                     @elseif ($type_of_request == "Procurement")
                         <div id="sub_type_of_request_container" class="col-span-2">
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Requests (Procurement)
-                                <span class="text-customRed">*</span>
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Procurement Requests
+                                <span class="text-red-600">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -178,15 +182,16 @@
                                 <option value="Request to Buy/Book/Avail Service">Request to Buy/Book/Avail Service</option>
                             </select>
                             @error('sub_type_of_request')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('sub_type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sub_type_of_request_container').focus();">
+                                <div class="text-sm transition transform alert alert-danger"
+                                x-data x-init="document.getElementById('sub_type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sub_type_of_request_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                         </div>
                     @elseif ($type_of_request == "HR")
                         <div id="sub_type_of_request_container" class="col-span-2">
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Requests (Human Resource)
-                                <span class="text-customRed">*</span>
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of HR Requests
+                                <span class="text-red-600">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
                                 class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -200,7 +205,8 @@
                                 <option value="Request for a Meeting">Request for a Meeting</option>
                             </select>
                             @error('sub_type_of_request')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('sub_type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sub_type_of_request_container').focus();">
+                                <div class="text-sm transition transform alert alert-danger"
+                                x-data x-init="document.getElementById('sub_type_of_request_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sub_type_of_request_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
@@ -219,21 +225,22 @@
                 @if ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Certificate of Employment")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request (CoE)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Requesting CoE
+                                <span class="text-red-600">*</span>
                             </label>
                             <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                 class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                             </textarea>
                             @error('purpose')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
-                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                <div class="text-sm transition transform alert alert-danger"
+                                    x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                         </div>
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_request" class="block mb-2 text-sm font-medium text-gray-900">Commutation
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
@@ -246,8 +253,9 @@
                                 </div>
                             </div>
                             @error('type_of_hrconcern')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
-                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                <div class="text-sm transition transform alert alert-danger"
+                                    x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                         </div>
@@ -255,8 +263,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-Related Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900 ">Type of Concern (HMO)
-                                <span class="text-customRed">*</span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900 ">Type of HMO Concern
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_request" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -268,37 +276,40 @@
                                     <option value="Request for Deletion">Request for Deletion</option>
                                 </select>
                                 @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                    x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900 ">Description of Concern (HMO)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900 ">Describe your HMO Concern
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                     class="block p-2.5 w-full text-sm shadow-inner text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900 ">Link related to your concern (HMO)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900 ">HMO Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
                                     class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -309,19 +320,20 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Payroll Date
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <input class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                 type="date" name="request_date" id="request_date" wire:model.live="request_date" required>
                             @error('request_date')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
+                                <div class="text-sm transition transform alert alert-danger"
+                                    x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                         </div>
                         <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Concern (Payroll)
-                                <span class="text-customRed">*</span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Payroll Concern
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_request" wire:model.live="type_of_hrconcern" required
@@ -334,36 +346,39 @@
                                     <option value="Request for Deletion">Request for Deletion</option>
                                 </select>
                                 @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Description of Concern (Payroll)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Payroll Concern Description
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
-                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                            <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
-                        <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Payroll)
-                                <span class="text-customRed">*</span></label>
+                        <div id="request_link_container"  class="grid items-start grid-cols-1 ">
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Payroll Concern Link
+                                <span class="text-red-600">*</span></label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -373,8 +388,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Leave Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Leave)
-                                <span class="text-customRed">*</span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Leave Request
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_request" wire:model.live="type_of_hrconcern" required
@@ -385,37 +400,40 @@
                                     <option value="Cancellation of Leaves">Cancellation of Leaves</option>
                                 </select>
                                 @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Description of Concern (Leave)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Leave Concern Description
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Leave)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Leave Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -425,34 +443,36 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Request for Consultation")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Request for Consultation)
-                                <span class="text-customRed">*</span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Consultation Request
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_request" wire:model.live="type_of_hrconcern"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
-                                    <option value="High (ASAP)">High (ASAP)</option>
-                                    <option value="Medium (within the day)">Medium (within the day)</option>
-                                    <option value="Low (can be attended the next day)">Low (can be attended the next day)</option>
+                                <select name="type_of_request" wire:model.live="type_of_hrconcern" required
+                                    class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
+                                    <option value="High (ASAP)">High (Urgent)</option>
+                                    <option value="Medium (within the day) ">Medium (Within the day)</option>
+                                    <option value="Low (can be attended the next dy)">Low (Can be attended the next day)</option>
                                 </select>
                                 @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Description of Concern (Request for Consultation)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Leave Request Concern Description
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -462,20 +482,21 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Request for a Meeting")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
-                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date of Meeting (Request for Meeting)
-                                <span class="text-customRed">*</span>
+                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date of Meeting
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
+                                <div class="text-sm transition transform alert alert-danger"
+                                    x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}} </span>
                                 </div>
                             @enderror
                         </div>
                         <div id="request_requested_container" class="col-span-1">
-                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">Target Person (Request for Meeting)
-                                <span class="text-customRed">*</span>
+                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">Target Person
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="request_requested" required wire:model="request_requested" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -485,22 +506,24 @@
                                     @endforeach
                                 </select>
                                 @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Meeting (Request for Meeting)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Meeting
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -511,7 +534,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Remittance Certificate
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -533,7 +556,8 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                     @error('remittance_request_others')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('remittance_request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('remittance_request_others_container').focus();">
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('remittance_request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('remittance_request_others_container').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
                                     @enderror
@@ -542,7 +566,7 @@
                         </div>
                         <div class="col-span-1">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Account Assigned
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_assigned_container">
                                 <select name="request_assigned" required wire:model.live="request_assigned" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -562,20 +586,21 @@
 
                             @if ($request_assigned == "Others")
                                 <div id="request_others_container" class="mt-4">
-                                    <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                    <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     </textarea>
                                     @error('request_extra')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_others_container').focus();">
-                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_others_container').focus();">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
                                     @enderror
                                 </div>
                             @endif
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Requesting
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
@@ -590,7 +615,7 @@
                         </div>
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date Start
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed shadow-inner focus:border-customRed block w-full p-2.5">
@@ -604,8 +629,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-Mandated Benefits Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of Concern (GMR)
-                                <span class="text-customRed">*</span>
+                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of GMR Concern
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -626,10 +651,10 @@
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (GMR)
-                                <span class="text-customRed">*</span> <br>
-                                <span class="text-customRed">*</span> Supporting documents/List of requirements <br>
-                                <span class="text-customRed">*</span> For SSS R1A and PHILHEALTH ER2, must be in Excel format.
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">GMR Concern Link
+                                <span class="text-red-600">*</span><br>
+                                <span class="text-gray-500">●</span> Supporting documents/List of requirements <br>
+                                <span class="text-gray-500">●</span> For SSS R1A and PHILHEALTH ER2, must be in Excel format.
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
@@ -646,8 +671,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Messengerial")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-6">
                         <div class="col-span-1 lg:col-span-2">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900"> Type of Request (Messengerial)
-                                <span class="text-customRed">*</span>
+                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900"> Type of Messengerial Request
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -685,7 +710,8 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_requested')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
+                                    <div class="text-sm transition transform alert alert-danger"
+                                        x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -693,7 +719,7 @@
                         </div>
                         <div id="request_assigned_container" class="col-span-1 lg:col-span-2">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Contact Person
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_assigned">
                                 <textarea type="text" rows="2" id="request_assigned" name="request_assigned" wire:model="request_assigned" required
@@ -707,8 +733,8 @@
                             </div>
                         </div>
                         <div id="request_others_container"  class="col-span-1 lg:col-span-3">
-                            <label for="request_extra" class="block mb-2 text-sm font-medium text-gray-900">Address of Destination (Messengerial)
-                                <span class="text-customRed">*</span>
+                            <label for="request_extra" class="block mb-2 text-sm font-medium text-gray-900">Address of Messengerial Destination
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_extra">
                                 <textarea type="text" rows="2" id="request_extra" name="request_extra" wire:model="request_extra" required
@@ -722,8 +748,8 @@
                             </div>
                         </div>
                         <div class="col-span-1 lg:col-span-3">
-                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date of Pick Up or Send (Messengerial)
-                                <span class="text-customRed">*</span>
+                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date of Messengerial Pick Up or Send Off
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed shadow-inner focus:border-customRed block w-full p-2.5">
@@ -736,7 +762,7 @@
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Repairs/Maintenance")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <div class="grid grid-cols-1 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow md:grid-cols-2 lg:grid-cols-5 lg:col-span-2">
+                        <div class="grid grid-cols-5 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow lg:col-span-2">
                             <ul class="col-span-1">
                                 <h1>1. Electrical Issues Checklist</h1>
                                 <li> <span class="text-customRed">◦ </span> Malfunctioning outlets or switches</li>
@@ -819,8 +845,8 @@
                             </ul>
                         </div>
                         <div class="col-span-1">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Repairs and Maintenance)
-                                <span class="text-customRed">*</span>
+                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of Repairs and Maintenance Request
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
                                 <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -849,7 +875,8 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     </textarea>
                                     @error('messengerial_other_type')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('messengerial_other_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('messengerial_other_type_container').focus();">
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('messengerial_other_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('messengerial_other_type_container').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
                                     @enderror
@@ -858,8 +885,7 @@
                         </div>
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Concerned Area
-                                <span class="text-customRed">*</span>
-                                <span class="font-base">(Please indicate the floor, area and department)</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" placeholder="Indicate the floor, area and department." required
@@ -876,8 +902,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Book a Car")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
-                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Departure (Book a Car)
-                                <span class="text-customRed">*</span>
+                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Departure
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -888,8 +914,8 @@
                             @enderror
                         </div>
                         <div class="col-span-1">
-                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Pick-Up (Book a Car)
-                                <span class="text-customRed">*</span>
+                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Pick-Up
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_requested" id="request_requested" wire:model.live="request_requested" required
                                 class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -900,8 +926,8 @@
                             @enderror
                         </div>
                         <div id="account_client_hr_ops_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Passenger/s Name (Book a Car)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Passenger/s Name
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <input type="text" name="account_client_hr_ops" id="account_client_hr_ops" wire:model.live="account_client_hr_ops" required
@@ -914,8 +940,8 @@
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Destination (Book a Car)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Address of Destination
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <input type="text" name="purpose" id="purpose" wire:model="purpose" required
@@ -931,8 +957,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Book a Meeting Room")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
-                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date (Book a Meeting Room)
-                                <span class="text-customRed">*</span>
+                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -943,8 +969,8 @@
                             @enderror
                         </div>
                         <div class="col-span-1">
-                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">End Date (Book a Meeting Room)
-                                <span class="text-customRed">*</span>
+                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">End Date
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_requested" id="request_requested" wire:model.live="request_requested" required
                                 class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -955,8 +981,8 @@
                             @enderror
                         </div>
                         <div id="type_of_hrconcern_container" class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Room (Book a Meeting Room)
-                                <span class="text-customRed">*</span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Room
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_requested_container">
                                 <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -972,8 +998,8 @@
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Description of Purpose (Book a Meeting Room)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Booking
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
@@ -1309,8 +1335,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Procurement" && $sub_type_of_request == "Request for Quotation")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div id="type_of_hrconcern_container" class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Specifications (Request for Quotation)
-                                <span class="text-customRed">*</span><br> <span class="text-gray-500 font-base">(Please make sure to include the complete details such as color, size, code, etc.) </span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Quotation Specifications
+                                <span class="text-red-600">*</span><br>
                             </label>
                             <div id="type_of_hrconcern">
                                 <textarea type="text" required rows="4" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" placeholder="Make sure to include the complete details such as color, size, code, etc."
@@ -1324,8 +1350,8 @@
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose (Request for Quotation)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" required
@@ -1339,8 +1365,8 @@
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Request for Quotation)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Quotation Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="4" id="request_link" name="request_link" wire:model="request_link" required
@@ -1357,8 +1383,8 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Procurement" && $sub_type_of_request == "Request to Buy/Book/Avail Service")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Product/Service Specifications (Request to Buy Services)
-                                <span class="text-customRed">*</span>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Product/Service Specifications
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern">
                                 <textarea type="text" rows="2" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" required
@@ -1372,8 +1398,8 @@
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Request to Buy Services)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Service Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
@@ -1391,7 +1417,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Cut-Off Date
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -1402,8 +1428,8 @@
                             @enderror
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Description of Concern (Reimbursement)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Reimbursement Description
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
@@ -1417,8 +1443,8 @@
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Reimbursement)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Reimbursement Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="(Payslips, Timesheet, etc.)" required
@@ -1436,7 +1462,7 @@
                     <div class="flex flex-col justify-between gap-4 lg:flex-row">
                         <div id="type_of_hrconcern_container" class="w-full">
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
@@ -1457,7 +1483,7 @@
                         </div>
                         <div id="type_of_hrconcern_container" class="w-full">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Equipment Type
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <select id="type_of_hrconcern" name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 <option value=""selected>Select</option>
@@ -1481,9 +1507,6 @@
                         </div>
                         @if ($type_of_hrconcern == "Others")
                             <div id="purpose_container" class="w-full">
-                                <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Equipment Type (Others)
-                                    <span class="text-customRed">*</span>
-                                </label>
                                 <div id="purpose">
                                     <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                         class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
@@ -1501,7 +1524,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date of Cash Advance Request
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -1512,8 +1535,8 @@
                             @enderror
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (CA)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Cash Advance Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
@@ -1531,7 +1554,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Liquidation Coverage
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
@@ -1545,8 +1568,8 @@
                             </div>
                         </div>
                         <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Liquidation)
-                                <span class="text-customRed">*</span>
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Liquidation Concern Link
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
@@ -1563,8 +1586,8 @@
                 @elseif ($type_of_ticket == "HR Operations" && $type_of_request == "Performance Monitoring Request")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
-                            <label for="type_of_pe_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (PMR)
-                                <span class="text-customRed">*</span></label>
+                            <label for="type_of_pe_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Performance Monitoring Request
+                                <span class="text-red-600">*</span></label>
                             <div id="type_of_pe_hr_ops_container">
                                 <select name="type_of_pe_hr_ops" required wire:model.live="type_of_pe_hr_ops" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
                                     <option value=""selected>Select</option>
@@ -1582,8 +1605,8 @@
                             </div>
                         </div>
                         <div class="col-span-1">
-                            <label for="account_client_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (PMR)
-                                <span class="text-customRed">*</span>
+                            <label for="account_client_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Client's Account
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="account_client_hr_opscontainer">
                                 <select name="account_client_hr_ops" required wire:model.live="account_client_hr_ops" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -1603,7 +1626,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_hrconcerns" class="block mb-2 text-sm font-medium text-gray-900">Level of Offense
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div class="grid w-full grid-cols-3 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
@@ -1627,7 +1650,7 @@
                         </div>
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Incident Report
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required
@@ -1645,7 +1668,7 @@
                     <div class="grid grid-cols-1 gap-4">
                         <div id="type_of_hrconcern_container">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Type of Notice
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <select id="type_of_hrconcern" required name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 <option value=""selected>Select</option>
@@ -1664,8 +1687,8 @@
                 @elseif ($type_of_ticket == "HR Operations" && $type_of_request == "Request for Employee Files")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request (Employee Files)
-                                <span class="text-customRed">*</span>
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Employee Files Request
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
                                 <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required
@@ -1680,7 +1703,7 @@
                         </div>
                         <div id="request_requested_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Document/s Needed
-                                <span class="text-customRed">*</span>
+                                <span class="text-red-600">*</span>
                             </label>
                             <div id="request_requested">
                                 <textarea type="text" rows="5" id="request_requested" name="request_requested" wire:model="request_requested" required
@@ -1697,7 +1720,7 @@
                 @endif
                 <div>
                     <label class="block mb-2 text-sm font-medium text-gray-900 ">Name of Concerned Employee
-                        <span class="text-customRed">*</span>
+                        <span class="text-red-600">*</span>
                     </label>
                     <input type="text" wire:model="concerned_employee"  required
                         class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
@@ -1709,12 +1732,14 @@
                 </div>
             </div>
             <div class="grid grid-cols-2 justify-items-end">
-                <button type="submit" class="col-span-1 col-start-2 inline-flex text-nowrap items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                <button type="submit" class="col-span-1 col-start-2 inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
                         <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
-                    </svg> Submit HR Ticket
+                    </svg>
+                    Submit HR Ticket
                 </button>
             </div>
+
         @endif
         <!-- Loading screen -->
         <div wire:loading wire:target="submit" class="load-over">
@@ -1734,7 +1759,7 @@
                     </svg>
                     <span class="sr-only">Check icon</span>
                 </div>
-                <div class="text-sm font-normal ms-3">HR Ticket Submitted Successfully</div>
+                <div class="text-sm font-normal ms-3">HR Ticket <br> Submitted Successfully</div>
                 <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" data-dismiss-target="#toast-success" aria-label="Close">
                     <span class="sr-only">Close</span>
                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
