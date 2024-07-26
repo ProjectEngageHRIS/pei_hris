@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Auth;
 
+use App\Events\bannedAccount;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
@@ -53,10 +54,11 @@ class Login extends Component
 
         if (!Auth::attempt(['employee_id' => $this->email, 'password' => $this->password], $this->remember)) {
             RateLimiter::hit($throttleKey, $cooldown);
-            if ($attempts >= 10) {  // Adjust this number based on your needs
-                $user = User::where('employee_id', $this->email)->update(['banned_flag' => 0]);
+            if ($attempts >= 1) {  // Adjust this number based on your needs
+                $user = User::where('employee_id', $this->email)->select('employee_id', 'banned_flag')->update(['banned_flag' => 0]);
                 if($user){
                     $this->addError('email', 'Your account has been banned. Please contact IT support.');
+                    bannedAccount::dispatch($this->email);
                 } else{
                     $this->addError('email', trans('auth.failed'));
                 }

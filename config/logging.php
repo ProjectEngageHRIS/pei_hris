@@ -137,6 +137,11 @@ return [
             'path' => storage_path('logs/changepasswordotp/passwordchanged.log'),
             'level' => 'info',
         ],
+        'bannedaccount' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/loginlogs/bannedaccount.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

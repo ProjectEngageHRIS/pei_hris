@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Events\bannedAccount;
 use App\Events\changePassword;
 use App\Events\otpInputAttempt;
 use App\Events\ResetPasswordSendOtp;
@@ -44,7 +45,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         changePassword::class => [
             \App\Listeners\LoginActivityListener::class.'@changedPassword'
-
+        ],
+        bannedAccount::class => [
+            \App\Listeners\LoginActivityListener::class.'@bannedAccount'
         ],
         // \Illuminate\Auth\Events\PasswordReset::class => [
         //     \App\Listeners\LoginActivityListener::class.'@passwordReset',

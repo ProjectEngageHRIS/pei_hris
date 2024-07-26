@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events;
+use App\Events\bannedAccount;
 use App\Events\changePassword;
 use App\Events\otpInputAttempt;
 use App\Events\ResetPasswordSendOtp;
@@ -61,6 +62,13 @@ class LoginActivityListener
         $ip = \Request::getClientIp(true);
         Log::channel('passwordchanged')->info(
             "User with the email of {$event->email} and employee ID of {$event->employee_id} changed password from {$ip}");
+    }
+
+    public function bannedAccount(bannedAccount $event){
+        
+        $ip = \Request::getClientIp(true);
+        Log::channel('bannedaccount')->info(
+            "User with the employee ID of {$event->employee_id} has been banned from {$ip}");
     }
 
     
