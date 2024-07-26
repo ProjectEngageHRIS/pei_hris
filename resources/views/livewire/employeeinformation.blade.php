@@ -10,7 +10,7 @@
                 <svg class="mx-1 text-gray-400 size-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="gray" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('profile')}}" class="text-sm font-semibold text-gray-800 ms-1 hover:text-customRed md:ms-2">Profile</a>
+                <p class="text-sm font-semibold ms-1 text-customRed md:ms-2">Profile</p>
             </div>
         </ol>
     </nav>
@@ -197,9 +197,9 @@
                 @endif
             </div>
         </div>
-        <div class="bg-white border border-gray-200 rounded-lg shadow p-8 gap-4 flex flex-col">
+        <div class="flex flex-col gap-4 p-8 bg-white border border-gray-200 rounded-lg shadow">
             <div class="flex items-center justify-between">
-                <p class="text-lg text-nowrap font-bold text-customRed" style="word-break: break-all; overflow-wrap: break-word;">Submitted Documents</p>
+                <p class="text-lg font-bold text-nowrap text-customRed" style="word-break: break-all; overflow-wrap: break-word;">Submitted Documents</p>
             </div>
             <div class="flow-root">
                 <ul role="list" class="divide-y divide-customGray">

@@ -195,7 +195,7 @@
                         <div class="py-1">
                             <a href="{{ route('TasksTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">My Tasks</a>
                             <a href="{{ route('AssignedTasksTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assigned Tasks</a>
-                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assign a Task</a>
+                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assign Task</a>
 
                         </div>
                     </div>
@@ -206,7 +206,7 @@
         <div class="flex item-center gap-x-3.5">
             <!-- Profile Icon -->
             <div class="relative inline-block text-left">
-                <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="relative flex items-center text-sm font-medium rounded-full text-customGray1 pe-1 hover:text-customRed  md:me-0 focus:ring-4 focus:ring-gray-100  " type="button">
+                <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="relative flex items-center text-sm font-medium rounded-full text-customGray1 pe-1 hover:text-customRed md:me-0 focus:ring-4 focus:ring-gray-100 " type="button">
                     @if($employeeImage)
                         @php
                             $employee_image = $this->getImage();
@@ -223,7 +223,7 @@
                 </button>
 
                 <!-- Dropdown menu -->
-                <div id="dropdownAvatarName" class="absolute right-0 z-10 hidden mt-2 origin-top-right bg-white divide-y divide-gray-300 rounded-lg shadow-lg w-44   top-12">
+                <div id="dropdownAvatarName" class="absolute right-0 z-10 hidden mt-2 origin-top-right bg-white divide-y divide-gray-300 rounded-lg shadow-lg w-44 top-12">
                     <div class="px-4 py-3 text-sm text-customGray1 ">
                         <div class="font-medium">{{$department}}</div>
                         <div class="truncate text-customRed">{{$employee_id}}</div>
