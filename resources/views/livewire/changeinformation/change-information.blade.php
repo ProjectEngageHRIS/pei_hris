@@ -41,21 +41,21 @@
                                     <label for="firstname"
                                         class="block mb-2 text-sm font-medium text-gray-900whitespace-nowrap ">First name</label>
                                     <input type="text" name="firstname" id="firstname"  wire:model="first_name"
-                                        class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                        class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                         placeholder="First name" required="" >
                                 </div>
                                 <div class="w-full ">
                                     <label for="middlename"
                                         class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Middle name</label>
                                     <input type="text" name="middlename" id="middlename" wire:model="middle_name"
-                                        class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                        class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                         placeholder="Middle name" required="" >
                                 </div>
                                 <div class="w-full">
                                     <label for="lastname"
                                         class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Last name</label>
                                     <input type="text" name="lastname" id="lastname"  wire:model="last_name"
-                                        class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
+                                        class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5"
                                         placeholder="Last name" required="" >
                                 </div>
                             </div>
@@ -121,7 +121,7 @@
                                         class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                         Profile Summary</label>
                                     <textarea type="text" rows="3" name="profile_summary" id="profile_summary"  wire:model="profile_summary"
-                                        class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                        class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                     </textarea>
                                     @error('profile_summary')
                                             <div class="text-sm transition transform alert alert-danger"
@@ -138,7 +138,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Phone Number</label>
                                         <input type="text" name="phonenumber" id="phonenumber" wire:model="phone"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
+                                            class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
                                         @error('phone')
                                             <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('phone_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phone_container').focus();">
@@ -151,7 +151,7 @@
                                             Sex
                                         </label>
                                         <select name="sex" id="sex" wire:model="gender"
-                                                class="bg-gray-50 mt-2 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                                class="bg-gray-50 mt-2 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                             <option value="" disabled>Select Sex</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
@@ -168,7 +168,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Nickname</label>
                                         <input type="text" name="nickname" id="nickname"  wire:model="nickname"
-                                            class="bg-gray-50 mb-2 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
+                                            class="bg-gray-50 mb-2 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
                                         @error('nickname')
                                             <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('nickname_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('nickname_container').focus();">
@@ -183,7 +183,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Present Address</label>
                                         <input type="text" name="address" id="address"  wire:model="address"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
+                                            class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
                                         @error('address')
                                                 <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('address_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('address_container').focus();">
@@ -196,7 +196,7 @@
                                             class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Religion</label>
                                         <input type="text" name="religion" id="religion"  wire:model="religion"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
+                                            class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed  block w-full p-2.5">
                                         @error('personal_email')
                                                 <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('religion_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('religion_container').focus();">
@@ -209,7 +209,7 @@
                                             Civil Status
                                         </label>
                                         <select name="civil_status" id="civil_status" wire:model="civil_status"
-                                                class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                                class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                             <option value="" disabled>Select Civil Status</option>
                                             <option value="single">Single</option>
                                             <option value="married">Married</option>
@@ -262,7 +262,7 @@
                                     <div  id="employeeHistory_{{$index}}_name_of_company_container">
                                         <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Company Name
                                             <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" required></input>
                                         @error('employeeHistory.' . $index . '.name_of_company')
                                             <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
@@ -273,7 +273,7 @@
                                     <div class="mt-5 ">
                                         <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Position <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" required></input>
                                         @error('employeeHistory.' . $index . '.prev_position')
                                             <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
@@ -286,7 +286,7 @@
                                     <div class="mt-5">
                                         <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Start Date <span class="text-red-600">*</span></label>
-                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" required></input>
                                         @error('employeeHistory.' . $index . '.start_date')
                                             <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
@@ -297,7 +297,7 @@
                                     <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
                                         <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             End Date <span class="text-red-600">*</span></label>
-                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" required></input>
                                         @error('employeeHistory.' . $index . '.end_date')
                                             <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
