@@ -22,7 +22,7 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 ">Create Leave Request</span>
+            <span class="text-sm font-semibold text-customRed ms-1 md:ms-2 ">Create Leave Request</span>
             </div>
         </li>
         </ol>
@@ -86,7 +86,7 @@
                             <span class="text-red-600">*</span>
                         </label>
                         <select id="mode_of_application" name="mode_of_application" wire:model.live="mode_of_application"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                            class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option value="" selected>Select</option>
                             <option value="Vacation Leave">Vacation Leave</option>
                             <option value="Sick Leave">Sick Leave</option>
@@ -108,7 +108,7 @@
                             <span class="text-red-600">*</span>
                         </label>
                         <select id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                            class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option value="" selected>Select</option>
                             <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
 {{--
@@ -147,7 +147,7 @@
                                     <span class="text-red-600">*</span>
                                 </label>
                                 <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                    class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('date_earned')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('date_earned_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_earned_container').focus();" >
@@ -160,8 +160,8 @@
                                 <label for="earned_description" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned Description <span class="text-red-600">*</span></label>
                                 <div id="earned_description" class="grid grid-cols-1">
                                     <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
-                                        placeholder="Write additional information here. Maximum of 200 only"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                        placeholder="Write additional information here. Maximum of 200 only."
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" required>
                                     </textarea>
                                     @error('earned_description')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('date_description_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_description_container').focus();" >
@@ -180,7 +180,7 @@
                                     <span class="text-red-600">*</span>
                                 </label>
                                 <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                    class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                    class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_start_date')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
@@ -193,7 +193,7 @@
                                     <span class="text-red-600">*</span>
                                 </label>
                                 <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
-                                    class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                    class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_end_date')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
@@ -206,7 +206,7 @@
                                     <span class="text-red-600">*</span>
                                 </label>
                                 <select id="purpose_type" name="purpose_type" wire:model="purpose_type"
-                                    class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                    class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                     required>
                                     <option value="" selected>Select</option>
                                     <option value="Interview Candidate">Interview Candidate</option>
@@ -227,7 +227,7 @@
                                     <span class="text-red-600">*</span>
                                 </label>
                                 <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                    class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                    class="bg-gray-50 shadow-inner border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                     <option value="" selected>Select</option>
                                     <option value="Salary">Salary</option>
                                     <option value="Credits">Credits</option>
@@ -251,7 +251,7 @@
                                         <span class="text-red-600">*</span>
                                     </label>
                                     <input type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
-                                        class="bg-gray border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                        class="bg-gray border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                         required="">
                                     @error('inclusive_start_date')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
@@ -262,7 +262,7 @@
                                 <div class="col-span-1">
                                     <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
                                     <input type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
+                                        class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
                                         required="">
                                     @error('inclusive_end_date')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
@@ -277,7 +277,7 @@
                                 <div class="col-span-1">
                                     <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-gray-500 ">Number of Days</label>
                                     <input type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
-                                        class="bg-gray-50 border font-bold border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                        class="bg-gray-50 border font-medium border-gray-300 shadow-inner text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                         disabled>
                                     @error('num_of_days_work_days_applied')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
@@ -288,7 +288,7 @@
                                 <div class="col-span-1">
                                     <label for="available_credits" class="block mb-2 text-sm font-medium text-gray-500 ">Available Credits</label>
                                     <input type="number" name="available_credits" id="available_credits" wire:model="available_credits"
-                                        class="bg-gray-50 border font-bold border-gray-300 text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                        class="bg-gray-50 border font-medium border-gray-300 shadow-inner text-gray-500  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                         disabled>
                                     @error('available_credits')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
@@ -301,7 +301,7 @@
                                         <span class="text-red-600">*</span>
                                     </label>
                                     <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                        class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                         <option value="">Select </option>
                                         <option value="Salary">Salary</option>
                                         <option value="Credits">Credits</option>
@@ -322,7 +322,7 @@
                         </label>
                         <textarea type="text" rows="10" id="reason" name="reason" wire:model="reason"
                             placeholder="Write your reason of filing here. Maximum of 500 only."
-                            class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                            class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" required>
                         </textarea>
                         @error('reason')
                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('reason_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('reason_container').focus();" >
