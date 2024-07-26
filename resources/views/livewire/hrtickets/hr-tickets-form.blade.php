@@ -37,27 +37,27 @@
                 <div class="col-span-1 min-[902px]:col-span-2">
                     <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">First name</label>
                     <input type="text" name="firstname" id="firstname"  value="{{$first_name}}" required="" disabled
-                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-2">
                     <label for="middlename" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Middle name</label>
                     <input type="text" name="middlename" id="middlename" value="{{$middle_name}}" required="" disabled
-                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-2">
                     <label for="lastname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Last name</label>
                     <input type="text" name="lastname" id="lastname"  value="{{$last_name}}" required="" disabled
-                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-3">
                     <label for="employee_email" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Employee Email</label>
                     <input type="text" name="employee_email" id="employee_email"  value="{{$employee_email}}" required="" disabled
-                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-3">
                     <label for="employee_id" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Employee ID</label>
                     <input type="text" name="" id="employee_id"  value="{{$employee_id}}" required="" disabled
-                        class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
             </div>
         </div>
@@ -68,7 +68,7 @@
             <div class="grid grid-cols-1 gap-4 lg:grid-cols-4">
                 <div class="col-span-2">
                     <label for="application_date" class="block mb-2 text-sm font-medium text-gray-500">Date of Filing</label>
-                    <input type="date" wire:model="application_date" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
+                    <input type="date" wire:model="application_date" class="bg-gray-50 border shadow-inner border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
                         placeholder="Date of Filing" required disabled>
                 </div>
                 <div class="col-span-2">
@@ -76,7 +76,7 @@
                         <span class="text-customRed">*</span>
                     </label>
                     <select id="type_of_ticket" name="type_of_ticket" wire:model.live="type_of_ticket" id="type_of_ticket_container" required wire:change="resetTypeOfRequest"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                        class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                         <option selected>Select</option>
                         <option value="HR Internal">HR Internal</option>
                         <option value="Internal Control">Internal Control</option>
@@ -94,8 +94,8 @@
                             <span class="text-customRed">*</span>
                         </label>
                         <select name="type_of_request" wire:model.live="type_of_request" required wire:change="resetSubTypeOfRequest"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                            <option selected>Select</option>
+                            class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                            <option value=""selected>Select</option>
                             <option value="Performance Monitoring Request">Performance Monitoring Request</option>
                             <option value="Incident Report">Incident Report</option>
                             <option value="Request for Issuance of Notice/Letter">Request for Issuance of Notice/Letter</option>
@@ -113,7 +113,7 @@
                             <span class="text-customRed">*</span>
                         </label>
                         <select name="type_of_request" wire:model.live="type_of_request" required wire:change="resetSubTypeOfRequest"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:customRed focus:ring-customRed focus:border-customRed w-full p-2.5">
+                            class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:customRed focus:ring-customRed focus:border-customRed w-full p-2.5">
                             <option selected>Select</option>
                             <option value="Reimbursements">Reimbursements</option>
                             <option value="Tools and Equipment">Tools and Equipment</option>
@@ -132,7 +132,7 @@
                             <span class="text-customRed">*</span>
                         </label>
                         <select name="type_of_request" wire:model.live="type_of_request" required wire:change="resetSubTypeOfRequest"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                            class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             <option selected>Select</option>
                             <option value="HR">HR</option>
                             <option value="Office Admin">Office Admin</option>
@@ -150,10 +150,10 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 <option selected>Select</option>
                                 <option value="Certificate of Remittances">Certificate of Remittances </option>
-                                <option value="Government-mandated benefits concern">Government-mandated benefits concern</option>
+                                <option value="Government-Mandated Benefits Concerns">Government-Mandated Benefits Concerns</option>
                                 <option value="Messengerial">Messengerial</option>
                                 <option value="Repairs/Maintenance">Repairs/Maintenance</option>
                                 <option value="Book a Car">Book a Car</option>
@@ -172,7 +172,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 <option selected>Select</option>
                                 <option value="Request for Quotation">Request for Quotation</option>
                                 <option value="Request to Buy/Book/Avail Service">Request to Buy/Book/Avail Service</option>
@@ -189,13 +189,13 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 <option selected>Select</option>
                                 <option value="Manpower Request Form">Manpower Request Form</option>
                                 <option value="Certificate of Employment">Certificate of Employment</option>
-                                <option value="HMO-related concerns">HMO-related concerns</option>
-                                <option value="Payroll-related concerns">Payroll-related concerns</option>
-                                <option value="Leave concerns">Leave concerns</option>
+                                <option value="HMO-Related Concerns">HMO-Related Concerns</option>
+                                <option value="Payroll-Related Concerns">Payroll-Related Concerns</option>
+                                <option value="Leave Concerns">Leave Concerns</option>
                                 <option value="Request for Consultation">Request for Consultation</option>
                                 <option value="Request for a Meeting">Request for a Meeting</option>
                             </select>
@@ -222,8 +222,8 @@
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request (CoE)
                                 <span class="text-customRed">*</span>
                             </label>
-                            <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                            <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                             </textarea>
                             @error('purpose')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -235,13 +235,13 @@
                             <label for="type_of_request" class="block mb-2 text-sm font-medium text-gray-900">Commutation
                                 <span class="text-customRed">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                            <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
-                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="with_compensation" wire:model="type_of_hrconcern" value="With Compensation">
+                                    <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="with_compensation" wire:model="type_of_hrconcern" value="With Compensation">
                                     <label for="with_compensation" class="text-sm font-medium">With Compensation</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="ml-2 text-customRed border-customRed focus:ring-customRed" id="without_compensation" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Without Compensation">
+                                    <input type="radio" required class="ml-2 text-customRed border-customRed focus:ring-customRed" id="without_compensation" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Without Compensation">
                                     <label for="without_compensation" class="text-sm font-medium">Without Compensation</label><br>
                                 </div>
                             </div>
@@ -252,15 +252,15 @@
                             @enderror
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-related concerns")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-Related Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900 ">Type of Concern (HMO)
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_request" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_request" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Availment of Service">Availment of Service</option>
                                     <option value="Card Replacement">Card Replacement</option>
                                     <option value="Reimbursement">Reimbursement</option>
@@ -279,8 +279,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm shadow-inner text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -294,8 +294,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -305,13 +305,13 @@
                             </div>
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Payroll-related concerns")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Payroll-Related Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Payroll Date
                                 <span class="text-customRed">*</span>
                             </label>
-                            <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                            <input class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                 type="date" name="request_date" id="request_date" wire:model.live="request_date" required>
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
@@ -324,9 +324,9 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_request" wire:model.live="type_of_hrconcern"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_request" wire:model.live="type_of_hrconcern" required
+                                    class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Overtime Pay">Overtime Pay</option>
                                     <option value="Holiday Pay">Holiday Pay</option>
                                     <option value="Deductions">Deductions</option>
@@ -345,8 +345,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -359,8 +359,8 @@
                             <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">Link related to your concern (Payroll)
                                 <span class="text-customRed">*</span></label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -370,16 +370,16 @@
                             </div>
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Leave concerns")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Leave Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (Leave)
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_request" wire:model.live="type_of_hrconcern"
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_request" wire:model.live="type_of_hrconcern" required
+                                    class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Leave Credits">Leave Credits</option>
                                     <option value="Changes on Filed Leaves">Changes on Filed Leaves</option>
                                     <option value="Cancellation of Leaves">Cancellation of Leaves</option>
@@ -396,8 +396,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -411,8 +411,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -448,8 +448,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -466,7 +466,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}} </span>
@@ -478,8 +478,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="request_requested" wire:model="request_requested" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="request_requested" required wire:model="request_requested" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     @foreach ($employeeNames as $name)
                                         <option value="{{$name}}">{{$name}}</option>
                                     @endforeach
@@ -496,8 +496,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -514,8 +514,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="SSS">SSS</option>
                                     <option value="PHILHEALTH">PHILHEALTH</option>
                                     <option value="HDMF">HDMF</option>
@@ -529,9 +529,9 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="remittance_request_others_container" class="mt-4">
-                                    <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
-                                    </textarea>
+                                    <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
+                                </textarea>
                                     @error('remittance_request_others')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('remittance_request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('remittance_request_others_container').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -545,8 +545,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_assigned_container">
-                                <select name="request_assigned" wire:model.live="request_assigned" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="request_assigned" required wire:model.live="request_assigned" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="PEI">PEI</option>
                                     <option value="SL TEMPS">SL TEMPS</option>
                                     <option value="SL SEARCH">SL SEARCH</option>
@@ -559,6 +559,7 @@
                                     </div>
                                 @enderror
                             </div>
+
                             @if ($request_assigned == "Others")
                                 <div id="request_others_container" class="mt-4">
                                     <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others"
@@ -577,8 +578,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -592,7 +593,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed shadow-inner focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -600,15 +601,15 @@
                             @enderror
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-mandated benefits concern")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-Mandated Benefits Concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of Concern (GMR)
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="SSS Salary Loan for Approval">SSS Salary Loan for Approval</option>
                                     <option value="SSS Calamity Loan for Approval">SSS Calamity Loan for Approval</option>
                                     <option value="PAG-IBIG Multi-Purpose Loan for Approval">PAG-IBIG Multi-Purpose Loan for Approval</option>
@@ -631,8 +632,8 @@
                                 <span class="text-customRed">*</span> For SSS R1A and PHILHEALTH ER2, must be in Excel format.
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -649,8 +650,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Send Document">Send Document</option>
                                     <option value="Pick-Up Document">Pick-Up Document</option>
                                     <option value="Collections">Collections</option>
@@ -664,9 +665,9 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="messengerial_other_type_container" class="mt-4">
-                                    <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
-                                    </textarea>
+                                    <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
+                                </textarea>
                                     @error('messengerial_other_type')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('messengerial_other_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('messengerial_other_type_container').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -676,10 +677,12 @@
                             @endif
                         </div>
                         <div id="request_requested_container" class="col-span-1 lg:col-span-2">
-                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900"> Company </label>
+                            <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900"> Company
+                                <span class="text-red-600">*</span>
+                            </label>
                             <div id="request_requested">
-                                <textarea type="text" rows="2" id="request_requested" name="request_requested" wire:model="request_requested"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="request_requested" name="request_requested" wire:model="request_requested" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_requested')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
@@ -693,8 +696,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_assigned">
-                                <textarea type="text" rows="2" id="request_assigned" name="request_assigned" wire:model="request_assigned"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="request_assigned" name="request_assigned" wire:model="request_assigned" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_assigned')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_assigned_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_assigned_container').focus();">
@@ -708,8 +711,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_extra">
-                                <textarea type="text" rows="2" id="request_extra" name="request_extra" wire:model="request_extra"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="request_extra" name="request_extra" wire:model="request_extra" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_extra')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_others_container').focus();">
@@ -722,8 +725,8 @@
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date of Pick Up or Send (Messengerial)
                                 <span class="text-customRed">*</span>
                             </label>
-                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required required
+                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed shadow-inner focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -733,7 +736,7 @@
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Repairs/Maintenance")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow lg:col-span-2">
+                        <div class="grid grid-cols-1 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow md:grid-cols-2 lg:grid-cols-5 lg:col-span-2">
                             <ul class="col-span-1">
                                 <h1>1. Electrical Issues Checklist</h1>
                                 <li> <span class="text-customRed">◦ </span> Malfunctioning outlets or switches</li>
@@ -820,8 +823,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
-                                <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Electrical">Electrical</option>
                                     <option value="Plumbing">Plumbing</option>
                                     <option value="HVAC">HVAC</option>
@@ -842,8 +845,8 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="messengerial_other_type_container"  class="mt-4">
-                                    <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                    <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     </textarea>
                                     @error('messengerial_other_type')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('messengerial_other_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('messengerial_other_type_container').focus();">
@@ -859,8 +862,8 @@
                                 <span class="font-base">(Please indicate the floor, area and department)</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" placeholder="Enter your answer here."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" placeholder="Indicate the floor, area and department." required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -877,7 +880,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -889,7 +892,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_requested" id="request_requested" wire:model.live="request_requested" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_requested')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -902,7 +905,7 @@
                             </label>
                             <div id="purpose">
                                 <input type="text" name="account_client_hr_ops" id="account_client_hr_ops" wire:model.live="account_client_hr_ops" required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('account_client_hr_ops_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('account_client_hr_ops_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
@@ -916,7 +919,7 @@
                             </label>
                             <div id="purpose">
                                 <input type="text" name="purpose" id="purpose" wire:model="purpose" required
-                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
@@ -932,7 +935,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -944,7 +947,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_requested" id="request_requested" wire:model.live="request_requested" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_requested')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -956,8 +959,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_requested_container">
-                                <select name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Training Room">Training Room</option>
                                     <option value="Villa Office">Villa Office</option>
                                 </select>
@@ -973,8 +976,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -991,7 +994,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_black" class="text-sm font-medium text-gray-900">Ballpen Black</label>
                                     <input type="number" id="supplies_request.ballpen_black" name="supplies_request.ballpen_black" wire:model="supplies_request.ballpen_black"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                     @error('supplies_request.ballpen_black')
                                         <div class="text-sm transition transform alert alert-danger"x-data x-init="document.getElementById('supplies_request.ballpen_black').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_black').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1003,7 +1006,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_blue" class="text-sm font-medium text-gray-900">Ballpen Blue</label>
                                     <input type="number" id="supplies_request.ballpen_blue" name="supplies_request.ballpen_blue" wire:model="supplies_request.ballpen_blue"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                     @error('supplies_request.ballpen_blue')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.ballpen_blue').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_blue').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1015,7 +1018,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_red" class="text-sm font-medium text-gray-900">Ballpen Red</label>
                                     <input type="number" id="supplies_request.ballpen_red" name="supplies_request.ballpen_red" wire:model="supplies_request.ballpen_red"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.ballpen_red')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.ballpen_red').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_red').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1027,7 +1030,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.pencil" class="text-sm font-medium text-gray-900">Pencil</label>
                                     <input type="number" id="supplies_request.pencil" name="supplies_request.pencil" wire:model="supplies_request.pencil"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.pencil')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.pencil').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.pencil').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1039,7 +1042,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.highlighter" class="text-sm font-medium text-gray-900">Highlighter</label>
                                     <input type="number" id="supplies_request.highlighter" name="supplies_request.highlighter" wire:model="supplies_request.highlighter"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.highlighter')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.highlighter').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.highlighter').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1051,7 +1054,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.permanent_marker" class="text-sm font-medium text-gray-900">Permanent Marker</label>
                                     <input type="number" id="supplies_request.permanent_marker" name="supplies_request.permanent_marker" wire:model="supplies_request.permanent_marker"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.permanent_marker')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.permanent_marker').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.permanent_marker').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1063,7 +1066,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.correction_tape" class="text-sm font-medium text-gray-900">Correction Tape</label>
                                     <input type="number" id="supplies_request.correction_tape" name="supplies_request.correction_tape" wire:model="supplies_request.correction_tape"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.correction_tape')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.correction_tape').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.correction_tape').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1075,7 +1078,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_green_exp_folder" class="text-sm font-medium text-gray-900">Green Expandable Folder (L)</label>
                                     <input type="number" id="supplies_request.l_green_exp_folder" name="supplies_request.l_green_exp_folder" wire:model="supplies_request.l_green_exp_folder"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_green_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_green_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_green_exp_folder').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1087,7 +1090,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_green_exp_folder" class="text-sm font-medium text-gray-900">Green Expandable Folder (S)</label>
                                     <input type="number" id="supplies_request.s_green_exp_folder" name="supplies_request.s_green_exp_folder" wire:model="supplies_request.s_green_exp_folder"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_green_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_green_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_green_exp_folder').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1099,7 +1102,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_brown_exp_folder" class="text-sm font-medium text-gray-900">Brown Expandable Folder (L)</label>
                                     <input type="number" id="supplies_request.l_brown_exp_folder" name="supplies_request.l_brown_exp_folder" wire:model="supplies_request.l_brown_exp_folder"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_brown_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_brown_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_brown_exp_folder').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1111,7 +1114,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_brown_exp_folder" class="text-sm font-medium text-gray-900">Brown Expandable Folder (S)</label>
                                     <input type="number" id="supplies_request.s_brown_exp_folder" name="supplies_request.s_brown_exp_folder" wire:model="supplies_request.s_brown_exp_folder"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_brown_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_brown_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_brown_exp_folder').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1123,7 +1126,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.scissors" class="text-sm font-medium text-gray-900">Scissors</label>
                                     <input type="number" id="supplies_request.scissors" name="supplies_request.scissors" wire:model="supplies_request.scissors"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.scissors')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.scissors').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.scissors').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1135,7 +1138,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.white_envelope" class="text-sm font-medium text-gray-900">White Envelope</label>
                                     <input type="number" id="supplies_request.white_envelope" name="supplies_request.white_envelope" wire:model="supplies_request.white_envelope"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.white_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.white_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.white_envelope').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1149,7 +1152,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.calculator" class="text-sm font-medium text-gray-900">Calculator</label>
                                     <input type="number" id="supplies_request.calculator" name="supplies_request.calculator" wire:model="supplies_request.calculator"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.calculator')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.calculator').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.calculator').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1161,7 +1164,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_two" class="text-sm font-medium text-gray-900">Binder Clips (2")</label>
                                     <input type="number" id="supplies_request.binder_two" name="supplies_request.binder_two" wire:model="supplies_request.binder_two"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.binder_two')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_two').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_two').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1173,7 +1176,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_one_fourth" class="text-sm font-medium text-gray-900">Binder Clips (1 1/4")</label>
                                     <input type="number" id="supplies_request.binder_one_fourth" name="supplies_request.binder_one_fourth" wire:model="supplies_request.binder_one_fourth"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.binder_one_fourth')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_one_fourth').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_one_fourth').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1185,7 +1188,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_three_fourth" class="text-sm font-medium text-gray-900">Binder Clips (3/4")</label>
                                     <input type="number" id="supplies_request.binder_three_fourth" name="supplies_request.binder_three_fourth" wire:model="supplies_request.binder_three_fourth"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.binder_three_fourth')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_three_fourth').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_three_fourth').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1197,7 +1200,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_metal_clips" class="text-sm font-medium text-gray-900">Metal Paper Clips (L)</label>
                                     <input type="number" id="supplies_request.l_metal_clips" name="supplies_request.l_metal_clips" wire:model="supplies_request.l_metal_clips"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_metal_clips')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_metal_clips').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_metal_clips').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1209,7 +1212,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_metal_clips" class="text-sm font-medium text-gray-900">Metal Paper Clips (L)</label>
                                     <input type="number" id="supplies_request.s_metal_clips" name="supplies_request.s_metal_clips" wire:model="supplies_request.s_metal_clips"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_metal_clips')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_metal_clips').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_metal_clips').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1221,7 +1224,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.stapler" class="text-sm font-medium text-gray-900">Stapler</label>
                                     <input type="number" id="supplies_request.stapler" name="supplies_request.stapler" wire:model="supplies_request.stapler"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.stapler')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.stapler').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.stapler').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1233,7 +1236,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.stapler_wire" class="text-sm font-medium text-gray-900">Stapler Wire</label>
                                     <input type="number" id="supplies_request.stapler_wire" name="supplies_request.stapler_wire" wire:model="supplies_request.stapler_wire"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.stapler_wire')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.stapler_wire').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.stapler_wire').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1245,7 +1248,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.scotch_tape" class="text-sm font-medium text-gray-900">Scotch Tape</label>
                                     <input type="number" id="supplies_request.scotch_tape" name="supplies_request.scotch_tape" wire:model="supplies_request.scotch_tape"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.scotch_tape')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.scotch_tape').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.scotch_tape').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1257,7 +1260,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_brown_envelope" class="text-sm font-medium text-gray-900">Brown Envelope (L)</label>
                                     <input type="number" id="supplies_request.l_brown_envelope" name="supplies_request.l_brown_envelope" wire:model="supplies_request.l_brown_envelope"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_brown_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_brown_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_brown_envelope').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1269,7 +1272,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_brown_envelope" class="text-sm font-medium text-gray-900">Brown Envelope (S)</label>
                                     <input type="number" id="supplies_request.s_brown_envelope" name="supplies_request.s_brown_envelope" wire:model="supplies_request.s_brown_envelope"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_brown_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_brown_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_brown_envelope').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1281,7 +1284,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.post_it" class="text-sm font-medium text-gray-900">Post It</label>
                                     <input type="number" id="supplies_request.post_it" name="supplies_request.post_it" wire:model="supplies_request.post_it"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.post_it')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.post_it').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.post_it').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1293,7 +1296,7 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.white_folder" class="text-sm font-medium text-gray-900">White Folder</label>
                                     <input type="number" id="supplies_request.white_folder" name="supplies_request.white_folder" wire:model="supplies_request.white_folder"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.white_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.white_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.white_folder').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1310,8 +1313,8 @@
                                 <span class="text-customRed">*</span><br> <span class="text-gray-500 font-base">(Please make sure to include the complete details such as color, size, code, etc.) </span>
                             </label>
                             <div id="type_of_hrconcern">
-                                <textarea type="text" rows="2" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" placeholder="Enter your answer here."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" required rows="4" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" placeholder="Make sure to include the complete details such as color, size, code, etc."
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('type_of_hrconcern')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
@@ -1325,8 +1328,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" placeholder="Enter your answer here."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1340,8 +1343,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="4" id="request_link" name="request_link" wire:model="request_link" placeholder="Enter your answer here."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="4" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -1358,8 +1361,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="type_of_hrconcern">
-                                <textarea type="text" rows="2" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" placeholder="Enter your answer here."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('type_of_hrconcern')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
@@ -1373,8 +1376,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="Enter your answer here."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -1391,7 +1394,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -1403,8 +1406,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1418,8 +1421,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="(payslips,timesheet.etc.)"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="(Payslips, Timesheet, etc.)" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -1435,13 +1438,13 @@
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
                                 <span class="text-customRed">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                            <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
-                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="condition_availability" id="new" wire:model="condition_availability" value="New">
+                                    <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" name="condition_availability" id="new" wire:model="condition_availability" value="New">
                                     <label for="New" class="text-sm font-medium">New</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" id="Old/Existing Unit" name="condition_availability" wire:model="condition_availability" value="Old/Existing Unit">
+                                    <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" id="Old/Existing Unit" name="condition_availability" wire:model="condition_availability" value="Old/Existing Unit">
                                     <label for="Old/Existing Unit" class="text-sm font-medium">Old/Existing Unit</label><br>
                                 </div>
                             </div>
@@ -1456,8 +1459,8 @@
                             <label class="block mb-2 text-sm font-medium text-gray-900">Equipment Type
                                 <span class="text-customRed">*</span>
                             </label>
-                            <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                <option selected>Select</option>
+                            <select id="type_of_hrconcern" name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                <option value=""selected>Select</option>
                                 <option value="Laptop">Laptop</option>
                                 <option value="Printer">Printer</option>
                                 <option value="Monitor">Monitor</option>
@@ -1482,8 +1485,8 @@
                                     <span class="text-customRed">*</span>
                                 </label>
                                 <div id="purpose">
-                                    <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                    <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                        class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                     </textarea>
                                     @error('purpose')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1501,7 +1504,7 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -1513,8 +1516,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -1531,8 +1534,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1546,8 +1549,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" placeholder="Share the link of your Email / Knox Approval below."
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed ">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
@@ -1563,8 +1566,8 @@
                             <label for="type_of_pe_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Request (PMR)
                                 <span class="text-customRed">*</span></label>
                             <div id="type_of_pe_hr_ops_container">
-                                <select name="type_of_pe_hr_ops" wire:model.live="type_of_pe_hr_ops" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
-                                    <option selected>Select</option>
+                                <select name="type_of_pe_hr_ops" required wire:model.live="type_of_pe_hr_ops" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
+                                    <option value=""selected>Select</option>
                                     <option value="3rd Month">3rd Month</option>
                                     <option value="5th Month">5th Month</option>
                                     <option value="Annual">Annual</option>
@@ -1583,8 +1586,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="account_client_hr_opscontainer">
-                                <select name="account_client_hr_ops" wire:model.live="account_client_hr_ops" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option selected>Select</option>
+                                <select name="account_client_hr_ops" required wire:model.live="account_client_hr_ops" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
                                     <option value="Option 1">Option 1</option>
                                     <option value="Option 2">Option 2</option>
                                 </select>
@@ -1602,18 +1605,18 @@
                             <label for="type_of_hrconcerns" class="block mb-2 text-sm font-medium text-gray-900">Level of Offense
                                 <span class="text-customRed">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-3 p-4 border border-gray-300 rounded-lg bg-gray-50">
+                            <div class="grid w-full grid-cols-3 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
-                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="High" id="new" wire:model="type_of_hrconcern" value="High">
+                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="High" wire:model="type_of_hrconcern" value="High" required>
                                     <label for="High" class="text-sm font-medium">High</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" id="Medium" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Medium">
-                                    <label for="Medium" class="text-sm font-medium">Medium</label><br>
+                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" id="Medium" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Medium" required>
+                                    <label for="Medium" class="text-sm font-medium">Medium</label>
                                 </div>
                                 <div>
-                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" id="Low" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Low">
-                                    <label for="Low" class="text-sm font-medium">Low</label><br>
+                                    <input type="radio" class="text-customRed border-customRed focus:ring-customRed" id="Low" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Low" required>
+                                    <label for="Low" class="text-sm font-medium">Low</label>
                                 </div>
                             </div>
                             @error('type_of_hrconcern')
@@ -1627,8 +1630,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" placeholder="(Please write the description)"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1644,8 +1647,8 @@
                             <label class="block mb-2 text-sm font-medium text-gray-900">Type of Notice
                                 <span class="text-customRed">*</span>
                             </label>
-                            <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                <option selected>Select</option>
+                            <select id="type_of_hrconcern" required name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                <option value=""selected>Select</option>
                                 <option value="End of Assignment">End of Assignment</option>
                                 <option value="Extension of Assignment/Project">Extension of Assignment/Project</option>
                                 <option value="End of Project">End of Project</option>
@@ -1665,8 +1668,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" placeholder="(Please write the description)"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1680,8 +1683,8 @@
                                 <span class="text-customRed">*</span>
                             </label>
                             <div id="request_requested">
-                                <textarea type="text" rows="5" id="request_requested" name="request_requested" wire:model="request_requested"
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
+                                <textarea type="text" rows="5" id="request_requested" name="request_requested" wire:model="request_requested" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_requested')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
@@ -1696,8 +1699,8 @@
                     <label class="block mb-2 text-sm font-medium text-gray-900 ">Name of Concerned Employee
                         <span class="text-customRed">*</span>
                     </label>
-                    <input type="text" wire:model="concerned_employee" placeholder="Name of Concerned Employee" required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                    <input type="text" wire:model="concerned_employee"  required
+                        class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                     @error('concerned_employee')
                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supervisor_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supervisor_email_container').focus();">
                             <span class="text-xs text-red-500">{{$message}}</span>
