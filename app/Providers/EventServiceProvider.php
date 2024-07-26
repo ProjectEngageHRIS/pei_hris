@@ -15,6 +15,22 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
+        \Illuminate\Auth\Events\Login::class => [
+            \App\Listeners\LoginActivityListener::class.'@login',
+        ],
+        \Illuminate\Auth\Events\Logout::class => [
+            \App\Listeners\LoginActivityListener::class.'@logout',
+        ],
+        // \Illuminate\Auth\Events\Registered::class => [
+        //     \Illuminate\Auth\Listeners\SendEmailVerificationNotification::class,
+        //     \App\Listeners\LoginActivityListener::class.'@registered',
+        // ],
+        \Illuminate\Auth\Events\Failed::class => [
+            \App\Listeners\LoginActivityListener::class.'@failed',
+        ],
+        // \Illuminate\Auth\Events\PasswordReset::class => [
+        //     \App\Listeners\LoginActivityListener::class.'@passwordReset',
+        // ],
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
