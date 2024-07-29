@@ -51,7 +51,7 @@
                 </div>
             </div>
             <a href="{{route('HumanResourceDashboard')}}">
-                <div class="flex item-center">
+                <div class="flex ml-2 item-center">
                     <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
                     <div class="flex flex-col">
                         <span class="text-sm text-customGray">Powered by</span>
