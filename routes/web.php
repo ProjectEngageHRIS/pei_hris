@@ -43,6 +43,7 @@ use App\Livewire\Hrtickets\HrTicketsUpdate;
 use App\Livewire\Ithelpdesk\ItHelpDeskForm;
 use App\Livewire\Ithelpdesk\ItHelpDeskView;
 use App\Livewire\Trainings\TrainingGallery;
+use App\Livewire\HrPortal\HrDailyTimeRecord;
 use App\Livewire\Ithelpdesk\ItHelpDeskTable;
 use App\Http\Controllers\PayrolPdfController;
 use App\Livewire\Activities\ActivitiesUpdate;
@@ -70,8 +71,8 @@ use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
-use App\Livewire\Changeschedule\ChangeScheduleForm;
 
+use App\Livewire\Changeschedule\ChangeScheduleForm;
 use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
@@ -81,16 +82,16 @@ use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
-use App\Livewire\Requestdocuments\RequestDocumentForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\Requestdocuments\RequestDocumentForm;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
-use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
@@ -402,6 +403,8 @@ Route::middleware('auth')->group(function (){
 
     Route::get("/hrtickets/approverequests/approve/{index}", ApproveHrTicketsForm::class)->name('ApproveHrTicketsForm');
 
+    Route::get("/humanresource/dailytimerecord", HrDailyTimeRecord::class)->name('HrDailyTimeRecord');
+
     // Route::get('/hrtickets/{index}', [::class, 'download'])->name('downloadTeachPermit');
 
     // Route::get("/teachpermit/pdf/{index}", [TeachPermitController::class, 'turnToPdf'])->name('TeachPermitPdf');
@@ -429,7 +432,6 @@ Route::middleware('auth')->group(function (){
     Route::get("/requestdocument/approve/{index}", ApproveRequestDocumentForm::class)->name('ApproveRequestDocumentForm');
 
     Route::get('/requestdocument/{index}', [RequestDocumentTable::class, 'download'])->name('downloadDocumentRequestForm');
-
 });
 
 
@@ -457,7 +459,6 @@ Route::middleware('auth')->group(function (){
     Route::get("/trainings/pretest/{index}", TrainingPreTestForm::class)->name('TrainingPreTestForm');
 
     Route::get("/trainings/posttest/{index}", TrainingPostTestForm::class)->name('TrainingPostTestForm');
-
 });
 
 

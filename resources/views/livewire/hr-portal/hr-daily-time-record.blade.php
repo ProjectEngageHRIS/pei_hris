@@ -88,38 +88,14 @@
 <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
     <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
         <div>
-            <button id="dropdownRadioButton" data-dropdown-toggle="dropdownRadio" class="z-50 inline-flex items-center shadow h-10 p-2 focus:ring-1 focus:border-1 focus:bg-customRed focus:ring-customRed focus:text-white font-medium text-sm px-3 py-1.5 bg-navButton text-gray-900 rounded-8px hover:bg-customRed hover:text-white" type="button">
-                <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
+        <div class="relative max-w-sm">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                 </svg>
-                {{$filterName}}
-                <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg>
-            </button>
-            <!-- Dropdown menu -->
-            <div id="dropdownRadio" class="z-10 hidden w-40 mt-1 bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                    <div class="flex items-center p-2 rounded bg-navButton text-gray-900n hover:bg-customRed hover:text-white">
-                        <input id="filter-radio-example-0" type="radio" wire:model.live="filter" value="0" name="filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2"> <label for="filter-radio-example-0" class="cursor-pointer"> &nbsp; All </label></input>
-                    </div>
-                    <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                        <input id="filter-radio-example-1" type="radio" wire:model.live="filter" value="1" name="filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="filter-radio-example-1" class="cursor-pointer"> &nbsp;  Today </label> </input>
-                    </div>
-                    <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                        <input id="filter-radio-example-2" type="radio" wire:model.live="filter" value="2" name="filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="filter-radio-example-2" class="cursor-pointer"> &nbsp; This Week </label>  </input>
-                    </div>
-                    <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                        <input id="filter-radio-example-3" type="radio" wire:model.live="filter" value="3" name="filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="filter-radio-example-3" class="cursor-pointer"> &nbsp; This Month </label>  </input>
-                    </div>
-                    <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                        <input id="filter-radio-example-4" type="radio" wire:model.live="filter" value="4" name="filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="filter-radio-example-4" class="cursor-pointer"> &nbsp; Last 6 Months </label></input>
-                    </div>
-                    <div for="filter-radio-example-5" class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                        <input id="filter-radio-example-5" type="radio" wire:model.live="filter" value="5" name="filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="filter-radio-example-5" class="cursor-pointer"> &nbsp; This Year</label> </input>
-                    </div>
-                </ul>
             </div>
+            <input id="datepicker-actions"  type="date" wire:model.live="selectedDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+        </div>
         </div>
         <label for="table-search" class="sr-only">Search</label>
         <div class="relative">

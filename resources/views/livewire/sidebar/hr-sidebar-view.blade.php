@@ -23,7 +23,7 @@
                                     <path fill-rule="evenodd" d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z" clip-rule="evenodd" />
                                 </svg> Employees
                             </a>
-                            <a href="{{ route('AttendanceTable') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('AttendanceTable') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
+                            <a href="{{ route('HrDailyTimeRecord') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('HrDailyTimeRecord') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path fill-rule="evenodd" d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z" clip-rule="evenodd" />
                                 </svg> Attendance
@@ -80,8 +80,8 @@
                     </button>
                 </a>
                 <!-- Attendance Button -->
-                <a href="{{ route('AttendanceTable') }}" class="w-32">
-                    <button class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('AttendanceTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
+                <a href="{{ route('HrDailyTimeRecord') }}" class="w-32">
+                    <button class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('HrDailyTimeRecord') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                             <path fill-rule="evenodd" d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z" clip-rule="evenodd" />
                         </svg> Attendance

@@ -8,7 +8,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
 
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
-
+        <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
         <link rel="icon" type="image/x-icon" href="{{asset('assets\sllogo.png')}}">
         <title>Employee Portal</title>
         @vite(['resources/css/app.css','resources/js/app.js'])
