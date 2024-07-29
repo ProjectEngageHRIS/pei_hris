@@ -149,14 +149,14 @@
                     </div>
                     @if ($type_of_request == "Office Admin")
                         <div id="sub_type_of_request_container" class="col-span-2">
-                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Admin Requests
+                            <label class="block mb-2 text-sm font-medium text-gray-900">Type of Office Admin Requests
                                 <span class="text-red-600">*</span>
                             </label>
                             <select name="sub_type_of_request" wire:model.live="sub_type_of_request" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 <option selected>Select</option>
                                 <option value="Certificate of Remittances">Certificate of Remittances </option>
-                                <option value="Government-Mandated Benefits Concerns">Government-Mandated Benefits Concerns</option>
+                                <option value="Government-mandated menefits concern">Government-Mandated Benefits Concerns</option>
                                 <option value="Messengerial">Messengerial</option>
                                 <option value="Repairs/Maintenance">Repairs/Maintenance</option>
                                 <option value="Book a Car">Book a Car</option>
@@ -198,8 +198,8 @@
                                 <option selected>Select</option>
                                 <option value="Manpower Request Form">Manpower Request Form</option>
                                 <option value="Certificate of Employment">Certificate of Employment</option>
-                                <option value="HMO-Related Concerns">HMO-Related Concerns</option>
-                                <option value="Payroll-Related Concerns">Payroll-Related Concerns</option>
+                                <option value="HMO-related concerns">HMO-Related Concerns</option>
+                                <option value="Payroll-related concerns">Payroll-Related Concerns</option>
                                 <option value="Leave Concerns">Leave Concerns</option>
                                 <option value="Request for Consultation">Request for Consultation</option>
                                 <option value="Request for a Meeting">Request for a Meeting</option>
@@ -260,7 +260,7 @@
                             @enderror
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-Related Concerns")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-related concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900 ">Type of HMO Concern
@@ -284,7 +284,7 @@
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900 ">Describe your HMO Concern
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900 ">HMO Concern Description
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
@@ -316,7 +316,7 @@
                             </div>
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Payroll-Related Concerns")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "Payroll-related concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Payroll Date
@@ -450,9 +450,9 @@
                                 <select name="type_of_request" wire:model.live="type_of_hrconcern" required
                                     class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                     <option value=""selected>Select</option>
-                                    <option value="High (ASAP)">High (Urgent)</option>
-                                    <option value="Medium (within the day) ">Medium (Within the day)</option>
-                                    <option value="Low (can be attended the next dy)">Low (Can be attended the next day)</option>
+                                    <option value="High (Urgent)">High (Urgent)</option>
+                                    <option value="Medium (Within the day) ">Medium (Within the day)</option>
+                                    <option value="Low (Can be attended the next day)">Low (Can be attended the next day)</option>
                                 </select>
                                 @error('type_of_hrconcern')
                                     <div class="text-sm transition transform alert alert-danger"
@@ -463,7 +463,7 @@
                             </div>
                         </div>
                         <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Leave Request Concern Description
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Consultation Concern Description
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
@@ -626,7 +626,7 @@
                             @enderror
                         </div>
                     </div>
-                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-Mandated Benefits Concerns")
+                @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-mandated bnefits concern")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of GMR Concern
@@ -1459,8 +1459,8 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Tools and Equipment")
-                    <div class="flex flex-col justify-between gap-4 lg:flex-row">
-                        <div id="type_of_hrconcern_container" class="w-full">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                        <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
                                 <span class="text-red-600">*</span>
                             </label>
@@ -1481,7 +1481,7 @@
                                 </div>
                             @enderror
                         </div>
-                        <div id="type_of_hrconcern_container" class="w-full">
+                        <div id="type_of_hrconcern_container" class="col-span-1">
                             <label class="block mb-2 text-sm font-medium text-gray-900">Equipment Type
                                 <span class="text-red-600">*</span>
                             </label>
@@ -1504,21 +1504,21 @@
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
-                        </div>
-                        @if ($type_of_hrconcern == "Others")
-                            <div id="purpose_container" class="w-full">
-                                <div id="purpose">
-                                    <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
-                                        class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
-                                    </textarea>
-                                    @error('purpose')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
+                            @if ($type_of_hrconcern == "Others")
+                                <div id="purpose_container" class="mt-4">
+                                    <div id="purpose">
+                                        <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                            class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
+                                        </textarea>
+                                        @error('purpose')
+                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
-                        @endif
+                            @endif
+                        </div>
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Cash Advance")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
