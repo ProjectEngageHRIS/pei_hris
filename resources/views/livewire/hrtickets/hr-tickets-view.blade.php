@@ -2,7 +2,7 @@
     <nav class="flex mb-4" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
         <li class="inline-flex items-center">
-            <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
+            <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:hover:text-white">
             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
             </svg>
@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('HrTicketsTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">HR Ticket</a>
+            <a href="{{route('HrTicketsTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:hover:text-white">HR Ticket</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,13 +22,13 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-medium text-customGray ms-1 md:ms-2 dark:text-gray-400">View</span>
+            <span class="text-sm font-semibold text-customRed ms-1 md:ms-2 ">View HR Ticket</span>
             </div>
         </li>
         </ol>
     </nav>
     <h2 class="mb-2 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl dark:text-white">View HR Ticket </h2>
-    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <p class="mb-4 text-lg font-semibold text-customRed"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
     <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         @csrf
         {{-- Information field --}}
@@ -216,7 +216,7 @@
                         </div>
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_request" class="block mb-2 text-sm font-medium text-gray-500">Commutation</label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-300 shadow-inner rounded-lg bg-gray-50">
+                            <div class="grid w-full grid-cols-2 p-4 border border-gray-300 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" class="text-gray-500 border-gray-500" name="type_of_hrconcern" id="with_compensation" wire:model="type_of_hrconcern" value="With Compensation" disabled>
                                     <label for="with_compensation" class="text-sm font-medium text-gray-500">With Compensation</label>
@@ -236,7 +236,7 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "HR" && $sub_type_of_request == "HMO-related concerns")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm shadow-inner font-medium text-gray-500">Type of HMO Concern</label>
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-500 shadow-inner">Type of HMO Concern</label>
                             <div id="type_of_hrconcern_container">
                                 <select disabled name="type_of_request" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg block w-full p-2.5">
                                     <option selected>Select</option>
@@ -583,7 +583,7 @@
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Messengerial")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-6">
                         <div class="col-span-1 lg:col-span-2">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium shadow-inner text-gray-500"> Type of Messengerial Request</label>
+                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-500 shadow-inner"> Type of Messengerial Request</label>
                             <div id="type_of_hrconcern_container">
                                 <select disabled name="type_of_hrconcern" wire:model.live="type_of_hrconcern" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg block w-full p-2.5">
                                     <option selected>Select</option>
