@@ -14,11 +14,12 @@ use Maatwebsite\Excel\Concerns\WithStyles;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Style\Alignment;
+use Maatwebsite\Excel\Concerns\ShouldAutoSize;
 use Maatwebsite\Excel\Concerns\WithChunkReading;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
 
-class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, WithEvents
+class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, WithEvents, ShouldAutoSize
 {
     protected $start_date;
     protected $end_date;
@@ -341,6 +342,8 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
             }
         }
     }
+
+
     public function view(): View
     {
         $start_date = Carbon::parse($this->start_date);
@@ -374,8 +377,10 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
                 
                 if ($dtr) {
                     $sameDay = Carbon::parse($dtr->time_in)->isSameDay(Carbon::parse($dtr->time_out));
-        
-                    if ($sameDay) {
+                    if(!in_array($dtr->type, ["Wholeday", "Overtime", "Undertime", "Half-Day"])){
+                        $timeIn = $dtr->type;
+                        $timeOut = $dtr->type;
+                    } else if ($sameDay) {
                         $timeIn = Carbon::parse($dtr->time_in)->format('h:i A');
                         $timeOut = Carbon::parse($dtr->time_out)->format('h:i A');
                     } else {

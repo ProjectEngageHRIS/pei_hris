@@ -217,11 +217,19 @@
                         <td class="px-6 py-4 text-center">
                             {{ Illuminate\Support\Carbon::parse($data->attendance_date)->format('l') }}
                         </td>
+                        @php
+                            $timeIn = \Carbon\Carbon::parse($data->time_in);
+                            $timeOut = \Carbon\Carbon::parse($data->time_out);
+                            if($timeIn->isSameDay($timeOut)){
+                                $timeIn = $timeIn->format('H:i:s');
+                                $timeOut = $timeOut->format('H:i:s');
+                            }
+                        @endphp
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{$data->time_in}}
+                            {{ $timeIn }}
                         </td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{$data->time_out}}
+                            {{ $timeOut }}
                         </td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             {{$data->undertime}}

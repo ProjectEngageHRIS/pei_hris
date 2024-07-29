@@ -77,8 +77,15 @@
             <td>{{ $employeeData['employee']->start_of_employment }}</td>
             @foreach($employeeData['dtrs'] as $day)
                 @if($day)
-                    <td align="center">{{ $day['time_in'] }}</td>
-                    <td align="center">{{ $day['time_out'] }}</td>
+                    @if (is_null($day['time_in']) || preg_match('/^\d{1,2}:\d{2} (AM|PM)$/i', $day['time_in']))
+                        <!-- Handle cases where time_in is null or not a time string -->
+                        <td align="center">{{ $day['time_in'] }}</td>
+                        <td align="center">{{ $day['time_out'] }}</td>
+                    @else
+                        <td width="200px" align="center">{{ $day['time_in'] }}</td>
+                        <td width="200px" align="center">{{ $day['time_out'] }}</td>
+                        <!-- Handle cases where time_in is a valid time string -->
+                    @endif
                 @else
                     <td align="center"></td>
                     <td align="center"></td>
