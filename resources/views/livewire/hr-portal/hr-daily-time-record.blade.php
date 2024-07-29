@@ -289,7 +289,7 @@
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
             <tr>
                 <th scope="col" class="px-6 py-3 text-center"> No. </th>
-                <th scope="col" class="px-6 py-3 text-center"> Employee ID </th>
+                <th scope="col" class="px-6 py-3 text-center"> Employee ID / Name </th>
                 <th scope="col" class="px-6 py-3 text-center"> Date </th>
                 <th scope="col" class="px-6 py-3 text-center"> Type </th>
                 <th scope="col" class="px-6 py-3 text-center"> Time In </th>
@@ -330,8 +330,8 @@
                             {{$pageIndex + $ctr}}
                         </th>
                         <th scope="row" class="px-6 py-4 font-medium text-center text-customRed whitespace-nowrap">
-                            <span class="inline-flex items-center px-2 py-1 text-sm text-white bg-customRed rounded-lg">
-                                {{$data->employee_id}}
+                            <span class="inline-flex items-center px-2 py-1 text-sm text-white bg-red-500 rounded-lg">
+                                {{$data->employee_id}} | {{$data->employee->first_name}} {{$data->employee->middle_name}} {{$data->employee->last_name}} 
                             </span>
                         </th>
                         
