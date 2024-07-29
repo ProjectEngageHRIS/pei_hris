@@ -88,13 +88,8 @@
 <div class="relative bg-white rounded-t-lg shadow-md ">
     <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
         <!-- Add user button -->
-        <div class="relative max-w-sm">
-            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-            <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                </svg>
-            </div>
-            <input id="datepicker-actions"  type="date" wire:model.live="selectedDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
+        <div class="relative max-w-sm">           
+            <input id="datepicker-actions" type="date" wire:model.live="selectedDate" class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
         </div>
          <div class="flex flex-row pr-2">
              <label for="table-search" class="sr-only">Search</label>
@@ -104,7 +99,7 @@
                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                      </svg>
                  </div>
-                 <input type="text" id="table-search-users" wire:model.live="search" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                 <input type="text" id="table-search-users" wire:model.change="search" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
              </div>
              <!-- Filter Sidebar -->
              <div class="absolute rounded-lg right-8 hover:text-customRed">
@@ -284,6 +279,7 @@
          </div>
      </div>
 </div>
+
 <div id="data-table" class="relative overflow-x-auto">
     <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right ">
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
@@ -403,9 +399,70 @@
         </div>
     </table>
 </div>
+
+<div wire:loading wire:target="selectedDate, search" class="load-over z-50">
+    <div wire:loading wire:target="selectedDate, search" class="loading-overlay">
+        <div class="flex flex-col justify-center items-center">
+            <div class="spinner"></div>
+            <p>Updating Table...</p>
+        </div>
+    </div>
+</div>
+<style>
+    .load-over {
+        position: fixed;
+        background: rgba(255, 255, 255, 0.8);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .loading-overlay {
+        position: fixed;
+        top: 40%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        color: #AC0C2E;
+        pointer-events: none; /* Makes sure the overlay is not interactable */
+    }
+
+    .spinner {
+        border: 8px solid rgba(172, 12, 46, 0.3);
+        border-top: 8px solid #AC0C2E;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .loading-overlay p {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
+
 <div  class="w-full p-4 overflow-x-auto bg-gray-100 rounded-b-lg">
     {{ $DtrData->links(data : ['scrollTo' => false])}}
 </div>
+
 
 <script>
     $(document).ready(function() {

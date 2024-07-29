@@ -80,7 +80,7 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="load-over z-50">
+        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1," class="load-over z-50">
             <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
