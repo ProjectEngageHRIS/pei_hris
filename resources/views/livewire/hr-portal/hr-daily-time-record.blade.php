@@ -400,8 +400,8 @@
     </table>
 </div>
 
-<div wire:loading wire:target="selectedDate, search" class="load-over z-50">
-    <div wire:loading wire:target="selectedDate, search" class="loading-overlay">
+<div wire:loading wire:target="selectedDate, search, generateRecord" class="load-over z-50">
+    <div wire:loading wire:target="selectedDate, search, generateRecord" class="loading-overlay">
         <div class="flex flex-col justify-center items-center">
             <div class="spinner"></div>
             <p>Updating Table...</p>
@@ -488,10 +488,10 @@
         document.getElementById('date-range-picker').classList.add('hidden');
     });
 
-    document.getElementById('export-btn').addEventListener('click', function() {
-        // Handle export functionality here
-        alert('Exporting data...');
-    });
+    // document.getElementById('export-btn').addEventListener('click', function() {
+    //     // Handle export functionality here
+    //     alert('Exporting data...');
+    // });
 
     const options = {
         chart: {

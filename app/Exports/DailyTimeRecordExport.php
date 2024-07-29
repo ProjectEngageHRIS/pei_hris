@@ -341,12 +341,6 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
             }
         }
     }
-
-
-
-   
-    
-
     public function view(): View
     {
         $start_date = Carbon::parse($this->start_date);

@@ -222,7 +222,7 @@ class HrDailyTimeRecord extends Component
 
     public function generateRecord(){
 
-        $this->dispatch('triggerClose');
+        // $this->dispatch('triggerClose');
 
         return Excel::download(new DailyTimeRecordExport($this->start_date, $this->end_date), 'timekeeping.xlsx');
 

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DailyTimeRecordExport;
+use App\Exports\UserDtrExport;
 
 class AttendanceTable extends Component
 {
@@ -213,8 +214,9 @@ class AttendanceTable extends Component
     public function generateRecord(){
 
         $this->dispatch('triggerClose');
+        $loggedInUser = auth()->user()->employee_id;
 
-        return Excel::download(new DailyTimeRecordExport($this->start_date, $this->end_date), 'timekeeping.xlsx');
+        return Excel::download(new UserDtrExport($this->start_date, $this->end_date, $loggedInUser), 'attendance.xlsx');
 
     }
 
