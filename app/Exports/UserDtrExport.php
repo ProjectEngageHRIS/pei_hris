@@ -338,6 +338,7 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
             $employeeDtrs = [];
             $currentDate = $start_date->copy();
             $endingDate = $end_date->copy();
+            $leaveRequestFlag = false;
 
             // dd($currentDate, $endingDate);
             while ($currentDate->lessThanOrEqualTo($endingDate)) {
@@ -349,8 +350,11 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
                 
                 if ($dtr) {
                     $sameDay = Carbon::parse($dtr->time_in)->isSameDay(Carbon::parse($dtr->time_out));
-        
-                    if ($sameDay) {
+                    if(!in_array($dtr->type, ["Wholeday", "Overtime", "Undertime", "Half-Day"])){
+                        $leaveRequestFlag = true;
+                        $timeIn = $dtr->type;
+                        $timeOut = $dtr->type;
+                    } else if ($sameDay) {
                         $timeIn = Carbon::parse($dtr->time_in)->format('h:i A');
                         $timeOut = Carbon::parse($dtr->time_out)->format('h:i A');
                     } else {
@@ -361,7 +365,7 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
                     $attendance_date = $formatted_date;
                     $overtime = $dtr->overtime;
                 } else {
-                    $attendance_date = null;
+                    $attendance_date = $currentDate->format('F j, Y');
                     $timeIn = null;
                     $timeOut = null;
                     $overtime = null;
@@ -373,6 +377,7 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
                     'time_in' => $timeIn,
                     'time_out' => $timeOut,
                     'overtime' => $overtime,
+                    'leave_request_flag' => $leaveRequestFlag,
                 ];
                 
                 // Move to the next date

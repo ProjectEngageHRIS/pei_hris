@@ -67,7 +67,7 @@
         </tr>
         </thead>
         <tbody>
-       @foreach($dtrs as $employeeData)
+        @foreach($dtrs as $employeeData)
         <tr>
             <td>{{ $employeeData['employee']->employee_id }}</td>
             <td>{{ $employeeData['employee']->department }}</td>
@@ -77,7 +77,7 @@
             <td>{{ $employeeData['employee']->start_of_employment }}</td>
             @foreach($employeeData['dtrs'] as $day)
                 @if($day)
-                    @if (is_null($day['time_in']) || preg_match('/^\d{1,2}:\d{2} (AM|PM)$/i', $day['time_in']))
+                    @if (!$employeeData['leave_request_flag'])
                         <!-- Handle cases where time_in is null or not a time string -->
                         <td align="center">{{ $day['time_in'] }}</td>
                         <td align="center">{{ $day['time_out'] }}</td>
@@ -115,10 +115,8 @@
             <td ></td>
             <td></td>
             <td ></td>
-
-    
         </tr>
-    @endforeach
+        @endforeach
     
     
         </tbody>

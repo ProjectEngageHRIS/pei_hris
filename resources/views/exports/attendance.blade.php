@@ -90,19 +90,26 @@
             <td>{{ $employeeData->start_of_employment }}</td> --}}
                 {{-- @dd($employeeData, $day) --}}
             @if($employeeData)
-                <td align="center">{{ $employeeData['time_in'] }}</td>
-                <td align="center">{{ $employeeData['time_out'] }}</td>
+                @if (is_null($employeeData['time_in']) || preg_match('/^\d{1,2}:\d{2} (AM|PM)$/i', $employeeData['time_in']))
+                    <!-- Handle cases where time_in is null or not a time string -->
+                    <td align="center">{{ $employeeData['time_in'] }}</td>
+                    <td align="center">{{ $employeeData['time_out'] }}</td>
+                @else
+                    <td width="200px" align="center">{{ $employeeData['time_in'] }}</td>
+                    <td width="200px" align="center">{{ $employeeData['time_out'] }}</td>
+                    <!-- Handle cases where time_in is a valid time string -->
+                @endif
             @else
                 <td align="center"></td>
                 <td align="center"></td>
             @endif
             @php
                 $regularOt = 0;
-                foreach ($employeeData as $day) {
-                    if ($day && isset($day['overtime'])) {
-                        $regularOt += $day['overtime'];
-                    }
-                }
+                // foreach ($employeeData as $day) {
+                //     if ($day && isset($day['overtime'])) {
+                //         $regularOt += $day['overtime'];
+                //     }
+                // }
             @endphp
             <td ></td>
             <td></td>

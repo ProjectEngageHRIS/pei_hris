@@ -216,7 +216,7 @@ class AttendanceTable extends Component
         $this->dispatch('triggerClose');
         $loggedInUser = auth()->user()->employee_id;
 
-        return Excel::download(new UserDtrExport($this->start_date, $this->end_date, $loggedInUser), 'attendance.xlsx');
+        return Excel::download(new UserDtrExport($this->start_date, $this->end_date, $loggedInUser), $loggedInUser . ' Attendance.xlsx');
 
     }
 
