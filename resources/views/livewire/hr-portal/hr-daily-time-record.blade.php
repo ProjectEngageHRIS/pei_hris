@@ -48,11 +48,11 @@
             </div>
         </div>
     </div> <br>
-    <div class="col-span-3 gap-4">
+    <div wire:ignore class="col-span-3 gap-4">
         <div class="w-full col-span-2 p-4 pb-4 bg-white rounded-lg shadow md:p-4 ">
             <div class="flex justify-between">
                 <div>
-                    <p class="text-2xl font-bold text-customRed " style="word-break: break-word;">Summary</p>
+                    <p class="text-xl font-bold text-customRed " style="word-break: break-word;">Daily Time-In Overview</p>
                 </div>
                 <div class="flex items-center px-2.5 py-0.5 text-base font-semibold text-customGreen  text-center">
                     <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
@@ -85,9 +85,9 @@
             </div>
         </div>
     </div> <br>
-<div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
-    <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
-        <div>
+<div class="relative bg-white rounded-t-lg shadow-md ">
+    <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
+        <!-- Add user button -->
         <div class="relative max-w-sm">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
             <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -96,24 +96,202 @@
             </div>
             <input id="datepicker-actions"  type="date" wire:model.live="selectedDate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date">
         </div>
-        </div>
-        <label for="table-search" class="sr-only">Search</label>
-        <div class="relative">
-            <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
-                <svg class="w-5 h-5 text-customGray1 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
-            </div>
-            <input type="text" id="table-search" wire:model.live="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed border-text" placeholder="Search like: 2024-01-01 ">
-        </div>
-    </div>
+         <div class="flex flex-row pr-2">
+             <label for="table-search" class="sr-only">Search</label>
+             <div class="relative">
+                 <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
+                     <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                     </svg>
+                 </div>
+                 <input type="text" id="table-search-users" wire:model.live="search" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+             </div>
+             <!-- Filter Sidebar -->
+             <div class="absolute rounded-lg right-8 hover:text-customRed">
+                 <div x-data="{
+                     filterOpen: false,
+                     employeeTypeOpen: false,
+                     departmentOpen: false,
+                     companyOpen: false,
+                     genderOpen: false,
+                     employeeTypeCount: 0,
+                     departmentCount: 0,
+                     companyCount: 0,
+                     genderCount: 0,
+                     updateEmployeeTypeCount() {
+                         this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
+                     },
+                     updateDepartmentCount() {
+                         this.departmentCount = document.querySelectorAll('.departmentOpen .filter-checkbox:checked').length;
+                     },
+                     updateCompanyCount() {
+                         this.companyCount = document.querySelectorAll('.companyOpen .filter-checkbox:checked').length;
+                     },
+                     updateGenderCount() {
+                         this.genderCount = document.querySelectorAll('.genderOpen .filter-checkbox:checked').length;
+                     },
+                     clearAllFilters() {
+                         document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
+                         this.employeeTypeCount = 0;
+                         this.departmentCount = 0;
+                         this.companyCount = 0;
+                         this.genderCount = 0;
+                     }
+                     }" class="relative">
+
+                     <!-- Filter Icon Button -->
+                     <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 right-1">
+                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
+                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                         </svg>
+                     </button>
+                     <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
+                         <!-- Clear All Button -->
+                         <div class="px-4 py-2">
+                             <button wire:click="clearAllFilters" @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
+                                 Clear All
+                             </button>
+                         </div>
+                         <!-- Employee Type Dropdown Button -->
+                         <div class="px-2">
+                             <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                 Employee Type
+                                 <span class="float-right">&#9662;</span>
+                                 <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
+                             </button>
+                             <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2 employeeTypeOpen">
+                                 <hr class="my-4 border-gray-300">
+                                 {{-- @foreach($employeeTypesFilter as $type => $checked) --}}
+                                   <div class="flex items-center px-4 py-2">
+                                       <input type="checkbox" wire:model.live="employeeTypesFilter.Internals"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                       <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
+                                   </div>
+                                   <div class="flex items-center px-4 py-2">
+                                       <input type="checkbox" wire:model.live="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                       <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                   </div>
+                                   <div class="flex items-center px-4 py-2">
+                                       <input type="checkbox" wire:model.live="employeeTypesFilter.PEI-CCS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                       <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
+                                   </div>
+                                   <div class="flex items-center px-4 py-2">
+                                       <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                       <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
+                                   </div>
+                                   <div class="flex items-center px-4 py-2">
+                                       <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                       <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
+                                   </div>
+                                   <div class="flex items-center px-4 py-2">
+                                       <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                       <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
+                                   </div>
+                               {{-- @endforeach --}}
+                             </div>
+                         </div>
+                         <!-- Department Dropdown Button -->
+                         <div class="px-2">
+                             <button @click="departmentOpen = !departmentOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                 Department
+                                 <span class="float-right">&#9662;</span>
+                                 <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
+                             </button>
+                             <div x-show="departmentOpen" @click.away="departmentOpen = false" class="w-full mt-2 space-y-2 departmentOpen">
+                                 <hr class="my-4 border-gray-300">
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.HR AND ADMIN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Overseas Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.PEI/SL Temps DO-174" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Corporate Accounting and Finance" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Accounting Operations" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <!-- Company Dropdown Button -->
+                         <div class="px-2">
+                             <button @click="companyOpen = !companyOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                 Company
+                                 <span class="float-right">&#9662;</span>
+                                 <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
+                             </button>
+                             <div x-show="companyOpen" @click.away="companyOpen = false" class="w-full mt-2 space-y-2 companyOpen">
+                                 <hr class="my-4 border-gray-300">
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="departmentTypesFilter.SL SEARCH"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="departmentTypesFilter.SL TEMPS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="departmentTypesFilter.PEI-UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
+                                 </div>
+                             </div>
+                         </div>
+                         <!-- Gender Dropdown Button -->
+                         <div class="px-2 pb-2">
+                             <button @click="genderOpen = !genderOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                 Gender
+                                 <span class="float-right">&#9662;</span>
+                                 <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
+                             </button>
+                             <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
+                                 <hr class="my-4 border-gray-300">
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
+                                 </div>
+                                 <div class="flex items-center px-4 py-2">
+                                     <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                     <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </div>
+     </div>
 </div>
 <div id="data-table" class="relative overflow-x-auto">
     <table class="w-full pb-4 text-sm text-left text-gray-500 rtl:text-right ">
         <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
             <tr>
                 <th scope="col" class="px-6 py-3 text-center"> No. </th>
+                <th scope="col" class="px-6 py-3 text-center"> Employee ID </th>
                 <th scope="col" class="px-6 py-3 text-center"> Date </th>
                 <th scope="col" class="px-6 py-3 text-center"> Type </th>
-                <th scope="col" class="px-6 py-3 text-center"> Day of the Week </th>
                 <th scope="col" class="px-6 py-3 text-center"> Time In </th>
                 <th scope="col" class="px-6 py-3 text-center"> Time Out </th>
                 <th scope="col" class="px-6 py-3 text-center"> Undertime </th>
@@ -151,6 +329,12 @@
                         <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                             {{$pageIndex + $ctr}}
                         </th>
+                        <th scope="row" class="px-6 py-4 font-medium text-center text-customRed whitespace-nowrap">
+                            <span class="inline-flex items-center px-2 py-1 text-sm text-white bg-customRed rounded-lg">
+                                {{$data->employee_id}}
+                            </span>
+                        </th>
+                        
                         <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">
                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 rounded-lg bg-customGreen focus:ring-4 focus:outline-none focus:ring-red-300 me-2">
                                 {{$data->attendance_date }}
@@ -190,15 +374,21 @@
 
                             @endif
                         </td>
-                        <td class="px-6 py-4 text-center">
-                            {{ Illuminate\Support\Carbon::parse($data->attendance_date)->format('l') }}
-                        </td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{$data->time_in}}
-                        </td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{$data->time_out}}
-                        </td>
+                    @php
+                        $timeIn = \Carbon\Carbon::parse($data->time_in);
+                        $timeOut = \Carbon\Carbon::parse($data->time_out);
+                        if($timeIn->isSameDay($timeOut)){
+                            $timeIn = $timeIn->format('H:i:s');
+                            $timeOut = $timeOut->format('H:i:s');
+                        }
+                    @endphp
+                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                        {{ $timeIn }}
+                    </td>
+                    <td class="px-6 py-4 text-center whitespace-nowrap">
+                        {{ $timeOut }}
+                    </td>
+                    
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             {{$data->undertime}}
                         </td>
@@ -305,8 +495,7 @@
             labels: {
                 show: true,
             },
-            min: 1,
-            max: 7,
+          
             axisBorder: {
                 show: true,
             },
@@ -320,8 +509,6 @@
                 show: true,
             },
             beginAtZero: true,
-            min: 1,
-            max: 5,
             axisBorder: {
                 show: true,
             },
@@ -348,7 +535,7 @@
                 },
                 yaxis: {
                     min: 1,
-                    max: 31
+                    stepSize: 1, // Number of ticks on the y-axis
                 }
             })
         })
@@ -368,7 +555,7 @@
                 },
                 yaxis: {
                     min: 1,
-                    max: 7
+                    stepSize: 1, // Number of ticks on the y-axis
                 }
             })
         })

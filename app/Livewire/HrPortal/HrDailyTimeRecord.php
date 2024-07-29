@@ -55,6 +55,48 @@ class HrDailyTimeRecord extends Component
 
     public $end_date;
 
+    // Filters 
+    public $employeeTypesFilter = [
+        'INTERNALS' => false,
+        'OJT' => false,
+        'PEI-CCS' => false,
+        'RAPID' => false,
+        'RAPIDMOBILITY' => false,
+        'UPSKILLS' => false,
+    ];
+
+    public $insideDepartmentTypesFilter = [
+        'HR AND ADMIN' => false,
+        'Recruitment' => false,
+        'CXS' => false,
+        'Overseas Recruitment' => false,
+        'PEI/SLTEMPSDO174' => false,
+        'CAF' => false,
+        'ACCOUNTING ' => false,
+    ];
+
+    public $departmentTypesFilter = [
+        'PEI' => false,
+        'SLSEARCH' => false,
+        'SLTEMPS' => false,
+        'WESEARCH' => false,
+        'PEI-UPSKILLS' => false,
+    ];
+
+    public $genderTypesFilter = [
+        'MALE' => false,
+        'FEMALE' => false,
+    ];
+
+
+    public $employeeTypeFilter;
+    public $departmentTypeFilter;
+    public $companyFilter;
+    public $genderFilter;
+
+
+
+
     protected $queryString = [
         'category',
         'sort',
@@ -118,7 +160,6 @@ class HrDailyTimeRecord extends Component
                 DB::raw('MONTH(attendance_date) as month'),
                 DB::raw('COUNT(*) as count')
             )
-            ->where('employee_id', $loggedInUser)
             // ->where('attendance_type', 'time-in')
             ->whereYear('attendance_date', $currentYear)
             ->groupBy(DB::raw('MONTH(attendance_date)'))
@@ -129,7 +170,6 @@ class HrDailyTimeRecord extends Component
             DB::raw('WEEK(attendance_date, 0) as week'), // Start the week on Sunday (0)
             DB::raw('COUNT(*) as count')
         )
-        ->where('employee_id', $loggedInUser)
         // ->where('attendance_type', 'time-in')
         ->whereYear('attendance_date', $currentYear)
         ->whereMonth('attendance_date', $currentMonth)
@@ -170,6 +210,14 @@ class HrDailyTimeRecord extends Component
 
         // $this->data = array_values($this->weeklyCountsArray);
     
+    }
+
+    public function clearAllFilters()
+    {
+        $this->employeeTypesFilter = [];
+        $this->insideDepartmentTypesFilter = [];
+        $this->departmentTypesFilter = [];
+        $this->genderTypesFilter = [];
     }
 
     public function generateRecord(){
@@ -223,9 +271,11 @@ class HrDailyTimeRecord extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user();
-        $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id)
-                                ->select('attendance_date',
+        $loggedInUser = auth()->user(); 
+
+        $query = Dailytimerecord::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
+                                         ->select('attendance_date',
+                                         'employee_id',
                                          'type',
                                          'time_in',
                                          'time_out',
@@ -233,33 +283,79 @@ class HrDailyTimeRecord extends Component
                                          'undertime',
                                          'late',
                                          );
-        if($this->selectedDate != null){
-            $query->whereDate('attendance_date',  $this->selectedDate );
-        } 
+
+        $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
+            return $this->employeeTypesFilter[$key];
+        });
         
-        switch ($this->filter) {
-            case '1':
-               
-                break;
-            default:
-                $this->filterName = "All";
-                break;
-
+        if (!empty($employeeTypes)) {
+            $query->whereHas('employee', function ($query) use ($employeeTypes) {
+                $query->whereIn('employee_type', $employeeTypes);
+            });
         }
 
+        // // Inside Department Filter
+        $insideDepartmentTypes = array_filter(array_keys($this->insideDepartmentTypesFilter), function($key) {
+            return $this->insideDepartmentTypesFilter[$key];
+        });
+        
+        if (!empty($insideDepartmentTypes)) {
+            $query->whereHas('employee', function ($query) use ($insideDepartmentTypes) {
+                $query->whereIn('inside_department', $insideDepartmentTypes);
+            });
+        }
+        // // dump($insideDepartmentTypes);
 
-        if (strlen($this->search) >= 1) {
+        // // Department Filter
+        $departmentTypes = array_filter(array_keys($this->departmentTypesFilter), function($key) {
+            return $this->departmentTypesFilter[$key];
+        });
+        
+        if (!empty($departmentTypes)) {
+            $query->whereHas('employee', function ($query) use ($departmentTypes) {
+                $query->whereIn('department', $departmentTypes);
+            });
+        }
+
+        // // Department Filter
+        $genderTypes = array_filter(array_keys($this->genderTypesFilter), function($key) {
+            return $this->genderTypesFilter[$key];
+        });
+        
+        if (!empty($genderTypes)) {
+            $query->whereHas('employee', function ($query) use ($genderTypes) {
+                $query->whereIn('gender', $genderTypes);
+            });
+
+        }
+      
+        if($this->selectedDate != null){
+            $query->whereDate('attendance_date',  $this->selectedDate);
+        } 
+
+        if(strlen($this->search) >= 1){
             $searchTerms = explode(' ', $this->search);
-            $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhere('attendance_date', 'like', '%' . $term . '%')
-                      ->orWhere('type', 'like', '%' . $term . '%');
-                    // Add other fields if needed
-                }
-            })->orderBy('attendance_date', 'desc')->paginate(5);
+            $results = $query->whereHas('employee', function ($query) use ($searchTerms) {
+                 $query->where(function ($q) use ($searchTerms) {
+                    foreach ($searchTerms as $term) {
+                        $q->orWhere('first_name', 'like', '%' . $term . '%')
+                        ->orWhere('middle_name', 'like', '%' . $term . '%')
+                        ->orWhere('last_name', 'like', '%' . $term . '%')
+                        ->orWhere('department', 'like', '%' . $term . '%')
+                        ->orWhere('current_position', 'like', '%' . $term . '%')
+                        ->orWhere('employee_type', 'like', '%' . $term . '%')
+                        ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                    }
+                });
+            })->orderBy('created_at', 'desc')->paginate(5);
+
         } else {
-            $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+
         }
+
+
+
         return view('livewire.hr-portal.hr-daily-time-record', [
             'DtrData' => $results,
             'data' => $this->filter($this->filter),
