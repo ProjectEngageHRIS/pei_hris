@@ -90,7 +90,7 @@
             <td>{{ $employeeData->start_of_employment }}</td> --}}
                 {{-- @dd($employeeData, $day) --}}
             @if($employeeData)
-                @if (is_null($employeeData['time_in']) || preg_match('/^\d{1,2}:\d{2} (AM|PM)$/i', $employeeData['time_in']))
+                @if (!$employeeData['leave_request_flag'])
                     <!-- Handle cases where time_in is null or not a time string -->
                     <td align="center">{{ $employeeData['time_in'] }}</td>
                     <td align="center">{{ $employeeData['time_out'] }}</td>

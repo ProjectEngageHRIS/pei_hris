@@ -142,6 +142,11 @@ return [
             'path' => storage_path('logs/loginlogs/bannedaccount.log'),
             'level' => 'info',
         ],
+        'hrextract' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/hrdtr/hrextractdtr.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

@@ -5,6 +5,7 @@ namespace App\Exports;
 use Throwable;
 use Carbon\Carbon;
 use App\Models\Employee;
+use App\Events\HrDtrEvent;
 use App\Models\Dailytimerecord;
 use Illuminate\Contracts\View\View;
 use Maatwebsite\Excel\Concerns\FromView;
@@ -477,8 +478,10 @@ class DailyTimeRecordExport implements FromView, WithStyles, WithChunkReading, W
             ];
         }
 
-        
+        $loggedInUser = auth()->user()->employee_id;
+        HrDtrEvent::dispatch($loggedInUser);
 
+        
         return view('exports.timekeeping', [
             'dtrs' => $results,
             'employees' => $employees,

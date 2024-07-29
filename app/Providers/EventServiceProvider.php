@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Events\bannedAccount;
 use App\Events\changePassword;
+use App\Events\HrDtrEvent;
 use App\Events\otpInputAttempt;
 use App\Events\ResetPasswordSendOtp;
 use Illuminate\Support\Facades\Event;
@@ -48,6 +49,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         bannedAccount::class => [
             \App\Listeners\LoginActivityListener::class.'@bannedAccount'
+        ],
+        HrDtrEvent::class => [
+            \App\Listeners\LoginActivityListener::class.'@HrDtrListener'
         ],
         // \Illuminate\Auth\Events\PasswordReset::class => [
         //     \App\Listeners\LoginActivityListener::class.'@passwordReset',

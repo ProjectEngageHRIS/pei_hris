@@ -5,6 +5,7 @@ namespace App\Listeners;
 use App\Events;
 use App\Events\bannedAccount;
 use App\Events\changePassword;
+use App\Events\HrDtrEvent;
 use App\Events\otpInputAttempt;
 use App\Events\ResetPasswordSendOtp;
 use App\Events\ResetPasswordSendOtpSuccessful;
@@ -69,6 +70,12 @@ class LoginActivityListener
         $ip = \Request::getClientIp(true);
         Log::channel('bannedaccount')->info(
             "User with the employee ID of {$event->employee_id} has been banned from {$ip}");
+    }
+
+    public function HrDtrListener(HrDtrEvent $event){
+        $ip = \Request::getClientIp(true);
+        Log::channel('hrextract')->info(
+            "User with the employee ID of {$event->employee_id} has extracted DTR from {$ip}");
     }
 
     
