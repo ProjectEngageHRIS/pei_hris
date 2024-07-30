@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Dailytimerecord;
+namespace App\Livewire\HrPortal;
 
 use Carbon\Carbon;
 use Livewire\Component;
@@ -10,14 +10,13 @@ use App\Models\Activities;
 use Livewire\WithPagination;
 use App\Models\Dailytimerecord;
 use Illuminate\Support\Facades\DB;
-use Livewire\WithoutUrlPagination;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DailyTimeRecordExport;
-use App\Exports\UserDtrExport;
 
-class AttendanceTable extends Component
+class HrDailyTimeRecord extends Component
 {
     use WithPagination;
+
     public $options = [];
     public $dateChosen = [];
 
@@ -56,10 +55,54 @@ class AttendanceTable extends Component
 
     public $end_date;
 
+    // Filters 
+    public $employeeTypesFilter = [
+        'INTERNALS' => false,
+        'OJT' => false,
+        'PEI-CCS' => false,
+        'RAPID' => false,
+        'RAPIDMOBILITY' => false,
+        'UPSKILLS' => false,
+    ];
+
+    public $insideDepartmentTypesFilter = [
+        'HR AND ADMIN' => false,
+        'Recruitment' => false,
+        'CXS' => false,
+        'Overseas Recruitment' => false,
+        'PEI/SLTEMPSDO174' => false,
+        'CAF' => false,
+        'ACCOUNTING ' => false,
+    ];
+
+    public $departmentTypesFilter = [
+        'PEI' => false,
+        'SLSEARCH' => false,
+        'SLTEMPS' => false,
+        'WESEARCH' => false,
+        'PEI-UPSKILLS' => false,
+    ];
+
+    public $genderTypesFilter = [
+        'MALE' => false,
+        'FEMALE' => false,
+    ];
+
+
+    public $employeeTypeFilter;
+    public $departmentTypeFilter;
+    public $companyFilter;
+    public $genderFilter;
+
+
+
+
     protected $queryString = [
         'category',
         'sort',
     ];
+
+    public $selectedDate;
     
 
     public function search()
@@ -111,53 +154,12 @@ class AttendanceTable extends Component
         }
 
         $loggedInUser = auth()->user()->employee_id;
-        // $employeeInformation = Employee::where('employee_id', $loggedInUser)
-        //                         ->select( 'sick_credits', 'vacation_credits', 'first_name', 'gender')->first();
-        // $this->firstName = $employeeInformation->first_name;
-        // $this->vacationCredits = $employeeInformation->vacation_credits;
-        // $this->sickCredits = $employeeInformation->sick_credits;
-        // $this->gender = $employeeInformation->gender;
-        // $this->activities = Activities::where(function ($query) use ($collegeIds) {
-        //         foreach ($collegeIds  as $college) {
-        //         $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-        //             $query->orWhereJsonContains('visible_to_list', $college_name);
-        //         }
-        //     })->get();
-        // $this->trainings = Training::where(function ($query) use ($collegeIds) {
-        //     foreach ($collegeIds  as $college) {
-        //     $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-        //         $query->orWhereJsonContains('visible_to_list', $college_name);
-        //     }
-        // })->get();
-
-        // $attendanceCount = Dailytimerecord::where('employee_id', $loggedInUser)->count();
-        // $currentTime = Carbon::now();
-        // // Set the start and end times for each period
-        // $morningStart = Carbon::createFromTime(6, 0, 0); // 6:00 AM
-        // $afternoonStart = Carbon::createFromTime(12, 0, 0); // 12:00 PM (noon)
-        // $eveningStart = Carbon::createFromTime(18, 0, 0); // 6:00 PM
-
-        // // Compare the current time with the defined periods
-        // if ($currentTime->between($morningStart, $afternoonStart)) {
-        //     // Current time is in the morning
-        //     $this->period = 'Morning';
-        // } elseif ($currentTime->between($afternoonStart, $eveningStart)) {
-        //     // Current time is in the afternoon
-        //     $this->period = 'Afternoon';
-        // } else {
-        //     // Current time is in the evening
-        //     $this->period = 'Evening';
-        // }
-        // $currentYear = Carbon::now()->year;
-        // $currentMonth = Carbon::now()->month;
-        // $currentDay = Carbon::now()->day;
 
         // Query to get the attendance count for each month in the current year
         $monthlyCounts = Dailytimerecord::select(
                 DB::raw('MONTH(attendance_date) as month'),
                 DB::raw('COUNT(*) as count')
             )
-            ->where('employee_id', $loggedInUser)
             // ->where('attendance_type', 'time-in')
             ->whereYear('attendance_date', $currentYear)
             ->groupBy(DB::raw('MONTH(attendance_date)'))
@@ -168,7 +170,6 @@ class AttendanceTable extends Component
             DB::raw('WEEK(attendance_date, 0) as week'), // Start the week on Sunday (0)
             DB::raw('COUNT(*) as count')
         )
-        ->where('employee_id', $loggedInUser)
         // ->where('attendance_type', 'time-in')
         ->whereYear('attendance_date', $currentYear)
         ->whereMonth('attendance_date', $currentMonth)
@@ -211,12 +212,19 @@ class AttendanceTable extends Component
     
     }
 
+    public function clearAllFilters()
+    {
+        $this->employeeTypesFilter = [];
+        $this->insideDepartmentTypesFilter = [];
+        $this->departmentTypesFilter = [];
+        $this->genderTypesFilter = [];
+    }
+
     public function generateRecord(){
 
-        $this->dispatch('triggerClose');
-        $loggedInUser = auth()->user()->employee_id;
+        // $this->dispatch('triggerClose');
 
-        return Excel::download(new UserDtrExport($this->start_date, $this->end_date, $loggedInUser), $loggedInUser . ' Attendance.xlsx');
+        return Excel::download(new DailyTimeRecordExport($this->start_date, $this->end_date), 'timekeeping.xlsx');
 
     }
 
@@ -263,9 +271,11 @@ class AttendanceTable extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user();
-        $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id)
-                                ->select('attendance_date',
+        $loggedInUser = auth()->user(); 
+
+        $query = Dailytimerecord::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
+                                         ->select('attendance_date',
+                                         'employee_id',
                                          'type',
                                          'time_in',
                                          'time_out',
@@ -273,64 +283,85 @@ class AttendanceTable extends Component
                                          'undertime',
                                          'late',
                                          );
+
+        $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
+            return $this->employeeTypesFilter[$key];
+        });
         
-        switch ($this->filter) {
-            case '1':
-                $query->whereDate('attendance_date',  Carbon::today());
-                $this->filterName = "Today";
-                break;
-            case '2':
-                $query->where('attendance_date', '>=', Carbon::today()->startOfWeek());
-                $this->filterName = "This week";
-                break;
-            case '3':
-                $query->where('attendance_date', '>=', Carbon::today()->subMonth());
-                $this->filterName = "This Month";
-                break;
-            case '4':
-                $query->where('attendance_date', '>=', Carbon::today()->subMonths(6));
-                $this->filterName = "These 6 Months";
-                break;
-            case '5':
-                $query->where('attendance_date', '>=', Carbon::today()->subYear());
-                    $this->filterName = "This Year";
-                break;
-            default:
-                $this->filterName = "All";
-                break;
-
+        if (!empty($employeeTypes)) {
+            $query->whereHas('employee', function ($query) use ($employeeTypes) {
+                $query->whereIn('employee_type', $employeeTypes);
+            });
         }
 
+        // // Inside Department Filter
+        $insideDepartmentTypes = array_filter(array_keys($this->insideDepartmentTypesFilter), function($key) {
+            return $this->insideDepartmentTypesFilter[$key];
+        });
+        
+        if (!empty($insideDepartmentTypes)) {
+            $query->whereHas('employee', function ($query) use ($insideDepartmentTypes) {
+                $query->whereIn('inside_department', $insideDepartmentTypes);
+            });
+        }
+        // // dump($insideDepartmentTypes);
 
-        if (strlen($this->search) >= 1) {
+        // // Department Filter
+        $departmentTypes = array_filter(array_keys($this->departmentTypesFilter), function($key) {
+            return $this->departmentTypesFilter[$key];
+        });
+        
+        if (!empty($departmentTypes)) {
+            $query->whereHas('employee', function ($query) use ($departmentTypes) {
+                $query->whereIn('department', $departmentTypes);
+            });
+        }
+
+        // // Department Filter
+        $genderTypes = array_filter(array_keys($this->genderTypesFilter), function($key) {
+            return $this->genderTypesFilter[$key];
+        });
+        
+        if (!empty($genderTypes)) {
+            $query->whereHas('employee', function ($query) use ($genderTypes) {
+                $query->whereIn('gender', $genderTypes);
+            });
+
+        }
+      
+        if($this->selectedDate != null){
+            $query->whereDate('attendance_date',  $this->selectedDate);
+        } 
+
+        if(strlen($this->search) >= 1){
             $searchTerms = explode(' ', $this->search);
-            $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhere('attendance_date', 'like', '%' . $term . '%')
-                      ->orWhere('type', 'like', '%' . $term . '%');
-                    // Add other fields if needed
-                }
-            })->orderBy('attendance_date', 'desc')->paginate(5);
+            $results = $query->whereHas('employee', function ($query) use ($searchTerms) {
+                 $query->where(function ($q) use ($searchTerms) {
+                    foreach ($searchTerms as $term) {
+                        $q->orWhere('first_name', 'like', '%' . $term . '%')
+                        ->orWhere('middle_name', 'like', '%' . $term . '%')
+                        ->orWhere('last_name', 'like', '%' . $term . '%')
+                        ->orWhere('department', 'like', '%' . $term . '%')
+                        ->orWhere('current_position', 'like', '%' . $term . '%')
+                        ->orWhere('employee_type', 'like', '%' . $term . '%')
+                        ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                    }
+                });
+            })->orderBy('created_at', 'desc')->paginate(5);
+
         } else {
-            $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+
         }
 
-    
-        if(in_array($loggedInUser->role_id, [6,7,8,9])){
-            return view('livewire.dailytimerecord.attendance-table', [
-                'DtrData' => $results,
-                'data' => $this->filter($this->filter),
-            ])->layout('components.layouts.hr-navbar');
-        } else {
-                return view('livewire.dailytimerecord.attendance-table', [
-                    'DtrData' => $results,
-                    'data' => $this->filter($this->filter),
-                ]);
-        }
 
+
+        return view('livewire.hr-portal.hr-daily-time-record', [
+            'DtrData' => $results,
+            'data' => $this->filter($this->filter),
+        ])->layout('components.layouts.hr-navbar');
 
       
     }
-
 
 }

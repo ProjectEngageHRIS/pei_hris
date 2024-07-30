@@ -117,6 +117,36 @@ return [
         'emergency' => [
             'path' => storage_path('logs/laravel.log'),
         ],
+        'loginlog' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/loginalerts.log'),
+            'level' => 'info',
+        ],
+        'failedotpsend' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/changepasswordotp/failedotpsendalerts.log'),
+            'level' => 'info',
+        ],
+        'successfulotpsend' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/changepasswordotp/successfulotpsendalerts.log'),
+            'level' => 'info',
+        ],
+        'passwordchanged' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/changepasswordotp/passwordchanged.log'),
+            'level' => 'info',
+        ],
+        'bannedaccount' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/loginlogs/bannedaccount.log'),
+            'level' => 'info',
+        ],
+        'hrextract' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/hrdtr/hrextractdtr.log'),
+            'level' => 'info',
+        ],
     ],
 
 ];

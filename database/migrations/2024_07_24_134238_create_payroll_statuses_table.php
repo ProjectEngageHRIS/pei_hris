@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('status', 50);
             $table->string('month', 20)->default(now()->format('M'));
             $table->string('year', 8)->default(now()->format('Y'));
+            $table->dateTime('deleted_at')->nullable();
             $table->timestamps();
         });
     }

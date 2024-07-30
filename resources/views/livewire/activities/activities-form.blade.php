@@ -40,7 +40,7 @@
                 <div class="grid grid-cols-2 gap-4">
                     <div>
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type<span class="text-red-600">*</span></label>
-                        <select  size="1" id="type" name="type" wire:model.live="type"
+                        <select   id="type" name="type" wire:model.live="type"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="null">Select An Option</option>
                             <option value="Announcement">Announcement</option>
@@ -78,7 +78,7 @@
                     <div class="grid grid-cols-1 items-center justify-center w-full">
                         <label for="poster" style="height: 121px;"  class="flex flex-col items-center justify-center w-full  border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
                             <img src="{{ $poster->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
-                            <input id="poster" type="file" class="hidden" wire:model.blur="poster">
+                            <input id="poster" type="file" class="hidden" wire:model="poster">
                         </label>
                     </div>
                     @else
@@ -91,7 +91,7 @@
                                 <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
                                 <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG (MAX. 800x400px)</p>
                             </div>
-                            <input id="poster" type="file" class="hidden" wire:model.blur="poster" />
+                            <input id="poster" type="file" class="hidden" wire:model="poster" />
                         </label>
                     </div> 
                     @endif
@@ -236,7 +236,7 @@
                         @enderror
                     </div>
                 </div>
-                <div >
+                <div>
                     <div wire:ignore class="col-span-4">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Visible To List<span class="text-red-600">*</span></label>
                         <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -255,18 +255,81 @@
                             </div> 
                         @enderror
                     </div>
-                   
                 </div>
             </div>
         </div>
+        
         <button type="submit"  class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bgindigo rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
             Create Activity
         </button>
         </form>
+
+        <!-- Loading screen -->
+        <div wire:loading wire:target="submit, poster" class="load-over">
+            <div wire:loading wire:target="submit, poster" class="loading-overlay">
+                <div class="flex flex-col justify-center items-center">
+                    <div class="spinner"></div>
+                    <p>Uploading...</p>
+                </div>
+            </div>
+        </div>
+        
+        <style>
+            .load-over {
+                position: fixed;
+                background: rgba(255, 255, 255, 0.8);
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+            .loading-overlay {
+                position: fixed;
+                top: 40%;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                font-family: Arial, sans-serif;
+                color: #AC0C2E;
+                pointer-events: none; /* Makes sure the overlay is not interactable */
+            }
+        
+            .spinner {
+                border: 8px solid rgba(172, 12, 46, 0.3);
+                border-top: 8px solid #AC0C2E;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 1s linear infinite;
+                margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+            }
+        
+            @keyframes spin {
+                0% {
+                    transform: rotate(0deg);
+                }
+                100% {
+                    transform: rotate(360deg);
+                }
+            }
+        
+            .loading-overlay p {
+                margin: 0;
+                font-size: 18px;
+                font-weight: bold;
+            }
+        </style>
+
     </section>
     
     </div>
 </div>
+
 
 <script>
     $(document).ready(function() {

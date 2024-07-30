@@ -1,4 +1,4 @@
-<div class="p-4 main-content">
+<div  x-init="initFlowbite();" class="p-4 main-content">
     <div class="rounded-lg ">
         <nav class="flex mb-2" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
@@ -217,11 +217,19 @@
                         <td class="px-6 py-4 text-center">
                             {{ Illuminate\Support\Carbon::parse($data->attendance_date)->format('l') }}
                         </td>
+                        @php
+                            $timeIn = \Carbon\Carbon::parse($data->time_in);
+                            $timeOut = \Carbon\Carbon::parse($data->time_out);
+                            if($timeIn->isSameDay($timeOut)){
+                                $timeIn = $timeIn->format('H:i:s');
+                                $timeOut = $timeOut->format('H:i:s');
+                            }
+                        @endphp
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{$data->time_in}}
+                            {{ $timeIn }}
                         </td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{$data->time_out}}
+                            {{ $timeOut }}
                         </td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             {{$data->undertime}}
@@ -237,6 +245,64 @@
         </div>
     </table>
 </div>
+<div wire:loading wire:target="selectedDate, search, generateRecord" class="load-over z-50">
+    <div wire:loading wire:target="selectedDate, search, generateRecord" class="loading-overlay">
+        <div class="flex flex-col justify-center items-center">
+            <div class="spinner"></div>
+            <p>Updating Table...</p>
+        </div>
+    </div>
+</div>
+<style>
+    .load-over {
+        position: fixed;
+        background: rgba(255, 255, 255, 0.8);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .loading-overlay {
+        position: fixed;
+        top: 40%;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        font-family: Arial, sans-serif;
+        color: #AC0C2E;
+        pointer-events: none; /* Makes sure the overlay is not interactable */
+    }
+
+    .spinner {
+        border: 8px solid rgba(172, 12, 46, 0.3);
+        border-top: 8px solid #AC0C2E;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+        margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .loading-overlay p {
+        margin: 0;
+        font-size: 18px;
+        font-weight: bold;
+    }
+</style>
 <div  class="w-full p-4 overflow-x-auto bg-gray-100 rounded-b-lg">
     {{ $DtrData->links(data : ['scrollTo' => false])}}
 </div>
@@ -265,10 +331,10 @@
         document.getElementById('date-range-picker').classList.add('hidden');
     });
 
-    document.getElementById('export-btn').addEventListener('click', function() {
-        // Handle export functionality here
-        alert('Exporting data...');
-    });
+    // document.getElementById('export-btn').addEventListener('click', function() {
+    //     // Handle export functionality here
+    //     alert('Exporting data...');
+    // });
 
     const options = {
         chart: {

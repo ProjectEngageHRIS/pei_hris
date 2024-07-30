@@ -39,11 +39,11 @@
             
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
                         <button wire:click.prevent="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeInFlag ) disabled @endif>
+                            @if($timeInFlag ) disabled style="cursor: not-allowed;" @endif>
                             Time In
                         </button>
                         <button id="check_out" type="submit" class="flex items-center justify-center px-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeOutFlag ) disabled @endif>
+                            @if($timeOutFlag ) disabled style="cursor: not-allowed;" @endif>
                             Time Out
                         </button>
                     </div>
@@ -152,9 +152,12 @@
                 <hr class="w-full my-4 border-gray-300">
                 <!-- Buttons -->
                     <div class="flex flex-col">
-                        <a href="{{route('TasksTable')}}"  id="myButton" class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
+                        {{-- <a href="{{route('TasksTable')}}"  id="myButton" class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
                            My Tasks
-                        </a>
+                        </a> --}} 
+                        <a href="#" @click="getLocalStorage"  id="myButton" class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
+                            My Tasks
+                         </a>
                         <a href="{{route('HrTicketsTable')}}"  id="navButton"  class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
                             HR Tickets
                         </a>
@@ -165,6 +168,23 @@
                             Leave Requests
                         </a>
                     </div>
+                    <script>
+                        function getLocalStorage(){
+                            let deviceId = localStorage.getItem('device_id');
+                            
+                            // Generate a unique ID, e.g., using a UUID library
+                            // deviceId = generateUniqueId(); // Implement this function
+                            // localStorage.setItem('device_id', deviceId);
+                            alert(deviceId )
+                        }
+                        // Example function to generate a unique ID
+                        function generateUniqueId() {
+                            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+                                var r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                                return v.toString(16);
+                            });
+                        }
+                    </script>
             </div>
         </div>
         <!-- Upcoming Leaves -->

@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 const colors = require('tailwindcss/colors')
+
 module.exports = {
   content: [
     "./resources/**/*.blade.php",
@@ -55,6 +56,7 @@ module.exports = {
         800: '#12263a',
         900: '#0a192a',
       },
+      primary: '#AC0C2E', 
     },
     fontFamily: {
     //   sans: ['Graphik', 'sans-serif'],
