@@ -1,8 +1,26 @@
-<div class="flex flex-col space-y-6">
-
+<div class="flex flex-col space-y-6 ">
+    <!-- New Containers -->
+    <div class="flex flex-row justify-between space-x-4">
+        <div class="flex-1 p-4 bg-white h-[150px] rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Completed Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-customGreen">141</p>
+        </div>
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Ongoing Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-yellow-500">2</p>
+        </div>
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Unassigned Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-customGray1">8</p>
+        </div>
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Cancelled Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-customRed">10</p>
+        </div>
+    </div>
     <!-- Employee Table -->
     <div class="relative shadow-md">
-        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
+        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg rounded-8px">
             <!-- Add user button -->
             <form>
                 <button onclick="resetStep(1)" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
