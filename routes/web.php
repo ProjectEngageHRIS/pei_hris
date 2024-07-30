@@ -71,6 +71,7 @@ use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
 use App\Livewire\Dashboard\AccountingDashboardView;
+use App\Livewire\Dashboard\ITDashboardView;
 
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
@@ -138,7 +139,7 @@ Route::get('/', function(){
 Route::middleware('guest')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
- 
+
     Route::get('register', Register::class)
         ->name('register');
 });
@@ -180,6 +181,7 @@ Route::middleware('auth')->group(function (){
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
 
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
+    Route::get("/informationtech", ItDashboardView::class)->name('ITDashboard');
 
     Route::get('/password-change', ChangePassword::class)->name('ChangePassword');
 
@@ -196,7 +198,7 @@ Route::middleware('auth')->group(function (){
     Route::get('/changeinformation', ChangeInformation::class)->name('changeInformation');
 
     Route::get('/changeinformationrequests', ApproveChangeInformationTable::class)->name('ApproveChangeInformationTable');
-    
+
     Route::get('/changeinformationrequests/approve/{index}', ApproveChangeInformationForm::class)->name('ApproveChangeInformationForm');
 
     Route::get('/notifications', NotificationsTable::class)->name('NotificationsTable');
@@ -265,7 +267,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get("leaverequest/approverequests", ApproveLeaverequestTable::class)->name('ApproveLeaveRequestTable');
 
-    Route::get("leaverequest/approverequests/approve/{index}", ApproveLeaverequestForm::class)->name('ApproveLeaveRequestForm'); 
+    Route::get("leaverequest/approverequests/approve/{index}", ApproveLeaverequestForm::class)->name('ApproveLeaveRequestForm');
 
     // Route::get('/leaverequest/{index}', [LeaveRequestTable::class, 'download'])->name('downloadLeave');
 });
@@ -450,7 +452,7 @@ Route::middleware('auth')->group(function (){
     Route::get("/trainings/form/edit/{index}", TrainingUpdate::class)->name('TrainingUpdate');
 
     Route::get("/trainings/view/{index}", TrainingView::class)->name('TrainingView');
-    
+
     Route::get("/trainings/pretest/{index}", TrainingPreTestForm::class)->name('TrainingPreTestForm');
 
     Route::get("/trainings/posttest/{index}", TrainingPostTestForm::class)->name('TrainingPostTestForm');
@@ -471,13 +473,13 @@ Route::middleware('auth')->group(function (){
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
     Route::get("/employees/add", AddEmployee::class)->name("EmployeesForm");
-    
+
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 
     Route::get("/human", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
     Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
-    
+
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");
@@ -490,7 +492,7 @@ Route::middleware('auth')->group(function (){
     Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
     Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
-    
+
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");
