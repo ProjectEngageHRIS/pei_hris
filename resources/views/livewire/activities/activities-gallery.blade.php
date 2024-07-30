@@ -244,11 +244,13 @@
                                                         @enderror
                                                     </div>
                                                     <div class="items-center">
-                                                        <label class="inline-flex items-center cursor-pointer">
-                                                            <input id="featured_{{$loop->index}}" type="checkbox" class="sr-only peer" {{ $data->is_featured ? 'checked' : '' }}>
-                                                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                                        <label for="featured_{{$loop->index}}" class="flex items-center cursor-pointer">
+                                                            <input id="featured_{{$loop->index}}" type="checkbox" value="" class="sr-only peer" {{ $data->is_featured ? 'checked' : '' }}>
+                                                            <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-customRed dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-customRed"></div>
                                                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Featured?</span>
                                                         </label>
+                                                        
+                                                        
                                                         @error('is_featured')
                                                             <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
                                                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
@@ -397,38 +399,9 @@
                                                 
                                             </div>
                                             {{-- <hr class="border-gray-700"> --}}
-                                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                            <button  type="submit" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Announcement</button>
                                                                         
-                                            <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
-                                                <div class="relative w-full max-w-md max-h-full p-4">
-                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                        <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                            </svg>
-                                                            <span class="sr-only">Close modal</span>
-                                                        </button>
-                                                            <div class="p-4 text-center md:p-5">
-                                                                <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                                </svg>
-                                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                                <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
-                                                                    <li>Verify the file exists and can be accessed.</li>
-                                                                    <li>Ensure the employee's email has been added as a viewer.</li>
-                                                                    <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
-                                                                    <li>Review and modify these rules if necessary.</li>
-                                                                </ul>
-                                                                <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
-                                                                
-                                                                <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                                    Yes
-                                                                </button>
-                                                                <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
-                                                            </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+
                                             
                                         </form>
 
