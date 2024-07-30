@@ -42,174 +42,402 @@
                 <button type="button" wire:click="fillerSetter('Training')" class="text-gray-900 border transition-transform duration-300 hover:scale-105 border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Training' ? 'bg-customRed text-white' : 'bg-white' }}">Training</button>
                 <button type="button" wire:click="fillerSetter('Others')" class="text-gray-900 border transition-transform duration-300 hover:scale-105 border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Others' ? 'bg-customRed text-white' : 'bg-white' }}">Others</button>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
+            <div x-data="{openEditForm: false, currentEditModal: null, openAddWarningButton: false}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
                 @foreach ($ActivitiesData as $data)
-                <div class="w-full h-full object-contain bg-gray-50 border-2 border-gray-300 border-solid p-4 rounded-lg transition-transform duration-300 hover:shadow-lg">
-                    <div class="flex justify-end items-center mt-2 pb-2 space-x-2">
-                        <button type="button" data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll"  class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-transform duration-300 hover:scale-105">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
-                            </svg>
-                        </button>
-                        <button type="button" wire:click="deleteActivity('{{ $data->activity_id }}')" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-transform duration-300 hover:scale-105">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                            </svg>
-                        </button>
+                    <div class="w-full h-full object-contain bg-gray-50 border-2 border-gray-300 border-solid p-4 rounded-lg transition-transform duration-300 hover:shadow-lg">
+                        <div class="flex justify-end items-center mt-2 pb-2 space-x-2">
+                            {{-- @dd($data) --}}
+                            <button @click="openEditForm = true; currentEditModal = '{{ $loop->index }}'"  id="edit-form" type="button" class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-transform duration-300 hover:scale-105">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                </svg>
+                            </button>
+                            <button type="button" wire:click="deleteActivity('{{ $data->activity_id }}')" class="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-transform duration-300 hover:scale-105">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                </svg>
+                            </button>
+                        </div>
+                        <a href="{{ route('ActivitiesView', ['index' => $data->activity_id]) }}" class="group">
+                            <img class="w-full h-60 object-contain rounded-xl border-2 transition-transform duration-300 group-hover:scale-105 group-hover:border-customRed shadow-lg" src="{{ asset('storage/'. $data->poster) }}" alt="{{ $data->subject }}">
+                        </a>
+                        <h3 class="mt-2 text-xl font-semibold text-center transition-transform duration-300 hover:scale-105 text-customRed dark:text-white">{{ $data->subject }}</h3>
+                        {{-- <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"> --}}
+                        <p class="text-center text-gray-700 transition-transform duration-300 hover:scale-105 dark:text-gray-300">{{ Str::limit($data->description, 100) }}</p>
+                        <p class="text-center text-gray-700 transition-transform duration-300 hover:scale-105 dark:text-gray-300">{{ $data->date }}</p>
+                        <p class="text-center text-gray-700 transition-transform duration-300 hover:scale-105 dark:text-gray-300">{{ $data->start }} - {{ $data->end }}</p>
                     </div>
-                    <a href="{{ route('ActivitiesView', ['index' => $data->activity_id]) }}" class="group">
-                        <img class="w-full h-60 object-contain rounded-xl border-2 transition-transform duration-300 group-hover:scale-105 group-hover:border-customRed shadow-lg" src="{{ asset('storage/'. $data->poster) }}" alt="{{ $data->subject }}">
-                    </a>
-                    <h3 class="mt-2 text-xl font-semibold text-center transition-transform duration-300 hover:scale-105 text-customRed dark:text-white">{{ $data->subject }}</h3>
-                    {{-- <hr class="w-48 h-1 mx-auto my-4 bg-gray-100 border-0 rounded md:my-10 dark:bg-gray-700"> --}}
-                    <p class="text-center text-gray-700 transition-transform duration-300 hover:scale-105 dark:text-gray-300">{{ Str::limit($data->description, 100) }}</p>
-                    <p class="text-center text-gray-700 transition-transform duration-300 hover:scale-105 dark:text-gray-300">{{ $data->date }}</p>
-                    <p class="text-center text-gray-700 transition-transform duration-300 hover:scale-105 dark:text-gray-300">{{ $data->start }} - {{ $data->end }}</p>
-                </div>
-                <div  id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
-                    <div class="relative w-full max-w-lg max-h-full p-4">
-                        <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow ">
-                            <!-- Modal header -->
-                            <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
-                                <h3 class="text-xl font-semibold text-gray-900 ">
-                                    Edit Announcement
-                                </h3>
-                                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
-                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                    </svg>
-                                    <span class="sr-only">Close modal</span>
-                                </button>
-                            </div>
-                            <!-- Modal body -->
-                            <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
-                                <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
-                                    <div class="grid grid-cols-2 gap-4">
-                                        <div x-data="{ selected: @entangle('types.' . $data->id) }">
-                                            <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                                Type<span class="text-red-600">*</span>
-                                            </label>
-                                            <select
-                                                id="type_{{ $data->id }}"
-                                                name="type_{{ $data->id }}"
-                                                x-model="selected"
-                                                wire:model="types.{{ $data->id }}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"
-                                            >
-                                                <option value="null" :selected="selected === 'null'">Select An Option</option>
-                                                <option value="Announcement" :selected="selected === 'Announcement'">Announcement</option>
-                                                <option value="Event" :selected="selected === 'Event'">Event</option>
-                                                <option value="Seminar" :selected="selected === 'Seminar'">Seminar</option>
-                                                <option value="Training" :selected="selected === 'Training'">Training</option>
-                                                <option value="Others" :selected="selected === 'Others'">Others</option>
-                                            </select>
-                                            @error('types.' . $data->id)
-                                                <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{ $message }}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
-                                        <div>
-                                            <label for="subject" class="block mb-2 text-sm whitespace-nowrap font-medium text-gray-900 dark:text-white">Subject<span class="text-red-600">*</span></label>
-                                            <input type="text" id="subject" name="subject" wire:model.fill="subject" value="{{$data->subject}}" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
-                                            @error('subject')
-                                                <div class="transition transform alert alert-danger"
-                                                        x-init="$el.closest('form').scrollIntoView()">
-                                                    <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
-                                                </div> 
-                                            @enderror
-                                        </div>
+                    <div x-show="openEditForm && currentEditModal === '{{ $loop->index }}'"  class="fixed inset-0 z-50 flex items-center justify-center">
+                        <div class="fixed inset-0 bg-black opacity-50"></div>
+                        <div tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-4xl max-h-full p-4 bg-white rounded-lg shadow-lg">
+                            <div class="relative w-full max-w-4xl max-h-full p-4">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow ">
+                                    <!-- Modal header -->
+                                    <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
+                                        <h3 class="text-xl font-semibold text-gray-900 ">
+                                            Edit Announcement
+                                        </h3>
+                                        <button @click="openEditForm = false" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
                                     </div>
-                                    <hr class="border-gray-700">
-        
-                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
-                                        <div>
-                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
-                                            <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                                <option value="" selected>Select Phase</option>
-                                                <option value="1st Half">1st Half</option>
-                                                <option value="2nd Half">2nd Half</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
-                                            <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                                <option value="" selected>Select Month</option>
-                                                @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
-                                                    <option value="{{ $month }}">{{ $month }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
-                                            <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                                <option value="" selected>Select Year</option>
-                                                @foreach(range(2000, date('Y')) as $year)
-                                                    <option value="{{ $year }}">{{ $year }}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-        
-                                    <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
-                                        {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
-                                        <label for="payroll_picture"
-                                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
-                                            <span class="text-red-600">*</span></label>
-                                        <div id="payroll_picture" class="grid grid-cols-1">
-                                            <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
-                                                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                            </textarea>
-                                            @error('payroll_picture')
-                                                <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
-                                                        <span class="text-xs text-red-500" > {{$message}}</span>
-                                                </div>
-                                            @enderror
-                                        </div>
-                                    </div>
-        
-                                    <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
-                                    {{-- <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button> --}}
-                                    <div x-show="openAddWarningButton" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
-                                        <div class="relative w-full max-w-md max-h-full p-4">
-                                            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                    </svg>
-                                                    <span class="sr-only">Close modal</span>
-                                                </button>
-                                                    <div class="p-4 text-center md:p-5">
-                                                        <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                        </svg>
-                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                        <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
-                                                            <li>Verify the file exists and can be accessed.</li>
-                                                            <li>Ensure the employee's email has been added as a viewer.</li>
-                                                            <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
-                                                            <li>Review and modify these rules if necessary.</li>
-                                                        </ul>
-                                                        <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
-                                                        
-                                                        <button id="addWarningButton1" @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                            Yes
-                                                        </button>
-                                                        <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                    <!-- Modal body -->
+                                    <div class="p-4 xl:p-5">
+                                        <form class="space-y-4" wire:submit.prevent="editAnnouncement('{{$data->activity_id}}')" method="POST">
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div>
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                        Type<span class="text-red-600">*</span>
+                                                    </label>
+                                                    <select id="type_{{$loop->index}}" name="type" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                        <option value="null" @if($data->type == 'null') selected @endif>Select An Option</option>
+                                                        <option value="Announcement" @if($data->type == 'Announcement') selected @endif>Announcement</option>
+                                                        <option value="Event" @if($data->type == 'Event') selected @endif>Event</option>
+                                                        <option value="Seminar" @if($data->type == 'Seminar') selected @endif>Seminar</option>
+                                                        <option value="Training" @if($data->type == 'Training') selected @endif>Training</option>
+                                                        <option value="Others" @if($data->type == 'Others') selected @endif>Others</option>
+                                                    </select>
+                                                    
+                                                    @error('type')
+                                                    <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
+                                                        <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
                                                     </div>
+                                                    @enderror
+                                                </div>
+                                                
+                                                <div id="subject_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg shadow">
+                                                    <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                        Subject <span class="text-red-600">*</span>
+                                                    </label>
+                                                    <div class="grid grid-cols-1">
+                                                        <input id="subject_{{$loop->index}}" value="{{ $data->subject }}" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                                        @error('subject')
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('subject_container{{$loop->index}}').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subject_container{{$loop->index}}').focus();">
+                                                            <span class="text-xs text-red-500">{{ $message }}</span>
+                                                        </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                @php
+                                                    
+                                                @endphp
+
+                                                <div class="grid grid-cols-1  rounded-lg  ">
+                                                    <label for="poster" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                        Poster<span class="text-red-600">*</span>
+                                                    </label>
+                                                    <div class="grid grid-cols-1 items-center justify-center w-full">
+                                                        <label for="poster" style="height: 121px;"  class="relative p-1 flex flex-col items-center  border-2 border-gray-400 border-dashed justify-center w-full h-32 rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                                                        @if($data->poster && $removedImage != True)
+                                                                @if($poster)
+                                                                    {{-- @php
+                                                                        $data->poster = $this->getPoster();
+                                                                    @endphp --}}
+                                                                    <img src="{{ $poster->temporaryUrl() }}" class="w-full h-full object-contain" alt="Uploaded Image">
+                                                                @elseif(is_string($data->poster))
+                                                                    <img src="{{ asset('storage/'. $data->poster) }}" alt="Image Description" class="w-full h-full object-contain"> 
+
+                                                                @endif
+                                                                <input id="poster" type="file" class="hidden" wire:model.live="poster">
+                                    
+                                                                <button type="button" wire:click="removeImage" class="absolute top-0 right-0 m-2 text-red-600 py-1  rounded">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                    </svg>
+                                                                </button>
+                                                        @else
+                                                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                                                <svg class="w-4 h-4 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                                                </svg>
+                                                                <p class="mb-2 text-xs text-center text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span></p>
+                                                                <p class="text-xs text-center text-gray-500 dark:text-gray-400">PNG, JPG, or PDF file (Max: 5 MB size)</p>
+                                                            </div>
+                                                            <input id="poster" type="file" class="hidden" wire:model.blur="poster" />
+                                                        @endif
+                                                        </label>
+                                                        @error('poster')
+                                                            <div class="transition transform alert alert-danger"
+                                                                    x-init="$el.closest('label').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div> 
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div id="description_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg shadow">
+                                                    <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                        Description <span class="text-red-600">*</span>
+                                                    </label>
+                                                    <div class="grid grid-cols-1">
+                                                        <textarea id="description_{{$loop->index}}" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $data->description }}</textarea>
+                                                        @error('description')
+                                                            <div class="text-sm transition transform alert alert-danger"
+                                                                x-data x-init="document.getElementById('description_container{{$loop->index}}').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('description_container{{$loop->index}}').focus();">
+                                                                <span class="text-xs text-red-500">{{ $message }}</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class="grid grid-cols-3 gap-4 col-span-2">
+                                                    <div class="w-full">
+                                                        <label for="date_{{$loop->index}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                            Date of Event<span class="text-red-600">*</span>
+                                                        </label>
+                                                        <input id="date_{{$loop->index}}" type="date" value="{{$data->date}}" 
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            required>
+                                                        @error('date')
+                                                            <div class="transition transform alert alert-danger" x-init="$el.closest('label').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <label for="start_{{$loop->index}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                            Start Time <span class="text-red-600">*</span>
+                                                        </label>
+                                                        <input id="start_{{$loop->index}}" type="time" value="{{$data->start}}" 
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            required>
+                                                        @error('start')
+                                                            <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                    <div class="w-full">
+                                                        <label for="end_{{$loop->index}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                            End Time <span class="text-red-600">*</span>
+                                                        </label>
+                                                        <input id="end_{{$loop->index}}" type="time" value="{{$data->end}}" 
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            required>
+                                                        @error('end')
+                                                            <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <div class="mb-4">
+                                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                                                            Publisher<span class="text-red-600">*</span>
+                                                        </label>
+                                                        <select id="publisher_{{$loop->index}}" name="publisher" 
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                            <option value="">Select a publisher</option>
+                                                            <option value="You">You</option>
+                                                            <option value="Department">Your Department</option>
+                                                            <option value="{{$data->publisher}}" selected>{{$data->publisher}}</option>
+                                                        </select>
+                                                        @error('publisher')
+                                                            <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div> 
+                                                        @enderror
+                                                    </div>
+                                                    <div class="items-center">
+                                                        <label class="inline-flex items-center cursor-pointer">
+                                                            <input id="featured_{{$loop->index}}" type="checkbox" class="sr-only peer" {{ $data->is_featured ? 'checked' : '' }}>
+                                                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Featured?</span>
+                                                        </label>
+                                                        @error('is_featured')
+                                                            <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div> 
+                                                        @enderror
+                                                    </div>
+                                                </div>
+                                                
+                                                <div>
+                                                    <div wire:ignore class="col-span-4">
+                                                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Visible To List<span class="text-red-600">*</span></label>
+                                                        <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                            <optgroup label="Employee Names" ></optgroup>
+                                                            <option @if(in_array("PEI", $data->visible_to_list)) selected @endif value="PEI">PEI</option>
+                                                            <option @if(in_array("SL SEARCH", $data->visible_to_list)) selected @endif value="SL SEARCH">SL SEARCH</option>
+                                                            <option @if(in_array("SL TEMPS", $data->visible_to_list)) selected @endif value="SL TEMPS">SL TEMPS</option>         
+                                                            <option @if(in_array("WESEARCH", $data->visible_to_list)) selected @endif value="WESEARCH">WESEARCH</option>      
+                                                            <option @if(in_array("PEI-UPSKILLS", $data->visible_to_list)) selected @endif value="PEI-UPSKILLS">PEI-UPSKILLS</option>   
+                                                        </select>
+                                                        @error('visible_to_list')
+                                                            <div class="transition transform alert alert-danger"
+                                                                    x-init="$el.closest('form').scrollIntoView()">
+                                                                <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
+                                                            </div> 
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        
+                                                        $('.js-example-basic-multiple').select2({
+                                                            placeholder: 'Select an option',
+                                                            closeOnSelect: false,
+                                                        }).on('select2:open', function() {
+                                                            // Apply Tailwind CSS classes to the Select2 dropdown
+                                                            $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500');
+                                                            $('.select2-results__options').addClass('p-2 ');
+                                                        }).on('change', function() {
+                                                            let data = $(this).val();
+                                                            console.log(data);
+                                                            @this.visible_to_list = data;
+                                                        });
+                                                        $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2');
+                                                
+                                                        // Toggle modal visibility when form submission is completed
+                                                        Livewire.on('formSubmitted', () => {
+                                                            $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
+                                                        });
+                                                    });
+                                                </script>
+                                                
+                                                
+                                                
+                                                <script>
+                                                    document.addEventListener('DOMContentLoaded', () => {
+                                                        document.querySelectorAll('[id^=subject_]').forEach(input => {
+                                                            input.addEventListener('change', function() {
+                                                                let component = Livewire.find(input.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                if (input.value) {
+                                                                    let value = input.value.trim(); // Get the input value and trim whitespace
+                                                                    let wrappedValue = `${input.value}`; // Wrap the value in backticks
+                                                                    component.set('subject', wrappedValue); // Pass wrapped value to Livewire component
+                                                                }
+                                                            });
+                                                        });
+                                                
+                                                        document.querySelectorAll('[id^=type_]').forEach(select => {
+                                                            select.addEventListener('change', function() {
+                                                                let component = Livewire.find(select.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                let value = select.value; // Get the selected value
+                                                                component.set('type', value); // Pass the selected value to Livewire component
+                                                            });
+                                                        });
+
+                                                        document.querySelectorAll('[id^=description_]').forEach(textarea => {
+                                                            textarea.addEventListener('change', function() {
+                                                                let component = Livewire.find(textarea.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                if(textarea.value){
+                                                                    let value = textarea.value.trim(); // Get the textarea value and trim whitespace
+                                                                    let wrappedValue = `${textarea.value}`; // Wrap the value in backticks
+
+                                                                    component.set('description', wrappedValue); // Pass wrapped value to Livewire component
+                                                                }
+                                                            });
+                                                        });
+
+                                                        document.querySelectorAll('[id^=date_]').forEach(input => {
+                                                            input.addEventListener('change', function() {
+                                                                let component = Livewire.find(input.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                if (input.value) {
+                                                                    let value = input.value.trim(); // Get the input value and trim whitespace
+                                                                    let wrappedValue = `${input.value}`; // Wrap the value in backticks
+                                                                    component.set('date', wrappedValue); // Pass wrapped value to Livewire component
+                                                                }
+                                                            });
+                                                        });
+
+                                                        // Handle time input changes
+                                                        document.querySelectorAll('[id^=start_]').forEach(input => {
+                                                            input.addEventListener('change', function() {
+                                                                let component = Livewire.find(input.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                if (input.value) {
+                                                                    let value = input.value.trim(); // Get the input value and trim whitespace
+                                                                    let wrappedValue = `${input.value}`; // Wrap the value in backticks
+                                                                    component.set('start', wrappedValue); // Pass wrapped value to Livewire component
+                                                                }
+                                                            });
+                                                        });
+
+                                                        // Handle time input changes
+                                                        document.querySelectorAll('[id^=end_]').forEach(input => {
+                                                            input.addEventListener('change', function() {
+                                                                let component = Livewire.find(input.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                if (input.value) {
+                                                                    let value = input.value.trim(); // Get the input value and trim whitespace
+                                                                    let wrappedValue = `${input.value}`; // Wrap the value in backticks
+                                                                    component.set('end', wrappedValue); // Pass wrapped value to Livewire component
+                                                                }
+                                                            });
+                                                        });
+
+                                                         // Handle select dropdown changes
+                                                        document.querySelectorAll('[id^=publisher_]').forEach(select => {
+                                                            select.addEventListener('change', function() {
+                                                                let component = Livewire.find(select.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                let value = select.value; // Get the selected value
+                                                                component.set('publisher', value); // Pass the selected value to Livewire component
+                                                            });
+                                                        });
+
+                                                        // Handle checkbox changes
+                                                        document.querySelectorAll('[id^=featured_]').forEach(checkbox => {
+                                                            checkbox.addEventListener('change', function() {
+                                                                let component = Livewire.find(checkbox.closest('[wire\\:id]').getAttribute('wire:id'));
+                                                                let value = checkbox.checked; // Get the checked state (true/false)
+                                                                component.set('is_featured', value); // Pass the checked state to Livewire component
+                                                            });
+                                                        });
+
+
+
+                                                    });
+                                                </script>
+                                                
                                             </div>
-                                        </div>
+                                            {{-- <hr class="border-gray-700"> --}}
+                                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                                                        
+                                            <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                <div class="relative w-full max-w-md max-h-full p-4">
+                                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                                        <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                            </svg>
+                                                            <span class="sr-only">Close modal</span>
+                                                        </button>
+                                                            <div class="p-4 text-center md:p-5">
+                                                                <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                                </svg>
+                                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                                <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                    <li>Verify the file exists and can be accessed.</li>
+                                                                    <li>Ensure the employee's email has been added as a viewer.</li>
+                                                                    <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                                    <li>Review and modify these rules if necessary.</li>
+                                                                </ul>
+                                                                <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                                
+                                                                <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                    Yes
+                                                                </button>
+                                                                <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                            </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            
+                                        </form>
+
+
                                     </div>
-                                </form>
-        
-        
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                
                 @endforeach
             </div>
         </div>
@@ -224,7 +452,7 @@
                 <span class="sr-only">Check icon</span>
             </div>
             <div id="toast-message-checkin" class="text-sm font-normal ms-3">Updated</div>
-            <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="toast-container-checkin" aria-label="Close">
+            <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700"  aria-label="Close">
                 <span class="sr-only">Close</span>
                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -234,8 +462,8 @@
     </div>
 
             <!-- Loading screen -->
-            <div wire:loading wire:target="deleteActivity, editActivity" class="load-over">
-                <div wire:loading wire:target="deleteActivity, editActivity" class="loading-overlay">
+            <div wire:loading wire:target="deleteActivity, editActivity " class="load-over z-50">
+                <div wire:loading wire:target="deleteActivity, editActivity " class="loading-overlay z-50">
                     <div class="flex flex-col justify-center items-center">
                         <div class="spinner"></div>
                         <p>Updating...</p>

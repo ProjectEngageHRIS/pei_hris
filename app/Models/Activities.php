@@ -52,6 +52,12 @@ class Activities extends Model
         'is_featured',
     ];
 
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at',
+    ];
+
     protected $casts = [
         'visible_to_list' => 'array',
     ];

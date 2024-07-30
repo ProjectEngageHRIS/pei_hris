@@ -5,15 +5,34 @@ namespace App\Livewire\Activities;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Activities;
+use Livewire\WithFileUploads;
+use App\Models\Dailytimerecord;
 use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\DB;
 
 class ActivitiesGallery extends Component
 {   
+    use WithFileUploads;
+
     public $filter;
 
     #[Locked]
     public $is_head;
+
+
+    // Edit
+    public $type;
+    public $subject;
+    public $poster;
+    public $removedImage = False;
+    public $description;
+    public $date;
+    public $start;
+    public $end;
+    public $publisher;
+    public $is_featured;
+    public $visible_to_list;
+
 
     public function getActivityPhoto($index){
         // $imageFile = $this->editLeaveRequest($this->index);
@@ -24,6 +43,21 @@ class ActivitiesGallery extends Component
     public function deleteActivity($id){
         Activities::where('activity_id', $id)->select('activity_id', 'deleted_at')->update(['deleted_at' => now()]);
         return $this->dispatch('triggerSuccess');
+    }
+
+    public function fillData($data){
+        if($data){
+            $this->type = $data['type'];
+        }
+    }
+
+    public function editAnnouncement($id){
+        dd($id, $this->type, $this->subject, $this->poster, $this->date, $this->start, $this->end, $this->publisher, $this->is_featured, $this->visible_to_list);
+    }
+
+    public function removeImage(){
+        $this->removedImage = True;
+        $this->poster = null;
     }
 
     public function filterListener(){
