@@ -67,12 +67,24 @@ class LoginDashboard extends Component
         $loggedInUser = auth()->user();
         if(!$loggedInUser){
             if($loggedInUser->role_id != 1){
-                return redirect()->to(route('AccountingDashboard'));
+                return redirect()->to(route('LoginDashboard'));
             }
         }
 
         return redirect()->to(route('AccountingDashboard'));
     }
+
+    public function itPortal(){
+        $loggedInUser = auth()->user();
+        if(!$loggedInUser){
+            if($loggedInUser->role_id != 1){
+                return redirect()->to(route('LoginDashboard'));
+            }
+        }
+
+        return redirect()->to(route('ITDashboard'));
+    }
+
     public function render()
     {
         return view('livewire.dashboard.login-dashboard')->layout('components.layouts.loginlayout');

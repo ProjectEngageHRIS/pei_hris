@@ -10,20 +10,19 @@
             </div>
         </a>
         <div class="flex items-center lg:order-2">
-            <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown">
+            <button type="button" class="flex mx-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown">
                 <span class="sr-only">Open user menu</span>
-                @if(is_null($employeeImage) == False)
-                <img
-                    class="w-10 h-10 shadow-xl rounded-full"
-                    src="data:image/gif;base64,{{ $employeeImage }}"
-                    alt="Employee Image"
-                />
-                @else
-                <img class="w-10 h-10 shadow-xl rounded-full"  src="{{ asset( 'storage/photos/avatar/default.png') }}" alt="Employee Image"/>
+                @if($employeeImage)
+                    @php
+                        $employee_image = $this->getImage();
+                    @endphp
+                        <img class="w-8 h-8 rounded-full" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="user photo">
+                    @else
+                        <img class="w-8 h-8 rounded-full" src="{{ asset( 'assets/defaultuser.png') }}" alt="user photo">
                 @endif
             </button>
             <!-- Dropdown menu -->
-            <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
+            <div class="hidden z-50 my-4 w-56 text-base list-none bg-white rounded divide-y divide-gray-100 shadow" id="user-dropdown">
                 <div class="py-3 px-4">
                     <span class="block text-sm font-bold text-gray-900 dark:text-white">{{$employeeName}}</span>
                     <span class="block text-sm text-red-700 font-semibold truncate dark:text-gray-400">{{$employee_id}}</span>
