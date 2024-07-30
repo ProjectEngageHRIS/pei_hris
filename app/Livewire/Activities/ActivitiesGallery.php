@@ -51,8 +51,48 @@ class ActivitiesGallery extends Component
         }
     }
 
+    public function updated($key){
+        if($key == "poster") {
+            $this->removedImage = False;
+        }
+    }
+
     public function editAnnouncement($id){
-        dd($id, $this->type, $this->subject, $this->poster, $this->date, $this->start, $this->end, $this->publisher, $this->is_featured, $this->visible_to_list);
+        $activity = Activities::where('activity_id', $id)->first();
+        // Update fields only if the corresponding property is set
+        if ($this->type) $activity->type = $this->type;
+        if ($this->subject) $activity->subject = $this->subject;
+        if ($this->date) $activity->date = $this->date;
+        if ($this->start) $activity->start = $this->start;
+        if ($this->end) $activity->end = $this->end;
+        if ($this->publisher) $activity->publisher = $this->publisher;
+        if ($this->is_featured !== null) $activity->is_featured = $this->is_featured; // Check for null explicitly
+        if ($this->visible_to_list !== null) $activity->visible_to_list = $this->visible_to_list; // Check for null explicitly
+
+        if ($this->poster){
+            if($this->type == "Announcement"){
+                $activity->poster = $this->poster->store('photos/activities/announcement', 'public');
+            }
+            else if($this->type == "Event"){
+                $activity->poster = $this->poster->store('photos/activities/event', 'public');
+            }
+            else if($this->type == "Seminar"){
+                $activity->poster = $this->poster->store('photos/activities/seminar', 'public');
+            }
+            else if($this->type == "Training"){
+                $activity->poster = $this->poster->store('photos/activities/training', 'public');
+            }
+            else if($this->type == "Others"){
+                $activity->poster = $this->poster->store('photos/activities/others', 'public');
+            } else {
+                $activity->poster = $this->poster->store('photos/activities/notype', 'public');
+            }
+        }
+
+        // Save the updated activity record
+        $activity->update();
+        return $this->dispatch('triggerSuccess');
+        // dd($id, $this->type, $this->subject, $this->poster, $this->date, $this->start, $this->end, $this->publisher, $this->is_featured, $this->visible_to_list);
     }
 
     public function removeImage(){
