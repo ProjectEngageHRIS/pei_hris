@@ -15,107 +15,88 @@ class ActivitiesGallery extends Component
     #[Locked]
     public $is_head;
 
-
-    public function mount(){
-        $loggedInUser = auth()->user()->employee_id;
-        $employeeData = Employee::where('employee_id', $loggedInUser)
-                            ->first();
-
-
-        $dept_head_id = False;
-        foreach($employeeData->is_department_head as $department_id){
-            if($department_id == 1){
-                $dept_head_id = True;
-            }
-        }
-
-        $college_head_id = False;
-        foreach($employeeData->is_college_head as $college_id){
-            if($college_id == 1){
-                $college_head_id = True;
-            }
-        }
-        $this->is_head = $dept_head_id == 1 || $college_head_id == 1;
-
-    }
-
     public function getActivityPhoto($index){
         // $imageFile = $this->editLeaveRequest($this->index);
         $imageFile = Activities::where('activity_id', $index)->value('poster');
         return $imageFile;
     }
 
+    public function deleteActivity($id){
+        Activities::where('activity_id', $id)->select('activity_id', 'deleted_at')->update(['deleted_at' => now()]);
+        return $this->dispatch('triggerSuccess');
+    }
+
     public function filterListener(){
         $loggedInUser = auth()->user();
-        $collegeName = Employee::where('employee_id', $loggedInUser->employee_id)
-                                ->value('college_id');
-        if($loggedInUser->role_id == 0){
-            return Activities::paginate(10);
-        }
-        else if($this->filter == "Announcement"){
-            $activities =  Activities::whereJsonContains('visible_to_list', $collegeName)
-            ->where('type', 'Announcement') // Add additional conditions if needed
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-        }
-        else if($this->filter == "Event"){
-            $activities =  Activities::where(function ($query) use ($collegeName) {
-                        foreach ($collegeName as $college) {
-                        $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-                            $query->orWhereJsonContains('visible_to_list', $college_name);
-                        }
-                        })
-                        ->where('type', 'Event')
-                        ->where('status', '!=', 'Deleted')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(10);
-        }
-        else if($this->filter == "Seminar"){
-            $activities =  Activities::where(function ($query) use ($collegeName) {
-                        foreach ($collegeName as $college) {
-                        $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-                            $query->orWhereJsonContains('visible_to_list', $college_name);
-                        }
-                        })
-                        ->where('type', 'Seminar')
-                        ->where('status', '!=', 'Deleted')
-                        ->orderBy('created_at', 'desc')
-                        ->paginate(10);
-        }
-        else if($this->filter == "Training"){
-            $activities =  Activities::where(function ($query) use ($collegeName) {
-                    foreach ($collegeName as $college) {
-                    $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-                        $query->orWhereJsonContains('visible_to_list', $college_name);
-                    }
-                    })
-                    ->where('type', 'Training')
-                    ->where('status', '!=', 'Deleted')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10);
-        }
-        else if($this->filter == "Others"){
-            $activities = Activities::where(function ($query) use ($collegeName) {
-                    foreach ($collegeName as $college) {
-                    $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-                        $query->orWhereJsonContains('visible_to_list', $college_name);
-                    }
-                    })
-                    ->where('type', 'Others')
-                    ->where('status', '!=', 'Deleted')
-                    ->orderBy('created_at', 'desc')
-                    ->paginate(10);
-        }
-        else{
-            $activities =  Activities::where(function ($query) use ($collegeName) {
-                foreach ($collegeName as $college) {
-                $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
-                    $query->orWhereJsonContains('visible_to_list', $college_name);
-                }
-            })->where('status', '!=', 'Deleted')
-            ->orderBy('created_at', 'desc')
-            ->paginate(10);
-        }
+        // $collegeName = Employee::where('employee_id', $loggedInUser->employee_id)
+        //                         ->value('college_id');
+        // if($loggedInUser->role_id == 0){
+            $activities =  Activities::paginate(10);
+        // }
+        // else if($this->filter == "Announcement"){
+        //     $activities =  Activities::whereJsonContains('visible_to_list', $collegeName)
+        //     ->where('type', 'Announcement') // Add additional conditions if needed
+        //     ->orderBy('created_at', 'desc')
+        //     ->paginate(10);
+        // }
+        // else if($this->filter == "Event"){
+        //     $activities =  Activities::where(function ($query) use ($collegeName) {
+        //                 foreach ($collegeName as $college) {
+        //                 $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
+        //                     $query->orWhereJsonContains('visible_to_list', $college_name);
+        //                 }
+        //                 })
+        //                 ->where('type', 'Event')
+        //                 ->where('status', '!=', 'Deleted')
+        //                 ->orderBy('created_at', 'desc')
+        //                 ->paginate(10);
+        // }
+        // else if($this->filter == "Seminar"){
+        //     $activities =  Activities::where(function ($query) use ($collegeName) {
+        //                 foreach ($collegeName as $college) {
+        //                 $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
+        //                     $query->orWhereJsonContains('visible_to_list', $college_name);
+        //                 }
+        //                 })
+        //                 ->where('type', 'Seminar')
+        //                 ->where('status', '!=', 'Deleted')
+        //                 ->orderBy('created_at', 'desc')
+        //                 ->paginate(10);
+        // }
+        // else if($this->filter == "Training"){
+        //     $activities =  Activities::where(function ($query) use ($collegeName) {
+        //             foreach ($collegeName as $college) {
+        //             $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
+        //                 $query->orWhereJsonContains('visible_to_list', $college_name);
+        //             }
+        //             })
+        //             ->where('type', 'Training')
+        //             ->where('status', '!=', 'Deleted')
+        //             ->orderBy('created_at', 'desc')
+        //             ->paginate(10);
+        // }
+        // else if($this->filter == "Others"){
+        //     $activities = Activities::where(function ($query) use ($collegeName) {
+        //             foreach ($collegeName as $college) {
+        //             $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
+        //                 $query->orWhereJsonContains('visible_to_list', $college_name);
+        //             }
+        //             })
+        //             ->where('type', 'Others')
+        //             ->where('status', '!=', 'Deleted')
+        //             ->orderBy('created_at', 'desc')
+        //             ->paginate(10);
+        // }
+        // else{
+        //     $activities =  Activities::where(function ($query) use ($collegeName) {
+        //         foreach ($collegeName as $college) {
+        //         $college_name = DB::table('colleges')->where('college_id', $college)->value('college_name');
+        //             $query->orWhereJsonContains('visible_to_list', $college_name);
+        //         }
+        //     })->where('status', '!=', 'Deleted')
+        //     ->orderBy('created_at', 'desc')
+        //     ->paginate(10);
+        // }
         return $activities;
     }
 
