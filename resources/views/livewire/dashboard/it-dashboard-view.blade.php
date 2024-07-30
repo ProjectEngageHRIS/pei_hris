@@ -23,21 +23,18 @@
         <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg rounded-8px">
             <!-- Add user button -->
             <form>
-                <button onclick="resetStep(1)" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
-                    Add new item
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
-                        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-                    </svg>
+                <button onclick="resetStep()" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+                    Add new ticket
                 </button>
                 <!-- Main modal -->
                 <div id="add-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                    <div class="relative w-full max-w-md max-h-full p-4">
+                    <div class="relative w-full max-w-md p-4">
                         <!-- Modal content -->
-                        <div class="relative bg-white rounded-lg shadow h-144">
+                        <div class="relative h-full bg-white rounded-lg shadow">
                             <!-- Modal header -->
                             <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
                                 <h3 class="text-xl font-semibold text-gray-900">
-                                    Add new item
+                                    Add new ticket
                                 </h3>
                                 <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="add-modal">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -46,265 +43,25 @@
                                     <span class="sr-only">Close modal</span>
                                 </button>
                             </div>
-                            <!-- Stepper -->
-                            <ol class="flex items-center justify-center w-full p-4">
-                                <li class="flex flex-row items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="flex items-center justify-center text-white border-2 rounded-full done-step size-5 bg-customRed border-customRed">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                    </svg>
-                                    <div class="flex items-center justify-center text-xs border-2 rounded-full number-step size-5 border-customRed"> 1 </div>
-                                    <div class="w-10 h-1 step-indicator"> </div>
-                                </li>
-                                <li class="flex flex-row items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="flex items-center justify-center text-white border-2 rounded-full done-step size-5 bg-customRed border-customRed">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                    </svg>
-                                    <div class="flex items-center justify-center text-xs border-2 rounded-full number-step size-5 border-customRed"> 2 </div>
-                                    <div class="w-10 h-1 step-indicator"> </div>
-                                </li>
-                                <li class="flex flex-row items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="flex items-center justify-center text-white border-2 rounded-full done-step size-5 bg-customRed border-customRed">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                    </svg>
-                                    <div class="flex items-center justify-center text-xs border-2 rounded-full number-step size-5 border-customRed"> 3 </div>
-                                    <div class="w-10 h-1 step-indicator"> </div>
-                                </li>
-                                <li class="flex flex-row items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="flex items-center justify-center text-white border-2 rounded-full done-step size-5 bg-customRed border-customRed">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                    </svg>
-                                    <div class="flex items-center justify-center text-xs border-2 rounded-full number-step size-5 border-customRed"> 4 </div>
-                                    <div class="w-10 h-1 step-indicator"> </div>
-                                </li>
-                                <li class="flex flex-row items-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="flex items-center justify-center text-white border-2 rounded-full done-step size-5 bg-customRed border-customRed">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 12.75 6 6 9-13.5" />
-                                    </svg>
-                                    <div class="flex items-center justify-center text-xs border-2 rounded-full number-step size-5 border-customRed"> 5 </div>
-                                    <div class="w-10 h-1 step-indicator"> </div>
-                                </li>
-                                <li class="">
-                                    <div class="flex items-center justify-center text-xs border-2 rounded-full number-step size-5 border-customRed"> 6 </div>
-                                </li>
-                            </ol>
                             <!-- Modal body -->
-                            <div class="p-4 overflow-y-scroll max-h-[450px] md:p-5">
-                                <form id="stepperForm" class="space-y-4" action="#">
-                                    <!-- Personal Information 1-->
-                                    <div id="step-1" class="step">
-                                        <p class="font-semibold text-md text-customGray1">Personal Information</p>
-                                        <hr class="my-4 border-gray-300">
-                                        <div>
-                                            <label for="fname" class="block mt-2 mb-2 text-sm font-medium text-customGray1">First Name <span class="text-red-600">*</span></label>
-                                            <input type="text" name="fname" id="fname" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter First Name" required>
-                                        </div>
-                                        <div>
-                                            <label for="mname" class="block mb-2 text-sm font-medium text-customGray1">Middle Name <span class="text-red-600">*</span></label>
-                                            <input type="text" name="mname" id="mname" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Middle Name"required>
-                                        </div>
-                                        <div>
-                                            <label for="lname" class="block mb-2 text-sm font-medium text-customGray1">Last Name <span class="text-red-600">*</span></label>
-                                            <input type="text" name="lname" id="lname" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Last Name"required>
-                                        </div>
-                                        <div>
-                                            <label for="nn" class="block mb-2 text-sm font-medium text-customGray1">Nickname <span class="text-red-600">*</span></label>
-                                            <input type="text" name="nn" id="nn" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Nickname"required>
-                                        </div>
-                                        <div>
-                                            <label for="status" class="block mb-2 text-sm font-medium text-customGray1">status <span class="text-red-600">*</span></label>
-                                            <select name="status" id="status" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                <option value="" selected>Select status</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="bdate" class="block mb-2 text-sm font-medium text-customGray1">Birth Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="bdate" id="bdate" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
+                            <div class="p-4 overflow-y-scroll max-h-[450px]">
+                                <form class="" action="#">
+                                    <div id="name-container" class="grid grid-cols-2">
+                                        <label for="fname" class="block col-span-2 mb-2 text-sm font-medium text-customGray1">Name <span class="text-red-600">*</span></label>
+                                        <input type="text" name="fname" id="fname" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Name" required>
+                                        <button onclick="changeField()" class="col-span-1 col-start-2 text-sm hover:underline justify-self-end text-medium text-customRed"> Enter Employee ID instead </button>
                                     </div>
-                                    <!-- Personal Information 2 -->
-                                    <div id="step-2" class="hidden step">
-                                        <p class="font-semibold text-md text-customGray1">Other Information</p>
-                                        <hr class="my-4 border-gray-300">
-                                        <div>
-                                            <label for="age" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Age <span class="text-red-600">*</span></label>
-                                            <input type="text" name="age" id="age" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Age"required>
-                                        </div>
-                                        <div>
-                                            <label for="cs" class="block mb-2 text-sm font-medium text-customGray1">Civil Status <span class="text-red-600">*</span></label>
-                                            <select name="cs" id="cs" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                <option value="" selected>Select Civil Status</option>
-                                                <option value="single">Single</option>
-                                                <option value="married">Married</option>
-                                                <option value="separated">Separated or Divorced</option>
-                                                <option value="widowed">Widowed</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="rel" class="block mb-2 text-sm font-medium text-customGray1">Religion <span class="text-red-600">*</span></label>
-                                            <input type="text" name="rel" id="rel" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Religion"required>
-                                        </div>
-                                        <div>
-                                            <label for="cpnum" class="block mb-2 text-sm font-medium text-customGray1">Cellphone Number <span class="text-red-600">*</span></label>
-                                            <input type="text" name="cpnum" id="cpnum" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Cellphone Number"required>
-                                        </div>
-                                        <div>
-                                            <label for="eadd" class="block mb-2 text-sm font-medium text-customGray1">Email Address <span class="text-red-600">*</span></label>
-                                            <input type="email" name="eadd" id="eadd" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Email Address"required>
-                                        </div>
-                                        <div>
-                                            <label for="hadd" class="block mb-2 text-sm font-medium text-customGray1">Home Address <span class="text-red-600">*</span></label>
-                                            <input type="text" name="hadd" id="hadd" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Home Address"required>
-                                        </div>
+                                    <div id="employee-id-container" class="grid grid-cols-2">
+                                        <label for="eid" class="block col-span-2 mb-2 text-sm font-medium text-customGray1">Employee ID <span class="text-red-600">*</span></label>
+                                        <input type="text" name="eid" id="eid" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Employee ID" required>
+                                        <button onclick="changeField()" class="col-span-1 col-start-2 text-sm hover:underline justify-self-end text-medium text-customRed"> Enter Name instead </button>
                                     </div>
-                                    <!-- Emergency Contact -->
-                                    <div id="step-3" class="hidden step">
-                                        <p class="font-semibold text-md text-customGray1">Emergency Contact</p>
-                                        <hr class="my-4 border-gray-300">
-                                        <div>
-                                            <label for="name" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Name <span class="text-red-600">*</span></label>
-                                            <input type="text" name="name" id="name" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Age"required>
-                                        </div>
-                                        <div>
-                                            <label for="rel" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Relationship <span class="text-red-600">*</span></label>
-                                            <input type="text" name="rel" id="rel" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Age"required>
-                                        </div>
-                                        <div>
-                                            <label for="address" class="block mb-2 text-sm font-medium text-customGray1">Home Address <span class="text-red-600">*</span></label>
-                                            <input type="text" name="address" id="address" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Religion"required>
-                                        </div>
-                                        <div>
-                                            <label for="pnum" class="block mb-2 text-sm font-medium text-customGray1">Phone Number <span class="text-red-600">*</span></label>
-                                            <input type="text" name="pnum" id="pnum" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Cellphone Number"required>
-                                        </div>
+                                    <div>
+                                        <label for="issue" class="block mb-2 text-sm font-medium text-customGray1">Issue <span class="text-red-600">*</span></label>
+                                        <input type="text" name="issue" id="issue" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Issue" required>
                                     </div>
-                                    <!-- Company details -->
-                                    <div id="step-4" class="hidden step">
-                                        <p class="font-semibold text-md text-customGray1">Company Details</p>
-                                        <hr class="my-4 border-gray-300">
-                                        <div>
-                                            <label for="enum" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Employee Number <span class="text-red-600">*</span></label>
-                                            <input type="text" name="enum" id="enum" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Employee Number"required>
-                                        </div>
-                                        <div>
-                                            <label for="dept" class="block mb-2 text-sm font-medium text-customGray1">Department <span class="text-red-600">*</span></label>
-                                            <select name="dept" id="dept" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                <option value="" selected>Select Department</option>
-                                                <option value="hr">HR and Admin</option>
-                                                <option value="recruitment">Recruitment</option>
-                                                <option value="cxs">CXS</option>
-                                                <option value="overseas">Overseas Recruitment</option>
-                                                <option value="pei-sl">PEI-SL Temps DO-74</option>
-                                                <option value="corporate">Corporate Accounting and Finance</option>
-                                                <option value="accounting">Accounting Operations</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Type <span class="text-red-600">*</span></label>
-                                            <select name="etype" id="etype" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                <option value="" selected>Select Department</option>
-                                                <option value="internals">Internals</option>
-                                                <option value="ojt">OJT</option>
-                                                <option value="pei">PEI-CCS</option>
-                                                <option value="rapid">Rapid</option>
-                                                <option value="rapidmob">Rapid Mobility</option>
-                                                <option value="upskills">Upskills</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="company" class="block mb-2 text-sm font-medium text-customGray1">Company <span class="text-red-600">*</span></label>
-                                            <select name="company" id="company" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                <option value="" selected>Select Department</option>
-                                                <option value="hr">PEI</option>
-                                                <option value="recruitment">SL Search</option>
-                                                <option value="cxs">SL Temps</option>
-                                                <option value="overseas">WESEARCH</option>
-                                                <option value="pei-sl">PEI-Upskills</option>
-                                            </select>
-                                        </div>
-                                        <div>
-                                            <label for="pos" class="block mb-2 text-sm font-medium text-customGray1">Position <span class="text-red-600">*</span></label>
-                                            <input type="text" name="pos" id="pos" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Position"required>
-                                        </div>
-                                        <div class="relative flex flex-row w-full">
-                                            <div class="flex flex-col w-full">
-                                                <label for="password" class="block mb-2 text-sm font-medium text-customGray1">Password <span class="text-red-600">*</span></label>
-                                                <input type="password" name="password" id="password" placeholder="••••••••" class="w-full bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block py-2.5 pl-2.5 pr-8" required>
-                                            </div>
-                                            <button class="absolute right-2 bottom-[21px] size-4 text-customGray1 hover:text-customRed" onclick="togglePassword()">
-
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4" id="eyeopen">
-                                                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-                                                    <path fillRule="evenodd" d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" clipRule="evenodd" />
-                                                  </svg>
-
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4" id="eyeclose">
-                                                    <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                                                    <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                                                    <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <!-- History 1 -->
-                                    <div id="step-5" class="hidden step">
-                                        <p class="font-semibold text-md text-customGray1">Work History</p>
-                                        <hr class="my-4 border-gray-300">
-                                        <div>
-                                            <label for="com" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Company <span class="text-red-600">*</span></label>
-                                            <input type="text" name="com" id="com" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Previous Company"required>
-                                        </div>
-                                        <div>
-                                            <label for="pos" class="block mb-2 text-sm font-medium text-customGray1">Position <span class="text-red-600">*</span></label>
-                                            <input type="text" name="pos" id="pos" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Previous Position"required>
-                                        </div>
-                                        <div>
-                                            <label for="sdate" class="block mb-2 text-sm font-medium text-customGray1">Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="sdate" id="sdate" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
-                                        <div>
-                                            <label for="edate" class="block mb-2 text-sm font-medium text-customGray1">Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="edate" id="edate" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
-                                    </div>
-                                    <!-- History 2 -->
-                                    <div id="step-6" class="hidden step">
-                                        <p class="font-semibold text-md text-customGray1">Education History</p>
-                                        <hr class="my-4 border-gray-300">
-                                        <p class="text-sm font-semibold text-customGray1">College</p>
-                                        <div>
-                                            <label for="school" class="block mt-2 mb-2 text-sm font-medium text-customGray1">School <span class="text-red-600">*</span></label>
-                                            <input type="text" name="school" id="school" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Previous School"required>
-                                        </div>
-                                        <div>
-                                            <label for="sdate" class="block mb-2 text-sm font-medium text-customGray1">Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="sdate" id="sdate" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
-                                        <div>
-                                            <label for="edate" class="block mb-2 text-sm font-medium text-customGray1">Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="edate" id="edate" class="bg-gray-50 mb-4 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
-                                        <hr class="my-4 border-gray-300">
-                                        <p class="mt-2 mb-2 text-sm font-semibold text-customGray1">High School</p>
-                                        <div>
-                                            <label for="school" class="block mb-2 text-sm font-medium text-customGray1">School <span class="text-red-600">*</span></label>
-                                            <input type="text" name="school" id="school" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Previous School"required>
-                                        </div>
-                                        <div>
-                                            <label for="sdate" class="block mb-2 text-sm font-medium text-customGray1">Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="sdate" id="sdate" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
-                                        <div>
-                                            <label for="edate" class="block mb-2 text-sm font-medium text-customGray1">Start Date <span class="text-red-600">*</span></label>
-                                            <input type="date" name="edate" id="edate" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        </div>
-                                        </div>
-                                    <!-- Stepper buttons -->
-                                    <div class="grid grid-cols-2 my-2">
-                                        <button type="submit" id="prevBtn" class="justify-self-start col-start-1 col-span-1 text-gray-700 hover:text-white hover:bg-gray-400 font-medium text-sm px-5 py-2.5 rounded-lg bg-gray-200" onclick="changeStep(-1)">Previous</button>
-                                        <button type="submit" id="nextBtn" class="justify-self-end col-start-2 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium text-sm px-5 py-2.5 rounded-lg " onclick="changeStep(1)">Next</button>
-                                        <button type="submit" id="createBtn" class="justify-self-end col-start-2 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center" onclick="changeStep(0)">Create account</button>
+                                    <div class="grid grid-cols-2 my-3">
+                                        <button type="submit" id="createBtn" class="justify-self-end col-start-2 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Ticket</button>
                                     </div>
                                 </form>
                             </div>
@@ -670,74 +427,15 @@
 </div>
 
 <script>
-    let currentStep = 1;
-    let addInputs = document.querySelectorAll('input');
-    let addSelect = document.querySelectorAll('select');
-    let eyeButton = document.getElementById('')
-    let eyeopen = document.getElementById("eyeopen");
-    let eyeclose = document.getElementById("eyeclose");
-    let password = document.getElementById("password");
-
-    function togglePassword() {
-        if (password.type === "password") {
-            password.type = "text";
-            password.placeholder = "password";
-            document.getElementById("eyeclose").classList.add('hidden');
-            document.getElementById("eyeopen").classList.remove('hidden');
-        } else {
-            password.type = "password";
-            password.placeholder = "••••••••";
-            document.getElementById("eyeclose").classList.remove('hidden');
-            document.getElementById("eyeopen").classList.add('hidden');
-        }
+    function resetStep() {
+        document.getElementById('name-container').classList.add('hidden');
+        document.getElementById('employee-id-container').classList.remove('hidden');
     }
 
-    function resetStep(step) {
-        currentStep = step;
-        showStep(currentStep);
-        document.getElementById('prevBtn').classList.add('hidden');
-        document.getElementById('createBtn').classList.add('hidden');
-        addInputs.forEach(input => input.value = '');
-        addSelect.forEach(input => input.value = '');
-        password.type = "password";
-        password.placeholder = "••••••••";
-        document.getElementById("eyeclose").classList.remove('hidden');
-        document.getElementById("eyeopen").classList.add('hidden');
+    function changeField() {
+        document.getElementById('name-container').classList.toggle('hidden');
+        document.getElementById('employee-id-container').classList.toggle('hidden');
+        document.getElementById('fname').value = ""
+        document.getElementById('eid').value = ""
     }
-
-    function showStep(step) {
-        document.querySelectorAll('.number-step').forEach((numberStepper, index) => {
-            numberStepper.classList.toggle('hidden', index < step - 1);
-        });
-
-        document.querySelectorAll('.done-step').forEach((doneStepper, index) => {
-            doneStepper.classList.toggle('hidden', index >= step - 1);
-        });
-
-        document.querySelectorAll('.step').forEach((stepElement, index) => {
-            stepElement.classList.toggle('hidden', index !== step - 1);
-        });
-
-        document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
-            indicator.classList.toggle('bg-customRed', index < step-1);
-            indicator.classList.toggle('bg-gray-100', index >= step-1);
-        });
-    }
-
-    function changeStep(step) {
-        currentStep += step;
-        currentStep = Math.max(1, Math.min(currentStep, 6)); // Ensure the step stays between 1 and 6
-        showStep(currentStep);
-
-        document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
-        document.getElementById('nextBtn').classList.toggle('hidden', currentStep === 6);
-        document.getElementById('createBtn').classList.toggle('hidden', currentStep < 6);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        showStep(currentStep);
-        document.getElementById('prevBtn').classList.add('hidden');
-        document.getElementById('createBtn').classList.add('hidden');
-    });
-
 </script>
