@@ -5,6 +5,7 @@ namespace App\Livewire\Activities;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Activities;
+use Livewire\WithPagination;
 use Livewire\WithFileUploads;
 use App\Models\Dailytimerecord;
 use Livewire\Attributes\Locked;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 class ActivitiesGallery extends Component
 {   
     use WithFileUploads;
+    use WithPagination;
 
     public $filter;
 
@@ -105,7 +107,7 @@ class ActivitiesGallery extends Component
         // $collegeName = Employee::where('employee_id', $loggedInUser->employee_id)
         //                         ->value('college_id');
         // if($loggedInUser->role_id == 0){
-            $activities =  Activities::paginate(10);
+            $activities =  Activities::paginate(1);
         // }
         // else if($this->filter == "Announcement"){
         //     $activities =  Activities::whereJsonContains('visible_to_list', $collegeName)

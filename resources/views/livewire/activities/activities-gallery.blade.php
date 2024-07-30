@@ -31,7 +31,7 @@
         </div>
     @endif --}}
    
-    <section class="bg-white dark:bg-gray-900 pb-24 px-8 rounded-lg">
+    <section class="bg-white dark:bg-gray-900 pb-24 px-8 rounded-t-lg">
         <div class="px-1 mx-auto pt-8">
             <h2 class="mb-4 text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Activities</h2>
             <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
@@ -393,12 +393,7 @@
                                             </div>
                                             {{-- <hr class="border-gray-700"> --}}
                                             <button @click="openEditForm = false"  type="submit" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Announcement</button>
-                                                                        
-
-                                            
                                         </form>
-
-
                                     </div>
                                 </div>
                             </div>
@@ -406,8 +401,13 @@
                     </div>
                 @endforeach
             </div>
+          
         </div>
+        
     </section>
+    <div class="p-4  bg-gray-100 w-full rounded-b-lg">
+        {{ $ActivitiesData->links(data : ['scrollTo' => False]) }}
+    </div>
     
     <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center w-full h-full bg-gray-800 bg-opacity-50">
         <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
