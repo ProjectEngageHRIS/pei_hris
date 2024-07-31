@@ -178,9 +178,8 @@ class ActivitiesGallery extends Component
         $activitydata->is_featured = $this->is_featured ?? 0;
         $activitydata->visible_to_list = $this->visible_to_list;
 
-        $this->js("alert('Activity Created!')"); 
         $activitydata->save();
-        return redirect()->to(route('ActivitiesGallery'));
+        return $this->dispatch('triggerSuccess');
     }
 
     public function removeImage(){
@@ -270,6 +269,6 @@ class ActivitiesGallery extends Component
     {
         return view('livewire.activities.activities-gallery', [
             'ActivitiesData' => $this->filterListener(),
-        ])->extends('components.layouts.app');
+        ])->layout('components.layouts.hr-navbar');
     }
 }

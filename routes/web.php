@@ -438,9 +438,9 @@ Route::middleware('auth')->group(function (){
 Route::middleware('auth')->group(function (){
     Route::get("/activities", ActivitiesGallery::class)->name('ActivitiesGallery');
 
-    Route::get("/activities/form", ActivitiesForm::class)->name('ActivitiesForm');
+    // Route::get("/activities/form", ActivitiesForm::class)->name('ActivitiesForm');
 
-    Route::get("/activities/form/edit/{index}", ActivitiesUpdate::class)->name('ActivitiesUpdate');
+    // Route::get("/activities/form/edit/{index}", ActivitiesUpdate::class)->name('ActivitiesUpdate');
 
     Route::get("/activities/view/{index}", ActivitiesView::class)->name('ActivitiesView');
 

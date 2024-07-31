@@ -72,7 +72,7 @@
                                             Subject <span class="text-red-600">*</span>
                                         </label>
                                         <div class="grid grid-cols-1">
-                                            <input id="subject" wire:model="subject" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                            <input id="subject" wire:model="subject" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed"></input>
                                             @error('subject')
                                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('subject_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subject_container').focus();">
                                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -123,7 +123,7 @@
                                             Description <span class="text-red-600">*</span>
                                         </label>
                                         <div class="grid grid-cols-1">
-                                            <textarea id="description" rows="5" wire:model="description" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></textarea>
+                                            <textarea id="description" rows="5" wire:model="description" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed"></textarea>
                                             @error('description')
                                                 <div class="text-sm transition transform alert alert-danger"
                                                     x-data x-init="document.getElementById('description_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('description_container').focus();">
@@ -139,7 +139,7 @@
                                                 Date of Event<span class="text-red-600">*</span>
                                             </label>
                                             <input id="date" type="date" wire:model="date"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required>
                                             @error('date')
                                                 <div class="transition transform alert alert-danger" x-init="$el.closest('label').scrollIntoView()">
@@ -152,7 +152,7 @@
                                                 Start Time <span class="text-red-600">*</span>
                                             </label>
                                             <input id="start" type="time" wire:model="start"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required>
                                             @error('start')
                                                 <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
@@ -165,7 +165,7 @@
                                                 End Time <span class="text-red-600">*</span>
                                             </label>
                                             <input id="end" type="time" wire:model="end"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required>
                                             @error('end')
                                                 <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
@@ -180,7 +180,7 @@
                                                 Publisher<span class="text-red-600">*</span>
                                             </label>
                                             <select id="publisher" name="publisher" wire:model="publisher"
-                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
                                                 <option value="">Select a publisher</option>
                                                 <option value="You">You</option>
                                                 <option value="Department">Your Department</option>
@@ -192,9 +192,9 @@
                                             @enderror
                                         </div>
                                         <div class="items-center">
-                                            <label for="featured" class="flex items-center cursor-pointer">
-                                                <input type="checkbox" wire:model="is_featured" class="sr-only peer">
-                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                            <label  class="flex items-center cursor-pointer">
+                                                <input id="featured" type="checkbox" wire:model="featured"  class="sr-only peer" >
+                                                <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-red-300 dark:peer-focus:ring-customRed dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-customRed"></div>
                                                 <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Featured?</span>
                                             </label>
                                             @error('is_featured')
@@ -208,7 +208,7 @@
                                     <div>
                                         <div wire:ignore class="col-span-4">
                                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Visible To List<span class="text-red-600">*</span></label>
-                                            <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
                                                 <optgroup label="Employee Names" ></optgroup>
                                                 <option value="PEI">PEI</option>
                                                 <option value="SL SEARCH">SL SEARCH</option>
@@ -234,14 +234,14 @@
                                                 closeOnSelect: false,
                                             }).on('select2:open', function() {
                                                 // Apply Tailwind CSS classes to the Select2 dropdown
-                                                $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500');
+                                                $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed');
                                                 $('.select2-results__options').addClass('p-2 ');
                                             }).on('change', function() {
                                                 let data = $(this).val();
                                                 console.log(data);
                                                 @this.visible_to_list = data;
                                             });
-                                            $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2');
+                                            $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed p-2');
                                     
                                             // Toggle modal visibility when form submission is completed
                                             Livewire.on('formSubmitted', () => {
@@ -364,7 +364,7 @@
         <div class="px-1 mx-auto pt-8">
             <h2 class="mb-4 text-3xl text-center font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Activities</h2>
             <div class="flex items-center justify-center py-4 md:py-8 flex-wrap">
-                <button type="button" wire:click="fillerSetter('All')" class="hover:text-white border transition-transform duration-300 hover:scale-105 border-customRed hover:bg-customRed text-customRed rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800 {{ $filter === 'All' ? 'bg-customRed text-white' : 'bg-white' }}">All categories</button>
+                <button type="button" wire:click="fillerSetter('All')" class="hover:text-white border transition-transform duration-300 hover:scale-105 border-customRed hover:bg-customRed text-customRed rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:border-customRed dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:bg-gray-900 dark:focus:ring-blue-800 {{ $filter === 'All' ? 'bg-customRed text-white' : 'bg-white' }}">All categories</button>
                 <button type="button" wire:click="fillerSetter('Announcement')" class="text-gray-900 transition-transform duration-300 hover:scale-105 border border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Announcement' ? 'bg-customRed text-white' : 'bg-white' }}">Announcement</button>
                 <button type="button" wire:click="fillerSetter('Event')" class="text-gray-900 border transition-transform duration-300 hover:scale-105 border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Event' ? 'bg-customRed text-white' : 'bg-white' }}">Event</button>
                 <button type="button" wire:click="fillerSetter('Seminar')" class="text-gray-900 border transition-transform duration-300 hover:scale-105 border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Seminar' ? 'bg-customRed text-white' : 'bg-white' }}">Seminar</button>
@@ -443,7 +443,7 @@
                                                         Subject <span class="text-red-600">*</span>
                                                     </label>
                                                     <div class="grid grid-cols-1">
-                                                        <input id="subject_{{$loop->index}}" value="{{ $data->subject }}" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"></input>
+                                                        <input id="subject_{{$loop->index}}" value="{{ $data->subject }}" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed"></input>
                                                         @error('subject')
                                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('subject_container{{$loop->index}}').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subject_container{{$loop->index}}').focus();">
                                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -498,7 +498,7 @@
                                                         Description <span class="text-red-600">*</span>
                                                     </label>
                                                     <div class="grid grid-cols-1">
-                                                        <textarea id="description_{{$loop->index}}" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ $data->description }}</textarea>
+                                                        <textarea id="description_{{$loop->index}}" rows="5" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">{{ $data->description }}</textarea>
                                                         @error('description')
                                                             <div class="text-sm transition transform alert alert-danger"
                                                                 x-data x-init="document.getElementById('description_container{{$loop->index}}').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('description_container{{$loop->index}}').focus();">
@@ -514,7 +514,7 @@
                                                             Date of Event<span class="text-red-600">*</span>
                                                         </label>
                                                         <input id="date_{{$loop->index}}" type="date" value="{{$data->date}}" 
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             required>
                                                         @error('date')
                                                             <div class="transition transform alert alert-danger" x-init="$el.closest('label').scrollIntoView()">
@@ -527,7 +527,7 @@
                                                             Start Time <span class="text-red-600">*</span>
                                                         </label>
                                                         <input id="start_{{$loop->index}}" type="time" value="{{$data->start}}" 
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             required>
                                                         @error('start')
                                                             <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
@@ -540,7 +540,7 @@
                                                             End Time <span class="text-red-600">*</span>
                                                         </label>
                                                         <input id="end_{{$loop->index}}" type="time" value="{{$data->end}}" 
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             required>
                                                         @error('end')
                                                             <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
@@ -555,7 +555,7 @@
                                                             Publisher<span class="text-red-600">*</span>
                                                         </label>
                                                         <select id="publisher_{{$loop->index}}" name="publisher" 
-                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
                                                             <option value="">Select a publisher</option>
                                                             <option value="You">You</option>
                                                             <option value="Department">Your Department</option>
@@ -584,7 +584,7 @@
                                                 <div>
                                                     <div wire:ignore class="col-span-4">
                                                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Visible To List<span class="text-red-600">*</span></label>
-                                                        <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
                                                             <optgroup label="Employee Names" ></optgroup>
                                                             <option @if(in_array("PEI", $data->visible_to_list)) selected @endif value="PEI">PEI</option>
                                                             <option @if(in_array("SL SEARCH", $data->visible_to_list)) selected @endif value="SL SEARCH">SL SEARCH</option>
@@ -610,14 +610,14 @@
                                                             closeOnSelect: false,
                                                         }).on('select2:open', function() {
                                                             // Apply Tailwind CSS classes to the Select2 dropdown
-                                                            $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500');
+                                                            $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed');
                                                             $('.select2-results__options').addClass('p-2 ');
                                                         }).on('change', function() {
                                                             let data = $(this).val();
                                                             console.log(data);
                                                             @this.visible_to_list = data;
                                                         });
-                                                        $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2');
+                                                        $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed p-2');
                                                 
                                                         // Toggle modal visibility when form submission is completed
                                                         Livewire.on('formSubmitted', () => {
