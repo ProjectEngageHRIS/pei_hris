@@ -11,11 +11,13 @@ use Livewire\WithFileUploads;
 use App\Models\Dailytimerecord;
 use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithoutUrlPagination;
 
 class ActivitiesGallery extends Component
 {   
     use WithFileUploads;
     use WithPagination;
+    use WithoutUrlPagination;
 
     public $filter;
 
@@ -94,7 +96,7 @@ class ActivitiesGallery extends Component
 
         // Save the updated activity record
         $activity->update();
-        return $this->dispatch('triggerSuccess');
+        return $this->dispatch('triggerSuccess', modal: "editForm");
         // dd($id, $this->type, $this->subject, $this->poster, $this->date, $this->start, $this->end, $this->publisher, $this->is_featured, $this->visible_to_list);
     }
 
@@ -114,11 +116,12 @@ class ActivitiesGallery extends Component
     ];
 
     public function addAnnouncement(){
-       
+
         foreach($this->rules as $rule => $validationRule){
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
         }   
+
 
         $dateToday = Carbon::now()->toDateString();;
         $this->validate(['date' => 'required|after_or_equal:'.$dateToday]);
@@ -179,7 +182,7 @@ class ActivitiesGallery extends Component
         $activitydata->visible_to_list = $this->visible_to_list;
 
         $activitydata->save();
-        return $this->dispatch('triggerSuccess');
+        $this->dispatch('triggerSuccess', modal: "addForm");
     }
 
     public function removeImage(){
@@ -188,18 +191,34 @@ class ActivitiesGallery extends Component
     }
 
     public function filterListener(){
-        $loggedInUser = auth()->user();
+        // $loggedInUser = auth()->user();
         // $collegeName = Employee::where('employee_id', $loggedInUser->employee_id)
         //                         ->value('college_id');
         // if($loggedInUser->role_id == 0){
-            $activities =  Activities::paginate(1);
+            // $activities =  Activities::paginate(1);
         // }
-        // else if($this->filter == "Announcement"){
-        //     $activities =  Activities::whereJsonContains('visible_to_list', $collegeName)
-        //     ->where('type', 'Announcement') // Add additional conditions if needed
-        //     ->orderBy('created_at', 'desc')
-        //     ->paginate(10);
-        // }
+        $activities =  Activities::query();
+
+        
+        if($this->filter == "Announcement"){
+            $activities =  Activities::where('type', 'Announcement') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Event"){
+            $activities =  Activities::where('type', 'Event') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Seminar"){
+            $activities =  Activities::where('type', 'Seminar') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Training"){
+            $activities =  Activities::where('type', 'Training') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Others"){
+            $activities =  Activities::where('type', 'Others') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        }
+
+        $activities = $activities->paginate(6);
+
         // else if($this->filter == "Event"){
         //     $activities =  Activities::where(function ($query) use ($collegeName) {
         //                 foreach ($collegeName as $college) {

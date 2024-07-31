@@ -23,9 +23,9 @@
    
 
     {{-- @if ($is_head == 1) --}}
-    <div class="flex justify-end" x-data="{openAddForm: false, openAddWarningButton: false}">
+    <div class="flex justify-end" x-data="{openAddForm: false}" @close-modal-add.window="openAddForm = false;">
         <button type="button" @click="openAddForm = true" class="text-white mb-8 transition-transform duration-300 hover:scale-105 bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Activity</button>
-        <div x-show="openAddForm"  class="fixed inset-0 z-50 flex items-center justify-center">
+        <div x-cloak x-show="openAddForm"  class="fixed inset-0 z-50 flex items-center justify-center">
             <div class="fixed inset-0 bg-black opacity-50"></div>
             <div tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-4xl max-h-full p-4 bg-white rounded-lg shadow-lg">
                 <div class="relative w-full max-w-4xl max-h-full p-4">
@@ -34,7 +34,7 @@
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
                             <h3 class="text-xl font-semibold text-gray-900 ">
-                                Add Announcement
+                                Add Activity
                             </h3>
                             <button @click="openAddForm = false" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -67,12 +67,12 @@
                                         @enderror
                                     </div>
                                     
-                                    <div id="subject_container" class="grid grid-cols-1 rounded-lg shadow">
+                                    <div id="subject_container" class="grid grid-cols-1 rounded-lg">
                                         <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                             Subject <span class="text-red-600">*</span>
                                         </label>
                                         <div class="grid grid-cols-1">
-                                            <input id="subject" wire:model="subject" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed"></input>
+                                            <input type="text" id="subject" wire:model="subject" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"></input>
                                             @error('subject')
                                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('subject_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subject_container').focus();">
                                                 <span class="text-xs text-red-500">{{ $message }}</span>
@@ -228,7 +228,6 @@
 
                                     <script>
                                         $(document).ready(function() {
-                                            
                                             $('.js-example-basic-multiple').select2({
                                                 placeholder: 'Select an option',
                                                 closeOnSelect: false,
@@ -345,7 +344,7 @@
                                     
                                 </div>
                                 {{-- <hr class="border-gray-700"> --}}
-                                <button @click="openAddForm = false"  type="submit" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Announcement</button>
+                                <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Activity</button>
                             </form>
                         </div>
                     </div>
@@ -371,7 +370,7 @@
                 <button type="button" wire:click="fillerSetter('Training')" class="text-gray-900 border transition-transform duration-300 hover:scale-105 border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Training' ? 'bg-customRed text-white' : 'bg-white' }}">Training</button>
                 <button type="button" wire:click="fillerSetter('Others')" class="text-gray-900 border transition-transform duration-300 hover:scale-105 border-white hover:bg-customRed hover:text-white dark:border-gray-900 dark:bg-gray-900 dark:hover:border-gray-700 focus:ring-4 focus:outline-none focus:ring-gray-300 rounded-full text-base font-medium px-5 py-2.5 text-center me-3 mb-3 dark:text-white dark:focus:ring-gray-800 {{ $filter === 'Others' ? 'bg-customRed text-white' : 'bg-white' }}">Others</button>
             </div>
-            <div x-data="{openEditForm: false, currentEditModal: null, openAddWarningButton: false}" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
+            <div x-cloak x-data="{openEditForm: false, currentEditModal: null, openAddWarningButton: false}" @close-modal-edit.window="openEditForm = false; currentEditModal = null;" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 place-items-center">
                 @foreach ($ActivitiesData as $data)
                     <div class="w-full h-full object-contain bg-gray-50 border-2 border-gray-300 border-solid p-4 rounded-lg transition-transform duration-300 hover:shadow-lg">
                         <div class="flex justify-end items-center mt-2 pb-2 space-x-2">
@@ -405,7 +404,7 @@
                                     <!-- Modal header -->
                                     <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
                                         <h3 class="text-xl font-semibold text-gray-900 ">
-                                            Edit Announcement
+                                            Edit Activity
                                         </h3>
                                         <button @click="openEditForm = false" type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
                                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -438,12 +437,12 @@
                                                     @enderror
                                                 </div>
                                                 
-                                                <div id="subject_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg shadow">
+                                                <div id="subject_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg">
                                                     <label for="subject" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                                                         Subject <span class="text-red-600">*</span>
                                                     </label>
                                                     <div class="grid grid-cols-1">
-                                                        <input id="subject_{{$loop->index}}" value="{{ $data->subject }}" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed"></input>
+                                                        <input id="subject_{{$loop->index}}" value="{{ $data->subject }}" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed"></input>
                                                         @error('subject')
                                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('subject_container{{$loop->index}}').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('subject_container{{$loop->index}}').focus();">
                                                             <span class="text-xs text-red-500">{{ $message }}</span>
@@ -721,7 +720,7 @@
                                                 
                                             </div>
                                             {{-- <hr class="border-gray-700"> --}}
-                                            <button @click="openEditForm = false"  type="submit" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Announcement</button>
+                                            <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Activity</button>
                                         </form>
                                     </div>
                                 </div>
@@ -757,11 +756,11 @@
     </div>
 
             <!-- Loading screen -->
-            <div wire:loading wire:target="deleteActivity, editActivity, editAnnouncement" class="load-over z-50">
-                <div wire:loading wire:target="deleteActivity, editActivity, editAnnouncement " class="loading-overlay z-50">
+            <div wire:loading wire:target="deleteActivity, editActivity, editAnnouncement, addAnnouncement" class="load-over z-50">
+                <div wire:loading wire:target="deleteActivity, editActivity, editAnnouncement, addAnnouncement" class="loading-overlay z-50">
                     <div class="flex flex-col justify-center items-center">
                         <div class="spinner"></div>
-                        <p>Updating...</p>
+                        <p> Updating...</p>
                     </div>
                 </div>
             </div>
@@ -830,10 +829,15 @@
             if (toastContainer && toastMessage) {
                 setTimeout(() => {
                     toastContainer.classList.remove('hidden');
-                }, 10); // Hide after 5 seconds
+                }, 10); 
                 setTimeout(() => {
                     toastContainer.classList.add('hidden');
-                }, 3000); // Hide after 5 seconds
+                }, 2000); // Hide after 2 seconds
+            }
+            if (event.modal === 'editForm') {
+                window.dispatchEvent(new CustomEvent('close-modal-edit'));
+            } else if (event.modal === 'addForm') {
+                window.dispatchEvent(new CustomEvent('close-modal-add'));
             }
         });
     });
