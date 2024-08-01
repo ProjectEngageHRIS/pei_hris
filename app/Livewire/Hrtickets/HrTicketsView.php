@@ -7,6 +7,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
 use App\Models\Leaverequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class HrTicketsView extends Component
@@ -328,8 +329,21 @@ class HrTicketsView extends Component
     }
 
     public function cancelRequest(){
-        $this->hr_ticket->update(['cancelled_at' => now()]);
-        return $this->dispatch('triggerNotification');
+        try {
+            // throw new \Exception('Simulated error for testing logging.');
+            $this->hr_ticket->update(['cancelled_at' => now()]);
+            $this->dispatch('trigger-success');
+            return redirect()->to('HrTicketsView');
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
     }
 
 

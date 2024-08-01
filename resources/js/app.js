@@ -1,6 +1,9 @@
 // import './bootstrap';
 import 'flowbite';
 import { initFlowbite } from 'flowbite';
+// import { Livewire } from "../../vendor/livewire/livewire/dist/livewire.esm";
+
+
 
 window.addEventListener('app:scroll-to', (ev) => {
     ev.stopPropagation();
@@ -124,8 +127,16 @@ Livewire.hook('commit', ({ component, commit, respond, succeed, fail }) => {
 })
 
 document.addEventListener('livewire:navigated', () => {
+    // console.log("Navigated");
+    // Livewire.();
+
     initFlowbite();
+
 })
+
+// document.addEventListener("livewire:navigated", () => {
+//   console.log("Navigated");
+// });
 
   // // Cursor wait button functionality
   // document.getElementById('navButton').addEventListener('click', function() {

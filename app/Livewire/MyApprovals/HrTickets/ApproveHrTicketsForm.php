@@ -7,6 +7,7 @@ use App\Models\Employee;
 use App\Models\Hrticket;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveHrTicketsForm extends Component
@@ -286,16 +287,25 @@ class ApproveHrTicketsForm extends Component
     }
 
     public function submit(){
-        $hrticketdata = Hrticket::where('uuid', $this->index)->first();
+        try {
+            $hrticketdata = Hrticket::where('uuid', $this->index)->first();
 
-        $hrticketdata->status = $this->status;
+            $hrticketdata->status = $this->status;
 
-        $hrticketdata->update();
+            $hrticketdata->update();
 
-        $this->dispatch('triggerNotification');
+            $this->dispatch('trigger-success');
+            // return redirect()->to(route('ApproveHrTicketsTable'));
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
 
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
 
     }
 

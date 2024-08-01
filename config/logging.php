@@ -147,6 +147,11 @@ return [
             'path' => storage_path('logs/hrdtr/hrextractdtr.log'),
             'level' => 'info',
         ],
+        'failedforms' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/forms/failedforms.log'),
+            'level' => 'error',
+        ],
     ],
 
 ];

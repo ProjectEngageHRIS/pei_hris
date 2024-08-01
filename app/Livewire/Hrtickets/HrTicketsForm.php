@@ -9,6 +9,7 @@ use App\Models\Hrticket;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class HrTicketsForm extends Component
 {
@@ -270,6 +271,8 @@ class HrTicketsForm extends Component
         // }
 
         // dd($this->supplies_request);
+
+        try {
         
         $loggedInUser = auth()->user();
 
@@ -446,9 +449,20 @@ class HrTicketsForm extends Component
         // dd('stop');
         $hrticketdata->save();
 
-        $this->dispatch('triggerNotification');
+        $this->dispatch('triggerSuccess');
 
         return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
+        
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to save Hrticket: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
 
     }
 
