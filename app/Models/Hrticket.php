@@ -40,4 +40,10 @@ class Hrticket extends Model
         'request_others',
     ];
 
+    protected $hidden = [
+        'deleted_at',
+        'created_at',
+        'updated_at',
+    ];
+
 }
