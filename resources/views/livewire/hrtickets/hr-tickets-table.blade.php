@@ -286,12 +286,12 @@
                                         @elseif($hrticket->sub_type_of_request == "Certificate of Employment" || $hrticket->sub_type_of_request == "Request for Consultation" )
                                             <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Type of COE </span> {{$hrticket->type_of_hrconcern}} 
-                                        @elseif($hrticket->sub_type_of_request == "HMO-related concerns" || $hrticket->sub_type_of_request == "Leave concerns")
+                                        @elseif($hrticket->sub_type_of_request == "HMO-related Concerns" || $hrticket->sub_type_of_request == "Leave Concerns")
                                             <span class="font-semibold text-gray-700">Type of Concern: </span>{{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
                                             <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} 
                                         
-                                        @elseif($hrticket->sub_type_of_request == "Payroll-related concerns")
+                                        @elseif($hrticket->sub_type_of_request == "Payroll-related Concerns")
                                             <span class="font-semibold text-gray-700">Payroll Date: </span>{{$hrticket->request_date}} <br>
                                             <span class="font-semibold text-gray-700">Type of Concern: </span>    {{$hrticket->type_of_hrconcern}} <br>
                                             <span class="font-semibold text-gray-700">Concern Description: </span>    {{$hrticket->purpose }} <br>
