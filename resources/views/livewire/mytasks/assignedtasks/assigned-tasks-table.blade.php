@@ -66,7 +66,7 @@
                             </li>
                             <li>
                                 <div class="flex items-center p-2 text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-example-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 6 Monthss </input>
+                                    <input id="date_filter-radio-example-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  &nbsp; Last 6 Months </input>
                                 </div>
                             </li>
                             <li>
