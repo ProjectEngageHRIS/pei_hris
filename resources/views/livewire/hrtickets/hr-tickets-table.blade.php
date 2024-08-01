@@ -727,7 +727,7 @@
                                             </div>
                                         </div>
                                     </div> --}}
-                                <div x-data="{ open: false }"
+                                <div x-cloak x-data="{ open: false }"
                                     x-init="$el.addEventListener('modal-open', () => open = true); $el.addEventListener('modal-close', () => open = false)"
                                     x-show="open" 
                                     @keydown.window.escape="open = false" 
@@ -817,8 +817,7 @@
                 </div>
             </div>
         </div>
-
-
+        
     </div>
 </div>
 </div>

@@ -11,6 +11,8 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class HrTicketsView extends Component
 {
+
+    public Hrticket $hr_ticket;
         
     public $employeeRecord;
     public $date;
@@ -109,6 +111,7 @@ class HrTicketsView extends Component
             if (is_null($hrticketdata)) {
                 return redirect()->to(route('HrTicketsTable'));
             }
+            $this->hr_ticket = $hrticketdata;
         } catch (AuthorizationException $e) {
             return redirect()->to(route('HrTicketsTable'));
             abort(404);
@@ -287,42 +290,46 @@ class HrTicketsView extends Component
         }
     }
 
-    public function submit(){
-        $hrticketdata = Hrticket::where('form_id', $this->index)->first();
+    // public function submit(){
+    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
 
-        $hrticketdata->status = $this->status;
-        // $this->js("alert('HR Ticket Status Updated!')"); 
-        $this->dispatch('triggerNotification');
+    //     $hrticketdata->status = $this->status;
+    //     // $this->js("alert('HR Ticket Status Updated!')"); 
+    //     $this->dispatch('triggerNotification');
 
-        $hrticketdata->update();
+    //     $hrticketdata->update();
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+    //     return redirect()->to(route('ApproveHrTicketsTable'));
 
-    }
+    // }
 
-    public function decline(){
-        $hrticketdata = Hrticket::where('form_id', $this->index)->first();
+    // public function decline(){
+    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
 
-        $hrticketdata->status = "Declined";
-        $this->js("alert('HR Ticket Declined!')"); 
+    //     $hrticketdata->status = "Declined";
+    //     $this->js("alert('HR Ticket Declined!')"); 
 
-        $hrticketdata->update();
+    //     $hrticketdata->update();
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+    //     return redirect()->to(route('ApproveHrTicketsTable'));
 
-    }
+    // }
 
 
     public function editForm($index){
         // $hrticket=  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $hrticket= Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
-        
+        $hrticket = Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
         if(!$hrticket || $hrticket->employee_id != $loggedInUser){
             return ;
         }
         // $this->hrticket= $hrticket;
         return $hrticket;
+    }
+
+    public function cancelRequest(){
+        $this->hr_ticket->update(['cancelled_at' => now()]);
+        return $this->dispatch('triggerNotification');
     }
 
 

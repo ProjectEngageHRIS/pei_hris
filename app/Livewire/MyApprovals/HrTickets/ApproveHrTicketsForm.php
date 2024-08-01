@@ -153,12 +153,12 @@ class ApproveHrTicketsForm extends Component
                     $this->purpose = $hrticketdata->purpose;
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                 }
-                else if($hrticketdata->sub_type_of_request == "HMO-related concerns" || $hrticketdata->sub_type_of_request == "Leave concerns"){
+                else if($hrticketdata->sub_type_of_request == "HMO-related Concerns" || $hrticketdata->sub_type_of_request == "Leave Concerns"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;
                 }
-                else if($hrticketdata->sub_type_of_request == "Payroll-related concerns"){
+                else if($hrticketdata->sub_type_of_request == "Payroll-related Concerns"){
                     $this->request_date = $hrticketdata->request_date;
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;

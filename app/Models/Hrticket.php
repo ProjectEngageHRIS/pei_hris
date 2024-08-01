@@ -22,28 +22,37 @@ class Hrticket extends Model
 
     protected $fillable = [
         'status',
-        'application_date',
-        'concerned_employee',
-        'type_of_ticket',
-        'type_of_request',
-        'sub_type_of_request',
-        'type_of_pe_hr_ops',
-        'account_client_hr_ops',
-        'request_requested',
-        'purpose',
-        'type_of_hrconcern',
-        'condition_availability',
-        'request_extra',
-        'request_assigned',
-        'request_link',
-        'request_date',
-        'request_others',
+        // 'application_date',
+        // 'concerned_employee',
+        // 'type_of_ticket',
+        // 'type_of_request',
+        // 'sub_type_of_request',
+        // 'type_of_pe_hr_ops',
+        // 'account_client_hr_ops',
+        // 'request_requested',
+        // 'purpose',
+        // 'type_of_hrconcern',
+        // 'condition_availability',
+        // 'request_extra',
+        // 'request_assigned',
+        // 'request_link',
+        // 'request_date',
+        // 'request_others',
+        'cancelled_at',
     ];
 
-    protected $hidden = [
-        'deleted_at',
-        'created_at',
-        'updated_at',
-    ];
+    // protected $hidden = [
+    //     'cancelled_at',
+    //     'created_at',
+    //     'updated_at',
+    // ];
+
+    // protected $guarded = [
+    //     'form_id',
+    //     'uuid',
+    //     'cancelled_at',
+    //     'created_at',
+    //     'updated_at',
+    // ];
 
 }
