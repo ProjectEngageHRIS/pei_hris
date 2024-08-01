@@ -73,62 +73,6 @@
         </div>
         <!-- Right Section: Notification and Profile Buttons -->
         <div class="flex item-center gap-x-3.5">
-            <!-- Notification -->
-            <div class="relative inline-block text-left">
-                <button id="dropdownNotificationButton" data-dropdown-toggle="dropdownNotification" class="relative inline-flex items-center text-sm font-medium text-center text-gray-600 hover:text-customRed focus:outline-none dark:hover:text-white dark:text-customGray" type="button">
-                    <svg class="w-6 h-6" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 14 20">
-                        <path d="M12.133 10.632v-1.8A5.406 5.406 0 0 0 7.979 3.57.946.946 0 0 0 8 3.464V1.1a1 1 0 0 0-2 0v2.364a.946.946 0 0 0 .021.106 5.406 5.406 0 0 0-4.154 5.262v1.8C1.867 13.018 0 13.614 0 14.807 0 15.4 0 16 .538 16h12.924C14 16 14 15.4 14 14.807c0-1.193-1.867-1.789-1.867-4.175ZM3.823 17a3.453 3.453 0 0 0 6.354 0H3.823Z"/>
-                    </svg>
-                    <div class="absolute block w-5 h-5 text-white border-2 border-white rounded-full bg-customRed -top-1.5 start-3 dark:border-gray-900 text-[10px]">2</div>
-                </button>
-
-                <!-- Dropdown menu -->
-                <div id="dropdownNotification" class="absolute right-0 z-10 hidden w-64 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-lg shadow-lg dark:bg-gray-800 dark:divide-gray-700" aria-labelledby="dropdownNotificationButton">
-                    <div class="block px-4 py-2 text-sm font-medium text-center text-gray-700 rounded-t-lg bg-gray-50 dark:bg-gray-800 dark:text-white"> Notifications </div>
-                    <div class="divide-y divide-gray-100 dark:divide-gray-700">
-                        <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
-                            <div class="flex-shrink-0">
-                                <img class="rounded-full w-11 h-11" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                                <div class="absolute flex items-center justify-center w-5 h-5 -mt-5 border border-white rounded-full bg-customRed ms-6 dark:border-gray-800">
-                                    <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                                        <path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/>
-                                        <path d="M4.439 9a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239Z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="w-full ps-3">
-                                <div class="text-gray-500 text-xs mb-1.5 dark:text-gray-400">New task from <span class="font-semibold text-customGray1 dark:text-white">Jese Leos</span>: "Compile documents"</div>
-                                <div class="text-xs text-customRed dark:text-customRed">a few moments ago</div>
-                            </div>
-                        </a>
-                        <a href="#" class="flex px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700">
-                            <div class="flex-shrink-0">
-                                <img class="rounded-full w-11 h-11" src="{{ asset( 'assets/defaultuser.png') }}" alt="Profile Picture">
-                                <div class="absolute flex items-center justify-center w-5 h-5 -mt-5 border border-white rounded-full bg-customRed ms-6 dark:border-gray-800">
-                                    <svg class="w-2 h-2 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 18">
-                                        <path d="M1 18h16a1 1 0 0 0 1-1v-6h-4.439a.99.99 0 0 0-.908.6 3.978 3.978 0 0 1-7.306 0 .99.99 0 0 0-.908-.6H0v6a1 1 0 0 0 1 1Z"/>
-                                        <path d="M4.439 9a2.99 2.99 0 0 1 2.742 1.8 1.977 1.977 0 0 0 3.638 0A2.99 2.99 0 0 1 13.561 9H17.8L15.977.783A1 1 0 0 0 15 0H3a1 1 0 0 0-.977.783L.2 9h4.239Z"/>
-                                    </svg>
-                                </div>
-                            </div>
-                            <div class="w-full ps-3">
-                                <div class="text-gray-500 text-xs mb-1.5 dark:text-gray-400">New task from <span class="font-semibold text-customGray1 dark:text-white">Jese Leos</span>: "Compile documents"</div>
-                                <div class="text-xs text-customRed dark:text-customRed">a few moments ago</div>
-                            </div>
-                        </a>
-                    </div>
-                    <!-- Additional notification items here -->
-                    <a href="#" class="block py-2 text-sm font-medium text-center rounded-b-lg text-customGray1 bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-customRed dark:text-white">
-                        <div class="inline-flex items-center ">
-                            <svg class="w-4 h-4 text-sm text-gray-700 me-2 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 14">
-                                <path d="M10 0C4.612 0 0 5.336 0 7c0 1.742 3.546 7 10 7 6.454 0 10-5.258 10-7 0-1.664-4.612-7-10-7Zm0 10a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z"/>
-                            </svg>
-                            View all
-                        </div>
-                    </a>
-                </div>
-            </div>
-
             <!-- Profile Icon -->
             <div class="relative inline-block text-left">
                 <button id="dropdownAvatarNameButton" data-dropdown-toggle="dropdownAvatarName" class="relative flex items-center text-sm font-medium rounded-full text-customGray1 pe-1 hover:text-customRed dark:hover:text-customRed md:me-0 focus:ring-4 focus:ring-gray-100 dark:focus:ring-customGray1 dark:text-white" type="button">
@@ -146,11 +90,16 @@
                     </div>
                     <ul class="py-2 text-sm text-customGray1 dark:text-gray-200" aria-labelledby="dropdownAvatarNameButton">
                         <li>
-                            <a href="{{route('EmployeeDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Employee Portal</a>
+                            <a href="{{route('profile')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white ">My Profile</a>
                         </li>
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Account Settings</a>
+                            <a href="{{route('ChangePassword')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white ">Change Password</a>
                         </li>
+                        @if($role_id != 1)
+                            <li>
+                                <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white ">Choose Portal</a>
+                            </li>
+                        @endif
                     </ul>
                     <div class="py-2">
                         <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-customGray1 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Sign out</a>
