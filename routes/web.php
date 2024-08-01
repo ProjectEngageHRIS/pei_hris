@@ -67,11 +67,13 @@ use App\Livewire\Leaverequest\LeaveRequestTable;
 use App\Livewire\Trainings\TrainingPostTestForm;
 use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
+use App\Livewire\Dailytimerecord\HrAttendance;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
 use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Dashboard\ITDashboardView;
+
 
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
@@ -389,6 +391,8 @@ Route::middleware('auth')->group(function (){
 
 Route::middleware('auth')->group(function (){
 
+    Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
+
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
 
     Route::get("/hrtickets/form/{type?}", HrTicketsForm::class)->name('HrTicketsForm');
@@ -464,7 +468,6 @@ Route::middleware('auth')->group(function (){
     Route::get("/dailytimerecord", AttendanceTable::class)->name('AttendanceTable');
 
     Route::get("/dailytimerecord/pdf/{dates}", [AttendancePdfController::class, 'turnToPdf'])->name('AttendancePdf');
-
 });
 
 
