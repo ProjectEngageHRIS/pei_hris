@@ -1485,16 +1485,16 @@
                     @enderror
                 </div>
             </div>
-             <!-- Change Status Button -->
-            <div class="flex flex-row-reverse">
-                <button data-modal-target="crud-modal" type="button" data-modal-toggle="crud-modal" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
-                    Change Status
-                </button>
-            </div>
         @endif
+             <!-- Change Status Button -->
+        <div class="flex flex-row-reverse">
+            <button data-modal-target="crud-modal" type="button" data-modal-toggle="crud-modal" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                Change Status
+            </button>
+        </div>
+  
 
         <div x-data="crudModal: false">
-                    <!-- Change Status Modal -->
             <div id="crud-modal" tabindex="-1" aria-hidden="true" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
                 <div class="relative w-full max-w-md p-4">
                     <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
@@ -1556,6 +1556,8 @@
                     </div>
                 </div>
             </div>
+
+
             <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                 @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'HR Ticket Cancelled'; openCancelModal = false; setTimeout(() => showToast = false, 3000)"
                 @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; setTimeout(() => showToast = false, 3000)">

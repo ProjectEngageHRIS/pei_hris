@@ -667,7 +667,7 @@
                                             <!-- Cancel Button -->
                                             @if ($hrticket->status != "Cancelled" && $hrticket->status != "Completed" )
                                                 <a id="cancel_button_{{ $loop->index }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600"
-                                                    @click="openCancelModal('{{ $loop->index }}')">
+                                                    @click="openCancelModal('{{ $loop->index }}');">
                                                     Cancel
                                                 </a>
                                             @endif
@@ -792,10 +792,10 @@
     function openCancelModal(index) {
         const modalId = 'popup-modal_' + index;
         const modal = document.getElementById(modalId);
-    if (modal) {
-        const event = new CustomEvent('modal-open');
-        modal.dispatchEvent(event);
-        }
+        if (modal) {
+            const event = new CustomEvent('modal-open');
+            modal.dispatchEvent(event);
+            }
     }
 
     function closeCancelModal(index) {
@@ -814,11 +814,8 @@
             
             // Access Alpine data
             const alpineData = Alpine.$data(modal);
-
             // Update the state
             alpineData.open = false; // Open the modal
-
-
         });
     });
 

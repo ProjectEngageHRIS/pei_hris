@@ -3,6 +3,7 @@
 namespace App\Livewire\MyApprovals\HrTickets;
 
 use finfo;
+use Exception;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
@@ -10,6 +11,7 @@ use App\Models\Hrticket;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class ApproveHrTicketsTable extends Component
@@ -27,6 +29,10 @@ class ApproveHrTicketsTable extends Component
     public $statusFilterName = "All";
 
     public $search = "";
+
+    public $status;
+
+    public $currentFormid;
     
     
     public function search()
@@ -156,15 +162,35 @@ class ApproveHrTicketsTable extends Component
         $name = Employee::where('employee_id', $employee_id)->select('first_name', 'middle_name', 'last_name')->first();
         return $name->first_name . ' ' . $name->middle_name . ' ' . $name->last_name;
     }
+
     
 
-    public function cancelForm($index){
-        // $HrTicketData = Hrticket::where('form_id', $index)->first();
-        $dataToUpdate = ['status' => 'Cancelled',
-                         'cancelled_at' => now()];
-        // $this->authorize('delete', $leaveRequestData);
-        Hrticket::where('form_id', $index)->update($dataToUpdate);
-        return redirect()->route('ApproveHrTicketsTable');
+    public function changeStatus(){
+        try {
+            $form = Hrticket::find($this->currentFormid);
+            if($form){
+                if(in_array(auth()->user()->role_id, [11])){
+                    if($this->status == "Cancelled"){
+                        $dataToUpdate = ['status' => 'Cancelled',
+                            'cancelled_at' => now()];
+                    } else {
+                        $dataToUpdate = ['status' => $this->status];
+                    }
+                    $form->update($dataToUpdate);
+                    $this->dispatch('triggerSuccess'); 
+    
+                }
+            } else {
+                $this->dispatch('triggerError'); 
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
+
+        }
+
     }
 
 }
