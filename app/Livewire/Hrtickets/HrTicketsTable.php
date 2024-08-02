@@ -3,6 +3,7 @@
 namespace App\Livewire\Hrtickets;
 
 use finfo;
+use Exception;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
@@ -153,6 +154,7 @@ class HrTicketsTable extends Component
     public function cancelForm($index, $loopIndex){
         // $this->dispatch('triggerConfirmation');
         try{
+            // throw new Exception('test');
             $employee_id = auth()->user()->employee_id;
 
             $data = Hrticket::where('employee_id', $employee_id)
@@ -164,7 +166,7 @@ class HrTicketsTable extends Component
                 $data->cancelled_at = now();
                 $data->update();
             }
-            $this->dispatch('trigger-success' );
+            // $this->dispatch('trigger-success');
             $this->dispatch('triggerSuccess', id: $loopIndex); 
             // $this->closeModal = false;
             // return redirect()->route('HrTicketsTable', ['type' => $this->type]);
@@ -174,7 +176,7 @@ class HrTicketsTable extends Component
             Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
-            $this->dispatch('trigger-error');
+            $this->dispatch('triggerError', id: $loopIndex);
 
             // Optionally, you could redirect the user to an error page or show an error message
             return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');

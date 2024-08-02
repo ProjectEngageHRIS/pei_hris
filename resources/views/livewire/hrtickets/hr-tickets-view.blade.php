@@ -1503,7 +1503,7 @@
             </div>
              <!-- Cancel Button -->
              @if ($status != "Cancelled")
-                <div x-data="{ openCancelModal: false }">
+                <div x-cloak x-data="{ openCancelModal: false }">
                     <div class="flex flex-row-reverse">
                         <button id="cancel_button"  
                             type="button" 
@@ -1562,7 +1562,7 @@
 
                     <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                         @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'HR Ticket Cancelled'; openCancelModal = false; setTimeout(() => showToast = false, 3000)"
-                        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; setTimeout(() => showToast = false, 3000)">
+                        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openCancelModal = false; setTimeout(() => showToast = false, 3000)">
                         <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                        <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                             x-show="showToast"
@@ -1596,6 +1596,15 @@
              @endif
         @endif
     </form>
+    <!-- Loading screen -->
+    <div wire:loading wire:target="cancelRequest" class="load-over z-50">
+        <div wire:loading wire:target="cancelRequest" class="loading-overlay z-50">
+            <div class="flex flex-col items-center justify-center">
+                <div class="spinner"></div>
+                <p>Cancelling your Request...</p>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     // // Add this script to hide the success alert after a delay
@@ -1609,9 +1618,9 @@
     //     });
     // });
 
-    document.addEventListener('livewire:init', function () {
-        Livewire.on('triggerSuccess', () => {
-            window.dispatchEvent(new CustomEvent('trigger-success'));
-        });
-    });
+    // document.addEventListener('livewire:init', function () {
+    //     Livewire.on('triggerSuccess', () => {
+    //         window.dispatchEvent(new CustomEvent('trigger-success'));
+    //     });
+    // });
 </script>

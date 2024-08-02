@@ -811,7 +811,14 @@
         Livewire.on('triggerSuccess', (itemId) => {
             window.dispatchEvent(new CustomEvent('trigger-success'));
             const modal = document.querySelector(`[x-ref="modal_${itemId.id}"]`);
-            
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.open = false; // Open the modal
+        });
+        Livewire.on('triggerError', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-error'));
+            const modal = document.querySelector(`[x-ref="modal_${itemId.id}"]`);
             // Access Alpine data
             const alpineData = Alpine.$data(modal);
             // Update the state

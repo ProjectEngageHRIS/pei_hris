@@ -2,6 +2,7 @@
 
 namespace App\Livewire\MyApprovals\HrTickets;
 
+use Exception;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
@@ -101,9 +102,6 @@ class ApproveHrTicketsForm extends Component
 
     public $form_id;
 
-    private $ticket_number;
-
-
     public function mount($index){
         $loggedInUser = auth()->user();
         try {
@@ -139,14 +137,6 @@ class ApproveHrTicketsForm extends Component
         $this->sub_type_of_request = $hrticketdata->sub_type_of_request;
         $this->concerned_employee = $hrticketdata->concerned_employee;
         $this->status = $hrticketdata->status;
-
-        // $this->purpose = $hrticketdata->purpose;
-        // $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
-        // $this->request_link = $hrticketdata->request_link;
-        // $this->request_date = $hrticketdata->request_date;
-        // $this->type_of_hrconcern = $hrticketdata->remittance_request_others;
-        // $this->request_assigned = $hrticketdata->request_assigned_request_others;
-
         
         if($hrticketdata->type_of_ticket == "HR Internal"){
             if($hrticketdata->type_of_request == "HR"){
@@ -288,6 +278,7 @@ class ApproveHrTicketsForm extends Component
 
     public function submit(){
         try {
+            throw new Exception('testing');
             $hrticketdata = Hrticket::where('uuid', $this->index)->first();
 
             $hrticketdata->status = $this->status;
@@ -295,7 +286,7 @@ class ApproveHrTicketsForm extends Component
             $hrticketdata->update();
 
             $this->dispatch('trigger-success');
-            // return redirect()->to(route('ApproveHrTicketsTable'));
+            return redirect()->to(route('ApproveHrTicketsTable'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
@@ -308,19 +299,6 @@ class ApproveHrTicketsForm extends Component
         }
 
     }
-
-    // public function decline(){
-    //     $hrticketdata = Hrticket::where('form_id', $this->ticket_number)->first();
-
-    //     $hrticketdata->status = "Declined";
-
-    //     $hrticketdata->update();
-
-    //     $this->dispatch('triggerNotification');
-
-    //     return redirect()->to(route('ApproveHrTicketsTable'));
-
-    // }
 
 
     public function editForm($index){

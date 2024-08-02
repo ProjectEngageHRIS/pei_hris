@@ -330,10 +330,10 @@ class HrTicketsView extends Component
 
     public function cancelRequest(){
         try {
-            // throw new \Exception('Simulated error for testing logging.');
             $this->hr_ticket->update(['cancelled_at' => now()]);
             $this->dispatch('trigger-success');
-            return redirect()->to('HrTicketsView');
+            return redirect()->to(route('HrTicketsView'));
+
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());

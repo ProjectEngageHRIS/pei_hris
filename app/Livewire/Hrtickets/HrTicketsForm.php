@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Hrtickets;
 
+use Exception;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
@@ -446,14 +447,19 @@ class HrTicketsForm extends Component
             }
         }
 
+        throw new Exception('test');
+
         // dd('stop');
         $hrticketdata->save();
 
-        $this->dispatch('triggerSuccess');
+        $this->dispatch('trigger-success');
 
         return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
         
         } catch (\Exception $e) {
+
+            $this->dispatch('trigger-error');
+
             // Log the exception for further investigation
             Log::channel('failedforms')->error('Failed to save Hrticket: ' . $e->getMessage());
 
