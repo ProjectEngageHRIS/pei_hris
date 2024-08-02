@@ -154,23 +154,20 @@ class HrTicketsTable extends Component
     }
 
     public function cancelForm(){
-        // $this->dispatch('triggerConfirmation');
         try{
-            // throw new Exception('test');
             $employee_id = auth()->user()->employee_id;
-
             $data = Hrticket::where('employee_id', $employee_id)
-                            ->where('form_id', $this->currentFormId)
-                            ->select('form_id', 'status', 'cancelled_at') 
+                            ->where('uuid', $this->currentFormId)
+                            ->select('uuid', 'form_id', 'employee_id', 'status', 'cancelled_at') 
                             ->first();
             if($data){
-                $data->status = "Cancelled";
-                $data->cancelled_at = now();
-                $data->update();
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
+                }
             }
-            $this->dispatch('triggerSuccess'); 
-
-
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
@@ -181,6 +178,6 @@ class HrTicketsTable extends Component
             // Optionally, you could redirect the user to an error page or show an error message
             return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-
+        
     }
 }

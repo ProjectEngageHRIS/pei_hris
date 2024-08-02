@@ -32,7 +32,7 @@ class ApproveHrTicketsTable extends Component
 
     public $status;
 
-    public $currentFormid;
+    public $currentFormId;
     
     
     public function search()
@@ -167,7 +167,7 @@ class ApproveHrTicketsTable extends Component
 
     public function changeStatus(){
         try {
-            $form = Hrticket::find($this->currentFormid);
+            $form = Hrticket::find($this->currentFormId);
             if($form){
                 if(in_array(auth()->user()->role_id, [11])){
                     if($this->status == "Cancelled"){

@@ -273,42 +273,98 @@
                                             </a>
                                             <!-- Cancel Button -->
                                             @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Completed" )
-                                                <a id="cancel_button_{{ $loop->index }}" class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600 " @click="openCancelModal('{{ $loop->index }}')">
-                                                    Cancel
-                                                </a>
+                                                <button @click="openCancelModal('{{$leaverequest->uuid}}')"
+                                                    type="button" 
+                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
+                                                    Change Status
+                                                </button>
                                             @endif
                                         </div>
                                     </td>
-                                    
-                                    <div id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
-                                        <div class="relative w-full max-w-md max-h-full p-4">
-                                            <div class="relative bg-white rounded-lg shadow ">
-                                                <button type="button" @click="closeCancelModal('{{ $loop->index }}')"  class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="popup-modal">
-                                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                    </svg>
-                                                    <span class="sr-only">Close modal</span>
-                                                </button>
-                                                <div class="p-4 md:p-5">
-                                                    <div class="p-4 text-center md:p-5">
-                                                        <svg class="w-12 h-12 mx-auto mb-4 text-red-600 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                        </svg>
-                                                        <h3 class="mb-5 text-lg font-normal text-gray-500 ">Confirm cancellation?</h3>
-                                                        <button wire:click="removeLeaveRequest('{{$leaverequest->uuid}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                            Yes
-                                                        </button>
-                                                        <button type="button" @click="closeCancelModal('{{ $loop->index }}')" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  ">No</button>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-                                        </div>
-                                    </div>
-
-
                                 </tr>
                             @endforeach
+
+                    <div x-cloak x-data="{ cancelModal: false }" x-ref="cancel-modal" 
+                        x-init="
+                        $el.addEventListener('modal-open', (event) => {
+                            $wire.set('currentFormId', event.detail)
+                            cancelModal = true;
+                        });
+                        $el.addEventListener('modal-close', () => openCrudModal = false);"
+                        x-show="cancelModal" 
+                        @keydown.window.escape="open = false" 
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        tabindex="-1" 
+                        class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
+                        id="cancel-modal">
+                        <div x-show="cancelModal" 
+                                x-transition:enter="transition ease-out duration-300"
+                                x-transition:enter-start="transform opacity-0 scale-90"
+                                x-transition:enter-end="transform opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-200"
+                                x-transition:leave-start="transform opacity-100 scale-100"
+                                x-transition:leave-end="transform opacity-0 scale-90"
+                                class="relative p-4 w-full max-w-md max-h-full bg-white rounded-lg shadow dark:bg-gray-700">
+                            <button type="button" @click="cancelModal = false"
+                                    class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                            <div class="p-4 md:p-5">
+                                <div class="text-center">
+                                        <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                        </svg>
+                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
+                                    <button wire:click="cancelForm" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                                        Yes
+                                    </button>
+                                    <button @click="cancelModal = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                        No
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
+                            @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Leave Request Cancelled'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+                            @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+                        <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
+                        <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
+                            x-show="showToast"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 scale-90"
+                            x-transition:enter-end="opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="opacity-100 scale-100"
+                            x-transition:leave-end="opacity-0 scale-90">
+                        <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
+                            <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                            </svg>
+                            <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
+                            </svg>
+                            <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
+                        </div>
+                        <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
+                        <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
+                            <span class="sr-only">Close</span>
+                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                            </svg>
+                        </button>
+                            </div>
+                        </div>
+                    </div>
                         @endif
                         </tbody>
                     </div>
@@ -324,58 +380,87 @@
 
 <script>
 
-    function adjustDropdownPosition(index) {
-        const dropdown = document.getElementById('dropdown' + index);
-        if (dropdown) {
-            const rect = dropdown.getBoundingClientRect();
-            const isLeftAligned = rect.right > window.innerWidth;
-            dropdown.classList.toggle('left-10', isLeftAligned);
-            dropdown.classList.toggle('right-10', !isLeftAligned);
+    function openCancelModal(id) {
+            const modal = document.getElementById('cancel-modal');
+            if (modal) {
+                const event = new CustomEvent('modal-open', { 
+                    detail: id, 
+                });
+                modal.dispatchEvent(event);
+            }
         }
-    }
 
-    
-    function closeCancelModal(index) {
-        const modalId = 'popup-modal_' + index;
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('hidden');
-        } else {
-            console.error(`Modal with id ${modalId} does not exist.`);
-        }
-    }
-
-    function openCancelModal(index) {
-        const modalId = 'popup-modal_' + index;
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('hidden');
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Select all cancel buttons and add event listeners
-        document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {
-            const modalId = 'popup-modal' + cancelButton.getAttribute('id').substring(13); // Adjust substring length as per your ID format
-            const modal = document.getElementById(modalId);
-
-            // Add click event listener to each cancel button
-            cancelButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (modal) {
-                    modal.classList.remove('hidden');
-                }
-            });
+    document.addEventListener('livewire:init', function () {
+        Livewire.on('triggerSuccess', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-success'));
+            const modal = document.querySelector(`[x-ref="cancel-modal"]`);
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.cancelModal = false; // Open the modal
         });
-
-        // Select all close modal buttons and add event listeners
-        document.querySelectorAll('[data-modal-hide="popup-modal"]').forEach(closeButton => {
-            closeButton.addEventListener('click', () => {
-                const modal = closeButton.closest('.fixed');
-                if (modal) {
-                    modal.classList.add('hidden');
-                }
-            });
+        Livewire.on('triggerError', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-error'));
+            const modal = document.querySelector(`[x-ref="cancel-modal"]`);
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.cancelModal = false; // Open the modal
         });
     });
+
+    // function adjustDropdownPosition(index) {
+    //     const dropdown = document.getElementById('dropdown' + index);
+    //     if (dropdown) {
+    //         const rect = dropdown.getBoundingClientRect();
+    //         const isLeftAligned = rect.right > window.innerWidth;
+    //         dropdown.classList.toggle('left-10', isLeftAligned);
+    //         dropdown.classList.toggle('right-10', !isLeftAligned);
+    //     }
+    // }
+
+    
+    // function closeCancelModal(index) {
+    //     const modalId = 'popup-modal_' + index;
+    //     const modal = document.getElementById(modalId);
+    //     if (modal) {
+    //         modal.classList.add('hidden');
+    //     } else {
+    //         console.error(`Modal with id ${modalId} does not exist.`);
+    //     }
+    // }
+
+    // function openCancelModal(index) {
+    //     const modalId = 'popup-modal_' + index;
+    //     const modal = document.getElementById(modalId);
+    //     if (modal) {
+    //         modal.classList.remove('hidden');
+    //     }
+    // }
+
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     // Select all cancel buttons and add event listeners
+    //     document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {
+    //         const modalId = 'popup-modal' + cancelButton.getAttribute('id').substring(13); // Adjust substring length as per your ID format
+    //         const modal = document.getElementById(modalId);
+
+    //         // Add click event listener to each cancel button
+    //         cancelButton.addEventListener('click', (e) => {
+    //             e.preventDefault();
+    //             if (modal) {
+    //                 modal.classList.remove('hidden');
+    //             }
+    //         });
+    //     });
+
+    //     // Select all close modal buttons and add event listeners
+    //     document.querySelectorAll('[data-modal-hide="popup-modal"]').forEach(closeButton => {
+    //         closeButton.addEventListener('click', () => {
+    //             const modal = closeButton.closest('.fixed');
+    //             if (modal) {
+    //                 modal.classList.add('hidden');
+    //             }
+    //         });
+    //     });
+    // });
 </script>

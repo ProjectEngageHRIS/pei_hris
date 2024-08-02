@@ -658,7 +658,7 @@
                                         {{-- <a href="{{route('ipcredit', $hrticket)}}" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a> --}}
                                         {{-- <a wire:click="removeIpcr({{$hrticket->id}})" class="font-medium text-red-600 cursor-pointer dark:text-red-500 hover:underline ms-3">Remove</a> --}}
 
-                                    <td class="items-center py-4 text-center">
+                                    <td x-data="{ data: @json($HrTicketData[0]->form_id)}" class="items-center py-4 text-center">
                                         <div class="flex items-center justify-center space-x-2">
                                             <!-- View Button -->
                                             <a onclick="location.href='{{ route('HrTicketsView', ['index' => $hrticket->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
@@ -666,13 +666,14 @@
                                             </a>
                                             <!-- Cancel Button -->
                                             @if ($hrticket->status != "Cancelled" && $hrticket->status != "Completed" )
-                                                <button @click="openCancelModal('{{$hrticket->form_id}}')"
+                                                <button @click="openCancelModal('{{$hrticket->uuid}}')"
                                                     type="button" 
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
                                                     Change Status
                                                 </button>
                                             @endif
                                         </div>
+                                        {{-- <span x-text="data"></span> --}}
                                     </td>
                             </tr>
 
@@ -794,6 +795,7 @@
             modal.dispatchEvent(event);
         }
     }
+    
     document.addEventListener('livewire:init', function () {
         Livewire.on('triggerSuccess', (itemId) => {
             window.dispatchEvent(new CustomEvent('trigger-success'));
@@ -813,29 +815,29 @@
         });
     });
 
-    document.addEventListener('DOMContentLoaded', () => {
-        // Select all cancel buttons and add event listeners
-        document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {
-            const modalId = 'popup-modal' + cancelButton.getAttribute('id').substring(13); // Adjust substring length as per your ID format
-            const modal = document.getElementById(modalId);
+    // document.addEventListener('DOMContentLoaded', () => {
+    //     // Select all cancel buttons and add event listeners
+    //     document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {
+    //         const modalId = 'popup-modal' + cancelButton.getAttribute('id').substring(13); // Adjust substring length as per your ID format
+    //         const modal = document.getElementById(modalId);
 
-            // Add click event listener to each cancel button
-            cancelButton.addEventListener('click', (e) => {
-                e.preventDefault();
-                if (modal) {
-                    modal.classList.remove('hidden');
-                }
-            });
-        });
+    //         // Add click event listener to each cancel button
+    //         cancelButton.addEventListener('click', (e) => {
+    //             e.preventDefault();
+    //             if (modal) {
+    //                 modal.classList.remove('hidden');
+    //             }
+    //         });
+    //     });
 
-        // Select all close modal buttons and add event listeners
-        document.querySelectorAll('[data-modal-hide="popup-modal"]').forEach(closeButton => {
-            closeButton.addEventListener('click', () => {
-                const modal = closeButton.closest('.fixed');
-                if (modal) {
-                    modal.classList.add('hidden');
-                }
-            });
-        });
-    });
+    //     // Select all close modal buttons and add event listeners
+    //     document.querySelectorAll('[data-modal-hide="popup-modal"]').forEach(closeButton => {
+    //         closeButton.addEventListener('click', () => {
+    //             const modal = closeButton.closest('.fixed');
+    //             if (modal) {
+    //                 modal.classList.add('hidden');
+    //             }
+    //         });
+    //     });
+    // });
 </script>

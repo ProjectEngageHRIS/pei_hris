@@ -330,21 +330,32 @@ class HrTicketsView extends Component
 
     public function cancelRequest(){
         try {
-            $this->hr_ticket->update(['cancelled_at' => now()]);
+            $employee_id = auth()->user()->employee_id;
+            $data = $this->hr_ticket;
+            if($data){
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
+                }
+            }
+
             $this->dispatch('trigger-success');
-            return redirect()->to(route('HrTicketsView'));
+            return redirect()->to(route('HrTicketsTable'));
 
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('failedforms')->error('Failed to cancel Leave Request: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
 
             // Optionally, you could redirect the user to an error page or show an error message
-            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
     }
+
 
 
     public function render()

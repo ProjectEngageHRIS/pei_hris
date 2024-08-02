@@ -9,6 +9,7 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 class ApproveLeaverequestTable extends Component
@@ -26,6 +27,11 @@ class ApproveLeaverequestTable extends Component
     public $statusFilterName = "All";
 
     public $search = "";
+
+    public $status;
+
+    public $currentFormId;
+
     
     public function search()
     {
@@ -144,13 +150,31 @@ class ApproveLeaverequestTable extends Component
         return $name->first_name . ' ' . $name->middle_name . ' ' . $name->last_name;
     }
     
-    public function removeLeaveRequest($index){
-        // $leaveRequestData = Leaverequest::where('form_id', $index)->first();
-        $dataToUpdate = ['status' => 'Cancelled',
-                         'cancelled_at' => now()];
-        // $this->authorize('delete', $leaveRequestData);
-        Leaverequest::where('uuid', $index)->update($dataToUpdate);
-        return redirect()->route('ApproveLeaveRequestTable');
+    public function changeStatus(){
+        try {
+            $form = Leaverequest::find($this->currentFormId);
+            if($form){
+                if(in_array(auth()->user()->role_id, [11])){
+                    if($this->status == "Cancelled"){
+                        $dataToUpdate = ['status' => 'Cancelled',
+                            'cancelled_at' => now()];
+                    } else {
+                        $dataToUpdate = ['status' => $this->status];
+                    }
+                    $form->update($dataToUpdate);
+                    $this->dispatch('triggerSuccess'); 
+                }
+            } else {
+                $this->dispatch('triggerError'); 
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
+
+        }
+
     }
 
    

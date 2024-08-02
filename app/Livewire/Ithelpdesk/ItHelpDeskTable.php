@@ -9,6 +9,7 @@ use App\Models\Ittickets;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 
 class ItHelpDeskTable extends Component
 { 
@@ -26,6 +27,8 @@ class ItHelpDeskTable extends Component
     public $statusFilterName = "All";
 
     public $search = "";
+
+    public $currentFormId;
     
 
     public function search()
@@ -101,19 +104,31 @@ class ItHelpDeskTable extends Component
         ]);
     }
 
-    public function cancelForm($index){
+    public function cancelForm(){
+        try{
+            $employee_id = auth()->user()->employee_id;
+            $data = Ittickets::where('employee_id', $employee_id)
+                            ->where('uuid', $this->currentFormId)
+                            ->select('uuid', 'form_id', 'employee_id', 'status', 'cancelled_at') 
+                            ->first();
+            if($data){
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
+                }
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
 
-        $employee_id = auth()->user()->employee_id;
-        $data = Ittickets::where('employee_id', $employee_id)
-                                    ->where('uuid', $index)
-                                    ->select('form_id', 'status', 'cancelled_at') 
-                                    ->first();
-        if ($data) {
-            $data->status = "Cancelled";
-            $data->cancelled_at = now();
-            $data->update();
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
         
-        return redirect()->route('ItHelpDeskTable');
     }
 }
