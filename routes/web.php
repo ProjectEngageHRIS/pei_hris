@@ -405,6 +405,8 @@ Route::middleware('auth')->group(function (){
 
     Route::get("/humanresource/dailytimerecord", HrDailyTimeRecord::class)->name('HrDailyTimeRecord');
 
+    // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
+
     // Route::get('/hrtickets/{index}', [::class, 'download'])->name('downloadTeachPermit');
 
     // Route::get("/teachpermit/pdf/{index}", [TeachPermitController::class, 'turnToPdf'])->name('TeachPermitPdf');

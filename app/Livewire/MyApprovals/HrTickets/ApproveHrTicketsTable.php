@@ -178,7 +178,6 @@ class ApproveHrTicketsTable extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess'); 
-    
                 }
             } else {
                 $this->dispatch('triggerError'); 

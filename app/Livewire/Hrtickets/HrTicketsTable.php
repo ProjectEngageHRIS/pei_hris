@@ -33,6 +33,8 @@ class HrTicketsTable extends Component
 
     public $type;
 
+    public $currentFormId;
+
     public function search()
     {
         $this->resetPage();
@@ -151,14 +153,14 @@ class HrTicketsTable extends Component
     
     }
 
-    public function cancelForm($index, $loopIndex){
+    public function cancelForm(){
         // $this->dispatch('triggerConfirmation');
         try{
             // throw new Exception('test');
             $employee_id = auth()->user()->employee_id;
 
             $data = Hrticket::where('employee_id', $employee_id)
-                            ->where('uuid', $index)
+                            ->where('form_id', $this->currentFormId)
                             ->select('form_id', 'status', 'cancelled_at') 
                             ->first();
             if($data){
@@ -166,17 +168,15 @@ class HrTicketsTable extends Component
                 $data->cancelled_at = now();
                 $data->update();
             }
-            // $this->dispatch('trigger-success');
-            $this->dispatch('triggerSuccess', id: $loopIndex); 
-            // $this->closeModal = false;
-            // return redirect()->route('HrTicketsTable', ['type' => $this->type]);
+            $this->dispatch('triggerSuccess'); 
+
 
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
-            $this->dispatch('triggerError', id: $loopIndex);
+            $this->dispatch('triggerError');
 
             // Optionally, you could redirect the user to an error page or show an error message
             return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');

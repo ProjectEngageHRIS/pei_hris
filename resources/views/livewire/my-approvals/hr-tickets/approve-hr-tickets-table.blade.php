@@ -652,7 +652,7 @@
                                                     </div>
                                                 </div>
                                                 {{-- @endforeach --}}
-                                           @endif>
+                                           @endif
                                         @endif
                                     </td>
                                   
