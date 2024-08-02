@@ -150,7 +150,7 @@ class HrTicketsTable extends Component
     
     }
 
-    public function cancelForm($index){
+    public function cancelForm($index, $loopIndex){
         // $this->dispatch('triggerConfirmation');
         try{
             $employee_id = auth()->user()->employee_id;
@@ -164,8 +164,9 @@ class HrTicketsTable extends Component
                 $data->cancelled_at = now();
                 $data->update();
             }
-            $this->dispatch('trigger-success'); 
-            $this->closeModal = false;
+            $this->dispatch('trigger-success' );
+            $this->dispatch('triggerSuccess', id: $loopIndex); 
+            // $this->closeModal = false;
             // return redirect()->route('HrTicketsTable', ['type' => $this->type]);
 
         } catch (\Exception $e) {

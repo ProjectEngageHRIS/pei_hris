@@ -673,7 +673,7 @@
                                             @endif
                                         </div>
                                     </td>
-                                <div x-cloak x-data="{ open: false }"
+                                <div x-cloak x-data="{ open: false }" x-ref="modal_{{ $loop->index }}" 
                                         x-init="$el.addEventListener('modal-open', () => open = true); $el.addEventListener('modal-close', () => open = false)"
                                         x-show="open" 
                                         @keydown.window.escape="open = false" 
@@ -707,7 +707,7 @@
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                 </svg>
                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm cancellation?</h3>
-                                               <button wire:click="cancelForm('{{$hrticket->uuid}}')" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                                               <button wire:click="cancelForm('{{$hrticket->uuid}}', '{{$loop->index}}')" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5">
                                                    Yes
                                                </button>
                                                <button @click="open = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -722,7 +722,7 @@
                             @endforeach
                         <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                                 @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'HR Ticket Cancelled'; $dispatch('modal-close'); open = false; setTimeout(() => showToast = false, 3000)"
-                                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); setTimeout(() => showToast = false, 3000)">
+                                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); open = false; setTimeout(() => showToast = false, 3000)">
                             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                             <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                                 x-show="showToast"
@@ -791,7 +791,7 @@
     
     function openCancelModal(index) {
         const modalId = 'popup-modal_' + index;
-    const modal = document.getElementById(modalId);
+        const modal = document.getElementById(modalId);
     if (modal) {
         const event = new CustomEvent('modal-open');
         modal.dispatchEvent(event);
@@ -799,7 +799,7 @@
     }
 
     function closeCancelModal(index) {
-        const modalId = 'popup-modal_' + index;
+        const modalId = 'popup-modal';
         const modal = document.getElementById(modalId);
         if (modal) {
             const event = new CustomEvent('modal-close');
@@ -808,11 +808,20 @@
     }
 
     document.addEventListener('livewire:init', function () {
-        Livewire.on('triggerSuccess', () => {
+        Livewire.on('triggerSuccess', (itemId) => {
             window.dispatchEvent(new CustomEvent('trigger-success'));
+            const modal = document.querySelector(`[x-ref="modal_${itemId.id}"]`);
+            
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+
+            // Update the state
+            alpineData.open = false; // Open the modal
+
+
         });
     });
-    
+
     document.addEventListener('DOMContentLoaded', () => {
         // Select all cancel buttons and add event listeners
         document.querySelectorAll('[id^="cancel_button"]').forEach(cancelButton => {
