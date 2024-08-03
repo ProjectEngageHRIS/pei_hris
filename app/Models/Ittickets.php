@@ -8,9 +8,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ittickets extends Model
 {
-    protected $primaryKey = 'form_id';
 
     use HasFactory;
+
+    protected $primaryKey = 'form_id';
 
     public static function boot() {
         parent::boot();
@@ -25,5 +26,6 @@ class Ittickets extends Model
         'status',
         'employee_id',
         'description',
+        'cancelled_at'
     ];
 }

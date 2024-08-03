@@ -2,11 +2,13 @@
 
 namespace App\Livewire\MyApprovals\HrTickets;
 
+use Exception;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveHrTicketsForm extends Component
@@ -100,9 +102,6 @@ class ApproveHrTicketsForm extends Component
 
     public $form_id;
 
-    private $ticket_number;
-
-
     public function mount($index){
         $loggedInUser = auth()->user();
         try {
@@ -138,14 +137,6 @@ class ApproveHrTicketsForm extends Component
         $this->sub_type_of_request = $hrticketdata->sub_type_of_request;
         $this->concerned_employee = $hrticketdata->concerned_employee;
         $this->status = $hrticketdata->status;
-
-        // $this->purpose = $hrticketdata->purpose;
-        // $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
-        // $this->request_link = $hrticketdata->request_link;
-        // $this->request_date = $hrticketdata->request_date;
-        // $this->type_of_hrconcern = $hrticketdata->remittance_request_others;
-        // $this->request_assigned = $hrticketdata->request_assigned_request_others;
-
         
         if($hrticketdata->type_of_ticket == "HR Internal"){
             if($hrticketdata->type_of_request == "HR"){
@@ -153,12 +144,12 @@ class ApproveHrTicketsForm extends Component
                     $this->purpose = $hrticketdata->purpose;
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                 }
-                else if($hrticketdata->sub_type_of_request == "HMO-related concerns" || $hrticketdata->sub_type_of_request == "Leave concerns"){
+                else if($hrticketdata->sub_type_of_request == "HMO-related Concerns" || $hrticketdata->sub_type_of_request == "Leave Concerns"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;
                 }
-                else if($hrticketdata->sub_type_of_request == "Payroll-related concerns"){
+                else if($hrticketdata->sub_type_of_request == "Payroll-related Concerns"){
                     $this->request_date = $hrticketdata->request_date;
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
@@ -286,31 +277,28 @@ class ApproveHrTicketsForm extends Component
     }
 
     public function submit(){
-        $hrticketdata = Hrticket::where('uuid', $this->index)->first();
+        try {
+            throw new Exception('testing');
+            $hrticketdata = Hrticket::where('uuid', $this->index)->first();
 
-        $hrticketdata->status = $this->status;
+            $hrticketdata->status = $this->status;
 
-        $hrticketdata->update();
+            $hrticketdata->update();
 
-        $this->dispatch('triggerNotification');
+            $this->dispatch('trigger-success');
+            return redirect()->to(route('ApproveHrTicketsTable'));
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
 
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
 
     }
-
-    // public function decline(){
-    //     $hrticketdata = Hrticket::where('form_id', $this->ticket_number)->first();
-
-    //     $hrticketdata->status = "Declined";
-
-    //     $hrticketdata->update();
-
-    //     $this->dispatch('triggerNotification');
-
-    //     return redirect()->to(route('ApproveHrTicketsTable'));
-
-    // }
 
 
     public function editForm($index){

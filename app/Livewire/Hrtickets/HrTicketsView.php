@@ -7,10 +7,13 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
 use App\Models\Leaverequest;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class HrTicketsView extends Component
 {
+
+    public Hrticket $hr_ticket;
         
     public $employeeRecord;
     public $date;
@@ -109,6 +112,7 @@ class HrTicketsView extends Component
             if (is_null($hrticketdata)) {
                 return redirect()->to(route('HrTicketsTable'));
             }
+            $this->hr_ticket = $hrticketdata;
         } catch (AuthorizationException $e) {
             return redirect()->to(route('HrTicketsTable'));
             abort(404);
@@ -155,12 +159,13 @@ class HrTicketsView extends Component
                     $this->purpose = $hrticketdata->purpose;
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                 }
-                else if($hrticketdata->sub_type_of_request == "HMO-related concerns" || $hrticketdata->sub_type_of_request == "Leave concerns"){
+                else if($hrticketdata->sub_type_of_request == "HMO-related Concerns" || $hrticketdata->sub_type_of_request == "Leave Concerns"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;
+                    // dd($this->type_of_hrconcern,  $hrticketdata->type_of_hrconcern);
                 }
-                else if($hrticketdata->sub_type_of_request == "Payroll-related concerns"){
+                else if($hrticketdata->sub_type_of_request == "Payroll-related Concerns"){
                     $this->request_date = $hrticketdata->request_date;
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
@@ -194,7 +199,7 @@ class HrTicketsView extends Component
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_date = $hrticketdata->request_date;
                 }
-                else if($hrticketdata->sub_type_of_request == "Government-mandated benefits concern"){
+                else if($hrticketdata->sub_type_of_request == "Government-Mandated Benefits Concern"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->request_link = $hrticketdata->request_link;
                 }
@@ -286,43 +291,71 @@ class HrTicketsView extends Component
         }
     }
 
-    public function submit(){
-        $hrticketdata = Hrticket::where('form_id', $this->index)->first();
+    // public function submit(){
+    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
 
-        $hrticketdata->status = $this->status;
-        // $this->js("alert('HR Ticket Status Updated!')"); 
-        $this->dispatch('triggerNotification');
+    //     $hrticketdata->status = $this->status;
+    //     // $this->js("alert('HR Ticket Status Updated!')"); 
+    //     $this->dispatch('triggerNotification');
 
-        $hrticketdata->update();
+    //     $hrticketdata->update();
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+    //     return redirect()->to(route('ApproveHrTicketsTable'));
 
-    }
+    // }
 
-    public function decline(){
-        $hrticketdata = Hrticket::where('form_id', $this->index)->first();
+    // public function decline(){
+    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
 
-        $hrticketdata->status = "Declined";
-        $this->js("alert('HR Ticket Declined!')"); 
+    //     $hrticketdata->status = "Declined";
+    //     $this->js("alert('HR Ticket Declined!')"); 
 
-        $hrticketdata->update();
+    //     $hrticketdata->update();
 
-        return redirect()->to(route('ApproveHrTicketsTable'));
+    //     return redirect()->to(route('ApproveHrTicketsTable'));
 
-    }
+    // }
 
 
     public function editForm($index){
         // $hrticket=  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $hrticket= Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
-        
+        $hrticket = Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
         if(!$hrticket || $hrticket->employee_id != $loggedInUser){
             return ;
         }
         // $this->hrticket= $hrticket;
         return $hrticket;
     }
+
+    public function cancelRequest(){
+        try {
+            $employee_id = auth()->user()->employee_id;
+            $data = $this->hr_ticket;
+            if($data){
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
+                }
+            }
+
+            $this->dispatch('trigger-success');
+            return redirect()->to(route('HrTicketsTable'));
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to cancel Leave Request: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
+    }
+
 
 
     public function render()

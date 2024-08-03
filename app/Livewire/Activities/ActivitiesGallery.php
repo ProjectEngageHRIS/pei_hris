@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Activities;
 
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Activities;
@@ -10,11 +11,13 @@ use Livewire\WithFileUploads;
 use App\Models\Dailytimerecord;
 use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\DB;
+use Livewire\WithoutUrlPagination;
 
 class ActivitiesGallery extends Component
 {   
     use WithFileUploads;
     use WithPagination;
+    use WithoutUrlPagination;
 
     public $filter;
 
@@ -93,8 +96,93 @@ class ActivitiesGallery extends Component
 
         // Save the updated activity record
         $activity->update();
-        return $this->dispatch('triggerSuccess');
+        return $this->dispatch('triggerSuccess', modal: "editForm");
         // dd($id, $this->type, $this->subject, $this->poster, $this->date, $this->start, $this->end, $this->publisher, $this->is_featured, $this->visible_to_list);
+    }
+
+    protected $rules = [
+        'type' => 'required|in:Announcement,Event,Seminar,Training,Others',
+        'subject' => 'required|min:2|max:150',
+        'poster' => 'required|mimes:jpg,png|extensions:jpg,png',
+        'description' => 'required|min:2|max:10000',
+        'start' => 'required|before_or_equal:end',
+        'end' => 'required|after_or_equal:start',
+        'is_featured' => 'nullable|boolean',
+        // 'publisher' => 'required',
+        // 'publisher' => 'required|in:College of Information System and Technology Management,College of Engineering,College of Business Administration,College of Liberal Arts,College of Sciences,College of Education,Finance Department,Human Resources Department,Information Technology Department,Legal Department',
+        'visible_to_list' => 'required|array|min:1',
+        'visible_to_list.*' => 'required'
+        
+    ];
+
+    public function addAnnouncement(){
+
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            $this->resetValidation();
+        }   
+
+
+        $dateToday = Carbon::now()->toDateString();;
+        $this->validate(['date' => 'required|after_or_equal:'.$dateToday]);
+
+        // $randomNumber = 0;
+        // while(True) {
+        //     $randomNumber = $this->generateRefNumber();
+        //     $existingRecord = Activities::where('activity_id', $randomNumber)->first();
+        //     if(!$existingRecord){
+        //         break;
+        //     }
+         
+        // }
+
+        $activitydata = new Activities();
+
+        $activitydata->type = $this->type;
+        // $activitydata->activity_id = $randomNumber;
+        $activitydata->subject = $this->subject;
+        $activitydata->description = $this->description;
+        $activitydata->status = "Active";
+
+        if($this->type == "Announcement"){
+            $activitydata->poster = $this->poster->store('photos/activities/announcement', 'public');
+        }
+        else if($this->type == "Event"){
+            $activitydata->poster = $this->poster->store('photos/activities/event', 'public');
+        }
+        else if($this->type == "Seminar"){
+            $activitydata->poster = $this->poster->store('photos/activities/seminar', 'public');
+        }
+        else if($this->type == "Training"){
+            $activitydata->poster = $this->poster->store('photos/activities/training', 'public');
+        }
+        else if($this->type == "Others"){
+            $activitydata->poster = $this->poster->store('photos/activities/others', 'public');
+        }
+
+        // $imageData = file_get_contents($this->poster->getRealPath());
+        // $activitydata->poster = $imageData;
+        $activitydata->date = $this->date;
+        $activitydata->start = $this->start;
+        $activitydata->end = $this->end;
+
+        $loggedInUser = auth()->user()->employee_id;
+
+        $employee = Employee::select('first_name', 'middle_name', 'last_name', 'department')->where('employee_id', $loggedInUser)->first();
+
+
+        if($this->publisher == "Department"){
+            $activitydata->publisher = $employee->department;
+        } else {
+            $activitydata->publisher = $employee->first_name . ' ' . $employee->middle_name . ' ' . $employee->last_name;
+        }
+
+        // dd($activitydata->publisher);
+        $activitydata->is_featured = $this->is_featured ?? 0;
+        $activitydata->visible_to_list = $this->visible_to_list;
+
+        $activitydata->save();
+        $this->dispatch('triggerSuccess', modal: "addForm");
     }
 
     public function removeImage(){
@@ -103,18 +191,34 @@ class ActivitiesGallery extends Component
     }
 
     public function filterListener(){
-        $loggedInUser = auth()->user();
+        // $loggedInUser = auth()->user();
         // $collegeName = Employee::where('employee_id', $loggedInUser->employee_id)
         //                         ->value('college_id');
         // if($loggedInUser->role_id == 0){
-            $activities =  Activities::paginate(1);
+            // $activities =  Activities::paginate(1);
         // }
-        // else if($this->filter == "Announcement"){
-        //     $activities =  Activities::whereJsonContains('visible_to_list', $collegeName)
-        //     ->where('type', 'Announcement') // Add additional conditions if needed
-        //     ->orderBy('created_at', 'desc')
-        //     ->paginate(10);
-        // }
+        $activities =  Activities::query();
+
+        
+        if($this->filter == "Announcement"){
+            $activities =  Activities::where('type', 'Announcement') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Event"){
+            $activities =  Activities::where('type', 'Event') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Seminar"){
+            $activities =  Activities::where('type', 'Seminar') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Training"){
+            $activities =  Activities::where('type', 'Training') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        } else if($this->filter == "Others"){
+            $activities =  Activities::where('type', 'Others') // Add additional conditions if needed
+                                    ->orderBy('created_at', 'desc');
+        }
+
+        $activities = $activities->paginate(6);
+
         // else if($this->filter == "Event"){
         //     $activities =  Activities::where(function ($query) use ($collegeName) {
         //                 foreach ($collegeName as $college) {
@@ -184,6 +288,6 @@ class ActivitiesGallery extends Component
     {
         return view('livewire.activities.activities-gallery', [
             'ActivitiesData' => $this->filterListener(),
-        ])->extends('components.layouts.app');
+        ])->layout('components.layouts.hr-navbar');
     }
 }

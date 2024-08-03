@@ -9,8 +9,10 @@ use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use App\Mail\LeaveRequestSubmitted;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\LeaveRequestConfirmation;
+use Exception;
 use Illuminate\Support\Facades\Storage;
 
 class LeaveRequestForm extends Component
@@ -192,62 +194,76 @@ class LeaveRequestForm extends Component
         'reason' => 'Reason for Leave',
     ];
 
-
     public function submit(){
-        $this->validate();
+        try {
+            $this->validate();
 
-        
-        $loggedInUser = auth()->user();
+            
+            $loggedInUser = auth()->user();
 
-        $leaverequestdata = new Leaverequest();
+            $leaverequestdata = new Leaverequest();
 
-        $leaverequestdata->employee_id = $loggedInUser->employee_id;
-        $leaverequestdata->status = "Pending";
-        $leaverequestdata->supervisor_email = $this->supervisor_email;
-        $leaverequestdata->application_date = $this->application_date;
+            $leaverequestdata->employee_id = $loggedInUser->employee_id;
+            $leaverequestdata->status = "Pending";
+            $leaverequestdata->supervisor_email = $this->supervisor_email;
+            $leaverequestdata->application_date = $this->application_date;
 
-        $leaverequestdata->mode_of_application = $this->mode_of_application;
-        // dd($this->mode_of_application == "Credit Leave");
-        if($this->mode_of_application == "Credit Leave"){
-            $leaverequestdata->date_earned = $this->date_earned;
-            $leaverequestdata->earned_description = $this->earned_description;
+            $leaverequestdata->mode_of_application = $this->mode_of_application;
+            // dd($this->mode_of_application == "Credit Leave");
+            if($this->mode_of_application == "Credit Leave"){
+                $leaverequestdata->date_earned = $this->date_earned;
+                $leaverequestdata->earned_description = $this->earned_description;
+                // dd($leaverequestdata->earned_description , $this->earned_description);
+            } else if($this->mode_of_application == "Advise Slip"){
+                $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
+                $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
+                $leaverequestdata->purpose_type = $this->purpose_type;
+                $leaverequestdata->deduct_to = $this->deduct_to;
+
+            } 
+            else{
+                $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);
+                $leaverequestdata->num_of_days_work_days_applied = $formattedValue ;
+                $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
+                $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
+                $leaverequestdata->deduct_to = $this->deduct_to;
+
+            }
             // dd($leaverequestdata->earned_description , $this->earned_description);
-        } else if($this->mode_of_application == "Advise Slip"){
-            $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
-            $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
-            $leaverequestdata->purpose_type = $this->purpose_type;
-            $leaverequestdata->deduct_to = $this->deduct_to;
 
-        } 
-        else{
-            $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);
-            $leaverequestdata->num_of_days_work_days_applied = $formattedValue ;
-            $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
-            $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
-            $leaverequestdata->deduct_to = $this->deduct_to;
+            
+            $leaverequestdata->full_or_half = $this->full_half;
+            
+            $leaverequestdata->reason = $this->reason;
 
+            $leaverequestdata->save();
+
+            $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
+                ->where('employee_id', $loggedInUser->employee_id)
+                ->first();
+
+            
+            // // Send email to the supervisor
+            // Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
+            // Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
+
+            $this->dispatch('trigger-success');
+
+            return redirect()->to(route('LeaveRequestTable'));
+        } catch (\Exception $e) {
+
+            $this->dispatch('trigger-error');
+
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to save Hrticket: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-        // dd($leaverequestdata->earned_description , $this->earned_description);
 
-        
-        $leaverequestdata->full_or_half = $this->full_half;
-        
-        $leaverequestdata->reason = $this->reason;
-
-        $leaverequestdata->save();
-
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
-            ->where('employee_id', $loggedInUser->employee_id)
-            ->first();
-
-        
-        // // Send email to the supervisor
-        // Mail::to($this->supervisor_email)->send(new LeaveRequestSubmitted($employeeRecord, $leaverequestdata));
-        // Mail::to($employeeRecord->employee_email)->send(new LeaveRequestConfirmation($employeeRecord, $leaverequestdata));
-
-        $this->dispatch('triggerNotification');
-
-        return redirect()->to(route('LeaveRequestTable'));
 
     }
 

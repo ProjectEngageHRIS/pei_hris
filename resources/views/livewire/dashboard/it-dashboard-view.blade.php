@@ -1,25 +1,43 @@
-<div class="flex flex-col space-y-6">
-
+<div class="flex flex-col space-y-6 ">
+    <!-- New Containers -->
+    <div class="flex flex-row justify-between space-x-4">
+        <div class="flex-1 p-4 bg-white h-[150px] rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Completed Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-customGreen">141</p>
+        </div>
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Ongoing Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-yellow-500">2</p>
+        </div>
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Unassigned Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-customGray1">8</p>
+        </div>
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
+            <p class="font-semibold text-md text-customGray">Cancelled Tickets</p>
+            <p class="text-[60px] font-semibold text-right text-customRed">10</p>
+        </div>
+    </div>
     <!-- Employee Table -->
     <div class="relative shadow-md">
-        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
+        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg rounded-8px">
             <!-- Add user button -->
-                <button onclick="resetStep(1)" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
-                    Add new item
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
-                        <path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z" />
-                    </svg>
+            <form>
+                @csrf
+                <button onclick="resetStep()" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+                    Add new ticket
                 </button>
                 <!-- Main modal -->
-                <div id="add-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                    <div class="relative w-full max-w-2xl max-h-full p-4">
-                        <div class="relative bg-white rounded-lg shadow">
+                <div id="add-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                    <div class="relative w-full max-w-md p-4">
+                        <!-- Modal content -->
+                        <div class="relative h-full bg-white rounded-lg shadow">
                             <!-- Modal header -->
-                            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 ">
-                                <h3 class="text-xl font-semibold text-gray-900 ">
-                                    Add new item
+                            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                                <h3 class="text-xl font-semibold text-gray-900">
+                                    Add new ticket
                                 </h3>
-                                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-modal">
+                                <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="add-modal">
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                     </svg>
@@ -27,62 +45,41 @@
                                 </button>
                             </div>
                             <!-- Modal body -->
-                            <form class="p-4 space-y-4 md:p-5" action="#">
-                                <div class="overflow-y-scroll h-[320px]">
-                                    <div>
-                                        <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name <span class="text-red-600">*</span></label>
-                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required/>
+                            <div class="p-4 overflow-y-scroll max-h-[450px]">
+                                <form class="" action="#">
+                                    <div id="name-container" class="grid grid-cols-2">
+                                        <label for="fname" class="block col-span-2 mb-2 text-sm font-medium text-gray-900">Name <span class="text-red-600">*</span></label>
+                                        <input type="text" name="fname" id="fname" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Name" required>
+                                        <button onclick="changeField()" class="col-span-1 col-start-2 text-sm hover:underline justify-self-end text-medium text-customRed"> Enter Employee ID instead </button>
                                     </div>
-                                    <div>
-                                        <label for="email" class="block mt-2 mb-2 text-sm font-medium text-customGray1 ">Email Address <span class="text-red-600">*</span></label>
-                                        <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Email Address" required/>
+                                    <div id="employee-id-container" class="grid grid-cols-2">
+                                        <label for="eid" class="block col-span-2 mb-2 text-sm font-medium text-gray-900">Employee ID <span class="text-red-600">*</span></label>
+                                        <input type="text" name="eid" id="eid" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Employee ID" required>
+                                        <button onclick="changeField()" class="col-span-1 col-start-2 text-sm hover:underline justify-self-end text-medium text-customRed"> Enter Name instead </button>
                                     </div>
-                                    <div>
-                                        <label for="status" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Status <span class="text-red-600">*</span></label>
-                                        <select name="status" id="status" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                            <option value="" selected>Select Status</option>
-                                            <option value="single">Completed</option>
-                                            <option value="married">Ongoing</option>
-                                            <option value="separated">Cancelled</option>
-                                            <option value="widowed">Unassigned</option>
+                                    <div id="issue-container">
+                                        <label for="issue" class="block mb-2 text-sm font-medium text-gray-900">Issue <span class="text-red-600">*</span></label>
+                                        <input type="text" name="issue" id="issue" class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Issue" required>
+                                    </div>
+                                    <div id="status-container">
+                                        <label for="status" class="block mb-2 text-sm font-medium text-gray-900">Status <span class="text-red-600">*</span></label>
+                                        <select name="status" id="status" class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                            <option selected>Select Status</option>
+                                            <option value="Cancelled">Cancelled</option>
+                                            <option value="Unassigned">Unassigned</option>
+                                            <option value="Ongoing">Ongoing</option>
+                                            <option value="Completed">Completed</option>
                                         </select>
                                     </div>
-                                    <div>
-                                        <label for="datetime" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Date and Time <span class="text-red-600">*</span></label>
-                                        <input type="datetime-local" name="bdate" id="bdate" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                    <div class="grid grid-cols-2 my-3">
+                                        <button type="submit" id="createBtn" class="justify-self-end col-start-2 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Ticket</button>
                                     </div>
-                                    <div>
-                                        <label for="issues" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Issues <span class="text-red-600">*</span></label>
-                                        <input type="text" name="issues" id="issues" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Issues" required/>
-                                    </div>
-                                    <div>
-                                        <label for="dept" class="block mt-2 mb-2 ztext-sm font-medium text-customGray1">Department <span class="text-red-600">*</span></label>
-                                        <select name="dept" id="dept" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                            <option value="" selected>Select Department</option>
-                                            <option value="hr">HR and Admin</option>
-                                            <option value="recruitment">Recruitment</option>
-                                            <option value="cxs">CXS</option>
-                                            <option value="overseas">Overseas Recruitment</option>
-                                            <option value="pei-sl">PEI-SL Temps DO-74</option>
-                                            <option value="corporate">Corporate Accounting and Finance</option>
-                                            <option value="accounting">Accounting Operations</option>
-                                        </select>
-                                    </div>
-                                    <div>
-                                        <label for="notes" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Notes</label>
-                                        <input type="text" name="notes" id="notes" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Notes" />
-                                    </div>
-                                </div>
-                                <!-- Modal footer -->
-                                <div class="flex items-center border-t border-gray-200 rounded-b md:p-5 ">
-                                    <button data-modal-hide="add-modal" type="button" class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Save</button>
-                                    <button data-modal-hide="add-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed ">Cancel</button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-
+            </form>
             {{-- Search bar  --}}
             <div class="flex flex-row pr-2">
                 <label for="table-search" class="sr-only">Search</label>
@@ -185,11 +182,11 @@
                                 </div>
                                 <div class="flex items-center px-4 py-2">
                                     <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updatestatusCount">
-                                    <label class="ml-2 text-xs font-medium text-customGray1">Cancelled</label>
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Unassigned</label>
                                 </div>
                                 <div class="flex items-center px-4 py-2">
                                     <input type="checkbox" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updatestatusCount">
-                                    <label class="ml-2 text-xs font-medium text-customGray1">Unassigned</label>
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Cancelled</label>
                                 </div>
                             </div>
                         </div>
@@ -202,10 +199,10 @@
               <thead class="text-xs text-gray-700 uppercase bg-gray-100">
                   <tr>
                       <th scope="col" class="px-6 py-3">
-                          Full Name
+                          Name
                       </th>
                       <th scope="col" class="px-6 py-3">
-                          Email Address
+                          Email
                       </th>
                       <th scope="col" class="px-6 py-3">
                           Status
@@ -243,7 +240,7 @@
                         <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-green-900 bg-green-100 rounded-lg text-nowrap me-2">
                             Completed
                         </span>
-                        </td>
+                    </td>
                       <td class="px-6 py-4">
                         07/16/24 3:47 PM
                       </td>
@@ -254,77 +251,79 @@
                           HR and Admin
                       </td>
                       <td class="px-6 py-4">
-                        ASAP PLS
+
                       </td>
                       <td>
                         <div class="flex flex-row p-2 space-x-4">
-                            <p class="font-medium text-yellow-400 hover:underline" data-modal-target="default-modal" data-modal-toggle="default-modal">Edit</p>
+                            <p class="font-medium text-yellow-400 hover:underline" data-modal-target="edit-modal" data-modal-toggle="edit-modal">Edit</p>
                             <a href="#" class="font-medium text-red-500 hover:underline">Delete</a>
                         </div>
-
                         <!-- Main modal -->
-                        <div id="default-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                            <div class="relative w-full max-w-2xl max-h-full p-4">
-                                <div class="relative bg-white rounded-lg shadow">
-                                    <!-- Modal header -->
-                                    <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5 ">
-                                        <h3 class="text-xl font-semibold text-gray-900 ">
-                                            Edit item
-                                        </h3>
-                                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="default-modal">
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                            <span class="sr-only">Close modal</span>
-                                        </button>
+                        <form>
+                            @csrf
+                            <!-- Main modal -->
+                            <div id="edit-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+                                <div class="relative w-full max-w-md p-4">
+                                    <!-- Modal content -->
+                                    <div class="relative h-full bg-white rounded-lg shadow">
+                                        <!-- Modal header -->
+                                        <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                                            <h3 class="text-xl font-semibold text-gray-900">
+                                                Edit Ticket
+                                            </h3>
+                                            <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="edit-modal">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                        </div>
+                                        <!-- Modal body -->
+                                        <div class="p-4 overflow-y-scroll max-h-[450px]">
+                                            <form class="" action="#">
+                                                <div id="name-container" class="grid grid-cols-2">
+                                                    <label for="fname" class="block col-span-2 mb-2 text-sm font-medium text-gray-500">Name</label>
+                                                    <input type="text" name="fname" id="fname" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
+                                                </div>
+                                                <div id="employee-id-container" class="grid grid-cols-2">
+                                                    <label for="eid" class="block col-span-2 mb-2 text-sm font-medium text-gray-500">Employee ID</label>
+                                                    <input type="text" name="eid" id="eid" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
+                                                </div>
+                                                <div id="department-container" class="grid grid-cols-2">
+                                                    <label for="dept" class="block col-span-2 mb-2 text-sm font-medium text-gray-500">Department</label>
+                                                    <input type="text" name="dept" id="dept" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
+                                                </div>
+                                                <div id="email-container" class="grid grid-cols-2">
+                                                    <label for="email" class="block col-span-2 mb-2 text-sm font-medium text-gray-500">Email</label>
+                                                    <input type="email" name="email" id="email" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
+                                                </div>
+                                                <div id="datetime-container" class="grid grid-cols-2">
+                                                    <label for="datetime" class="block col-span-2 mb-2 text-sm font-medium text-gray-500">Date and Time</label>
+                                                    <input type="datetime-local" name="datetime" id="datetime" class="col-span-2 bg-gray-50 border mb-2 border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
+                                                </div>
+                                                <div id="issue-container">
+                                                    <label for="issue" class="block mb-2 text-sm font-medium text-gray-500">Issue</label>
+                                                    <input type="text" name="issue" id="issue" class="bg-gray-50 border mb-2 border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
+                                                </div>
+                                                <div id="status-container">
+                                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Status <span class="text-red-600">*</span></label>
+                                                    <select name="status" id="status" class="bg-gray-50 border mb-2 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                                        <option selected>Select Status</option>
+                                                        <option value="Cancelled">Cancelled</option>
+                                                        <option value="Unassigned">Unassigned</option>
+                                                        <option value="Ongoing">Ongoing</option>
+                                                        <option value="Completed">Completed</option>
+                                                    </select>
+                                                </div>
+                                                <div class="grid grid-cols-2 my-3">
+                                                    <button type="submit" id="editBtn" class="justify-self-end col-start-2 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Ticket</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
-                                    <!-- Modal body -->
-                                    <form class="p-4 space-y-4 md:p-5" action="#">
-                                        <div class="overflow-y-scroll h-[320px]">
-                                            <div>
-                                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray">Full Name</label>
-                                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Neil Sims" disabled/>
-                                            </div>
-                                            <div>
-                                                <label for="email" class="block mt-2 mb-2 text-sm font-medium text-customGray ">Email Address</label>
-                                                <input type="email" name="email" id="email" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="neilsims@sle.com" disabled/>
-                                            </div>
-                                            <div>
-                                                <label for="status" class="block mt-2 mb-2 text-sm font-medium text-customGray1">Status <span class="text-red-600">*</span></label>
-                                                <select name="status" id="status" class="bg-gray-50 mb-2 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                    <option value="" selected>Select Status</option>
-                                                    <option value="single">Completed</option>
-                                                    <option value="married">Ongoing</option>
-                                                    <option value="separated">Cancelled</option>
-                                                    <option value="widowed">Unassigned</option>
-                                                </select>
-                                            </div>
-                                            <div>
-                                                <label for="datetime" class="block mt-2 mb-2 text-sm font-medium text-customGray">Date and Time</label>
-                                                <input type="text" name="datetime" id="datetime" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="07/16/24 3:47 PM" disabled/>
-                                            </div>
-                                            <div>
-                                                <label for="issues" class="block mt-2 mb-2 text-sm font-medium text-customGray">Issues</label>
-                                                <input type="text" name="issues" id="issues" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Printer Issue" disabled/>
-                                            </div>
-                                            <div>
-                                                <label for="dept" class="block mt-2 mb-2 text-sm font-medium text-customGray">Department</label>
-                                                <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="HR and Admin" disabled/>
-                                            </div>
-                                            <div>
-                                                <label for="notes" class="block mt-2 mb-2 text-sm font-medium text-customGray">Notes</label>
-                                                <input type="text" name="notes" id="notes" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="ASAP PLS" disabled/>
-                                            </div>
-                                        </div>
-                                        <!-- Modal footer -->
-                                        <div class="flex items-center border-t border-gray-200 rounded-b md:p-5 ">
-                                            <button data-modal-hide="default-modal" type="button" class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Save</button>
-                                            <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed ">Cancel</button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
-                        </div>
+                        </form>
 
                       </td>
                   </tr>
@@ -413,7 +412,7 @@
                         thomaslean@sle.com
                     </td>
                     <td class="px-6 py-4">
-                      <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-900 bg-gray-100 rounded-lg text-nowrap me-2">
+                      <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-900 bg-gray-200 rounded-lg text-nowrap me-2">
                           Unassigned
                       </span>
                   </td>
@@ -479,74 +478,15 @@
 </div>
 
 <script>
-    let currentStep = 1;
-    let addInputs = document.querySelectorAll('input');
-    let addSelect = document.querySelectorAll('select');
-    let eyeButton = document.getElementById('')
-    let eyeopen = document.getElementById("eyeopen");
-    let eyeclose = document.getElementById("eyeclose");
-    let password = document.getElementById("password");
-
-    function togglePassword() {
-        if (password.type === "password") {
-            password.type = "text";
-            password.placeholder = "password";
-            document.getElementById("eyeclose").classList.add('hidden');
-            document.getElementById("eyeopen").classList.remove('hidden');
-        } else {
-            password.type = "password";
-            password.placeholder = "••••••••";
-            document.getElementById("eyeclose").classList.remove('hidden');
-            document.getElementById("eyeopen").classList.add('hidden');
-        }
+    function resetStep() {
+        document.getElementById('name-container').classList.add('hidden');
+        document.getElementById('employee-id-container').classList.remove('hidden');
     }
 
-    function resetStep(step) {
-        currentStep = step;
-        showStep(currentStep);
-        document.getElementById('prevBtn').classList.add('hidden');
-        document.getElementById('createBtn').classList.add('hidden');
-        addInputs.forEach(input => input.value = '');
-        addSelect.forEach(input => input.value = '');
-        password.type = "password";
-        password.placeholder = "••••••••";
-        document.getElementById("eyeclose").classList.remove('hidden');
-        document.getElementById("eyeopen").classList.add('hidden');
+    function changeField() {
+        document.getElementById('name-container').classList.toggle('hidden');
+        document.getElementById('employee-id-container').classList.toggle('hidden');
+        document.getElementById('fname').value = ""
+        document.getElementById('eid').value = ""
     }
-
-    function showStep(step) {
-        document.querySelectorAll('.number-step').forEach((numberStepper, index) => {
-            numberStepper.classList.toggle('hidden', index < step - 1);
-        });
-
-        document.querySelectorAll('.done-step').forEach((doneStepper, index) => {
-            doneStepper.classList.toggle('hidden', index >= step - 1);
-        });
-
-        document.querySelectorAll('.step').forEach((stepElement, index) => {
-            stepElement.classList.toggle('hidden', index !== step - 1);
-        });
-
-        document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
-            indicator.classList.toggle('bg-customRed', index < step-1);
-            indicator.classList.toggle('bg-gray-100', index >= step-1);
-        });
-    }
-
-    function changeStep(step) {
-        currentStep += step;
-        currentStep = Math.max(1, Math.min(currentStep, 6)); // Ensure the step stays between 1 and 6
-        showStep(currentStep);
-
-        document.getElementById('prevBtn').classList.toggle('hidden', currentStep === 1);
-        document.getElementById('nextBtn').classList.toggle('hidden', currentStep === 6);
-        document.getElementById('createBtn').classList.toggle('hidden', currentStep < 6);
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        showStep(currentStep);
-        document.getElementById('prevBtn').classList.add('hidden');
-        document.getElementById('createBtn').classList.add('hidden');
-    });
-
 </script>

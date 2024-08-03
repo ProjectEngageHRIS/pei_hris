@@ -3,6 +3,7 @@
 namespace App\Livewire\Hrtickets;
 
 use finfo;
+use Exception;
 use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
@@ -10,6 +11,7 @@ use App\Models\Hrticket;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
 
 
@@ -30,7 +32,9 @@ class HrTicketsTable extends Component
     public $search = "";
 
     public $type;
-    
+
+    public $currentFormId;
+
     public function search()
     {
         $this->resetPage();
@@ -149,26 +153,31 @@ class HrTicketsTable extends Component
     
     }
 
-    public function cancelForm($index){
-        // $this->dispatch('triggerConfirmation');
+    public function cancelForm(){
+        try{
+            $employee_id = auth()->user()->employee_id;
+            $data = Hrticket::where('employee_id', $employee_id)
+                            ->where('uuid', $this->currentFormId)
+                            ->select('uuid', 'form_id', 'employee_id', 'status', 'cancelled_at') 
+                            ->first();
+            if($data){
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
+                }
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
 
-        $employee_id = auth()->user()->employee_id;
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
 
-        $data = Hrticket::where('employee_id', $employee_id)
-                        ->where('uuid', $index)
-                        ->select('form_id', 'status', 'cancelled_at') 
-                        ->first();
-        if($data){
-            $data->status = "Cancelled";
-            $data->cancelled_at = now();
-            $data->update();
+            // Optionally, you could redirect the user to an error page or show an error message
+            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-        return redirect()->route('HrTicketsTable', ['type' => $this->type]);
-
+        
     }
-
-    // public function render()
-    // {
-    //     return view('livewire.hrtickets.hr-tickets-table');
-    // }
 }

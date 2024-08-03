@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('employee_activities', function (Blueprint $table) {
             // $table->id();
-            $table->string('activity_id')->primary();
+            $table->bigIncrements('activity_id');
             $table->string('status')->default('Active');
             $table->dateTime('published_date')->default(now());
             $table->string('type');
