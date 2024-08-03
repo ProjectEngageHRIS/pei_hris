@@ -21,7 +21,7 @@
                     <label for="otp" class="block text-xs font-semibold leading-5 text-customGray1">
                         Enter OTP <span style="color:#AC0C2E">*</span>
                     </label>
-                    <input wire:model="otp" type="text" id="otp" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-red-500 focus:ring-blue transition duration-150 ease-in-out sm:text-sm sm:leading-5 custom-border @error('otp') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
+                    <input wire:model="otp" type="text" id="otp" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-customRed  transition duration-150 ease-in-out sm:text-sm sm:leading-5 custom-border @error('otp') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
                     @error('otp')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror

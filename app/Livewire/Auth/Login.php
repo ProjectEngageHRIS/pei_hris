@@ -4,8 +4,9 @@ namespace App\Livewire\Auth;
 
 use App\Models\User;
 use Livewire\Component;
-use App\Events\bannedAccount;
 use App\Models\UserDevices;
+use App\Events\bannedAccount;
+use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\RateLimiter;
@@ -64,14 +65,18 @@ class Login extends Component
             if ($deviceGuid != null) {
                 if ($this->isValidDevice($this->email, $deviceGuid)) {
                     return redirect()->route('LoginDashboard');
+
                 } else {
                     session(['auth_user_id' => $this->email]);
-                    return redirect()->route('MFAVerify');
+                    $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+                    return redirect()->to($url);
+                    // return redirect()->route('MFAVerify');
                 }
             } else {
                 // Handle case where device GUID is not found
                 session(['auth_user_id' => $this->email]);
-                return redirect()->route('MFAVerify');
+                $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+                return redirect()->to($url);
             }
         } else {
             // Invalid credentials

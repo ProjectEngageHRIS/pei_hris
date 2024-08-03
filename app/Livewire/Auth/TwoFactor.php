@@ -31,7 +31,7 @@ class TwoFactor extends Component
     
     protected $rules = [
         'email' => 'required|email',
-        'otp' => 'required|string|min:6|max:6',
+        'otp' => 'required|string|min:6',
         'password' => 'required|string|min:8|confirmed',
     ];
 
