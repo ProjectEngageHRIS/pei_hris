@@ -5,6 +5,7 @@ use App\Livewire\Auth\Verify;
 use App\Livewire\Auth\Register;
 use App\Livewire\Ipcr\IpcrForm;
 use App\Livewire\Opcr\OpcrForm;
+use App\Livewire\Auth\TwoFactor;
 use App\Livewire\Ipcr\IpcrTable;
 use App\Livewire\Opcr\OpcrTable;
 use App\Livewire\Ipcr\IpcrUpdate;
@@ -70,8 +71,8 @@ use App\Livewire\Trainings\TrainingPostTestForm;
 use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
-use App\Http\Controllers\RequestDocumentController;
 
+use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
 use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
@@ -81,16 +82,16 @@ use App\Livewire\Payroll\Accounting\AddPayrollTable;
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
-use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
-use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
@@ -137,13 +138,13 @@ Route::get('/', function(){
 // Route::get('/onboarding', EmployeeOnboardingForm::class)->name('EmployeeOnboarding');
 
 
-Route::middleware('throttle:api')->group(function () {
+// Route::middleware('')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
  
-    Route::get('register', Register::class)
-        ->name('register');
-});
+    // Route::get('register', Register::class)
+    //     ->name('register');
+// });
 
 // Route::get('password/reset', Email::class)
 //     ->name('password.request');
@@ -212,6 +213,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::get('/password-reset', PasswordReset::class)->name('PasswordReset');
+
+Route::get('/verify', TwoFactor::class)->name('MFAVerify');
 
 
 
