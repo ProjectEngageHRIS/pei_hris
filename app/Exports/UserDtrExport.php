@@ -53,7 +53,7 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
         $highestColumn = $sheet->getHighestColumn();
         $highestRow = $sheet->getHighestRow();
     
-        // Assuming the start date and end date are provided (e.g., in $startDate and $endDate)
+        // Assuming the start date and end date are provided
         $startDate = $this->start_date; // Replace with your actual start date
         $endDate = $this->end_date; // Replace with your actual end date
     
@@ -61,102 +61,13 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
         $startColumnIndex = Coordinate::columnIndexFromString('D'); // Column where your date columns start
         $endColumnIndex = $startColumnIndex + (new \DateTime($endDate))->diff(new \DateTime($startDate))->days * 2 + 1; // Each day spans 2 columns
     
-        $skipColumns = range($startColumnIndex, $endColumnIndex);
-
-    
         // Initialize the current column to "A"
         $currentColumnIndex = 1;
-    
-        // Loop through each column until we reach the highest column
-        while (true) {
-            $currentColumn = Coordinate::stringFromColumnIndex($currentColumnIndex);
-    
-            // // Apply styles to the header row (first row)
-            // if (!in_array($currentColumnIndex, $skipColumns)) {
-            //     $sheet->getStyle($currentColumn . '1')->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THICK,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //         'font' => [
-            //             'name' => 'Aptos Narrow',
-            //             'bold' => true,
-            //         ],
-            //         // 'alignment' => [
-            //         //     'horizontal' => Alignment::HORIZONTAL_CENTER,
-            //         //     'vertical' => Alignment::VERTICAL_CENTER,
-            //         // ],
-            //     ]);
-            //     $sheet->getStyle($currentColumn . '2')->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THICK,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //         'font' => [
-            //             'name' => 'Aptos Narrow',
-            //             'bold' => true,
-            //         ],
-            //         // 'alignment' => [
-            //         //     'horizontal' => Alignment::HORIZONTAL_CENTER,
-            //         //     'vertical' => Alignment::VERTICAL_CENTER,
-            //         // ],
-            //     ]);
-            //     $sheet->getStyle($currentColumn . '3')->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THICK,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //         'font' => [
-            //             'name' => 'Aptos Narrow',
-            //             'bold' => true,
-            //         ],
-            //         // 'alignment' => [
-            //         //     'horizontal' => Alignment::HORIZONTAL_CENTER,
-            //         //     'vertical' => Alignment::VERTICAL_CENTER,
-            //         // ],
-            //     ]);
-            // } else {
-            //     $sheet->getStyle($currentColumn . '1')->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THIN,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //     ]);
-            //     $sheet->getStyle($currentColumn . '2')->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THIN,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //     ]);
-            //     $sheet->getStyle($currentColumn . '3')->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THICK,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //         'font' => [
-            //             'name' => 'Aptos Narrow',
-            //             'bold' => true,
-            //         ],
-            //         // 'alignment' => [
-            //         //     'horizontal' => Alignment::HORIZONTAL_CENTER,
-            //         //     'vertical' => Alignment::VERTICAL_CENTER,
-            //         // ],
-            //     ]);
-            // }
-            
-            $sheet->getStyle("A6:N6")->applyFromArray([
+        
+        // Define the column index range for thick borders (first 3 columns)
+        $thickBorderColumns = [1, 2, 3]; // Adjust as needed for your specific columns
+
+        $sheet->getStyle("A6:N6")->applyFromArray([
                 'borders' => [
                     'outline' => [
                         'borderStyle' => Border::BORDER_THICK,
@@ -170,47 +81,33 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
                     'horizontal' => Alignment::HORIZONTAL_CENTER,
                     'vertical' => Alignment::VERTICAL_CENTER,
                 ],
-            ]);
-            // } else {
-            //     $sheet->getStyle($cell)->applyFromArray([
-            //         'borders' => [
-            //             'outline' => [
-            //                 'borderStyle' => Border::BORDER_THIN,
-            //                 'color' => ['argb' => '000000'],
-            //             ],
-            //         ],
-            //     ]);
-            // }
-
+        ]);
+        
+        // Loop through each column until we reach the highest column
+        while (true) {
+            $currentColumn = Coordinate::stringFromColumnIndex($currentColumnIndex);
+            
+            // Apply thick borders to the first three columns and thin borders to the rest
+            $borderStyle = in_array($currentColumnIndex, $thickBorderColumns) ? Border::BORDER_THICK : Border::BORDER_THIN;
+    
             // Apply styles to each cell in the column
-            for ($row = 7; $row <= $highestRow; $row++) { // Start from the 3rd row
+            for ($row = 7; $row <= $highestRow; $row++) { // Start from the 7th row
                 $cell = $currentColumn . $row;
-                if (!in_array($currentColumnIndex, $skipColumns)) {
-                    $sheet->getStyle($cell)->applyFromArray([
-                        'borders' => [
-                            'outline' => [
-                                'borderStyle' => Border::BORDER_THICK,
-                                'color' => ['argb' => '000000'],
-                            ],
+                $sheet->getStyle($cell)->applyFromArray([
+                    'borders' => [
+                        'outline' => [
+                            'borderStyle' => $borderStyle,
+                            'color' => ['argb' => '000000'],
                         ],
-                        'font' => [
-                            'name' => 'Aptos Narrow',
-                        ],
-                        'alignment' => [
-                            'horizontal' => Alignment::HORIZONTAL_CENTER,
-                            'vertical' => Alignment::VERTICAL_CENTER,
-                        ],
-                    ]);
-                } else {
-                    $sheet->getStyle($cell)->applyFromArray([
-                        'borders' => [
-                            'outline' => [
-                                'borderStyle' => Border::BORDER_THIN,
-                                'color' => ['argb' => '000000'],
-                            ],
-                        ],
-                    ]);
-                }
+                    ],
+                    'font' => [
+                        'name' => 'Aptos Narrow',
+                    ],
+                    'alignment' => [
+                        'horizontal' => Alignment::HORIZONTAL_CENTER,
+                        'vertical' => Alignment::VERTICAL_CENTER,
+                    ],
+                ]);
             }
     
             // Move to the next column
@@ -221,90 +118,6 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
                 break;
             }
         }
-    
-        // // Apply styles to the last column (the highest column)
-        // if (!in_array(Coordinate::columnIndexFromString($highestColumn), $skipColumns)) {
-        //     $sheet->getStyle($highestColumn . '1')->applyFromArray([
-        //         'borders' => [
-        //             'outline' => [
-        //                 'borderStyle' => Border::BORDER_THICK,
-        //                 'color' => ['argb' => '000000'],
-        //             ],
-        //         ],
-        //         'font' => [
-        //             'name' => 'Aptos Narrow',
-        //             'bold' => true,
-        //         ],
-        //         'alignment' => [
-        //             'horizontal' => Alignment::HORIZONTAL_CENTER,
-        //             'vertical' => Alignment::VERTICAL_CENTER,
-        //         ],
-        //     ]);
-        //     $sheet->getStyle($highestColumn . '2')->applyFromArray([
-        //         'borders' => [
-        //             'outline' => [
-        //                 'borderStyle' => Border::BORDER_THICK,
-        //                 'color' => ['argb' => '000000'],
-        //             ],
-        //         ],
-        //         'font' => [
-        //             'name' => 'Aptos Narrow',
-        //             'bold' => true,
-        //         ],
-        //         'alignment' => [
-        //             'horizontal' => Alignment::HORIZONTAL_CENTER,
-        //             'vertical' => Alignment::VERTICAL_CENTER,
-        //         ],
-        //     ]);
-        // } else {
-        //     $sheet->getStyle($highestColumn . '1')->applyFromArray([
-        //         'borders' => [
-        //             'outline' => [
-        //                 'borderStyle' => Border::BORDER_THIN,
-        //                 'color' => ['argb' => '000000'],
-        //             ],
-        //         ],
-        //     ]);
-        //     $sheet->getStyle($highestColumn . '2')->applyFromArray([
-        //         'borders' => [
-        //             'outline' => [
-        //                 'borderStyle' => Border::BORDER_THIN,
-        //                 'color' => ['argb' => '000000'],
-        //             ],
-        //         ],
-        //     ]);
-        // }
-    
-        // // Apply styles to each cell in the last column
-        // for ($row = 3; $row <= $highestRow; $row++) { // Start from the 3rd row
-        //     $cell = $highestColumn . $row;
-        //     if (!in_array(Coordinate::columnIndexFromString($highestColumn), $skipColumns)) {
-        //         $sheet->getStyle($cell)->applyFromArray([
-        //             'borders' => [
-        //                 'outline' => [
-        //                     'borderStyle' => Border::BORDER_THICK,
-        //                     'color' => ['argb' => '000000'],
-        //                 ],
-        //             ],
-        //             'font' => [
-        //                 'name' => 'Aptos Narrow',
-        //             ],
-        //             'alignment' => [
-        //                 'horizontal' => Alignment::HORIZONTAL_CENTER,
-        //                 'vertical' => Alignment::VERTICAL_CENTER,
-        //             ],
-        //         ]);
-        //     } else {
-        //         $sheet->getStyle($cell)->applyFromArray([
-        //             'borders' => [
-        //                 'outline' => [
-        //                     'borderStyle' => Border::BORDER_THIN,
-        //                     'color' => ['argb' => '000000'],
-        //                 ],
-        //             ],
-        //         ]);
-        //     }
-        // }
     }
 
     public function failed(Throwable $exception): void
@@ -319,8 +132,8 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
 
     public function view(): View
     {
-        $start_date = Carbon::parse($this->start_date);
-        $end_date = Carbon::parse($this->end_date);
+        $start_date = Carbon::parse($this->start_date ?? now());
+        $end_date = Carbon::parse($this->end_date ?? now());
         $diff_in_days = $start_date->diffInDays($end_date) + 1;
         // $start_date = Carbon::parse('March 22, 2024');
         // $end_date = Carbon::parse('September 17, 2024');
@@ -448,8 +261,6 @@ class UserDtrExport implements FromView, WithChunkReading, WithEvents, WithStyle
 
             ];
         }
-
-        
 
         return view('exports.attendance', [
             'dtrs' => $employeeDtrs,
