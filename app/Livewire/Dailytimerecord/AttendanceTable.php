@@ -129,8 +129,6 @@ class AttendanceTable extends Component
             }
         }
 
-        $loggedInUser = auth()->user()->employee_id;
-
         $this->setGraph();
         $this->chartFilter = "Weekly";
         // $employeeInformation = Employee::where('employee_id', $loggedInUser)
