@@ -36,10 +36,13 @@ class TwoFactor extends Component
     ];
 
     public function mount(){
-        $user_id = session()->get('auth_user_id');
+        // $user_id = session()->get('auth_user_id');
+        $user_id = auth()->user()->employee_id;
         // $this->user = User::where('employee_id', $user_id)->select('employee_id', 'email')->first();
-        $this->user_id = $user_id;
-        $this->sendOtp();
+        if($user_id){
+            $this->user_id = $user_id;
+            $this->sendOtp();
+        } 
     }
 
     public function sendOtp()

@@ -21,15 +21,23 @@ class AttendanceTable extends Component
     public $options = [];
     public $dateChosen = [];
 
+    public $chartFilter;
+
     public $currentYear;
 
     public $currentMonth;
 
+    public $currentMonthName;
     public $search = "";
+    public $dayFilter;
 
-    // public $filter;
+    public $dayFilterName;
+    public $monthFilter;
+    
+    public $monthFilterName;
+    public $yearFilter;
 
-    public $filterName = "All";
+    public $yearFilterName;
 
 
     public $activities;
@@ -56,6 +64,9 @@ class AttendanceTable extends Component
 
     public $end_date;
 
+    public $currentDate;
+
+
     protected $queryString = [
         'category',
         'sort',
@@ -73,9 +84,17 @@ class AttendanceTable extends Component
     }
 
     public function mount(){
+        $now = Carbon::now();
+        $currentYear = $now->year;
+        $currentMonth = $now->month;
+        $currentDay = $now->day;
+        $currentMonthName = $now->format('F');
+        $this->currentYear = $currentYear;
+        $this->currentMonth = $currentMonth;
+        $this->currentMonthName = $currentMonthName;
+        $this->yearFilter = $currentYear;
+        $this->monthFilter = $currentMonth;
 
-        $currentYear = Carbon::now()->year;
-        $currentMonth = Carbon::now()->month;
         $years = range($currentYear, 2000, -1);
         $months = [
             '01' => 'January',
@@ -111,6 +130,9 @@ class AttendanceTable extends Component
         }
 
         $loggedInUser = auth()->user()->employee_id;
+
+        $this->setGraph();
+        $this->chartFilter = "Weekly";
         // $employeeInformation = Employee::where('employee_id', $loggedInUser)
         //                         ->select( 'sick_credits', 'vacation_credits', 'first_name', 'gender')->first();
         // $this->firstName = $employeeInformation->first_name;
@@ -152,63 +174,115 @@ class AttendanceTable extends Component
         // $currentMonth = Carbon::now()->month;
         // $currentDay = Carbon::now()->day;
 
-        // Query to get the attendance count for each month in the current year
-        $monthlyCounts = Dailytimerecord::select(
-                DB::raw('MONTH(attendance_date) as month'),
-                DB::raw('COUNT(*) as count')
-            )
-            ->where('employee_id', $loggedInUser)
-            // ->where('attendance_type', 'time-in')
-            ->whereYear('attendance_date', $currentYear)
-            ->groupBy(DB::raw('MONTH(attendance_date)'))
-            ->get();
+        // // Query to get the attendance count for each month in the current year
+        // $monthlyCounts = Dailytimerecord::select(
+        //         DB::raw('MONTH(attendance_date) as month'),
+        //         DB::raw('COUNT(*) as count')
+        //     )
+        //     ->where('employee_id', $loggedInUser)
+        //     ->whereYear('attendance_date', $currentYear)
+        //     ->groupBy(DB::raw('MONTH(attendance_date)'))
+        //     ->get();
 
 
-        $weeklyCounts = Dailytimerecord::select(
-            DB::raw('WEEK(attendance_date, 0) as week'), // Start the week on Sunday (0)
-            DB::raw('COUNT(*) as count')
-        )
-        ->where('employee_id', $loggedInUser)
-        // ->where('attendance_type', 'time-in')
-        ->whereYear('attendance_date', $currentYear)
-        ->whereMonth('attendance_date', $currentMonth)
-        ->groupBy(DB::raw('WEEK(attendance_date, 0)'))
-        ->get();
+        // $weeklyCounts = Dailytimerecord::select(
+        //     DB::raw('WEEK(attendance_date, 0) as week'), // Start the week on Sunday (0)
+        //     DB::raw('COUNT(*) as count')
+        // )
+        // ->where('employee_id', $loggedInUser)
+        // ->whereYear('attendance_date', $currentYear)
+        // ->whereMonth('attendance_date', $currentMonth)
+        // ->groupBy(DB::raw('WEEK(attendance_date, 0)'))
+        // ->get();
 
-        // Initialize arrays to hold the counts for each month and week
-        $monthlyCountsArray = [];
-        $weeklyCountsArray = [];
+        // // Initialize arrays to hold the counts for each month and week
+        // $monthlyCountsArray = [];
+        // $weeklyCountsArray = [];
 
-        // Process monthly counts
-        for ($i = 1; $i <= 12; $i++) {
-            $found = false;
-            foreach ($monthlyCounts as $count) {
-                if ($count->month == $i) {
-                    $this->monthlyCountsArray[$i] = $count->count;
-                    $found = true;
-                    break;
-                }
-            }
-            if (!$found) {
-                $this->monthlyCountsArray[$i] = 0;
-            }
-        }
+        // // Process monthly counts
+        // for ($i = 1; $i <= 12; $i++) {
+        //     $found = false;
+        //     foreach ($monthlyCounts as $count) {
+        //         if ($count->month == $i) {
+        //             $this->monthlyCountsArray[$i] = $count->count;
+        //             $found = true;
+        //             break;
+        //         }
+        //     }
+        //     if (!$found) {
+        //         $this->monthlyCountsArray[$i] = 0;
+        //     }
+        // }
 
-        foreach ($weeklyCounts as $count) {
-            if($count->count != 0){
-                $this->weeklyCountsArray[] = $count->count;
-            }else {
-                $this->weeklyCountsArray[] = 0;
-            }
-        }
-        while (count($this->weeklyCountsArray) < 5) {
-            $this->weeklyCountsArray[] = 0;
-        }
+        // foreach ($weeklyCounts as $count) {
+        //     if($count->count != 0){
+        //         $this->weeklyCountsArray[] = $count->count;
+        //     }else {
+        //         $this->weeklyCountsArray[] = 0;
+        //     }
+        // }
+        // while (count($this->weeklyCountsArray) < 5) {
+        //     $this->weeklyCountsArray[] = 0;
+        // }
 
-        $this->setFilter("weekly");
+        // $this->setFilter("weekly");
 
         // $this->data = array_values($this->weeklyCountsArray);
     
+    }
+
+    public function setGraph(){
+            // Query to get the attendance count for each month in the current year
+            $loggedInUser = auth()->user()->employee_id;
+            $monthlyCounts = Dailytimerecord::select(
+                    DB::raw('MONTH(attendance_date) as month'),
+                    DB::raw('COUNT(*) as count')
+                )
+                ->where('employee_id', $loggedInUser)
+                ->whereYear('attendance_date', $this->yearFilter)
+                ->groupBy(DB::raw('MONTH(attendance_date)'))
+                ->get();
+
+            $weeklyCounts = Dailytimerecord::select(
+                DB::raw('WEEK(attendance_date, 0) as week'), // Start the week on Sunday (0)
+                DB::raw('COUNT(*) as count')
+                )->where('employee_id', $loggedInUser)
+                ->whereYear('attendance_date', $this->yearFilter)
+                ->whereMonth('attendance_date', $this->monthFilter != "all" ? $this->monthFilter : $this->currentMonth)
+                ->groupBy(DB::raw('WEEK(attendance_date, 0)'))
+                ->get();
+    
+            // Initialize arrays to hold the counts for each month and week
+            $monthlyCountsArray = [];
+            $weeklyCountsArray = [];
+    
+            // Process monthly counts
+            for ($i = 1; $i <= 12; $i++) {
+                $found = false;
+                foreach ($monthlyCounts as $count) {
+                    if ($count->month == $i) {
+                        $monthlyCountsArray[$i] = $count->count;
+                        $found = true;
+                        break;
+                    }
+                }
+                if (!$found) {
+                    $monthlyCountsArray[$i] = 0;
+                }
+            }
+    
+            foreach ($weeklyCounts as $count) {
+                if($count->count != 0){
+                    $weeklyCountsArray[] = $count->count;
+                }else {
+                    $weeklyCountsArray[] = 0;
+                }
+            }
+            while (count($weeklyCountsArray) < 5) {
+                $weeklyCountsArray[] = 0;
+            }
+
+            return [$monthlyCountsArray, $weeklyCountsArray];
     }
 
     public function generateRecord(){
@@ -220,31 +294,11 @@ class AttendanceTable extends Component
 
     }
 
-    public function filter($filter){
-        if($filter == 'weekly'){
-            return [332, 321, 54, 32, 32];
-            
-        }
-        else if ($filter == 'monthly'){
-            // $this->dateData = $this->monthlyCountsArray;
-            return [332, 321, 54, 32, 32];
-
-        }
-        $this->dispatch('$refresh');
-
-    }
+    
 
     public function setFilter($filter){
-        if($filter == "weekly"){
-            $this->filter = "Weekly";
-                $this->dispatch('refresh-weekly-chart', data: array_values($this->weeklyCountsArray));
-        }
-        else{
-            $this->filter = "Monthly";
-            // dd($this->monthlyCountsArray );
-            $this->dispatch('refresh-monthly-chart', data: array_values($this->monthlyCountsArray));
-        }
-        
+        $this->filter = $filter;
+        $this->chartFilter = $filter;
     }
 
     protected $rules = [
@@ -263,6 +317,7 @@ class AttendanceTable extends Component
 
     public function render()
     {
+
         $loggedInUser = auth()->user();
         $query = Dailytimerecord::where('employee_id', $loggedInUser->employee_id)
                                 ->select('attendance_date',
@@ -273,34 +328,58 @@ class AttendanceTable extends Component
                                          'undertime',
                                          'late',
                                          );
-        
-        switch ($this->filter) {
-            case '1':
-                $query->whereDate('attendance_date',  Carbon::today());
-                $this->filterName = "Today";
-                break;
-            case '2':
-                $query->where('attendance_date', '>=', Carbon::today()->startOfWeek());
-                $this->filterName = "This week";
-                break;
-            case '3':
-                $query->where('attendance_date', '>=', Carbon::today()->subMonth());
-                $this->filterName = "This Month";
-                break;
-            case '4':
-                $query->where('attendance_date', '>=', Carbon::today()->subMonths(6));
-                $this->filterName = "These 6 Months";
-                break;
-            case '5':
-                $query->where('attendance_date', '>=', Carbon::today()->subYear());
-                    $this->filterName = "This Year";
-                break;
-            default:
-                $this->filterName = "All";
-                break;
 
+        
+        [$yearly, $monthly] = $this->setGraph();
+        // dd($monthly, $yearly);
+        if($this->filter == "Weekly"){
+            $this->filter = "Weekly";
+            $this->dispatch('refresh-weekly-chart', data: array_values($monthly));
+        }
+        else{
+            $this->filter = "Monthly";
+            $this->dispatch('refresh-monthly-chart', data: array_values($yearly));
         }
 
+
+        if($this->dayFilter == "all" ){
+            $this->dayFilterName = "*";
+        } else {
+            $dateToday = Carbon::now();
+            $query->whereDay('attendance_date', $this->dayFilter ?? $dateToday->day);
+            $this->dayFilterName = $this->dayFilter ?? $dateToday->day;
+        }
+
+
+
+        if($this->monthFilter == null){
+            $query->whereMonth('attendance_date', $this->currentMonth);
+            $this->monthFilterName = $this->currentMonthName;
+        } else {
+            $monthNames = [
+                1 => "January",
+                2 => "February",
+                3 => "March",
+                4 => "April",
+                5 => "May",
+                6 => "June",
+                7 => "July",
+                8 => "August",
+                9 => "September",
+                10 => "October",
+                11 => "November",
+                12 => "December"
+            ];
+            if (array_key_exists($this->monthFilter, $monthNames)) {
+                $query->whereMonth('attendance_date', $this->monthFilter);
+                $this->monthFilterName = $monthNames[$this->monthFilter];
+            } else {
+                $this->monthFilterName = "All";
+            }
+        }
+
+        $query->whereYear('attendance_date', $this->yearFilter ?? $dateToday->year);
+        $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
 
         if (strlen($this->search) >= 1) {
             $searchTerms = explode(' ', $this->search);
@@ -316,18 +395,13 @@ class AttendanceTable extends Component
         }
 
     
-        if(in_array($loggedInUser->role_id, [6,7,8,9])){
-            return view('livewire.dailytimerecord.attendance-table', [
-                'DtrData' => $results,
-                'data' => $this->filter($this->filter),
-            ])->layout('components.layouts.hr-navbar');
-        } else {
-                return view('livewire.dailytimerecord.attendance-table', [
-                    'DtrData' => $results,
-                    'data' => $this->filter($this->filter),
-                ]);
-        }
-
+    
+        return view('livewire.dailytimerecord.attendance-table', [
+            'DtrData' => $results,
+            'Monthly' => $monthly,
+            'Yearly' => $yearly,
+            // 'data' => $this->filter($this->filter),
+        ])->layout('components.layouts.hr-navbar');
 
       
     }
