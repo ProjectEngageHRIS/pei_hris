@@ -514,7 +514,8 @@
 
                     </div>
                     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                    @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Added/Edited Ticket'; setTimeout(() => showToast = false, 3000)"
+                    @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited IT Ticket Successfully'; setTimeout(() => showToast = false, 3000)"
+                    @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added IT Ticket Successfully'; setTimeout(() => showToast = false, 3000)"
                     @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.';  setTimeout(() => showToast = false, 3000)">
                 <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                 <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
@@ -571,8 +572,12 @@
     }
 
     document.addEventListener('livewire:init', function () {
-        Livewire.on('triggerSuccess', () => {
-            window.dispatchEvent(new CustomEvent('trigger-success'));
+        Livewire.on('triggerSuccess', (event) => {
+            if(event.type == "add"){
+                window.dispatchEvent(new CustomEvent('trigger-success-add'));
+            } else if(event.type == "edit") {
+                window.dispatchEvent(new CustomEvent('trigger-success-edit'));
+            }
             const crudModal = document.querySelector(`[x-ref="crudModal"]`);
             const crud = Alpine.$data(crudModal);
             if (crud) {

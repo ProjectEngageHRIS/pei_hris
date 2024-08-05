@@ -197,7 +197,7 @@ class ItDashboardView extends Component
             $itticket->status = $this->status;
             $itticket->description = $this->description;
             $itticket->save();
-            $this->dispatch('triggerSuccess'); 
+            $this->dispatch('triggerSuccess', type : "add"); 
        } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('ittickets')->error('Failed to update ItTicket: ' . $e->getMessage());
@@ -218,7 +218,7 @@ class ItDashboardView extends Component
                         $dataToUpdate = ['status' => $this->status];
                     }
                     $form->update($dataToUpdate);
-                    $this->dispatch('triggerSuccess'); 
+                    $this->dispatch('triggerSuccess', type: "edit"); 
                 }
             } else {
                 $this->dispatch('triggerError'); 
