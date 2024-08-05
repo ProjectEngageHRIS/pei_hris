@@ -466,11 +466,11 @@ class DashboardView extends Component
         if ($time && (in_array($time->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day']) || $time->type == null)) {
             // Calculate the difference based on whether time_out is null or not
             if (is_null($time->time_out)) {
-                $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
+                $this->timeIn = Carbon::parse($time->time_in);
                 $differenceInSeconds = now()->diffInSeconds(Carbon::parse($time->time_in));
                 $this->timeOutFlag = false; // Time Out button should be enabled
             } else {
-                $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
+                $this->timeIn = Carbon::parse($time->time_in);
                 $this->timeOut = Carbon::parse($time->time_out)->format('h:i:s A');
                 $differenceInSeconds = Carbon::parse($time->time_in)->diffInSeconds(Carbon::parse($time->time_out));
                 $this->timeOutFlag = true; // Time Out button should be disabled

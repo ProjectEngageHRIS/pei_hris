@@ -38,7 +38,7 @@
                     @endif
             
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
-                        <button wire:click.prevent="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
+                        <button wire:click.once="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
                             @if($timeInFlag ) disabled style="cursor: not-allowed;" @endif>
                             Time In
                         </button>
@@ -52,16 +52,22 @@
                 <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
                     <div class="">
                         <p class="text-sm font-medium text-customGray1">Time In:</p>
-                        <p class="text-sm font-medium text-customRed">{{$timeIn ?? "N/A"}} </p>
+                        <p class="text-sm font-medium text-customRed">{{$timeIn->format('h:i:s A') ?? "N/A"}} </p>
                     </div>
                     <div class="">
                         <p class="text-sm font-medium text-customGray1">Time Out:</p>
-                        <p class="text-sm font-medium text-customRed">{{$timeOut ?? "N/A"}}</p>
+                        <p class="text-sm font-medium text-customRed">{{$timeOut ? $timeOut->format('h:i:s A') : "N/A" }}</p>
                     </div>
                     <div class="items-center col-span-2 mt-6">
                         <div class="">
                             <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
-                            <p class="text-sm font-medium text-customRed">{{$currentTimeIn ?? "N/A"}}</p>
+                            @if ($timeIn)
+                                <p id="time-difference" data-time-in="{{$timeIn}}" class="px-20 text-sm text-customGray1 font-regular"></p>
+                            @else
+                                <p class="px-20 text-sm text-customGray1 font-regular">N/A</p>
+
+                            @endif
+                            
                         </div>
                     </div>
                 </div>
@@ -225,18 +231,18 @@
                         </svg>
                         <span class="sr-only">Close modal</span>
                     </button>
-                    <form wire:submit.prevent="checkOut" method="POST"  class="p-4 md:p-5">
+                    {{-- <form wire:submit.once="checkOut" method="POST" class="p-4 md:p-5"> --}}
                         <div class="p-4 text-center md:p-5">
                             <svg class="w-12 h-12 mx-auto mb-4 text-orange-300 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                             </svg>
                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you certain about checking out?</h3>
-                            <button type="submit" class="text-white bg-orange-400 hover:bg-orange-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                            <button wire:click.once="checkOut"class="text-white bg-orange-400 hover:bg-orange-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                 Yes
                             </button>
                             <button id="close-warning_pop_up_cancel" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
                         </div>
-                    </form>
+                    {{-- </form> --}}
                 </div>
             </div>
         </div>
@@ -318,13 +324,50 @@
     </div>
 
     <script>
-        function updateTime() {
-            const options = { timeZone: 'Asia/Manila', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' };
-            const now = new Date().toLocaleTimeString('en-US', options);
-            document.getElementById('current-time').textContent = now;
-        }
-        setInterval(updateTime, 1000); // Update every second
-        updateTime(); // Initial call to display time immediately
+function updateTime() {
+    const options = { timeZone: 'Asia/Manila', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+    const now = new Date().toLocaleTimeString('en-US', options);
+    document.getElementById('current-time').textContent = now;
+
+    const timeInElement = document.getElementById('time-difference');
+    const timeInString = timeInElement.getAttribute('data-time-in');
+
+    if (timeInString) {
+        // Ensure timeInString is in the format "HH:MM:SS" if using only time
+        const [hours, minutes, seconds] = timeInString.split(' ')[1].split(':').map(Number);
+
+        // Create a Date object for timeInDate with today's date
+        const nowManilaDate = new Date();
+        const timeInDate = new Date(nowManilaDate);
+        timeInDate.setHours(hours, minutes, seconds, 0);
+
+        // Calculate the difference in milliseconds
+        const differenceInMilliseconds = nowManilaDate - timeInDate;
+
+        // Convert to hours, minutes, and seconds
+        const diffHours = Math.floor(differenceInMilliseconds / (1000 * 60 * 60));
+        const diffMinutes = Math.floor((differenceInMilliseconds % (1000 * 60 * 60)) / (1000 * 60));
+        const diffSeconds = Math.floor((differenceInMilliseconds % (1000 * 60)) / 1000);
+
+        // Format the difference as hh:mm:ss
+        const formattedDifference = `${String(diffHours).padStart(2, '0')}:${String(diffMinutes).padStart(2, '0')}:${String(diffSeconds).padStart(2, '0')}`;
+        document.getElementById('time-difference').textContent = formattedDifference;
+    } else {
+        console.error('timeInString is undefined or null');
+    }
+}
+
+// Call the updateTime function every second for smooth updates
+function updateTimeSmooth() {
+    updateTime();
+    requestAnimationFrame(updateTimeSmooth);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    requestAnimationFrame(updateTimeSmooth);
+});
+
+    
 
         document.addEventListener('DOMContentLoaded', (event) => {
             const updateButton = document.getElementById('check_out');
@@ -404,43 +447,7 @@
         });
 
 
-        // const closeToastButton = document.getElementById('close-toast');
-        //     closeToastButton.addEventListener('click', () => {
-        //             const toastContainer = document.getElementById('toast-container-checkout');
-        //             if (toastContainer) {
-        //                 toastContainer.classList.add('hidden');
-        //             }
-        // });
-
-
-
-
-
-        // Livewire.on('triggerDangerCheckIn', () => {
-        //     // Show the modale
-        //     const modal = document.getElementById('toast-danger');
-        //     if (modal) {
-        //         modal.classList.remove('hidden');
-
-        //         setTimeout(() => {
-        //         modal.classList.add('hidden');
-        //         }, 5000); // 5000 milliseconds = 5 seconds
-
-        //     }
-        // });
-
-        // Livewire.on('triggerWarning', () => {
-        //     // Show the modale
-        //     const modal = document.getElementById('toast-success');
-        //     if (modal) {
-        //         modal.classList.remove('hidden');
-
-        //         setTimeout(() => {
-        //         modal.classList.add('hidden');
-        //         }, 5000); // 5000 milliseconds = 5 seconds
-
-        //     }
-        // });
+      
 
 
     </script>
