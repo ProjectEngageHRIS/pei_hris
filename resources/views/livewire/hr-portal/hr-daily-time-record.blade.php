@@ -3,7 +3,7 @@
         <nav class="flex mb-2" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
-                    <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed ">
+                    <a href="{{route('HumanResourceDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed ">
                         <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
                         </svg> Home
@@ -14,7 +14,7 @@
                         <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                         </svg>
-                        <a href="{{route('AttendanceTable')}}" class="text-sm font-semibold text-gray-900 ms-1 hover:text-customRed md:ms-2 ">Daily Time Record</a>
+                        <a href="{{route('HrDailyTimeRecord')}}" class="text-sm font-semibold text-gray-900 ms-1 hover:text-customRed md:ms-2 ">Daily Time Record</a>
                     </div>
                 </li>
             </ol>
@@ -51,13 +51,46 @@
                         <!-- Modal body -->
                         <div class="p-4  max-h-[450px]">
                             <form wire:submit.prevent="generateRecord" method="POST">
-                                <select id="selectedEmployee" name="selectedEmployee" wire:model.live="selectedEmployee"
+                                {{-- <select id="selectedEmployee" name="selectedEmployee" wire:model.live="selectedEmployee"
                                     class="bg-gray-50 shadow-inner border mb-5 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                     <option value="All">All</option>
                                     @foreach($employeeNames as $name)
                                         <option value="{{$name}}">{{$name}}</option>
                                     @endforeach
-                                </select>
+                                </select> --}}
+                                <div wire:ignore class="mb-4">
+                                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Target Employees<span class="text-red-600">*</span></label>
+                                    <select style="width:100%; height:100% background:gray;" class="js-example-basic mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
+                                        <option value="All">All</option>
+                                        @foreach($employeeNames as $name)
+                                           <option value="{{$name}}">{{$name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                
+                                <script>
+                                    $(document).ready(function() {
+                                        $('.js-example-basic').select2({
+                                            placeholder: 'Select an option',
+                                            closeOnSelect: true,  // Automatically closes dropdown after selection
+                                        }).on('select2:open', function() {
+                                            // Apply Tailwind CSS classes to the Select2 dropdown
+                                            $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ');
+                                            $('.select2-results__options').addClass('p-2 ');
+                                        }).on('change', function() {
+                                            let data = $(this).val();
+                                            console.log(data);
+                                            @this.selectedEmployee = data;
+                                        });
+                                        $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2');
+                                
+                                        // Toggle modal visibility when form submission is completed
+                                        Livewire.on('formSubmitted', () => {
+                                            $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
+                                        });
+                                    });
+                                </script>
+                                
                                 <div>
                                     <label for="timein" class="block mb-2 text-sm font-medium text-customGray1">Date From <span class="text-red-600">*</span></label>
                                     <input type="date" name="timein" id="timein" wire:model.live="start_date" class="bg-gray-50 border mb-2 border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
@@ -81,7 +114,7 @@
     </div> <br>
         
     <div class="col-span-3 gap-4">
-        <div class="overflow-x-auto">
+        <div wire:ignore class="overflow-x-auto">
             <div class="flex flex-col w-full gap-4 p-4 bg-white rounded-lg shadow h-fit min-w-[1024px]">
                 <div class="flex items-center space-x-2">
                     <p class="text-sm font-semibold">Today is</p>
@@ -93,29 +126,32 @@
                     <thead>
                         <tr class="flex text-sm font-medium text-center">
                             <th scope="col" class="flex-1">No. of Absents</th>
+                            <th scope="col" class="flex-1">No. of Late</th>
                             <th scope="col" class="flex-1">No. of Whole Day</th>
                             <th scope="col" class="flex-1">No. of Overtime</th>
                             <th scope="col" class="flex-1">No. of Undertime</th>
                             <th scope="col" class="flex-1">No. of No Time Out</th>
                             <th scope="col" class="flex-1">No. of On Leave</th>
+
                         </tr>
                     </thead>
                     <tbody>
                         <tr class="flex text-sm font-medium text-center">
-                            <td class="flex-1">1</td>
-                            <td class="flex-1">2</td>
-                            <td class="flex-1">3</td>
-                            <td class="flex-1">4</td>
-                            <td class="flex-1">5</td>
-                            <td class="flex-1">6</td>
+                            <td class="flex-1">{{$dtrTypes['Absent']}}</td>
+                            <td class="flex-1">{{$dtrTypes['Late']}}</td>
+                            <td class="flex-1">{{$dtrTypes['Wholeday']}}</td>
+                            <td class="flex-1">{{$dtrTypes['Overtime']}}</td>
+                            <td class="flex-1">{{$dtrTypes['Undertime']}}</td>
+                            <td class="flex-1">{{$dtrTypes['No Time Out']}}</td>
+                            <td class="flex-1">{{$dtrTypes['Leave']}}</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
         <br>
-        <div class="w-full col-span-2 p-4 pb-4 bg-white rounded-lg shadow md:p-4 ">
-            <div class="flex justify-between">
+        <div  class="w-full col-span-2 p-4 pb-4 bg-white rounded-lg shadow md:p-4 ">
+            <div wire:ignore class="flex justify-between">
                 <div>
                     <p class="text-xl font-bold text-customRed " style="word-break: break-word;">Daily Time-In Overview <span class="text-customGray">@if($this->filter == "Weekly") ({{$monthFilterName}} {{$yearFilterName}}) @else {{$yearFilterName}}  @endif</span></p>
                 </div>
@@ -125,7 +161,7 @@
                     </svg>
                 </div>
             </div>
-            <div id="area-chart"></div>
+            <div wire:ignore id="area-chart"></div>
             <div class="grid items-center justify-between grid-cols-1 border-t border-gray-200 ">
                 <div class="flex items-center justify-between">
                     <!-- Button -->
@@ -152,7 +188,7 @@
         </div>
     </div> <br>
 
-    <div wire:ignore class="relative bg-white rounded-t-lg shadow-md ">
+    <div class="relative bg-white rounded-t-lg shadow-md ">
         <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
             <!-- Add user button -->
             <div>
@@ -610,18 +646,25 @@
                             </td>
                         @php
                             $timeIn = \Carbon\Carbon::parse($data->time_in);
-                            $timeOut = \Carbon\Carbon::parse($data->time_out);
-                            if($timeIn->isSameDay($timeOut)){
+                            $timeOut = null;
+                            if($data->time_out != null) {
+                                $timeOut = \Carbon\Carbon::parse($data->time_out);
+                                if($timeIn->isSameDay($timeOut)){
+                                    $timeIn = $timeIn->format('H:i:s');
+                                    $timeOut = $timeOut->format('H:i:s');
+                                }
+                            } else {
                                 $timeIn = $timeIn->format('H:i:s');
-                                $timeOut = $timeOut->format('H:i:s');
                             }
+                           
                         @endphp
 
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{ $timeOut }}
+                            {{ $timeIn }}
+
                         </td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                            {{ $timeIn }}
+                            {{ $timeOut }}
                         </td>
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             {{$data->undertime}}
@@ -638,8 +681,8 @@
         </table>
     </div>
 
-<div wire:loading wire:target="selectedDate, search, generateRecord" class="load-over z-50">
-    <div wire:loading wire:target="selectedDate, search, generateRecord" class="loading-overlay">
+<div wire:loading wire:target="selectedDate, search, generateRecord, dayFilter, monthFilter, yearFilter" class="load-over z-50">
+    <div wire:loading wire:target="selectedDate, search, generateRecord, dayFilter, monthFilter, yearFilter" class="loading-overlay">
         <div class="flex flex-col justify-center items-center">
             <div class="spinner"></div>
             <p>Updating Table...</p>

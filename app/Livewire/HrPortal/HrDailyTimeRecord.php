@@ -111,6 +111,16 @@ class HrDailyTimeRecord extends Component
         'FEMALE' => false,
     ];
 
+    public $dtrTypes = [
+        'Absent' => null,
+        'Late' => null,
+        'Wholeday' => null,
+        'Overtime' => null,
+        'Undertime' => null,
+        'No Time Out' => null,
+        'Leave' => null
+    ];
+
 
     public $employeeTypeFilter;
     public $departmentTypeFilter;
@@ -143,7 +153,6 @@ class HrDailyTimeRecord extends Component
         $now = Carbon::now();
         $currentYear = $now->year;
         $currentMonth = $now->month;
-        $currentDay = $now->day;
         $currentMonthName = $now->format('F');
         $this->currentYear = $currentYear;
         $this->currentMonth = $currentMonth;
@@ -182,7 +191,7 @@ class HrDailyTimeRecord extends Component
             }
         }
 
-        $this->setGraph();
+        // $this->setGraph();
         $this->chartFilter = "Weekly";
 
         $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->get();
@@ -259,7 +268,7 @@ class HrDailyTimeRecord extends Component
         // $this->dispatch('triggerClose');
         if($this->selectedEmployee == "All"){
             return Excel::download(new DailyTimeRecordExport($this->start_date, $this->end_date), 'timekeeping.xlsx');
-        } 
+        }
         $parts = explode(' | ', $this->selectedEmployee);
         $employee_id = trim($parts[1]);
         
@@ -288,19 +297,9 @@ class HrDailyTimeRecord extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user(); 
-
         $query = Dailytimerecord::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
-                                         ->select('attendance_date',
-                                         'employee_id',
-                                         'type',
-                                         'time_in',
-                                         'time_out',
-                                         'overtime',
-                                         'undertime',
-                                         'late',
-                                         );
-
+                                 ->select('attendance_date', 'employee_id', 'type', 'time_in', 'time_out', 'overtime', 'undertime', 'late');
+    
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
             return $this->employeeTypesFilter[$key];
         });
@@ -310,8 +309,8 @@ class HrDailyTimeRecord extends Component
                 $query->whereIn('employee_type', $employeeTypes);
             });
         }
-
-        // // Inside Department Filter
+    
+        // Inside Department Filter
         $insideDepartmentTypes = array_filter(array_keys($this->insideDepartmentTypesFilter), function($key) {
             return $this->insideDepartmentTypesFilter[$key];
         });
@@ -321,9 +320,8 @@ class HrDailyTimeRecord extends Component
                 $query->whereIn('inside_department', $insideDepartmentTypes);
             });
         }
-        // // dump($insideDepartmentTypes);
-
-        // // Department Filter
+    
+        // Department Filter
         $departmentTypes = array_filter(array_keys($this->departmentTypesFilter), function($key) {
             return $this->departmentTypesFilter[$key];
         });
@@ -333,8 +331,8 @@ class HrDailyTimeRecord extends Component
                 $query->whereIn('department', $departmentTypes);
             });
         }
-
-        // // Department Filter
+    
+        // Gender Filter
         $genderTypes = array_filter(array_keys($this->genderTypesFilter), function($key) {
             return $this->genderTypesFilter[$key];
         });
@@ -343,32 +341,27 @@ class HrDailyTimeRecord extends Component
             $query->whereHas('employee', function ($query) use ($genderTypes) {
                 $query->whereIn('gender', $genderTypes);
             });
-
         }
-      
+    
         [$yearly, $monthly] = $this->setGraph();
-        // dd($monthly, $yearly);
-        if($this->filter == "Weekly"){
+        
+        if ($this->filter == "Weekly") {
             $this->filter = "Weekly";
             $this->dispatch('refresh-weekly-chart', data: array_values($monthly));
-        }
-        else{
+        } else {
             $this->filter = "Monthly";
             $this->dispatch('refresh-monthly-chart', data: array_values($yearly));
         }
-
-
-        if($this->dayFilter == "all" ){
+    
+        if ($this->dayFilter == "all") {
             $this->dayFilterName = "*";
         } else {
             $dateToday = Carbon::now();
             $query->whereDay('attendance_date', $this->dayFilter ?? $dateToday->day);
             $this->dayFilterName = $this->dayFilter ?? $dateToday->day;
         }
-
-
-
-        if($this->monthFilter == null){
+    
+        if ($this->monthFilter == null) {
             $query->whereMonth('attendance_date', $this->currentMonth);
             $this->monthFilterName = $this->currentMonthName;
         } else {
@@ -393,37 +386,37 @@ class HrDailyTimeRecord extends Component
                 $this->monthFilterName = "All";
             }
         }
-
+    
         $query->whereYear('attendance_date', $this->yearFilter ?? $dateToday->year);
         $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
+    
+        // Calculate counts for each type
+        $results = $query->orderBy('created_at', 'desc')->paginate(5);
+    
+        // Aggregate counts
+        $counts = Dailytimerecord::select(DB::raw('
+            SUM(CASE WHEN type = "No Time In" AND time_in IS NULL THEN 1 ELSE 0 END) AS `Absent`,
+            SUM(CASE WHEN type is NULL AND late = 1 THEN 1 ELSE 0 END) AS `Late`,
+            SUM(CASE WHEN type = "Whole Day" THEN 1 ELSE 0 END) AS `Wholeday`,
+            SUM(CASE WHEN type = "Overtime" THEN 1 ELSE 0 END) AS `Overtime`,
+            SUM(CASE WHEN type = "Undertime" THEN 1 ELSE 0 END) AS `Undertime`,
+            SUM(CASE WHEN type is NULL AND time_out IS NULL THEN 1 ELSE 0 END) AS `No Time Out`,
+            SUM(CASE WHEN type LIKE "%Leave" THEN 1 ELSE 0 END) AS `Leave`
+        '))
+        ->whereYear('attendance_date', $this->yearFilter ?? Carbon::now()->year)
+        ->whereMonth('attendance_date', $this->monthFilter ?? Carbon::now()->month)
+        ->whereDay('attendance_date', $this->dayFilter ?? Carbon::now()->day)
+        ->first();
 
-        if(strlen($this->search) >= 1){
-            $searchTerms = explode(' ', $this->search);
-            $results = $query->whereHas('employee', function ($query) use ($searchTerms) {
-                 $query->where(function ($q) use ($searchTerms) {
-                    foreach ($searchTerms as $term) {
-                        $q->orWhere('first_name', 'like', '%' . $term . '%')
-                        ->orWhere('middle_name', 'like', '%' . $term . '%')
-                        ->orWhere('last_name', 'like', '%' . $term . '%')
-                        ->orWhere('department', 'like', '%' . $term . '%')
-                        ->orWhere('current_position', 'like', '%' . $term . '%')
-                        ->orWhere('employee_type', 'like', '%' . $term . '%')
-                        ->orWhere('start_of_employment', 'like', '%' . $term . '%');
-                    }
-                });
-            })->orderBy('created_at', 'desc')->paginate(5);
-
-        } else {
-            $results = $query->orderBy('created_at', 'desc')->paginate(5);
-
-        }
-
+        // Map the counts to the dtrTypes
+        $this->dtrTypes = array_merge($this->dtrTypes, $counts->toArray());
+    
         return view('livewire.hr-portal.hr-daily-time-record', [
             'DtrData' => $results,
             // 'Monthly' => $monthly,
             // 'Yearly' => $yearly,
         ])->layout('components.layouts.hr-navbar');
-
-      
     }
+    
+    
 }

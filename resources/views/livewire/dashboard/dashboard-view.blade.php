@@ -52,11 +52,11 @@
                 <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
                     <div class="">
                         <p class="text-sm font-medium text-customGray1">Time In:</p>
-                        <p class="text-sm font-medium text-customRed">{{$timeIn->format('h:i:s A') ?? "N/A"}} </p>
+                        <p class="text-sm font-medium text-customRed">{{$timeIn ? $timeIn->format('h:i:s A') : "N/A"}} </p>
                     </div>
                     <div class="">
                         <p class="text-sm font-medium text-customGray1">Time Out:</p>
-                        <p class="text-sm font-medium text-customRed">{{$timeOut ? $timeOut->format('h:i:s A') : "N/A" }}</p>
+                        <p class="text-sm font-medium text-customRed">{{$timeOut ? $timeOut->format('h:i:s A') : "N/A"   }}</p>
                     </div>
                     <div class="items-center col-span-2 mt-6">
                         <div class="">

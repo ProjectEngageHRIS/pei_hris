@@ -466,10 +466,6 @@ class AccountingDashboardView extends Component
         }
     }
 
-
-    
- 
-
     public function render()
     {
         $this->payrollMap = $this->getPayrollData();

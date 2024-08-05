@@ -147,9 +147,19 @@ return [
             'path' => storage_path('logs/hrdtr/hrextractdtr.log'),
             'level' => 'info',
         ],
-        'failedforms' => [
+        'hrticket' => [
             'driver' => 'single',
-            'path' => storage_path('logs/forms/failedforms.log'),
+            'path' => storage_path('logs/forms/hr_tickets.log'),
+            'level' => 'error',
+        ],
+        'leaverequests' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/forms/leave_request.log'),
+            'level' => 'error',
+        ],
+        'ittickets' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/forms/it_tickets.log'),
             'level' => 'error',
         ],
     ],

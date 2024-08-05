@@ -9,6 +9,7 @@ use App\Models\Ittickets;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 
 class ApproveItTicketsTable extends Component
 {
@@ -107,14 +108,31 @@ class ApproveItTicketsTable extends Component
     }
     
 
-    public function cancelForm($index){
-        // $leaveRequestData = Ittickets::where('form_id', $index)->first();
-        $dataToUpdate = ['status' => 'Cancelled',
-                         'cancelled_at' => now()];
-        // $this->authorize('delete', $leaveRequestData);
-        Ittickets::where('form_id', $index)->update($dataToUpdate);
-        return redirect()->route('ApproveItHelpDeskTable');
-    }
+    public function changeStatus(){
+        try {
+            $form = Ittickets::find($this->currentFormId);
+            if($form){
+                if(in_array(auth()->user()->role_id, [11])){
+                    if($this->status == "Cancelled"){
+                        $dataToUpdate = ['status' => 'Cancelled',
+                            'cancelled_at' => now()];
+                    } else {
+                        $dataToUpdate = ['status' => $this->status];
+                    }
+                    $form->update($dataToUpdate);
+                    $this->dispatch('triggerSuccess'); 
+                }
+            } else {
+                $this->dispatch('triggerError'); 
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('failedforms')->error('Failed to update ItTicket: ' . $e->getMessage());
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
 
+        }
+
+    }
     
 }
