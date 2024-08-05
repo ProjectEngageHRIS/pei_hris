@@ -108,38 +108,49 @@ class ItHelpDeskForm extends Component
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
-        $this->validate();
+        try {
+            $this->validate();
         
-
-        
-        $loggedInUser = auth()->user();
-
-        $itticket = new Ittickets();
-
-        $itticket->employee_id = $loggedInUser->employee_id;
-        $itticket->status = "Pending";
-        $itticket->description = $this->description;
-        $itticket->save();
-        
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department',  'employee_email')
-        ->where('employee_id', $loggedInUser->employee_id)
-        ->first(); 
-
-        // Mail::to($employeeRecord->employee_email)->send(new ItTicketsConfirmation($employeeRecord, $itticket));
-
-        // $ItEmployee = Employee::where('employee_id', 'SLE0004')->first();
-
-        // if ($ItEmployee) {
-        //     Mail::to($ItEmployee->employee_email)->send(new ItTicketRequest($employeeRecord, $ItEmployee, $itticket));
-        // } else {
-        //     Log::error('IT email not found for employee_id SLE0004');
-        //     $this->addError('email', 'IT email not found');
-        // }
-
-        $this->dispatch('triggerNotification');
-
+            $loggedInUser = auth()->user();
     
-        return redirect()->to(route('ItHelpDeskTable'));
+            $itticket = new Ittickets();
+    
+            $itticket->employee_id = $loggedInUser->employee_id;
+            $itticket->status = "Pending";
+            $itticket->description = $this->description;
+            $itticket->save();
+            
+            $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department',  'employee_email')
+                ->where('employee_id', $loggedInUser->employee_id)
+                ->first(); 
+    
+            // Mail::to($employeeRecord->employee_email)->send(new ItTicketsConfirmation($employeeRecord, $itticket));
+    
+            // $ItEmployee = Employee::where('employee_id', 'SLE0004')->first();
+    
+            // if ($ItEmployee) {
+            //     Mail::to($ItEmployee->employee_email)->send(new ItTicketRequest($employeeRecord, $ItEmployee, $itticket));
+            // } else {
+            //     Log::error('IT email not found for employee_id SLE0004');
+            //     $this->addError('email', 'IT email not found');
+            // }
+    
+            $this->dispatch('trigger-success');
+        
+            return redirect()->to(route('ItHelpDeskTable'));
+        } catch (\Exception $e) {
+
+            $this->dispatch('trigger-error');
+
+            // Log the exception for further investigation
+            Log::channel('ittickets')->error('Failed to submit IT Concern: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
 
     }
 

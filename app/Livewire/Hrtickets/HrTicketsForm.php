@@ -447,8 +447,6 @@ class HrTicketsForm extends Component
             }
         }
 
-        throw new Exception('test');
-
         // dd('stop');
         $hrticketdata->save();
 
@@ -461,13 +459,13 @@ class HrTicketsForm extends Component
             $this->dispatch('trigger-error');
 
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to save Hrticket: ' . $e->getMessage());
+            Log::channel('hrticket')->error('Failed to save Hrticket: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
 
             // Optionally, you could redirect the user to an error page or show an error message
-            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
 
     }

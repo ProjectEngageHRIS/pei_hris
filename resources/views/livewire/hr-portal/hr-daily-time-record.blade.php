@@ -602,7 +602,7 @@
                             <th scope="row" class="flex items-center justify-center px-6 py-4 text-gray-900  whitespace-nowrap ">
                                 <div class="ps-3 text-center">
                                     <div class="text-base font-semibold">{{$data->employee->first_name}} {{$data->employee->middle_name}} {{$data->employee->last_name}} </div>
-                                    <div class="font-normal  text-center text-gray-500">{{$data->employee_id}} | {{$data->employee->department}}</div>
+                                    <div class="font-normal  text-center text-gray-500"> <span class="text-customRed">{{$data->employee_id}}</span> | {{$data->employee->department}}</div>
                                 </div>
                             </th>
                             <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap ">

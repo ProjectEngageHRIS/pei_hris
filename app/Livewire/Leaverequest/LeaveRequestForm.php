@@ -255,7 +255,7 @@ class LeaveRequestForm extends Component
             $this->dispatch('trigger-error');
 
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to save Hrticket: ' . $e->getMessage());
+            Log::channel('leaverequests')->error('Failed to save Hrticket: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);

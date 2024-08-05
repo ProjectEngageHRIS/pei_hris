@@ -184,7 +184,7 @@ class ApproveHrTicketsTable extends Component
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 

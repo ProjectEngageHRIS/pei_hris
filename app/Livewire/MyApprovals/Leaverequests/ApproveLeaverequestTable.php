@@ -56,7 +56,7 @@ class ApproveLeaverequestTable extends Component
     {
         $loggedInUser = auth()->user()->role_id;
 
-        $query = Leaverequest::query();
+        $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
 
 
         switch ($this->date_filter) {
@@ -169,7 +169,7 @@ class ApproveLeaverequestTable extends Component
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('leaverequests')->error('Failed to update Hrticket: ' . $e->getMessage());
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 

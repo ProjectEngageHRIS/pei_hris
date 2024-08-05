@@ -128,6 +128,9 @@
                             No.
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
+                            Employee Information
+                        </th>
+                        <th scope="col" class="px-6 py-3 text-center">
                             Status
                         </th>
                         <th scope="col" class="px-6 py-3 text-center">
@@ -170,6 +173,12 @@
                                 <tr class="bg-white border-b hover:bg-gray-50 ">
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
                                         {{$pageIndex + $ctr}}
+                                    </th>
+                                    <th scope="row" class="flex items-center justify-center px-6 py-4 text-gray-900  whitespace-nowrap ">
+                                        <div class="ps-3 text-center">
+                                            <div class="text-base font-semibold">{{$leaverequest->employee->first_name}} {{$leaverequest->employee->middle_name}} {{$leaverequest->employee->last_name}} </div>
+                                            <div class="font-normal  text-center text-gray-500"> <span class="text-customRed">{{$leaverequest->employee_id}}</span> | {{$leaverequest->employee->department}}</div>
+                                        </div>
                                     </th>
                                     @if($leaverequest->status == "Pending")
                                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
