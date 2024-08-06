@@ -38,7 +38,7 @@
                     <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
-                </button>
+                    </button>
 
                     <!-- Dropdown menu -->
                     <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
@@ -185,7 +185,6 @@
                                     </div>
                                     <!-- Employee Type Dropdown Button -->
                                     <div x-data="{ 
-                                        employeeTypeCount: 0,  // Add employeeTypeCount to x-data
                                         init() {
                                             this.updateEmployeeTypeCount();  // Initialize employeeTypeCount on component mount
                                         },
@@ -389,7 +388,7 @@
                                             },
                                             updateGenderCount() {
                                                 // Update count using document.querySelectorAll
-                                                this.genderCount = document.querySelectorAll('.genderTypeOpen .filter-checkbox:checked').length;
+                                                this.genderCount = Object.keys(this.genderTypesFilter).filter(key => this.genderTypesFilter[key]).length;
                                             }
                                         }">
                                         <div class="px-2 pb-2">
@@ -494,11 +493,16 @@
                                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {{$pageIndex + $ctr}}
                                     </th>
-                                    <th scope="row" class="flex items-center justify-center px-6 py-4 text-gray-900  whitespace-nowrap ">
-                                        <div class="ps-3 text-center">
-                                            <div class="text-base font-semibold">{{$change_info->employee->first_name}} {{$change_info->employee->middle_name}} {{$change_info->employee->last_name}} </div>
-                                            <div class="font-normal  text-center text-gray-500"> <span class="text-customRed">{{$change_info->employee_id}}</span> | {{$change_info->employee->department}}</div>
+                                    <th scope="row" class="flex items-center justify-center px-6 py-4 text-gray-900 whitespace-nowrap h-full">
+                                        <div class="flex flex-col items-center justify-center h-full">
+                                            <div class="text-base font-semibold">
+                                                {{$change_info->employee->first_name}} {{$change_info->employee->middle_name}} {{$change_info->employee->last_name}}
+                                            </div>
+                                            <div class="font-normal text-gray-500 mt-1">
+                                                <span class="text-customRed">{{$change_info->employee_id}}</span> | {{$change_info->employee->department}}
+                                            </div>
                                         </div>
+                                    </th>
                                     </th>
                                     @if($change_info->status == "Pending")
                                     <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
@@ -728,8 +732,8 @@
             {{ $ChangeInfoData->links() }}
         </div>
 
-        <div wire:loading wire:target="submit, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over">
-            <div wire:loading wire:target="submit, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay">
+        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over">
+            <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Updating...</p>

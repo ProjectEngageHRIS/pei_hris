@@ -1,4 +1,4 @@
-<header class="px-2 py-4 bg-white">
+<header x-cloak class="px-2 py-4 bg-white">
     <nav class="flex justify-between items-center w-[99%] mx-auto">
         <!-- Left Section: Image and Text -->
         <div class="flex flex-row items-center">
@@ -63,23 +63,25 @@
                                     </div>
                                 </ul>
                             </div>
-                            <div x-data="{ approvalMobileOpen: false }"  class="relative group">
-                                <div @click="approvalMobileOpen = true" @click.away="approvalMobileOpen = false"   id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
-                                        <path fillRule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm6.713 4.16a.75.75 0 0 1 .127 1.053l-2.75 3.5a.75.75 0 0 1-1.078.106l-1.75-1.5a.75.75 0 1 1 .976-1.138l1.156.99L9.66 6.287a.75.75 0 0 1 1.053-.127Z" clipRule="evenodd" />
-                                    </svg> Approvals
-                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 ml-2">
-                                        <path fillRule="evenodd" d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
-                                    </svg>
-                                </div>
-                                <!-- Nested Dropdown Menu -->
-                                <ul x-show="approvalMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="approveBDropdownMenu" class="absolute top-0 z-10  w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
-                                    <div class="py-1">
-                                        <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
-                                        <a href="{{ route('ApproveHrTicketsTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
+                            @if($role_id == 10 || $role_id == 4)
+                                <div x-data="{ approvalMobileOpen: false }"  class="relative group">
+                                    <div @click="approvalMobileOpen = true" @click.away="approvalMobileOpen = false"   id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
+                                            <path fillRule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm6.713 4.16a.75.75 0 0 1 .127 1.053l-2.75 3.5a.75.75 0 0 1-1.078.106l-1.75-1.5a.75.75 0 1 1 .976-1.138l1.156.99L9.66 6.287a.75.75 0 0 1 1.053-.127Z" clipRule="evenodd" />
+                                        </svg> Approvals
+                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 ml-2">
+                                            <path fillRule="evenodd" d="M6.22 4.22a.75.75 0 0 1 1.06 0l3.25 3.25a.75.75 0 0 1 0 1.06l-3.25 3.25a.75.75 0 0 1-1.06-1.06L8.94 8 6.22 5.28a.75.75 0 0 1 0-1.06Z" clipRule="evenodd" />
+                                        </svg>
                                     </div>
-                                </ul>
-                            </div>
+                                    <!-- Nested Dropdown Menu -->
+                                    <ul x-show="approvalMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="approveBDropdownMenu" class="absolute top-0 z-10  w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
+                                        <div class="py-1">
+                                            <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
+                                            <a href="{{ route('ApproveHrTicketsTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
+                                        </div>
+                                    </ul>
+                                </div>
+                            @endif
                             <a href="{{ route('PayrollTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm {{ request()->routeIs('PayrollTable') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5V5h14v-.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
@@ -173,7 +175,7 @@
 
 
                 <!-- Approval Button -->
-                @if($role_id == 10)
+                @if($role_id == 10 || $role_id == 4)
                     <div x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">

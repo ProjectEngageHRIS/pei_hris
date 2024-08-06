@@ -121,36 +121,38 @@
                   </div>
                   <!-- Filter Sidebar -->
                   <div class="absolute rounded-lg right-8 hover:text-customRed">
-                      <div x-data="{
-                          filterOpen: false,
-                          employeeTypeOpen: false,
-                          departmentOpen: false,
-                          companyOpen: false,
-                          genderOpen: false,
-                          employeeTypeCount: 0,
-                          departmentCount: 0,
-                          companyCount: 0,
-                          genderCount: 0,
-                          updateEmployeeTypeCount() {
-                              this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
-                          },
-                          updateDepartmentCount() {
-                              this.departmentCount = document.querySelectorAll('.departmentOpen .filter-checkbox:checked').length;
-                          },
-                          updateCompanyCount() {
-                              this.companyCount = document.querySelectorAll('.companyOpen .filter-checkbox:checked').length;
-                          },
-                          updateGenderCount() {
-                              this.genderCount = document.querySelectorAll('.genderOpen .filter-checkbox:checked').length;
-                          },
-                          clearAllFilters() {
-                              document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
-                              this.employeeTypeCount = 0;
-                              this.departmentCount = 0;
-                              this.companyCount = 0;
-                              this.genderCount = 0;
-                          }
-                          }" class="relative">
+                    <div x-data="{
+                        employeeTypesFilter: @entangle('employeeTypesFilter'), 
+                        insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
+                        departmentTypesFilter: @entangle('departmentTypesFilter'), 
+                        genderTypesFilter: @entangle('genderTypesFilter'), 
+                        filterOpen: false,
+                        employeeTypeOpen: false,
+                        departmentTypeOpen: false,
+                        insideDepartmentTypeOpen: false,
+                        genderTypeOpen: false,
+                        employeeTypeCount: 0,
+                        departmentCount: 0,
+                        companyCount: 0,
+                        genderCount: 0,
+                        clearAllFilters() {
+                            document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
+                            this.employeeTypeCount = 0;
+                            this.departmentCount = 0;
+                            this.companyCount = 0;
+                            this.genderCount = 0;
+                            @this.set('genderTypesFilter', this.genderTypesFilter);
+                            @this.set('departmentTypesFilter', this.departmentTypesFilter);
+                            @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
+                            @this.set('employeeTypesFilter', this.employeeTypesFilter);
+                        }, 
+                        applyAllFilters(){
+                            @this.set('genderTypesFilter', this.genderTypesFilter);
+                            @this.set('departmentTypesFilter', this.departmentTypesFilter);
+                            @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
+                            @this.set('employeeTypesFilter', this.employeeTypesFilter);
+                        }
+                        }" class="relative">
   
                           <!-- Filter Icon Button -->
                           <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 right-1">
@@ -159,139 +161,259 @@
                               </svg>
                           </button>
                           <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
-                              <!-- Clear All Button -->
-                              <div class="px-4 py-2">
-                                  <button wire:click="clearAllFilters" @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
-                                      Clear All
-                                  </button>
-                              </div>
-                              <!-- Employee Type Dropdown Button -->
-                              <div class="px-2">
-                                  <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                      Employee Type
-                                      <span class="float-right">&#9662;</span>
-                                      <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
-                                  </button>
-                                  <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2 employeeTypeOpen">
-                                      <hr class="my-4 border-gray-300">
-                                      {{-- @foreach($employeeTypesFilter as $type => $checked) --}}
+                            <!-- Clear All Button -->
+                            <div class="px-4 py-2">
+                                <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
+                                    Clear All
+                                </button>
+                            </div>
+                            <!-- Employee Type Dropdown Button -->
+                            <div x-data="{ 
+                                {{-- employeeTypeCount: 0,  // Add employeeTypeCount to x-data --}}
+                                init() {
+                                    this.updateEmployeeTypeCount();  // Initialize employeeTypeCount on component mount
+                                },
+                                clearEmployeeFilters() {
+                                    // Iterate over all keys and set them to false
+                                    Object.keys(this.employeeTypesFilter).forEach(key => {
+                                        this.employeeTypesFilter[key] = false;
+                                    });
+                                    this.updateEmployeeTypeCount();  // Update employeeTypeCount when filters are cleared
+                                },
+                                updateEmployeeTypeCount() {
+                                    // Calculate the count of checked filters
+                                    this.employeeTypeCount = Object.keys(this.employeeTypesFilter).filter(key => this.employeeTypesFilter[key]).length;
+                                }
+                            }" x-init="init()">
+                                <div class="px-2">
+                                    <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                        Employee Type
+                                        <span class="float-right">&#9662;</span>
+                                        <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
+                                    </button>
+                                    <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
+                                        <hr class="my-4 border-gray-300">
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.Internals"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" x-model="employeeTypesFilter.Internals" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.PEI-CCS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" x-model="employeeTypesFilter['PEI-CCS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" x-model="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" x-model="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
                                         </div>
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <input type="checkbox" x-model="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
                                         </div>
-                                    {{-- @endforeach --}}
-                                  </div>
-                              </div>
-                              <!-- Department Dropdown Button -->
-                              <div class="px-2">
-                                  <button @click="departmentOpen = !departmentOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                      Department
-                                      <span class="float-right">&#9662;</span>
-                                      <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
-                                  </button>
-                                  <div x-show="departmentOpen" @click.away="departmentOpen = false" class="w-full mt-2 space-y-2 departmentOpen">
-                                      <hr class="my-4 border-gray-300">
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.HR AND ADMIN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Overseas Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.PEI/SL Temps DO-174" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Corporate Accounting and Finance" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Accounting Operations" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Company Dropdown Button -->
-                              <div class="px-2">
-                                  <button @click="companyOpen = !companyOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                      Company
-                                      <span class="float-right">&#9662;</span>
-                                      <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
-                                  </button>
-                                  <div x-show="companyOpen" @click.away="companyOpen = false" class="w-full mt-2 space-y-2 companyOpen">
-                                      <hr class="my-4 border-gray-300">
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="departmentTypesFilter.SL SEARCH"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="departmentTypesFilter.SL TEMPS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="departmentTypesFilter.PEI-UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
-                                      </div>
-                                  </div>
-                              </div>
-                              <!-- Gender Dropdown Button -->
-                              <div class="px-2 pb-2">
-                                  <button @click="genderOpen = !genderOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                      Gender
-                                      <span class="float-right">&#9662;</span>
-                                      <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
-                                  </button>
-                                  <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
-                                      <hr class="my-4 border-gray-300">
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
-                                      </div>
-                                      <div class="flex items-center px-4 py-2">
-                                          <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                          <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+                                        <!-- More checkboxes... -->
+                                        <div class="px-4 py-2 flex space-x-2">
+                                            <!-- Clear Filters Button -->
+                                            <button @click="clearEmployeeFilters(); $wire.set('employeeTypesFilter', employeeTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                Clear Filters
+                                            </button>
+                                            <!-- Apply Filters Button -->
+                                            <button @click="$wire.set('employeeTypesFilter', employeeTypesFilter); employeeTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                Apply Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            
+                            <!-- Department Dropdown Button -->
+                            <div x-data="{ 
+                                init() {
+                                    this.updateDepartmentCount();  // Initialize departmentCount on component mount
+                                },
+                                clearInsideDepartmentFilters() {
+                                    // Iterate over all keys and set them to false
+                                    Object.keys(this.insideDepartmentTypesFilter).forEach(key => {
+                                        this.insideDepartmentTypesFilter[key] = false;
+                                    });
+                                    this.updateDepartmentCount();  // Update departmentCount when filters are cleared
+                                },
+                                updateDepartmentCount() {
+                                    // Calculate the count of checked filters
+                                    this.departmentCount = Object.keys(this.insideDepartmentTypesFilter).filter(key => this.insideDepartmentTypesFilter[key]).length;
+                                }
+                            }">
+                                <div class="px-2">
+                                    <button @click="insideDepartmentTypeOpen = !insideDepartmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                        Department
+                                        <span class="float-right">&#9662;</span>
+                                        <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
+                                    </button>
+                                    <div x-show="insideDepartmentTypeOpen" @click.away="insideDepartmentTypeOpen = false" class="w-full mt-2 space-y-2 insideDepartmentTypeOpen">
+                                        <hr class="my-4 border-gray-300">
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter['HR AND ADMIN']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter['Overseas Recruitment']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter['PEI/SL Temps DO-174']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter['Corporate Accounting and Finance']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="insideDepartmentTypesFilter['Accounting Operations']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
+                                        </div>
+                                        <div class="px-4 py-2 flex space-x-2">
+                                            <!-- Clear Filters Button -->
+                                            <button @click="clearInsideDepartmentFilters(); $wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                Clear Filters
+                                            </button>
+                                            <!-- Apply Filters Button -->
+                                            <button @click="$wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter); insideDepartmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                Apply Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+                            <!-- Company Dropdown Button -->
+                            <div x-data="{ 
+                                init() {
+                                    this.updateCompanyCount();  // Initialize companyCount on component mount
+                                },
+                                clearCompanyFilters() {
+                                    // Iterate over all keys and set them to false
+                                    Object.keys(this.departmentTypesFilter).forEach(key => {
+                                        this.departmentTypesFilter[key] = false;
+                                    });
+                                    this.updateCompanyCount();  // Update companyCount when filters are cleared
+                                },
+                                updateCompanyCount() {
+                                    // Calculate the count of checked filters
+                                    this.companyCount = Object.keys(this.departmentTypesFilter).filter(key => this.departmentTypesFilter[key]).length;
+                                }
+                            }">
+                                <div class="px-2">
+                                    <button @click="departmentTypeOpen = !departmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                        Company
+                                        <span class="float-right">&#9662;</span>
+                                        <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
+                                    </button>
+                                    <div x-show="departmentTypeOpen" @click.away="departmentTypeOpen = false" class="w-full mt-2 space-y-2 departmentTypeOpen">
+                                        <hr class="my-4 border-gray-300">
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="departmentTypesFilter['SL SEARCH']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="departmentTypesFilter['SL TEMPS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="departmentTypesFilter['PEI-UPSKILLS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
+                                        </div>
+                                        <div class="px-4 py-2 flex space-x-2">
+                                            <!-- Clear Filters Button -->
+                                            <button @click="clearCompanyFilters(); $wire.set('departmentTypesFilter', departmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                Clear Filters
+                                            </button>
+                                            <!-- Apply Filters Button -->
+                                            <button @click="$wire.set('departmentTypesFilter', departmentTypesFilter); departmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                Apply Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+
+
+                            <!-- Gender Dropdown Button -->
+                            <div x-data="{ 
+                                    clearGenderFilters() {
+                                        // Iterate over all keys and set them to false
+                                        Object.keys(this.genderTypesFilter).forEach(key => {
+                                            this.genderTypesFilter[key] = false;
+                                        });
+                                        this.updateGenderCount(); // Update count after clearing filters
+                                    },
+                                    updateGenderCount() {
+                                        // Update count using document.querySelectorAll
+                                        this.genderCount = Object.keys(this.genderTypesFilter).filter(key => this.genderTypesFilter[key]).length;
+
+                                        {{-- this.genderCount = document.querySelectorAll('.genderTypeOpen .filter-checkbox:checked').length; --}}
+                                    }
+                                }">
+                                <div class="px-2 pb-2">
+                                    <button @click="genderTypeOpen = !genderTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                        Gender
+                                        <span class="float-right">&#9662;</span>
+                                        <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
+                                    </button>
+                                    <div x-show="genderTypeOpen" @click.away="genderTypeOpen = false" class="w-full mt-2 space-y-2 genderTypeOpen">
+                                        <hr class="my-4 border-gray-300">
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="genderTypesFilter.Male" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
+                                        </div>
+                                        <div class="px-4 py-2 flex space-x-2">
+                                            <!-- Clear Filters Button -->
+                                            <button @click="clearGenderFilters(); $wire.set('genderTypesFilter', genderTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                Clear Filters
+                                            </button>
+                                            <!-- Apply Filters Button -->
+                                            <button @click="$wire.set('genderTypesFilter', genderTypesFilter); genderTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                Apply Filters
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div x-show="insideDepartmentTypeOpen == false && genderTypeOpen == false && departmentTypeOpen == false && insideDepartmentTypeOpen == false" class="px-4 pb-6 py-2 flex space-x-2 justify-between">
+                                <!-- Apply All Button -->
+                                <button @click="applyAllFilters();" class="w-full text-xs font-medium text-right text-customRed hover:text-red-900">
+                                    Apply All
+                                </button>
+                            </div>
+                        </div>
                       </div>
                   </div>
               </div>
@@ -555,6 +677,14 @@
             </div>
           </div>
       </div>
+      <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over z-50">
+        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay z-50">
+            <div class="flex flex-col justify-center items-center">
+                <div class="spinner"></div>
+                <p>Updating...</p>
+            </div>
+        </div>
+    </div>
   </div>
 
 <script>
@@ -650,273 +780,273 @@
 </script>
 
   
-  <script>
-  
-      const getChartOptions1 = () => {
-      return {
-          series: @json($employee_type),
-          colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["Internals", "OJT", "PEI-CCS", "Rapid", "Rapid Mobility", "Upskills"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          animations: {
-            enabled: false,
-            easing: 'easeinout',
-            speed: 800,
-            animateGradually: {
-                enabled: true,
-                delay: 150
-            },
-            dynamicAnimation: {
-                enabled: true,
-                speed: 350
-            }
-        }
-          },
+<script>
 
-      }
-      }
-  
-      const getChartOptions2 = () => {
-      return {
-          series: @json($inside_department),
-          colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["HR and Admin", "Recruitment", "CXS", "Overseas Recruitment", "PEI/SL Temps DO-174", "Corporate Accounting and Finance", "Accounting Operations"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          },
-      }
-      }
-  
-      const getChartOptions3 = () => {
-      return {
-          series: @json($department),
-          colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          },
-      }
-      }
-  
-      const getChartOptions4 = () => {
-      return {
-          series: @json($gender),
-          colors: ["#45E5E7", "#E745A5"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["Male", "Female"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          },
-      }
-      }
-  
-      if (document.getElementById("pie-chart-1") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
-      chart.render();
-      }
-  
-      if (document.getElementById("pie-chart-2") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-2"), getChartOptions2());
-      chart.render();
-      }
-  
-      if (document.getElementById("pie-chart-3") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-3"), getChartOptions3());
-      chart.render();
-      }
-  
-      if (document.getElementById("pie-chart-4") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-4"), getChartOptions4());
-      chart.render();
-      }
-  
-  </script>
+    const getChartOptions1 = () => {
+    return {
+        series: @json($employee_type),
+        colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5"],
+        chart: {
+        height: 420,
+        width: "100%",
+        type: "pie",
+        },
+        stroke: {
+        colors: ["white"],
+        lineCap: "",
+        },
+        plotOptions: {
+        pie: {
+            labels: {
+            show: true,
+            },
+            size: "100%",
+            dataLabels: {
+            offset: -25
+            }
+        },
+        },
+        labels: ["Internals", "OJT", "PEI-CCS", "Rapid", "Rapid Mobility", "Upskills"],
+        dataLabels: {
+        enabled: true,
+        style: {
+            fontFamily: "Inter, sans-serif",
+        },
+        },
+        legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+        },
+        yaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        },
+        xaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        axisTicks: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        animations: {
+        enabled: false,
+        easing: 'easeinout',
+        speed: 800,
+        animateGradually: {
+            enabled: true,
+            delay: 150
+        },
+        dynamicAnimation: {
+            enabled: true,
+            speed: 350
+        }
+    }
+        },
+
+    }
+    }
+
+    const getChartOptions2 = () => {
+    return {
+        series: @json($inside_department),
+        colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
+        chart: {
+        height: 420,
+        width: "100%",
+        type: "pie",
+        },
+        stroke: {
+        colors: ["white"],
+        lineCap: "",
+        },
+        plotOptions: {
+        pie: {
+            labels: {
+            show: true,
+            },
+            size: "100%",
+            dataLabels: {
+            offset: -25
+            }
+        },
+        },
+        labels: ["HR and Admin", "Recruitment", "CXS", "Overseas Recruitment", "PEI/SL Temps DO-174", "Corporate Accounting and Finance", "Accounting Operations"],
+        dataLabels: {
+        enabled: true,
+        style: {
+            fontFamily: "Inter, sans-serif",
+        },
+        },
+        legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+        },
+        yaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        },
+        xaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        axisTicks: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        },
+    }
+    }
+
+    const getChartOptions3 = () => {
+    return {
+        series: @json($department),
+        colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
+        chart: {
+        height: 420,
+        width: "100%",
+        type: "pie",
+        },
+        stroke: {
+        colors: ["white"],
+        lineCap: "",
+        },
+        plotOptions: {
+        pie: {
+            labels: {
+            show: true,
+            },
+            size: "100%",
+            dataLabels: {
+            offset: -25
+            }
+        },
+        },
+        labels: ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"],
+        dataLabels: {
+        enabled: true,
+        style: {
+            fontFamily: "Inter, sans-serif",
+        },
+        },
+        legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+        },
+        yaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        },
+        xaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        axisTicks: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        },
+    }
+    }
+
+    const getChartOptions4 = () => {
+    return {
+        series: @json($gender),
+        colors: ["#45E5E7", "#E745A5"],
+        chart: {
+        height: 420,
+        width: "100%",
+        type: "pie",
+        },
+        stroke: {
+        colors: ["white"],
+        lineCap: "",
+        },
+        plotOptions: {
+        pie: {
+            labels: {
+            show: true,
+            },
+            size: "100%",
+            dataLabels: {
+            offset: -25
+            }
+        },
+        },
+        labels: ["Male", "Female"],
+        dataLabels: {
+        enabled: true,
+        style: {
+            fontFamily: "Inter, sans-serif",
+        },
+        },
+        legend: {
+        position: "bottom",
+        fontFamily: "Inter, sans-serif",
+        },
+        yaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        },
+        xaxis: {
+        labels: {
+            formatter: function (value) {
+            return value
+            },
+        },
+        axisTicks: {
+            show: false,
+        },
+        axisBorder: {
+            show: false,
+        },
+        },
+    }
+    }
+
+    if (document.getElementById("pie-chart-1") && typeof ApexCharts !== 'undefined') {
+    const chart = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
+    chart.render();
+    }
+
+    if (document.getElementById("pie-chart-2") && typeof ApexCharts !== 'undefined') {
+    const chart = new ApexCharts(document.getElementById("pie-chart-2"), getChartOptions2());
+    chart.render();
+    }
+
+    if (document.getElementById("pie-chart-3") && typeof ApexCharts !== 'undefined') {
+    const chart = new ApexCharts(document.getElementById("pie-chart-3"), getChartOptions3());
+    chart.render();
+    }
+
+    if (document.getElementById("pie-chart-4") && typeof ApexCharts !== 'undefined') {
+    const chart = new ApexCharts(document.getElementById("pie-chart-4"), getChartOptions4());
+    chart.render();
+    }
+
+</script>
   

@@ -91,6 +91,11 @@ class ItDashboardView extends Component
         }
     }
 
+    public function clearAllFilters(){
+        $this->reset(['employeeTypesFilter', 'insideDepartmentTypesFilter', 'departmentTypesFilter', 'genderTypesFilter']);
+    }
+
+
     public function render()
     {
         $loggedInUser = auth()->user();

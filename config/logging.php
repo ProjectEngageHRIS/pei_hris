@@ -167,6 +167,11 @@ return [
             'path' => storage_path('logs/forms/it_tickets.log'),
             'level' => 'error',
         ],
+        'time-in-and-out' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/forms/timeinandout.log'),
+            'level' => 'error',
+        ],
     ],
 
 ];

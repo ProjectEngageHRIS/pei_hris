@@ -1486,7 +1486,7 @@
                 </div>
             </div>
         @endif
-             <!-- Change Status Button -->
+        <!-- Change Status Button -->
         <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse">
             <button @click="openCrudModal = true" type="button" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
                 Change Status
@@ -1569,7 +1569,7 @@
             </div>
 
             <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                    @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'HR Ticket Edited'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
+                    @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Change Request Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
                     @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
                     <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                 <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
