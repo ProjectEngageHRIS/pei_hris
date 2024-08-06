@@ -13,6 +13,11 @@ class ChangeInformation extends Model
     use HasFactory;
     protected $primaryKey = 'form_id';
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
+
     public static function boot() {
         parent::boot();
 
@@ -20,6 +25,10 @@ class ChangeInformation extends Model
             $model->uuid = Str::uuid();
         });
     }
+
+    protected $fillable = [
+        'status'
+    ];
 
     protected $casts = [
         'employee_history' => 'array',

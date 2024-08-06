@@ -371,7 +371,7 @@
                                     <th scope="row" class="flex items-center justify-center px-6 py-4 text-gray-900  whitespace-nowrap ">
                                         <div class="ps-3 text-center">
                                             <div class="text-base font-semibold">{{$it_ticket->employee->first_name}} {{$it_ticket->employee->middle_name}} {{$it_ticket->employee->last_name}} </div>
-                                            <div class="font-normal  text-center text-gray-500">{{$it_ticket->employee_id}} | {{$it_ticket->employee->department}}</div>
+                                            <div class="font-normal  text-center text-gray-500"><span class="text-customRed">{{$it_ticket->employee_id}}</span> | {{$it_ticket->employee->department}}</div>
                                         </div>
                                     </th>
                                     @if($it_ticket->status == "Pending")
