@@ -3,15 +3,16 @@
 namespace App\Livewire\Dashboard;
 
 use Carbon\Carbon;
+use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Training;
 use App\Models\Activities;
+use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use App\Models\Dailytimerecord;
-use App\Models\Leaverequest;
-use App\Models\Mytasks;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class DashboardView extends Component
@@ -275,11 +276,12 @@ class DashboardView extends Component
     public function checkIn()
     {
 
-        $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
-        $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
-        $currentTime = Carbon::now();
-
-
+        try {
+            $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+            $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
+            $currentTime = Carbon::now();
+    
+    
         if ($currentTime->greaterThanOrEqualTo($startOfCheckInTime)) {
             $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
             if (!$time) {
@@ -293,7 +295,7 @@ class DashboardView extends Component
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
 
-                $this->dispatch('triggerSuccessCheckIn');
+                $this->dispatch('trigger-success-checkin');
 
                 $this->timeInFlag = true;
                 $this->timeOutFlag = false;
@@ -302,116 +304,133 @@ class DashboardView extends Component
             }
         } else {
             // $this->js("alert('You can only check in at or after 4:40 PM')");
-            $this->dispatch('triggerDangerCheckIn');
+            throw new \Exception('Error');
+        }
 
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('time-in-and-out')->error('Failed to time In: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
     }
 
 
     public function checkOut()
     {
-        $loggedInUser = auth()->user()->employee_id;
+        try {
+            $loggedInUser = auth()->user()->employee_id;
 
-        $current_time = Carbon::today();
-        $six_am_today = Carbon::today()->setHour(6);
-        // $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); 
-        if (now()->greaterThan($six_am_today)) {
-            $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
-        } else {
-            $time = Dailytimerecord::where('employee_id', $loggedInUser)->orderBy('attendance_date', 'desc')->first(); // assuming 'attendance_date' is stored as a date only
-        }
+            $current_time = Carbon::today();
+            $six_am_today = Carbon::today()->setHour(6);
+            // $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); 
+            if (now()->greaterThan($six_am_today)) {
+                $time = Dailytimerecord::whereDate('attendance_date', $current_time)->orderBy('attendance_date', 'desc')->where('employee_id', $loggedInUser)->first(); // assuming 'attendance_date' is stored as a date only
+            } else {
+                $time = Dailytimerecord::where('employee_id', $loggedInUser)->orderBy('attendance_date', 'desc')->first(); // assuming 'attendance_date' is stored as a date only
+            }
 
-        
-        if($time->type == null){
+            
+            if($time->type == null){
+                // dd($time->time_out != null);
+                if($time->time_out == null){
 
-           if($time->time_out == Null){
+                        $loggedInUser = auth()->user()->employee_id;
+                        $dtr = $time;
+                        $dtr->employee_id = $loggedInUser;
+                
+                        $dtr->attendance_date = Carbon::today()->toDateString();
+                        $dtr->time_out = Carbon::now()->toDateTimeString();
+                        $dtr->time_in = "2024-07-21 7:59:59";
+                        $dtr->time_out = "2024-07-21  9:59:59";
 
-                $loggedInUser = auth()->user()->employee_id;
-                $dtr = $time;
-                $dtr->employee_id = $loggedInUser;
-        
-                $dtr->attendance_date = Carbon::today()->toDateString();
-                $dtr->time_out = Carbon::now()->toDateTimeString();
-                $dtr->time_in = "2024-07-21 7:59:59";
-                $dtr->time_out = "2024-07-21  9:59:59";
+                        $timeIn = Carbon::parse($dtr->time_in);
+                        $timeOut = Carbon::parse($dtr->time_out);
+                        $differenceInSeconds = $timeIn->diffInSeconds($timeOut);
+                        $differenceInMinutes = $timeIn->diffInMinutes($timeOut);
 
-                $timeIn = Carbon::parse($dtr->time_in);
-                $timeOut = Carbon::parse($dtr->time_out);
-                $differenceInSeconds = $timeIn->diffInSeconds($timeOut);
-                $differenceInMinutes = $timeIn->diffInMinutes($timeOut);
+                        $hours = floor($differenceInSeconds / 3600);
+                        $minutes = floor(($differenceInSeconds % 3600) / 60);
+                        $seconds = $differenceInSeconds % 60;
 
-                $hours = floor($differenceInSeconds / 3600);
-                $minutes = floor(($differenceInSeconds % 3600) / 60);
-                $seconds = $differenceInSeconds % 60;
+                        $standardWorkMinutes =  540;
+                        $onePM = Carbon::today()->setHour(13)->setMinute(0)->setSecond(0);
 
-                $standardWorkMinutes =  540;
-                $onePM = Carbon::today()->setHour(13)->setMinute(0)->setSecond(0);
+                        if($timeIn->greaterThan($onePM)){
+                            if ($hours >= 10) {
+                                $dtr->type = 'Overtime';
+                                $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->overtime = $overtime / 60;
+                                $dtr->undertime = 0;
+                            } elseif ($hours >= 9) {
+                                $dtr->type = 'Wholeday';
+                                $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->overtime = $overtime / 60;
+                                $dtr->undertime = 0;
+                            } elseif ($hours >= 5) {
+                                $dtr->type = 'Half-Day';
+                                $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->undertime = $undertime / 60;
+                                $dtr->overtime = 0;
+                            } elseif ($hours <= 5) {
+                                $dtr->type = 'Undertime';
+                                $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->undertime = $undertime / 60;
+                                $dtr->overtime = 0;
+                                // dd($dtr->undertime, $dtr->overtime);
+                            } else {
+                                $dtr->type = 'Undefined';
+                            }
+                        } else {
+                            if ($hours >= 10) {
+                                $dtr->type = 'Overtime';
+                                $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->overtime = ($overtime - 60) / 60 ;
+                                $dtr->undertime = 0;
+                            } elseif ($hours >= 9) {
+                                $dtr->type = 'Wholeday';
+                                $overtime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->overtime = ($overtime - 60) / 60 ;
+                                $dtr->undertime = 0;
+                            } elseif ($hours >= 5) {
+                                $dtr->type = 'Half-Day';
+                                $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->undertime = ($undertime- 60) / 60 ;
+                                $dtr->overtime = 0;
+                            } elseif ($hours <= 5) {
+                                $dtr->type = 'Undertime';
+                                $undertime =  $differenceInMinutes - $standardWorkMinutes ;
+                                $dtr->undertime = ($undertime- 60) / 60;
+                                $dtr->overtime = 0;
+                                // dd($dtr->undertime, $dtr->overtime);
+                            } else {
+                                $dtr->type = 'Undefined';
+                            }
 
-                if($timeIn->greaterThan($onePM)){
-                    if ($hours >= 10) {
-                        $dtr->type = 'Overtime';
-                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->overtime = $overtime / 60;
-                        $dtr->undertime = 0;
-                    } elseif ($hours >= 9) {
-                        $dtr->type = 'Wholeday';
-                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->overtime = $overtime / 60;
-                        $dtr->undertime = 0;
-                    } elseif ($hours >= 5) {
-                        $dtr->type = 'Half-Day';
-                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->undertime = $undertime / 60;
-                        $dtr->overtime = 0;
-                    } elseif ($hours <= 5) {
-                        $dtr->type = 'Undertime';
-                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->undertime = $undertime / 60;
-                        $dtr->overtime = 0;
-                        // dd($dtr->undertime, $dtr->overtime);
-                    } else {
-                        $dtr->type = 'Undefined';
-                    }
+                        }
+
+
+                        $dtr->update();
+
+                        // $this->js("alert('You have already checked out!");
+                        $this->dispatch('triggerSuccess');
                 } else {
-                    if ($hours >= 10) {
-                        $dtr->type = 'Overtime';
-                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->overtime = ($overtime - 60) / 60 ;
-                        $dtr->undertime = 0;
-                    } elseif ($hours >= 9) {
-                        $dtr->type = 'Wholeday';
-                        $overtime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->overtime = ($overtime - 60) / 60 ;
-                        $dtr->undertime = 0;
-                    } elseif ($hours >= 5) {
-                        $dtr->type = 'Half-Day';
-                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->undertime = ($undertime- 60) / 60 ;
-                        $dtr->overtime = 0;
-                    } elseif ($hours <= 5) {
-                        $dtr->type = 'Undertime';
-                        $undertime =  $differenceInMinutes - $standardWorkMinutes ;
-                        $dtr->undertime = ($undertime- 60) / 60;
-                        $dtr->overtime = 0;
-                        // dd($dtr->undertime, $dtr->overtime);
-                    } else {
-                        $dtr->type = 'Undefined';
-                    }
-
+                    // $this->js("alert('You have already checked out today! Try Again Tomorrow')");
+                    throw new \Exception('Already Checked out Today!');
                 }
+            }
+            
+        } catch (\Exception $e) {
+            dd($e);
+            // Log the exception for further investigation
+            Log::channel('time-in-and-out')->error('Failed to time out: ' . $e->getMessage());
 
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
 
-                $dtr->update();
-
-                // $this->js("alert('You have already checked out!");
-                $this->dispatch('triggerSuccessCheckOut');
-            } 
-               
-        } else {
-
-            // $this->js("alert('You have already checked out today! Try Again Tomorrow')");
-            $this->dispatch('triggerDangerCheckOut');
-
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
     
     
@@ -466,12 +485,12 @@ class DashboardView extends Component
         if ($time && (in_array($time->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day']) || $time->type == null)) {
             // Calculate the difference based on whether time_out is null or not
             if (is_null($time->time_out)) {
-                $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
+                $this->timeIn = Carbon::parse($time->time_in);
                 $differenceInSeconds = now()->diffInSeconds(Carbon::parse($time->time_in));
                 $this->timeOutFlag = false; // Time Out button should be enabled
             } else {
-                $this->timeIn = Carbon::parse($time->time_in)->format('h:i:s A');
-                $this->timeOut = Carbon::parse($time->time_out)->format('h:i:s A');
+                $this->timeIn = Carbon::parse($time->time_in);
+                $this->timeOut = Carbon::parse($time->time_out);
                 $differenceInSeconds = Carbon::parse($time->time_in)->diffInSeconds(Carbon::parse($time->time_out));
                 $this->timeOutFlag = true; // Time Out button should be disabled
             }

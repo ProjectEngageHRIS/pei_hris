@@ -12,6 +12,11 @@ class Hrticket extends Model
 
     protected $primaryKey = 'form_id';
 
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class, 'employee_id', 'employee_id');
+    }
+
     public static function boot() {
         parent::boot();
 

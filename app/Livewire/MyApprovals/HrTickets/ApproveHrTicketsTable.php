@@ -33,6 +33,43 @@ class ApproveHrTicketsTable extends Component
     public $status;
 
     public $currentFormId;
+
+    public $employeeTypesFilter = [
+        'INTERNALS' => false,
+        'OJT' => false,
+        'PEI-CCS' => false,
+        'RAPID' => false,
+        'RAPIDMOBILITY' => false,
+        'UPSKILLS' => false,
+    ];
+
+    public $insideDepartmentTypesFilter = [
+        'HR AND ADMIN' => false,
+        'Recruitment' => false,
+        'CXS' => false,
+        'Overseas Recruitment' => false,
+        'PEI/SL Temps DO-174' => false,
+        'Corporate Accounting and Finance' => false,
+        'ACCOUNTING ' => false,
+    ];
+
+    public $departmentTypesFilter = [
+        'PEI' => false,
+        'SLSEARCH' => false,
+        'SLTEMPS' => false,
+        'WESEARCH' => false,
+        'PEI-UPSKILLS' => false,
+    ];
+
+    public $genderTypesFilter = [
+        'MALE' => false,
+        'FEMALE' => false,
+    ];
+
+    public $employeeTypeFilter;
+    public $departmentTypeFilter;
+    public $companyFilter;
+    public $genderFilter;
     
     
     public function search()
@@ -62,11 +99,16 @@ class ApproveHrTicketsTable extends Component
         // $this->sickCredits = $employeeInformation->sick_credits;
     }
 
+    public function clearAllFilters(){
+        $this->reset(['employeeTypesFilter', 'insideDepartmentTypesFilter', 'departmentTypesFilter', 'genderTypesFilter']);
+    }
+
+
     public function render()
     {
         $loggedInUser = auth()->user()->role_id;
 
-        $query = Hrticket::query();
+        $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
 
         switch ($this->date_filter) {
             case '1':
@@ -113,11 +155,70 @@ class ApproveHrTicketsTable extends Component
                 break;
         }
 
+        $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
+            return $this->employeeTypesFilter[$key];
+        });
+        
+        if (!empty($employeeTypes)) {
+            $query->whereHas('employee', function ($query) use ($employeeTypes) {
+                $query->whereIn('employee_type', $employeeTypes);
+            });
+        }
+    
+        // Inside Department Filter
+        $insideDepartmentTypes = array_filter(array_keys($this->insideDepartmentTypesFilter), function($key) {
+            return $this->insideDepartmentTypesFilter[$key];
+        });
+        
+        if (!empty($insideDepartmentTypes)) {
+            $query->whereHas('employee', function ($query) use ($insideDepartmentTypes) {
+                $query->whereIn('inside_department', $insideDepartmentTypes);
+            });
+        }
+    
+        // Department Filter
+        $departmentTypes = array_filter(array_keys($this->departmentTypesFilter), function($key) {
+            return $this->departmentTypesFilter[$key];
+        });
+        
+        if (!empty($departmentTypes)) {
+            $query->whereHas('employee', function ($query) use ($departmentTypes) {
+                $query->whereIn('department', $departmentTypes);
+            });
+        }
+    
+        // Gender Filter
+        $genderTypes = array_filter(array_keys($this->genderTypesFilter), function($key) {
+            return $this->genderTypesFilter[$key];
+        });
+        
+        if (!empty($genderTypes)) {
+            $query->whereHas('employee', function ($query) use ($genderTypes) {
+                $query->whereIn('gender', $genderTypes);
+            });
+        }
+
+
+        // if(strlen($this->search) >= 1){
+        //     $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+        // } else {
+        //     $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+        // }
 
         if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('first_name', 'like', '%' . $term . '%')
+                      ->orWhere('last_name', 'like', '%' . $term . '%')
+                      ->orWhere('department', 'like', '%' . $term . '%')
+                      ->orWhere('current_position', 'like', '%' . $term . '%')
+                      ->orWhere('employee_type', 'like', '%' . $term . '%')
+                      ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                }
+            })->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
         } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
         }
 
         if($loggedInUser == 10){
@@ -184,7 +285,7 @@ class ApproveHrTicketsTable extends Component
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 

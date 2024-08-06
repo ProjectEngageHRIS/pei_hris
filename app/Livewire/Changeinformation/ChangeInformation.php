@@ -5,6 +5,7 @@ namespace App\Livewire\Changeinformation;
 use Livewire\Component;
 use App\Models\Employee;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportFileUploads\WithFileUploads;
 use App\Models\ChangeInformation as ModelsChangeInformation;
@@ -273,151 +274,159 @@ class ChangeInformation extends Component
         //     $this->resetValidation();
         // }   
 
-        // $randomNumber = 0;
-        // while(True) {
-        //     $randomNumber = $this->generateRefNumber();
-        //     $existingRecord = \App\Models\ChangeInformation::where('reference_num', $randomNumber)->first() ?? null;
-        //     if(!$existingRecord){
-        //         break;
-        //     }
-         
-        // }
-     
-        $employee = new ModelsChangeInformation();
-        // $employee->reference_num = $randomNumber;
-        $employee->employee_id = auth()->user()->employee_id;
-        $employee->application_date = now();
+        try {
+            
+            $employee = new ModelsChangeInformation();
+            // $employee->reference_num = $randomNumber;
+            $employee->employee_id = auth()->user()->employee_id;
+            $employee->application_date = now();
 
-        $employee->first_name = $this->first_name;
-        $employee->middle_name = $this->middle_name;
-        $employee->last_name = $this->last_name;
-        $employee->status = 'Pending';
+            $employee->first_name = $this->first_name;
+            $employee->middle_name = $this->middle_name;
+            $employee->last_name = $this->last_name;
+            $employee->status = 'Pending';
 
 
-        // $employee->age = $this->age;
-        $employee->gender = $this->gender;
-        // $employee->personal_email = $this->personal_email;
-        $employee->phone = $this->phone;
-        // $employee->birth_date = $this->birth_date;
-        $employee->address = $this->address;
-        
+            // $employee->age = $this->age;
+            $employee->gender = $this->gender;
+            // $employee->personal_email = $this->personal_email;
+            $employee->phone = $this->phone;
+            // $employee->birth_date = $this->birth_date;
+            $employee->address = $this->address;
+            
 
-        $employee->civil_status = $this->civil_status;
-        $employee->religion = $this->religion;
-        $employee->nickname = $this->nickname;
-        $employee->profile_summary = $this->profile_summary;
-        
+            $employee->civil_status = $this->civil_status;
+            $employee->religion = $this->religion;
+            $employee->nickname = $this->nickname;
+            $employee->profile_summary = $this->profile_summary;
+            
 
 
-        if(is_string($this->emp_image) != True){
-            $this->validate(['emp_image' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
-            $employee->emp_image = $this->emp_image->store('photos/changeinformation/emp_image');
-            // $imageData = file_get_contents($this->emp_image->getRealPath());
-            // $employee->emp_image = base64_encode($imageData);
+            if(is_string($this->emp_image) != True){
+                $this->validate(['emp_image' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
+                $employee->emp_image = $this->emp_image->store('photos/changeinformation/emp_image');
+                // $imageData = file_get_contents($this->emp_image->getRealPath());
+                // $employee->emp_image = base64_encode($imageData);
+            }
+
+            
+            // else{
+            //     $employee->emp_image = $this->emp_image;
+            // }
+
+            // $fileFields = [
+            //     'emp_diploma',
+            //     'emp_tor',
+            //     'emp_cert_of_trainings_seminars',
+            //     'emp_auth_copy_of_csc_or_prc',
+            //     'emp_auth_copy_of_prc_board_rating',
+            //     'emp_med_certif',
+            //     'emp_nbi_clearance',
+            //     'emp_psa_birth_certif',
+            //     'emp_psa_marriage_certif',
+            //     'emp_service_record_from_other_govt_agency',
+            //     'emp_approved_clearance_prev_employer',
+            //     'other_documents'
+            // ];
+
+
+            
+            
+            // foreach ($fileFields as $field) {
+            //     $fileNames = [];            
+            //     $ctrField = count($this->$field) - 1 ;
+            //     $ctr = 0;
+            //     foreach($this->$field as $index => $item){
+            //         if(is_string($item)){
+            //             $ctr += 1;
+            //             // dump($field, $item);
+            //             // $fileNames[] = $item;  
+            //         }
+            //         else if(is_array($item)){
+            //             if (is_null($item)){
+            //                 dd('test');
+            //             }
+            //             else{
+            //             foreach($item as $file){
+            //                 if (is_null($file)){
+            //                     dd('test');
+            //                 }
+            //                 else if(is_string($item)){
+            //                     // $fileNames[] = $file;
+            //                     $ctr += 1;
+            //                 }
+            //                 else{ 
+            //                     $ctr += 1;
+            //                     $imageData = file_get_contents($file->getRealPath());
+            //                     // $itemName = $file->store("photos/changeinformation/$field", 'local');
+            //                     $fileNames[] = base64_encode($imageData);;
+            //                     if($employee->$field != null && $ctr <= $ctrField){
+            //                         Storage::delete($employee->$field[$index]);
+            //                     }
+            //                 }
+            //             }
+            //         }
+            //         }
+            //         else{
+            //             $this->resetValidation();
+            //             if (!is_array($item) && !is_string($item)) {
+            //                 $this->addError($field . '.' . $index, 'The' . $field . 'must be a string or an array.');
+            //             }
+            //         }
+            //         if($field == "other_documents"){
+            //             if($ctr > 5){
+            //                 $this->validate([$field => [Rule::prohibitedIf(true)]]);
+            //             }
+            //         }
+            //         if($ctr > 3){
+            //             dump($ctr);
+            //             // $this->addError("{$field}", "{$field} must be less than or equal to 3.");   
+            //             $this->validate([$field => [Rule::prohibitedIf(true)]]);
+            //         }
+
+            //     }
+
+            //     if(count($fileNames) > 0){
+            //         $employee->$field = json_encode($fileNames, true);        
+            //         // dd($employee->$field, $fileNames);
+            //     }
+            // }
+            
+            foreach($this->employeeHistory as $history){
+                $jsonEmployeeHistory[] = [
+                    'name_of_company' => $history['name_of_company'],
+                    'prev_position' => $history['prev_position'],
+                    'start_date' => $history['start_date'],
+                    'end_date' => $history['end_date'],
+                ];
+            }
+
+            $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
+
+            $employee->employee_history = $jsonEmployeeHistory;
+
+
+            $this->dispatch('trigger-success');
+    
+            $employee->save();
+
+            return redirect()->to(route('profile'));
+
+
+
+        } catch (\Exception $e) {
+
+            $this->dispatch('trigger-error');
+
+            // Log the exception for further investigation
+            Log::channel('changeinforequests')->error('Failed to submit Change Information Request: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-
-        
-        // else{
-        //     $employee->emp_image = $this->emp_image;
-        // }
-
-        // $fileFields = [
-        //     'emp_diploma',
-        //     'emp_tor',
-        //     'emp_cert_of_trainings_seminars',
-        //     'emp_auth_copy_of_csc_or_prc',
-        //     'emp_auth_copy_of_prc_board_rating',
-        //     'emp_med_certif',
-        //     'emp_nbi_clearance',
-        //     'emp_psa_birth_certif',
-        //     'emp_psa_marriage_certif',
-        //     'emp_service_record_from_other_govt_agency',
-        //     'emp_approved_clearance_prev_employer',
-        //     'other_documents'
-        // ];
-
-
-        
-        
-        // foreach ($fileFields as $field) {
-        //     $fileNames = [];            
-        //     $ctrField = count($this->$field) - 1 ;
-        //     $ctr = 0;
-        //     foreach($this->$field as $index => $item){
-        //         if(is_string($item)){
-        //             $ctr += 1;
-        //             // dump($field, $item);
-        //             // $fileNames[] = $item;  
-        //         }
-        //         else if(is_array($item)){
-        //             if (is_null($item)){
-        //                 dd('test');
-        //             }
-        //             else{
-        //             foreach($item as $file){
-        //                 if (is_null($file)){
-        //                     dd('test');
-        //                 }
-        //                 else if(is_string($item)){
-        //                     // $fileNames[] = $file;
-        //                     $ctr += 1;
-        //                 }
-        //                 else{ 
-        //                     $ctr += 1;
-        //                     $imageData = file_get_contents($file->getRealPath());
-        //                     // $itemName = $file->store("photos/changeinformation/$field", 'local');
-        //                     $fileNames[] = base64_encode($imageData);;
-        //                     if($employee->$field != null && $ctr <= $ctrField){
-        //                         Storage::delete($employee->$field[$index]);
-        //                     }
-        //                 }
-        //             }
-        //         }
-        //         }
-        //         else{
-        //             $this->resetValidation();
-        //             if (!is_array($item) && !is_string($item)) {
-        //                 $this->addError($field . '.' . $index, 'The' . $field . 'must be a string or an array.');
-        //             }
-        //         }
-        //         if($field == "other_documents"){
-        //             if($ctr > 5){
-        //                 $this->validate([$field => [Rule::prohibitedIf(true)]]);
-        //             }
-        //         }
-        //         if($ctr > 3){
-        //             dump($ctr);
-        //             // $this->addError("{$field}", "{$field} must be less than or equal to 3.");   
-        //             $this->validate([$field => [Rule::prohibitedIf(true)]]);
-        //         }
-
-        //     }
-
-        //     if(count($fileNames) > 0){
-        //         $employee->$field = json_encode($fileNames, true);        
-        //         // dd($employee->$field, $fileNames);
-        //     }
-        // }
-        
-        foreach($this->employeeHistory as $history){
-            $jsonEmployeeHistory[] = [
-                'name_of_company' => $history['name_of_company'],
-                'prev_position' => $history['prev_position'],
-                'start_date' => $history['start_date'],
-                'end_date' => $history['end_date'],
-            ];
-        }
-
-        $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
-
-        $employee->employee_history = $jsonEmployeeHistory;
-
-        
-        $this->js("alert('Change Information Submitted!')"); 
- 
-        $employee->save();
-
-        return redirect()->to(route('profile'));
     }
 
     public function render()

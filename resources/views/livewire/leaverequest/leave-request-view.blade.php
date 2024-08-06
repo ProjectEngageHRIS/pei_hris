@@ -111,10 +111,10 @@
                         <label class="block mb-2 text-sm font-medium text-gray-900 ">Email of Supervisor
                             <span class="text-red-600">*</span>
                         </label>
-                        <select disabled id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
+                        <select disabled id="supervisor_email" name="supervisor_email" 
                             class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                            <option value="" selected>Select</option>
-                            <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
+                            <option selected value="{{$supervisor_email}}" selected>{{$supervisor_email}}</option>
+                            {{-- <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option> --}}
                         {{-- 
                             <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                             <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
@@ -247,8 +247,8 @@
                         <hr class="my-4 border-gray-300">
                     @elseif ($mode_of_application == "Vacation Leave" || $mode_of_application == "Sick Leave" || $mode_of_application == "Maternity Leave"
                         || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave" || $mode_of_application == "Others")
-                        <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-2 gap-4">
-                            <div class="col-span-1 grid grid-cols-1  gap-4">
+                        <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-7 gap-4">
+                            <div class="col-span-4 grid grid-cols-1  gap-4">
                                 <h2 class="col-span-1 whitespace-nowrap font-bold text-customRed">Leave Request Time Frame</h2>
                                 <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 ">
                                     <div class="col-span-1">
@@ -283,12 +283,16 @@
                                             <select disabled id="purpose_type" name="full_half" wire:model.live="full_half"
                                                 class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                 <option value="" selected>Select</option>
-                                                <option value="Start Full">Full Day on Start Day || Half Day on End Day</option>
-                                                <option value="End Full">Full Day on End Day || Half Day on Start Day</option>
-                                                <option value="Both Full">Full Day on Both Day</option>
-                                                <option value="Start Half">Half Day on Start Day || Full Day on End Day </option>
-                                                <option value="End Half">Half Day on End Day || Full Day on Start Day </option>
-                                                <option value="Both Half">Half Day on Both Day</option>
+                                                <optgroup label="Full Day Options">
+                                                    <option value="Start Full">Full Day Start | Half Day End</option>
+                                                    <option value="End Full">Full Day End | Half Day Start</option>
+                                                    <option value="Both Full">Full Day Both</option>
+                                                </optgroup>
+                                                <optgroup label="Half Day Options">
+                                                    <option value="Start Half">Half Day Start | Full Day End</option>
+                                                    <option value="End Half">Half Day End | Full Day Start</option>
+                                                    <option value="Both Half">Half Day Both</option>
+                                                </optgroup>
                                             </select>
                                             @error('full_half')
                                                 <div class="text-sm transition transform alert alert-danger"
@@ -301,8 +305,8 @@
                                 </div>
                             </div>
                             {{-- Available Credits --}}
-                            <div id="leavecredits_container" class="col-span-1 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
-                                <h2 class="col-span-1 min-[902px]:col-span-3 font-bold text-customRed">Leave Credits</h2>
+                            <div id="leavecredits_container" class="col-span-3 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
+                                <h2 class="col-span-3 min-[902px]:col-span-3 font-bold text-customRed">Leave Credits</h2>
                                 <div class="col-span-1">
                                     <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-customGray ">Number of Days <span class="text-red-600">*</span></label>
                                     <input disabled type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"

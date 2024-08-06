@@ -59,13 +59,13 @@ class HrDashboardView extends Component
     public $genderFilter;
     public $search;
 
-    public function clearAllFilters()
-    {
-        $this->employeeTypesFilter = [];
-        $this->insideDepartmentTypesFilter = [];
-        $this->departmentTypesFilter = [];
-        $this->genderTypesFilter = [];
-    }
+    // public function clearAllFilters()
+    // {
+    //     $this->employeeTypesFilter = [];
+    //     $this->insideDepartmentTypesFilter = [];
+    //     $this->departmentTypesFilter = [];
+    //     $this->genderTypesFilter = [];
+    // }
 
     
     public function updatingSearch()
@@ -154,6 +154,10 @@ class HrDashboardView extends Component
         }
         $image = Storage::disk('local')->get($emp_image);
         return $image;
+    }
+
+    public function clearAllFilters(){
+        $this->reset(['employeeTypesFilter', 'insideDepartmentTypesFilter', 'departmentTypesFilter', 'genderTypesFilter']);
     }
 
     // public function paginationView()

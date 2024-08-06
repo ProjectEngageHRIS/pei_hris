@@ -28,7 +28,7 @@ return new class extends Migration
             $table->text('earned_description')->nullable();
             $table->text('purpose_type')->nullable();
             $table->text('reason');
-            $table->boolean('approved_by_hr')->nullable();
+            $table->boolean('approved_by_supervisor')->nullable();
             $table->boolean('approved_by_president')->nullable();
             $table->dateTime('cancelled_at')->nullable();
 

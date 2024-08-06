@@ -154,7 +154,7 @@ class LeaveRequestView extends Component
 
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('failedforms')->error('Failed to cancel Leave Request: ' . $e->getMessage());
+            Log::channel('leaverequests')->error('Failed to cancel Leave Request: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
