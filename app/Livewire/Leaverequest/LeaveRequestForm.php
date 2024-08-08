@@ -172,7 +172,7 @@ class LeaveRequestForm extends Component
 
 
      protected $rules = [
-        'mode_of_application' => 'required|in:Advise Slip,Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
+        'mode_of_application' => 'required|in:Advise Slip,Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Magna Carta Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
         // 'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
         // 'full_half' => 'required',
         // // 'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
@@ -195,10 +195,8 @@ class LeaveRequestForm extends Component
     ];
 
     public function submit(){
+        $this->validate();
         try {
-            $this->validate();
-
-            
             $loggedInUser = auth()->user();
 
             $leaverequestdata = new Leaverequest();
@@ -251,26 +249,22 @@ class LeaveRequestForm extends Component
 
             return redirect()->to(route('LeaveRequestTable'));
         } catch (\Exception $e) {
-
             $this->dispatch('trigger-error');
 
             // Log the exception for further investigation
             Log::channel('leaverequests')->error('Failed to save Hrticket: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
-            $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
+            // $this->dispatch('triggerFailure', ['message' => 'Something went wrong. Please contact IT support.']);
 
             // Optionally, you could redirect the user to an error page or show an error message
-            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
 
 
     }
 
-    // public function updateNumOfDays($start_date, $end_date){
-    //     dd($start_date);
-     
-    // }
+
     public function render()
     {
         return view('livewire.leaverequest.leave-request-form')->extends('components.layouts.app');

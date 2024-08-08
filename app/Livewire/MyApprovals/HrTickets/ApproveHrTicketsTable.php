@@ -107,9 +107,17 @@ class ApproveHrTicketsTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user()->role_id;
-
         $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
 
+        if($loggedInUser == 6){
+            $query->where('type_of_ticket', 'HR Internal');
+        } else if($loggedInUser == 7){
+            $query->where('type_of_ticket', 'Internal Control');
+        } else if($loggedInUser == 8){
+            $query->where('type_of_ticket', 'HR Operations');
+        } else {
+            redirect()->to(route('HumanResourceDashboard'));
+        }
         switch ($this->date_filter) {
             case '1':
                 $query->whereDate('application_date',  Carbon::today());

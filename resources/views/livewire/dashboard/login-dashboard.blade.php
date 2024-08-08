@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     </button>
-                    @if ($is_hr)
+                    @if ($is_hr || $is_superadmin)
                         <button type="button" onclick="location.href='{{ route('HumanResourceDashboard') }}'" class="text-white  loginButton focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 h-40 me-2 mt-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" style="word-wrap: break-word;">
                             <div class="text-center items-center flex flex-col mt-4">  <div class="flex "> 
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -39,7 +39,7 @@
                             </div>
                         </button>
                     @endif
-                    {{-- @if ($is_accounting) --}}
+                    @if ($is_accounting || $is_superadmin)
                     <button type="button" onclick="location.href='{{ route('AccountingDashboard') }}'" class="text-white loginButton focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 h-40 me-2 mt-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" style="word-wrap: break-word;">
                         <div class="text-center items-center flex flex-col ">  <div class="flex "> 
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -51,6 +51,8 @@
                         </div>
                         </div>
                     </button>
+                    @endif
+                    @if($is_it || $is_superadmin)
                     <button type="button" onclick="location.href='{{ route('ItDashboard') }}'"  class="text-white loginButton focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 h-40 me-2 mt-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800" style="word-wrap: break-word;">
                         <div class="text-center items-center flex flex-col ">  <div class="flex "> 
                             <svg class="w-6 h-6 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
@@ -61,7 +63,7 @@
                         </div>
                         </div>
                     </button>
-                    {{-- @endif                 --}}
+                    @endif                
             </div>
         </div>
     </div>

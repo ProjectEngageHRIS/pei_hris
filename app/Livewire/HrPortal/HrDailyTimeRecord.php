@@ -149,7 +149,11 @@ class HrDailyTimeRecord extends Component
     }
 
     public function mount(){
-
+        
+        $loggedInUser = auth()->user()->role_id;
+        if(!in_array($loggedInUser, [9, 10])){
+            return redirect()->to(route('HumanResourceDashboard'));
+        }
         $now = Carbon::now();
         $currentYear = $now->year;
         $currentMonth = $now->month;
