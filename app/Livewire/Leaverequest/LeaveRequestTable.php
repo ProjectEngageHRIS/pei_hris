@@ -21,16 +21,41 @@ class LeaveRequestTable extends Component
 
     public $date_filter;
 
-    public $status_filter;
+    public $supervisor_status_filter;
+    public $president_status_filter;
+
 
     public $dateFilterName = "All";
-    public $statusFilterName = "All";
+    public $supervisorFilterName = "All";
+    public $presidentFilterName = "All";
+
+    public $dayFilter;
+
+    public $dayFilterName;
+    public $monthFilter;
+    
+    public $monthFilterName;
+    public $yearFilter;
+
+    public $yearFilterName;
+
+    public $currentMonth;
+
+    public $currentYear;
+
+    public $currentMonthName;
+
 
     public $search = "";
 
     public $type;
 
     public $currentFormId;
+
+    // public $president_status_filter =
+    // [
+    //     'Approved' => Null
+    // ]
     
     public function search()
     {
@@ -43,6 +68,15 @@ class LeaveRequestTable extends Component
     }
 
     public function mount($type = null){
+        $now = Carbon::now();
+        $currentYear = $now->year;
+        $currentMonth = $now->month;
+        $currentMonthName = $now->format('F');
+        $this->currentYear = $currentYear;
+        $this->currentMonth = $currentMonth;
+        $this->currentMonthName = $currentMonthName;
+        $this->yearFilter = $currentYear;
+        $this->monthFilter = $currentMonth;
         $this->type = $type;
         $loggedInUser = auth()->user()->employee_id;
         $employeeInformation = Employee::where('employee_id', $loggedInUser)
@@ -57,6 +91,43 @@ class LeaveRequestTable extends Component
         $loggedInUser = auth()->user();
 
         $query = Leaverequest::where('employee_id', $loggedInUser->employee_id);
+
+        if ($this->dayFilter == "all") {
+            $this->dayFilterName = "*";
+        } else {
+            $dateToday = Carbon::now();
+            $query->whereDay('created_at', $this->dayFilter ?? $dateToday->day);
+            $this->dayFilterName = $this->dayFilter ?? $dateToday->day;
+        }
+    
+        if ($this->monthFilter == null) {
+            $query->whereMonth('created_at', $this->currentMonth);
+            $this->monthFilterName = $this->currentMonthName;
+        } else {
+            $monthNames = [
+                1 => "January",
+                2 => "February",
+                3 => "March",
+                4 => "April",
+                5 => "May",
+                6 => "June",
+                7 => "July",
+                8 => "August",
+                9 => "September",
+                10 => "October",
+                11 => "November",
+                12 => "December"
+            ];
+            if (array_key_exists($this->monthFilter, $monthNames)) {
+                $query->whereMonth('created_at', $this->monthFilter);
+                $this->monthFilterName = $monthNames[$this->monthFilter];
+            } else {
+                $this->monthFilterName = "All";
+            }
+        }
+    
+        $query->whereYear('created_at', $this->yearFilter ?? $dateToday->year);
+        $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
 
         switch ($this->date_filter) {
             case '1':
@@ -84,21 +155,39 @@ class LeaveRequestTable extends Component
                 break;
         }
 
-        switch ($this->status_filter) {
+        switch ($this->supervisor_status_filter) {
             case '1':
-                $query->where('status',  'Approved');
-                $this->statusFilterName = "Approved";
+                $query->where('approved_by_supervisor', 1);
+                $this->supervisorFilterName = "Approved";
                 break;
             case '2':
-                $query->where('status', 'Pending');
-                $this->statusFilterName = "Pending";
+                $query->whereNull('approved_by_supervisor');
+                $this->supervisorFilterName = "Pending";
                 break;
             case '3':
-                $query->where('status', 'Declined');
-                $this->statusFilterName = "Declined";
+                $query->where('approved_by_supervisor', 0);
+                $this->supervisorFilterName = "Declined";
                 break;
             default:
-                $this->statusFilterName = "All";
+                $this->supervisorFilterName = "All";
+                break;
+        }
+
+        switch ($this->president_status_filter) {
+            case '1':
+                $query->where('approved_by_president', 1);
+                $this->presidentFilterName = "Approved";
+                break;
+            case '2':
+                $query->whereNull('approved_by_president');
+                $this->presidentFilterName = "Pending";
+                break;
+            case '3':
+                $query->where('approved_by_president', 0);
+                $this->presidentFilterName = "Declined";
+                break;
+            default:
+                $this->presidentFilterName = "All";
                 break;
         }
 

@@ -172,6 +172,21 @@ return [
             'path' => storage_path('logs/forms/timeinandout.log'),
             'level' => 'error',
         ],
+        'accountingerrors' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/accounting/accounting_errors.log'),
+            'level' => 'error',
+        ],
+        'activities' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/activities/announcement.log'),
+            'level' => 'error',
+        ],
+        'tasks' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/mytasks/tasks.log'),
+            'level' => 'error',
+        ],
     ],
 
 ];

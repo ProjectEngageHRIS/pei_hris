@@ -18,6 +18,9 @@ module.exports = {
       xxl: '1536px',
     },
     colors: {
+      pastelYellow: '#FDFD96', // Soft Yellow
+      pastelBlue: '#A2C2E6', // Soft Blue
+      pastelPink: '#F7C6C7', // Soft Pink
       customGray: '#000000',
       navButton: '#FFFCFC',
       customGray1: '#494A4C',

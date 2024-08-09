@@ -216,7 +216,7 @@
                         <div class="py-1">
                             <a href="{{ route('TasksTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">My Tasks</a>
                             <a href="{{ route('AssignedTasksTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assigned Tasks</a>
-                            <a href="{{ route('TasksForm') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assign a Task</a>
+                            <a href="{{ route('TasksForm') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assign a Task</a>
 
                         </div>
                     </div>

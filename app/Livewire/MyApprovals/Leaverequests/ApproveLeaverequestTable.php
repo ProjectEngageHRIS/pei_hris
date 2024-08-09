@@ -98,15 +98,15 @@ class ApproveLeaverequestTable extends Component
     {
         $loggedInUser = auth()->user();
 
-        $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
+        $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');   
+    
         if($loggedInEmail == "spm_2009@wesearch.com.ph"){
             $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
-                                  ->where('supervisor_email', $loggedInEmail)->where('');
+                                  ->where('supervisor_email', $loggedInEmail)->where('approved_by_supervisor', '1');
         } else {
             $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
                                   ->where('supervisor_email', $loggedInEmail);
         }
-
 
         switch ($this->date_filter) {
             case '1':

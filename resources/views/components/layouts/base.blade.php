@@ -4,12 +4,12 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="icon" type="image/x-icon" href="{{asset('assets\sllogo.png')}}">
-        @hasSection('title')
+        {{-- @hasSection('title')
 
             <title>@yield('title') - {{ config('app.name') }}</title>
         @else
             <title>{{ config('app.name') }}</title>
-        @endif
+        @endif --}}
 
         <!-- Favicon -->
 	
@@ -18,6 +18,7 @@
 
         <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
         <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <title>SL Group Employee Portal</title>
 
         {{-- @vite(['resources/sass/app.scss', 'resources/js/app.js']) --}}
         @livewireStyles

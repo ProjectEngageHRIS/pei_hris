@@ -5,6 +5,7 @@ namespace App\Livewire\Mytasks;
 use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class MyTasksView extends Component
@@ -30,13 +31,23 @@ class MyTasksView extends Component
     public $start_time;
     public $end_time;
 
+    public $owner;
+    public $status;
+
+    public $loggedInUser;
+
     public function mount($index){
         $loggedInUser = auth()->user();
+        $this->loggedInUser = $loggedInUser;
 
         try {
             $task = $this->editForm($index);
             // $this->authorize('update', [$leaverequest]);
             if (is_null( $task)) {
+                return redirect()->to(route('TasksTable'));
+            }
+            $target_employees = json_decode($task->target_employees);
+            if(!in_array($loggedInUser, $target_employees) && $task->employee_id != $loggedInUser->employee_id){
                 return redirect()->to(route('TasksTable'));
             }
         } catch (AuthorizationException $e) {
@@ -46,9 +57,11 @@ class MyTasksView extends Component
 
         $this->index = $index;
 
+
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department',  'employee_email')
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->first(); 
+        $this->owner = $task->employee_id == $loggedInUser->employee_id ? True : False;
         $this->first_name = $employeeRecord->first_name;
         $this->middle_name = $employeeRecord->middle_name;
         $this->last_name = $employeeRecord->last_name;
@@ -79,6 +92,7 @@ class MyTasksView extends Component
         $this->target_employees = $selectedEmployees;
 
         $this->form_id = $task->form_id;
+        $this->status = $task->status;
         
         $this->task_title = $task->task_title;
         $this->assigned_task = $task->assigned_task;
@@ -90,10 +104,41 @@ class MyTasksView extends Component
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
         $task = Mytasks::whereJsonContains('target_employees', auth()->user()->employee_id)->where('uuid', $index)->first();
-        if(!$task || $task->employee_id != $loggedInUser){
+
+        if(!$task){
             return ;
         }
         return $task ;
+    }
+
+    public function changeStatus(){
+        $loggedInUser = auth()->user();
+        try {
+            $form = Mytasks::where('uuid', $this->index)->first();
+            if($form){
+                if($form->employee_id == $loggedInUser->employee_id){
+                    if($this->status == "Cancelled"){
+                        $dataToUpdate = ['status' => 'Cancelled',
+                            'cancelled_at' => now()];
+                    } else {
+                        $dataToUpdate = ['status' => $this->status];
+                    }
+                    $form->update($dataToUpdate);
+                    $this->dispatch('trigger-success'); 
+                    return redirect()->to(route('TasksTable'));
+                }
+            } else {
+                $this->dispatch('trigger-error'); 
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('tasks')->error('Failed to update Task Status: ' . $e->getMessage().' | ' . $loggedInUser->employee_id);
+            
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+
+        }
+       
     }
 
     

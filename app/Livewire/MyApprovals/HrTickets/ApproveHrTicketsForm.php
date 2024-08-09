@@ -278,7 +278,6 @@ class ApproveHrTicketsForm extends Component
 
     public function submit(){
         try {
-            throw new Exception('testing');
             $hrticketdata = Hrticket::where('uuid', $this->index)->first();
 
             $hrticketdata->status = $this->status;
@@ -304,10 +303,10 @@ class ApproveHrTicketsForm extends Component
     public function editForm($index){
         // $hrticket=  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $hrticket= Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
+        $hrticket = Hrticket::where('uuid', $index)->first();
         
-        if(!$hrticket || $hrticket->employee_id != $loggedInUser){
-            return False;
+        if(!$hrticket){
+            return ;
         }
         // $this->hrticket= $hrticket;
         return $hrticket;

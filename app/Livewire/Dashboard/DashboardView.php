@@ -97,8 +97,8 @@ class DashboardView extends Component
         }
        
 
-        $loggedInUser = auth()->user()->employee_id;
-        $employeeInformation = Employee::where('employee_id', $loggedInUser)
+        $loggedInUser = auth()->user();
+        $employeeInformation = Employee::where('employee_id', $loggedInUser->employee_id)
                                 ->select('sick_credits', 'vacation_credits', 'first_name', 'middle_name', 'last_name', 'gender', 'current_position', 'department', 'emp_image')->first();
         $employeeInformation->middle_name = $employeeInformation->middle_name ?? " ";
         $this->employee_name = $employeeInformation->first_name . ' ' ;
@@ -106,14 +106,14 @@ class DashboardView extends Component
         $this->department = $employeeInformation->department;
         $this->employeeImage = $employeeInformation->emp_image;
 
-        $this->leave_requests = Leaverequest::where('employee_id', $loggedInUser)
+        $this->leave_requests = Leaverequest::where('employee_id', $loggedInUser->employee_id)
                                     // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
                                     ->orderBy('inclusive_start_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
                                     ->take(5)
                                     ->select('inclusive_start_date', 'inclusive_end_date', 'form_id')
                                     ->get();
 
-        $this->tasks = Mytasks::where('employee_id', $loggedInUser)
+        $this->tasks = Mytasks::whereJsonContains('target_employees', $loggedInUser->employee_id)
                             // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
                             ->orderBy('application_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
                             ->take(5)
@@ -507,7 +507,8 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
-        $activities = Activities::all();
+        
+        $activities = Activities::whereNull('deleted_at')->get();
         
         return view('livewire.dashboard.dashboard-view', [
             // 'data' => $this->filter($this->filter),

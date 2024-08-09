@@ -7,6 +7,7 @@ use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Mail\TaskRequestSubmitted;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 
 class MyTasksForm extends Component
@@ -115,42 +116,46 @@ class MyTasksForm extends Component
         // }
 
         $this->validate();
-
-        
         $loggedInUser = auth()->user();
+        try {
+            $task = new Mytasks();
 
-        $task = new Mytasks();
+            $employeeIds = array_map(function($employee) {
+                $parts = explode(' | ', $employee);
+                return trim($parts[1]);
+            }, $this->target_employees);
 
-        $employeeIds = array_map(function($employee) {
-            $parts = explode(' | ', $employee);
-            return trim($parts[1]);
-        }, $this->target_employees);
+            $task->employee_id = $loggedInUser->employee_id;
+            $task->status = "Pending";
+            $task->application_date = now();
+            $task->task_title = $this->task_title;
+            $task->target_employees = json_encode($employeeIds);
+            $task->assigned_task = $this->assigned_task;
+            $task->start_time = $this->start_time;
+            $task->end_time = $this->end_time;
 
-        $task->employee_id = $loggedInUser->employee_id;
-        $task->status = "Pending";
-        $task->application_date = now();
-        $task->task_title = $this->task_title;
-        $task->target_employees = json_encode($employeeIds);
-        $task->assigned_task = $this->assigned_task;
-        $task->start_time = $this->start_time;
-        $task->end_time = $this->end_time;
+            $task->save();
 
-        $task->save();
-
-        $assignee = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
-        ->where('employee_id', $loggedInUser->employee_id)
-        ->first();
+            $assignee = Employee::select('first_name', 'middle_name', 'last_name', 'department','employee_email')
+            ->where('employee_id', $loggedInUser->employee_id)
+            ->first();
 
 
-        $targetEmployees = Employee::whereIn('employee_id', $employeeIds)->get();
+            $targetEmployees = Employee::whereIn('employee_id', $employeeIds)->get();
 
-        // foreach ($targetEmployees as $targetEmployee) {
-        //     Mail::to($targetEmployee->employee_email)->send(new TaskRequestSubmitted($assignee, $targetEmployee, $task));
-        // }
+            // foreach ($targetEmployees as $targetEmployee) {
+            //     Mail::to($targetEmployee->employee_email)->send(new TaskRequestSubmitted($assignee, $targetEmployee, $task));
+            // }
 
-        $this->dispatch('triggerNotification');
+            $this->dispatch('trigger-success');
 
-        return redirect()->to(route('TasksTable'));
+            return redirect()->to(route('TasksTable'));
+        } catch (\Exception $e) {
+            $this->dispatch('trigger-error');
+
+            // Log the exception for further investigation
+            Log::channel('tasks')->error('Failed to assign Task: ' . $e->getMessage().' | ' . $loggedInUser->employee_id);
+        }
 
     }
 
