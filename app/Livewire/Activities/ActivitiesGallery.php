@@ -83,7 +83,15 @@ class ActivitiesGallery extends Component
             if ($this->date) $activity->date = $this->date;
             if ($this->start) $activity->start = $this->start;
             if ($this->end) $activity->end = $this->end;
-            if ($this->publisher) $activity->publisher = $this->publisher;
+            if ($this->publisher){
+                if($this->publisher == "You"){
+                    $loggedInUser = auth()->user()->employee_id;
+                    $employee = Employee::select('first_name', 'middle_name', 'last_name', 'department')->where('employee_id', $loggedInUser)->first();
+                    $activity->publisher = $employee->first_name . ' ' . $employee->middle_name . ' ' . $employee->last_name;
+                } else {
+                    $activity->publisher = $this->publisher;
+                }
+            }
             if ($this->is_featured !== null) $activity->is_featured = $this->is_featured; // Check for null explicitly
             if ($this->visible_to_list !== null) $activity->visible_to_list = $this->visible_to_list; // Check for null explicitly
 
@@ -183,11 +191,12 @@ class ActivitiesGallery extends Component
             $employee = Employee::select('first_name', 'middle_name', 'last_name', 'department')->where('employee_id', $loggedInUser)->first();
 
 
-            if($this->publisher == "Department"){
-                $activitydata->publisher = $employee->department;
-            } else {
+            if($this->publisher == "You"){
                 $activitydata->publisher = $employee->first_name . ' ' . $employee->middle_name . ' ' . $employee->last_name;
+            } else {
+                $activitydata->publisher = $this->publisher;
             }
+   
 
             // dd($activitydata->publisher);
             $activitydata->is_featured = $this->is_featured ?? 0;
