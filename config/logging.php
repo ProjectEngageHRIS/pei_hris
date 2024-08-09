@@ -182,6 +182,11 @@ return [
             'path' => storage_path('logs/activities/announcement.log'),
             'level' => 'error',
         ],
+        'tasks' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/mytasks/tasks.log'),
+            'level' => 'error',
+        ],
     ],
 
 ];

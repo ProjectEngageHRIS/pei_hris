@@ -278,7 +278,6 @@ class ApproveHrTicketsForm extends Component
 
     public function submit(){
         try {
-            throw new Exception('testing');
             $hrticketdata = Hrticket::where('uuid', $this->index)->first();
 
             $hrticketdata->status = $this->status;
