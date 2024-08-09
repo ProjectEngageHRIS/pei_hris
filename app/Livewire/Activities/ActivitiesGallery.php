@@ -12,6 +12,7 @@ use App\Models\Dailytimerecord;
 use Livewire\Attributes\Locked;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 
 class ActivitiesGallery extends Component
 {   
@@ -38,6 +39,8 @@ class ActivitiesGallery extends Component
     public $is_featured;
     public $visible_to_list;
 
+    public $currentFormId;
+
 
     public function getActivityPhoto($index){
         // $imageFile = $this->editLeaveRequest($this->index);
@@ -45,9 +48,18 @@ class ActivitiesGallery extends Component
         return $imageFile;
     }
 
-    public function deleteActivity($id){
-        Activities::where('activity_id', $id)->select('activity_id', 'deleted_at')->update(['deleted_at' => now()]);
-        return $this->dispatch('triggerSuccess');
+    public function deleteActivity(){
+        try {
+            Activities::where('activity_id', $this->currentFormId)->select('activity_id', 'deleted_at')->update(['deleted_at' => now()]);
+            $this->dispatch('triggerSuccessDelete');
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('activities')->error('Failed to Delete Announcement: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
+        }
+
     }
 
     public function fillData($data){
@@ -63,40 +75,48 @@ class ActivitiesGallery extends Component
     }
 
     public function editAnnouncement($id){
-        $activity = Activities::where('activity_id', $id)->first();
-        // Update fields only if the corresponding property is set
-        if ($this->type) $activity->type = $this->type;
-        if ($this->subject) $activity->subject = $this->subject;
-        if ($this->date) $activity->date = $this->date;
-        if ($this->start) $activity->start = $this->start;
-        if ($this->end) $activity->end = $this->end;
-        if ($this->publisher) $activity->publisher = $this->publisher;
-        if ($this->is_featured !== null) $activity->is_featured = $this->is_featured; // Check for null explicitly
-        if ($this->visible_to_list !== null) $activity->visible_to_list = $this->visible_to_list; // Check for null explicitly
+        try {
+            $activity = Activities::where('activity_id', $id)->first();
+            // Update fields only if the corresponding property is set
+            if ($this->type) $activity->type = $this->type;
+            if ($this->subject) $activity->subject = $this->subject;
+            if ($this->date) $activity->date = $this->date;
+            if ($this->start) $activity->start = $this->start;
+            if ($this->end) $activity->end = $this->end;
+            if ($this->publisher) $activity->publisher = $this->publisher;
+            if ($this->is_featured !== null) $activity->is_featured = $this->is_featured; // Check for null explicitly
+            if ($this->visible_to_list !== null) $activity->visible_to_list = $this->visible_to_list; // Check for null explicitly
 
-        if ($this->poster){
-            if($this->type == "Announcement"){
-                $activity->poster = $this->poster->store('photos/activities/announcement', 'public');
+            if ($this->poster){
+                if($this->type == "Announcement"){
+                    $activity->poster = $this->poster->store('photos/activities/announcement', 'public');
+                }
+                else if($this->type == "Event"){
+                    $activity->poster = $this->poster->store('photos/activities/event', 'public');
+                }
+                else if($this->type == "Seminar"){
+                    $activity->poster = $this->poster->store('photos/activities/seminar', 'public');
+                }
+                else if($this->type == "Training"){
+                    $activity->poster = $this->poster->store('photos/activities/training', 'public');
+                }
+                else if($this->type == "Others"){
+                    $activity->poster = $this->poster->store('photos/activities/others', 'public');
+                } else {
+                    $activity->poster = $this->poster->store('photos/activities/notype', 'public');
+                }
             }
-            else if($this->type == "Event"){
-                $activity->poster = $this->poster->store('photos/activities/event', 'public');
-            }
-            else if($this->type == "Seminar"){
-                $activity->poster = $this->poster->store('photos/activities/seminar', 'public');
-            }
-            else if($this->type == "Training"){
-                $activity->poster = $this->poster->store('photos/activities/training', 'public');
-            }
-            else if($this->type == "Others"){
-                $activity->poster = $this->poster->store('photos/activities/others', 'public');
-            } else {
-                $activity->poster = $this->poster->store('photos/activities/notype', 'public');
-            }
+            // Save the updated activity record
+            $activity->update();
+            return $this->dispatch('triggerSuccessEdit');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('activities')->error('Failed to Edit Announcement: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
         }
-
-        // Save the updated activity record
-        $activity->update();
-        return $this->dispatch('triggerSuccess', modal: "editForm");
         // dd($id, $this->type, $this->subject, $this->poster, $this->date, $this->start, $this->end, $this->publisher, $this->is_featured, $this->visible_to_list);
     }
 
@@ -117,72 +137,71 @@ class ActivitiesGallery extends Component
 
     public function addAnnouncement(){
 
-        foreach($this->rules as $rule => $validationRule){
-            $this->validate([$rule => $validationRule]);
-            $this->resetValidation();
-        }   
-
+        // foreach($this->rules as $rule => $validationRule){
+        //     $this->validate([$rule => $validationRule]);
+        //     $this->resetValidation();
+        // }   
 
         $dateToday = Carbon::now()->toDateString();;
+
         $this->validate(['date' => 'required|after_or_equal:'.$dateToday]);
 
-        // $randomNumber = 0;
-        // while(True) {
-        //     $randomNumber = $this->generateRefNumber();
-        //     $existingRecord = Activities::where('activity_id', $randomNumber)->first();
-        //     if(!$existingRecord){
-        //         break;
-        //     }
-         
-        // }
+        try {
 
-        $activitydata = new Activities();
+            $activitydata = new Activities();
 
-        $activitydata->type = $this->type;
-        // $activitydata->activity_id = $randomNumber;
-        $activitydata->subject = $this->subject;
-        $activitydata->description = $this->description;
-        $activitydata->status = "Active";
+            $activitydata->type = $this->type;
+            // $activitydata->activity_id = $randomNumber;
+            $activitydata->subject = $this->subject;
+            $activitydata->description = $this->description;
+            $activitydata->status = "Active";
 
-        if($this->type == "Announcement"){
-            $activitydata->poster = $this->poster->store('photos/activities/announcement', 'public');
+            if($this->type == "Announcement"){
+                $activitydata->poster = $this->poster->store('photos/activities/announcement', 'public');
+            }
+            else if($this->type == "Event"){
+                $activitydata->poster = $this->poster->store('photos/activities/event', 'public');
+            }
+            else if($this->type == "Seminar"){
+                $activitydata->poster = $this->poster->store('photos/activities/seminar', 'public');
+            }
+            else if($this->type == "Training"){
+                $activitydata->poster = $this->poster->store('photos/activities/training', 'public');
+            }
+            else if($this->type == "Others"){
+                $activitydata->poster = $this->poster->store('photos/activities/others', 'public');
+            }
+
+            // $imageData = file_get_contents($this->poster->getRealPath());
+            // $activitydata->poster = $imageData;
+            $activitydata->date = $this->date;
+            $activitydata->start = $this->start;
+            $activitydata->end = $this->end;
+
+            $loggedInUser = auth()->user()->employee_id;
+
+            $employee = Employee::select('first_name', 'middle_name', 'last_name', 'department')->where('employee_id', $loggedInUser)->first();
+
+
+            if($this->publisher == "Department"){
+                $activitydata->publisher = $employee->department;
+            } else {
+                $activitydata->publisher = $employee->first_name . ' ' . $employee->middle_name . ' ' . $employee->last_name;
+            }
+
+            // dd($activitydata->publisher);
+            $activitydata->is_featured = $this->is_featured ?? 0;
+            $activitydata->visible_to_list = $this->visible_to_list;
+
+            $activitydata->save();
+            $this->dispatch('triggerSuccess');
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('activities')->error('Failed to Create Announcement: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
         }
-        else if($this->type == "Event"){
-            $activitydata->poster = $this->poster->store('photos/activities/event', 'public');
-        }
-        else if($this->type == "Seminar"){
-            $activitydata->poster = $this->poster->store('photos/activities/seminar', 'public');
-        }
-        else if($this->type == "Training"){
-            $activitydata->poster = $this->poster->store('photos/activities/training', 'public');
-        }
-        else if($this->type == "Others"){
-            $activitydata->poster = $this->poster->store('photos/activities/others', 'public');
-        }
-
-        // $imageData = file_get_contents($this->poster->getRealPath());
-        // $activitydata->poster = $imageData;
-        $activitydata->date = $this->date;
-        $activitydata->start = $this->start;
-        $activitydata->end = $this->end;
-
-        $loggedInUser = auth()->user()->employee_id;
-
-        $employee = Employee::select('first_name', 'middle_name', 'last_name', 'department')->where('employee_id', $loggedInUser)->first();
-
-
-        if($this->publisher == "Department"){
-            $activitydata->publisher = $employee->department;
-        } else {
-            $activitydata->publisher = $employee->first_name . ' ' . $employee->middle_name . ' ' . $employee->last_name;
-        }
-
-        // dd($activitydata->publisher);
-        $activitydata->is_featured = $this->is_featured ?? 0;
-        $activitydata->visible_to_list = $this->visible_to_list;
-
-        $activitydata->save();
-        $this->dispatch('triggerSuccess', modal: "addForm");
     }
 
     public function removeImage(){
@@ -197,7 +216,7 @@ class ActivitiesGallery extends Component
         // if($loggedInUser->role_id == 0){
             // $activities =  Activities::paginate(1);
         // }
-        $activities =  Activities::query();
+        $activities =  Activities::whereNull('deleted_at');
 
         
         if($this->filter == "Announcement"){

@@ -2,15 +2,16 @@
 
 namespace App\Livewire\Dashboard;
 
-use App\Models\Accountingnotes;
-use App\Models\PayrollStatus;
 use DateTime;
 use Carbon\Carbon;
 use App\Models\Payroll;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithPagination;
+use App\Models\PayrollStatus;
 use Livewire\WithFileUploads;
+use App\Models\Accountingnotes;
+use Illuminate\Support\Facades\Log;
 use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
 class AccountingDashboardView extends Component
@@ -368,101 +369,135 @@ class AccountingDashboardView extends Component
 
     public function addPayroll($employee_id){
         // dd($this->start_date, $this->end_date, $this->payroll_picture);
-        $loggedInUser = auth()->user()->employee_id;
+
         // foreach($this->rules as $rule => $validationRule){
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
+        try {
+            throw new \Exception('test');
 
-        // dd($this->payroll_picture);
+            $loggedInUser = auth()->user()->employee_id;
 
-        $payroll = new Payroll();
-        $payroll->employee_id = $loggedInUser;
-        $payroll->target_employee = $employee_id;
-        $payroll->phase = $this->payroll_phase;
-        $payroll->month = $this->payroll_month;
-        $payroll->year = $this->payroll_year;
-        $payroll->payroll_picture = $this->payroll_picture;
-        // $payroll->save();
+            $payroll = new Payroll();
+            $payroll->employee_id = $loggedInUser;
+            $payroll->target_employee = $employee_id;
+            $payroll->phase = $this->payroll_phase;
+            $payroll->month = $this->payroll_month;
+            $payroll->year = $this->payroll_year;
+            $payroll->payroll_picture = $this->payroll_picture;
 
+            $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                            ->where('month', $payroll->month)
+                                            ->where('phase', $payroll->phase)
+                                            ->where('year', $payroll->year)
+                                            ->whereNull('deleted_at')
+                                            ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
+            if(!$payroll_status_data){
+                $payroll_status = new PayrollStatus();
+                $payroll_status->employee_id = $loggedInUser;
+                $payroll_status->target_employee = $payroll->target_employee;
+                $payroll_status->phase = $payroll->phase;
+                $payroll_status->year = $payroll->year;
+                $payroll_status->month = $payroll->month;
+                // if($start_date->day  15) $payroll->month_phase = '1st Half'
+                $payroll_status->status = "Approved";
+                $payroll_status->save();
+                $payroll->save();
 
-        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
-                                        ->where('month', $payroll->month)
-                                        ->where('phase', $payroll->phase)
-                                        ->where('year', $payroll->year)
-                                        ->whereNull('deleted_at')
-                                        ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
-        if(!$payroll_status_data){
-            $payroll_status = new PayrollStatus();
-            $payroll_status->employee_id = $loggedInUser;
-            $payroll_status->target_employee = $payroll->target_employee;
-            $payroll_status->phase = $payroll->phase;
-            $payroll_status->year = $payroll->year;
-            $payroll_status->month = $payroll->month;
-            // if($start_date->day  15) $payroll->month_phase = '1st Half'
-            $payroll_status->status = "Approved";
-            $payroll_status->save();
-            $payroll->save();
+                return $this->dispatch('trigger-success-add');
+            }        
 
-            return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
-        }        
+            $payroll_status_data->status = "Approved";
+            $payroll_status_data->update();
+            $payroll->update();
 
-        $payroll_status_data->status = "Approved";
-        $payroll_status_data->update();
-        $payroll->update();
+            return $this->dispatch('trigger-success-add');
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to add Payroll: ' . $e->getMessage());
 
-        return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
 
     }
 
 
     public function deletePayroll($employee_id){
 
-        $loggedInUser = auth()->user()->employee_id;
-        $payroll = Payroll::where('target_employee', $employee_id)
-                            ->where('phase',  $this->payroll_phase)
-                            ->where('month',  $this->payroll_month)
-                            ->where('year',   $this->payroll_year)
-                            ->whereNull('deleted_at')
-                            ->select('month', 'year', 'phase', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
+        try {
+            throw new \Exception('test');
+
+            $loggedInUser = auth()->user()->employee_id;
+            $payroll = Payroll::where('target_employee', $employee_id)
+                                ->where('phase',  $this->payroll_phase)
+                                ->where('month',  $this->payroll_month)
+                                ->where('year',   $this->payroll_year)
+                                ->whereNull('deleted_at')
+                                ->select('month', 'year', 'phase', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
 
 
-        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
-                            ->where('phase', $payroll->phase)
-                            ->where('month', $payroll->month)
-                            ->where('year', $payroll->year)
-                            ->whereNull('deleted_at')
-                            ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
+            $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                ->where('phase', $payroll->phase)
+                                ->where('month', $payroll->month)
+                                ->where('year', $payroll->year)
+                                ->whereNull('deleted_at')
+                                ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
 
-        if($payroll_status_data && $payroll){
-            $payroll_status_data->employee_id = $loggedInUser;
-            $payroll_status_data->deleted_at = now();
-            $payroll->employee_id = $loggedInUser;
-            $payroll->deleted_at = now();
-            $payroll_status_data->update();
-            $payroll->update();
-        } else {
-            dump('Error');
+            if($payroll_status_data && $payroll){
+                $payroll_status_data->employee_id = $loggedInUser;
+                $payroll_status_data->deleted_at = now();
+                $payroll->employee_id = $loggedInUser;
+                $payroll->deleted_at = now();
+                $payroll_status_data->update();
+                $payroll->update();
+            } 
+            return $this->dispatch('trigger-success-delete');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to delete Payroll: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-
-        return $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
-         
     }
 
     public function addNote(){
-        $note = new Accountingnotes();
-        $note->employee_id = auth()->user()->employee_id;
-        $note->note = $this->note;
-        $note->save();
-        $this->dispatch('triggerSuccess', ['message' => 'Note Added!']);
+        try {
+            $note = new Accountingnotes();
+            $note->employee_id = auth()->user()->employee_id;
+            $note->note = $this->note;
+            $note->save();
+            $this->dispatch('trigger-success-add-note');
+        }  catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to add Note: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+        }
     }
 
     public function deleteNote($id){
-        $note = Accountingnotes::where('id', $id)->first();
-        if($note){
-            $note->deleted_at = now();
-            $note->update();
-            $this->dispatch('triggerSuccess', ['message' => 'Note Deleted!']);
+        try {
+            $note = Accountingnotes::where('id', $id)->first();
+            if($note){
+                $note->deleted_at = now();
+                $note->update();
+                $this->dispatch('trigger-success-delete-note');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to delete Note: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
     }
 

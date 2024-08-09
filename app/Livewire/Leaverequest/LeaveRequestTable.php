@@ -51,6 +51,11 @@ class LeaveRequestTable extends Component
     public $type;
 
     public $currentFormId;
+
+    // public $president_status_filter =
+    // [
+    //     'Approved' => Null
+    // ]
     
     public function search()
     {

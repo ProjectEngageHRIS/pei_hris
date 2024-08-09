@@ -399,7 +399,7 @@ class AttendanceTable extends Component
             'Monthly' => $monthly,
             'Yearly' => $yearly,
             // 'data' => $this->filter($this->filter),
-        ])->layout('components.layouts.hr-navbar');
+        ]);
 
       
     }
