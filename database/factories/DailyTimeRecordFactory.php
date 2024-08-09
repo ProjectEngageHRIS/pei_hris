@@ -162,7 +162,7 @@ class DailyTimeRecordFactory extends Factory
         return [
             'employee_id' => $employeeId,
             'attendance_date' => $date->format('Y-m-d'),
-            'type' => $this->faker->randomElement(['Wholeday', 'Overtime', 'Half-Day', 'Undertime', 'Vacation Leave Half-Day', 'Sick Leave Full-Day']),
+            'type' => $this->faker->randomElement(['WholeDay', 'Overtime', 'Half-Day', 'Undertime', 'Vacation Leave Half-Day', 'Sick Leave Full-Day']),
             'time_in' => $timeIn->format('Y-m-d H:i:s'),
             'time_out' => $timeOut->format('Y-m-d H:i:s'),
             'late' => $this->faker->boolean,

@@ -388,10 +388,16 @@
     </table>
 </div>
 <div wire:loading wire:target="selectedDate, search, generateRecord" class="load-over z-50">
-    <div wire:loading wire:target="selectedDate, search, generateRecord" class="loading-overlay">
+    <div wire:loading wire:target="selectedDate, search" class="loading-overlay">
         <div class="flex flex-col justify-center items-center">
             <div class="spinner"></div>
             <p>Updating Table...</p>
+        </div>
+    </div>
+    <div wire:loading wire:target="generateRecord" class="loading-overlay">
+        <div class="flex flex-col justify-center items-center">
+            <div class="spinner"></div>
+            <p>Exporting your Records...</p>
         </div>
     </div>
 </div>

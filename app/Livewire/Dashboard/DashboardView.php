@@ -507,7 +507,8 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
-        $activities = Activities::all();
+        
+        $activities = Activities::whereNull('deleted_at')->get();
         
         return view('livewire.dashboard.dashboard-view', [
             // 'data' => $this->filter($this->filter),
