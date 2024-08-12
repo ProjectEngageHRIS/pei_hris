@@ -176,7 +176,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/verify', [VerifyController::class, 'verify'])
     ->name('verify');
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth'])->group(function (){
     Route::get("/dashboard", LoginDashboard::class)->name('LoginDashboard');
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
@@ -218,7 +218,7 @@ Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.
 
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function () {
+Route::middleware(['auth', ])->group(function () {
     Route::get("/ipcr", IpcrTable::class)->name("IpcrTable");
 
     Route::get("/ipcr/form/{type}", IpcrForm::class)->name('IpcrForm');
@@ -241,7 +241,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function () {
 
 });
 
-Route::middleware(['auth', 'otp.verified'])->group(function () {
+Route::middleware(['auth', ])->group(function () {
 
     Route::get("/opcr", OpcrTable::class)->name("OpcrTable");
 
@@ -258,7 +258,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function () {
+Route::middleware(['auth', ])->group(function () {
 
     Route::get("/leaverequest/requests/{type?}", LeaveRequestTable::class)->name('LeaveRequestTable');
 
@@ -278,7 +278,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function () {
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/helpdesk/requests", ItHelpDeskTable::class)->name('ItHelpDeskTable');
 
@@ -297,7 +297,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/mytasks/requests", MyTasksTable::class)->name('TasksTable');
 
@@ -320,7 +320,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/studypermit", StudyPermitTable::class)->name('StudyPermitTable');
 
@@ -336,7 +336,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/teachpermit", TeachPermitTable::class)->name('TeachPermitTable');
 
@@ -354,7 +354,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 
 });
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/changeschedule", ChangeScheduleTable::class)->name('ChangeScheduleTable');
 
@@ -374,7 +374,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/creditsmonetization", CreditsMonetizationTable::class)->name('CreditsMonetizationTable');
 
@@ -392,7 +392,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 
 });
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
 
@@ -423,7 +423,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
     Route::get("/requestdocument", RequestDocumentTable::class)->name('RequestDocumentTable');
 
     Route::get("/requestdocument/form", RequestDocumentForm::class)->name('RequestDocumentForm');
@@ -440,7 +440,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
     Route::get("/activities", ActivitiesGallery::class)->name('ActivitiesGallery');
 
     // Route::get("/activities/form", ActivitiesForm::class)->name('ActivitiesForm');
@@ -452,7 +452,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
     Route::get("/trainings", TrainingGallery::class)->name('TrainingGallery');
 
     Route::get("/trainings/form", TrainingForm::class)->name('TrainingForm');
@@ -467,7 +467,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
     Route::get("/dailytimerecord", AttendanceTable::class)->name('AttendanceTable');
 
     Route::get("/dailytimerecord/pdf/{dates}", [AttendancePdfController::class, 'turnToPdf'])->name('AttendancePdf');
@@ -475,7 +475,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
@@ -494,7 +494,7 @@ Route::middleware(['auth', 'otp.verified'])->group(function (){
 });
 
 
-Route::middleware(['auth', 'otp.verified'])->group(function (){
+Route::middleware(['auth', ])->group(function (){
 
     Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 

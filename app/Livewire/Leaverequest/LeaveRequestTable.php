@@ -92,42 +92,42 @@ class LeaveRequestTable extends Component
 
         $query = Leaverequest::where('employee_id', $loggedInUser->employee_id);
 
-        if ($this->dayFilter == "all") {
-            $this->dayFilterName = "*";
-        } else {
-            $dateToday = Carbon::now();
-            $query->whereDay('created_at', $this->dayFilter ?? $dateToday->day);
-            $this->dayFilterName = $this->dayFilter ?? $dateToday->day;
-        }
+        // if ($this->dayFilter == "all") {
+        //     $this->dayFilterName = "*";
+        // } else {
+        //     $dateToday = Carbon::now();
+        //     $query->whereDay('created_at', $this->dayFilter ?? $dateToday->day);
+        //     $this->dayFilterName = $this->dayFilter ?? $dateToday->day;
+        // }
     
-        if ($this->monthFilter == null) {
-            $query->whereMonth('created_at', $this->currentMonth);
-            $this->monthFilterName = $this->currentMonthName;
-        } else {
-            $monthNames = [
-                1 => "January",
-                2 => "February",
-                3 => "March",
-                4 => "April",
-                5 => "May",
-                6 => "June",
-                7 => "July",
-                8 => "August",
-                9 => "September",
-                10 => "October",
-                11 => "November",
-                12 => "December"
-            ];
-            if (array_key_exists($this->monthFilter, $monthNames)) {
-                $query->whereMonth('created_at', $this->monthFilter);
-                $this->monthFilterName = $monthNames[$this->monthFilter];
-            } else {
-                $this->monthFilterName = "All";
-            }
-        }
+        // if ($this->monthFilter == null) {
+        //     $query->whereMonth('created_at', $this->currentMonth);
+        //     $this->monthFilterName = $this->currentMonthName;
+        // } else {
+        //     $monthNames = [
+        //         1 => "January",
+        //         2 => "February",
+        //         3 => "March",
+        //         4 => "April",
+        //         5 => "May",
+        //         6 => "June",
+        //         7 => "July",
+        //         8 => "August",
+        //         9 => "September",
+        //         10 => "October",
+        //         11 => "November",
+        //         12 => "December"
+        //     ];
+        //     if (array_key_exists($this->monthFilter, $monthNames)) {
+        //         $query->whereMonth('created_at', $this->monthFilter);
+        //         $this->monthFilterName = $monthNames[$this->monthFilter];
+        //     } else {
+        //         $this->monthFilterName = "All";
+        //     }
+        // }
     
-        $query->whereYear('created_at', $this->yearFilter ?? $dateToday->year);
-        $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
+        // $query->whereYear('created_at', $this->yearFilter ?? $dateToday->year);
+        // $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
 
         switch ($this->date_filter) {
             case '1':
@@ -135,19 +135,21 @@ class LeaveRequestTable extends Component
                 $this->dateFilterName = "Today";
                 break;
             case '2':
-                $query->where('application_date', '>=', Carbon::today()->startOfWeek());
+                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), now()]);
                 $this->dateFilterName = "This Week";
                 break;
             case '3':
-                $query->where('application_date', '>=', Carbon::today()->subMonth());
+                $query->whereBetween('application_date', [Carbon::today()->startOfMonth(), now()]);
                 $this->dateFilterName = "This Month";
                 break;
             case '4':
-                $query->where('application_date', '>=', Carbon::today()->subMonths(6));
+                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), now()]);
+                // $query->where('application_date', '>=', Carbon::today()->subMonths(6));
                 $this->dateFilterName = "Last 6 Months";
                 break;
             case '5':
-                $query->where('application_date', '>=', Carbon::today()->subYear());
+                $query->whereBetween('application_date', [Carbon::today()->subYear(), now()]);
+                // $query->where('application_date', '>=', Carbon::today()->subYear());
                 $this->dateFilterName = "This Year";
                 break;
             default:
@@ -197,6 +199,24 @@ class LeaveRequestTable extends Component
         } else {
             $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
         }
+
+        if(strlen($this->search) >= 1){
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('application_date', 'like', '%' . $term . '%')
+                      ->orWhere('mode_of_application', 'like', '%' . $term . '%')
+                      ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
+                      ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
+                      ->orWhere('reason', 'like', '%' . $term . '%');
+                    //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                }
+            })->orderBy('application_date', 'desc')->where('status', '!=', 'Cancelled')->paginate(6);
+        } else {
+            $results = $query->orderBy('application_date', 'desc')->where('status', '!=', 'Cancelled')->paginate(6);
+        }
+
+        
 
         return view('livewire.leaverequest.leave-request-table', [
             'LeaveRequestData' => $results,
