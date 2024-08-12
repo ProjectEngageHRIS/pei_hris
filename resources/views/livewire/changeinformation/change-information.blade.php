@@ -397,7 +397,7 @@
         <div wire:loading wire:target="submit" class="loading-overlay">
             <div class="flex flex-col justify-center items-center">
                 <div class="spinner"></div>
-                <p>Submitting your Concern...</p>
+                <p>Submitting your Request...</p>
             </div>
         </div>
         <div wire:loading wire:target="emp_image" class="loading-overlay">

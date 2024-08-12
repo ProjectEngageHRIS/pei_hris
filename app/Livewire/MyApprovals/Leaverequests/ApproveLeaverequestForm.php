@@ -262,9 +262,7 @@ class ApproveLeaverequestForm extends Component
             Log::channel('leaverequests')->error('Failed to update Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
 
             $this->dispatch('trigger-error');
-
         }
-        
     }
     
     public function render()

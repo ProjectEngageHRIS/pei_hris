@@ -216,10 +216,11 @@ class ItDashboardView extends Component
     }
 
     public function changeStatus(){
+        $loggedInUser = auth()->user();
         try {
             $form = Ittickets::find($this->currentFormId);
             if($form){
-                if(in_array(auth()->user()->role_id, [11])){
+                if(in_array($loggedInUser->role_id, [14, 0])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {
@@ -229,17 +230,17 @@ class ItDashboardView extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess', type: "edit"); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
                 }
             } else {
-                $this->dispatch('triggerError'); 
+                throw new \Exception('No Record Found');
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('ittickets')->error('Failed to update ItTicket: ' . $e->getMessage());
+            Log::channel('ittickets')->error('Failed to update ItTicket: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
-
         }
-
     }
 }

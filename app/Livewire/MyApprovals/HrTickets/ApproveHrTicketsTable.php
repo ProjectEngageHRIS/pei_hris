@@ -275,10 +275,11 @@ class ApproveHrTicketsTable extends Component
     
 
     public function changeStatus(){
+        $loggedInUser = auth()->user();
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if(in_array(auth()->user()->role_id, [11])){
+                if(in_array($loggedInUser->role_id, [11])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];
@@ -287,13 +288,17 @@ class ApproveHrTicketsTable extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess'); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
                 }
             } else {
-                $this->dispatch('triggerError'); 
+                throw new \Exception('No Record Found');
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('hrticket')->error('Failed to update HR Ticket: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            // Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 

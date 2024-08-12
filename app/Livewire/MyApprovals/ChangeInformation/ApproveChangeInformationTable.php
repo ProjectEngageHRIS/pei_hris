@@ -219,35 +219,143 @@ class ApproveChangeInformationTable extends Component
     }
 
     public function changeStatus(){
-        $loggedInUser = auth()->user()->employee_id;
+        $loggedInUser = auth()->user();
         try {
-            $form = ChangeInformation::find($this->currentFormId);
-            if($form){
-                if(in_array(auth()->user()->role_id, [11])){
-                    if($this->status == "Cancelled"){
-                        $dataToUpdate = ['status' => 'Cancelled',
-                            'cancelled_at' => now()];
-                    } else {
-                        $dataToUpdate = ['status' => $this->status];
-                    }
-                    $form->update($dataToUpdate);
-                    $this->dispatch('triggerSuccess'); 
-                } else {
-                    throw new \Exception('Unauthorized Access');
+            if ($loggedInUser->role_id != 9 && $loggedInUser->role_id != 10){
+                throw new \Exception('Unauthorized Access');
+            } 
+            if($this->status == "Approved"){
+                $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)->first();
+
+                if(!$changeInformationStatus){
+                    throw new \Exception('No Record Found');
                 }
-            } else {
-                throw new \Exception('Record Not Found');
+                $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
+                $employee->first_name = $changeInformationStatus->first_name;
+                $employee->middle_name = $changeInformationStatus->middle_name;
+                $employee->last_name = $changeInformationStatus->last_name;
+                $employee->civil_status = $changeInformationStatus->civil_status;
+                $employee->religion = $changeInformationStatus->religion;
+                $employee->nickname = $changeInformationStatus->nickname;
+    
+                // $employee->age = $changeInformationStatus->age;
+                $employee->gender = $changeInformationStatus->gender;
+                $employee->personal_email = $changeInformationStatus->personal_email;
+                $employee->phone_number = $changeInformationStatus->phone;
+                $employee->home_address = $changeInformationStatus->address;
+    
+    
+                
+                if($changeInformationStatus->emp_image){
+                    // $this->validate(['emp_image' => 'nullable']);
+                    $employee->emp_image = $changeInformationStatus->emp_image;
+                }
+    
+                // $fileFields = [
+                //     'emp_diploma',
+                //     'emp_TOR',
+                //     'emp_cert_of_trainings_seminars',
+                //     'emp_auth_copy_of_csc_or_prc',
+                //     'emp_auth_copy_of_prc_board_rating',
+                //     'emp_med_certif',
+                //     'emp_nbi_clearance',
+                //     'emp_psa_birth_certif',
+                //     'emp_psa_marriage_certif',
+                //     'emp_service_record_from_other_govt_agency',
+                //     'emp_approved_clearance_prev_employer',
+                //     'other_documents'
+                // ];
+                
+                
+                // foreach ($fileFields as $field) {
+                //     $fileNames = [];            
+                //     $ctrField = count($this->$field) - 1 ;
+                //     $ctr = 0;
+                //     foreach($this->$field as $this->currentFormId => $item){
+                //         $ctr += 1;
+                //         if(is_null($item)){
+                //         }
+                //         else if(is_string($item)){
+                //             // $fileNames[] = $item;
+                //         }
+                //         else{
+                //             $this->resetValidation();
+                //             if (!is_array($item) && !is_string($item)) {
+                //                 $this->addError($field . '.' . $this->currentFormId, 'The' . $field . 'must be a string or an array.');
+                //             }
+                //         }
+                //     }
+                //     if(count($fileNames) > 0){
+                //         $employee->$field = json_encode($fileNames, true);        
+                //     } else{
+    
+                //     }
+                // }
+            
+                
+                // foreach($this->employeeHistory as $history){
+                //     $jsonEmployeeHistory[] = [
+                //         'name_of_company' => $history['name_of_company'],
+                //         'prev_position' => $history['prev_position'],
+                //         'start_date' => $history['start_date'],
+                //         'end_date' => $history['end_date'],
+                //     ];
+                // }
+    
+                // $jsonEmployeeHistory = json_encode($jsonEmployeeHistory);
+    
+                $employee->employee_history = $changeInformationStatus->employee_history ;  
+                
+                // dd(base64_encode($changeInformationStatus->emp_photo));
+                $updateData = [
+                    'first_name' =>  $employee->first_name  ,
+                    'middle_name' => $employee->middle_name,
+                    'last_name' => $employee->last_name,
+                    // 'age' =>  $employee->age,
+                    'gender' => $employee->gender,
+                    'civil_status' => $employee->civil_status,
+                    'religion' => $employee->religion,
+                    'phone_number'  => $employee->phone_number,
+                    'birth_date' => $employee->birth_date,
+                    'home_address' => $employee->home_address,
+                    'nickname' => $employee->nickname,
+                    'employee_history' => $employee->employee_history,
+                    'emp_image' => $employee->emp_image,
+                    // 'other_documents' => json_encode($employee->other_documents, true),
+                    'updated_at' => now(),
+                ];
+    
+                
+                Employee::where('employee_id', $changeInformationStatus->employee_id)
+                                    ->update($updateData);
+                
+                // $this->js("alert('Change Information Request Submitted!')"); 
+    
+                $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
+    
+                $employee->employee_history = $jsonEmployeeHistory;
+    
+                
             }
+            
+            $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)
+                                                            ->update(['Status' => $this->status,
+                                                                    'updated_at' => now() ]);
+    
+            $this->dispatch('triggerSuccess');
+
+            return redirect()->to(route('ApproveChangeInformationTable'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('changeinforequests')->error('Failed to update Change Information: ' . $e->getMessage(). '| ' . $loggedInUser);
+            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
 
     }
-
-    
-
  
 }

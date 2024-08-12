@@ -60,7 +60,7 @@ class ApproveItTicketsForm extends Component
         $loggedInUser = auth()->user()->employee_id;
         $it_ticket =  Ittickets::where('uuid', $this->index)->first();
         
-        if(!$it_ticket|| $it_ticket->employee_id != $loggedInUser){
+        if(!$it_ticket){
             return ;
         }
         return $it_ticket ;
@@ -68,10 +68,11 @@ class ApproveItTicketsForm extends Component
 
 
     public function changeStatus(){
+        $loggedInUser = auth()->user();
         try {
             $form = Ittickets::where('form_id', $this->form_id)->first();
             if($form){
-                if(in_array(auth()->user()->role_id, [11])){
+                if(in_array($loggedInUser->role_id, [11])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {
@@ -81,18 +82,19 @@ class ApproveItTicketsForm extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('trigger-success'); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
                 }
             } else {
-                $this->dispatch('triggerError'); 
+                throw new \Exception('No Record Fond');
             }
+            return redirect()->to(route('ItDashboard'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('ittickets')->error('Failed to update IT Ticket: ' . $e->getMessage());
+            Log::channel('ittickets')->error('Failed to update IT Ticket: ' . $e->getMessage() . ' | '. $loggedInUser->employee_id);
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
         }
-
-        return redirect()->to(route('ItDashboard'));
     }
 
     public function render()

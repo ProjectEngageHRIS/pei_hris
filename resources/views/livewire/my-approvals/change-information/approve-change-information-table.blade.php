@@ -624,7 +624,7 @@
                     x-transition:enter="transition ease-out duration-300"
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0">
                     <div class="relative w-full max-w-md p-4">
@@ -645,10 +645,10 @@
                                     <div>
                                         <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
                                         <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
+                                            <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                            <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                            <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
+                                            {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Report</option> --}}
+                                            {{-- <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option> --}}
                                             <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
                                         </select>
                                     </div>
@@ -732,8 +732,8 @@
             {{ $ChangeInfoData->links() }}
         </div>
 
-        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over">
-            <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay">
+        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over z-50">
+            <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay z-50">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Updating...</p>
