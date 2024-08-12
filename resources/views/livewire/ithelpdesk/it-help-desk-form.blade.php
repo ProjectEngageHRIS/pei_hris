@@ -28,7 +28,7 @@
         </ol>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Submit Concern</h2>
-    <section class="px-8 pb-24 mt-10 bg-white rounded-lg dark:bg-gray-900">
+    <section class="px-8 pb-8 mt-10 bg-white rounded-lg dark:bg-gray-900">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
                 @csrf
@@ -83,7 +83,7 @@
                         </div>
                         {{-- Concern Information --}}
                         <div class="grid w-full grid-cols-1 col-span-3 ">
-                            <h2 class="font-bold text-customRed">Concern Information</h2>
+                            <h2 class="font-bold text-customRed">Concern Information <span class="text-customGray1">(Max: 5000 Characters)</span> </h2>
                             <div id="description_container" class="mt-5">
                                 <textarea type="text" rows="10" id="description" name="description" wire:model="description"
                                     class="block p-2.5 w-full text-sm shadow-inner text-gray-500 bg-gray-50 rounded-lg ring-1 border border-gray-200 ring-gray-300 focus:border-customRed focus:ring-customRed" >
@@ -98,15 +98,20 @@
                         </div>
                     </div>
                 </div>
-                <button type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">
-                    Submit Concern
-                </button>
+                <div class="grid grid-cols-2 mt-10 justify-items-end">
+                    <button type="submit" class="col-span-1 col-start-2 inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                            <path d="M2.87 2.298a.75.75 0 0 0-.812 1.021L3.39 6.624a1 1 0 0 0 .928.626H8.25a.75.75 0 0 1 0 1.5H4.318a1 1 0 0 0-.927.626l-1.333 3.305a.75.75 0 0 0 .811 1.022 24.89 24.89 0 0 0 11.668-5.115.75.75 0 0 0 0-1.175A24.89 24.89 0 0 0 2.869 2.298Z" />
+                        </svg>
+                        Submit IT Ticket
+                    </button>
+                </div>
                 <!-- Loading screen -->
                 <div wire:loading wire:target="submit" class="load-over">
                     <div wire:loading wire:target="submit" class="loading-overlay">
                         <div class="flex flex-col justify-center items-center">
                             <div class="spinner"></div>
-                            <p>Submitting your Concern...</p>
+                            <p>Submitting your Ticket...</p>
                         </div>
                     </div>
                 </div>

@@ -147,14 +147,14 @@ class ApproveLeaverequestForm extends Component
 
     public function changeStatus()
     {
-
-        $loggedInUser = auth()->user()->role_id;
-        if ($loggedInUser != 9 && $loggedInUser != 10) {
-            return;
-        }
+        $loggedInUser = auth()->user();
         try {
-
-            DB::transaction(function () use ($loggedInUser) {
+            if ($loggedInUser->role_id != 9 && $loggedInUser->role_id != 10) {
+                throw new \Exception('Unauthorized Access');
+            }
+            
+            $role = $loggedInUser->role_id;
+            DB::transaction(function () use ($role) {
                 // Fetch the leave request data
                 $leaverequestdata = Leaverequest::where('uuid', $this->index)->first();
                 if (!$leaverequestdata) {
@@ -231,14 +231,14 @@ class ApproveLeaverequestForm extends Component
                 // $leaverequestdata->status = $this->status;
                 
                 if($this->status == "Completed"){
-                    if ($loggedInUser == 9) {
+                    if ($role == 9) {
                         if ($this->status == "Completed") {
                             $leaverequestdata->approved_by_supervisor = 1;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = "Approved";
                             }
                         }
-                    } elseif ($loggedInUser == 10) {
+                    } elseif ($role == 10) {
                         if ($this->status == "Completed") {
                             $leaverequestdata->approved_by_president = 1;
                             if ($leaverequestdata->approved_by_supervisor == 1) {
@@ -259,8 +259,8 @@ class ApproveLeaverequestForm extends Component
             return redirect()->to(route('ApproveLeaveRequestTable'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('leaverequests')->error('Failed to update Leaverequest: ' . $e->getMessage());
-            // Dispatch a failure event with an error message
+            Log::channel('leaverequests')->error('Failed to update Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
             $this->dispatch('trigger-error');
 
         }

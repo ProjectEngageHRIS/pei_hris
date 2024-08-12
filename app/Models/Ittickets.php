@@ -31,6 +31,7 @@ class Ittickets extends Model
         'status',
         'employee_id',
         'description',
+        'report',
         'cancelled_at'
     ];
 }

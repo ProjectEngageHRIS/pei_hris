@@ -35,6 +35,7 @@ class ItDashboardView extends Component
     public $itTicketTypes = [
         'Completed' => null,
         'Ongoing' => null,
+        'Report' => null,
         'Unassigned' => null,
         'Cancelled' => null,
     ];
@@ -77,6 +78,8 @@ class ItDashboardView extends Component
     public $genderFilter;
 
     public $employeeNames;
+
+    public $report;
 
     public function updatingSearch()
     {
@@ -165,6 +168,7 @@ class ItDashboardView extends Component
         $counts = Ittickets::select(DB::raw('
             SUM(CASE WHEN status = "Completed" THEN 1 ELSE 0 END) AS `Completed`,
             SUM(CASE WHEN status = "Ongoing" THEN 1 ELSE 0 END) AS `Ongoing`,
+            SUM(CASE WHEN status = "Report" THEN 1 ELSE 0 END) AS `Report`,
             SUM(CASE WHEN status = "Unassigned" THEN 1 ELSE 0 END) AS `Unassigned`,
             SUM(CASE WHEN status = "Cancelled" THEN 1 ELSE 0 END) AS `Cancelled`
         '))->first();
@@ -217,8 +221,9 @@ class ItDashboardView extends Component
             if($form){
                 if(in_array(auth()->user()->role_id, [11])){
                     if($this->status == "Cancelled"){
-                        $dataToUpdate = ['status' => 'Cancelled',
-                            'cancelled_at' => now()];
+                        $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
+                    } else if($this->status == "Report") {
+                        $dataToUpdate = ['status' => 'Report', 'report' => $this->report];                        
                     } else {
                         $dataToUpdate = ['status' => $this->status];
                     }

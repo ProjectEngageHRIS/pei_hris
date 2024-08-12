@@ -164,7 +164,7 @@ return [
         ],
         'changeinforequests' => [
             'driver' => 'single',
-            'path' => storage_path('logs/forms/it_tickets.log'),
+            'path' => storage_path('logs/forms/change_info_request.log'),
             'level' => 'error',
         ],
         'time-in-and-out' => [

@@ -219,6 +219,7 @@ class ApproveChangeInformationTable extends Component
     }
 
     public function changeStatus(){
+        $loggedInUser = auth()->user()->employee_id;
         try {
             $form = ChangeInformation::find($this->currentFormId);
             if($form){
@@ -231,16 +232,17 @@ class ApproveChangeInformationTable extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess'); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
                 }
             } else {
-                $this->dispatch('triggerError'); 
+                throw new \Exception('Record Not Found');
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('changeinforequests')->error('Failed to update Change Information: ' . $e->getMessage());
+            Log::channel('changeinforequests')->error('Failed to update Change Information: ' . $e->getMessage(). '| ' . $loggedInUser);
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
-
         }
 
     }

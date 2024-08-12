@@ -203,21 +203,21 @@ class ApproveLeaverequestTable extends Component
         //     $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
         // }
 
-        if(strlen($this->search) >= 1){
-            $searchTerms = explode(' ', $this->search);
-            $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhere('first_name', 'like', '%' . $term . '%')
-                      ->orWhere('last_name', 'like', '%' . $term . '%')
-                      ->orWhere('department', 'like', '%' . $term . '%')
-                      ->orWhere('current_position', 'like', '%' . $term . '%')
-                      ->orWhere('employee_type', 'like', '%' . $term . '%')
-                      ->orWhere('start_of_employment', 'like', '%' . $term . '%');
-                }
-            })->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
-        } else {
-            $results = $query->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
-        }
+            if(strlen($this->search) >= 1){
+                $searchTerms = explode(' ', $this->search);
+                $results = $query->where(function ($q) use ($searchTerms) {
+                    foreach ($searchTerms as $term) {
+                        $q->orWhere('first_name', 'like', '%' . $term . '%')
+                        ->orWhere('last_name', 'like', '%' . $term . '%')
+                        ->orWhere('department', 'like', '%' . $term . '%')
+                        ->orWhere('current_position', 'like', '%' . $term . '%')
+                        ->orWhere('employee_type', 'like', '%' . $term . '%')
+                        ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                    }
+                })->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
+            } else {
+                $results = $query->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
+            }
 
         
         if($loggedInUser->role_id == 10 || $loggedInUser->role_id == 4){
@@ -277,13 +277,15 @@ class ApproveLeaverequestTable extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess'); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
                 }
             } else {
-                $this->dispatch('triggerError'); 
+                throw new \Exception('No Record Found');
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('leaverequests')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('leaverequests')->error('Failed to update Leave Request: ' . $e->getMessage() . ' | ' . auth()->user()->employee_id);
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 

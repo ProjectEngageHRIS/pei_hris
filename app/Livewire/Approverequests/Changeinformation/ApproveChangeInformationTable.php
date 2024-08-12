@@ -67,10 +67,6 @@ class ApproveChangeInformationTable extends Component
         } else {
             abort(404);
         }
-       
-       
-
     }
-
    
 }

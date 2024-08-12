@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('status', 20);
             $table->string('employee_id');
             $table->string('description', 5000);
+            $table->string('report', 5000)->nullable();
             $table->dateTime('cancelled_at')->nullable();
             $table->timestamps();
         });

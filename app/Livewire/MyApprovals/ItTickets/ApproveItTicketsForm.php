@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveItTicketsForm extends Component
@@ -25,6 +26,7 @@ class ApproveItTicketsForm extends Component
 
     public $form_id;
 
+    public $report;
 
     public function mount($index){
         $loggedInUser = auth()->user();
@@ -46,7 +48,7 @@ class ApproveItTicketsForm extends Component
         $this->last_name = $employeeRecord->last_name;
         $this->department_name = $employeeRecord->department;
         $this->email = $employeeRecord->employee_email;
-
+        $this->report = $it_ticket->report;
         $this->form_id = $it_ticket->form_id;
         $this->description = $it_ticket->description;
 
@@ -56,31 +58,46 @@ class ApproveItTicketsForm extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->find($index);
+        $it_ticket =  Ittickets::where('uuid', $this->index)->first();
         
         if(!$it_ticket|| $it_ticket->employee_id != $loggedInUser){
-            return False;
+            return ;
         }
         return $it_ticket ;
     }
 
 
-    public function submit(){
-        $it_ticket_data = Ittickets::where('form_id', $this->index)->first();
+    public function changeStatus(){
+        try {
+            $form = Ittickets::where('form_id', $this->form_id)->first();
+            if($form){
+                if(in_array(auth()->user()->role_id, [11])){
+                    if($this->status == "Cancelled"){
+                        $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
+                    } else if($this->status == "Report") {
+                        $dataToUpdate = ['status' => 'Report', 'report' => $this->report];                        
+                    } else {
+                        $dataToUpdate = ['status' => $this->status];
+                    }
+                    $form->update($dataToUpdate);
+                    $this->dispatch('trigger-success'); 
+                }
+            } else {
+                $this->dispatch('triggerError'); 
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('ittickets')->error('Failed to update IT Ticket: ' . $e->getMessage());
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+        }
 
-        $it_ticket_data->status = $this->status;
-        // $this->js("alert('Leave Request Updated!')"); 
-
-        $this->dispatch('triggerNotification');
-
-        $it_ticket_data->update();
-
-        return redirect()->to(route('ApproveItHelpDeskTable'));
+        return redirect()->to(route('ItDashboard'));
     }
 
     public function render()
     {
-        return view('livewire.my-approvals.it-tickets.approve-it-tickets-form')->extends('components.layouts.app');
+        return view('livewire.my-approvals.it-tickets.approve-it-tickets-form')->extends('components.layouts.it-navbar');
     }
    
 }
