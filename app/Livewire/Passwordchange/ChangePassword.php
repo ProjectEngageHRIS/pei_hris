@@ -5,6 +5,7 @@ namespace App\Livewire\Passwordchange;
 use App\Models\User;
 use Livewire\Component;
 use App\Mail\PasswordChanged;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -25,7 +26,7 @@ class ChangePassword extends Component
     ];
 
     public function changePassword()
-    {
+    {   
         $this->validate([
             'password' => [
                 'required',
@@ -39,19 +40,32 @@ class ChangePassword extends Component
             ],
         ]);
 
+
         $user = auth()->user();
 
-        if (Hash::check($this->old_password, $user->password)) {
-            $user->password = Hash::make($this->password);
-            $user->save();
+        try {
+            if (Hash::check($this->old_password, $user->password)) {
+                $user->password = Hash::make($this->password);
+                $user->save();
+    
+                // Send email notification
+                Mail::to($user->email)->send(new PasswordChanged($user));
+    
+                $this->dispatch('trigger-success');
+    
+                // session()->flash('message', 'Password changed successfully! Check your email for confirmation.');
+                Log::channel('employee_change_password')->error('Successfully Updated  Password: ' . ' | ' . $user->employee_id);
 
-            // Send email notification
-            Mail::to($user->email)->send(new PasswordChanged($user));
+                return redirect()->to('/employee');
+            } else {
+                $this->addError('old_password', 'The current password is incorrect.');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('employee_change_password')->error('Failed to update Password: ' . $e->getMessage() . ' | ' . $user->employee_id);
 
-            session()->flash('message', 'Password changed successfully! Check your email for confirmation.');
-            return redirect()->to('/employee');
-        } else {
-            $this->addError('old_password', 'The current password is incorrect.');
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
         }
     }
 

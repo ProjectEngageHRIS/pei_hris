@@ -192,6 +192,11 @@ return [
             'path' => storage_path('logs/admin/it-change-password.log'),
             'level' => 'error',
         ],
+        'employee_change_password' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/employee/employee-change-password..log'),
+            'level' => 'error',
+        ],
     ],
 
 ];

@@ -50,22 +50,49 @@
                     });
                 </script>
             </div>
-            <div >
-                <ul class="mt-8 ml-3 list-disc text-xs text-gray-600"> <!-- Adjusted mt-6 to mt-4 -->
-                    <li>At least 8 characters long</li>
-                    <li>At least one uppercase letter (A-Z)</li>
-                    <li>At least one lowercase letter (a-z)</li>
-                    <li>At least one number (0-9)</li>
-                    <li>At least one special character (e.g., !, @, #, $)</li>
-                </ul>
+            <div x-data="{
+                password: @entangle('password'),
+                length: false,
+                uppercase: false,
+                lowercase: false,
+                number: false,
+                special: false,
+                checkPassword() {
+                    this.length = this.password.length >= 8;
+                    this.uppercase = /[A-Z]/.test(this.password);
+                    this.lowercase = /[a-z]/.test(this.password);
+                    this.number = /[0-9]/.test(this.password);
+                    this.special = /[!@#$%^&*(),.?\&quot;\:{}|<>]/.test(this.password);
+                }
+            }"
+            x-init="() => $watch('password', () => checkPassword())">
+        
+            <div class="mt-4">
+                <label for="password" class="block text-sm font-medium leading-5 mb-2 text-gray-700">
+                    New Password <span style="color:#AC0C2E">*</span>
+                </label>
+                <input  x-model="password" type="password" id="password" required 
+                       class="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:border-red-500 focus:ring-customRed sm:text-sm sm:leading-5 custom-border" />
             </div>
-            <div class="mt-4"> <!-- Adjusted mt-6 to mt-4 -->
-                <label for="password" class="block text-sm font-medium leading-5 text-gray-700">New Password <span style="color:#AC0C2E">*</span></label>
-                <input wire:model="password" type="password" id="password" required class="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:border-red-500 focus:ring-customRed sm:text-sm sm:leading-5 custom-border @error('password') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
-                @error('password')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
-            </div>
+        
+            <ul class="mt-4 ml-3 list-disc text-xs text-gray-600">
+                <li :class="{'text-green-500': length}">
+                    <span x-show="length">✔</span> At least 8 characters long
+                </li>
+                <li :class="{'text-green-500': uppercase}">
+                    <span x-show="uppercase">✔</span> At least one uppercase letter (A-Z)
+                </li>
+                <li :class="{'text-green-500': lowercase}">
+                    <span x-show="lowercase">✔</span> At least one lowercase letter (a-z)
+                </li>
+                <li :class="{'text-green-500': number}">
+                    <span x-show="number">✔</span> At least one number (0-9)
+                </li>
+                <li :class="{'text-green-500': special}">
+                    <span x-show="special">✔</span> At least one special character (e.g., !, @, #, $)
+                </li>
+            </ul>
+        </div>
 
             <div class="mt-4"> <!-- Adjusted mt-6 to mt-4 -->
                 <label for="password_confirmation" class="block text-sm font-medium leading-5 text-gray-700">Confirm New Password <span style="color:#AC0C2E">*</span></label>
