@@ -187,6 +187,11 @@ return [
             'path' => storage_path('logs/mytasks/tasks.log'),
             'level' => 'error',
         ],
+        'it_change_password' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/admin/it-change-password.log'),
+            'level' => 'error',
+        ],
     ],
 
 ];

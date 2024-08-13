@@ -37,7 +37,7 @@ class LoginDashboard extends Component
             $this->is_president = True;
             // return redirect()->to(route('EmployeeDashboard'));
         }
-        if(in_array($role_id, ['0'])){
+        if(in_array($role_id, [61024])){
             $this->is_superadmin = True;
         }
         // return redirect()->to(route('LoginDashboard'));

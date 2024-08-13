@@ -24,6 +24,7 @@ use App\Livewire\Payroll\PayrollTable;
 use App\Livewire\Mytasks\MyTasksUpdate;
 use App\Http\Controllers\IpcrController;
 use App\Http\Controllers\OpcrController;
+use App\Livewire\Admin\ItChangePassword;
 use App\Livewire\Auth\Passwords\Confirm;
 use App\Livewire\Trainings\TrainingForm;
 use App\Livewire\Trainings\TrainingView;
@@ -70,8 +71,8 @@ use App\Livewire\Leaverequest\LeaveRequestTable;
 use App\Livewire\Trainings\TrainingPostTestForm;
 use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
-use App\Livewire\Leaverequest\LeaveRequestUpdate;
 
+use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
 use App\Livewire\Dashboard\AccountingDashboardView;
@@ -81,16 +82,16 @@ use App\Livewire\Changeschedule\ChangeScheduleTable;
 use App\Livewire\Payroll\Accounting\AddPayrollTable;
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
-use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
-use App\Livewire\Requestdocuments\RequestDocumentTable;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
@@ -506,3 +507,6 @@ Route::middleware(['auth', ])->group(function (){
 
 });
 
+Route::middleware(('auth'))->group(function () {
+    Route::get("/itchangepassword", ItChangePassword::class)->name('ItChangePassword');
+});

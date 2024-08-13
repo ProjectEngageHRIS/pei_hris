@@ -33,11 +33,11 @@ class ItDashboardView extends Component
     public $currentFormId;
 
     public $itTicketTypes = [
-        'Completed' => null,
-        'Ongoing' => null,
-        'Report' => null,
-        'Unassigned' => null,
-        'Cancelled' => null,
+        'Completed' => 0,
+        'Ongoing' => 0,
+        'Report' => 0,
+        'Unassigned' => 0,
+        'Cancelled' => 0,
     ];
 
     public $employeeTypesFilter = [

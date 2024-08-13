@@ -9,8 +9,8 @@
                         @php
                             $employee_image = $this->getImage();
                         @endphp
-                            <img class="w-20 h-20 border-4 border-white rounded-full " src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="user photo">
-                        @else
+                        <img class="w-20 h-20 border-4 border-white rounded-full " src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="user photo">
+                    @else
                             <img class="w-20 h-20 border-4 border-white rounded-full "src="{{ asset( 'assets/defaultuser.png') }}" alt="user photo">
                     @endif
                     {{-- <img class="w-20 h-20 border-4 border-white rounded-full" src="{{asset('assets/header.png')}}" alt="Profile Icon"> --}}

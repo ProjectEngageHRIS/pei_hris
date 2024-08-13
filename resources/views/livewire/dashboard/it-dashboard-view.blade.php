@@ -3,23 +3,23 @@
     <div class="flex flex-row justify-between space-x-4">
         <div class="flex-1 p-4 bg-white h-[150px] rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Completed Tickets</p>
-            <p class="text-[60px] font-semibold text-right text-customGreen">{{$itTicketTypes['Completed']}}</p>
+            <p class="text-[60px] font-semibold text-right text-customGreen">{{$itTicketTypes['Completed'] ?? 0}}</p>
         </div>
         <div class="flex-1 p-4 bg-white rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Ongoing Tickets</p>
-            <p class="text-[60px] font-semibold text-right text-yellow-500">{{$itTicketTypes['Ongoing']}}</p>
+            <p class="text-[60px] font-semibold text-right text-yellow-500">{{$itTicketTypes['Ongoing'] ?? 0}}</p>
         </div>
         <div class="flex-1 p-4 bg-white rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Unassigned Tickets</p>
-            <p class="text-[60px] font-semibold text-right text-customGray1">{{$itTicketTypes['Unassigned']}}</p>
+            <p class="text-[60px] font-semibold text-right text-customGray1">{{$itTicketTypes['Unassigned'] ?? 0}}</p>
         </div>
         <div class="flex-1 p-4 bg-white rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Reported Tickets</p>
-            <p class="text-[60px] font-semibold text-right text-blue-500">{{$itTicketTypes['Report']}}</p>
+            <p class="text-[60px] font-semibold text-right text-blue-500">{{$itTicketTypes['Report'] ?? 0}}</p>
         </div>
         <div class="flex-1 p-4 bg-white rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Cancelled Tickets</p>
-            <p class="text-[60px] font-semibold text-right text-customRed">{{$itTicketTypes['Cancelled']}}</p>
+            <p class="text-[60px] font-semibold text-right text-customRed">{{$itTicketTypes['Cancelled'] ?? 0}}</p>
         </div>
     </div>
     <!-- Employee Table -->
@@ -456,7 +456,7 @@
 
                         @if ($ItTicketData->isEmpty())
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
-                                    <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
+                                    <th scope="col" colspan="10" class="justify-center" style="padding-bottom: 40px"> 
                                         <div class="flex justify-center " style="padding-top: 40px">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />

@@ -57,7 +57,6 @@ class Login extends Component
 
         // Check if the credentials are valid
         // $credentials = ['employee_id' => $this->email, 'password' => $this->password];
-        
         if (Auth::attempt(['employee_id' => $this->email, 'password' => $this->password], $this->remember)) {
             // For example, you might want to check for a valid device GUID here
             // $cookieName = 'device_guid_' . $this->email;
@@ -78,7 +77,12 @@ class Login extends Component
             //     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
             //     return redirect()->to($url);
             // }
+            $loggedInUser = auth()->user()->role_id;
 
+            if ($loggedInUser == 1) {
+                return redirect()->route('EmployeeDashboard');
+            }
+            return redirect()->route('LoginDashboard');
             
         } else {
             // Invalid credentials
@@ -166,13 +170,7 @@ class Login extends Component
 
         // Check if the device is registered and valid
 
-        $loggedInUser = auth()->user()->role_id;
-        
 
-        if ($loggedInUser == 1) {
-            return redirect()->route('EmployeeDashboard');
-        }
-        return redirect()->route('LoginDashboard');
         // }
     
 
