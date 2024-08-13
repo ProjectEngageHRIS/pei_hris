@@ -17,7 +17,7 @@
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                 @enderror
             </div>
-            <div x-data="{
+        <div x-data="{
                 password: @entangle('password'),
                 showPassword: false,
                 length: false,
@@ -49,7 +49,7 @@
                     <button
                         type="button"
                         @click="showPassword = !showPassword"
-                        class="absolute inset-y-0 right-0 px-3 flex mt-6 items-center text-gray-500"
+                        class="absolute inset-y-0 right-0 px-3 flex mt-7 items-center text-gray-500"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"                             
                             x-show="!showPassword"
@@ -83,6 +83,11 @@
                         -webkit-user-select: none; /* Chrome, Safari, and Opera */
                         -moz-user-select: none; /* Firefox */
                         -ms-user-select: none; /* Internet Explorer/Edge */
+                    }
+
+                    input::-ms-reveal,
+                    input::-ms-clear {
+                        display: none;
                     }
                 </style>
             
@@ -159,7 +164,7 @@
                         </button>
                     </div>
                 </div>
-            </div>
+        </div>
             <button type="submit" style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md active:bg-indigo-700">
                 Change Password
             </button>

@@ -36,6 +36,7 @@ class ItChangePassword extends Component
         'email' => 'required|email',
         'old_password' => 'required|string',
         'password' => 'required|string|min:8|confirmed',
+        'selectedEmployee' => 'required|regex:/^[A-Za-z\s]+ \| SLE[A-Z]?\d{4}$/',   
     ];
     
 
@@ -60,6 +61,7 @@ class ItChangePassword extends Component
             if(Auth::check() && $user->role_id == 61024 && $user->employee_id == "SLEA9999"){
                 $parts = explode(' | ', $this->selectedEmployee);
                 $employee_id = trim($parts[1]);
+                // $this->validate(['employeeId' => 'required|regex:/^SLE[A-Z]?\d{4}$/']);
                 $target_employee = User::where('employee_id', $employee_id)->first();
                 $target_employee->password = Hash::make($this->password);
                 $target_employee->save();
