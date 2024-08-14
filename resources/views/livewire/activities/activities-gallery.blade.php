@@ -23,12 +23,12 @@
    
 
     {{-- @if ($is_head == 1) --}}
-    <div class="flex justify-end" x-data="{openAddForm: false}" x-ref="addForm" @close-modal-add.window="openAddForm = false;">
+    <div class="flex justify-end n" x-data="{openAddForm: false}" x-ref="addForm" @close-modal-add.window="openAddForm = false;">
         <button type="button" @click="openAddForm = true" class="text-white mb-8 transition-transform duration-300 hover:scale-105 bg-customRed font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Create Activity</button>
-        <div x-cloak x-show="openAddForm"  class="fixed inset-0 z-50 flex items-center justify-center">
+        <div x-cloak x-show="openAddForm"  class="fixed inset-0 z-50 flex items-center justify-center " >
             <div class="fixed inset-0 bg-black opacity-50"></div>
-            <div tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-4xl max-h-full p-4 bg-white rounded-lg shadow-lg">
-                <div class="relative w-full max-w-4xl max-h-full p-4">
+            <div tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-4xl max-h-full p-4 overflow-y-scroll bg-white   rounded-lg shadow-lg">
+                <div class="relative w-full max-w-4xl max-h-2xl p-4">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow ">
                         <!-- Modal header -->

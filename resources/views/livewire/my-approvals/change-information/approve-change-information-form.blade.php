@@ -328,6 +328,8 @@
                     Submit Change Information
             </button> --}}
 
+
+
             </form>
         <!-- Change Status Button -->
 
@@ -335,6 +337,9 @@
         <br>
         <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse">
             <button @click="openCrudModal = true" type="button" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"  stroke="currentColor" class="mr-2 size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                </svg>
                 Change Status
             </button>
             <div  x-ref="crudModal"
@@ -366,8 +371,8 @@
                                 <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                     <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                    <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                    <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
+                                    {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Report</option> --}}
+                                    {{-- <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option> --}}
                                     <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
                                 </select>
                             </div>
@@ -447,7 +452,14 @@
             </div>
         </div>
     </section>
-
+    <div wire:loading wire:target="changeStatus" class="load-over z-50">
+        <div wire:loading wire:target="changeStatus" class="loading-overlay z-50">
+            <div class="flex flex-col justify-center items-center">
+                <div class="spinner"></div>
+                <p>Updating...</p>
+            </div>
+        </div>
+    </div>
 
     </div>
 </div>

@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('LeaveRequestTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Leave Request</a>
+            <a href="{{route('ApproveLeaveRequestTable')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Leave Request</a>
             </div>
         </li>
         <li aria-current="page">
@@ -366,7 +366,10 @@
 
                 <!-- Change Status Button -->
                 <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse">
-                    <button @click="openCrudModal = true" type="button" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
+                    <button @click="openCrudModal = true" type="button" class="inline-flex items-center shadow float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"  stroke="currentColor" class="mr-2 size-5">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                        </svg>
                         Change Status
                     </button>
                     <div  x-ref="crudModal"
@@ -375,7 +378,7 @@
                     x-transition:enter="transition ease-out duration-200"
                     x-transition:enter-start="opacity-0"
                     x-transition:enter-end="opacity-100"
-                    x-transition:leave="transition ease-in duration-150"
+                    x-transition:leave="transition ease-in duration-300"
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0">
                     <div class="relative w-full max-w-md p-4">
@@ -478,28 +481,15 @@
                                 </div>
                     </div>
                 </div>
-                
-                {{-- <div id="toast-container-success" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
-                    <div id="toast-success" tabindex="-1" class=" fixed top-4 left-1/2 transform -translate-x-1/2 z-50 flex justify-center items-center w-full max-w-xs p-4 text-gray-500 bg-white rounded-lg shadow dark:text-gray-400 dark:bg-gray-800" role="alert">
-                        <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                            </svg>
-                            <span class="sr-only">Check icon</span>
-                        </div>
-                        <div class="ms-3 text-sm font-normal">Status Updated Successfully.</div>
-                        <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-container-success" aria-label="Close">
-                            <span class="sr-only">Close</span>
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div> --}}
-
-
-                
             </form>
+        </div>
+        <div wire:loading wire:target="changeStatus" class="load-over z-50">
+            <div wire:loading wire:target="changeStatus" class="loading-overlay z-50">
+                <div class="flex flex-col justify-center items-center">
+                    <div class="spinner"></div>
+                    <p>Updating...</p>
+                </div>
+            </div>
         </div>
     </section>
     

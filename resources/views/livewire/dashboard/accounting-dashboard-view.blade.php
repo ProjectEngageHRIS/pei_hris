@@ -642,11 +642,11 @@
                                                     <!-- Backdrop -->
                                                     <div x-show="openPayrollEditModal" class="fixed inset-0 bg-black opacity-50"></div>
                                         
-                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-md max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full  h-auto max-w-md  p-4 bg-white rounded-lg shadow-lg">
                                                         <!-- Modal content -->
                                                         <div class="relative bg-white rounded-lg shadow">
                                                             <!-- Modal header -->
-                                                            <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
+                                                            <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                 <h3 class="text-xl font-semibold text-gray-900">Edit Account Details</h3>
                                                                 <button @click="openPayrollEditModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -656,7 +656,7 @@
                                                                 </button>
                                                             </div>
                                                             <!-- Modal body -->
-                                                            <div class="p-4 xl:p-5">
+                                                            <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto ">
                                                                 <form class="space-y-4" wire:submit.prevent="submit('{{ $employee->employee_id }}')" method="POST">
                                                                     <div>
                                                                         <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
@@ -702,14 +702,14 @@
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                    <div  x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
-                                                        <!-- Backdrop -->
-                                                        <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
-                                                            <!-- Modal content -->
-                                                            <div class="relative bg-white rounded-lg shadow">
+                                                <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
+                                                    <!-- Backdrop -->
+                                                    <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
+                                                    <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative overflow-y-auto overflow-x-hidden  w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
+                                                        <!-- Modal content -->
+                                                        <div class="relative bg-white rounded-lg shadow ">
                                                                 <!-- Modal header -->
-                                                                <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
+                                                                <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -719,7 +719,21 @@
                                                                     </button>
                                                                 </div>
                                                                 <!-- Modal body -->
-                                                                <div class="p-4 xl:p-5">
+                                                                <div 
+                                                                    x-data="{ isScrollable: false }" 
+                                                                    x-init="
+                                                                        let container = $el;
+                                                                        function checkScroll() {
+                                                                            isScrollable = container.scrollHeight > container.clientHeight;
+                                                                        }
+                                                                        checkScroll();
+                                                                        window.addEventListener('resize', checkScroll);
+                                                                        $watch('isScrollable', () => {
+                                                                            checkScroll();
+                                                                        });
+                                                                    "
+                                                                    :class="isScrollable ? 'mb-4' : ''" 
+                                                                    class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
                                                                     <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')" method="POST">
                                                                         @csrf
                                                                         <div class="grid grid-cols-2 gap-4" >
@@ -787,7 +801,7 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
                                                                         
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
@@ -826,14 +840,14 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed overflow-y-auto inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed  inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg max-h-full p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg  p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
-                                                                <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
+                                                                <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -843,7 +857,22 @@
                                                                     </button>
                                                                 </div>
                                                                 <!-- Modal body -->
-                                                                <div class="p-4 xl:p-5" x-data="{openCancelPrompt: false}">
+                                                                <div 
+                                                                x-data="{ isScrollable: false, openCancelPrompt: false }" 
+                                                                x-init="
+                                                                    let container = $el;
+                                                                    function checkScroll() {
+                                                                        isScrollable = container.scrollHeight > container.clientHeight;
+                                                                    }
+                                                                    checkScroll();
+                                                                    window.addEventListener('resize', checkScroll);
+                                                                    $watch('isScrollable', () => {
+                                                                        checkScroll();
+                                                                    });
+                                                                "
+                                                                :class="isScrollable ? 'mb-4' : ''" 
+                                                                class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
+                                                                {{-- <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto"> --}}
                                                                     <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
                                                                         @csrf
 

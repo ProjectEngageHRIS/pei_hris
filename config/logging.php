@@ -164,7 +164,7 @@ return [
         ],
         'changeinforequests' => [
             'driver' => 'single',
-            'path' => storage_path('logs/forms/it_tickets.log'),
+            'path' => storage_path('logs/forms/change_info_request.log'),
             'level' => 'error',
         ],
         'time-in-and-out' => [
@@ -185,6 +185,16 @@ return [
         'tasks' => [
             'driver' => 'single',
             'path' => storage_path('logs/mytasks/tasks.log'),
+            'level' => 'error',
+        ],
+        'it_change_password' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/admin/it-change-password.log'),
+            'level' => 'error',
+        ],
+        'employee_change_password' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/employee/employee-change-password..log'),
             'level' => 'error',
         ],
     ],

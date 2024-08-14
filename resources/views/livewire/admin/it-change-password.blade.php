@@ -11,13 +11,46 @@
         <form wire:submit.prevent="changePassword" class="mt-4"> <!-- Adjusted mt-6 to mt-4 -->
 
             <div class="mt-4 "> <!-- Adjusted mt-6 to mt-4 -->
-                <label for="old_password" class="block text-sm font-medium leading-5 mb-2 text-gray-700">Current Password <span style="color:#AC0C2E">*</span></label>
-                <input wire:model="old_password" type="password" id="old_password" required class="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:border-red-500 focus:ring-customRed sm:text-sm sm:leading-5 custom-border" />
-                @error('old_password')
-                    <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
-                @enderror
+                <div id="targetContainer" wire:ignore class="mb-4">
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Target Employee<span class="text-red-600">*</span></label>
+                    <select style="width:100%; height:100% background:gray;" class="js-example-basic mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
+                        <option value="N/A">Select an Employee</option>
+                        @foreach($employeeNames as $name)
+                           <option value="{{$name}}">{{$name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                @error('selectedEmployee')
+                <div class="text-sm transition transform alert alert-danger"
+                        x-data x-init="document.getElementById('targetContainer').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('targetContainer').focus();" >
+                            <span class="text-xs text-red-500" > {{$message}}</span>
+                    </div>
+                 @enderror
+                
+                <script>
+                    $(document).ready(function() {
+                        $('.js-example-basic').select2({
+                            placeholder: 'Select an option',
+                            closeOnSelect: true,  // Automatically closes dropdown after selection
+                        }).on('select2:open', function() {
+                            // Apply Tailwind CSS classes to the Select2 dropdown
+                            $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ');
+                            $('.select2-results__options').addClass('p-2 ');
+                        }).on('change', function() {
+                            let data = $(this).val();
+                            console.log(data);
+                            @this.selectedEmployee = data;
+                        });
+                        $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2');
+                
+                        // Toggle modal visibility when form submission is completed
+                        Livewire.on('formSubmitted', () => {
+                            $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
+                        });
+                    });
+                </script>
             </div>
-        <div x-data="{
+            <div x-data="{
                 password: @entangle('password'),
                 showPassword: false,
                 length: false,
@@ -84,38 +117,13 @@
                         -moz-user-select: none; /* Firefox */
                         -ms-user-select: none; /* Internet Explorer/Edge */
                     }
-
                     input::-ms-reveal,
                     input::-ms-clear {
                         display: none;
                     }
                 </style>
             
-                <script>
-                    document.addEventListener('DOMContentLoaded', (event) => {
-                        const inputField = document.getElementById('password');
-            
-                        // Disable copy
-                        inputField.addEventListener('copy', (e) => {
-                            e.preventDefault();
-                        });
-            
-                        // Disable cut
-                        inputField.addEventListener('cut', (e) => {
-                            e.preventDefault();
-                        });
-            
-                        // Disable paste
-                        inputField.addEventListener('paste', (e) => {
-                            e.preventDefault();
-                        });
-            
-                        // Optionally, disable context menu (right-click menu)
-                        inputField.addEventListener('contextmenu', (e) => {
-                            e.preventDefault();
-                        });
-                    });
-                </script>
+
             
                 <ul class="mt-4 ml-3 list-disc text-xs text-gray-600">
                     <li :class="{'text-green-500': length}">
@@ -137,8 +145,8 @@
 
                 <div class="mt-4"> <!-- Adjusted mt-6 to mt-4 -->
                     <div class="relative mt-4">
-                        <label for="password_confirmation" class="block text-sm font-medium leading-5 mb-2 text-gray-700">Confirm New Password <span style="color:#AC0C2E">*</span></label>
-                        <input wire:model="password_confirmation" :type="showPassword ? 'text' : 'password'" id="password_confirmation" required class="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:border-red-500 focus:ring-customRed  sm:text-sm sm:leading-5 custom-border" />
+                        <label for="confirm-password" class="block text-sm font-medium leading-5 mb-2 text-gray-700">Confirm New Password <span style="color:#AC0C2E">*</span></label>
+                        <input wire:model="password_confirmation" :type="showPassword ? 'text' : 'password'" id="confirm-password" required class="block w-full px-3 py-2 placeholder-gray-400 transition duration-150 ease-in-out border border-gray-300 rounded-md appearance-none focus:outline-none focus:border-red-500 focus:ring-customRed  sm:text-sm sm:leading-5 custom-border" />
                         <button
                             type="button"
                             @click="showPassword = !showPassword"
@@ -165,6 +173,7 @@
                     </div>
                 </div>
         </div>
+
             <button type="submit" style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md active:bg-indigo-700">
                 Change Password
             </button>
@@ -179,9 +188,10 @@
                 </div>
             </div>
         </div>
+
         <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                 @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Changed Password Successfully';  cancelModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please Contact IT Support'; cancelModal = false; setTimeout(() => showToast = false, 3000)">
+                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong.'; cancelModal = false; setTimeout(() => showToast = false, 3000)">
             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
             <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                 x-show="showToast"
@@ -212,3 +222,25 @@
         </div>
     </div>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const passwordField = document.getElementById('password');
+        const confirmPasswordField = document.getElementById('confirm-password');
+
+        // Disable copy, cut, paste, and context menu for the password field
+        if (passwordField) {
+            passwordField.addEventListener('copy', (e) => e.preventDefault());
+            passwordField.addEventListener('cut', (e) => e.preventDefault());
+            passwordField.addEventListener('paste', (e) => e.preventDefault());
+            passwordField.addEventListener('contextmenu', (e) => e.preventDefault());
+        }
+
+        // Disable copy, cut, paste, and context menu for the confirm password field
+        if (confirmPasswordField) {
+            // confirmPasswordField.addEventListener('copy', (e) => e.preventDefault());
+            confirmPasswordField.addEventListener('cut', (e) => e.preventDefault());
+            confirmPasswordField.addEventListener('paste', (e) => e.preventDefault());
+            confirmPasswordField.addEventListener('contextmenu', (e) => e.preventDefault());
+        }
+    });
+</script>

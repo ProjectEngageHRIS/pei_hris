@@ -33,10 +33,11 @@ class ItDashboardView extends Component
     public $currentFormId;
 
     public $itTicketTypes = [
-        'Completed' => null,
-        'Ongoing' => null,
-        'Unassigned' => null,
-        'Cancelled' => null,
+        'Completed' => 0,
+        'Ongoing' => 0,
+        'Report' => 0,
+        'Unassigned' => 0,
+        'Cancelled' => 0,
     ];
 
     public $employeeTypesFilter = [
@@ -77,6 +78,8 @@ class ItDashboardView extends Component
     public $genderFilter;
 
     public $employeeNames;
+
+    public $report;
 
     public function updatingSearch()
     {
@@ -165,6 +168,7 @@ class ItDashboardView extends Component
         $counts = Ittickets::select(DB::raw('
             SUM(CASE WHEN status = "Completed" THEN 1 ELSE 0 END) AS `Completed`,
             SUM(CASE WHEN status = "Ongoing" THEN 1 ELSE 0 END) AS `Ongoing`,
+            SUM(CASE WHEN status = "Report" THEN 1 ELSE 0 END) AS `Report`,
             SUM(CASE WHEN status = "Unassigned" THEN 1 ELSE 0 END) AS `Unassigned`,
             SUM(CASE WHEN status = "Cancelled" THEN 1 ELSE 0 END) AS `Cancelled`
         '))->first();
@@ -212,29 +216,31 @@ class ItDashboardView extends Component
     }
 
     public function changeStatus(){
+        $loggedInUser = auth()->user();
         try {
             $form = Ittickets::find($this->currentFormId);
             if($form){
-                if(in_array(auth()->user()->role_id, [11])){
+                if(in_array($loggedInUser->role_id, [14, 0])){
                     if($this->status == "Cancelled"){
-                        $dataToUpdate = ['status' => 'Cancelled',
-                            'cancelled_at' => now()];
+                        $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
+                    } else if($this->status == "Report") {
+                        $dataToUpdate = ['status' => 'Report', 'report' => $this->report];                        
                     } else {
                         $dataToUpdate = ['status' => $this->status];
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess', type: "edit"); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
                 }
             } else {
-                $this->dispatch('triggerError'); 
+                throw new \Exception('No Record Found');
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('ittickets')->error('Failed to update ItTicket: ' . $e->getMessage());
+            Log::channel('ittickets')->error('Failed to update ItTicket: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
-
         }
-
     }
 }

@@ -34,11 +34,14 @@
         </div> --}}
 
 
-        <div class="flex justify-end">
-            <button type="button" onclick="location.href='{{ route('HrTicketsForm', ['type' => $type]) }}'"  class="text-white bg-customRed mb-8 hover:text-white hover:bg-red-600 shadow font-medium rounded-lg text-sm px-5 py-2.5 me-2 ">Apply for HR Ticket</button>
+        <div class="flex flex-row-reverse self-end mb-4">
+            <button type="button" onclick="location.href='{{ route('HrTicketsForm', ['type' => $type]) }}'" class="text-nowrap border-2 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium rounded-lg text-sm px-5 py-2.5">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="inline-block w-4 h-4 mr-2 align-middle">
+                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
+                </svg>
+                Submit HR Ticket
+            </button>
         </div>
-
-
 
         <div class="w-full pb-4 overflow-x-auto bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -52,7 +55,7 @@
                     <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
-                </button>
+                    </button>
 
                     <!-- Dropdown menu -->
                     <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
