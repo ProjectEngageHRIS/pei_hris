@@ -333,7 +333,7 @@ public $govt_professional_exam_taken=[];
             $add_employee->religion = $this->religion;
             $add_employee->age = $this->age;
             $add_employee->start_of_employment =$sanitized_start_of_employment;
-            $add_employee->active = $this->active;
+            // $add_employee->active = $this->active;
             $add_employee->govt_professional_exam_taken = json_encode($this->govt_professional_exam_taken);
 
             $add_employee->personal_email = $this->personal_email;
@@ -441,7 +441,7 @@ public $govt_professional_exam_taken=[];
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);
         $this->js("alert('Employee Created!')");
         $this->showConfirmation = true;
-
+        dd($this->employee_id);
     }
 
 

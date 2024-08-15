@@ -51,7 +51,7 @@ return new class extends Migration
                 $table->string('name_of_mother', 255);
                 $table->string('name_of_father', 255);
                 $table->string('spouse', 255)->nullable();
-                $table->json('names_of_children')->nullable();
+                $table->longText('names_of_children')->nullable();
                 $table->string('sss_num', 100)->nullable();
                 $table->string('tin_num', 100)->nullable();
                 $table->string('phic_num', 100)->nullable();
@@ -65,7 +65,7 @@ return new class extends Migration
                 $table->decimal('vacation_credits')->nullable();
                 $table->decimal('sick_credits')->nullable();
                 $table->string('payroll_status', 50)->nullable();
-                $table->boolean('active');
+                $table->boolean('active')->default(1);
 
 
                 $table->string('personal_email', 100)->nullable();
