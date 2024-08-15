@@ -1,0 +1,32 @@
+[2024-08-05 15:09:59] local.ERROR: Failed to update ItTicket: test  
+[2024-08-05 15:10:10] local.ERROR: Failed to update ItTicket: test  
+[2024-08-05 15:11:08] local.ERROR: Failed to update ItTicket: test  
+[2024-08-05 15:11:18] local.ERROR: Failed to update ItTicket: test  
+[2024-08-05 15:12:23] local.ERROR: Failed to update ItTicket: test  
+[2024-08-05 16:22:55] local.ERROR: Failed to update ItTicket: Undefined array key 1  
+[2024-08-05 16:23:14] local.ERROR: Failed to update ItTicket: Undefined array key 1  
+[2024-08-05 16:24:08] local.ERROR: Failed to update ItTicket: Undefined array key 1  
+[2024-08-05 16:24:47] local.ERROR: Failed to update ItTicket: The Concern Information field must be at least 10 characters.  
+[2024-08-05 16:29:48] local.ERROR: Failed to update ItTicket: test  
+[2024-08-05 16:33:03] local.ERROR: Failed to update ItTicket: The Concern Information field must be at least 10 characters. (and 1 more error)  
+[2024-08-05 16:49:48] local.ERROR: Failed to save Hrticket: test  
+[2024-08-05 17:00:42] local.ERROR: Failed to submit Change Information Request: test  
+[2024-08-06 10:00:07] local.ERROR: Failed to update Change Information: Add [status] to fillable property to allow mass assignment on [App\Models\ChangeInformation].  
+[2024-08-06 14:00:09] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:00:16] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:00:25] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:01:03] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:04:06] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:05:47] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:06:08] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:06:15] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:06:59] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:09:13] local.ERROR: Failed to update Change Request: test  
+[2024-08-06 14:10:02] local.ERROR: Failed to update Change Request: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'status' cannot be null (Connection: mysql, SQL: update `change_information` set `Status` = ?, `change_information`.`updated_at` = 2024-08-06 14:10:02 where `uuid` = 9ba30a5e-2fb7-4a40-96ad-0a3001732962)  
+[2024-08-12 17:11:12] local.ERROR: Failed to update ItTicket: Unauthorized Access | SLE0002  
+[2024-08-12 17:15:54] local.ERROR: Failed to update ItTicket: Unauthorized Access | SLE0002  
+[2024-08-12 17:17:30] local.ERROR: Failed to update IT Ticket: Unauthorized Access | SLE0002  
+[2024-08-12 17:18:02] local.ERROR: Failed to update IT Ticket: Unauthorized Access | SLE0002  
+[2024-08-12 17:18:26] local.ERROR: Failed to update IT Ticket: Unauthorized Access | SLE0002  
+[2024-08-12 17:18:59] local.ERROR: Failed to update IT Ticket: Unauthorized Access | SLE0002  
+[2024-08-15 16:00:25] local.ERROR: Failed to view IT Ticket: No Record Found | SLEA9999  

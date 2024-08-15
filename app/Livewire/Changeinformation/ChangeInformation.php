@@ -64,6 +64,9 @@ class ChangeInformation extends Component
     public function mount(){
         $employee_id = auth()->user()->employee_id;
         $employee = Employee::where('employee_id', $employee_id)->first();
+        if($employee->employee_id != $employee_id){
+            return redirect()->to(route('EmployeeDashboard'));
+        }
 
         $this->first_name = $employee->first_name;
         $this->middle_name = $employee->middle_name;

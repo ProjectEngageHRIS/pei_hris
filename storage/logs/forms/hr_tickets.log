@@ -1,0 +1,46 @@
+[2024-08-01 16:26:07] local.ERROR: Failed to update Hrticket: Simulated error for testing logging.  
+[2024-08-01 16:26:16] local.ERROR: Failed to update Hrticket: Simulated error for testing logging.  
+[2024-08-02 13:58:52] local.ERROR: Failed to update Hrticket: Testing.  
+[2024-08-02 14:33:44] local.ERROR: Failed to save Hrticket: Testing  
+[2024-08-02 14:35:12] local.ERROR: Failed to save Hrticket: Testing  
+[2024-08-02 14:41:42] local.ERROR: Failed to update Hrticket: Simulated error for testing logging.  
+[2024-08-02 14:42:36] local.ERROR: Failed to update Hrticket: Missing required parameter for [Route: HrTicketsView] [URI: hrtickets/view/{index}] [Missing parameter: index].  
+[2024-08-02 14:44:20] local.ERROR: Failed to update Hrticket: Missing required parameter for [Route: HrTicketsView] [URI: hrtickets/view/{index}] [Missing parameter: index].  
+[2024-08-02 14:44:40] local.ERROR: Failed to update Hrticket: Missing required parameter for [Route: HrTicketsView] [URI: hrtickets/view/{index}] [Missing parameter: index].  
+[2024-08-02 14:46:19] local.ERROR: Failed to save Hrticket: test  
+[2024-08-02 14:47:14] local.ERROR: Failed to update Hrticket: test  
+[2024-08-02 14:48:21] local.ERROR: Failed to update Hrticket: test  
+[2024-08-02 14:48:39] local.ERROR: Failed to update Hrticket: test  
+[2024-08-02 14:49:37] local.ERROR: Failed to update Hrticket: test  
+[2024-08-02 14:51:40] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:52:34] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:52:38] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:52:44] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:53:38] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:53:44] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:55:05] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:55:19] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:57:20] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:58:11] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:58:58] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 14:59:11] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:00:24] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:01:29] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:02:00] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:02:57] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:03:15] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:03:31] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:04:38] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:05:46] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 15:06:08] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 16:49:15] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-02 17:42:00] local.ERROR: Failed to update Hrticket: Missing required parameter for [Route: HrTicketsView] [URI: hrtickets/view/{index}] [Missing parameter: index].  
+[2024-08-02 17:43:37] local.ERROR: Failed to update Hrticket: Property [$hr_ticket] not found on component: [leaverequest.leave-request-view]  
+[2024-08-02 17:45:12] local.ERROR: Failed to update Hrticket: Property [$currentFormId] not found on component: [leaverequest.leave-request-view]  
+[2024-08-02 17:46:09] local.ERROR: Failed to cancel Leave Request: Property [$currentFormId] not found on component: [leaverequest.leave-request-view]  
+[2024-08-02 17:56:31] local.ERROR: Failed to save Hrticket: test  
+[2024-08-05 17:08:06] local.ERROR: Failed to save Hrticket: test  
+[2024-08-06 09:29:10] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-06 14:01:37] local.ERROR: Failed to update Hrticket: testing  
+[2024-08-12 16:46:14] local.ERROR: Failed to update HR Ticket: Unauthorized Access | SLE0002  
+[2024-08-15 15:57:11] local.ERROR: Failed to view Hrticket: No Record Found | SLEA9999  

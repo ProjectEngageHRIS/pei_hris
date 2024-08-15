@@ -75,7 +75,6 @@ class LeaveRequestView extends Component
 
         try {
             $leaverequest = $this->editLeaveRequest($index);
-            // $this->authorize('update', [$leaverequest]);
             if (is_null($leaverequest)) {
                 return redirect()->to(route('LeaveRequestTable'));
             }
@@ -84,8 +83,6 @@ class LeaveRequestView extends Component
             return redirect()->to(route('LeaveRequestTable'));
             abort(404);
         }
-
-        
 
         $this->index = $index;
         
@@ -126,14 +123,21 @@ class LeaveRequestView extends Component
     }
     
     public function editLeaveRequest($index){
-        // $leaverequest =  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $leaverequest =  Leaverequest::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
-        if(!$leaverequest || $leaverequest->employee_id != $loggedInUser){
-            return ;
+        try {
+            $leaverequest =  Leaverequest::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
+            if(!$leaverequest){
+                throw new \Exception('No Record Found');
+            }
+            if($leaverequest->employee_id != $loggedInUser){
+                throw new \Exception('Unauthorized Access');
+            }
+            return $leaverequest;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('leaverequests')->error('Failed to view Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            redirect()->to(route('LeaveRequestTable'));
         }
-
-        return $leaverequest;
     }
 
     public function cancelRequest(){

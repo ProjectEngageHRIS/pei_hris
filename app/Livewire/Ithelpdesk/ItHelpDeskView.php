@@ -5,6 +5,7 @@ namespace App\Livewire\Ithelpdesk;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ItHelpDeskView extends Component
@@ -57,12 +58,20 @@ class ItHelpDeskView extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
-        $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
-        
-        if(!$it_ticket|| $it_ticket->employee_id != $loggedInUser){
-            return ;
+        try {
+            $it_ticket =  Ittickets::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
+            if(!$it_ticket){
+                throw new \Exception('No Record Found');
+            }
+            if($it_ticket->employee_id != $loggedInUser){
+                throw new \Exception('Unauthorized Access');
+            }
+            return $it_ticket;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('ittickets')->error('Failed to view IT Ticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            redirect()->to(route('ItHelpDeskTable'));
         }
-        return $it_ticket ;
     }
 
     public function render()
