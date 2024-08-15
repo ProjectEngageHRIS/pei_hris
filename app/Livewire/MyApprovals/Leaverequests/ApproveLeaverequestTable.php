@@ -82,19 +82,22 @@ class ApproveLeaverequestTable extends Component
         $this->resetPage();
     }
 
-    // public function mount(){
-    //     $loggedInUser = auth()->user()->employee_id;
-    //     $employeeInformation = Employee::where('employee_id', $loggedInUser)
-    //                             ->select('sick_credits', 'vacation_credits')->first();
-
-    //     $this->vacationCredits = $employeeInformation->vacation_credits;
-    //     $this->sickCredits = $employeeInformation->sick_credits;
-    // }
+    public function mount(){
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser->role_id, [4, 6])){
+                throw new \Exception('Unauthorized Access');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrticket')->error('Failed to view Approve Leave Request Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+                return null;
+        }
+    }
 
     public function clearAllFilters(){
         $this->reset(['employeeTypesFilter', 'insideDepartmentTypesFilter', 'departmentTypesFilter', 'genderTypesFilter']);
     }
-
 
     public function render()
     {
@@ -269,7 +272,7 @@ class ApproveLeaverequestTable extends Component
     public function changeStatus(){
         $loggedInUser = auth()->user();
         try {
-            if ($loggedInUser->role_id != 9 && $loggedInUser->role_id != 10) {
+            if ($loggedInUser->role_id != 4 && $loggedInUser->role_id != 6) {
                 throw new \Exception('Unauthorized Access');
             }
             $role = $loggedInUser->role_id;

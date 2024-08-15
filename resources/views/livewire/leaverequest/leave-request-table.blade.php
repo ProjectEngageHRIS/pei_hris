@@ -431,7 +431,7 @@
                         </div>
                     </div>
 
-                    <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
+                    <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                             @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Leave Request Cancelled'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
                             @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
                         <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">

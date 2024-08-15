@@ -13,7 +13,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveHrTicketsForm extends Component
 {
-    
+
     public $employeeRecord;
     public $date;
     public $first_name;
@@ -107,16 +107,18 @@ class ApproveHrTicketsForm extends Component
         try {
             $hrticketdata = $this->editForm($index);
             // $this->authorize('update', [$hrticket]);
+            if(!$hrticketdata){
+                return redirect()->to(route('ApproveHrTicketsTable'));
+            }
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('LeaveRequestTable'));
             abort(404);
         }
 
         $this->index = $index;
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'employee_email', 'employee_id', 'current_position')
                                     ->where('employee_id', $loggedInUser->employee_id)
-                                    ->first(); 
-                          
+                                    ->first();
+
         $this->available_credits = $employeeRecord->vacation_credits + $employeeRecord->sick_credits;
         $this->employee_id = $employeeRecord->employee_id;
         $this->first_name = $employeeRecord->first_name;
@@ -137,7 +139,7 @@ class ApproveHrTicketsForm extends Component
         $this->sub_type_of_request = $hrticketdata->sub_type_of_request;
         $this->concerned_employee = $hrticketdata->concerned_employee;
         $this->status = $hrticketdata->status;
-        
+
         if($hrticketdata->type_of_ticket == "HR Internal"){
             if($hrticketdata->type_of_request == "HR"){
                 if($hrticketdata->sub_type_of_request == "Certificate of Employment" || $hrticketdata->sub_type_of_request == "Request for Consultation" ){
@@ -154,7 +156,7 @@ class ApproveHrTicketsForm extends Component
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;
-                }   
+                }
                 else if($this->sub_type_of_request == "Request for a Meeting"){
                     $this->request_date = $hrticketdata->request_date;
                     $this->purpose = $hrticketdata->purpose ;
@@ -212,7 +214,7 @@ class ApproveHrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Book a Meeting Room"){
                     $this->request_date = $hrticketdata->request_date ;
                     $this->request_requested = $hrticketdata->request_requested;
-                    $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern; 
+                    $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                 }
                 else if($this->sub_type_of_request == "Office Supplies"){
@@ -277,41 +279,103 @@ class ApproveHrTicketsForm extends Component
     }
 
     public function submit(){
+        $loggedInUser = auth()->user();
         try {
-            $hrticketdata = Hrticket::where('uuid', $this->index)->first();
-
-            $hrticketdata->status = $this->status;
-
-            $hrticketdata->update();
-
+            $form = Hrticket::where('form_id', $this->form_id)->first();
+            if($form){
+                if($form->type_of_ticket == "HR Internal"){
+                    if($form->type_of_request == "HR"){
+                        if($loggedInUser->role_id != 11){
+                            throw new \Exception('Unauthorized Access');
+                        }
+                    } else if($form->type_of_request == "Office Admin"){
+                        if($loggedInUser->role_id != 12){
+                            throw new \Exception('Unauthorized Access');
+                        }
+                    } else if($form->type_of_request == "Procurement"){
+                        if($loggedInUser->role_id != 13){
+                            throw new \Exception('Unauthorized Access');
+                        }
+                    }
+                } else if($form->type_of_ticket == "HR Internal Control"){
+                    if($loggedInUser->role_id != 9){
+                        throw new \Exception('Unauthorized Access');
+                    }
+                } else if($form->type_of_ticket == "HR Operations"){
+                    if($loggedInUser->role_id != 10){
+                        throw new \Exception('Unauthorized Access');
+                    }
+                } else {
+                    throw new \Exception('Unknown Ticket Type');
+                }
+                if($this->status == "Cancelled"){
+                    $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
+                } else {
+                    $dataToUpdate = ['status' => $this->status];
+                }
+                $form->update($dataToUpdate);
+                $this->dispatch('trigger-success'); 
+            } else {
+                throw new \Exception('No Record Fond');
+            }
+            dd('test');
             $this->dispatch('trigger-success');
             return redirect()->to(route('ApproveHrTicketsTable'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
-
-            // Optionally, you could redirect the user to an error page or show an error message
-            return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+            return redirect()->to(route('EmployeeDashboard'));
         }
 
     }
 
 
     public function editForm($index){
-        // $hrticket=  Leaverequest::find($this->index);
-        $loggedInUser = auth()->user()->employee_id;
-        $hrticket = Hrticket::where('uuid', $index)->first();
-        
-        if(!$hrticket){
-            return ;
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [10, 11, 12])){
+                throw new \Exception('Unauthorized Access');
+            }
+            $hr_ticket = Hrticket::where('uuid', $index)->first();
+            if (!$hr_ticket) {
+                throw new \Exception('No Record Found');
+            }
+            if($hr_ticket->type_of_ticket == "HR Internal"){
+                if($hr_ticket->type_of_request == "HR"){
+                    if($loggedInUser->role_id != 11){
+                        throw new \Exception('Unauthorized Access');
+                    }
+                } else if($hr_ticket->type_of_request == "Office Admin"){
+                    if($loggedInUser->role_id != 12){
+                        throw new \Exception('Unauthorized Access');
+                    }
+                } else if($hr_ticket->type_of_request == "Procurement"){
+                    if($loggedInUser->role_id != 13){
+                        throw new \Exception('Unauthorized Access');
+                    }
+                }
+            } else if($hr_ticket->type_of_ticket == "HR Internal Control"){
+                if($loggedInUser->role_id != 9){
+                    throw new \Exception('Unauthorized Access');
+                }
+            } else if($hr_ticket->type_of_ticket == "HR Operations"){
+                if($loggedInUser->role_id != 10){
+                    throw new \Exception('Unauthorized Access');
+                }
+            } else {
+                throw new \Exception('Unknown Ticket Type');
+            }
+            return $hr_ticket;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrticket')->error('Failed to view/approve Hrticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return null;
         }
-        // $this->hrticket= $hrticket;
-        return $hrticket;
     }
-    
+
     public function removeImage($item){
         $this->$item = null;
     }
@@ -331,5 +395,5 @@ class ApproveHrTicketsForm extends Component
         return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-form')->layout('components.layouts.hr-navbar');
     }
 
-  
+
 }

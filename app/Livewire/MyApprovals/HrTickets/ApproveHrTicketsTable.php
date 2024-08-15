@@ -109,11 +109,11 @@ class ApproveHrTicketsTable extends Component
         $loggedInUser = auth()->user()->role_id;
         $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
 
-        if($loggedInUser == 6){
+        if(in_array($loggedInUser, [11, 12, 13])){
             $query->where('type_of_ticket', 'HR Internal');
-        } else if($loggedInUser == 7){
+        } else if($loggedInUser == 9){
             $query->where('type_of_ticket', 'Internal Control');
-        } else if($loggedInUser == 8){
+        } else if($loggedInUser == 10){
             $query->where('type_of_ticket', 'HR Operations');
         } else {
             redirect()->to(route('HumanResourceDashboard'));
@@ -206,13 +206,6 @@ class ApproveHrTicketsTable extends Component
             });
         }
 
-
-        // if(strlen($this->search) >= 1){
-        //     $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
-        // } else {
-        //     $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
-        // }
-
         if(strlen($this->search) >= 1){
             $searchTerms = explode(' ', $this->search);
             $results = $query->where(function ($q) use ($searchTerms) {
@@ -229,15 +222,10 @@ class ApproveHrTicketsTable extends Component
             $results = $query->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
         }
 
-        if($loggedInUser == 10){
-            return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
-                'HrTicketData' => $results,
-            ]);
-        } else {
-            return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
-                'HrTicketData' => $results,
-            ])->layout('components.layouts.hr-navbar');
-        }
+
+        return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
+            'HrTicketData' => $results,
+        ])->layout('components.layouts.hr-navbar');
 
     }
 
@@ -279,7 +267,7 @@ class ApproveHrTicketsTable extends Component
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if(in_array($loggedInUser->role_id, [11])){
+                if(in_array($loggedInUser->role_id, [9, 10, 11, 12, 13])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];

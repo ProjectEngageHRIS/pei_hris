@@ -76,23 +76,19 @@ class ApproveLeaverequestForm extends Component
     public function mount($index){
         $loggedInUser = auth()->user();
 
-        // if($loggedInUser->role_id != 9){
-        //     return redirect()->to(route('home'));
-        //     abort(404);
-        // }
-
         try {
             $leaverequest = $this->editLeaveRequest($index);
-            // $this->authorize('update', [$leaverequest]);
+            if (is_null($leaverequest)) {
+                return redirect()->to(route('ApproveLeaveRequestTable'));
+            }
         } catch (AuthorizationException $e) {
-            return redirect()->to(route('ApproveLeaveRequestTable'));
             abort(404);
         }
 
         $this->index = $index;
         
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position',)
-                                    ->where('employee_id', $loggedInUser->employee_id)
+                                    ->where('employee_id', $leaverequest->employee_id)
                                     ->first();   
 
         // $departmentName = DB::table('departments')->where('department_id', $employeeRecord->department_id)->value('department_name');
@@ -132,17 +128,30 @@ class ApproveLeaverequestForm extends Component
     }
 
     public function editLeaveRequest($index){
-        // $leaverequest =  Leaverequest::find($this->index);
-        $loggedInUser = auth()->user()->employee_id;
-        $leaverequest =  Leaverequest::where('uuid', $index)->first();
-        
-        if(!$leaverequest){
-            return False;
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [4, 6])){
+                throw new \Exception('Unauthorized Access');
+            }
+            $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
+            $leaverequest = Leaverequest::where('uuid', $index)->where('supervisor_email', $loggedInEmail)->first();
+            if (!$leaverequest) {
+                throw new \Exception('No Record Found');
+            }
+            if ($leaverequest->supervisor_email != $loggedInEmail) {
+                throw new \Exception('Unauthorized Access');
+            }
+            return $leaverequest;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('leaverequests')->error('Failed to View/Approve Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
+            return null;
+            
+            // Return the redirect to halt further execution
+            // redirect()->to(route('ApproveLeaveRequestTable'));
         }
-        // $this->leaverequest = $leaverequest;
-        return $leaverequest;
     }
-
+    
 
 
     public function changeStatus()

@@ -291,32 +291,6 @@ class HrTicketsView extends Component
         }
     }
 
-    // public function submit(){
-    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
-
-    //     $hrticketdata->status = $this->status;
-    //     // $this->js("alert('HR Ticket Status Updated!')"); 
-    //     $this->dispatch('triggerNotification');
-
-    //     $hrticketdata->update();
-
-    //     return redirect()->to(route('ApproveHrTicketsTable'));
-
-    // }
-
-    // public function decline(){
-    //     $hrticketdata = Hrticket::where('form_id', $this->index)->first();
-
-    //     $hrticketdata->status = "Declined";
-    //     $this->js("alert('HR Ticket Declined!')"); 
-
-    //     $hrticketdata->update();
-
-    //     return redirect()->to(route('ApproveHrTicketsTable'));
-
-    // }
-
-
     public function editForm($index){
         $loggedInUser = auth()->user()->employee_id;
         try {
@@ -331,7 +305,7 @@ class HrTicketsView extends Component
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('hrticket')->error('Failed to view Hrticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
-            redirect()->to(route('HrTicketsTable'));
+            return null;
         }
     }
 
