@@ -604,11 +604,11 @@
 
         <button type="button" id="nextBtn" class="justify-self-end col-start-2 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium text-sm px-5 py-2.5 rounded-lg" onclick="changeStep(1)">Next</button>
 
-        <div x-data="{ openConfirmation: @entangle('showConfirmation') }">
+{{-- <div x-data="{ openConfirmation: @entangle('showConfirmation') }"> --}}
         <button wire:click="submit()" type="submit" id="createBtn" class="justify-self-end col-start-3 col-span-1 text-white hover:bg-red-600 hover:text-white bg-customRed font-medium text-sm px-5 py-2.5 rounded-lg">Create Account</button>
 
     <!-- Confirmation Modal -->
-    <div x-show="openConfirmation" x-ref="confirmModal" tabindex="-1" class="fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50"
+    {{-- <div x-show="openConfirmation" x-ref="confirmModal" tabindex="-1" class="fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50"
         x-transition:enter="transition ease-out duration-300"
         x-transition:enter-start="opacity-0"
         x-transition:enter-end="opacity-100"
@@ -636,7 +636,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
         @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Change Request Updated'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
@@ -669,7 +669,7 @@
             </div>
         </div>
     </div>
-</div>
+{{-- </div> --}}
 
     </div>
     <script>
