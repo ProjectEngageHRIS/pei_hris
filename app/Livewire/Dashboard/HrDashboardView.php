@@ -441,7 +441,6 @@ public $govt_professional_exam_taken=[];
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);
         $this->js("alert('Employee Created!')");
         $this->showConfirmation = true;
-        dd($this->employee_id);
     }
 
 
