@@ -91,7 +91,7 @@ class ApproveLeaverequestTable extends Component
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('hrticket')->error('Failed to view Approve Leave Request Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
-                return null;
+            return redirect()->to(route('EmployeeDashboard'));
         }
     }
 
