@@ -82,8 +82,8 @@ class DashboardView extends Component
 
         // $this->role_id = auth()->user()->role_id;
 
-
-        $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+        $employee_id = auth()->user()->employee_id;
+        $time = Dailytimerecord::where('employee_id', $employee_id)->where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
 
         $this->timeInFlag = false;
         $this->timeOutFlag = true;
@@ -277,7 +277,9 @@ class DashboardView extends Component
     {
 
         try {
-            $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+            $employee_id = auth()->user()->employee_id;
+            $time = Dailytimerecord::where('employee_id', $employee_id)->where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+            // $time = Dailytimerecord::where('emwhere('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
             $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
             $currentTime = Carbon::now();
     
@@ -336,16 +338,11 @@ class DashboardView extends Component
             if($time->type == null){
                 // dd($time->time_out != null);
                 if($time->time_out == null){
-
                         $loggedInUser = auth()->user()->employee_id;
                         $dtr = $time;
                         $dtr->employee_id = $loggedInUser;
-                
                         $dtr->attendance_date = Carbon::today()->toDateString();
                         $dtr->time_out = Carbon::now()->toDateTimeString();
-                        $dtr->time_in = "2024-07-21 7:59:59";
-                        $dtr->time_out = "2024-07-21  9:59:59";
-
                         $timeIn = Carbon::parse($dtr->time_in);
                         $timeOut = Carbon::parse($dtr->time_out);
                         $differenceInSeconds = $timeIn->diffInSeconds($timeOut);
@@ -505,7 +502,7 @@ class DashboardView extends Component
             $this->timeIn = null;
             $this->timeOut = null;
             $this->currentTimeIn = '00:00:00';
-            $this->timeOutFlag = true;
+            $this->timeOutFlag = false;
         }
         
         $activities = Activities::whereNull('deleted_at')->get();
