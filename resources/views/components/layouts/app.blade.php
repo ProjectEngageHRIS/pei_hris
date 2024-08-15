@@ -69,7 +69,7 @@
         background-color: #FFFFFF;
     } */
 </style>
-<body class="overflow-x-hidden bg-gray-200">
+<body class=" bg-gray-200">
     @extends('components.layouts.base')
 
     @section('body')
