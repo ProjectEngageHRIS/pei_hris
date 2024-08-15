@@ -630,12 +630,9 @@
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Account Created</h3>
                     <h3 class="mb-5 text-lg font-normal text-gray-900 dark:text-gray-400">Your Employee ID is : {{ $employee_id }} </h3>
                     <h4 class="mb-5 text-lg font-normal text-gray-900 dark:text-gray-400">Your Password is :  {{ $password }} </h4>
-
-<button type="button" @click="openConfirmation = false; window.location.href = '{{ route('HumanResourceDashboard') }}'" class="text-white bg-amber-600 hover:bg-amber-800 dark:focus:ring-amber-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-    Confirm
-</button>
-
-
+                <button type="button" @click="openConfirmation = false; window.location.href = '{{ route('HumanResourceDashboard') }}'" class="text-white bg-amber-600 hover:bg-amber-800 dark:focus:ring-amber-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                    Confirm
+                </button>
                 </div>
             </div>
         </div>
