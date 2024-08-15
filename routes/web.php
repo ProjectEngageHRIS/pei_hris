@@ -484,7 +484,7 @@ Route::middleware(['auth', ])->group(function (){
     
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 
-    Route::get("/human", AccountingPayrollTable::class)->name("AccountingPayrollTable");
+    // Route::get("/human", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
     Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
     
