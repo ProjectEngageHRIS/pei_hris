@@ -68,7 +68,7 @@ return new class extends Migration
                 $table->boolean('active');
 
 
-                $table->string('personal_email', 100);
+                $table->string('personal_email', 100)->nullable();
             // $table->string('address');
 
             // $table->integer('study_available_units')->nullable();
