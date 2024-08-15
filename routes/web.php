@@ -219,44 +219,9 @@ Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.
 
 
 
-Route::middleware(['auth', ])->group(function () {
-    Route::get("/ipcr", IpcrTable::class)->name("IpcrTable");
 
-    Route::get("/ipcr/form/{type}", IpcrForm::class)->name('IpcrForm');
 
-    // Route::get("/submitipcr", [IpcrController::class, 'submit'])->name("submitipcr");
 
-    Route::get("/ipcr/edit/{index}", IpcrUpdate::class)->name('IpcrEdit');
-
-    Route::get("ipcr/pdf/{index}", [IpcrController::class, 'turnToPdf'])->name('IpcrPdf');
-
-    Route::get("/ipcr/approve/{index}", ApproveIpcrForm::class)->name('ApproveIpcrForm');
-
-    Route::get("/ipcr/requests/", ApproveIpcrTable::class)->name('ApproveIpcrTable');
-
-    // Route::get("ipcr/{path}", PrivateController::class)->name('ipcrimage');
-
-    // Route::get("ipcr/{index}", [IpcrController::class, 'image'])->name('ipcrimage');
-
-    // Route::get("ipcr/pdf/{index}", Ipcrpdf::class)->name('ipcrpdf');
-
-});
-
-Route::middleware(['auth', ])->group(function () {
-
-    Route::get("/opcr", OpcrTable::class)->name("OpcrTable");
-
-    Route::get("/opcr/form/{type}", OpcrForm::class)->name('OpcrForm');
-
-    Route::get("/opcr/edit/{index}", OpcrUpdate::class)->name('OpcrEdit');
-
-    Route::get("/opcr/pdf/{index}", [OpcrController::class, 'turnToPdf'])->name('OpcrPdf');
-
-    Route::get("/opcr/request/", ApproveOpcrTable::class)->name('ApproveOpcrTable');
-
-    Route::get("/opcr/approve/{index}", ApproveOpcrForm::class)->name('ApproveOpcrForm');
-
-});
 
 
 Route::middleware(['auth', ])->group(function () {
@@ -320,79 +285,6 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-
-Route::middleware(['auth', ])->group(function (){
-
-    Route::get("/studypermit", StudyPermitTable::class)->name('StudyPermitTable');
-
-    Route::get("/studypermit/form", StudyPermitForm::class)->name('StudyPermitForm');
-
-    Route::get("/studypermit/edit/{index}", StudyPermitUpdate::class)->name('StudyPermitEdit');
-
-    Route::get("/studypermit/pdf/{index}", [StudyPermitController::class, 'turnToPdf'])->name('StudyPermitPdf');
-
-    Route::get("/studypermit/requests", ApproveStudyPermitTable::class)->name('ApproveStudyPermitTable');
-
-    Route::get("/studypermit/approve/{index}", ApproveStudyPermitForm::class)->name('ApproveStudyPermitForm');
-});
-
-
-Route::middleware(['auth', ])->group(function (){
-
-    Route::get("/teachpermit", TeachPermitTable::class)->name('TeachPermitTable');
-
-    Route::get("/teachpermit/form", TeachPermitForm::class)->name('TeachPermitForm');
-
-    Route::get("/teachpermit/edit/{index}", TeachPermitUpdate::class)->name('TeachPermitEdit');
-
-    Route::get("/teachpermit/pdf/{index}", [TeachPermitController::class, 'turnToPdf'])->name('TeachPermitPdf');
-
-    Route::get("/teachpermit/requests", ApproveTeachPermitTable::class)->name('ApproveTeachPermitTable');
-
-    Route::get("/teachpermit/approve/{index}", ApproveTeachPermitForm::class)->name('ApproveTeachPermitForm');
-
-    Route::get('/teachpermit/{index}', [TeachPermitTable::class, 'download'])->name('downloadTeachPermit');
-
-});
-
-Route::middleware(['auth', ])->group(function (){
-
-    Route::get("/changeschedule", ChangeScheduleTable::class)->name('ChangeScheduleTable');
-
-    Route::get("/changeschedule/form", ChangeScheduleForm::class)->name('ChangeScheduleForm');
-
-    Route::get("/changeschedule/edit/{index}", ChangeScheduleUpdate::class)->name('ChangeScheduleEdit');
-
-    // Route::get("/teachpermit/pdf/{index}", [TeachPermitController::class, 'turnToPdf'])->name('TeachPermitPdf');
-
-    // Route::get("/teachpermit/requests", ApproveTeachPermitTable::class)->name('ApproveTeachPermitTable');
-
-    // Route::get("/teachpermit/approve/{index}", ApproveTeachPermitForm::class)->name('ApproveTeachPermitForm');
-
-    // Route::get('/teachpermit/{index}', [TeachPermitTable::class, 'download'])->name('downloadTeachPermit');
-
-});
-
-
-
-Route::middleware(['auth', ])->group(function (){
-
-    Route::get("/creditsmonetization", CreditsMonetizationTable::class)->name('CreditsMonetizationTable');
-
-    Route::get("/creditsmonetization/form", CreditsMonetizationForm::class)->name('CreditsMonetizationForm');
-
-    Route::get("/creditsmonetization/edit/{index}", CreditsMonetizationUpdate::class)->name('CreditsMonetizationEdit');
-
-    // Route::get("/teachpermit/pdf/{index}", [TeachPermitController::class, 'turnToPdf'])->name('TeachPermitPdf');
-
-    // Route::get("/teachpermit/requests", ApproveTeachPermitTable::class)->name('ApproveTeachPermitTable');
-
-    // Route::get("/teachpermit/approve/{index}", ApproveTeachPermitForm::class)->name('ApproveTeachPermitForm');
-
-    // Route::get('/teachpermit/{index}', [TeachPermitTable::class, 'download'])->name('downloadTeachPermit');
-
-});
-
 Route::middleware(['auth', ])->group(function (){
 
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
@@ -421,23 +313,6 @@ Route::middleware(['auth', ])->group(function (){
 
     // Route::get('/teachpermit/{index}', [TeachPermitTable::class, 'download'])->name('downloadTeachPermit');
 
-});
-
-
-Route::middleware(['auth', ])->group(function (){
-    Route::get("/requestdocument", RequestDocumentTable::class)->name('RequestDocumentTable');
-
-    Route::get("/requestdocument/form", RequestDocumentForm::class)->name('RequestDocumentForm');
-
-    Route::get("/requestdocument/edit/{index}", RequestDocumentUpdate::class)->name('RequestDocumentEdit');
-
-    Route::get("/requestdocument/pdf/{index}", [RequestDocumentController::class, 'turnToPdf'])->name('RequestDocumentPdf');
-
-    Route::get("/requestdocument/requests", ApproveRequestDocumentTable::class)->name('ApproveRequestDocumentTable');
-
-    Route::get("/requestdocument/approve/{index}", ApproveRequestDocumentForm::class)->name('ApproveRequestDocumentForm');
-
-    Route::get('/requestdocument/{index}', [RequestDocumentTable::class, 'download'])->name('downloadDocumentRequestForm');
 });
 
 
