@@ -277,8 +277,7 @@ class DashboardView extends Component
     {
 
         try {
-            $employee_id = auth()->user()->employee_id;
-            $time = Dailytimerecord::where('employee_id', $employee_id)->where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+            $time = Dailytimerecord::where('employee_id', auth()->user()->employee_id)->where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
             // $time = Dailytimerecord::where('emwhere('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
             $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
             $currentTime = Carbon::now();
