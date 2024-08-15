@@ -318,14 +318,21 @@ class HrTicketsView extends Component
 
 
     public function editForm($index){
-        // $hrticket=  Leaverequest::find($this->index);
         $loggedInUser = auth()->user()->employee_id;
-        $hrticket = Hrticket::where('employee_id', $loggedInUser)->where('uuid', $index)->first();
-        if(!$hrticket || $hrticket->employee_id != $loggedInUser){
-            return ;
+        try {
+            $hrticket =  Hrticket::where('employee_id', auth()->user()->employee_id)->where('uuid', $index)->first();
+            if(!$hrticket){
+                throw new \Exception('No Record Found');
+            }
+            if($hrticket->employee_id != $loggedInUser){
+                throw new \Exception('Unauthorized Access');
+            }
+            return $hrticket;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrticket')->error('Failed to view Hrticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            redirect()->to(route('HrTicketsTable'));
         }
-        // $this->hrticket= $hrticket;
-        return $hrticket;
     }
 
     public function cancelRequest(){

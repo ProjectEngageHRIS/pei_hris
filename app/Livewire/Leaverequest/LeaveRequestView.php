@@ -135,7 +135,7 @@ class LeaveRequestView extends Component
             return $leaverequest;
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('leaverequests')->error('Failed to view Hrticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            Log::channel('leaverequests')->error('Failed to view Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser );
             redirect()->to(route('LeaveRequestTable'));
         }
     }
