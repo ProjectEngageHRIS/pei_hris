@@ -66,6 +66,7 @@ class DashboardView extends Component
 
     public $leaveIndicator = False;
 
+    public $timeDifference;
 
 
     public function search()
@@ -277,14 +278,15 @@ class DashboardView extends Component
     {
 
         try {
-            $time = Dailytimerecord::where('employee_id', auth()->user()->employee_id)->where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+            $employee_id = auth()->user()->employee_id;
+            // $time = Dailytimerecord::where('attendance_date', now()->toDateString())->where('employee_id', $employee_id)->first(); // assuming 'attendance_date' is stored as a date only
             // $time = Dailytimerecord::where('emwhere('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
             $startOfCheckInTime = Carbon::today()->setTime(6, 00, 0); // 4:31 PM
             $currentTime = Carbon::now();
     
     
         if ($currentTime->greaterThanOrEqualTo($startOfCheckInTime)) {
-            $time = Dailytimerecord::where('attendance_date', now()->toDateString())->first(); // assuming 'attendance_date' is stored as a date only
+            $time = Dailytimerecord::where('attendance_date', now()->toDateString())->where('employee_id', $employee_id)->first(); // assuming 'attendance_date' is stored as a date only
             if (!$time) {
                 $dtr = new Dailytimerecord();
                 $dtr->employee_id = auth()->user()->employee_id;
@@ -488,7 +490,14 @@ class DashboardView extends Component
                 $this->timeIn = Carbon::parse($time->time_in);
                 $this->timeOut = Carbon::parse($time->time_out);
                 $differenceInSeconds = Carbon::parse($time->time_in)->diffInSeconds(Carbon::parse($time->time_out));
+                // Convert the difference to hours, minutes, and seconds
+                $differenceInHours = floor($differenceInSeconds / 3600);
+                $differenceInMinutes = floor(($differenceInSeconds % 3600) / 60);
+                $differenceInSeconds = $differenceInSeconds % 60;
+
                 $this->timeOutFlag = true; // Time Out button should be disabled
+                // You can now use these variables as needed
+                $this->timeDifference = sprintf('%02d:%02d:%02d', $differenceInHours, $differenceInMinutes, $differenceInSeconds);
             }
     
             // Format seconds into hh:mm:ss
@@ -501,7 +510,7 @@ class DashboardView extends Component
             $this->timeIn = null;
             $this->timeOut = null;
             $this->currentTimeIn = '00:00:00';
-            $this->timeOutFlag = false;
+            $this->timeOutFlag = true;
         }
         
         $activities = Activities::whereNull('deleted_at')->get();

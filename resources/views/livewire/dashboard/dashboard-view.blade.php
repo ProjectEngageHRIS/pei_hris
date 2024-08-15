@@ -108,7 +108,9 @@
                     <div class="items-center col-span-2 mt-6">
                         <div class="">
                             <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
-                            @if ($timeIn)
+                            @if ($timeIn && $timeOut)
+                                <p class="px-20 text-sm text-customGray1 font-regular">{{$timeDifference}}</p>
+                            @elseif($timeIn)
                                 <p id="time-difference" data-time-in="{{$timeIn}}" class="px-20 text-sm text-customGray1 font-regular"></p>
                             @else
                                 <p class="px-20 text-sm text-customGray1 font-regular">N/A</p>
