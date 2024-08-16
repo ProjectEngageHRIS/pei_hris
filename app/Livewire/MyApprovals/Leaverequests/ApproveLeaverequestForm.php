@@ -194,7 +194,9 @@ class ApproveLeaverequestForm extends Component
                                 $leaverequestdata->status = "Approved";
                             }
                         }
-                    } 
+                    } else {
+                        throw new \Exception('Unauthorized Access');
+                    }
 
                     if($leaverequestdata->approved_by_supervisor == 1 && $leaverequestdata->approved_by_president == 1){
                         $startDate = Carbon::parse($leaverequestdata->inclusive_start_date)->toDateString();

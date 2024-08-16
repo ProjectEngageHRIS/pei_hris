@@ -59,6 +59,7 @@ class LeaveRequestForm extends Component
     public $reason;
 
     public $date_earned;
+    public $credit_application;
     public $earned_description;
     public $purpose_type;
     public $type;
@@ -172,7 +173,7 @@ class LeaveRequestForm extends Component
 
 
      protected $rules = [
-        'mode_of_application' => 'required|in:Advise Slip,Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Magna Carta Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
+        'mode_of_application' => 'required|in:Advise Slip,Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Magna Carta Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave,Credit Leave',
         // 'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
         // 'full_half' => 'required',
         // // 'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
@@ -209,15 +210,14 @@ class LeaveRequestForm extends Component
             $leaverequestdata->mode_of_application = $this->mode_of_application;
             // dd($this->mode_of_application == "Credit Leave");
             if($this->mode_of_application == "Credit Leave"){
-                $leaverequestdata->date_earned = $this->date_earned;
+                $leaverequestdata->inclusive_start_date = $this->date_earned;
+                $leaverequestdata->inclusive_end_date = $this->credit_application;
                 $leaverequestdata->earned_description = $this->earned_description;
                 // dd($leaverequestdata->earned_description , $this->earned_description);
             } else if($this->mode_of_application == "Advise Slip"){
                 $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
                 $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
                 $leaverequestdata->purpose_type = $this->purpose_type;
-                $leaverequestdata->deduct_to = $this->deduct_to;
-
             } 
             else{
                 $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);

@@ -275,6 +275,9 @@ class ApproveLeaverequestTable extends Component
             if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
                 throw new \Exception('Unauthorized Access');
             }
+            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
+                throw new \Exception('Unauthorized Access');
+            }
             $role = $loggedInUser->role_id;
             DB::transaction(function () use ($role) {
                 // Fetch the leave request data
@@ -289,8 +292,8 @@ class ApproveLeaverequestTable extends Component
                         if ($leaverequestdata->approved_by_president == 1) {
                             $leaverequestdata->status = "Approved";
                         }
-                    // } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
-                    } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
+                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                         if($role == 6){ // President Role
                             $leaverequestdata->approved_by_supervisor = 1;
                             $leaverequestdata->approved_by_president = 1;
@@ -308,14 +311,9 @@ class ApproveLeaverequestTable extends Component
                                 $leaverequestdata->status = "Approved";
                             }
                         }
-                    } else if($leaverequestdata->supervisor_email == "mbaniqued@projectengage.com.ph"){
-                        if($role == 14){ // IT Supervisor
-                            $leaverequestdata->approved_by_supervisor = 1;
-                            if ($leaverequestdata->approved_by_president == 1) {
-                                $leaverequestdata->status = "Approved";
-                            }
-                        }
-                    } 
+                    } else {
+                        throw new \Exception('Unauthorized Access');
+                    }
 
                     if($leaverequestdata->approved_by_supervisor == 1 && $leaverequestdata->approved_by_president == 1){
                         $startDate = Carbon::parse($leaverequestdata->inclusive_start_date)->toDateString();
@@ -343,22 +341,13 @@ class ApproveLeaverequestTable extends Component
                             while ($currentDate <= $endDate) {
                                 $isStartDay = $currentDate->isSameDay($startDate);
                                 $isEndDay = $currentDate->isSameDay($endDate);
-                
-                                if ($isStartDay) {
-                                    if (in_array($leaveDayOption, ['Start Full', 'Both Full'])) {
+                                if ($isEndDay) {
+                                    if ($leaveDayOption == 'Full Day') {
                                         $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['End Full', 'End Half'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'End Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['Start Half', 'Both Half'])) {
+                                    } elseif ($leaveDayOption == 'Half Day') {
                                         $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
-                                    }
-                                } elseif ($isEndDay) {
-                                    if (in_array($leaveDayOption, ['End Full', 'Both Full'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['Start Full', 'Start Half'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'Start Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['End Half', 'Both Half'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                                    } elseif ($leaveDayOption == 'Undertime') {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Undertime'];
                                     }
                                 } else {
                                     $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
@@ -389,8 +378,6 @@ class ApproveLeaverequestTable extends Component
                     $leaverequestdata->status = $this->status;
                 }
                 
-
-        
                 // $leaverequestdata->status = $this->status;
         
                 $leaverequestdata->update();

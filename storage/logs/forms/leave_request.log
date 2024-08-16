@@ -34,3 +34,5 @@
 [2024-08-15 16:22:33] local.ERROR: Failed to view/approve Leave Request: No Record Found | SLEA9999  
 [2024-08-15 16:23:01] local.ERROR: Failed to view/approve Leave Request: No Record Found | SLEA9999  
 [2024-08-16 08:19:45] local.ERROR: Failed to update Leave Request: Property [$currentFormId] not found on component: [my-approvals.leaverequests.approve-leaverequest-form] | SLE0001  
+[2024-08-16 16:56:57] local.ERROR: Failed to save Hrticket: Property [$credit_applicaition] not found on component: [leaverequest.leave-request-form]  
+[2024-08-16 17:31:51] local.ERROR: Failed to update Leave Request: Property [$index] not found on component: [my-approvals.leaverequests.approve-leaverequest-table] | SLE0001  

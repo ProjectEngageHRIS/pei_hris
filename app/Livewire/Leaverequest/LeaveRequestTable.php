@@ -195,9 +195,9 @@ class LeaveRequestTable extends Component
 
 
         if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->paginate(5);
         } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
 
         if(strlen($this->search) >= 1){
