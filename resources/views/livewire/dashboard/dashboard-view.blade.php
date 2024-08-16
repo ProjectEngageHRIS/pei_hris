@@ -148,9 +148,9 @@
                         <h2 class="text-base font-semibold text-customGray1">{{ $activity->type }}</h2>
                     </div>
                     <div class="px-8 text-xs text-justify text-customGray">
-                        <p class="flex items-center">
-                            <span>Published by: {{ $activity->publisher }}</span>
-                            <span class="mx-1">•</span>
+                        <p class="flex flex-col sm:flex-row items-center">
+                            <span class="sm:mr-2">Published by: {{ $activity->publisher }}</span>
+                            <span class="hidden sm:inline mx-1">•</span>
                             <span>Date and Time Published: {{ $activity->published_date }}</span>
                         </p>
                     </div>
