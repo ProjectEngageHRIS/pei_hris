@@ -175,8 +175,8 @@ class ApproveLeaverequestForm extends Component
                         if ($leaverequestdata->approved_by_president == 1) {
                             $leaverequestdata->status = "Approved";
                         }
-                    // } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
-                    } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
+                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                         if($role == 6){ // President Role
                             $leaverequestdata->approved_by_supervisor = 1;
                             $leaverequestdata->approved_by_president = 1;
@@ -222,22 +222,13 @@ class ApproveLeaverequestForm extends Component
                             while ($currentDate <= $endDate) {
                                 $isStartDay = $currentDate->isSameDay($startDate);
                                 $isEndDay = $currentDate->isSameDay($endDate);
-                
-                                if ($isStartDay) {
-                                    if (in_array($leaveDayOption, ['Start Full', 'Both Full'])) {
+                                if ($isEndDay) {
+                                    if ($leaveDayOption == 'Full Day') {
                                         $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['End Full', 'End Half'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'End Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['Start Half', 'Both Half'])) {
+                                    } elseif ($leaveDayOption == 'Half Day') {
                                         $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
-                                    }
-                                } elseif ($isEndDay) {
-                                    if (in_array($leaveDayOption, ['End Full', 'Both Full'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['Start Full', 'Start Half'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'Start Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
-                                    } elseif (in_array($leaveDayOption, ['End Half', 'Both Half'])) {
-                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                                    } elseif ($leaveDayOption == 'Undertime') {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Undertime'];
                                     }
                                 } else {
                                     $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];

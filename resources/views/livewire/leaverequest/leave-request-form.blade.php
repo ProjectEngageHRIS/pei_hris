@@ -300,13 +300,17 @@
                                             </div>
                                             <div class="col-span-1">
                                                 <div id="full_half_container" class="col-span-1">
-                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full on Start or End Day
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full/Undertime on End Day
                                                         <span class="text-red-600">*</span>
                                                     </label>
                                                     <select id="purpose_type" name="full_half" wire:model.live="full_half"
                                                         class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                         <option value="" selected>Select</option>
-                                                        <optgroup label="Full Day Options">
+                                                        <option value="Full Day">Full Day</option>
+                                                        <option value="Half Day">Half Day</option>
+                                                        <option value="Undertime">Undertime</option>
+
+                                                        {{-- <optgroup label="Full Day Options">
                                                             <option value="Start Full">Full Day Start | Half Day End</option>
                                                             <option value="End Full">Full Day End | Half Day Start</option>
                                                             <option value="Both Full">Full Day Both</option>
@@ -315,7 +319,7 @@
                                                             <option value="Start Half">Half Day Start | Full Day End</option>
                                                             <option value="End Half">Half Day End | Full Day Start</option>
                                                             <option value="Both Half">Half Day Both</option>
-                                                        </optgroup>
+                                                        </optgroup> --}}
                                                     </select>
                                                     @error('full_half')
                                                         <div class="text-sm transition transform alert alert-danger"
