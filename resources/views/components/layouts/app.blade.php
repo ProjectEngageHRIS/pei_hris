@@ -23,11 +23,12 @@
     @extends('components.layouts.base')
 
     @section('body')
-        <header>
+        {{-- <header> --}}
+            {{-- The problem about responsiveness --}}
             @livewire('sidebar.sidebar-view')
-        </header>
+        {{-- </header> --}}
         <main>
-            <div class="p-8 main-content">
+            <div class="p-8 main-content" style="margin-top: 5rem">
                 @isset($slot)
                     {{ $slot }}
                 @endisset

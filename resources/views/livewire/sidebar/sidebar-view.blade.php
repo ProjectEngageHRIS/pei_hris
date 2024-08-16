@@ -1,5 +1,6 @@
-<header x-cloak class="px-2 py-4 bg-white">
-    <nav class="flex justify-between items-center w-[99%] mx-auto">
+<header class="antialiased ">
+    <nav class="fixed flex justify-between items-center w-full mx-auto top-0 z-50  pb-4 bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
+    {{-- <nav class="flex justify-between items-center w-[99%] mx-auto"> --}}
         <!-- Left Section: Image and Text -->
         <div class="flex flex-row items-center">
             <!-- Menu Button when smaller than large screen -->
