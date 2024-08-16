@@ -63,7 +63,7 @@
                                     </div>
                                 </ul>
                             </div>
-                            @if($role_id == 10 || $role_id == 4)
+                            @if(in_array($role_id, [4, 6, 7]))
                                 <div x-data="{ approvalMobileOpen: false }"  class="relative group">
                                     <div @click="approvalMobileOpen = true" @click.away="approvalMobileOpen = false"   id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -175,7 +175,7 @@
 
 
                 <!-- Approval Button -->
-                @if($role_id == 10 || $role_id == 4)
+                @if(in_array($role_id, [4, 6, 7]))
                     <div x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">

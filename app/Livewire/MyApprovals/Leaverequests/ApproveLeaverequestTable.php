@@ -85,7 +85,7 @@ class ApproveLeaverequestTable extends Component
     public function mount(){
         $loggedInUser = auth()->user()->role_id;
         try {
-            if(!in_array($loggedInUser->role_id, [4, 6])){
+            if(!in_array($loggedInUser, [4, 6, 7])){
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -225,7 +225,7 @@ class ApproveLeaverequestTable extends Component
             }
 
         
-        if($loggedInUser->role_id == 10 || $loggedInUser->role_id == 4){
+        if(in_array($loggedInUser->role_id, [4, 6])){
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
                 'LeaveRequestData' => $results,
             ]);
@@ -272,7 +272,7 @@ class ApproveLeaverequestTable extends Component
     public function changeStatus(){
         $loggedInUser = auth()->user();
         try {
-            if ($loggedInUser->role_id != 4 && $loggedInUser->role_id != 6) {
+            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8])) {
                 throw new \Exception('Unauthorized Access');
             }
             $role = $loggedInUser->role_id;
@@ -282,103 +282,114 @@ class ApproveLeaverequestTable extends Component
                 if (!$leaverequestdata) {
                     return;
                 }
-                
-                $startDate = Carbon::parse($leaverequestdata->inclusive_start_date)->toDateString();
-                $endDate = Carbon::parse($leaverequestdata->inclusive_end_date)->toDateString();
-                
-                $dailyRecords = Dailytimerecord::whereDate('attendance_date', '>=', $startDate)
-                    ->whereDate('attendance_date', '<=', $endDate)
-                    ->where('employee_id', $leaverequestdata->employee_id)
-                    ->get();
-        
-                foreach($dailyRecords as $record) {
-                    if($record->type == "Wholeday" || $record->type == "Overtime") {
-                        return $this->dispatch('triggerErrorNotification');
-                    }
-                }
-        
-                if (!in_array($leaverequestdata->mode_of_application, ['Advice Slip', 'Credit Leave'])) {
-                    $startDate = Carbon::parse($leaverequestdata->inclusive_start_date);
-                    $endDate = Carbon::parse($leaverequestdata->inclusive_end_date);
-                    $leaveDayOption = $leaverequestdata->full_or_half;
-        
-                    $currentDate = $startDate->copy();
-                    $dailyLeaveRecords = [];
-        
-                    while ($currentDate <= $endDate) {
-                        $isStartDay = $currentDate->isSameDay($startDate);
-                        $isEndDay = $currentDate->isSameDay($endDate);
-        
-                        if ($isStartDay) {
-                            if (in_array($leaveDayOption, ['Start Full', 'Both Full'])) {
-                                $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                            } elseif (in_array($leaveDayOption, ['End Full', 'End Half'])) {
-                                $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'End Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
-                            } elseif (in_array($leaveDayOption, ['Start Half', 'Both Half'])) {
-                                $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
-                            }
-                        } elseif ($isEndDay) {
-                            if (in_array($leaveDayOption, ['End Full', 'Both Full'])) {
-                                $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                            } elseif (in_array($leaveDayOption, ['Start Full', 'Start Half'])) {
-                                $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'Start Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
-                            } elseif (in_array($leaveDayOption, ['End Half', 'Both Half'])) {
-                                $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
-                            }
-                        } else {
-                            $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
-                        }
-        
-                        $currentDate->addDay();
-                    }
-        
-                    foreach ($dailyLeaveRecords as $record) {
-                        $dailyRecord = Dailytimerecord::where('attendance_date', $record['date'])
-                            ->where('employee_id', $leaverequestdata->employee_id)
-                            ->first();
-        
-                        if ($dailyRecord) {
-                            $dailyRecord->type = $record['type'];
-                            $dailyRecord->update();
-                        } else {
-                            $newDailyRecord = new Dailytimerecord();
-                            $newDailyRecord->employee_id = $leaverequestdata->employee_id;
-                            $newDailyRecord->attendance_date = $record['date'];
-                            $newDailyRecord->type = $record['type'];
-                            $newDailyRecord->save();
-                        }
-                    }
-                }
-        
-                // $leaverequestdata->status = $this->status;
-                
+
                 if($this->status == "Completed"){
-                    if ($role == 9) {
-                        if ($this->status == "Completed") {
+                    if ($role == 4) {
+                        $leaverequestdata->approved_by_supervisor = 1;
+                        if ($leaverequestdata->approved_by_president == 1) {
+                            $leaverequestdata->status = "Approved";
+                        }
+                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
+                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                        if($role == 6){ // President Role
+                            $leaverequestdata->approved_by_supervisor = 1;
+                            $leaverequestdata->approved_by_president = 1;
+                            $leaverequestdata->status = "Approved";
+                        }
+                    } else if ($role == 6) {
+                        $leaverequestdata->approved_by_president = 1;
+                        if ($leaverequestdata->approved_by_supervisor == 1) {
+                            $leaverequestdata->status = "Approved";
+                        }
+                    } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
+                        if($role == 7){ // Hr Head Role
                             $leaverequestdata->approved_by_supervisor = 1;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = "Approved";
                             }
                         }
-                    } elseif ($role == 10) {
-                        if ($this->status == "Completed") {
-                            $leaverequestdata->approved_by_president = 1;
-                            if ($leaverequestdata->approved_by_supervisor == 1) {
-                                $leaverequestdata->status = "Approved";
+                    } 
+
+                    if($leaverequestdata->approved_by_supervisor == 1 && $leaverequestdata->approved_by_president == 1){
+                        $startDate = Carbon::parse($leaverequestdata->inclusive_start_date)->toDateString();
+                        $endDate = Carbon::parse($leaverequestdata->inclusive_end_date)->toDateString();
+                        
+                        $dailyRecords = Dailytimerecord::whereDate('attendance_date', '>=', $startDate)
+                            ->whereDate('attendance_date', '<=', $endDate)
+                            ->where('employee_id', $leaverequestdata->employee_id)
+                            ->get();
+                
+                        foreach($dailyRecords as $record) {
+                            if($record->type == "Wholeday" || $record->type == "Overtime") {
+                                return $this->dispatch('triggerErrorNotification');
+                            }
+                        }
+                
+                        if (!in_array($leaverequestdata->mode_of_application, ['Advice Slip', 'Credit Leave'])) {
+                            $startDate = Carbon::parse($leaverequestdata->inclusive_start_date);
+                            $endDate = Carbon::parse($leaverequestdata->inclusive_end_date);
+                            $leaveDayOption = $leaverequestdata->full_or_half;
+                
+                            $currentDate = $startDate->copy();
+                            $dailyLeaveRecords = [];
+                
+                            while ($currentDate <= $endDate) {
+                                $isStartDay = $currentDate->isSameDay($startDate);
+                                $isEndDay = $currentDate->isSameDay($endDate);
+                
+                                if ($isStartDay) {
+                                    if (in_array($leaveDayOption, ['Start Full', 'Both Full'])) {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                                    } elseif (in_array($leaveDayOption, ['End Full', 'End Half'])) {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'End Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
+                                    } elseif (in_array($leaveDayOption, ['Start Half', 'Both Half'])) {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                                    }
+                                } elseif ($isEndDay) {
+                                    if (in_array($leaveDayOption, ['End Full', 'Both Full'])) {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                                    } elseif (in_array($leaveDayOption, ['Start Full', 'Start Half'])) {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaveDayOption == 'Start Full' ? $leaverequestdata->mode_of_application . ' Half-Day' : $leaverequestdata->mode_of_application . ' Full-Day'];
+                                    } elseif (in_array($leaveDayOption, ['End Half', 'Both Half'])) {
+                                        $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Half-Day'];
+                                    }
+                                } else {
+                                    $dailyLeaveRecords[] = ['date' => $currentDate->format('Y-m-d'), 'type' => $leaverequestdata->mode_of_application . ' Full-Day'];
+                                }
+                
+                                $currentDate->addDay();
+                            }
+                
+                            foreach ($dailyLeaveRecords as $record) {
+                                $dailyRecord = Dailytimerecord::where('attendance_date', $record['date'])
+                                    ->where('employee_id', $leaverequestdata->employee_id)
+                                    ->first();
+                
+                                if ($dailyRecord) {
+                                    $dailyRecord->type = $record['type'];
+                                    $dailyRecord->update();
+                                } else {
+                                    $newDailyRecord = new Dailytimerecord();
+                                    $newDailyRecord->employee_id = $leaverequestdata->employee_id;
+                                    $newDailyRecord->attendance_date = $record['date'];
+                                    $newDailyRecord->type = $record['type'];
+                                    $newDailyRecord->save();
+                                }
                             }
                         }
                     }
                 } else {
                     $leaverequestdata->status = $this->status;
-
                 }
+                
+
+        
+                // $leaverequestdata->status = $this->status;
         
                 $leaverequestdata->update();
         
                 $this->dispatch('triggerSuccess'); 
             });
-        
-            return redirect()->to(route('ApproveLeaveRequestTable'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('leaverequests')->error('Failed to update Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
