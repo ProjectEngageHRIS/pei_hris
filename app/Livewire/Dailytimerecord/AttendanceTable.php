@@ -8,12 +8,13 @@ use App\Models\Employee;
 use App\Models\Training;
 use App\Models\Activities;
 use Livewire\WithPagination;
+use App\Exports\UserDtrExport;
 use App\Models\Dailytimerecord;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\DailyTimeRecordExport;
-use App\Exports\UserDtrExport;
 
 class AttendanceTable extends Component
 {

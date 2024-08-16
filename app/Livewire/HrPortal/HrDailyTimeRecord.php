@@ -11,8 +11,9 @@ use Livewire\WithPagination;
 use App\Exports\UserDtrExport;
 use App\Models\Dailytimerecord;
 use Illuminate\Support\Facades\DB;
-use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Log;
 
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Cache;
 use App\Exports\DailyTimeRecordExport;
 use Illuminate\Support\Facades\Storage;
@@ -149,11 +150,17 @@ class HrDailyTimeRecord extends Component
     }
 
     public function mount(){
-        
         $loggedInUser = auth()->user()->role_id;
-        if(!in_array($loggedInUser, [9, 10])){
-            return redirect()->to(route('HumanResourceDashboard'));
+        try {
+            if(!in_array($loggedInUser, [7, 8, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrextract')->error('Failed to view Approve HR DTR Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
         }
+
         $now = Carbon::now();
         $currentYear = $now->year;
         $currentMonth = $now->month;

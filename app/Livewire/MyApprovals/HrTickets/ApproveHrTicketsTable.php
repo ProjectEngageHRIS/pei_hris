@@ -115,9 +115,12 @@ class ApproveHrTicketsTable extends Component
             $query->where('type_of_ticket', 'Internal Control');
         } else if($loggedInUser == 10){
             $query->where('type_of_ticket', 'HR Operations');
+        } else if(in_array($loggedInUser, [7, 8, 61024])){
+
         } else {
             redirect()->to(route('HumanResourceDashboard'));
         }
+
         switch ($this->date_filter) {
             case '1':
                 $query->whereDate('application_date',  Carbon::today());

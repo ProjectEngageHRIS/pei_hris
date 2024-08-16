@@ -108,6 +108,17 @@ class AccountingDashboardView extends Component
 
     public function mount(){
 
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [3, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to View/Edit Accounting Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
+
         $date = Carbon::now();
         $this->halfOfMonthFilter = "1st Half";
         $this->monthFilter = $date->format('F');

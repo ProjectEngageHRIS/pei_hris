@@ -130,7 +130,7 @@ class ApproveLeaverequestForm extends Component
     public function editLeaveRequest($index){
         $loggedInUser = auth()->user();
         try {
-            if(!in_array($loggedInUser->role_id, [4, 6, 7])){
+            if(!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])){
                 throw new \Exception('Unauthorized Access');
             }
             $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
@@ -158,7 +158,7 @@ class ApproveLeaverequestForm extends Component
     {
         $loggedInUser = auth()->user();
         try {
-            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8])) {
+            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
                 throw new \Exception('Unauthorized Access');
             }
             $role = $loggedInUser->role_id;
@@ -175,8 +175,8 @@ class ApproveLeaverequestForm extends Component
                         if ($leaverequestdata->approved_by_president == 1) {
                             $leaverequestdata->status = "Approved";
                         }
-                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
-                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                    // } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
+                    } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                         if($role == 6){ // President Role
                             $leaverequestdata->approved_by_supervisor = 1;
                             $leaverequestdata->approved_by_president = 1;
@@ -287,7 +287,7 @@ class ApproveLeaverequestForm extends Component
     public function render()
     {
         $loggedInUser = auth()->user()->role_id;
-        if($loggedInUser == 10 || $loggedInUser == 4){
+        if(in_array($loggedInUser, [4, 6])){
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-form');
         } else {
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-form')->layout('components.layouts.hr-navbar');

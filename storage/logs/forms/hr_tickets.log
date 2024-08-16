@@ -53,3 +53,5 @@
 [2024-08-15 17:50:46] local.ERROR: Failed to update Hrticket: Unauthorized Access | SLE0001  
 [2024-08-16 08:02:45] local.ERROR: Failed to view Approve Leave Request Table: Attempt to read property "role_id" on int | 6  
 [2024-08-16 08:04:37] local.ERROR: Failed to view Approve Leave Request Table: Attempt to read property "role_id" on int | 6  
+[2024-08-16 08:42:29] local.ERROR: Failed to view Approve Leave Request Table: Unauthorized Access | 6  
+[2024-08-16 08:44:18] local.ERROR: Failed to view Approve Leave Request Table: Unauthorized Access | 6  

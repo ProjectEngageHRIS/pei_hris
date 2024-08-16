@@ -1,13 +1,15 @@
 <?php
 
 namespace App\Livewire\Dashboard;
-use Illuminate\Support\Facades\Crypt;
+use ID;
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
-use App\Models\User;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
@@ -22,14 +24,14 @@ class HrDashboardView extends Component
     public $currentStep = 1;
     public $totalSteps = 2; // Number of steps
     public $stepData = [];
-public $emergencyContact;
-public $govtProfessionalExamTaken;
-public $employee_history=[];
-public $employeeHistory;
-public $moveToNextStep;
-public $moveToPreviousStep;
- public $validatedData;
-public $govt_professional_exam_taken=[];
+    public $emergencyContact;
+    public $govtProfessionalExamTaken;
+    public $employee_history=[];
+    public $employeeHistory;
+    public $moveToNextStep;
+    public $moveToPreviousStep;
+    public $validatedData;
+    public $govt_professional_exam_taken=[];
     public $tin_num;
     public $hdmf_num;
     public $phic_num;
@@ -94,6 +96,9 @@ public $govt_professional_exam_taken=[];
     public $spouse;
     public $showConfirmation = false;
     public $step = 1;
+
+
+    public $loggedInUser;
 
     public $employeeTypesFilter = [
         'INTERNALS' => false,
@@ -170,8 +175,19 @@ public $govt_professional_exam_taken=[];
     }
 
     public function mount(){
-
-
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+            if(in_array($loggedInUser, [7, 8, 61024, 14,])){
+                $this->loggedInUser = True;
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to View HR Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
 
         $combinedCounts = Employee::select(
             DB::raw('COUNT(CASE WHEN employee_type = "Internals" THEN 1 END) as Internals'),

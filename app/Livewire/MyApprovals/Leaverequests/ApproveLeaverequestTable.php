@@ -85,7 +85,7 @@ class ApproveLeaverequestTable extends Component
     public function mount(){
         $loggedInUser = auth()->user()->role_id;
         try {
-            if(!in_array($loggedInUser, [4, 6, 7])){
+            if(!in_array($loggedInUser, [4, 6, 7, 8, 14, 61024])){
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -272,7 +272,7 @@ class ApproveLeaverequestTable extends Component
     public function changeStatus(){
         $loggedInUser = auth()->user();
         try {
-            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8])) {
+            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
                 throw new \Exception('Unauthorized Access');
             }
             $role = $loggedInUser->role_id;
@@ -289,8 +289,8 @@ class ApproveLeaverequestTable extends Component
                         if ($leaverequestdata->approved_by_president == 1) {
                             $leaverequestdata->status = "Approved";
                         }
-                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
-                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                    // } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
+                    } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                         if($role == 6){ // President Role
                             $leaverequestdata->approved_by_supervisor = 1;
                             $leaverequestdata->approved_by_president = 1;
@@ -303,6 +303,13 @@ class ApproveLeaverequestTable extends Component
                         }
                     } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
                         if($role == 7){ // Hr Head Role
+                            $leaverequestdata->approved_by_supervisor = 1;
+                            if ($leaverequestdata->approved_by_president == 1) {
+                                $leaverequestdata->status = "Approved";
+                            }
+                        }
+                    } else if($leaverequestdata->supervisor_email == "mbaniqued@projectengage.com.ph"){
+                        if($role == 14){ // IT Supervisor
                             $leaverequestdata->approved_by_supervisor = 1;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = "Approved";

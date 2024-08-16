@@ -41,6 +41,19 @@ class ActivitiesGallery extends Component
 
     public $currentFormId;
 
+    public function mount(){
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [7, 8, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('activities')->error('Failed to view Approve Leave Request Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
+    }
+
 
     public function getActivityPhoto($index){
         // $imageFile = $this->editLeaveRequest($this->index);
