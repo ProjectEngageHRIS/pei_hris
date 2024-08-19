@@ -175,8 +175,8 @@ class ApproveLeaverequestForm extends Component
                         if ($leaverequestdata->approved_by_president == 1) {
                             $leaverequestdata->status = "Approved";
                         }
-                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
-                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                    // } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
+                    } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                         if($role == 6){ // President Role
                             $leaverequestdata->approved_by_supervisor = 1;
                             $leaverequestdata->approved_by_president = 1;

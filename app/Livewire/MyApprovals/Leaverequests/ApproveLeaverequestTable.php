@@ -103,14 +103,21 @@ class ApproveLeaverequestTable extends Component
     {
         $loggedInUser = auth()->user();
 
-        $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');   
-    
-        if($loggedInEmail == "spm_2009@wesearch.com.ph"){
-            $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
-                                  ->where('supervisor_email', $loggedInEmail)->where('approved_by_supervisor', '1');
+        $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
+
+        // Define the base query with the necessary relations
+        $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
+        
+        // Apply conditions based on the logged-in email
+        // if ($loggedInEmail === "spm_2009@wesearch.com.ph") {
+        if ($loggedInEmail === "seal.projectengage@gmail.com") {
+            $query->where(function ($query) use ($loggedInEmail) {
+                $query->where('approved_by_supervisor', '1');
+            })->orWhere(function ($query) use ($loggedInEmail) {
+                $query->where('supervisor_email', $loggedInEmail);
+            });
         } else {
-            $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender')
-                                  ->where('supervisor_email', $loggedInEmail);
+            $query->where('supervisor_email', $loggedInEmail);
         }
 
         switch ($this->date_filter) {
