@@ -108,14 +108,14 @@ class AccountingDashboardView extends Component
 
     public function mount(){
 
-        $loggedInUser = auth()->user()->role_id;
+        $loggedInUser = auth()->user();
         try {
-            if(!in_array($loggedInUser, [3, 61024])){
+            if(!in_array($loggedInUser->role_id, [3, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('accountingerrors')->error('Failed to View/Edit Accounting Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            Log::channel('accountingerrors')->error('Failed to View/Edit Accounting Table: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
             return redirect()->to(route('EmployeeDashboard'));
         }
 
@@ -123,8 +123,7 @@ class AccountingDashboardView extends Component
         $this->halfOfMonthFilter = "1st Half";
         $this->monthFilter = $date->format('F');
         $this->yearFilter = $date->format('Y');        
-        $loggedInUser = auth()->user()->employee_id;
-        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->where('employee_id', '!=', $loggedInUser)->get();
+        $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id', 'employee_email')->where('employee_id', '!=', $loggedInUser->employee_id)->get();
         foreach($employees as $employee){
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
@@ -227,31 +226,41 @@ class AccountingDashboardView extends Component
     // }
 
     public function submit($employee_id){
-        $loggedInUser = auth()->user()->employee_id;
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [3, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
 
-        $payroll_status_data = PayrollStatus::where('target_employee', $employee_id)
-                ->where('phase',  $this->payroll_phase)
-                ->where('month',  $this->payroll_month)
-                ->where('year',   $this->payroll_year)
-                ->whereNull('deleted_at')
-                ->select('month', 'year', 'employee_id', 'status', 'id')->first();
-
-        if(!$payroll_status_data){
-            $payroll_status = new PayrollStatus();
-            $payroll_status->employee_id = $loggedInUser;
-            $payroll_status->target_employee = $employee_id;
-            $payroll_status->phase = $this->payroll_phase;
-            $payroll_status->month = $this->payroll_month;
-            $payroll_status->year = $this->payroll_year;
-            $payroll_status->status = $this->payroll_status;
-            $payroll_status->save();
+            $payroll_status_data = PayrollStatus::where('target_employee', $employee_id)
+                    ->where('phase',  $this->payroll_phase)
+                    ->where('month',  $this->payroll_month)
+                    ->where('year',   $this->payroll_year)
+                    ->whereNull('deleted_at')
+                    ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+    
+            if(!$payroll_status_data){
+                $payroll_status = new PayrollStatus();
+                $payroll_status->employee_id = $loggedInUser->employee_id;
+                $payroll_status->target_employee = $employee_id;
+                $payroll_status->phase = $this->payroll_phase;
+                $payroll_status->month = $this->payroll_month;
+                $payroll_status->year = $this->payroll_year;
+                $payroll_status->status = $this->payroll_status;
+                $payroll_status->save();
+                return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
+            }        
+    
+            $payroll_status_data->status = $this->payroll_status;
+            $payroll_status_data->update();
+    
             return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
-        }        
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
 
-        $payroll_status_data->status = $this->payroll_status;
-        $payroll_status_data->update();
-
-        return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
     }
 
     public function resetEditField(){
@@ -283,15 +292,19 @@ class AccountingDashboardView extends Component
     // }
 
     public function addTargetPayroll(){
+        $loggedInUser = auth()->user();
 
-        $loggedInUser = auth()->user()->employee_id;
+        try {
+            if(!in_array($loggedInUser->role_id, [3, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
         // foreach($this->rules as $rule => $validationRule){
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
 
         $payroll = new Payroll();
-        $payroll->employee_id = $loggedInUser;
+        $payroll->employee_id = $loggedInUser->employee_id;
         $parts = explode(' | ', $this->selectedEmployee);
         $payroll->target_employee = $parts[1];
         $payroll->phase = $this->payroll_phase;
@@ -310,7 +323,7 @@ class AccountingDashboardView extends Component
                                         ->select('month', 'year', 'employee_id', 'status', 'id')->first();
         if(!$payroll_status_data){
             $payroll_status = new PayrollStatus();
-            $payroll_status->employee_id = $loggedInUser;
+            $payroll_status->employee_id = $loggedInUser->employee_id;
             $payroll_status->target_employee = $payroll->target_employee;
             $payroll_status->phase = $payroll->phase;
             $payroll_status->year = $payroll->year;
@@ -322,6 +335,12 @@ class AccountingDashboardView extends Component
         $payroll_status->save();
 
         $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
+
 
     }
 
@@ -329,52 +348,59 @@ class AccountingDashboardView extends Component
 
     public function editPayroll($employee_id){
         // dd($this->start_date, $this->end_date, $this->payroll_picture);
-        $loggedInUser = auth()->user()->employee_id;
         // foreach($this->rules as $rule => $validationRule){
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
+        $loggedInUser = auth()->user();
 
-        
+        try {
+            if(!in_array($loggedInUser->role_id, [3, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+            $payroll = Payroll::where('target_employee', $employee_id)
+                                ->where('phase',  $this->payroll_phase)
+                                ->where('month',  $this->payroll_month)
+                                ->where('year',   $this->payroll_year)
+                                ->whereNull('deleted_at')
+                                ->select('month', 'phase', 'year', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
 
-        $payroll = Payroll::where('target_employee', $employee_id)
-                            ->where('phase',  $this->payroll_phase)
-                            ->where('month',  $this->payroll_month)
-                            ->where('year',   $this->payroll_year)
-                            ->whereNull('deleted_at')
-                            ->select('month', 'year', 'employee_id', 'target_employee','payroll_id', 'payroll_picture')->first();
+            if($payroll){
+                $payroll->employee_id = $loggedInUser->employee_id;
+                $payroll->payroll_picture = $this->payroll_picture;
+            } else {
+                dump('Error');
+            }
 
-        if($payroll){
-            $payroll->employee_id = $loggedInUser;
-            $payroll->payroll_picture = $this->payroll_picture;
-        } else {
-            dump('Error');
+
+            $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                            ->where('phase', $payroll->phase)
+                                            ->where('month', $payroll->month)
+                                            ->where('year', $payroll->year)
+                                            ->whereNull('deleted_at')
+                                            ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
+            if(!$payroll_status_data){
+                $payroll_status = new PayrollStatus();
+                $payroll_status->employee_id = $loggedInUser->employee_id;
+                $payroll_status->target_employee = $payroll->target_employee;
+                $payroll_status->phase = $payroll->phase;
+                $payroll_status->year = $payroll->year;
+                $payroll_status->month = $payroll->month;
+                $payroll_status->status = "Approved";
+                $payroll_status->save();
+                $payroll->update();
+            } else {
+                $payroll_status_data->status = "Approved";
+                $payroll_status_data->update();
+                $payroll->update();
+            }
+
+            return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
+            return redirect()->to(route('EmployeeDashboard'));
         }
-
-
-        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
-                                        ->where('phase', $payroll->phase)
-                                        ->where('month', $payroll->month)
-                                        ->where('year', $payroll->year)
-                                        ->whereNull('deleted_at')
-                                        ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
-        if(!$payroll_status_data){
-            $payroll_status = new PayrollStatus();
-            $payroll_status->employee_id = $loggedInUser;
-            $payroll_status->target_employee = $payroll->target_employee;
-            $payroll_status->phase = $payroll->phase;
-            $payroll_status->year = $payroll->year;
-            $payroll_status->month = $payroll->month;
-            $payroll_status_data->status = "Approved";
-            $payroll_status_data->save();
-            $payroll->update();
-        } else {
-            $payroll_status_data->status = "Approved";
-            $payroll_status_data->update();
-            $payroll->update();
-        }
-
-        return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
 
     }
 
@@ -385,13 +411,15 @@ class AccountingDashboardView extends Component
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
-        try {
-            throw new \Exception('test');
+        $loggedInUser = auth()->user();
 
-            $loggedInUser = auth()->user()->employee_id;
+        try {
+            if(!in_array($loggedInUser->role_id, [3, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
 
             $payroll = new Payroll();
-            $payroll->employee_id = $loggedInUser;
+            $payroll->employee_id = $loggedInUser->employee_id;
             $payroll->target_employee = $employee_id;
             $payroll->phase = $this->payroll_phase;
             $payroll->month = $this->payroll_month;
@@ -403,10 +431,10 @@ class AccountingDashboardView extends Component
                                             ->where('phase', $payroll->phase)
                                             ->where('year', $payroll->year)
                                             ->whereNull('deleted_at')
-                                            ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
+                                            ->select('month', 'year', 'phase', 'employee_id', 'status', 'id',)->first();
             if(!$payroll_status_data){
                 $payroll_status = new PayrollStatus();
-                $payroll_status->employee_id = $loggedInUser;
+                $payroll_status->employee_id = $loggedInUser->employee_id;
                 $payroll_status->target_employee = $payroll->target_employee;
                 $payroll_status->phase = $payroll->phase;
                 $payroll_status->year = $payroll->year;
@@ -426,22 +454,21 @@ class AccountingDashboardView extends Component
             return $this->dispatch('trigger-success-add');
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('accountingerrors')->error('Failed to add Payroll: ' . $e->getMessage());
-
-            // Dispatch a failure event with an error message
-            $this->dispatch('trigger-error');
-            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+            Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
+            return redirect()->to(route('EmployeeDashboard'));
         }
 
     }
 
 
     public function deletePayroll($employee_id){
+        $loggedInUser = auth()->user();
 
         try {
-            throw new \Exception('test');
+            if(!in_array($loggedInUser->role_id, [3, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
 
-            $loggedInUser = auth()->user()->employee_id;
             $payroll = Payroll::where('target_employee', $employee_id)
                                 ->where('phase',  $this->payroll_phase)
                                 ->where('month',  $this->payroll_month)
@@ -458,9 +485,9 @@ class AccountingDashboardView extends Component
                                 ->select('month', 'year', 'phase', 'employee_id', 'status', 'id')->first();
 
             if($payroll_status_data && $payroll){
-                $payroll_status_data->employee_id = $loggedInUser;
+                $payroll_status_data->employee_id = $loggedInUser->employee_id;
                 $payroll_status_data->deleted_at = now();
-                $payroll->employee_id = $loggedInUser;
+                $payroll->employee_id = $loggedInUser->employee_id;
                 $payroll->deleted_at = now();
                 $payroll_status_data->update();
                 $payroll->update();
@@ -469,11 +496,8 @@ class AccountingDashboardView extends Component
 
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('accountingerrors')->error('Failed to delete Payroll: ' . $e->getMessage());
-
-            // Dispatch a failure event with an error message
-            $this->dispatch('trigger-error');
-            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
+            Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
+            return redirect()->to(route('EmployeeDashboard'));
         }
     }
 

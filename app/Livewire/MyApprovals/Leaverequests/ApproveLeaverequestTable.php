@@ -109,8 +109,8 @@ class ApproveLeaverequestTable extends Component
         $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
         // Apply conditions based on the logged-in email
-        // if ($loggedInEmail === "spm_2009@wesearch.com.ph") {
-        if ($loggedInEmail === "seal.projectengage@gmail.com") {
+        if ($loggedInEmail === "spm_2009@wesearch.com.ph") {
+        // if ($loggedInEmail === "seal.projectengage@gmail.com") {
             $query->where(function ($query) use ($loggedInEmail) {
                 $query->where('approved_by_supervisor', '1');
             })->orWhere(function ($query) use ($loggedInEmail) {

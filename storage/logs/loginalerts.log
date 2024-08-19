@@ -184,3 +184,4 @@
 [2024-08-16 09:59:36] local.INFO: [Illuminate\Auth\Events\Login] User SLE0002 logged in from 127.0.0.1 {"employee_id":"SLE0002","email":"eugene.labadie@stanton.com"} 
 [2024-08-16 16:17:18] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"eloisa03@bechtelar.biz"} 
 [2024-08-19 15:29:13] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"eloisa03@bechtelar.biz"} 
+[2024-08-19 16:40:34] local.INFO: [Illuminate\Auth\Events\Login] User SLE0002 logged in from 127.0.0.1 {"employee_id":"SLE0002","email":"eugene.labadie@stanton.com"} 
