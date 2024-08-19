@@ -53,32 +53,49 @@
             <div class="py-6" id="pie-chart-4"></div>
         </div>
     </div>
+    @if ($loggedInUser)
     <!-- Employee Table -->
-    <div class="relative shadow-md">
-        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
-            <!-- Add user button -->
-            <button onclick="startModal(1)" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
-                Add employee
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
-                    <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z" />
-                </svg>
-            </button>
-            <!-- Main modal -->
-            <div id="add-modal" wire:ignore tabindex="-1" aria-hidden="true" class="hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow h-144 w-full max-w-md p-4">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between py-4 border-b">
-                        <h3 class="text-xl font-semibold text-gray-900">
-                            Add new account
-                        </h3>
-                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="add-modal">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                            </svg>
-                            <span class="sr-only">Close modal</span>
-                        </button>
-                    </div>
+    <div class="relative shadow-md" x-data="{ showModal: false }">
+    <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
+        <!-- Add user button -->
+        <button @click="showModal = true; startModal(1)" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+            Add employee
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4 ml-1">
+                <path d="M8.5 4.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0ZM10 13c.552 0 1.01-.452.9-.994a5.002 5.002 0 0 0-9.802 0c-.109.542.35.994.902.994h8ZM12.5 3.5a.75.75 0 0 1 .75.75v1h1a.75.75 0 0 1 0 1.5h-1v1a.75.75 0 0 1-1.5 0v-1h-1a.75.75 0 0 1 0-1.5h1v-1a.75.75 0 0 1 .75-.75Z"/>
+            </svg>
+        </button>
+
+    <!-- Main modal -->
+    <div x-show="showModal"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0"
+         class="fixed inset-0 z-50 flex justify-center items-center w-full h-full">
+
+        <!-- Black shadow backdrop -->
+        <!-- The backdrop remains visible but does not close the modal when clicked -->
+        <div class="fixed inset-0 bg-black opacity-50"></div>
+
+        <!-- Modal content -->
+        <!-- The @click.stop directive prevents clicks inside the modal from propagating to the backdrop -->
+        <div class="relative bg-white rounded-lg shadow w-full max-w-md p-4" @click.stop>
+            <!-- Modal header -->
+            <div class="flex items-center justify-between py-4 border-b">
+                <h3 class="text-xl font-semibold text-gray-900">
+                    Add new account
+                </h3>
+                <!-- Close button -->
+                <button type="button" @click="showModal = false" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
                     <!-- Stepper -->
                     <ol class="flex items-center justify-center w-full p-4">
                         <li class="flex flex-row items-center">
@@ -484,7 +501,7 @@
                         <!-- Onboarding -->
                         <div id="step-6" class="hidden step mb-4">
                             <div class="flex flex-row justify-between">
-                                <h2 class="font-semibold text-md text-customGray1">Onboarding</h2>
+                                <h2 class="font-semibold text-md text-customGray1">Education History</h2>
                                 <button class="text-customGray1 hover:text-customRed" onclick="resetInputs('.step-6-inputs')">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -522,7 +539,7 @@
                         <!-- Company details -->
                         <div id="step-7" class="hidden step mb-4">
                             <div class="flex flex-row justify-between">
-                                <h2 class="font-semibold text-md text-customGray1">Education History</h2>
+                                <h2 class="font-semibold text-md text-customGray1">Onboarding</h2>
                                 <button class="text-customGray1 hover:text-customRed" onclick="resetInputs('.step-7-inputs')">
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-4">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0 3.181 3.183a8.25 8.25 0 0 0 13.803-3.7M4.031 9.865a8.25 8.25 0 0 1 13.803-3.7l3.181 3.182m0-4.991v4.99" />
@@ -535,10 +552,7 @@
                                     <label for="start_of_employment" class="block text-sm font-medium text-customGray1">Start of Employment <span class="text-red-600">*</span></label>
                                     <input type="date" name="start_of_employment" id="start_of_employment" wire:model="start_of_employment" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Start of Employment"required>
                                 </div>
-                                <div class="gap-2 flex flex-col">
-                                    <label for="employee_id" class="block text-sm font-medium text-customGray1">Employee ID <span class="text-red-600">*</span></label>
-                                    <input type="text" name="employee_id" id="employee_id" wire:model="employee_id" class="step-1-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Example: SLE00021">
-                                </div>
+
                                 <div class="gap-2 flex flex-col">
                                     <label for="inside_department" class="block text-sm font-medium text-customGray1">Department <span class="text-red-600">*</span></label>
                                     <select name="inside_department" id="inside_department" wire:model="inside_department" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
@@ -555,7 +569,7 @@
                                 <div class="gap-2 flex flex-col">
                                     <label for="employee_type" class="block text-sm font-medium text-customGray1">Employee Type <span class="text-red-600">*</span></label>
                                     <select name="employee_type" id="employee_type" wire:model="employee_type" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        <option selected>Select Department</option>
+                                        <option selected>Select Employee Type</option>
                                         <option value="Internals">Internals</option>
                                         <option value="OJT">OJT</option>
                                         <option value="PEI-CCS">PEI-CCS</option>
@@ -567,17 +581,21 @@
                                 <div class="gap-2 flex flex-col">
                                     <label for="company" class="block text-sm font-medium text-customGray1">Company <span class="text-red-600">*</span></label>
                                     <select name="company" id="company" wire:model="department" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        <option selected>Select Department</option>
+                                        <option selected>Select Company</option>
                                         <option value="PEI">PEI</option>
                                         <option value="SL Search">SL Search</option>
                                         <option value="SL Temps">SL Temps</option>
-                                        <option value="WESEARCH">WESEARCH</option>
+                                        <option value="WESEARCH">WESEARCH</optaion>
                                         <option value="PEI-Upskills">PEI-Upskills</option>
                                     </select>
                                 </div>
                                 <div class="gap-2 flex flex-col">
                                     <label for="current_position" class="block text-sm font-medium text-customGray1">Current Position <span class="text-red-600">*</span></label>
                                     <input type="text" name="current_position" id="current_position" wire:model="current_position" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Position"required>
+                                </div>
+                                <div class="gap-2 flex flex-col">
+                                    <label for="employee_id" class="block text-sm font-medium text-customGray1">Employee ID</label>
+                                    <input type="text" name="employee_id" id="employee_id" wire:model="employee_id" class="step-1-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Example: SLE00021">
                                 </div>
                                 <div class="flex flex-row w-full relative">
                                     <div class="flex flex-col w-full">
@@ -596,6 +614,16 @@
                                         </svg>
                                     </button>
                                 </div>
+                                <div class="items-center">
+    <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" wire:model="active" class="sr-only peer">
+        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active?</span>
+    </label>
+
+</div>
+
+
                             </div>
                         </div>
                         <!-- Stepper buttons -->
@@ -1131,6 +1159,7 @@
             </div>
           </div>
       </div>
+      @endif
   </div>
 
 <script>

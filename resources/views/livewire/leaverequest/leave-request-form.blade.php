@@ -162,22 +162,39 @@
                             <div>
                                 {{-- Time Frame --}}
                                 <h2 class="font-bold text-customRed">Credit Leave Description</h2>
-                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-2 gap-4">
-                                    <div id="date_earned_container" class="col-span-1">
-                                        <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date
-                                            <span class="text-red-600">*</span>
-                                        </label>
-                                        <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
-                                            required="">
-                                        @error('date_earned')
-                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('date_earned_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_earned_container').focus();" >
-                                                <span class="text-xs text-red-500">{{$message}}</span>
-                                            </div>
-                                        @enderror
+                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-5 gap-4">
+                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-2 ">
+                                    {{-- Date Earned --}}
+                                        <div id="date_earned_container" class="col-span-1">
+                                            <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned
+                                                <span class="text-red-600">*</span>
+                                            </label>
+                                            <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                                required="">
+                                            @error('date_earned')
+                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('date_earned_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_earned_container').focus();" >
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    {{-- Application Date --}}
+                                        <div id="credit_application_container" class="col-span-1">
+                                            <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Application Date
+                                                <span class="text-red-600">*</span>
+                                            </label>
+                                            <input type="date" name="credit_application" id="credit_application" wire:model.live="credit_application"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                                required="">
+                                            @error('credit_application')
+                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('credit_application_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('credit_application_container').focus();" >
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                     {{-- Available Credits --}}
-                                    <div id="date_description_container" class="col-span-1">
+                                    <div id="date_description_container" class="col-span-3">
                                         <label for="earned_description" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned Description <span class="text-red-600">*</span></label>
                                         <div id="earned_description" class="grid grid-cols-1">
                                             <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
@@ -199,7 +216,7 @@
                             <div>
                         {{-- @if ($mode_of_application == "Advise Slip") --}}
                                 <p class="mb-4 font-bold text-customRed">Advise Slip Information</p>
-                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-4 gap-4">
+                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
                                     <div id="time_period_container" class="col-span-1">
                                         <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Date Requested
                                             <span class="text-red-600">*</span>
@@ -247,23 +264,6 @@
                                             </div>
                                         @enderror
                                     </div>
-                                    <div id="deduct_to_container" class="col-span-1">
-                                        <label class="block mb-2 text-sm font-medium text-gray-900 ">Deduct to?
-                                            <span class="text-red-600">*</span>
-                                        </label>
-                                        <select id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                            <option value="" selected>Select</option>
-                                            <option value="Salary">Salary</option>
-                                            <option value="Credits">Credits</option>
-                                        </select>
-                                        @error('deduct_to')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                            x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();" >
-                                                <span class="text-xs text-red-500">{{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
                                 </div>
                                 <hr class="my-4 border-gray-300">
                             </div>
@@ -300,13 +300,17 @@
                                             </div>
                                             <div class="col-span-1">
                                                 <div id="full_half_container" class="col-span-1">
-                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full on Start or End Day
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full/Undertime on End Day
                                                         <span class="text-red-600">*</span>
                                                     </label>
                                                     <select id="purpose_type" name="full_half" wire:model.live="full_half"
                                                         class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                         <option value="" selected>Select</option>
-                                                        <optgroup label="Full Day Options">
+                                                        <option value="Full Day">Full Day</option>
+                                                        <option value="Half Day">Half Day</option>
+                                                        <option value="Undertime">Undertime</option>
+
+                                                        {{-- <optgroup label="Full Day Options">
                                                             <option value="Start Full">Full Day Start | Half Day End</option>
                                                             <option value="End Full">Full Day End | Half Day Start</option>
                                                             <option value="Both Full">Full Day Both</option>
@@ -315,7 +319,7 @@
                                                             <option value="Start Half">Half Day Start | Full Day End</option>
                                                             <option value="End Half">Half Day End | Full Day Start</option>
                                                             <option value="Both Half">Half Day Both</option>
-                                                        </optgroup>
+                                                        </optgroup> --}}
                                                     </select>
                                                     @error('full_half')
                                                         <div class="text-sm transition transform alert alert-danger"
@@ -404,7 +408,7 @@
                 <div wire:loading wire:target="submit" class="loading-overlay">
                     <div class="flex flex-col justify-center items-center">
                         <div class="spinner"></div>
-                        <p>Submitting your Leave Request...</p>
+                        <p>Submitting your Form...</p>
                     </div>
                 </div>
             </div>

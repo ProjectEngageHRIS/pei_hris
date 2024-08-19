@@ -87,6 +87,17 @@ class ItDashboardView extends Component
     }
 
     public function mount(){
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [14, 15, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('ittickets')->error('Failed to View/Edit IT Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
+
         $employees = Employee::select('first_name', 'middle_name', 'last_name', 'employee_id')->get();
         foreach($employees as $employee){
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
@@ -220,7 +231,7 @@ class ItDashboardView extends Component
         try {
             $form = Ittickets::find($this->currentFormId);
             if($form){
-                if(in_array($loggedInUser->role_id, [14, 0])){
+                if(in_array($loggedInUser->role_id, [14, 15, 61024])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {

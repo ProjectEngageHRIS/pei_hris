@@ -152,6 +152,11 @@ return [
             'path' => storage_path('logs/forms/hr_tickets.log'),
             'level' => 'error',
         ],
+        'hrdashboard' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/hrdtr/hrdashboard..log'),
+            'level' => 'error',
+        ],
         'leaverequests' => [
             'driver' => 'single',
             'path' => storage_path('logs/forms/leave_request.log'),

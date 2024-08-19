@@ -1,0 +1,6 @@
+[2024-08-16 09:05:08] local.ERROR: Failed to View/Edit Accounting Table: Unauthorized Access | 7  
+[2024-08-16 09:58:57] local.ERROR: Failed to View/Edit Accounting Table: Unauthorized Access | 1  
+[2024-08-19 16:50:05] local.ERROR: Failed to Update Payslip: test | SLE0002  
+[2024-08-19 16:53:41] local.ERROR: Failed to Update Payslip: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'phase' cannot be null (Connection: mysql, SQL: insert into `payroll_statuses` (`employee_id`, `target_employee`, `phase`, `year`, `month`, `status`, `updated_at`, `created_at`) values (SLE0002, SLE0032, ?, 2024, August, Approved, 2024-08-19 16:53:41, 2024-08-19 16:53:41)) | SLE0002  
+[2024-08-19 17:04:18] local.ERROR: Failed to Update Payslip: SQLSTATE[23000]: Integrity constraint violation: 1048 Column 'phase' cannot be null (Connection: mysql, SQL: insert into `payroll_statuses` (`employee_id`, `target_employee`, `phase`, `year`, `month`, `status`, `updated_at`, `created_at`) values (SLE0002, SLE0032, ?, 2024, August, Approved, 2024-08-19 17:04:18, 2024-08-19 17:04:18)) | SLE0002  
+[2024-08-19 17:06:04] local.ERROR: Failed to Update Payslip: test | SLE0002  

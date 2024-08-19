@@ -1,13 +1,17 @@
 <?php
 
 namespace App\Livewire\Dashboard;
-use Illuminate\Support\Facades\Crypt;
+
+use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
-use App\Models\User;
+use App\Mail\CreateEmployee;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
@@ -18,10 +22,14 @@ class HrDashboardView extends Component
     public $sss_num;
     public $trainingsSeminars;
     public $index;
+    public $active = 1;
+    public $employeeRecord;
     public $password;
     public $currentStep = 1;
     public $totalSteps = 2; // Number of steps
     public $stepData = [];
+    public $add_employee;
+    public $new_user;
 public $emergencyContact;
 public $govtProfessionalExamTaken;
 public $employee_history=[];
@@ -75,7 +83,6 @@ public $govt_professional_exam_taken=[];
 
     public $trainings_seminars=[];
     public $age;
-    public $active;
 
     public $religion;
     public $birth_place;
@@ -94,6 +101,8 @@ public $govt_professional_exam_taken=[];
     public $spouse;
     public $showConfirmation = false;
     public $step = 1;
+
+    public $loggedInUser;
 
     public $employeeTypesFilter = [
         'INTERNALS' => false,
@@ -171,7 +180,7 @@ public $govt_professional_exam_taken=[];
 
     public function mount(){
 
-
+        $this->active = $this->active == 1 ? true : false;
 
         $combinedCounts = Employee::select(
             DB::raw('COUNT(CASE WHEN employee_type = "Internals" THEN 1 END) as Internals'),
@@ -290,7 +299,6 @@ public $govt_professional_exam_taken=[];
             $sanitized_start_of_employment = str_replace('"', '', json_encode($this->start_of_employment));
 
 
-            $loggedInUser = auth()->user();
 
             $add_employee = new Employee();
             $add_employee->emergency_contact = json_encode($this->emergency_contact);
@@ -333,7 +341,7 @@ public $govt_professional_exam_taken=[];
             $add_employee->religion = $this->religion;
             $add_employee->age = $this->age;
             $add_employee->start_of_employment =$sanitized_start_of_employment;
-            // $add_employee->active = $this->active;
+            $add_employee->active = $this->active;
             $add_employee->govt_professional_exam_taken = json_encode($this->govt_professional_exam_taken);
 
             $add_employee->personal_email = $this->personal_email;
@@ -358,8 +366,13 @@ public $govt_professional_exam_taken=[];
             $add_employee->names_of_children = $formattedNamesString;
 
 
-            // Assuming $add_employee is an instance of your employee model
-            $add_employee->save();
+ $loggedInUser = auth()->user();
+
+  // Retrieve the existing employee's record
+  $employeeRecord = Employee::select( 'employee_id', 'employee_email')
+  ->where('employee_id', $loggedInUser->employee_id)
+  ->first();
+  $add_employee->save();
             $existing_user = User::where('email', $this->employee_email)->first();
             $existing_user = User::where('email', $this->employee_email)->first();
 
@@ -377,6 +390,14 @@ public $govt_professional_exam_taken=[];
                 $new_user->password = bcrypt('defaultpassword'); // Set a default password or prompt to change it later
                 $new_user->save();
             }
+// Send an email to the existing employee
+$new_user = Employee::where('employee_id', '$add_employee->employee_id')->first();
+// Assuming $add_employee is an instance of a new employee record or has an 'employee_email' property
+if (isset($add_employee->employee_email)) {
+  Mail::to($add_employee->employee_email)->send(new CreateEmployee($employeeRecord, $add_employee, $new_user));
+}
+            // Assuming $add_employee is an instance of your employee model
+
         });
 
         $this->trainingsSeminars = $this->trainingsSeminars ?? [];
@@ -439,8 +460,12 @@ public $govt_professional_exam_taken=[];
         $jsongovtProfessionalExamTaken = json_encode($jsongovtProfessionalExamTaken ?? ' ');
         $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ');
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);
+
+
+
         $this->js("alert('Employee Created!')");
-        $this->showConfirmation = true;
+        return redirect()->to(route('HumanResourceDashboard'));
+
     }
 
 
@@ -473,6 +498,21 @@ public $govt_professional_exam_taken=[];
 
     public function render()
     {
+
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+            if(in_array($loggedInUser, [7, 8, 61024, 14,])){
+                $this->loggedInUser = True;
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to View HR Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
+        
         // dump($this->employeeTypesFilter);
         // sleep(3);
 

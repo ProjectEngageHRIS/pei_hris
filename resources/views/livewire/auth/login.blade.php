@@ -96,11 +96,11 @@
                         </label>
                     </div>
 
-                    <div class="text-sm leading-5">
+                    {{-- <div class="text-sm leading-5">
                         <a href="{{ route('PasswordReset') }}" class="font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:underline transition ease-in-out duration-150 forgot-password-link" style="color: #AC0C2E;">
                             Forgot your password?
                         </a>
-                        </div>
+                    </div> --}}
 
                     {{-- <div class="text-sm leading-5">
                         <a href="{{ route('password.request') }}" class="font-medium text-blue-600 hover:text-blue-800 focus:outline-none focus:underline transition ease-in-out duration-150">

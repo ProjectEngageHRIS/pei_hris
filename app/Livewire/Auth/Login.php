@@ -33,27 +33,19 @@ class Login extends Component
     {
         $this->validate();
 
-        $throttleKey = strtolower($this->email) . '|' . request()->ip();
-        $attempts = RateLimiter::attempts($throttleKey);
-        $limits = [
-            60,           // 60 seconds
-            300,          // 5 minutes
-            900,          // 15 minutes
-            3600,         // 1 hour
-            86400,        // 1 day
-            604800,       // 7 days
-            2592000,      // 1 month
-            15552000,     // 6 months
-            31536000,     // 1 year
-        ];
-        $index = min($attempts, count($limits) - 1);
-        $cooldown = $limits[$index];
-
-        if (RateLimiter::tooManyAttempts($throttleKey, 3)) {
+        $throttleKey = strtolower($this->email);
+        $maxAttempts = 3; // Maximum number of attempts allowed
+        $decayMinutes = 1; // Time period in minutes to limit the attempts
+        
+        // Check if too many attempts have been made
+        if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
             $this->addError('email', 'Too many login attempts. Please try again in ' . RateLimiter::availableIn($throttleKey) . ' seconds.');
             $this->tooManyLoginAttempts = true;
             return;
         }
+        
+        // Otherwise, record the attempt
+        RateLimiter::hit($throttleKey, $decayMinutes * 60); // Decay time in seconds
 
         // Check if the credentials are valid
         // $credentials = ['employee_id' => $this->email, 'password' => $this->password];

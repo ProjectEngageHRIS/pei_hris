@@ -87,6 +87,19 @@ class ApproveChangeInformationTable extends Component
         $this->resetPage();
     }
 
+    public function mount(){
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [7, 8, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('changeinforequests')->error('Failed to View/Approve Change Information Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
+    }
+
     public function clearAllFilters(){
         $this->reset(['employeeTypesFilter', 'insideDepartmentTypesFilter', 'departmentTypesFilter', 'genderTypesFilter']);
     }

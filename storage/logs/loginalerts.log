@@ -177,3 +177,11 @@
 [2024-08-15 14:35:17] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0009 logged out from 127.0.0.1 {"employee_id":"SLE0009","email":"genoveva11@gmail.com"} 
 [2024-08-15 14:35:38] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
 [2024-08-15 14:36:55] local.INFO: [Illuminate\Auth\Events\Login] User SLE00001 logged in from 127.0.0.1 {"employee_id":"SLE00001","email":"hytyf@mailinator.com"} 
+[2024-08-15 17:26:07] local.INFO: [Illuminate\Auth\Events\Logout] User SLEA9999 logged out from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-08-15 17:26:31] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"eloisa03@bechtelar.biz"} 
+[2024-08-16 07:58:35] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"eloisa03@bechtelar.biz"} 
+[2024-08-16 09:59:01] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0006 logged out from 127.0.0.1 {"employee_id":"SLE0006","email":"briana.nikolaus@yahoo.com"} 
+[2024-08-16 09:59:36] local.INFO: [Illuminate\Auth\Events\Login] User SLE0002 logged in from 127.0.0.1 {"employee_id":"SLE0002","email":"eugene.labadie@stanton.com"} 
+[2024-08-16 16:17:18] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"eloisa03@bechtelar.biz"} 
+[2024-08-19 15:29:13] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"eloisa03@bechtelar.biz"} 
+[2024-08-19 16:40:34] local.INFO: [Illuminate\Auth\Events\Login] User SLE0002 logged in from 127.0.0.1 {"employee_id":"SLE0002","email":"eugene.labadie@stanton.com"} 

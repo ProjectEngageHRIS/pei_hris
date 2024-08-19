@@ -19,7 +19,7 @@ class LoginDashboard extends Component
 
     public function mount(){
         $role_id = auth()->user()->role_id;
-        if(in_array($role_id, [6,7,8,9])){
+        if(in_array($role_id, [2,7,8,9,10,11,12,13])){
             $this->is_hr = True;
             // return redirect()->to(route('HumanResourceDashboard'));
         }
@@ -30,10 +30,10 @@ class LoginDashboard extends Component
             $this->is_accounting = True;
             // return redirect()->to(route('AccountingDashboard'));
         }
-        if(in_array($role_id, [11])){
+        if(in_array($role_id, [14])){
             $this->is_it = True;
         }
-        if(in_array($role_id, [10])){
+        if(in_array($role_id, [6])){
             $this->is_president = True;
             // return redirect()->to(route('EmployeeDashboard'));
         }

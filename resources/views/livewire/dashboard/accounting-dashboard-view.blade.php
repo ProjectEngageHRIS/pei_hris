@@ -80,14 +80,14 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll" class="load-over z-50">
-            <div wire:loading wire:target="halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay">
+        <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll" class="load-over z-50">
+            <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay z-50">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Updating...</p>
                 </div>
             </div>
-            <div wire:loading wire:target="deletePayroll, editPayroll, addPayroll" class="loading-overlay">
+            <div wire:loading wire:target="deletePayroll, editPayroll, addPayroll" class="loading-overlay z-50">
                 <div class="flex flex-col justify-center items-center">
                     <div class="spinner"></div>
                     <p>Uploading...</p>

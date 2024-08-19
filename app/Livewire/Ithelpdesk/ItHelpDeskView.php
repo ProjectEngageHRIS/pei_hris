@@ -70,7 +70,7 @@ class ItHelpDeskView extends Component
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('ittickets')->error('Failed to view IT Ticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
-            redirect()->to(route('ItHelpDeskTable'));
+            return null;
         }
     }
 

@@ -399,11 +399,10 @@
                                     <div>
                                         <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
                                         <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
+                                            <option class="hover:bg-customRed hover:text-white" value="Completed">Approved</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                            <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                            <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
-                                            <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
+                                            <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
+                                            {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Cancelled</option> --}}
                                         </select>
                                     </div>
                                     <button @click="openConfirmation = true" id="updateButton" type="button"  class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
@@ -450,7 +449,7 @@
                     </div>
 
                     <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                            @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Change Request Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
+                            @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Leave Request Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
                             @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
                             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                         <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"

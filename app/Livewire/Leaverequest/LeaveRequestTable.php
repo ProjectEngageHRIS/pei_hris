@@ -195,9 +195,9 @@ class LeaveRequestTable extends Component
 
 
         if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->paginate(5);
         } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
 
         if(strlen($this->search) >= 1){
@@ -250,8 +250,8 @@ class LeaveRequestTable extends Component
     // }
 
     public function cancelForm(){
+        $employee_id = auth()->user()->employee_id;
         try{
-            $employee_id = auth()->user()->employee_id;
             $data = Leaverequest::where('employee_id', $employee_id)
                             ->where('uuid', $this->currentFormId)
                             ->select('uuid', 'form_id', 'employee_id', 'status', 'cancelled_at') 
@@ -266,7 +266,7 @@ class LeaveRequestTable extends Component
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('leaverequests')->error('Failed to update Hrticket: ' . $e->getMessage());
+            Log::channel('leaverequests')->error('Failed to update Leave Request: ' . $e->getMessage() . ' | ' . $employee_id);
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');

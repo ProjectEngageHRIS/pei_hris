@@ -124,305 +124,305 @@
                         </div>
                         <input type="text" id="table-search-users" wire:model.change="search" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                     </div>
-                        <!-- Filter Sidebar -->
-                        <div class="absolute rounded-lg  hover:text-customRed" style="right: 70px">
-                            <div x-data="{
-                                employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                                insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                                departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                                genderTypesFilter: @entangle('genderTypesFilter'), 
-                                filterOpen: false,
-                                employeeTypeOpen: false,
-                                departmentTypeOpen: false,
-                                insideDepartmentTypeOpen: false,
-                                genderTypeOpen: false,
-                                employeeTypeCount: 0,
-                                departmentCount: 0,
-                                companyCount: 0,
-                                genderCount: 0,
-                                clearAllFilters() {
-                                    document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
-                                    this.employeeTypeCount = 0;
-                                    this.departmentCount = 0;
-                                    this.companyCount = 0;
-                                    this.genderCount = 0;
-                                    @this.set('genderTypesFilter', this.genderTypesFilter);
-                                    @this.set('departmentTypesFilter', this.departmentTypesFilter);
-                                    @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
-                                    @this.set('employeeTypesFilter', this.employeeTypesFilter);
-                                }, 
-                                applyAllFilters(){
-                                    @this.set('genderTypesFilter', this.genderTypesFilter);
-                                    @this.set('departmentTypesFilter', this.departmentTypesFilter);
-                                    @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
-                                    @this.set('employeeTypesFilter', this.employeeTypesFilter);
-                                }
-                                }" class="relative">
-        
-                                <!-- Filter Icon Button -->
-                                <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 ">
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6  text-customGray hover:text-customRed">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                                    </svg>
-                                </button>
-                                <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
-                                    <!-- Clear All Button -->
-                                    <div class="px-4 py-2">
-                                        <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
-                                            Clear All
-                                        </button>
-                                    </div>
-                                    <!-- Employee Type Dropdown Button -->
-                                    <div x-data="{ 
-                                        {{-- employeeTypeCount: 0,  // Add employeeTypeCount to x-data --}}
-                                        init() {
-                                            this.updateEmployeeTypeCount();  // Initialize employeeTypeCount on component mount
-                                        },
-                                        clearEmployeeFilters() {
-                                            // Iterate over all keys and set them to false
-                                            Object.keys(this.employeeTypesFilter).forEach(key => {
-                                                this.employeeTypesFilter[key] = false;
-                                            });
-                                            this.updateEmployeeTypeCount();  // Update employeeTypeCount when filters are cleared
-                                        },
-                                        updateEmployeeTypeCount() {
-                                            // Calculate the count of checked filters
-                                            this.employeeTypeCount = Object.keys(this.employeeTypesFilter).filter(key => this.employeeTypesFilter[key]).length;
-                                        }
-                                    }" x-init="init()">
-                                        <div class="px-2">
-                                            <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                                Employee Type
-                                                <span class="float-right">&#9662;</span>
-                                                <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
-                                            </button>
-                                            <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
-                                                <hr class="my-4 border-gray-300">
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="employeeTypesFilter.Internals" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="employeeTypesFilter['PEI-CCS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
-                                                </div>
-                                                <!-- More checkboxes... -->
-                                                <div class="px-4 py-2 flex space-x-2">
-                                                    <!-- Clear Filters Button -->
-                                                    <button @click="clearEmployeeFilters(); $wire.set('employeeTypesFilter', employeeTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
-                                                        Clear Filters
-                                                    </button>
-                                                    <!-- Apply Filters Button -->
-                                                    <button @click="$wire.set('employeeTypesFilter', employeeTypesFilter); employeeTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
-                                                        Apply Filters
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    
-                                    <!-- Department Dropdown Button -->
-                                    <div x-data="{ 
-                                        init() {
-                                            this.updateDepartmentCount();  // Initialize departmentCount on component mount
-                                        },
-                                        clearInsideDepartmentFilters() {
-                                            // Iterate over all keys and set them to false
-                                            Object.keys(this.insideDepartmentTypesFilter).forEach(key => {
-                                                this.insideDepartmentTypesFilter[key] = false;
-                                            });
-                                            this.updateDepartmentCount();  // Update departmentCount when filters are cleared
-                                        },
-                                        updateDepartmentCount() {
-                                            // Calculate the count of checked filters
-                                            this.departmentCount = Object.keys(this.insideDepartmentTypesFilter).filter(key => this.insideDepartmentTypesFilter[key]).length;
-                                        }
-                                    }">
-                                        <div class="px-2">
-                                            <button @click="insideDepartmentTypeOpen = !insideDepartmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                                Department
-                                                <span class="float-right">&#9662;</span>
-                                                <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
-                                            </button>
-                                            <div x-show="insideDepartmentTypeOpen" @click.away="insideDepartmentTypeOpen = false" class="w-full mt-2 space-y-2 insideDepartmentTypeOpen">
-                                                <hr class="my-4 border-gray-300">
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter['HR AND ADMIN']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter['Overseas Recruitment']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter['PEI/SL Temps DO-174']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter['Corporate Accounting and Finance']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="insideDepartmentTypesFilter['Accounting Operations']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
-                                                </div>
-                                                <div class="px-4 py-2 flex space-x-2">
-                                                    <!-- Clear Filters Button -->
-                                                    <button @click="clearInsideDepartmentFilters(); $wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
-                                                        Clear Filters
-                                                    </button>
-                                                    <!-- Apply Filters Button -->
-                                                    <button @click="$wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter); insideDepartmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
-                                                        Apply Filters
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-
-                                    <!-- Company Dropdown Button -->
-                                    <div x-data="{ 
-                                        init() {
-                                            this.updateCompanyCount();  // Initialize companyCount on component mount
-                                        },
-                                        clearCompanyFilters() {
-                                            // Iterate over all keys and set them to false
-                                            Object.keys(this.departmentTypesFilter).forEach(key => {
-                                                this.departmentTypesFilter[key] = false;
-                                            });
-                                            this.updateCompanyCount();  // Update companyCount when filters are cleared
-                                        },
-                                        updateCompanyCount() {
-                                            // Calculate the count of checked filters
-                                            this.companyCount = Object.keys(this.departmentTypesFilter).filter(key => this.departmentTypesFilter[key]).length;
-                                        }
-                                    }">
-                                        <div class="px-2">
-                                            <button @click="departmentTypeOpen = !departmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                                Company
-                                                <span class="float-right">&#9662;</span>
-                                                <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
-                                            </button>
-                                            <div x-show="departmentTypeOpen" @click.away="departmentTypeOpen = false" class="w-full mt-2 space-y-2 departmentTypeOpen">
-                                                <hr class="my-4 border-gray-300">
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="departmentTypesFilter['SL SEARCH']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="departmentTypesFilter['SL TEMPS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="departmentTypesFilter['PEI-UPSKILLS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
-                                                </div>
-                                                <div class="px-4 py-2 flex space-x-2">
-                                                    <!-- Clear Filters Button -->
-                                                    <button @click="clearCompanyFilters(); $wire.set('departmentTypesFilter', departmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
-                                                        Clear Filters
-                                                    </button>
-                                                    <!-- Apply Filters Button -->
-                                                    <button @click="$wire.set('departmentTypesFilter', departmentTypesFilter); departmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
-                                                        Apply Filters
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-
-
-                                    <!-- Gender Dropdown Button -->
-                                    <div x-data="{ 
-                                            clearGenderFilters() {
-                                                // Iterate over all keys and set them to false
-                                                Object.keys(this.genderTypesFilter).forEach(key => {
-                                                    this.genderTypesFilter[key] = false;
-                                                });
-                                                this.updateGenderCount(); // Update count after clearing filters
-                                            },
-                                            updateGenderCount() {
-                                                // Update count using document.querySelectorAll
-                                                this.genderCount = Object.keys(this.genderTypesFilter).filter(key => this.genderTypesFilter[key]).length;
-
-                                                {{-- this.genderCount = document.querySelectorAll('.genderTypeOpen .filter-checkbox:checked').length; --}}
-                                            }
-                                        }">
-                                        <div class="px-2 pb-2">
-                                            <button @click="genderTypeOpen = !genderTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                                Gender
-                                                <span class="float-right">&#9662;</span>
-                                                <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
-                                            </button>
-                                            <div x-show="genderTypeOpen" @click.away="genderTypeOpen = false" class="w-full mt-2 space-y-2 genderTypeOpen">
-                                                <hr class="my-4 border-gray-300">
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
-                                                </div>
-                                                <div class="flex items-center px-4 py-2">
-                                                    <input type="checkbox" x-model="genderTypesFilter.Male" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                                    <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
-                                                </div>
-                                                <div class="px-4 py-2 flex space-x-2">
-                                                    <!-- Clear Filters Button -->
-                                                    <button @click="clearGenderFilters(); $wire.set('genderTypesFilter', genderTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
-                                                        Clear Filters
-                                                    </button>
-                                                    <!-- Apply Filters Button -->
-                                                    <button @click="$wire.set('genderTypesFilter', genderTypesFilter); genderTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
-                                                        Apply Filters
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div x-show="insideDepartmentTypeOpen == false && genderTypeOpen == false && departmentTypeOpen == false && insideDepartmentTypeOpen == false" class="px-4 pb-6 py-2 flex space-x-2 justify-between">
-                                        <!-- Apply All Button -->
-                                        <button @click="applyAllFilters();" class="w-full text-xs font-medium text-right text-customRed hover:text-red-900">
-                                            Apply All
-                                        </button>
-                                    </div>
-                                    
-                                
+                    <!-- Filter Sidebar -->
+                    <div class="absolute rounded-lg  hover:text-customRed" style="right: 70px">
+                        <div x-data="{
+                            employeeTypesFilter: @entangle('employeeTypesFilter'), 
+                            insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
+                            departmentTypesFilter: @entangle('departmentTypesFilter'), 
+                            genderTypesFilter: @entangle('genderTypesFilter'), 
+                            filterOpen: false,
+                            employeeTypeOpen: false,
+                            departmentTypeOpen: false,
+                            insideDepartmentTypeOpen: false,
+                            genderTypeOpen: false,
+                            employeeTypeCount: 0,
+                            departmentCount: 0,
+                            companyCount: 0,
+                            genderCount: 0,
+                            clearAllFilters() {
+                                document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
+                                this.employeeTypeCount = 0;
+                                this.departmentCount = 0;
+                                this.companyCount = 0;
+                                this.genderCount = 0;
+                                @this.set('genderTypesFilter', this.genderTypesFilter);
+                                @this.set('departmentTypesFilter', this.departmentTypesFilter);
+                                @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
+                                @this.set('employeeTypesFilter', this.employeeTypesFilter);
+                            }, 
+                            applyAllFilters(){
+                                @this.set('genderTypesFilter', this.genderTypesFilter);
+                                @this.set('departmentTypesFilter', this.departmentTypesFilter);
+                                @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
+                                @this.set('employeeTypesFilter', this.employeeTypesFilter);
+                            }
+                            }" class="relative">
+    
+                            <!-- Filter Icon Button -->
+                            <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 ">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6  text-customGray hover:text-customRed">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                                </svg>
+                            </button>
+                            <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
+                                <!-- Clear All Button -->
+                                <div class="px-4 py-2">
+                                    <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
+                                        Clear All
+                                    </button>
                                 </div>
+                                <!-- Employee Type Dropdown Button -->
+                                <div x-data="{ 
+                                    {{-- employeeTypeCount: 0,  // Add employeeTypeCount to x-data --}}
+                                    init() {
+                                        this.updateEmployeeTypeCount();  // Initialize employeeTypeCount on component mount
+                                    },
+                                    clearEmployeeFilters() {
+                                        // Iterate over all keys and set them to false
+                                        Object.keys(this.employeeTypesFilter).forEach(key => {
+                                            this.employeeTypesFilter[key] = false;
+                                        });
+                                        this.updateEmployeeTypeCount();  // Update employeeTypeCount when filters are cleared
+                                    },
+                                    updateEmployeeTypeCount() {
+                                        // Calculate the count of checked filters
+                                        this.employeeTypeCount = Object.keys(this.employeeTypesFilter).filter(key => this.employeeTypesFilter[key]).length;
+                                    }
+                                }" x-init="init()">
+                                    <div class="px-2">
+                                        <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                            Employee Type
+                                            <span class="float-right">&#9662;</span>
+                                            <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
+                                        </button>
+                                        <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
+                                            <hr class="my-4 border-gray-300">
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="employeeTypesFilter.Internals" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="employeeTypesFilter['PEI-CCS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
+                                            </div>
+                                            <!-- More checkboxes... -->
+                                            <div class="px-4 py-2 flex space-x-2">
+                                                <!-- Clear Filters Button -->
+                                                <button @click="clearEmployeeFilters(); $wire.set('employeeTypesFilter', employeeTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                    Clear Filters
+                                                </button>
+                                                <!-- Apply Filters Button -->
+                                                <button @click="$wire.set('employeeTypesFilter', employeeTypesFilter); employeeTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                    Apply Filters
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                
+                                <!-- Department Dropdown Button -->
+                                <div x-data="{ 
+                                    init() {
+                                        this.updateDepartmentCount();  // Initialize departmentCount on component mount
+                                    },
+                                    clearInsideDepartmentFilters() {
+                                        // Iterate over all keys and set them to false
+                                        Object.keys(this.insideDepartmentTypesFilter).forEach(key => {
+                                            this.insideDepartmentTypesFilter[key] = false;
+                                        });
+                                        this.updateDepartmentCount();  // Update departmentCount when filters are cleared
+                                    },
+                                    updateDepartmentCount() {
+                                        // Calculate the count of checked filters
+                                        this.departmentCount = Object.keys(this.insideDepartmentTypesFilter).filter(key => this.insideDepartmentTypesFilter[key]).length;
+                                    }
+                                }">
+                                    <div class="px-2">
+                                        <button @click="insideDepartmentTypeOpen = !insideDepartmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                            Department
+                                            <span class="float-right">&#9662;</span>
+                                            <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
+                                        </button>
+                                        <div x-show="insideDepartmentTypeOpen" @click.away="insideDepartmentTypeOpen = false" class="w-full mt-2 space-y-2 insideDepartmentTypeOpen">
+                                            <hr class="my-4 border-gray-300">
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter['HR AND ADMIN']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter['Overseas Recruitment']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter['PEI/SL Temps DO-174']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter['Corporate Accounting and Finance']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="insideDepartmentTypesFilter['Accounting Operations']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
+                                            </div>
+                                            <div class="px-4 py-2 flex space-x-2">
+                                                <!-- Clear Filters Button -->
+                                                <button @click="clearInsideDepartmentFilters(); $wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                    Clear Filters
+                                                </button>
+                                                <!-- Apply Filters Button -->
+                                                <button @click="$wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter); insideDepartmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                    Apply Filters
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+                                <!-- Company Dropdown Button -->
+                                <div x-data="{ 
+                                    init() {
+                                        this.updateCompanyCount();  // Initialize companyCount on component mount
+                                    },
+                                    clearCompanyFilters() {
+                                        // Iterate over all keys and set them to false
+                                        Object.keys(this.departmentTypesFilter).forEach(key => {
+                                            this.departmentTypesFilter[key] = false;
+                                        });
+                                        this.updateCompanyCount();  // Update companyCount when filters are cleared
+                                    },
+                                    updateCompanyCount() {
+                                        // Calculate the count of checked filters
+                                        this.companyCount = Object.keys(this.departmentTypesFilter).filter(key => this.departmentTypesFilter[key]).length;
+                                    }
+                                }">
+                                    <div class="px-2">
+                                        <button @click="departmentTypeOpen = !departmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                            Company
+                                            <span class="float-right">&#9662;</span>
+                                            <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
+                                        </button>
+                                        <div x-show="departmentTypeOpen" @click.away="departmentTypeOpen = false" class="w-full mt-2 space-y-2 departmentTypeOpen">
+                                            <hr class="my-4 border-gray-300">
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="departmentTypesFilter['SL SEARCH']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="departmentTypesFilter['SL TEMPS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="departmentTypesFilter['PEI-UPSKILLS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
+                                            </div>
+                                            <div class="px-4 py-2 flex space-x-2">
+                                                <!-- Clear Filters Button -->
+                                                <button @click="clearCompanyFilters(); $wire.set('departmentTypesFilter', departmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                    Clear Filters
+                                                </button>
+                                                <!-- Apply Filters Button -->
+                                                <button @click="$wire.set('departmentTypesFilter', departmentTypesFilter); departmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                    Apply Filters
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+
+
+                                <!-- Gender Dropdown Button -->
+                                <div x-data="{ 
+                                        clearGenderFilters() {
+                                            // Iterate over all keys and set them to false
+                                            Object.keys(this.genderTypesFilter).forEach(key => {
+                                                this.genderTypesFilter[key] = false;
+                                            });
+                                            this.updateGenderCount(); // Update count after clearing filters
+                                        },
+                                        updateGenderCount() {
+                                            // Update count using document.querySelectorAll
+                                            this.genderCount = Object.keys(this.genderTypesFilter).filter(key => this.genderTypesFilter[key]).length;
+
+                                            {{-- this.genderCount = document.querySelectorAll('.genderTypeOpen .filter-checkbox:checked').length; --}}
+                                        }
+                                    }">
+                                    <div class="px-2 pb-2">
+                                        <button @click="genderTypeOpen = !genderTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                            Gender
+                                            <span class="float-right">&#9662;</span>
+                                            <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
+                                        </button>
+                                        <div x-show="genderTypeOpen" @click.away="genderTypeOpen = false" class="w-full mt-2 space-y-2 genderTypeOpen">
+                                            <hr class="my-4 border-gray-300">
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
+                                            </div>
+                                            <div class="flex items-center px-4 py-2">
+                                                <input type="checkbox" x-model="genderTypesFilter.Male" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
+                                            </div>
+                                            <div class="px-4 py-2 flex space-x-2">
+                                                <!-- Clear Filters Button -->
+                                                <button @click="clearGenderFilters(); $wire.set('genderTypesFilter', genderTypesFilter);" class="w-full px-4 py-2 text-xs font-medium text-customGray1 bg-gray-200 hover:bg-gray-300 rounded">
+                                                    Clear Filters
+                                                </button>
+                                                <!-- Apply Filters Button -->
+                                                <button @click="$wire.set('genderTypesFilter', genderTypesFilter); genderTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white bg-customRed hover:bg-red-700 rounded">
+                                                    Apply Filters
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div x-show="insideDepartmentTypeOpen == false && genderTypeOpen == false && departmentTypeOpen == false && insideDepartmentTypeOpen == false" class="px-4 pb-6 py-2 flex space-x-2 justify-between">
+                                    <!-- Apply All Button -->
+                                    <button @click="applyAllFilters();" class="w-full text-xs font-medium text-right text-customRed hover:text-red-900">
+                                        Apply All
+                                    </button>
+                                </div>
+                                
+                            
                             </div>
                         </div>
+                    </div>
                 </div>
             </div>
             <table class="w-full pb-4 text-sm text-left text-gray-500 h-fit rtl:text-right " style="overflow-y:hidden;" >
@@ -491,52 +491,71 @@
                                     
                                     
                                     @if($leaverequest->status == "Pending")
-                                    <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
-                                        <div class="flex items-center justify-center space-x-4">
-                                            <!-- HR Approval Status -->
-                                            @if ($leaverequest->approved_by_supervisor == 1)
-                                                <span  class="text-gray-200 text-xs bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                                    <svg class="w-6 h-6 text-white mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-                                                    </svg>
-                                                    Supervisor : Approved
-                                                </span>
-                                            @else
-                                                <span class="text-gray-200 text-xs bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg px-2 py-1 inline-flex items-center">
+                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            @if($leaverequest->mode_of_application == "Credit Leave" || $leaverequest->mode_of_application == "Advise Slip" )
+                                                <span  class="text-gray-200 text-xs bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
                                                     <svg class="w-6 h-6 text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
                                                         <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
                                                         <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
-                                                    </svg>    
-                                                    Supervisor : {{$leaverequest->approved_by_supervisor ? 'Approved' : 'Pending'}}
+                                                    </svg>   
+                                                    Pending
                                                 </span>
+                                            @else
+                                            <div class="flex items-center justify-center space-x-4">
+                                                <!-- HR Approval Status -->
+                                                @if ($leaverequest->approved_by_supervisor == 1)
+                                                    <span  class="text-gray-200 text-xs bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                                        <svg class="w-6 h-6 text-white mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                                                        </svg>
+                                                        Supervisor : Approved
+                                                    </span>
+                                                @else
+                                                    <span class="text-gray-200 text-xs bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg px-2 py-1 inline-flex items-center">
+                                                        <svg class="w-6 h-6 text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
+                                                            <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                                                            <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
+                                                        </svg>    
+                                                        Supervisor : {{$leaverequest->approved_by_supervisor ? 'Approved' : 'Pending'}}
+                                                    </span>
+                                                    
+                                                @endif
                                                 
+                                                @if ($leaverequest->approved_by_president == 1)
+                                                    <span  class="text-gray-200 text-xs bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                                        <svg class="w-6 h-6 text-white mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
+                                                        </svg>
+                                                        President : Approved
+                                                    </span>
+                                                @else
+                                                    <span class="text-gray-200 text-xs bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg px-2 py-1 inline-flex items-center">
+                                                        <svg class="w-6 h-6 text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
+                                                            <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
+                                                            <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
+                                                        </svg>    
+                                                        President : {{$leaverequest->approved_by_supervisor ? 'Approved' : 'Pending'}}
+                                                    </span>
+                                                @endif
+                                            </div>
                                             @endif
-                                            
-                                            @if ($leaverequest->approved_by_president == 1)
-                                                <span  class="text-gray-200 text-xs bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
-                                                    <svg class="w-6 h-6 text-white mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-                                                    </svg>
-                                                    President : Approved
-                                                </span>
-                                            @else
-                                                <span class="text-gray-200 text-xs bg-amber-700 hover:bg-amber-800 focus:ring-4 focus:outline-none focus:ring-amber-300 font-medium rounded-lg px-2 py-1 inline-flex items-center">
-                                                    <svg class="w-6 h-6 text-gray-200 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 30 24">
-                                                        <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
-                                                        <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
-                                                    </svg>    
-                                                    President : {{$leaverequest->approved_by_supervisor ? 'Approved' : 'Pending'}}
-                                                </span>
-                                            @endif
-                                        </div>
-                                    </th>
+                                        </th>
                                     @elseif($leaverequest->status == "Approved")
                                         <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                             <span  class="text-gray-200 text-xs bg-green-700 hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
                                                 <svg class="w-6 h-6 text-white mr-1 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                                                 </svg>
-                                                {{ $leaverequest->status }} &nbsp;
+                                                Approved &nbsp;
+                                            </span>
+                                        </th>
+                                    @elseif($leaverequest->status == "Cancelled")
+                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                            <span  class="text-gray-200 text-xs bg-gray-700 hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-gray-300 font-medium rounded-lg  px-2 py-1 text-center inline-flex items-center me-2 dark:bg-green-300 dark:hover:bg-green-600 dark:focus:ring-green-800">
+                                                <svg class="w-6 h-6 text-white mr-1 dark:text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="24" height="24"  >
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
+                                                </svg> 
+                                                Cancelled &nbsp;
                                             </span>
                                         </th>
                                     @else
@@ -557,7 +576,9 @@
                                     </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         @if ($leaverequest->mode_of_application == "Credit Leave")
-                                            <span class="font-medium text-gray-700">Date Earned:</span> {{$leaverequest->inclusive_start_date}}
+                                            <span class="font-medium text-gray-700">Date Earned:</span> {{$leaverequest->inclusive_start_date}} <br>
+                                            <span class="font-medium text-gray-700">Date to Apply:</span> {{$leaverequest->inclusive_end_date}} <br>
+                                            <span class="font-medium text-gray-700">Earned Description:</span> {{$leaverequest->earned_description}} <br>
                                         @elseif ($leaverequest->mode_of_application == "Advise Slip")
                                             <span class="font-medium text-gray-700">Date Requested:</span> {{$leaverequest->inclusive_start_date}} <br>
                                             <span class="font-medium text-gray-700">Actual Schedule:</span> {{$leaverequest->inclusive_end_date}} <br>
@@ -568,7 +589,6 @@
                                             <span class="font-medium text-gray-700">End Date:</span> {{$leaverequest->inclusive_end_date}}
                                         @endif
                                     </td>
-
                                     <td class="items-center py-4 text-center">
                                         <div class="flex items-center justify-center space-x-2">
                                             <!-- View Button -->
@@ -649,11 +669,10 @@
                                             <div>
                                                 <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
                                                 <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                    <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
+                                                    <option class="hover:bg-customRed hover:text-white" value="Completed">Approved</option>
                                                     <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                                    <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                                    <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
-                                                    <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
+                                                    <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
+                                                    {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Cancelled</option> --}}
                                                 </select>
                                             </div>
                                             <button @click="openConfirmation = true" id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
