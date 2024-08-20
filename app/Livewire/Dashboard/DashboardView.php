@@ -60,9 +60,9 @@ class DashboardView extends Component
 
     public $role_id;
 
-    public $leave_requests;
+    // public $leave_requests;
 
-    public $tasks;
+    // public $tasks;
 
     public $leaveIndicator = False;
 
@@ -107,19 +107,6 @@ class DashboardView extends Component
         $this->department = $employeeInformation->department;
         $this->employeeImage = $employeeInformation->emp_image;
 
-        $this->leave_requests = Leaverequest::where('employee_id', $loggedInUser->employee_id)
-                                    // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
-                                    ->orderBy('inclusive_start_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
-                                    ->take(5)
-                                    ->select('inclusive_start_date', 'inclusive_end_date', 'form_id')
-                                    ->get();
-
-        $this->tasks = Mytasks::whereJsonContains('target_employees', $loggedInUser->employee_id)
-                            // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
-                            ->orderBy('application_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
-                            ->take(5)
-                            ->select('task_title', 'form_id')
-                            ->get();
 
         $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
         if($leaveIndicator){
@@ -274,19 +261,19 @@ class DashboardView extends Component
     }
 
     public $location;
-    // public $loading;
+    public $accuracy;
 
 
-    public function updateLocation($address, $action)
+    public function updateLocation($address, $action, $accuracy)
     {
         // $address = $data['address'];
         // $actionType = $data['action'];
-    
+        $this->location = $address;
+        
+        $this->accuracy = $accuracy;
         if ($action === 'Check In') {
-            $this->location = $address;
             $this->checkIn();
         } elseif ($action === 'Check Out') {
-            $this->location = $address;
             $this->checkOut(); // Assuming you have a checkOut method
         }
     }
@@ -312,7 +299,7 @@ class DashboardView extends Component
                 $dtr->time_in = Carbon::now()->toDateTimeString();
                 $lateCheckerParse = Carbon::parse($dtr->time_in);
                 $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0);
-                $dtr->time_in_location = $this->location; 
+                $dtr->time_in_location = $this->location . '(' . $this->accuracy . '%)'; 
                 if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
@@ -366,7 +353,7 @@ class DashboardView extends Component
                         $dtr->employee_id = $loggedInUser;
                         $dtr->attendance_date = Carbon::today()->toDateString();
                         $dtr->time_out = Carbon::now()->toDateTimeString();
-                        $dtr->time_out_location = $this->location;
+                        $dtr->time_out_location = $this->location . '(' . $this->accuracy . '%)';
                         $timeIn = Carbon::parse($dtr->time_in);
                         $timeOut = Carbon::parse($dtr->time_out);
                         $differenceInSeconds = $timeIn->diffInSeconds($timeOut);
@@ -536,14 +523,27 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
+
         
-        $activities = Activities::whereNull('deleted_at')->get();
-        
+        $leave_requests = Leaverequest::where('employee_id', $loggedInUser)
+                ->orderBy('inclusive_start_date', 'asc')
+                ->take(5)
+                ->select('inclusive_start_date', 'inclusive_end_date', 'uuid')
+                ->get(); // Ensure to call get() to execute the query and get the results
+
+        $tasks = Mytasks::whereJsonContains('target_employees', $loggedInUser)
+                ->orderBy('application_date', 'asc')
+                ->take(5)
+                ->select('task_title', 'uuid')
+                ->get(); // Ensure to call get() to execute the query and get the results
+
+        $activities = Activities::whereNull('deleted_at')->get(); // Ensure to call get() to execute the query and get the results
+
         return view('livewire.dashboard.dashboard-view', [
-            // 'data' => $this->filter($this->filter),
+            'leave_requests' => $leave_requests,
+            'tasks' => $tasks,
             'activities' => $activities,
         ]);
-
       
     }
 }

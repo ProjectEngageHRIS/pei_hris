@@ -48,7 +48,7 @@
                         </button>
                     </div>
                 </div>
-                <script>
+                {{-- <script>
                     document.addEventListener('livewire:init', function () {
                         Livewire.on('triggerLocationAction', (actionType) => {
                             window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
@@ -142,7 +142,7 @@
                                 });
                         }
                     });
-                </script>
+                </script> --}}
                 
                 
 
@@ -193,22 +193,22 @@
             </div>
 
             <script>
-            document.addEventListener('livewire:init', function () {
-                Livewire.on('triggerLocationAction', (actionType) => {
-                    window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
-                    if (navigator.geolocation) {
-                        requestLocation(actionType);
-                    } else {
-                        console.log('Location services are not supported by this browser.');
-                        window.dispatchEvent(new CustomEvent('end-loading'));
-                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
-                    }
-                });
+                document.addEventListener('livewire:init', function () {
+                    Livewire.on('triggerLocationAction', (actionType) => {
+                        window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
+                        if (navigator.geolocation) {
+                            requestLocation(actionType, 0); // Start with 0 retries
+                        } else {
+                            console.log('Location services are not supported by this browser.');
+                            window.dispatchEvent(new CustomEvent('end-loading'));
+                            window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                        }
+                    });
 
-                function requestLocation(actionType) {
+                function requestLocation(actionType, retries) {
                     navigator.geolocation.getCurrentPosition(
-                        (position) => handlePosition(position, actionType),
-                        (error) => handleError(error),
+                        (position) => handlePosition(position, actionType, retries),
+                        (error) => handleError(error, retries),
                         {
                             enableHighAccuracy: true,
                             timeout: 10000, // 10 seconds timeout
@@ -217,24 +217,34 @@
                     );
                 }
 
-                function handlePosition(position, actionType) {
+                function handlePosition(position, actionType, retries) {
                     const { latitude, longitude, accuracy } = position.coords;
                     console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+
                     if (accuracy < 50) { // Example accuracy threshold
-                        getAddressFromCoordinates(latitude, longitude, actionType);
-                    } else {
+                        getAddressFromCoordinates(latitude, longitude, actionType, accuracy);
+                    } else if (retries < 2) { // Retry up to 3 times (0, 1, 2)
                         console.warn('Accuracy is not sufficient, retrying...');
-                        // Optionally implement retry logic here
+                        setTimeout(() => requestLocation(actionType, retries + 1), 5000); // Retry after 10 seconds
+                    } else {
+                        console.error('Accuracy is still not sufficient after retries.');
+                        window.dispatchEvent(new CustomEvent('end-loading'));
+                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
                     }
                 }
 
-                function handleError(error) {
+                function handleError(error, retries) {
                     console.error('Geolocation error:', error);
-                    window.dispatchEvent(new CustomEvent('end-loading'));
-                    window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                    if (retries < 2) { // Retry up to 3 times (0, 1, 2)
+                        console.warn('Retrying due to geolocation error...');
+                        setTimeout(() => requestLocation('', retries + 1), 5000); // Retry after 10 seconds
+                    } else {
+                        window.dispatchEvent(new CustomEvent('end-loading'));
+                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                    }
                 }
 
-                function getAddressFromCoordinates(lat, lng, actionType) {
+                function getAddressFromCoordinates(lat, lng, actionType, acc) {
                     const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
 
                     fetch(url)
@@ -251,17 +261,25 @@
                                 console.log('Address:', address);
                                 Livewire.dispatch('checkLocation', { 
                                     address: address,
-                                    action: actionType
+                                    action: actionType,
+                                    accuracy: acc,
                                 });
+
+                                window.dispatchEvent(new CustomEvent('end-loading')); // End loading when done
                             } else {
                                 console.error('Geocoding error:', data);
+                                window.dispatchEvent(new CustomEvent('end-loading'));
+                                window.dispatchEvent(new CustomEvent('trigger-location-error'));
                             }
                         })
                         .catch(error => {
                             console.error('Fetch error:', error);
+                            window.dispatchEvent(new CustomEvent('end-loading'));
+                            window.dispatchEvent(new CustomEvent('trigger-location-error'));
                         });
                 }
             });
+
 
             document.addEventListener('livewire:init', function () {
                 Livewire.on('refreshPage', () => {
@@ -420,7 +438,7 @@
                                     <path fill-rule="evenodd" d="M7.502 6h7.128A3.375 3.375 0 0 1 18 9.375v9.375a3 3 0 0 0 3-3V6.108c0-1.505-1.125-2.811-2.664-2.94a48.972 48.972 0 0 0-.673-.05A3 3 0 0 0 15 1.5h-1.5a3 3 0 0 0-2.663 1.618c-.225.015-.45.032-.673.05C8.662 3.295 7.554 4.542 7.502 6ZM13.5 3A1.5 1.5 0 0 0 12 4.5h4.5A1.5 1.5 0 0 0 15 3h-1.5Z" clip-rule="evenodd" />
                                     <path fill-rule="evenodd" d="M3 9.375C3 8.339 3.84 7.5 4.875 7.5h9.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-9.75A1.875 1.875 0 0 1 3 20.625V9.375ZM6 12a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V12Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 15a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V15Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75ZM6 18a.75.75 0 0 1 .75-.75h.008a.75.75 0 0 1 .75.75v.008a.75.75 0 0 1-.75.75H6.75a.75.75 0 0 1-.75-.75V18Zm2.25 0a.75.75 0 0 1 .75-.75h3.75a.75.75 0 0 1 0 1.5H9a.75.75 0 0 1-.75-.75Z" clip-rule="evenodd" />
                                 </svg>
-                              <a class="col-span-11 ml-4 text-sm text-justify text-customRed line-clamp-3 hover:underline" href="{{ route('MyTasksView', ['index' => $task['form_id']]) }}"> <p >{{ $task->task_title }}</p> </a> 
+                              <a class="col-span-11 ml-4 text-sm text-justify text-customRed line-clamp-3 hover:underline" href="{{ route('MyTasksView', ['index' => $task->uuid]) }}"> <p >{{ $task->task_title }}</p> </a> 
                             </div>
                         @endforeach
                     </div>
@@ -486,9 +504,9 @@
                                     <path d="M12.75 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM7.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM8.25 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM9.75 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM10.5 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM12 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM12.75 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM14.25 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 17.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 15.75a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5ZM15 12.75a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0ZM16.5 13.5a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5Z" />
                                     <path fill-rule="evenodd" d="M6.75 2.25A.75.75 0 0 1 7.5 3v1.5h9V3A.75.75 0 0 1 18 3v1.5h.75a3 3 0 0 1 3 3v11.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V7.5a3 3 0 0 1 3-3H6V3a.75.75 0 0 1 .75-.75Zm13.5 9a1.5 1.5 0 0 0-1.5-1.5H5.25a1.5 1.5 0 0 0-1.5 1.5v7.5a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5v-7.5Z" clip-rule="evenodd" />
                                 </svg>
-                                <a  class="ml-2 flex" href="{{route('LeaveRequestView', ['index' => $request->form_id])}}">
+                                <a  class="ml-2 flex" href="{{route('LeaveRequestView', ['index' => $request->uuid])}}">
                                     <p class=" text-xs text-center text-customRed">{{ $request->inclusive_start_date }}</p>
-                                    <span class="text-xs text-center text-customRed">-</span>
+                                    <span class="text-xs text-center text-customRed"> &nbsp;  &nbsp;  - &nbsp; &nbsp;  </span>
                                     <p class="text-xs text-center text-customRed">{{ $request->inclusive_end_date }}</p>
                                 </a>
                             </div>
