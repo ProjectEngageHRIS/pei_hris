@@ -95,6 +95,7 @@ use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Livewire\Changeinformation\ChangeInformationTable;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
@@ -199,7 +200,9 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/profile/{media}/{filename}', [Employeeinformation::class, 'privateStorage'])->name('privateStorage');
 
-    Route::get('/changeinformation', ChangeInformation::class)->name('changeInformation');
+    Route::get('/changeinformation', ChangeInformationTable::class)->name('ChangeInformationTable');
+
+    Route::get('/changeinformationform', ChangeInformation::class)->name('changeInformation');
 
     Route::get('/changeinformationrequests', ApproveChangeInformationTable::class)->name('ApproveChangeInformationTable');
     

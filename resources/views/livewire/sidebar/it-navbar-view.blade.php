@@ -43,7 +43,7 @@
         <div class="invisible xl:visible xl:static absolute min-h-fit left-0 top-[9%] w-auto flex items-center px-5">
             <ul class="flex items-center gap-x-5">
                 <!-- Home Button -->
-                <a href="{{ route('HumanResourceDashboard') }}" class="w-32">
+                <a href="{{ route('ItDashboard') }}" class="w-32">
                     <button class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('HumanResourceDashboard') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                         <path fill-rule="evenodd" d="M8.543 2.232a.75.75 0 0 0-1.085 0l-5.25 5.5A.75.75 0 0 0 2.75 9H4v4a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V9h1.25a.75.75 0 0 0 .543-1.268l-5.25-5.5Z" clip-rule="evenodd" />

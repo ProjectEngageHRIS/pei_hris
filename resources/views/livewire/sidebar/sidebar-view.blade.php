@@ -51,7 +51,7 @@
                                         <a href="{{ route('LeaveRequestTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Request</a>
                                         <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                                         <a href="{{ route('ItHelpDeskTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
-                                        <a href="{{ route('changeInformation') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
+                                        <a href="{{ route('ChangeInformationTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
                                         <hr class="border-gray-400">
                                         <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Overtime Approval</a>
                                         <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Undertime Approval</a>
@@ -158,7 +158,7 @@
                             <a href="{{ route('LeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Request</a>
                             <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                             <a href="{{ route('ItHelpDeskTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
-                            <a href="{{ route('changeInformation') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
+                            <a href="{{ route('ChangeInformationTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
                             <hr class="border-gray-400">
                             <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Overtime Approval</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Undertime Approval</a>
