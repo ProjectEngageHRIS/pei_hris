@@ -169,84 +169,128 @@
             </div>
 
             <script>
-                document.addEventListener('livewire:init', function () {
-                    Livewire.on('triggerLocationCheckOut', (itemId) => {
-                        Livewire.dispatch('startLoading');
-                        if (navigator.geolocation) {
-                            getLocation(0); // Start with 0 retries
-                            @this.loading = true;
-                        } else {
-                            console.error("Geolocation is not supported by this browser.");
-                        }
-                    });
+document.addEventListener('livewire:init', function () {
+    Livewire.on('triggerLocationCheckOut', (itemId) => {
+        Livewire.dispatch('startLoading');
+        if (navigator.geolocation) {
+            watchLocation(0); // Start watching location with 0 retries
+            @this.loading = true;
+        } else {
+            console.error("Geolocation is not supported by this browser.");
+        }
+    });
 
-                    function getLocation(retries) {
-                        navigator.geolocation.getCurrentPosition(
-                            function(position) {
-                                var latitude = position.coords.latitude;
-                                var longitude = position.coords.longitude;
-                                var accuracy = position.coords.accuracy;
+    function watchLocation(retries) {
+        let watchId;
+        let bestAccuracy = Infinity;
 
-                                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+        watchId = navigator.geolocation.watchPosition(
+            function(position) {
+                const { latitude, longitude, accuracy } = position.coords;
 
-                                if (accuracy > 100 && retries < 3) { // Retry if accuracy is poor and retries are less than 3
-                                    console.warn('Poor accuracy, retrying geolocation...');
-                                    setTimeout(() => getLocation(retries + 1), 5000); // Retry after 5 seconds
-                                } else {
-                                    // Proceed with the best available location
-                                    console.log(accuracy > 100 ? 'Accuracy remains poor, using best available location.' : 'Good accuracy, using current location.');
-                                    getAddressFromCoordinates(latitude, longitude);
-                                }
-                            },
-                            function(error) {
-                                console.error("Geolocation error:", error);
-                            },
-                            {
-                                enableHighAccuracy: true,
-                                timeout: 10000, // Timeout after 10 seconds
-                                maximumAge: 0 // No cached position
-                            }
-                        );
-                    }
+                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
 
-                    function getAddressFromCoordinates(lat, lng) {
-                        var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+                if (accuracy < bestAccuracy) {
+                    bestAccuracy = accuracy;
+                    // Fetch the address immediately with the improved accuracy
+                    getAddressFromCoordinates(latitude, longitude);
+                }
 
-                        fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.address) {
-                                var address = [
-                                    data.address.road, 
-                                    data.address.city || data.address.town || data.address.village,
-                                    data.address.state,
-                                    data.address.country
-                                ].filter(Boolean).join(', ');
+                if (accuracy < 50 || retries >= 3) { // Stop if accuracy is below 50 meters or retries are exhausted
+                    console.log('Stopping watchPosition due to sufficient accuracy or retries.');
+                    navigator.geolocation.clearWatch(watchId); // Stop watching position
+                } else {
+                    console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
+                    retries++;
+                }
+            },
+            function(error) {
+                console.error("Geolocation error:", error);
+                navigator.geolocation.clearWatch(watchId); // Stop watching if there's an error
+            },
+            {
+                enableHighAccuracy: true,
+                timeout: 10000, // Timeout for each position update attempt
+                maximumAge: 0 // No cached position
+            }
+        );
+    }
 
-                                console.log('Address:', address);
-                                // Update Livewire component with address data
-                                Livewire.dispatch('checkOutLocation', {
-                                    // latitude: lat,
-                                    // longitude: lng,
-                                    address: address
-                                });
-                                // Use the address in your application
-                            } else {
-                                console.error('Geocoding error:', data);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
-                    }
+    function getAddressFromCoordinates(lat, lng) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            if (data && data.address) {
+                const address = [
+                    data.address.road, 
+                    data.address.city || data.address.town || data.address.village,
+                    data.address.state,
+                    data.address.country
+                ].filter(Boolean).join(', ');
+
+                console.log('Address:', address);
+                // Update Livewire component with address data
+                Livewire.dispatch('checkOutLocation', {
+                    address: address
                 });
-                </script>
+            } else {
+                console.error('Geocoding error:', data);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+});
+
+
+            </script>
+
+            <style>
+            .load-over {
+                position: fixed;
+                background: rgba(255, 255, 255, 0.8);
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+            }
+
+            .loading-overlay {
+                position: fixed;
+                top: 0; /* Start from the top */
+                left: 0;
+                width: 100%;
+                height: 100%; /* Cover the full height of the viewport */
+                
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 9999;
+                font-family: Arial, sans-serif;
+                color: #AC0C2E;
+                pointer-events: none; /* Makes sure the overlay is not interactable */
+            }
+
+            .spinner {
+                border: 8px solid rgba(172, 12, 46, 0.3);
+                border-top: 8px solid #AC0C2E;
+                border-radius: 50%;
+                width: 60px;
+                height: 60px;
+                animation: spin 1s linear infinite;
+                margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+            }
+
+                        </style>
 
             <!-- Loading screen -->
             <div x-show="loading" x-data="{ loading: false, action: '' }"
-                    x-init="$wire.on('startLoading', event => { loading = true; action = event.action });  $wire.on('stopLoading', () => loading = false);">
-                <div wire:loading wire:target="loading" class="load-over z-50">
-                    <div wire:loading class="loading-overlay z-50">
+                x-init="$wire.on('startLoading', event => { loading = true; action = event.action }); $wire.on('stopLoading', () => loading = false);">
+                <div class="load-over z-50">
+                    <div class="loading-overlay z-50">
                         <div class="flex flex-col items-center justify-center">
                             <div class="spinner"></div>
                             <p x-text="action ? 'Processing ' + action + '...' : 'Loading...'"></p>
@@ -254,7 +298,7 @@
                     </div>
                 </div>
             </div>
-                
+
             </div>
                 <div  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
                     <div class="">

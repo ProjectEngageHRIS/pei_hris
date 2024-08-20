@@ -274,7 +274,7 @@ class DashboardView extends Component
     }
 
     public $location;
-    public $loading;
+    // public $loading;
 
     public function checkInLocation(){
         $this->dispatch('startLoading', action: 'Time In');
