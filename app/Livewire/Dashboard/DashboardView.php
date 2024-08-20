@@ -52,7 +52,7 @@ class DashboardView extends Component
     public $employee_name;
 
     public $position;
-    protected $listeners = ['timeIn' => 'checkIn', 'timeOut' => 'checkOut', 'checkInLocation' => 'updateCheckInLocation', 'checkOutLocation' => 'updateCheckOutLocation'];
+    protected $listeners = ['timeIn' => 'checkIn', 'timeOut' => 'checkOut', 'checkLocation' => 'updateLocation', 'refresh' => '$refresh'];
 
     public $department;
 
@@ -276,10 +276,11 @@ class DashboardView extends Component
     public $location;
     // public $loading;
 
-    public function checkInLocation(){
+    public function checkLocation(){
         $this->dispatch('startLoading', action: 'Time In');
+        // $this->dispatch('start-loading');
         $this->location = null;
-        $this->dispatch('triggerLocationCheckIn');
+        // $this->dispatch('triggerLocationCheckIn');
     }
 
     public function checkOutLocation(){
@@ -288,10 +289,18 @@ class DashboardView extends Component
         $this->dispatch('triggerLocationCheckOut');
     }
 
-    public function updateCheckInLocation($address)
+    public function updateLocation($address, $action)
     {
-        $this->location = $address;
-        $this->checkIn();
+        // $address = $data['address'];
+        // $actionType = $data['action'];
+    
+        if ($action === 'Check In') {
+            $this->location = $address;
+            $this->checkIn();
+        } elseif ($action === 'Check Out') {
+            $this->location = $address;
+            $this->checkOut(); // Assuming you have a checkOut method
+        }
     }
 
     public function updateCheckOutLocation($address)
@@ -324,11 +333,11 @@ class DashboardView extends Component
                 if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
-
                 $this->dispatch('trigger-success-checkin');
-
                 $this->timeInFlag = true;
                 $this->timeOutFlag = false;
+                $this->dispatch('refreshPage');
+
             } else {
                 // $this->js("alert('You have already checked in today! Try Again Tomorrow')");
             }
@@ -340,13 +349,13 @@ class DashboardView extends Component
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('time-in-and-out')->error('Failed to time In: ' . $e->getMessage());
-            $this->dispatch('stopLoading');
+            $this->dispatch('end-loading');
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
             // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-        $this->dispatch('stopLoading');
+        $this->dispatch('end-loading');
 
     }
 

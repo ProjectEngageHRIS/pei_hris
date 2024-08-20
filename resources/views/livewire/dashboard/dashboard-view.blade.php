@@ -38,93 +38,113 @@
                     @endif
             
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
-                        <button wire:click.once="checkInLocation" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeInFlag ) disabled style="cursor: not-allowed;" @endif>
+                        <button wire:click="$dispatch('triggerLocationAction', 'Check In')" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
+                            @if($timeInFlag) disabled style="cursor: not-allowed;" @endif>
                             Time In
                         </button>
                         <button @click="checkOut = true" class="flex items-center justify-center px-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
-                            @if($timeOutFlag ) disabled style="cursor: not-allowed;" @endif>
+                            @if($timeOutFlag) disabled style="cursor: not-allowed;" @endif>
                             Time Out
                         </button>
                     </div>
                 </div>
                 <script>
-                document.addEventListener('livewire:init', function () {
-                    Livewire.on('triggerLocationCheckIn', (itemId) => {
-                        Livewire.dispatch('startLoading');
-                        if (navigator.geolocation) {
-                            watchLocation(0); // Start watching location with 0 retries
-                            @this.loading = true;
-                        } else {
-                            Livewire.dispatch('stopLoading');
-                        }
-                    });
-
-                    function watchLocation(retries) {
-                        let watchId;
-                        let bestAccuracy = Infinity;
-
-                        watchId = navigator.geolocation.watchPosition(
-                            function(position) {
-                                const { latitude, longitude, accuracy } = position.coords;
-
-                                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
-
-                                if (accuracy < bestAccuracy) {
-                                    bestAccuracy = accuracy;
-                                    // Fetch the address immediately with the improved accuracy
-                                    getAddressFromCoordinates(latitude, longitude);
-                                }
-
-                                if (accuracy < 50 || retries >= 3) { // Stop if accuracy is below 50 meters or retries are exhausted
-                                    console.log('Stopping watchPosition due to sufficient accuracy or retries.');
-                                    navigator.geolocation.clearWatch(watchId); // Stop watching position
-                                } else {
-                                    console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
-                                    retries++;
-                                }
-                            },
-                            function(error) {
-                                console.error("Geolocation error:", error);
-                                navigator.geolocation.clearWatch(watchId); // Stop watching if there's an error
-                            },
-                            {
-                                enableHighAccuracy: true,
-                                timeout: 10000, // Timeout for each position update attempt
-                                maximumAge: 0 // No cached position
-                            }
-                        );
-                    }
-
-                    function getAddressFromCoordinates(lat, lng) {
-                        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
-
-                        fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.address) {
-                                const address = [
-                                    data.address.road, 
-                                    data.address.city || data.address.town || data.address.village,
-                                    data.address.state,
-                                    data.address.country
-                                ].filter(Boolean).join(', ');
-
-                                console.log('Address:', address);
-                                // Update Livewire component with address data
-                                Livewire.dispatch('checkInLocation', {
-                                    address: address
+                    document.addEventListener('livewire:init', function () {
+                        Livewire.on('triggerLocationAction', (actionType) => {
+                            window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
+                            if (navigator.geolocation) {
+                                checkGeolocationPermission().then(hasPermission => {
+                                    if (hasPermission) {
+                                        watchLocation(0, actionType);
+                                    } else {
+                                        console.log('Geolocation permission is blocked or denied.');
+                                        window.dispatchEvent(new CustomEvent('end-loading'));
+                                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                                    }
                                 });
                             } else {
-                                console.error('Geocoding error:', data);
+                                console.log('Geolocation is not supported by this browser.');
+                                window.dispatchEvent(new CustomEvent('end-loading'));
                             }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
                         });
-                    }
-                });
+                
+                        function checkGeolocationPermission() {
+                            return navigator.permissions.query({ name: 'geolocation' }).then(result => {
+                                return result.state === 'granted';
+                            }).catch(err => {
+                                console.error('Permission query error:', err);
+                                return false;
+                            });
+                        }
+                
+                        function watchLocation(retries, actionType) {
+                            let watchId;
+                            let bestAccuracy = Infinity;
+                
+                            watchId = navigator.geolocation.watchPosition(
+                                function(position) {
+                                    const { latitude, longitude, accuracy } = position.coords;
+                
+                                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+                
+                                    if (accuracy < bestAccuracy) {
+                                        bestAccuracy = accuracy;
+                                        getAddressFromCoordinates(latitude, longitude, actionType);
+                                    }
+                
+                                    if (accuracy < 50 || retries >= 3) {
+                                        console.log('Stopping watchPosition due to sufficient accuracy or retries.');
+                                        navigator.geolocation.clearWatch(watchId);
+                                        window.dispatchEvent(new CustomEvent('end-loading'));
+                                    } else {
+                                        console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
+                                        retries++;
+                                    }
+                                },
+                                function(error) {
+                                    console.error("Geolocation error:", error);
+                                    window.dispatchEvent(new CustomEvent('end-loading'));
+                                    window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                                },
+                                {
+                                    enableHighAccuracy: true,
+                                    timeout: 10000,
+                                    maximumAge: 0
+                                }
+                            );
+                        }
+                
+                        function getAddressFromCoordinates(lat, lng, actionType) {
+                            const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+                
+                            fetch(url)
+                                .then(response => response.json())
+                                .then(data => {
+                                    if (data && data.address) {
+                                        const address = [
+                                            data.address.road, 
+                                            data.address.city || data.address.town || data.address.village,
+                                            data.address.state,
+                                            data.address.country
+                                        ].filter(Boolean).join(', ');
+                
+                                        console.log('Address:', address);
+                                        Livewire.dispatch('checkLocation', { 
+                                            address: address,
+                                            action: actionType
+                                        });
+                                    } else {
+                                        console.error('Geocoding error:', data);
+                                    }
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        }
+                    });
                 </script>
+                
+                
 
 
 
@@ -157,11 +177,11 @@
                     </button>
                     <div class="p-4 md:p-5">
                         <div class="text-center">
-                                <svg class="w-12 h-12 mx-auto mb-4 text-orange-300 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                 </svg>
                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you certain about Checking Out?</h3>
-                            <button wire:click.once="checkOutLocation" class="text-white bg-orange-600 hover:bg-orange-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                            <button wire:click="$dispatch('triggerLocationAction', 'Check Out')" class="text-white bg-customRed hover:bg-orange-800 font-medium rounded-lg text-sm px-5 py-2.5">
                                 Yes
                             </button>
                             <button @click="checkOut = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -175,13 +195,20 @@
             <script>
                 document.addEventListener('livewire:init', function () {
                     Livewire.on('triggerLocationCheckOut', (itemId) => {
-                        Livewire.dispatch('startLoading');
+                        console.log('test');
+                        window.dispatchEvent(new CustomEvent('end-loading'));
                         if (navigator.geolocation) {
                             watchLocation(0); // Start watching location with 0 retries
                             @this.loading = true;
                         } else {
                             Livewire.dispatch('stopLoading');
                         }
+                    });
+
+                    Livewire.on('refreshPage', () => {
+                        setTimeout(() => {
+                            window.location.reload(); // Forcefully refresh the page after 3 seconds
+                        }, 3000); // 3000 milliseconds = 3 seconds
                     });
 
                     function watchLocation(retries) {
@@ -286,19 +313,20 @@
                 margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
             }
 
-                        </style>
+            </style>
 
             <!-- Loading screen -->
             <div x-show="loading" x-data="{ loading: false, action: '' }"
-                x-init="$wire.on('startLoading', event => { loading = true; action = event.action }); $wire.on('stopLoading', () => loading = false);">
-                <div class="load-over z-50">
-                    <div class="loading-overlay z-50">
-                        <div class="flex flex-col items-center justify-center">
-                            <div class="spinner"></div>
-                            <p x-text="action ? 'Processing ' + action + '...' : 'Loading...'"></p>
+                @start-loading.window="loading = true; action = $event.detail.action"
+                @end-loading.window="loading = false">
+                    <div class="load-over z-50">
+                        <div class="loading-overlay z-50">
+                            <div class="flex flex-col items-center justify-center">
+                                <div class="spinner"></div>
+                                <p x-text="action ? 'Processing ' + action + '...' : 'Loading...'"></p>
+                            </div>
                         </div>
                     </div>
-                </div>
             </div>
 
             </div>
@@ -481,7 +509,9 @@
         <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                 @trigger-success-checkin.window="showToast = true; toastType = 'success'; toastMessage = 'Checked In Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
                 @trigger-success-checkout.window="showToast = true; toastType = 'success'; toastMessage = 'Checked Out Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+                @trigger-location-error.window="showToast = true; toastType = 'error'; toastMessage = 'Location access is blocked. Please enable it in your browser settings.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+
             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
             <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                 x-show="showToast"
@@ -510,80 +540,7 @@
                 </div>
             </div>
         </div>
-
-        {{-- <div id="toast-container-checkin" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
-            <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <span class="sr-only">Check icon</span>
-                </div>
-                <div class="text-sm font-normal ms-3">Checked in successfully!</div>
-                <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <div id="toast-container-checkout" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center hidden w-full h-full bg-gray-800 bg-opacity-50">
-            <div id="toast-success" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
-                <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                    <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <span class="sr-only">Check icon</span>
-                </div>
-                <div class="text-sm font-normal ms-3">Checked out successfully!</div>
-                <button id="close-toast-checkout" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
-            </div>
-        </div>
-
-        <div id="toast-danger" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-red-500 bg-red-100 rounded-lg dark:bg-red-800 dark:text-red-200">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 11.793a1 1 0 1 1-1.414 1.414L10 11.414l-2.293 2.293a1 1 0 0 1-1.414-1.414L8.586 10 6.293 7.707a1 1 0 0 1 1.414-1.414L10 8.586l2.293-2.293a1 1 0 0 1 1.414 1.414L11.414 10l2.293 2.293Z"/>
-                </svg>
-                <span class="sr-only">Error icon</span>
-            </div>
-            <div class="text-sm font-normal ms-3">You have already checked in. Try again tomorrow!</div>
-            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
-        </div> --}}
-
-        
-        {{-- <div id="toast-warning" tabindex="-1" class="fixed z-50 flex items-center justify-center hidden w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-orange-500 bg-orange-100 rounded-lg dark:bg-orange-700 dark:text-orange-200">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM10 15a1 1 0 1 1 0-2 1 1 0 0 1 0 2Zm1-4a1 1 0 0 1-2 0V6a1 1 0 0 1 2 0v5Z"/>
-                </svg>
-                <span class="sr-only">Warning icon</span>
-            </div>
-            <div class="text-sm font-normal ms-3">You Have Already Checked In. Try Again Tomorrow</div>
-            <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="#toast-success" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
-        </div> --}}
-
-
-
     </div>
-
 
     </div>
 
@@ -635,6 +592,7 @@
     document.addEventListener('livewire:init', function () {
         Livewire.on('triggerSuccess', (itemId) => {
             window.dispatchEvent(new CustomEvent('trigger-success-checkout'));
+            window.dispatchEvent(new CustomEvent('end-loading'));
             const modal = document.querySelector(`[x-ref="checkout-modal"]`);
             // Access Alpine data
             const alpineData = Alpine.$data(modal);
@@ -643,6 +601,7 @@
         });
         Livewire.on('triggerError', (itemId) => {
             window.dispatchEvent(new CustomEvent('trigger-error'));
+            window.dispatchEvent(new CustomEvent('end-loading'));
             const modal = document.querySelector(`[x-ref="checkout-modal"]`);
             // Access Alpine data
             const alpineData = Alpine.$data(modal);
