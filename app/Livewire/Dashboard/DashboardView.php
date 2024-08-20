@@ -276,18 +276,6 @@ class DashboardView extends Component
     public $location;
     // public $loading;
 
-    public function checkLocation(){
-        $this->dispatch('startLoading', action: 'Time In');
-        // $this->dispatch('start-loading');
-        $this->location = null;
-        // $this->dispatch('triggerLocationCheckIn');
-    }
-
-    public function checkOutLocation(){
-        $this->dispatch('startLoading', action: 'Time Out');
-        $this->location = null;
-        $this->dispatch('triggerLocationCheckOut');
-    }
 
     public function updateLocation($address, $action)
     {
@@ -303,11 +291,6 @@ class DashboardView extends Component
         }
     }
 
-    public function updateCheckOutLocation($address)
-    {
-        $this->location = $address;
-        $this->checkOut();
-    }
 
     public function checkIn()
     {
@@ -461,7 +444,6 @@ class DashboardView extends Component
             }
             
         } catch (\Exception $e) {
-            dd($e);
             // Log the exception for further investigation
             Log::channel('time-in-and-out')->error('Failed to time out: ' . $e->getMessage());
             $this->dispatch('stopLoading');

@@ -194,42 +194,52 @@
 
             <script>
                 document.addEventListener('livewire:init', function () {
-                    Livewire.on('triggerLocationCheckOut', (itemId) => {
-                        console.log('test');
-                        window.dispatchEvent(new CustomEvent('end-loading'));
+                    Livewire.on('triggerLocationAction', (actionType) => {
+                        window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
                         if (navigator.geolocation) {
-                            watchLocation(0); // Start watching location with 0 retries
-                            @this.loading = true;
+                            checkGeolocationPermission().then(hasPermission => {
+                                if (hasPermission) {
+                                    watchLocation(0, actionType);
+                                } else {
+                                    console.log('Geolocation permission is blocked or denied.');
+                                    window.dispatchEvent(new CustomEvent('end-loading'));
+                                    window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                                }
+                            });
                         } else {
-                            Livewire.dispatch('stopLoading');
+                            console.log('Geolocation is not supported by this browser.');
+                            window.dispatchEvent(new CustomEvent('end-loading'));
                         }
                     });
-
-                    Livewire.on('refreshPage', () => {
-                        setTimeout(() => {
-                            window.location.reload(); // Forcefully refresh the page after 3 seconds
-                        }, 3000); // 3000 milliseconds = 3 seconds
-                    });
-
-                    function watchLocation(retries) {
+            
+                    function checkGeolocationPermission() {
+                        return navigator.permissions.query({ name: 'geolocation' }).then(result => {
+                            return result.state === 'granted';
+                        }).catch(err => {
+                            console.error('Permission query error:', err);
+                            return false;
+                        });
+                    }
+            
+                    function watchLocation(retries, actionType) {
                         let watchId;
                         let bestAccuracy = Infinity;
-
+            
                         watchId = navigator.geolocation.watchPosition(
                             function(position) {
                                 const { latitude, longitude, accuracy } = position.coords;
-
+            
                                 console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
-
+            
                                 if (accuracy < bestAccuracy) {
                                     bestAccuracy = accuracy;
-                                    // Fetch the address immediately with the improved accuracy
-                                    getAddressFromCoordinates(latitude, longitude);
+                                    getAddressFromCoordinates(latitude, longitude, actionType);
                                 }
-
-                                if (accuracy < 50 || retries >= 3) { // Stop if accuracy is below 50 meters or retries are exhausted
+            
+                                if (accuracy < 50 || retries >= 3) {
                                     console.log('Stopping watchPosition due to sufficient accuracy or retries.');
-                                    navigator.geolocation.clearWatch(watchId); // Stop watching position
+                                    navigator.geolocation.clearWatch(watchId);
+                                    window.dispatchEvent(new CustomEvent('end-loading'));
                                 } else {
                                     console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
                                     retries++;
@@ -237,43 +247,51 @@
                             },
                             function(error) {
                                 console.error("Geolocation error:", error);
-                                navigator.geolocation.clearWatch(watchId); // Stop watching if there's an error
+                                window.dispatchEvent(new CustomEvent('end-loading'));
+                                window.dispatchEvent(new CustomEvent('trigger-location-error'));
                             },
                             {
                                 enableHighAccuracy: true,
-                                timeout: 10000, // Timeout for each position update attempt
-                                maximumAge: 0 // No cached position
+                                timeout: 10000,
+                                maximumAge: 0
                             }
                         );
                     }
-
-                    function getAddressFromCoordinates(lat, lng) {
+            
+                    function getAddressFromCoordinates(lat, lng, actionType) {
                         const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
-
+            
                         fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.address) {
-                                const address = [
-                                    data.address.road, 
-                                    data.address.city || data.address.town || data.address.village,
-                                    data.address.state,
-                                    data.address.country
-                                ].filter(Boolean).join(', ');
-
-                                console.log('Address:', address);
-                                // Update Livewire component with address data
-                                Livewire.dispatch('checkOutLocation', {
-                                    address: address
-                                });
-                            } else {
-                                console.error('Geocoding error:', data);
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                        });
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data && data.address) {
+                                    const address = [
+                                        data.address.road, 
+                                        data.address.city || data.address.town || data.address.village,
+                                        data.address.state,
+                                        data.address.country
+                                    ].filter(Boolean).join(', ');
+            
+                                    console.log('Address:', address);
+                                    Livewire.dispatch('checkLocation', { 
+                                        address: address,
+                                        action: actionType
+                                    });
+                                } else {
+                                    console.error('Geocoding error:', data);
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                            });
                     }
+                });
+                document.addEventListener('livewire:init', function () {
+                    Livewire.on('refreshPage', () => {
+                            setTimeout(() => {
+                                window.location.reload(); // Forcefully refresh the page after 3 seconds
+                            }, 3000); // 3000 milliseconds = 3 seconds
+                        });
                 });
             </script>
 
