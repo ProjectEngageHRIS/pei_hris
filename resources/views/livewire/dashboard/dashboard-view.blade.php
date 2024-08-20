@@ -243,9 +243,9 @@
                 </script>
 
             <!-- Loading screen -->
-            <div x-data="{ loading: false, action: '' }"
+            <div x-show="loading" x-data="{ loading: false, action: '' }"
                     x-init="$wire.on('startLoading', event => { loading = true; action = event.action });  $wire.on('stopLoading', () => loading = false);">
-                <div x-show="loading" class="load-over z-50">
+                <div wire:loading wire:target="loading" class="load-over z-50">
                     <div wire:loading class="loading-overlay z-50">
                         <div class="flex flex-col items-center justify-center">
                             <div class="spinner"></div>
