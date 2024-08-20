@@ -193,7 +193,7 @@
             </div>
 
             <script>
-                document.addEventListener('livewire:init', function () {
+            document.addEventListener('livewire:init', function () {
                     Livewire.on('triggerLocationAction', (actionType) => {
                         window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
                         if (navigator.geolocation) {
@@ -211,7 +211,7 @@
                         (error) => handleError(error, retries),
                         {
                             enableHighAccuracy: true,
-                            timeout: 10000, // 10 seconds timeout
+                            timeout: 5000, // 10 seconds timeout
                             maximumAge: 0 // No cached position
                         }
                     );
@@ -221,24 +221,26 @@
                     const { latitude, longitude, accuracy } = position.coords;
                     console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
 
-                    if (accuracy < 50) { // Example accuracy threshold
+                    if (accuracy < 50 || retries >= 2) { // Proceed if accuracy is acceptable or after max retries
                         getAddressFromCoordinates(latitude, longitude, actionType, accuracy);
-                    } else if (retries < 2) { // Retry up to 3 times (0, 1, 2)
-                        console.warn('Accuracy is not sufficient, retrying...');
-                        setTimeout(() => requestLocation(actionType, retries + 1), 5000); // Retry after 10 seconds
+                        if(retries >= 2){
+                            window.dispatchEvent(new CustomEvent('take-picture-attempt'));
+                        }
                     } else {
-                        console.error('Accuracy is still not sufficient after retries.');
-                        window.dispatchEvent(new CustomEvent('end-loading'));
-                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                        console.warn('Accuracy is not sufficient, retrying...');
+                        setTimeout(() => requestLocation(actionType, retries + 1), 5000); // Retry after 5 seconds
                     }
                 }
 
-                function handleError(error, retries) {
+                function handleError(error, actionType, retries) {
                     console.error('Geolocation error:', error);
                     if (retries < 2) { // Retry up to 3 times (0, 1, 2)
                         console.warn('Retrying due to geolocation error...');
-                        setTimeout(() => requestLocation('', retries + 1), 5000); // Retry after 10 seconds
+                        setTimeout(() => requestLocation(actionType, retries + 1), 5000); // Retry after 5 seconds
                     } else {
+                        console.error('Failed to retrieve location after multiple attempts.');
+                        // Continue even after retries if needed
+                        // You may still want to dispatch end-loading and error events
                         window.dispatchEvent(new CustomEvent('end-loading'));
                         window.dispatchEvent(new CustomEvent('trigger-location-error'));
                     }
@@ -520,11 +522,11 @@
 
 
         <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                @trigger-success-checkin.window="showToast = true; toastType = 'success'; toastMessage = 'Checked In Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-success-checkout.window="showToast = true; toastType = 'success'; toastMessage = 'Checked Out Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+                @trigger-success-checkin.window="showToast = true; toastType = 'success'; toastMessage = 'Checked In Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 6000)"
+                @trigger-success-checkout.window="showToast = true; toastType = 'success'; toastMessage = 'Checked Out Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 6000)"
                 @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-location-error.window="showToast = true; toastType = 'error'; toastMessage = 'Location access is blocked. Please enable it in your browser settings.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
-
+                @trigger-location-error.window="showToast = true; toastType = 'error'; toastMessage = 'Location access is blocked. Please enable it in your browser settings.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+                @take-picture-attempt.window="showToast = true; toastType = 'warning'; toastMessage = 'Weak Internet Connection. Please take a photo of your time-in along with yourself for verification.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
             <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                 x-show="showToast"
@@ -534,11 +536,14 @@
                 x-transition:leave="transition ease-in duration-200"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-90">
-            <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
+            <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error', 'text-orange-500 bg-red-100': toastType === 'warning'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
                 <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
                 </svg>
                 <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
+                </svg>
+                <svg x-show="toastType === 'warning'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
                 </svg>
                 <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
