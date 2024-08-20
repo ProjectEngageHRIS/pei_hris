@@ -355,7 +355,7 @@ Route::middleware(['auth', ])->group(function (){
 
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
-    Route::get("/employees/add", AddEmployee::class)->name("EmployeesForm");
+    Route::get('/employees-form/{index}', AddEmployee::class)->name("EmployeesForm");
     
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 

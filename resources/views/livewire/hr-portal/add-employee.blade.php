@@ -26,12 +26,12 @@
             </div>
         </li>
         </ol>
-    </nav> 
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Onboard a new Employee</h2>
+    </nav>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> View Employee</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
-            <form wire:submit.prevent="submit" method="POST">
-                @csrf
+        <form wire:submit.prevent="getEmployeeDetails">
+         @csrf
                 <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
                     <div class="block w-full col-span-3 ">
                         <div class="grid gap-4 sm:grid-cols-3 sm:gap-6">
@@ -44,80 +44,90 @@
                                         <div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
-                                                <label for="firstname"
+                                                <label for="first_name"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First name <span class="text-red-600">*</span></label>
-                                                <input type="text" name="firstname" id="firstname"  wire:model="first_name"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                <input type="text" name="first_name" id="first_name" value="{{ $first_name }}"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" {{ $isEditable ? '' : 'disabled' }}>
+
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="middlename" id="middlename" wire:model="middle_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="lastname" id="lastname"  wire:model="last_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                         </div>
 
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4 ">
                                             <div class="w-full ">
-                                                <label for="firstname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Phone Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="firstname" id="firstname"  wire:model="phone_number"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                <label for="nickname"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap"> Nickname <span class="text-red-600">*</span></label>
+                                                <input type="text" name="nickname" id="nickname" wire:model="nickname" class="bg-gray-50 border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                     required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full ">
-                                                <label for="middlename"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Landline Number<span class="text-red-600">*</span></label>
-                                                <input type="number" name="middlename" id="middlename" wire:model="landline_number"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                <label for="gender"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Gender<span class="text-red-600">*</span></label>
+                                                <select name="sex" id="sex" wire:model="gender"
+                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                required="" {{ $isEditable ? '' : 'disabled' }} >                                            <option value="" disabled>Select Sex</option>
+                                            <option value="male">Male</option>
+                                            <option value="female">Female</option>
+                                        </select>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Email <span class="text-red-600">*</span></label>
                                                 <input type="email" name="lastname" id="lastname"  wire:model="employee_email"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }} >
                                             </div>
                                         </div>
 
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-4 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
-                                                <label for="firstname"
+                                                <label for="age"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Age <span class="text-red-600">*</span></label>
-                                                <input type="number" name="firstname" id="firstname"  wire:model="age"
+                                                <input type="number" name="age" id="age"  wire:model="age"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Birth Date<span class="text-red-600">*</span></label>
                                                 <input type="date" name="middlename" id="middlename" wire:model="birth_date"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Religion <span class="text-red-600">*</span></label>
                                                 <input type="text" name="lastname" id="lastname"  wire:model="religion"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
-                                            <div class="w-full ">
-                                                <label for="firstname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Civil Status <span class="text-red-600">*</span></label>
-                                                <input type="text" name="firstname" id="firstname"  wire:model="civil_status"
+                                            <div class="w-full" id="civil_status_container">
+                                        <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            Civil Status
+                                        </label>
+                                        <select name="civil_status" id="civil_status" wire:model="civil_status"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
+                                                    <option value="" disabled>Select Civil Status</option>
+                                            <option value="single">Single</option>
+                                            <option value="married">Married</option>
+                                            <option value="widowed">Widowed</option>
+                                            <option value="divorced">Divorced</option>
+                                            <option value="separated">Separated</option>
+                                        </select>
                                             </div>
                                         </div>
 
@@ -129,25 +139,25 @@
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Height <span class="text-red-600">*</span></label>
                                                 <input type="number" name="middlename" id="middlename" wire:model="height"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Weight<span class="text-red-600">*</span></label>
                                                 <input type="number" name="lastname" id="lastname"  wire:model="weight"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Nickname<span class="text-red-600">*</span></label>
-                                                <input type="text" name="lastname" id="lastname"  wire:model="nickname"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee_ID<span class="text-red-600">*</span></label>
+                                                <input type="text" name="lastname" id="lastname"  wire:model="employee_id"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                         </div>
 
-                                        
+
 
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4 ">
                                             <div class="w-full ">
@@ -155,14 +165,28 @@
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Home Address <span class="text-red-600">*</span></label>
                                                 <textarea type="text" name="firstname" id="firstname"  wire:model="home_address"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" > </textarea>
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}> </textarea>
                                             </div>
                                             <div class="w-full ">
-                                                <label for="middlename"
+                                                <label for="firstname"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Birthplace <span class="text-red-600">*</span></label>
+                                                <textarea type="text" name="firstname" id="firstname"  wire:model="birth_place"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}> </textarea>
+                                            </div>
+                                            <div class="w-full ">
+                                                <label for="provincial_address"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Provincial Address <span class="text-red-600">*</span></label>
-                                                <textarea type="text" name="middlename" id="middlename" wire:model="provincial_address"
+                                                <textarea type="text" name="provincial_address" id="provincial_address" wire:model="provincial_address"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" > </textarea>
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}> </textarea>
+                                            </div>
+                                            <div class="w-full ">
+                                                <label for="phone_number"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Phone Number <span class="text-red-600">*</span></label>
+                                                <textarea type="text" name="phone_number" id="phone_number" wire:model="phone_number"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}> </textarea>
                                             </div>
 
                                         </div>
@@ -180,7 +204,7 @@
                                                 Profile Summary <span class="text-red-600">*</span></label>
                                             <textarea type="text" rows="3" name="profile_summary" id="profile_summary"  wire:model="profile_summary"
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </textarea>
                                             @error('profile_summary')
                                                     <div class="text-sm transition transform alert alert-danger"
@@ -195,41 +219,36 @@
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Start of Employment<span class="text-red-600">*</span></label>
                                                 <input type="date" name="firstname" id="firstname"  wire:model="start_of_employment"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="firstname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Position<span class="text-red-600">*</span></label>
                                                 <input type="text" name="firstname" id="firstname"  wire:model="current_position"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                          <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                              <div class="w-full" id="company_container">
                                                  <label for="company"
                                                      class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Company Name <span class="text-red-600">*</span></label>
-                                                 <select id="company" name="company" wire:model.live="company"
-                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                                 <select id="company" name="company" wire:model.live="department"
+                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {{ $isEditable ? '' : 'disabled' }}>
                                                      <option selected>Select</option>
                                                      <option value="PEI">PEI</option>
                                                     <option value="SL SEARCH">SL SEARCH</option>
-                                                    <option value="SL TEMPS">SL TEMPS</option>
+                                                    <option value="SL Temps">SL TEMPS</option>
                                                     <option value="WESEARCH">WESEARCH</option>
-                                                    <option value="PEI-UPSKILLS">PEI-UPSKILLS</option>
+                                                    <option value="PEI-Upskills">PEI-UPSKILLS</option>
                                                  </select>
-                                                 @error('company')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('company_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('company_container').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
+
                                              </div>
                                              <div class="w-full">
                                                  <label for="department_name"
                                                      class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Department Name <span class="text-red-600">*</span></label>
-                                                     <select id="mode_of_application" name="mode_of_application" wire:model.live="department"
-                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                                     <select id="inside_department" name="inside_department" wire:model.live="inside_department"
+                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {{ $isEditable ? '' : 'disabled' }}>
                                                      <option selected>Select</option>
                                                      <option value="HR and Admin">HR and Admin</option>
                                                      <option value="Recruitment">Recruitment</option>
@@ -239,18 +258,13 @@
                                                      <option value="Corporate Accounting and Finance">Corporate Accounting and Finance</option>
                                                      <option value="Accounting Operations">Accounting Operations</option>
                                                  </select>
-                                                 @error('mode_of_application')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('mode_of_application_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('mode_of_application_container').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
                                              </div>
+
                                              <div class="w-full">
                                                  <label for="employee_id"
                                                      class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Type <span class="text-red-600">*</span></label>
                                                  <select id="mode_of_application" name="mode_of_application" wire:model.live="employee_type"
-                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" {{ $isEditable ? '' : 'disabled' }}>
                                                      <option selected>Select</option>
                                                      <option value="INTERNALS">INTERNALS</option>
                                                      <option value="OJT">OJT</option>
@@ -273,28 +287,28 @@
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
                                                 <input type="number" name="firstname" id="firstname"  wire:model="sss_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
                                                 <input type="number" name="middlename" id="middlename" wire:model="tin_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">PHIC Number <span class="text-red-600">*</span></label>
                                                 <input type="number" name="lastname" id="lastname"  wire:model="phic_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">HDMF Number <span class="text-red-600">*</span></label>
                                                 <input type="number" name="lastname" id="lastname"  wire:model="hdmf_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                         <div class="w-full ">
@@ -302,7 +316,7 @@
                                                 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Microsoft Folder Link for  <span class="text-customRed">201 Files and Other Necessary Files</span> <span class="text-red-600">*</span></label>
                                             <textarea type="text" rows="2" name="firstname" id="firstname"  wire:model="files"
                                                 class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                required="" > </textarea>
+                                                required="" {{ $isEditable ? '' : 'disabled' }}> </textarea>
                                         </div>
                                      </div>
                                 </div>
@@ -318,114 +332,62 @@
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Father's Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="firstname" id="firstname"  wire:model="name_of_father"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Mother's Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="middlename" id="middlename" wire:model="name_of_mother"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required=""{{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full">
                                                 <label for="lastname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Spouse's Name </label>
                                                 <input type="text" name="lastname" id="lastname"  wire:model="name_of_spouse"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="firstname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Childrens' Name <span class="text-red-600">*</span></label>
-                                                <input type="text" name="firstname" id="firstname"  wire:model="names_of_children"
+                                                <input type="array" name="firstname" id="firstname"  wire:model="names_of_children"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middlename"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Emergency Contact <span class="text-red-600">*</span></label>
-                                                <input type="text" name="middlename" id="middlename" wire:model="emergency_contact"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Emergency Contact Person <span class="text-red-600">*</span></label>
+                                                <input type="text" name="middlename" id="middlename" wire:model="emergency_contact.contact_person"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    required="" >
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
-                                            
-                                        </div>
-                                        
-                                {{-- <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2rounded-lg shadow    ">
-                                    <h2 class="text-customRed"><b>Childrens</b></h2>
-                                    <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="employeehistory_container">
-                                        @php
-                                            $ctr = 0
-                                        @endphp
-                                        @if ($childrens)
-                                        @foreach ($childrens as $index => $history)
-                                        <div class="bg-white rounded-lg ">
-                                            <div class="col-span-5">
-                                                <ul class="text-sm flex font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                                    <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
-                                                        <span>No. {{$ctr + 1 }}</span>
-                                                    </li>
-                                                    <div class="p-2" class="col-span-3 w-full">
-                                                        <input type="text" name="lastname" id="lastname"  wire:model="name_of_spouse"
-                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                                    required="" >
-                                                    </div>
-                                                    <li class="">
-                                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                                        type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
-                                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100">
-                                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                            </svg>
-                                                        </button>
-                                                    </li>
-                                                </ul>
+                                            <div class="w-full ">
+                                                <label for="middlename"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Emergency Contact (Relationship)<span class="text-red-600">*</span></label>
+                                                <input type="text" name="middlename" id="middlename" wire:model="emergency_contact.relationship"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
                                             </div>
-                                        </div>
-                                    @php
-                                        $ctr += 1;
-                                    @endphp
-                                    @endforeach
-                                        @endif
-                                        <script>
-                                            document.addEventListener('livewire:init', () => {
-                                                Livewire.on('update-employee-history', (data) => {
-                                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
-                                                    // Parse the JSON data into a JavaScript array
-                                                    const dataArray = JSON.parse(data);
+                                            <div class="w-full ">
+                                                <label for="middlename"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Emergency Contact (Address)<span class="text-red-600">*</span></label>
+                                                <input type="text" name="middlename" id="middlename" wire:model="emergency_contact.address"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
+                                            </div>
+                                            <div class="w-full ">
+                                                <label for="middlename"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Emergency Contact (Phone Number)<span class="text-red-600">*</span></label>
+                                                <input type="text" name="middlename" id="middlename" wire:model="emergency_contact.cellphone_number"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    required="" {{ $isEditable ? '' : 'disabled' }}>
+                                            </div>
 
-                                                    // Iterate over the array elements
-                                                    dataArray.forEach((element, index) => {
-                                                        document.getElementById('employeeHistory_' + index + '_name_of_company').value = element.name_of_company;
-                                                        document.getElementById('employeeHistory_' + index + '_prev_position').value = element.prev_position;
-                                                        document.getElementById('employeeHistory_' + index + '_start_date').value = element.start_date;
-                                                        document.getElementById('employeeHistory_' + index + '_end_date').value = element.end_date;
-                                                    });
-                                                });
-                                            });
-                                        </script>
-                                        <div class="flex justify-center">
-                                            <button type="button" name="add" wire:click.prevent="addEmployeeHistory" class="text-customRed bg-navButton shadow  hover:bg-customRed hover:text-white font-medium rounded-8px text-sm px-5 py-2.5 me-2 mb-2 ">Add a History</button>
                                         </div>
-                                        @php
-                                            if(isset($index) == False){
-                                                $index = 0;
-                                            }
-                                        @endphp
-                                        @error('employeeHistory')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date_container').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div> --}}
 
-                                     </div>
-                                </div>
-                            </div>
 
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4  ">
@@ -438,14 +400,14 @@
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
                                                     <input type="text" name="firstname" id="firstname"  wire:model="high_school_school"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                                 <div class="w-full ">
                                                     <label for="middlename"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
                                                     <input type="date" name="middlename" id="middlename" wire:model="high_school_date_graduated"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                             </div>
                                         </div>
@@ -457,21 +419,21 @@
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
                                                     <input type="text" name="firstname" id="firstname"  wire:model="college_school"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                                 <div class="w-full ">
                                                     <label for="middlename"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course <span class="text-red-600">*</span></label>
                                                     <input type="text" name="middlename" id="middlename" wire:model="college_course"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                                 <div class="w-full ">
                                                     <label for="middlename"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
                                                     <input type="date" name="middlename" id="middlename" wire:model="college_date_graduated"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                             </div>
                                         </div>
@@ -483,40 +445,62 @@
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
                                                     <input type="text" name="firstname" id="firstname"  wire:model="vocational_school"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                                 <div class="w-full ">
                                                     <label for="middlename"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course <span class="text-red-600">*</span></label>
                                                     <input type="text" name="middlename" id="middlename" wire:model="vocational_course"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                                 <div class="w-full ">
                                                     <label for="middlename"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
                                                     <input type="date" name="middlename" id="middlename" wire:model="vocational_date_graduated"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        required="" >
+                                                        required="" {{ $isEditable ? '' : 'disabled' }}>
                                                 </div>
                                             </div>
                                         </div>
+
+
                                 </div>
                             </div>
 
-                          
+
                         </div>
+                        <div x-data="{ showSubmitButton: @entangle('showSubmitButton') }">
+    <!-- Edit Button -->
+    <button
+        type="button"
+        x-show="!showSubmitButton"
+        @click="$wire.enableEditing()"
+        class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">
+        Edit
+    </button>
+
+    <!-- Submit Button -->
+    <button
+        type="button"
+        x-show="showSubmitButton"
+        @click="if(confirm('Are you sure you want to submit the changes?')) { $wire.submit() }"
+        class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">
+        Submit
+    </button>
+</div>
                     </div>
+
                 </div>
-                <button type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">
-                    Onboard
-                </button>
+
+
+
                 <!-- Loading screen -->
                 <div wire:loading wire:target="submit" class="load-over">
                     <div wire:loading wire:target="submit" class="loading-overlay">
                         <div class="flex flex-col justify-center items-center">
                             <div class="spinner"></div>
-                            <p>Submitting your Leave Request...</p>
+                            <p>Changing Employee's Information...</p>
                         </div>
                     </div>
                 </div>
@@ -537,7 +521,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            
+
             display: flex;
             justify-content: center;
             align-items: center;

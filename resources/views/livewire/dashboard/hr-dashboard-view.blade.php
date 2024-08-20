@@ -53,7 +53,6 @@
             <div class="py-6" id="pie-chart-4"></div>
         </div>
     </div>
-    @if ($loggedInUser)
     <!-- Employee Table -->
     <div class="relative shadow-md" x-data="{ showModal: false }">
     <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg">
@@ -622,8 +621,6 @@
     </label>
 
 </div>
-
-
                             </div>
                         </div>
                         <!-- Stepper buttons -->
@@ -1006,7 +1003,11 @@
                                                 <!-- Dropdown content -->
                                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                     <li>
-                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="openModal('{{ $employee->employee_id }}')">View</a>
+                                                    <a wire:click.prevent="showEmployeeDetails({{ $employee->employee_id }})"
+   onclick="location.href='{{ route('EmployeesForm', ['index' => $employee->employee_id]) }}'"
+   class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
+   View
+</a>
                                                     </li>
                                                     <li>
                                                         <a id="cancel_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openDeactivateModal('{{ $employee->employee_id }}')">Deactivate</a>
@@ -1016,7 +1017,7 @@
                                                 <!-- Dropdown content -->
                                                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
                                                     <li>
-                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="{{ route('ItHelpDeskView', ['index' => $employee->form_id]) }}">View</a>
+                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="{{ route('AddEmployee', ['index' => $employee->form_id]) }}">View</a>
                                                     </li>
                                                 </ul>
                                             @endif
@@ -1159,7 +1160,6 @@
             </div>
           </div>
       </div>
-      @endif
   </div>
 
 <script>

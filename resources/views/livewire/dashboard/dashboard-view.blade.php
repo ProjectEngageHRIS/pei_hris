@@ -193,83 +193,83 @@
             </div>
 
             <script>
-document.addEventListener('livewire:init', function () {
-    Livewire.on('triggerLocationAction', (actionType) => {
-        window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
-        if (navigator.geolocation) {
-            requestLocation(actionType);
-        } else {
-            console.log('Location services are not supported by this browser.');
-            window.dispatchEvent(new CustomEvent('end-loading'));
-            window.dispatchEvent(new CustomEvent('trigger-location-error'));
-        }
-    });
-
-    function requestLocation(actionType) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => handlePosition(position, actionType),
-            (error) => handleError(error),
-            {
-                enableHighAccuracy: true,
-                timeout: 10000, // 10 seconds timeout
-                maximumAge: 0 // No cached position
-            }
-        );
-    }
-
-    function handlePosition(position, actionType) {
-        const { latitude, longitude, accuracy } = position.coords;
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
-        if (accuracy < 50) { // Example accuracy threshold
-            getAddressFromCoordinates(latitude, longitude, actionType);
-        } else {
-            console.warn('Accuracy is not sufficient, retrying...');
-            // Optionally implement retry logic here
-        }
-    }
-
-    function handleError(error) {
-        console.error('Geolocation error:', error);
-        window.dispatchEvent(new CustomEvent('end-loading'));
-        window.dispatchEvent(new CustomEvent('trigger-location-error'));
-    }
-
-    function getAddressFromCoordinates(lat, lng, actionType) {
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                if (data && data.address) {
-                    const address = [
-                        data.address.road,
-                        data.address.city || data.address.town || data.address.village,
-                        data.address.state,
-                        data.address.country
-                    ].filter(Boolean).join(', ');
-
-                    console.log('Address:', address);
-                    Livewire.dispatch('checkLocation', { 
-                        address: address,
-                        action: actionType
-                    });
-                } else {
-                    console.error('Geocoding error:', data);
-                }
-            })
-            .catch(error => {
-                console.error('Fetch error:', error);
-            });
-    }
-});
-
-                document.addEventListener('livewire:init', function () {
-                    Livewire.on('refreshPage', () => {
-                            setTimeout(() => {
-                                window.location.reload(); // Forcefully refresh the page after 3 seconds
-                            }, 3000); // 3000 milliseconds = 3 seconds
-                        });
+            document.addEventListener('livewire:init', function () {
+                Livewire.on('triggerLocationAction', (actionType) => {
+                    window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
+                    if (navigator.geolocation) {
+                        requestLocation(actionType);
+                    } else {
+                        console.log('Location services are not supported by this browser.');
+                        window.dispatchEvent(new CustomEvent('end-loading'));
+                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                    }
                 });
+
+                function requestLocation(actionType) {
+                    navigator.geolocation.getCurrentPosition(
+                        (position) => handlePosition(position, actionType),
+                        (error) => handleError(error),
+                        {
+                            enableHighAccuracy: true,
+                            timeout: 10000, // 10 seconds timeout
+                            maximumAge: 0 // No cached position
+                        }
+                    );
+                }
+
+                function handlePosition(position, actionType) {
+                    const { latitude, longitude, accuracy } = position.coords;
+                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+                    if (accuracy < 50) { // Example accuracy threshold
+                        getAddressFromCoordinates(latitude, longitude, actionType);
+                    } else {
+                        console.warn('Accuracy is not sufficient, retrying...');
+                        // Optionally implement retry logic here
+                    }
+                }
+
+                function handleError(error) {
+                    console.error('Geolocation error:', error);
+                    window.dispatchEvent(new CustomEvent('end-loading'));
+                    window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                }
+
+                function getAddressFromCoordinates(lat, lng, actionType) {
+                    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+                    fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.address) {
+                                const address = [
+                                    data.address.road,
+                                    data.address.city || data.address.town || data.address.village,
+                                    data.address.state,
+                                    data.address.country
+                                ].filter(Boolean).join(', ');
+
+                                console.log('Address:', address);
+                                Livewire.dispatch('checkLocation', { 
+                                    address: address,
+                                    action: actionType
+                                });
+                            } else {
+                                console.error('Geocoding error:', data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Fetch error:', error);
+                        });
+                }
+            });
+
+            document.addEventListener('livewire:init', function () {
+                Livewire.on('refreshPage', () => {
+                        setTimeout(() => {
+                            window.location.reload(); // Forcefully refresh the page after 3 seconds
+                        }, 3000); // 3000 milliseconds = 3 seconds
+                    });
+            });
             </script>
 
             <style>
