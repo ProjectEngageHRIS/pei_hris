@@ -50,7 +50,7 @@
                 </div>
                 <script>
                 document.addEventListener('livewire:init', function () {
-                    Livewire.on('triggerLocationCheckOut', (itemId) => {
+                    Livewire.on('triggerLocationCheckIn', (itemId) => {
                         Livewire.dispatch('startLoading');
                         if (navigator.geolocation) {
                             watchLocation(0); // Start watching location with 0 retries
