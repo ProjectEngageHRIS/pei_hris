@@ -93,6 +93,7 @@ use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
+use App\Livewire\Changeinformation\ChangeInformationView;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Livewire\Changeinformation\ChangeInformationTable;
@@ -202,7 +203,10 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/changeinformation', ChangeInformationTable::class)->name('ChangeInformationTable');
 
-    Route::get('/changeinformationform', ChangeInformation::class)->name('changeInformation');
+    Route::get('/changeinformation/form', ChangeInformation::class)->name('changeInformation');
+
+    Route::get('/changeinformation/view/{index}', ChangeInformationView::class)->name('ChangeInformationView');
+
 
     Route::get('/changeinformationrequests', ApproveChangeInformationTable::class)->name('ApproveChangeInformationTable');
     

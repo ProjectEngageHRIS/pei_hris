@@ -363,7 +363,7 @@
                             </div>
                         @enderror
                     </div>
-                    @if ($status != "Cancelled")
+                @if (!in_array($status, ['Cancelled', 'Approved']))
                     <div class="mt-4" x-cloak x-data="{ openCancelModal: false }">
                         <div class="flex flex-row-reverse">
                             <button id="cancel_button"  
@@ -454,7 +454,7 @@
                         </div>
                    
                     </div>
-                 @endif
+                @endif
                 @endif
 
 

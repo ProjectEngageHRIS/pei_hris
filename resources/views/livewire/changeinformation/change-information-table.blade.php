@@ -154,7 +154,6 @@
                         <th scope="col" class="px-6 py-3 text-center">
                             Date Filled
                         </th>
-
                         <th scope="col" class="px-6 py-3 text-center">
                             Actions
                         </th>
@@ -230,7 +229,7 @@
                                         <td class="items-center py-4 text-center">
                                             <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
                                                 <!-- View Button -->
-                                                <a onclick="location.href='{{ route('ItHelpDeskView', ['index' => $changeinfo->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
+                                                <a onclick="location.href='{{ route('ChangeInformationView', ['index' => $changeinfo->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
                                                     View
                                                 </a>
                                                 <!-- Cancel Button -->
