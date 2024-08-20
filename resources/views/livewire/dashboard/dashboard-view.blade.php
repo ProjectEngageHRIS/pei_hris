@@ -50,53 +50,60 @@
                 </div>
                 <script>
                 document.addEventListener('livewire:init', function () {
-                    Livewire.on('triggerLocationCheckIn', (itemId) => {
+                    Livewire.on('triggerLocationCheckOut', (itemId) => {
                         Livewire.dispatch('startLoading');
                         if (navigator.geolocation) {
-                            getLocation(0); // Start with 0 retries
+                            watchLocation(0); // Start watching location with 0 retries
                             @this.loading = true;
                         } else {
-                            console.error("Geolocation is not supported by this browser.");
+                            Livewire.dispatch('stopLoading');
                         }
                     });
 
-                    function getLocation(retries) {
-                        navigator.geolocation.getCurrentPosition(
+                    function watchLocation(retries) {
+                        let watchId;
+                        let bestAccuracy = Infinity;
+
+                        watchId = navigator.geolocation.watchPosition(
                             function(position) {
-                                var latitude = position.coords.latitude;
-                                var longitude = position.coords.longitude;
-                                var accuracy = position.coords.accuracy;
+                                const { latitude, longitude, accuracy } = position.coords;
 
                                 console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
 
-                                if (accuracy > 100 && retries < 3) { // Retry if accuracy is poor and retries are less than 3
-                                    console.warn('Poor accuracy, retrying geolocation...');
-                                    setTimeout(() => getLocation(retries + 1), 5000); // Retry after 5 seconds
-                                } else {
-                                    // Proceed with the best available location
-                                    console.log(accuracy > 100 ? 'Accuracy remains poor, using best available location.' : 'Good accuracy, using current location.');
+                                if (accuracy < bestAccuracy) {
+                                    bestAccuracy = accuracy;
+                                    // Fetch the address immediately with the improved accuracy
                                     getAddressFromCoordinates(latitude, longitude);
+                                }
+
+                                if (accuracy < 50 || retries >= 3) { // Stop if accuracy is below 50 meters or retries are exhausted
+                                    console.log('Stopping watchPosition due to sufficient accuracy or retries.');
+                                    navigator.geolocation.clearWatch(watchId); // Stop watching position
+                                } else {
+                                    console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
+                                    retries++;
                                 }
                             },
                             function(error) {
                                 console.error("Geolocation error:", error);
+                                navigator.geolocation.clearWatch(watchId); // Stop watching if there's an error
                             },
                             {
                                 enableHighAccuracy: true,
-                                timeout: 10000, // Timeout after 10 seconds
+                                timeout: 10000, // Timeout for each position update attempt
                                 maximumAge: 0 // No cached position
                             }
                         );
                     }
 
                     function getAddressFromCoordinates(lat, lng) {
-                        var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+                        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
 
                         fetch(url)
                         .then(response => response.json())
                         .then(data => {
                             if (data && data.address) {
-                                var address = [
+                                const address = [
                                     data.address.road, 
                                     data.address.city || data.address.town || data.address.village,
                                     data.address.state,
@@ -106,11 +113,8 @@
                                 console.log('Address:', address);
                                 // Update Livewire component with address data
                                 Livewire.dispatch('checkInLocation', {
-                                    // latitude: lat,
-                                    // longitude: lng,
                                     address: address
                                 });
-                                // Use the address in your application
                             } else {
                                 console.error('Geocoding error:', data);
                             }
@@ -169,83 +173,81 @@
             </div>
 
             <script>
-document.addEventListener('livewire:init', function () {
-    Livewire.on('triggerLocationCheckOut', (itemId) => {
-        Livewire.dispatch('startLoading');
-        if (navigator.geolocation) {
-            watchLocation(0); // Start watching location with 0 retries
-            @this.loading = true;
-        } else {
-            console.error("Geolocation is not supported by this browser.");
-        }
-    });
+                document.addEventListener('livewire:init', function () {
+                    Livewire.on('triggerLocationCheckOut', (itemId) => {
+                        Livewire.dispatch('startLoading');
+                        if (navigator.geolocation) {
+                            watchLocation(0); // Start watching location with 0 retries
+                            @this.loading = true;
+                        } else {
+                            Livewire.dispatch('stopLoading');
+                        }
+                    });
 
-    function watchLocation(retries) {
-        let watchId;
-        let bestAccuracy = Infinity;
+                    function watchLocation(retries) {
+                        let watchId;
+                        let bestAccuracy = Infinity;
 
-        watchId = navigator.geolocation.watchPosition(
-            function(position) {
-                const { latitude, longitude, accuracy } = position.coords;
+                        watchId = navigator.geolocation.watchPosition(
+                            function(position) {
+                                const { latitude, longitude, accuracy } = position.coords;
 
-                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+                                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
 
-                if (accuracy < bestAccuracy) {
-                    bestAccuracy = accuracy;
-                    // Fetch the address immediately with the improved accuracy
-                    getAddressFromCoordinates(latitude, longitude);
-                }
+                                if (accuracy < bestAccuracy) {
+                                    bestAccuracy = accuracy;
+                                    // Fetch the address immediately with the improved accuracy
+                                    getAddressFromCoordinates(latitude, longitude);
+                                }
 
-                if (accuracy < 50 || retries >= 3) { // Stop if accuracy is below 50 meters or retries are exhausted
-                    console.log('Stopping watchPosition due to sufficient accuracy or retries.');
-                    navigator.geolocation.clearWatch(watchId); // Stop watching position
-                } else {
-                    console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
-                    retries++;
-                }
-            },
-            function(error) {
-                console.error("Geolocation error:", error);
-                navigator.geolocation.clearWatch(watchId); // Stop watching if there's an error
-            },
-            {
-                enableHighAccuracy: true,
-                timeout: 10000, // Timeout for each position update attempt
-                maximumAge: 0 // No cached position
-            }
-        );
-    }
+                                if (accuracy < 50 || retries >= 3) { // Stop if accuracy is below 50 meters or retries are exhausted
+                                    console.log('Stopping watchPosition due to sufficient accuracy or retries.');
+                                    navigator.geolocation.clearWatch(watchId); // Stop watching position
+                                } else {
+                                    console.warn('Accuracy still not sufficient, continuing to watch for better accuracy...');
+                                    retries++;
+                                }
+                            },
+                            function(error) {
+                                console.error("Geolocation error:", error);
+                                navigator.geolocation.clearWatch(watchId); // Stop watching if there's an error
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 10000, // Timeout for each position update attempt
+                                maximumAge: 0 // No cached position
+                            }
+                        );
+                    }
 
-    function getAddressFromCoordinates(lat, lng) {
-        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+                    function getAddressFromCoordinates(lat, lng) {
+                        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
 
-        fetch(url)
-        .then(response => response.json())
-        .then(data => {
-            if (data && data.address) {
-                const address = [
-                    data.address.road, 
-                    data.address.city || data.address.town || data.address.village,
-                    data.address.state,
-                    data.address.country
-                ].filter(Boolean).join(', ');
+                        fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.address) {
+                                const address = [
+                                    data.address.road, 
+                                    data.address.city || data.address.town || data.address.village,
+                                    data.address.state,
+                                    data.address.country
+                                ].filter(Boolean).join(', ');
 
-                console.log('Address:', address);
-                // Update Livewire component with address data
-                Livewire.dispatch('checkOutLocation', {
-                    address: address
+                                console.log('Address:', address);
+                                // Update Livewire component with address data
+                                Livewire.dispatch('checkOutLocation', {
+                                    address: address
+                                });
+                            } else {
+                                console.error('Geocoding error:', data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
                 });
-            } else {
-                console.error('Geocoding error:', data);
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-    }
-});
-
-
             </script>
 
             <style>
