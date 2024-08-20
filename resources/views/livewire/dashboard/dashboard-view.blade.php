@@ -38,7 +38,7 @@
                     @endif
             
                     <div wire:poll.1ms class="flex justify-center w-full px-4 mb-4">
-                        <button wire:click.once="checkIn" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
+                        <button wire:click.once="checkInLocation" class="flex items-center justify-center px-4 mr-4 text-sm font-medium shadow bg-navButton rounded-10px w-28 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"
                             @if($timeInFlag ) disabled style="cursor: not-allowed;" @endif>
                             Time In
                         </button>
@@ -48,6 +48,81 @@
                         </button>
                     </div>
                 </div>
+                <script>
+                document.addEventListener('livewire:init', function () {
+                    Livewire.on('triggerLocationCheckIn', (itemId) => {
+                        Livewire.dispatch('startLoading');
+                        if (navigator.geolocation) {
+                            getLocation(0); // Start with 0 retries
+                            @this.loading = true;
+                        } else {
+                            console.error("Geolocation is not supported by this browser.");
+                        }
+                    });
+
+                    function getLocation(retries) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(position) {
+                                var latitude = position.coords.latitude;
+                                var longitude = position.coords.longitude;
+                                var accuracy = position.coords.accuracy;
+
+                                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+
+                                if (accuracy > 100 && retries < 3) { // Retry if accuracy is poor and retries are less than 3
+                                    console.warn('Poor accuracy, retrying geolocation...');
+                                    setTimeout(() => getLocation(retries + 1), 5000); // Retry after 5 seconds
+                                } else {
+                                    // Proceed with the best available location
+                                    console.log(accuracy > 100 ? 'Accuracy remains poor, using best available location.' : 'Good accuracy, using current location.');
+                                    getAddressFromCoordinates(latitude, longitude);
+                                }
+                            },
+                            function(error) {
+                                console.error("Geolocation error:", error);
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 10000, // Timeout after 10 seconds
+                                maximumAge: 0 // No cached position
+                            }
+                        );
+                    }
+
+                    function getAddressFromCoordinates(lat, lng) {
+                        var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+                        fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.address) {
+                                var address = [
+                                    data.address.road, 
+                                    data.address.city || data.address.town || data.address.village,
+                                    data.address.state,
+                                    data.address.country
+                                ].filter(Boolean).join(', ');
+
+                                console.log('Address:', address);
+                                // Update Livewire component with address data
+                                Livewire.dispatch('checkInLocation', {
+                                    // latitude: lat,
+                                    // longitude: lng,
+                                    address: address
+                                });
+                                // Use the address in your application
+                            } else {
+                                console.error('Geocoding error:', data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+                </script>
+
+
 
             <div x-cloak  x-ref="checkout-modal" 
                 x-show="checkOut" 
@@ -82,7 +157,7 @@
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                 </svg>
                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Are you certain about Checking Out?</h3>
-                            <button wire:click.once="checkOut" class="text-white bg-orange-600 hover:bg-orange-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                            <button wire:click.once="checkOutLocation" class="text-white bg-orange-600 hover:bg-orange-800 font-medium rounded-lg text-sm px-5 py-2.5">
                                 Yes
                             </button>
                             <button @click="checkOut = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
@@ -93,10 +168,95 @@
                 </div>
             </div>
 
+            <script>
+                document.addEventListener('livewire:init', function () {
+                    Livewire.on('triggerLocationCheckOut', (itemId) => {
+                        Livewire.dispatch('startLoading');
+                        if (navigator.geolocation) {
+                            getLocation(0); // Start with 0 retries
+                            @this.loading = true;
+                        } else {
+                            console.error("Geolocation is not supported by this browser.");
+                        }
+                    });
 
+                    function getLocation(retries) {
+                        navigator.geolocation.getCurrentPosition(
+                            function(position) {
+                                var latitude = position.coords.latitude;
+                                var longitude = position.coords.longitude;
+                                var accuracy = position.coords.accuracy;
+
+                                console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+
+                                if (accuracy > 100 && retries < 3) { // Retry if accuracy is poor and retries are less than 3
+                                    console.warn('Poor accuracy, retrying geolocation...');
+                                    setTimeout(() => getLocation(retries + 1), 5000); // Retry after 5 seconds
+                                } else {
+                                    // Proceed with the best available location
+                                    console.log(accuracy > 100 ? 'Accuracy remains poor, using best available location.' : 'Good accuracy, using current location.');
+                                    getAddressFromCoordinates(latitude, longitude);
+                                }
+                            },
+                            function(error) {
+                                console.error("Geolocation error:", error);
+                            },
+                            {
+                                enableHighAccuracy: true,
+                                timeout: 10000, // Timeout after 10 seconds
+                                maximumAge: 0 // No cached position
+                            }
+                        );
+                    }
+
+                    function getAddressFromCoordinates(lat, lng) {
+                        var url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+                        fetch(url)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data && data.address) {
+                                var address = [
+                                    data.address.road, 
+                                    data.address.city || data.address.town || data.address.village,
+                                    data.address.state,
+                                    data.address.country
+                                ].filter(Boolean).join(', ');
+
+                                console.log('Address:', address);
+                                // Update Livewire component with address data
+                                Livewire.dispatch('checkOutLocation', {
+                                    // latitude: lat,
+                                    // longitude: lng,
+                                    address: address
+                                });
+                                // Use the address in your application
+                            } else {
+                                console.error('Geocoding error:', data);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                        });
+                    }
+                });
+                </script>
+
+            <!-- Loading screen -->
+            <div x-data="{ loading: false, action: '' }"
+                    x-init="$wire.on('startLoading', event => { loading = true; action = event.action });  $wire.on('stopLoading', () => loading = false);">
+                <div x-show="loading" class="load-over z-50">
+                    <div wire:loading class="loading-overlay z-50">
+                        <div class="flex flex-col items-center justify-center">
+                            <div class="spinner"></div>
+                            <p x-text="action ? 'Processing ' + action + '...' : 'Loading...'"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 
             </div>
-                <div wire:poll.1ms  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
+                <div  class="grid grid-cols-2 gap-4 px-10 mb-6 text-center">
                     <div class="">
                         <p class="text-sm font-medium text-customGray1">Time In:</p>
                         <p class="text-sm font-medium text-customRed">{{$timeIn ? $timeIn->format('h:i:s A') : "N/A"}} </p>
@@ -105,7 +265,7 @@
                         <p class="text-sm font-medium text-customGray1">Time Out:</p>
                         <p class="text-sm font-medium text-customRed">{{$timeOut ? $timeOut->format('h:i:s A') : "N/A"   }}</p>
                     </div>
-                    <div class="items-center col-span-2 mt-6">
+                    <div  class="items-center col-span-2 mt-6">
                         <div class="">
                             <p class="text-sm font-medium text-customGray1">Number of Hours:</p>
                             @if ($timeIn && $timeOut)
@@ -114,7 +274,6 @@
                                 <p id="time-difference" data-time-in="{{$timeIn}}" class="px-20 text-sm text-customGray1 font-regular"></p>
                             @else
                                 <p class="px-20 text-sm text-customGray1 font-regular">N/A</p>
-
                             @endif
                             
                         </div>
@@ -412,6 +571,7 @@
             const formattedDifference = `${String(diffHours).padStart(2, '0')}:${String(diffMinutes).padStart(2, '0')}:${String(diffSeconds).padStart(2, '0')}`;
             document.getElementById('time-difference').textContent = formattedDifference;
         } else {
+            // document.getElementById('time-difference').textContent = ;
             console.error('timeInString is undefined or null');
         }
     }

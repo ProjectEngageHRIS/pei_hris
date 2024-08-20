@@ -52,7 +52,7 @@ class DashboardView extends Component
     public $employee_name;
 
     public $position;
-    protected $listeners = ['timeIn' => 'checkIn', 'timeOut' => 'checkOut'];
+    protected $listeners = ['timeIn' => 'checkIn', 'timeOut' => 'checkOut', 'checkInLocation' => 'updateCheckInLocation', 'checkOutLocation' => 'updateCheckOutLocation'];
 
     public $department;
 
@@ -273,10 +273,36 @@ class DashboardView extends Component
         return $image;
     }
 
+    public $location;
+    public $loading;
+
+    public function checkInLocation(){
+        $this->dispatch('startLoading', action: 'Time In');
+        $this->location = null;
+        $this->dispatch('triggerLocationCheckIn');
+    }
+
+    public function checkOutLocation(){
+        $this->dispatch('startLoading', action: 'Time Out');
+        $this->location = null;
+        $this->dispatch('triggerLocationCheckOut');
+    }
+
+    public function updateCheckInLocation($address)
+    {
+        $this->location = $address;
+        $this->checkIn();
+    }
+
+    public function updateCheckOutLocation($address)
+    {
+        $this->location = $address;
+        $this->checkOut();
+    }
 
     public function checkIn()
     {
-
+        // $this->dispatch('triggerLocation');
         try {
             $employee_id = auth()->user()->employee_id;
             // $time = Dailytimerecord::where('attendance_date', now()->toDateString())->where('employee_id', $employee_id)->first(); // assuming 'attendance_date' is stored as a date only
@@ -293,7 +319,8 @@ class DashboardView extends Component
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_in = Carbon::now()->toDateTimeString();
                 $lateCheckerParse = Carbon::parse($dtr->time_in);
-                $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0); 
+                $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0);
+                $dtr->time_in_location = $this->location; 
                 if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
@@ -313,11 +340,14 @@ class DashboardView extends Component
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('time-in-and-out')->error('Failed to time In: ' . $e->getMessage());
+            $this->dispatch('stopLoading');
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
             // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
+        $this->dispatch('stopLoading');
+
     }
 
 
@@ -344,6 +374,7 @@ class DashboardView extends Component
                         $dtr->employee_id = $loggedInUser;
                         $dtr->attendance_date = Carbon::today()->toDateString();
                         $dtr->time_out = Carbon::now()->toDateTimeString();
+                        $dtr->time_out_location = $this->location;
                         $timeIn = Carbon::parse($dtr->time_in);
                         $timeOut = Carbon::parse($dtr->time_out);
                         $differenceInSeconds = $timeIn->diffInSeconds($timeOut);
@@ -424,14 +455,16 @@ class DashboardView extends Component
             dd($e);
             // Log the exception for further investigation
             Log::channel('time-in-and-out')->error('Failed to time out: ' . $e->getMessage());
+            $this->dispatch('stopLoading');
+
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 
             // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-    
-    
+        $this->dispatch('stopLoading');
+
     }
     public function leaveRequest(){
         $dtr = new Dailytimerecord();
