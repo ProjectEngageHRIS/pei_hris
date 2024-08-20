@@ -182,7 +182,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
-    Route::get("/it", ItDashboardView::class)->name('ItDashboard');
+    Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
 
 
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');

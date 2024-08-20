@@ -116,7 +116,7 @@ class ItHelpDeskForm extends Component
             $itticket = new Ittickets();
     
             $itticket->employee_id = $loggedInUser->employee_id;
-            $itticket->status = "Pending";
+            $itticket->status = "Unassigned";
             $itticket->description = $this->description;
             $itticket->save();
             

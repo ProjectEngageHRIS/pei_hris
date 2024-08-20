@@ -76,16 +76,24 @@ class ItHelpDeskTable extends Component
 
         switch ($this->status_filter) {
             case '1':
-                $query->where('status',  'Approved');
-                $this->statusFilterName = "Approved";
+                $query->where('status',  'Completed');
+                $this->statusFilterName = "Completed";
                 break;
             case '2':
-                $query->where('status', 'Pending');
-                $this->statusFilterName = "Pending";
+                $query->where('status', 'Ongoing');
+                $this->statusFilterName = "Ongoing";
                 break;
             case '3':
-                $query->where('status', 'Declined');
-                $this->statusFilterName = "Declined";
+                $query->where('status', 'Report');
+                $this->statusFilterName = "Report";
+                break;
+            case '4':
+                $query->where('status', 'Unassigned');
+                $this->statusFilterName = "Unassigned";
+                break;
+            case '4':
+                $query->where('status', 'Cancelled');
+                $this->statusFilterName = "Cancelled";
                 break;
             default:
                 $this->statusFilterName = "All";

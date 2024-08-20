@@ -292,7 +292,6 @@ class ApproveHrTicketsTable extends Component
             // Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
-
         }
 
     }

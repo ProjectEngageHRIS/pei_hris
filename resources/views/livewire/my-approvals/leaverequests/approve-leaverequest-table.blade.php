@@ -774,7 +774,7 @@
 <script>
 
     
-function openButtonCrudModal(id, status) {
+    function openButtonCrudModal(id, status) {
         const modal = document.getElementById('crud_modal');
         if (modal) {
             const event = new CustomEvent('modal-open', { 

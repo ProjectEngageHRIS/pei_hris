@@ -299,7 +299,7 @@ class DashboardView extends Component
                 $dtr->time_in = Carbon::now()->toDateTimeString();
                 $lateCheckerParse = Carbon::parse($dtr->time_in);
                 $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0);
-                $dtr->time_in_location = $this->location . '(' . $this->accuracy . '%)'; 
+                $dtr->time_in_location = $this->location . '(' . $this->accuracy . 'm)'; 
                 if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
@@ -353,7 +353,7 @@ class DashboardView extends Component
                         $dtr->employee_id = $loggedInUser;
                         $dtr->attendance_date = Carbon::today()->toDateString();
                         $dtr->time_out = Carbon::now()->toDateTimeString();
-                        $dtr->time_out_location = $this->location . '(' . $this->accuracy . '%)';
+                        $dtr->time_out_location = $this->location . '(' . $this->accuracy . 'm)';
                         $timeIn = Carbon::parse($dtr->time_in);
                         $timeOut = Carbon::parse($dtr->time_out);
                         $differenceInSeconds = $timeIn->diffInSeconds($timeOut);

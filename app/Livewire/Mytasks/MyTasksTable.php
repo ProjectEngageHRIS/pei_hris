@@ -80,8 +80,8 @@ class MyTasksTable extends Component
                 $this->statusFilterName = "Pending";
                 break;
             case '3':
-                $query->where('status', 'Declined');
-                $this->statusFilterName = "Declined";
+                $query->where('status', 'Cancelled');
+                $this->statusFilterName = "Cancelled";
                 break;
             default:
                 $this->statusFilterName = "All";
