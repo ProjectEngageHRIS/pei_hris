@@ -1,7 +1,29 @@
 <div class="flex flex-col space-y-6 ">
-    <!-- New Containers -->
-    <div class="flex flex-row justify-between space-x-4">
-        <div class="flex-1 p-4 bg-white h-[150px] rounded-lg shadow">
+    {{-- Ticket Categories --}}
+    <div class="flex flex-col bg-white divide-y-2 divide-gray-300 rounded-lg shadow xl:hidden">
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Completed Tickets</p>
+            <p class="font-semibold text-right text-md text-customGreen">{{$itTicketTypes['Completed'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Ongoing Tickets</p>
+            <p class="font-semibold text-right text-yellow-500 text-md">{{$itTicketTypes['Ongoing'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Unassigned Tickets</p>
+            <p class="font-semibold text-right text-md text-customGray1">{{$itTicketTypes['Unassigned'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Reported Tickets</p>
+            <p class="font-semibold text-right text-blue-500 text-md">{{$itTicketTypes['Report'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Cancelled Tickets</p>
+            <p class="font-semibold text-right text-md text-customRed">{{$itTicketTypes['Cancelled'] ?? 0}}</p>
+        </div>
+    </div>
+    <div class="flex-row justify-between hidden space-x-4 xl:flex">
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Completed Tickets</p>
             <p class="text-[60px] font-semibold text-right text-customGreen">{{$itTicketTypes['Completed'] ?? 0}}</p>
         </div>
@@ -24,22 +46,21 @@
     </div>
     <!-- Employee Table -->
     <div class="relative shadow-md">
-        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg ">
+        <div class="grid grid-cols-2 gap-4 p-4 overflow-x-hidden bg-white rounded-t-lg">
             <!-- Add user button -->
             <div x-data="{showModal: false}">
-                <button @click="showModal = true;" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+                <button @click="showModal = true;" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5 h-9">
                     Add new ticket
                 </button>
                 <!-- Main modal -->
                 <div x-cloak x-show="showModal" class="fixed inset-0 z-40 bg-black bg-opacity-50" @click="showModal = false"></div>
-        
                 <!-- Modal -->
                 <div x-cloak x-show="showModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center">
                     <div class="relative w-full max-w-md p-4">
                         <!-- Modal content -->
                         <div class="relative h-full bg-white rounded-lg shadow">
                             <!-- Modal header -->
-                            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                            <div class="flex items-center justify-between p-5 border-b rounded-t">
                                 <h3 class="text-xl font-semibold text-gray-900">
                                     Add new ticket
                                 </h3>
@@ -120,17 +141,16 @@
                     </div>
                 </div>
             </div>
-            
             {{-- Search bar  --}}
-            <div class="flex flex-row pr-2">
+            <div class="flex flex-row overflow-hidden justify-self-end">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
-                        <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <svg class="text-gray-500 size-3 sm:size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-56 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                    <input type="text" id="table-search-users" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
@@ -167,8 +187,8 @@
                     }" class="absolute rounded-lg right-3 hover:text-customRed">
     
                     <!-- Filter Icon Button -->
-                    <button @click="filterOpen = !filterOpen" class="size-10 right-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 text-customGray hover:text-customRed">
+                    <button @click="filterOpen = !filterOpen" class="size-9 right-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-4 sm:size-6 text-customGray hover:text-customRed">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                         </svg>
                     </button>
@@ -496,31 +516,31 @@
                                     </th>
                                     
                                     @if($it_ticket->status == "Ongoing")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-yellow-900 bg-yellow-100 rounded-lg text-nowrap me-2">
                                                 Ongoing
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Completed")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-green-900 bg-green-100 rounded-lg text-nowrap me-2">
                                                 Completed
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Report")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-blue-900 bg-blue-100 rounded-lg text-nowrap me-2">
                                                 Report
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Cancelled")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-red-900 bg-red-100 rounded-lg text-nowrap me-2">
                                                 Cancelled
                                             </span>
                                         </th>
                                     @else
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-900 bg-gray-200 rounded-lg text-nowrap me-2">
                                                 Unassigned
                                             </span>
