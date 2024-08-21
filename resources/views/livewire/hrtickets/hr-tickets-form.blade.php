@@ -512,7 +512,7 @@
                                         <option value="{{$name}}">{{$name}}</option>
                                     @endforeach
                                 </select>
-                                @error('type_of_hrconcern')
+                                @error('request_requested')
                                     <div class="text-sm transition transform alert alert-danger"
                                         x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
@@ -584,7 +584,7 @@
                 </template>
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Certificate of Remittances'">
                 {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Certificate of Remittances") --}}
-                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div x-data="{typeOfHrConcern: @entangle('type_of_hrconcern'), requestAssigned: $wire.entangle('request_assigned')}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Remittance Certificate
                                 <span class="text-red-600">*</span>
@@ -603,7 +603,8 @@
                                     </div>
                                 @enderror
                             </div>
-                            @if ($type_of_hrconcern == "Others")
+                            {{-- @if ($type_of_hrconcern == "Others") --}}
+                            <template x-if="typeOfHrConcern === 'Others'">
                                 <div id="remittance_request_others_container" class="mt-4">
                                     <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
@@ -615,7 +616,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                            @endif
+                            </template>
                         </div>
                         <div class="col-span-1">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Account Assigned
@@ -637,7 +638,7 @@
                                 @enderror
                             </div>
 
-                            @if ($request_assigned == "Others")
+                            <template x-if="requestAssigned === 'Others'">
                                 <div id="request_others_container" class="mt-4">
                                     <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
@@ -649,7 +650,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                            @endif
+                            </template>
                         </div>
                         <div id="purpose_container" class="col-span-1">
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Requesting
@@ -685,7 +686,7 @@
 
                 {{-- @if ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Messengerial") --}}
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-6">
-                        <div class="col-span-1 lg:col-span-2">
+                        <div x-data="{typeOfHrConcern: $wire.entangle('type_of_hrconcern')}" class="col-span-1 lg:col-span-2">
                             <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900"> Type of Messengerial Request
                                 <span class="text-red-600">*</span>
                             </label>
@@ -703,7 +704,8 @@
                                     </div>
                                 @enderror
                             </div>
-                            @if ($type_of_hrconcern == "Others")
+                            {{-- @if ($type_of_hrconcern == "Others") --}}
+                            <template x-if="typeOfHrConcern === 'Others'">
                                 <div id="messengerial_other_type_container" class="mt-4">
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
@@ -714,7 +716,7 @@
                                         </div>
                                     @enderror
                                 </div>
-                            @endif
+                            </template>
                         </div>
                         <div id="request_requested_container" class="col-span-1 lg:col-span-2">
                             <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900"> Company
@@ -925,7 +927,7 @@
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Departure
                                 <span class="text-red-600">*</span>
                             </label>
-                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
+                            <input type="datetime-local" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
@@ -937,7 +939,7 @@
                             <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Pick-Up
                                 <span class="text-red-600">*</span>
                             </label>
-                            <input type="date" name="request_requested" id="request_requested" wire:model.live="request_requested" required
+                            <input type="datetime-local" name="request_requested" id="request_requested" wire:model.live="request_requested" required
                                 class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_requested')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
@@ -1448,7 +1450,7 @@
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div id="request_link">
+                            <div id="purpose">
                                 <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
@@ -1512,7 +1514,7 @@
                 
                 <template x-if="typeOfTicket === 'Internal Control' && typeOfRequest === 'Tools and Equipment'">
                     {{-- @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Tools and Equipment") --}}
-                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div x-data="{typeOfHrConcern: $wire.entangle($type_of_hrconcern)}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
                                 <span class="text-red-600">*</span>
@@ -1557,7 +1559,8 @@
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
-                            @if ($type_of_hrconcern == "Others")
+                            {{-- @if ($type_of_hrconcern == "Others") --}}
+                            <template x-if="typeOfHrConcern === 'Others">
                                 <div id="purpose_container" class="mt-4">
                                     <div id="purpose">
                                         <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
@@ -1570,7 +1573,7 @@
                                         @enderror
                                     </div>
                                 </div>
-                            @endif
+                            </template>
                         </div>
                     </div>
                 </template>

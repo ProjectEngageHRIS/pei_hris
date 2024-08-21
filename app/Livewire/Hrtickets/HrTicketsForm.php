@@ -132,19 +132,19 @@ class HrTicketsForm extends Component
         if($type == "overtime"){
             $this->type_of_ticket = "HR Internal";
             $this->type_of_request = "HR";
-            $this->sub_type_of_request = "Payroll-related concerns";
+            $this->sub_type_of_request = "Payroll-related Concerns";
             $this->type_of_hrconcern = "Overtime Pay";
             $this->request_date = $dateToday;
         } else if($type == "undertime"){
             $this->type_of_ticket = "HR Internal";
             $this->type_of_request = "HR";
-            $this->sub_type_of_request = "Payroll-related concerns";
+            $this->sub_type_of_request = "Payroll-related Concerns";
             $this->type_of_hrconcern = "Deductions";
             $this->request_date = $dateToday;
         } else if($type == "adviceslip"){
             $this->type_of_ticket = "HR Internal";
             $this->type_of_request = "HR";
-            $this->sub_type_of_request = "Payroll-related concerns";
+            $this->sub_type_of_request = "Payroll-related Concerns";
             $this->type_of_hrconcern = "Deductions";
             $this->request_date = $dateToday;
         } else if($type == "coe"){
@@ -241,17 +241,11 @@ class HrTicketsForm extends Component
      }
 
 
-    // protected $rules = [
-    //     'mode_of_application' => 'required|in:Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave',
-    //     'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-    //     'type_of_leave_sub_category' => 'nullable|in:Others,Within the Philippines,Abroad,Out Patient,Special Leave Benefits for Women,Completion of Master\'s degree,BAR/Board Examination Review,Monetization of leave credits,Terminal Leave,In Hospital, Others',
-    //     'type_of_leave_description' => 'required_if:type_of_leave_sub_category,Others|min:10|max:500',
-    //     'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
-    //     'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
-    //     // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
-    //     'commutation' => 'required|in:not requested,requested',
-    //     'commutation_signature_of_appli' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120'
-    // ];
+    protected $rules = [
+        'concerned_employee' => 'required|min:5|string',
+        'type_of_ticket' => 'required|in:HR Internal,Internal Control,HR Operations',
+        // 'type_of_request' => 'required|in:HR,Office Admin,Procurement',
+    ];
 
     protected $validationAttributes = [
         'mode_of_application' => 'Mode of Application',
@@ -272,6 +266,162 @@ class HrTicketsForm extends Component
         // }
 
         // dd($this->supplies_request);
+
+        # HR
+        if($this->type_of_ticket == "HR Internal"){
+            if($this->type_of_request == "HR"){
+                if($this->sub_type_of_request == "Certificate of Employment"){
+                    $this->validate(['purpose' => 'required|min:10|string', 
+                                     'type_of_hrconcern' => 'required|in:Without Compensation,With Compensation']);
+                } else if( $this->sub_type_of_request == "Request for Consultation"){
+                    $this->validate(['purpose' => 'required|min:10|string', 
+                                     'type_of_hrconcern' => 'required|in:High,Medium,Low']);
+                }
+                else if($this->sub_type_of_request == "HMO-related Concerns"){
+                    $this->validate(['purpose' => 'required|min:10|string', 
+                                     'type_of_hrconcern' => 'required|in:Availment of Service,Card Replacement,Reimbursement,Request for Enrollment,Request for Deletion',
+                                    'request_link' => 'required|url:https']);
+                } else if($this->sub_type_of_request == "Leave Concerns"){
+                    $this->validate(['purpose' => 'required|min:10|string', 
+                                    'type_of_hrconcern' => 'required|in:Leave Credits,Changes on Filed Leaves,Cancellation of Leaves',
+                                    'request_link' => 'required|url:https']);
+                }
+                else if($this->sub_type_of_request == "Payroll-related Concerns"){
+                    $this->validate(['request_date' => 'required|date',
+                                    'purpose' => 'required|min:10|string', 
+                                    'type_of_hrconcern' => 'required|in:Overtime Pay,Holiday Pay,Deductions,Others,Request for Deletion',
+                                    'request_link' => 'required|url:https']);
+                }   
+                else if($this->sub_type_of_request == "Request for a Meeting"){
+                    $this->validate(['request_date' => 'required|date',
+                                    'purpose' => 'required|min:10|string', 
+                                    'request_requested' => ['required', 'regex:/^[A-Za-z\s]+\|SLE[A-Z]?\d{4}$/']]);
+                }
+            }
+            else if($this->type_of_request == "Office Admin"){
+                if($this->sub_type_of_request == "Certificate of Remittances"){
+                    if($this->type_of_hrconcern == "Others"){
+                        $this->validate(['remittance_request_others' => 'required|string|min:5']);
+                    } else {
+                        $this->validate(['type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others']);
+                    }
+                    if($this->request_assigned == "Others"){
+                        $this->validate(['request_assigned_request_other' => 'required|string|min:5']);
+                    } else {
+                        $this->validate(['request_assigned' => 'required|in:PEI,SL TEMPS,SL SEARCH,WESEARCH,Others']);
+                    }
+                    $this->validate(['request_date' => 'required|date',
+                                     'purpose' => 'required|min:10|string']);
+                }
+                else if($this->sub_type_of_request == "Government-Mandated Benefits Concern"){
+                    $this->validate(['type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others,SSS Salary Loan for Approval,SSS Calamity Loan for Approval,PAG-IBIG Multi-Purpose Loan for Approval,SSS Maternity Notification,SSS Sickness Notification,Issuance of TIN Number,SSS R1A',
+                                     'request_link' => 'required|url:https']);
+                }
+                else if($this->sub_type_of_request == "Messengerial"){
+                    if($this->type_of_hrconcern == "Others"){
+                        $this->validate(['messengerial_other_type' => 'required|string|min:5']);
+                    } else {
+                        $this->validate(['type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others']);
+                    }
+                    $this->validate(['request_requested' => 'required|string|min:5',
+                                     'request_assigned' => 'required|string|min:5',
+                                     'request_extra' => 'required|string|min:5',
+                                     'request_date' => 'required|date',
+                                    ]);
+                }
+                else if($this->sub_type_of_request == "Repairs/Maintenance"){
+                    $this->validate([
+                        'type_of_hrconcern' => 'required|in:Electrical,Plumbing,HVAC,Structural,Safety Concerns,Equipment/Machinery,Environmental,Accessibility,General Maintenance,Security,Others',
+                        'purpose' => 'required|min:10|string',
+                    ]);
+                }  
+                else if($this->sub_type_of_request == "Book a Car"){
+                    $this->validate(['request_date' => 'required|date',
+                                     'request_requested' => 'required|date',
+                                     'account_client_hr_ops' => 'required|string|min:10',
+                                     'purpose' => 'required|min:10|string']);
+                }
+                else if($this->sub_type_of_request == "Book a Meeting Room"){
+                    $this->validate(['request_date' => 'required|date',
+                                     'request_requested' => 'required|date',
+                                     'type_of_hrconcern' => 'required|in:Training Room,Villa Office|string',
+                                     'purpose' => 'required|min:10|string'
+                                    ]);
+                }
+                else if($this->sub_type_of_request == "Office Supplies"){
+                    $this->validate(['request_others' => 'required']);
+                    // $hrticketdata->request_others = json_encode($this->supplies_request);
+                }
+            }
+            else if($this->type_of_request == "Procurement"){
+                if($this->sub_type_of_request == "Request for Quotation"){
+                    $this->validate(['type_of_hrconcern' => 'required|min:10|string',
+                                     'purpose' => 'required|min:10|string',
+                                     'request_link' => 'required|url:https']);
+                }
+                else if($this->sub_type_of_request == "Request to Buy/Book/Avail Service"){
+                    $this->validate(['type_of_hrconcern' => 'required|min:10|string',
+                                     'purpose' => 'required|min:10|string',
+                                     'request_link' => 'required|url:https']);
+                }
+            }
+        }
+
+        # Internal Control
+        else if($this->type_of_ticket == "Internal Control"){
+            if($this->type_of_request == "Reimbursements"){
+                $this->validate(['request_date' => 'required|date',
+                                 'purpose' => 'required|min:10|string',
+                                 'request_link' => 'required|url:https'
+                                ]);
+            }
+            else if($this->type_of_request == "Tools and Equipment"){
+                $this->validate(['condition_availability' => 'required|in:New,Old/Existing Unit',
+                                 'type_of_hrconcern' => 'required|in:Laptop,Printer,Monitor,Mouse,Laptop Charger / Adapter,Keyboard,LAN Dangle,HDMI to LAN Converter,Numeric Keypad,Extension Cord,Others',
+                                ]);
+            }
+            else if($this->type_of_request == "Cash Advance"){
+                $this->validate(['request_date' => 'required|date',
+                                 'request_link' => 'required|url:https'
+                                ]);
+            }
+            else if($this->type_of_request == "Liquidation"){
+                $this->validate(['purpose' => 'required|min:10|string',
+                                 'request_link' => 'required|url:https'
+                                ]);
+            }
+        }
+
+        # HR Operations
+        else if($this->type_of_ticket == "HR Operations"){
+            if($this->type_of_request == "Performance Monitoring Request"){
+                $this->validate([
+                    'type_of_pe_hr_ops' => 'required|in:3rd Month,5th Month,Annual,Semi-Annual,Employee Movement',
+                    'account_client_hr_ops' => 'required|Option 1,Option 2'
+                ]);
+            }
+            else if($this->type_of_request == "Incident Report"){
+                $this->validate([
+                    'type_of_hrconcern' => 'required|in:High,Medium,Low',
+                    'purpose' => 'required|min:10|string'
+                ]);
+            }
+            else if($this->type_of_request == "Request for Issuance of Notice/Letter"){
+                $this->validate([
+                    'type_of_hrconcern' => 'required|in:End of Assignment,Extension of Assignment/Project,End of Project',
+                ]);
+            }
+            else if($this->type_of_request == "Request for Employee Files"){
+                $this->validate([
+                    'request_requested' => 'required|min:10|string',
+                    'purpose' => 'required|min:10|string'
+                ]);
+            }
+        } 
+
+        $this->validate();
+       
+
 
         try {
         
@@ -303,7 +453,7 @@ class HrTicketsForm extends Component
                     $hrticketdata->purpose = $this->purpose;
                     $hrticketdata->request_link = $this->request_link;
                 }
-                else if($this->sub_type_of_request == "Payroll-related concerns"){
+                else if($this->sub_type_of_request == "Payroll-related Concerns"){
                     $hrticketdata->request_date = $this->request_date;
                     $hrticketdata->type_of_hrconcern = $this->type_of_hrconcern;
                     $hrticketdata->purpose = $this->purpose;
@@ -446,6 +596,9 @@ class HrTicketsForm extends Component
                 $hrticketdata->purpose = $this->purpose;
                 $hrticketdata->request_requested = $this->request_requested;
             }
+        } 
+        else {
+            throw new Exception('No Type of Ticket');
         }
 
         // dd('stop');
@@ -455,7 +608,7 @@ class HrTicketsForm extends Component
 
         return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
         
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
 
             $this->dispatch('trigger-error');
 
