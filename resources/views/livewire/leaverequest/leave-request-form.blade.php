@@ -216,7 +216,7 @@
                             <div>
                         {{-- @if ($mode_of_application == "Advise Slip") --}}
                                 <p class="mb-4 font-bold text-customRed">Advise Slip Information</p>
-                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
+                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-4 gap-4">
                                     <div id="time_period_container" class="col-span-1">
                                         <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Date Requested
                                             <span class="text-red-600">*</span>
@@ -257,9 +257,23 @@
                                             <option value="Job/School/PESO Fair">Job/School/PESO Fair</option>
                                             <option value="Travel/Assignment/Airline">Travel/Assignment/Airline</option>
                                             <option value="Collection">Collection</option>
+                                            <option value="Others">Others (Please specify the reason in the Reason of Filling) </option>
                                         </select>
                                         @error('purpose_type')
                                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_type_container').focus();" >
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-span-1">
+                                        <label for="logout_time" class="block mb-2 text-sm font-medium text-gray-900 ">Log Out Time
+                                            <span class="text-red-600">*</span>
+                                        </label>
+                                        <input type="datetime-local" name="logout_time" id="logout_time" wire:model.live="logout_time"
+                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                            required="">
+                                        @error('logout_time')
+                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
                                                 <span class="text-xs text-red-500">{{$message}}</span>
                                             </div>
                                         @enderror

@@ -70,6 +70,9 @@ class LeaveRequestView extends Component
 
     public Leaverequest $leaverequest;
 
+    public $logout_time;
+
+
     public function mount($index){
         $loggedInUser = auth()->user();
 
@@ -102,6 +105,34 @@ class LeaveRequestView extends Component
         // $this->salary = $employeeRecord->salary;
         // $this->is_faculty = $employeeRecord->is_faculty;
 
+        $this->status = "Pending";
+        $this->supervisor_email = $leaverequest->supervisor_email;
+        $this->application_date = $leaverequest->application_date;
+
+        $this->mode_of_application = $leaverequest->mode_of_application;
+        // dd($leaverequest->mode_of_application == "Credit Leave");
+        if($this->mode_of_application == "Credit Leave"){
+            $this->inclusive_start_date = $leaverequest->date_earned;
+            $this->inclusive_end_date = $leaverequest->credit_application;
+            $this->earned_description = $leaverequest->earned_description;
+            $this->full_half = $leaverequest->full_or_half;
+
+            // dd($this->earned_description , $leaverequest->earned_description);
+        } else if($this->mode_of_application == "Advise Slip"){
+            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
+            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->purpose_type = $leaverequest->purpose_type;
+            $this->full_half = $leaverequest->logout_time;
+        } 
+        else{
+            $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
+            $this->num_of_days_work_days_applied = $formattedValue ;
+            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
+            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->deduct_to = $leaverequest->deduct_to;
+            $this->full_half = $leaverequest->full_or_half;
+        }
+
         $this->form_id = $leaverequest->form_id;
         $this->application_date = $leaverequest->application_date;
         $this->mode_of_application = $leaverequest->mode_of_application;
@@ -110,6 +141,7 @@ class LeaveRequestView extends Component
         $this->inclusive_start_date = $leaverequest->inclusive_start_date;
         $this->inclusive_end_date = $leaverequest->inclusive_end_date;
         $this->full_half = $leaverequest->full_or_half;
+        $this->logout_time = $leaverequest->full_or_half;
         $this->date_earned = $leaverequest->date_earned;
         $this->earned_description = $leaverequest->earned_description;
         $this->commutation = $leaverequest->commutation;

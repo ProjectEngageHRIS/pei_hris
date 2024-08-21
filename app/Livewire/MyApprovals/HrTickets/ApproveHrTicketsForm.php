@@ -230,6 +230,7 @@ class ApproveHrTicketsForm extends Component
                 else if($hrticketdata->sub_type_of_request == "Request to Buy/Book/Avail Service"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->request_link = $hrticketdata->request_link;
+                    $this->purpose = $hrticketdata->purpose;
                 }
             }
 

@@ -342,7 +342,7 @@
         </div>
         <!-- Add user button -->
         <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
-            Add Payroll
+            Add Payslip
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-2">
                 <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
               </svg>
@@ -355,7 +355,7 @@
                     <!-- Modal header -->
                     <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
                         <h3 class="text-xl font-semibold text-gray-900 ">
-                            Add new Payroll
+                            Add new Payslip
                         </h3>
                         <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -415,7 +415,7 @@
                             <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
                                 {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
                                 <label for="payroll_picture"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payslip Photo Link
                                     <span class="text-red-600">*</span></label>
                                 <div id="payroll_picture" class="grid grid-cols-1">
                                     <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
@@ -430,7 +430,7 @@
                                 </div>
                             </div>
 
-                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payslip</button>
                             {{-- <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button> --}}
                             <div x-show="openAddWarningButton" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                 <div class="relative w-full max-w-md max-h-full p-4">
@@ -599,7 +599,7 @@
                                         @php
                                             $payroll_exists = $payrollMap->has($employee->employee_id);
                                         @endphp
-                                        <p class="text-xs"><strong>Payroll Issued? ({{$monthFilter}} {{$yearFilter}}):</strong>
+                                        <p class="text-xs"><strong>Payslip Issued? ({{$monthFilter}} {{$yearFilter}}):</strong>
                                             <span class="{{ $payroll_exists ? 'text-green-500' : 'text-red-500' }}">
                                                 {{ $payroll_exists ? 'Yes' : 'No' }}
                                             </span>
@@ -710,7 +710,7 @@
                                                         <div class="relative bg-white rounded-lg shadow ">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payslip For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -786,7 +786,7 @@
                                                                         <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
                                                                             {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
                                                                             <label for="payroll_picture"
-                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                                                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payslip Photo Link
                                                                                 <span class="text-red-600">*</span></label>
                                                                             <div id="payroll_picture" class="grid grid-cols-1">
                                                                                 <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
@@ -801,7 +801,7 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payslip</button>
                                                                         
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
@@ -848,7 +848,7 @@
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Payslip of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
                                                                     <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -921,7 +921,7 @@
                                                                     
                                                                     <div id="payroll_picture_container{{$loop->index}}" class="grid grid-cols-1 rounded-lg shadow">
                                                                         <label for="payroll_picture" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                                                                            Payroll Photo Link <span class="text-red-600">*</span>
+                                                                            Payslip Photo Link <span class="text-red-600">*</span>
                                                                         </label>
                                                                         <div class="grid grid-cols-1">
                                                                             <textarea id="payroll_picture_{{$loop->index}}" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">{{ e(trim($payrollMap->get($employee->employee_id)->payroll_picture) ?? '') }}</textarea>
@@ -952,11 +952,11 @@
                                                                     </script>
                                                                     
     
-                                                                    <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go to Payroll</button>
+                                                                    <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go to Payslip</button>
 
                                                                     <div class="grid grid-cols-2 gap-4">
-                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payroll</button>
-                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
+                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payslip</button>
+                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payslip</button>
                                                                     </div>
                                                                         
                                                                     <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
@@ -1056,9 +1056,9 @@
     </div>
 
     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-    @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added Payroll Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited Payroll Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Payroll Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-add-note.window="showToast = true; toastType = 'success'; toastMessage = 'Added Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete-note.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">

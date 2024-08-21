@@ -154,7 +154,6 @@
                             class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             <option selected>Select</option>
                             <option value="Certificate of Remittances">Certificate of Remittances </option>
-                            <option value="Government-Mandated Benefits Concern">Government-Mandated Benefits Concerns</option>
                             <option value="Messengerial">Messengerial</option>
                             <option value="Repairs/Maintenance">Repairs/Maintenance</option>
                             <option value="Book a Car">Book a Car</option>
@@ -198,6 +197,7 @@
                             class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             <option selected>Select</option>
                             <option value="Manpower Request Form">Manpower Request Form</option>
+                            <option value="Government-Mandated Benefits Concern">Government-Mandated Benefits Concerns</option>
                             <option value="Certificate of Employment">Certificate of Employment</option>
                             <option value="HMO-related Concerns">HMO-Related Concerns</option>
                             <option value="Payroll-related Concerns">Payroll-Related Concerns</option>
@@ -538,6 +538,50 @@
                         </div>
                     </div>
                 </template>
+                <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'HR' && subTypeOfRequest === 'Government-Mandated Benefits Concern'">
+                    {{-- @if ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-Mandated Benefits Concern") --}}
+                        <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                            <div class="col-span-1 items-center justify-center">
+                                <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of GMR Concern
+                                    <span class="text-red-600">*</span>
+                                </label>
+                                <div id="type_of_hrconcern_container">
+                                    <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                        <option value=""selected>Select</option>
+                                        <option value="SSS Salary Loan for Approval">SSS Salary Loan for Approval</option>
+                                        <option value="SSS Calamity Loan for Approval">SSS Calamity Loan for Approval</option>
+                                        <option value="PAG-IBIG Multi-Purpose Loan for Approval">PAG-IBIG Multi-Purpose Loan for Approval</option>
+                                        <option value="SSS Maternity Notification">SSS Maternity Notification</option>
+                                        <option value="SSS Sickness Notification">SSS Sickness Notification</option>
+                                        <option value="Issuance of TIN Number">Issuance of TIN Number</option>
+                                        <option value="SSS R1A">SSS R1A</option>
+                                    </select>
+                                    @error('type_of_hrconcern')
+                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div id="request_link_container" class="col-span-1">
+                                <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">GMR Concern Link
+                                    <span class="text-red-600">*</span><br>
+                                    <span class="text-gray-500">●</span> Supporting documents/List of requirements <br>
+                                    <span class="text-gray-500">●</span> For SSS R1A and PHILHEALTH ER2, must be in Excel format.
+                                </label>
+                                <div id="request_link">
+                                    <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
+                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
+                                    </textarea>
+                                    @error('request_link')
+                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </div>
+                        </div>
+                </template>
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Certificate of Remittances'">
                 {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Certificate of Remittances") --}}
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
@@ -636,50 +680,7 @@
                         </div>
                     </div>
                 </template>
-                <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Government-Mandated Benefits Concern'">
-                {{-- @if ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-Mandated Benefits Concern") --}}
-                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <div class="col-span-1 items-center justify-center">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Type of GMR Concern
-                                <span class="text-red-600">*</span>
-                            </label>
-                            <div id="type_of_hrconcern_container">
-                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option value=""selected>Select</option>
-                                    <option value="SSS Salary Loan for Approval">SSS Salary Loan for Approval</option>
-                                    <option value="SSS Calamity Loan for Approval">SSS Calamity Loan for Approval</option>
-                                    <option value="PAG-IBIG Multi-Purpose Loan for Approval">PAG-IBIG Multi-Purpose Loan for Approval</option>
-                                    <option value="SSS Maternity Notification">SSS Maternity Notification</option>
-                                    <option value="SSS Sickness Notification">SSS Sickness Notification</option>
-                                    <option value="Issuance of TIN Number">Issuance of TIN Number</option>
-                                    <option value="SSS R1A">SSS R1A</option>
-                                </select>
-                                @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
-                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div id="request_link_container" class="col-span-1">
-                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">GMR Concern Link
-                                <span class="text-red-600">*</span><br>
-                                <span class="text-gray-500">●</span> Supporting documents/List of requirements <br>
-                                <span class="text-gray-500">●</span> For SSS R1A and PHILHEALTH ER2, must be in Excel format.
-                            </label>
-                            <div id="request_link">
-                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
-                                </textarea>
-                                @error('request_link')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
-                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                    </div>
-                </template>
+
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Messengerial'">
 
                 {{-- @if ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Messengerial") --}}
@@ -1412,7 +1413,7 @@
 
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Procurement' && subTypeOfRequest === 'Request to Buy/Book/Avail Service'">
                     {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Procurement" && $sub_type_of_request == "Request to Buy/Book/Avail Service") --}}
-                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Product/Service Specifications
                                 <span class="text-red-600">*</span>
@@ -1437,6 +1438,21 @@
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('request_link')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div id="purpose_container" class="col-span-1">
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request
+                                <span class="text-red-600">*</span>
+                            </label>
+                            <div id="request_link">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
+                                </textarea>
+                                @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>

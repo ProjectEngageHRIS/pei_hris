@@ -69,6 +69,8 @@ class LeaveRequestForm extends Component
 
     public $leaveRequestTimeFrame;
 
+    public $logout_time;
+
 
 
     public function mount($type = null){
@@ -213,11 +215,14 @@ class LeaveRequestForm extends Component
                 $leaverequestdata->inclusive_start_date = $this->date_earned;
                 $leaverequestdata->inclusive_end_date = $this->credit_application;
                 $leaverequestdata->earned_description = $this->earned_description;
+                $leaverequestdata->full_or_half = $this->full_half;
+
                 // dd($leaverequestdata->earned_description , $this->earned_description);
             } else if($this->mode_of_application == "Advise Slip"){
                 $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
                 $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
                 $leaverequestdata->purpose_type = $this->purpose_type;
+                $leaverequestdata->full_or_half = $this->logout_time;
             } 
             else{
                 $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);
@@ -225,12 +230,11 @@ class LeaveRequestForm extends Component
                 $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
                 $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
                 $leaverequestdata->deduct_to = $this->deduct_to;
-
+                $leaverequestdata->full_or_half = $this->full_half;
             }
             // dd($leaverequestdata->earned_description , $this->earned_description);
 
             
-            $leaverequestdata->full_or_half = $this->full_half;
             
             $leaverequestdata->reason = $this->reason;
 
