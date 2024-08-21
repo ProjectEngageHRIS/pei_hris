@@ -333,6 +333,7 @@ public $govt_professional_exam_taken=[];
             $add_employee->department = $sanitized_department;
             $add_employee->inside_department = $sanitized_inside_department;
             $add_employee->employee_type = $sanitized_employee_type;
+            $this->home_address = "dadsd";
             $add_employee->home_address = $this->home_address;
             $add_employee->provincial_address = $this->provincial_address;
             $add_employee->phone_number = $this->phone_number;
@@ -477,11 +478,8 @@ if (isset($add_employee->employee_email)) {
 
 
 
-        $this->js("alert('Employee Created!')");
-        return redirect()->to(route('HumanResourceDashboard'));
-
+        $this->dispatch('triggerSuccess');
     }
-
 
     private function generateNewEmployeeId()
     {
