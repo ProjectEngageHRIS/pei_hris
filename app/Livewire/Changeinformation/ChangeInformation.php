@@ -413,7 +413,7 @@ class ChangeInformation extends Component
     
             $employee->save();
 
-            return redirect()->to(route('profile'));
+            return redirect()->to(route('ChangeInformationTable'));
 
 
 

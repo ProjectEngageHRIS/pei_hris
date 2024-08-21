@@ -70,8 +70,6 @@ class ChangeInformationView extends Component
             // $this->authorize('update', [$leaverequest]);
             if(!$changeInfoData ){
                 return redirect()->route('ApproveChangeInformationTable');
-                // Abort with a 404 error
-                abort(404);
             }
         } catch (AuthorizationException $e) {
             return redirect()->to(route('ApproveChangeInformationTable'));
@@ -276,141 +274,33 @@ class ChangeInformationView extends Component
         
     ];
 
-
-   
-    public function changeStatus(){
-        $loggedInUser = auth()->user()->employee_id;
+    public function cancelRequest(){
         try {
-            if($this->status == "Approved"){
-                $changeInformationStatus = ChangeInformation::where('uuid', $this->index)->first();
-                $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
-                $employee->first_name = $this->first_name;
-                $employee->middle_name = $this->middle_name;
-                $employee->last_name = $this->last_name;
-                $employee->civil_status = $this->civil_status;
-                $employee->religion = $this->religion;
-                $employee->nickname = $this->nickname;
-    
-                // $employee->age = $this->age;
-                $employee->gender = $this->gender;
-                $employee->personal_email = $this->personal_email;
-                $employee->phone_number = $this->phone;
-                $employee->home_address = $this->address;
-    
-    
-                
-                if($this->emp_image){
-                    $this->validate(['emp_image' => 'nullable']);
-                    $employee->emp_image = $changeInformationStatus->emp_image;
+            $employee_id = auth()->user()->employee_id;
+            $data = ChangeInformation::where('uuid', $this->index)->first();
+            if($data){
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
                 }
-    
-                // $fileFields = [
-                //     'emp_diploma',
-                //     'emp_TOR',
-                //     'emp_cert_of_trainings_seminars',
-                //     'emp_auth_copy_of_csc_or_prc',
-                //     'emp_auth_copy_of_prc_board_rating',
-                //     'emp_med_certif',
-                //     'emp_nbi_clearance',
-                //     'emp_psa_birth_certif',
-                //     'emp_psa_marriage_certif',
-                //     'emp_service_record_from_other_govt_agency',
-                //     'emp_approved_clearance_prev_employer',
-                //     'other_documents'
-                // ];
-                
-                
-                // foreach ($fileFields as $field) {
-                //     $fileNames = [];            
-                //     $ctrField = count($this->$field) - 1 ;
-                //     $ctr = 0;
-                //     foreach($this->$field as $index => $item){
-                //         $ctr += 1;
-                //         if(is_null($item)){
-                //         }
-                //         else if(is_string($item)){
-                //             // $fileNames[] = $item;
-                //         }
-                //         else{
-                //             $this->resetValidation();
-                //             if (!is_array($item) && !is_string($item)) {
-                //                 $this->addError($field . '.' . $index, 'The' . $field . 'must be a string or an array.');
-                //             }
-                //         }
-                //     }
-                //     if(count($fileNames) > 0){
-                //         $employee->$field = json_encode($fileNames, true);        
-                //     } else{
-    
-                //     }
-                // }
-            
-                
-                foreach($this->employeeHistory as $history){
-                    $jsonEmployeeHistory[] = [
-                        'name_of_company' => $history['name_of_company'],
-                        'prev_position' => $history['prev_position'],
-                        'start_date' => $history['start_date'],
-                        'end_date' => $history['end_date'],
-                    ];
-                }
-    
-                $jsonEmployeeHistory = json_encode($jsonEmployeeHistory);
-    
-                $employee->employee_history = $jsonEmployeeHistory;  
-                
-                // dd(base64_encode($changeInformationStatus->emp_photo));
-                $updateData = [
-                    'first_name' =>  $employee->first_name  ,
-                    'middle_name' => $employee->middle_name,
-                    'last_name' => $employee->last_name,
-                    // 'age' =>  $employee->age,
-                    'gender' => $employee->gender,
-                    'civil_status' => $employee->civil_status,
-                    'religion' => $employee->religion,
-                    'phone_number'  => $employee->phone_number,
-                    'birth_date' => $employee->birth_date,
-                    'home_address' => $employee->home_address,
-                    'nickname' => $employee->nickname,
-                    'employee_history' => $employee->employee_history,
-                    'emp_image' => $employee->emp_image,
-                    // 'other_documents' => json_encode($employee->other_documents, true),
-                    'updated_at' => now(),
-                ];
-    
-                
-                Employee::where('employee_id', $changeInformationStatus->employee_id)
-                                    ->update($updateData);
-                
-                // $this->js("alert('Change Information Request Submitted!')"); 
-    
-                $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
-    
-                $employee->employee_history = $jsonEmployeeHistory;
-    
-                
             }
-            
-    
-            $changeInformationStatus = ChangeInformation::where('uuid', $this->index)
-                                                            ->update(['Status' => $this->status,
-                                                                    'updated_at' => now() ]);
-    
-            $this->dispatch('trigger-success');
 
-    
-            // $employee->save();
-    
-            return redirect()->to(route('ApproveChangeInformationTable'));
+            $this->dispatch('trigger-success');
+            return redirect()->to(route('LeaveRequestTable'));
+
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage() . ' | ' . $loggedInUser);
+            Log::channel('leaverequests')->error('Failed to cancel Leave Request: ' . $e->getMessage());
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
+            // Optionally, you could redirect the user to an error page or show an error message
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-
     }
+
     
     public function render()
     {

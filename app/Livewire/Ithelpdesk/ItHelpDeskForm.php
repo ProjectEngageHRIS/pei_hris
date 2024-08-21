@@ -108,8 +108,10 @@ class ItHelpDeskForm extends Component
         //     $this->validate([$rule => $validationRule]);
         //     $this->resetValidation();
         // }   
+
+        $this->validate();
+
         try {
-            $this->validate();
         
             $loggedInUser = auth()->user();
     
@@ -153,7 +155,6 @@ class ItHelpDeskForm extends Component
         }
 
     }
-
     public function render()
     {
         return view('livewire.ithelpdesk.it-help-desk-form')->extends('components.layouts.app');
