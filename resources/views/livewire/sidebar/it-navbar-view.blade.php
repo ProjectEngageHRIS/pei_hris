@@ -11,19 +11,18 @@
                     </svg>
                 </button>
                 <!-- Menu Dropdown -->
-                <div id="barDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                <div id="barDropdownMenu" class="absolute z-10 hidden w-48 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div class="py-1">
                         <ul class="flex flex-col gap-y-1.5">
-                            <a href="{{ route('HumanResourceDashboard') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('HumanResourceDashboard') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
+                            <a href="{{ route('ItDashboard') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('ItDashboard') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path fill-rule="evenodd" d="M8.543 2.232a.75.75 0 0 0-1.085 0l-5.25 5.5A.75.75 0 0 0 2.75 9H4v4a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V9h1.25a.75.75 0 0 0 .543-1.268l-5.25-5.5Z" clip-rule="evenodd" />
                                 </svg> Home
                             </a>
-                            <a href="{{ route('ItChangePassword') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('ItChangePassword') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white flex items-center justify-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="w-5 h-5 mr-2">
+                            <a href="{{ route('ItChangePassword') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('ItChangePassword') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path fill-rule="evenodd" d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z" clip-rule="evenodd" />
-                                </svg> 
-                                <span>Change Password</span>
+                                </svg> Change Password
                             </a>
                         </ul>
                     </div>
@@ -44,7 +43,7 @@
             <ul class="flex items-center gap-x-5">
                 <!-- Home Button -->
                 <a href="{{ route('ItDashboard') }}" class="w-32">
-                    <button class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('HumanResourceDashboard') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
+                    <button class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('ItDashboard') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                         <path fill-rule="evenodd" d="M8.543 2.232a.75.75 0 0 0-1.085 0l-5.25 5.5A.75.75 0 0 0 2.75 9H4v4a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V9h1.25a.75.75 0 0 0 .543-1.268l-5.25-5.5Z" clip-rule="evenodd" />
                         </svg> Home
