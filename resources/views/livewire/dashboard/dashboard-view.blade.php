@@ -28,14 +28,14 @@
                     <!-- Container for SVG and Video Popup -->
                     <div class="relative">
                         <!-- SVG icon positioned at the top-right corner -->
-                        <div class="absolute top-0 right-0 m-4 cursor-pointer" @click="showVideo = !showVideo">
+                        <div class="absolute top-0 right-0 m-4 cursor-pointer" @mouseenter="showVideo = true" @mouseleave="showVideo = false">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6 mt-2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z" />
                             </svg>
                         </div>
                 
                         <!-- Video Popup -->
-                        <div x-show="showVideo" @click.away="showVideo = false" class="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 p-2 rounded-lg shadow-lg w-80 h-60 flex items-center justify-center z-50">
+                        <div x-show="showVideo" @mouseenter="showVideo = true" @mouseleave="showVideo = false" class="fixed top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 p-2 rounded-lg shadow-lg w-80 h-60 flex items-center justify-center z-50">
                             <video class="w-full h-full object-contain" controls>
                                 <source src="{{ asset('storage/photos/activities/tutorials/timeinandout.mp4') }}" type="video/mp4">
                                 Your browser does not support the video tag.
@@ -75,7 +75,6 @@
                         </div>
                     </div>
                 </div>
-                
                 
                 
                 {{-- <script>

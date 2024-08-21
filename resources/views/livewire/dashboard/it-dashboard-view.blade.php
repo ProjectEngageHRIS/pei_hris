@@ -495,10 +495,10 @@
                                         </div>
                                     </th>
                                     
-                                    @if($it_ticket->status == "Unassigned")
+                                    @if($it_ticket->status == "Ongoing")
                                         <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-yellow-900 bg-yellow-100 rounded-lg text-nowrap me-2">
-                                                Unassigned
+                                                Ongoing
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Completed")
