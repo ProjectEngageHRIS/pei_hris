@@ -87,6 +87,6 @@ class ItChangePassword extends Component
     
     public function render()
     {
-        return view('livewire.admin.it-change-password');
+        return view('livewire.admin.it-change-password')->layout('components.layouts.it-navbar');
     }
 }
