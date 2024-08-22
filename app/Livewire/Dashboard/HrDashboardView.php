@@ -401,6 +401,7 @@ public $govt_professional_exam_taken=[];
                 $new_user = new User();
                 $new_user->email = $this->employee_email;
                 $new_user->employee_id = $this->employee_id; // Save employee_id
+                $new_user->role_id = $this->role_id;
                 // Set additional fields as needed, such as name, password, role, etc.
                 $new_user->password = bcrypt('defaultpassword'); // Set a default password or prompt to change it later
                 $new_user->save();

@@ -594,6 +594,27 @@
                                     <input type="text" name="current_position" id="current_position" wire:model="current_position" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Position"required>
                                 </div>
                                 <div class="gap-2 flex flex-col">
+                                    <label for="role_id" class="block text-sm font-medium text-customGray1">Roles <span class="text-red-600">*</span></label>
+                                    <select name="role_id" id="role_id" wire:model="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                        <option selected>Select a Role</option>
+                                        <option value="1">Employee</option>
+                                        <option value="2"> HR Employee</option>
+                                        <option value="3">Accounting</option>
+                                        <option value="4">Supervisor</optaion>
+                                        <option value="5">Department Head</option>
+                                        <option value="6">President</option>
+                                        <option value="7">HR Head</option>
+                                        <option value="8">HR Assistant</option>
+                                        <option value="9">HR Internal Control</option>
+                                        <option value="10">HR Operations</option>
+                                        <option value="11">HR (HR Internal Tickets)</option>
+                                        <option value="12">Office Admin (HR Internal Tickets)</option>
+                                        <option value="13">Procurement (HR Internal Tickets)</option>
+                                        <option value="14">IT Lead</option>
+                                        <option value="15">IT Support</option>
+                                    </select>
+                                </div>
+                                <div class="gap-2 flex flex-col">
                                     <label for="employee_id" class="block text-sm font-medium text-customGray1">Employee ID</label>
                                     <input type="text" name="employee_id" id="employee_id" wire:model="employee_id" class="step-1-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Example: SLE00021">
                                 </div>
