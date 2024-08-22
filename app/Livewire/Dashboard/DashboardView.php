@@ -346,7 +346,6 @@ class DashboardView extends Component
 
             
             if($time->type == null){
-                // dd($time->time_out != null);
                 if($time->time_out == null){
                         $loggedInUser = auth()->user()->employee_id;
                         $dtr = $time;

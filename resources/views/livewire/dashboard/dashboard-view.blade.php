@@ -43,10 +43,10 @@
                             @mouseenter="showVideo = true" 
                             @mouseleave="showVideo = false" 
                             class="fixed top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 p-2 rounded-lg shadow-lg w-96 h-72 flex items-center justify-center z-50">
-                            <video class="w-full h-full object-contain" controls>
+                            {{-- <video class="w-full h-full object-contain" controls>
                                 <source src="{{ asset('storage/photos/activities/tutorials/timeinandout.mp4') }}" type="video/mp4">
                                 Your browser does not support the video tag.
-                            </video>
+                            </video> --}}
                         </div>
                     </div>
                     
@@ -96,7 +96,7 @@
                                     } else {
                                         console.log('Geolocation permission is blocked or denied.');
                                         window.dispatchEvent(new CustomEvent('end-loading'));
-                                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                                        window.dispatchEvent(new CustomEvent('trigger-location-access-error'));
                                     }
                                 });
                             } else {
@@ -141,7 +141,7 @@
                                 function(error) {
                                     console.error("Geolocation error:", error);
                                     window.dispatchEvent(new CustomEvent('end-loading'));
-                                    window.dispatchEvent(new CustomEvent('trigger-location-error'));
+                                    window.dispatchEvent(new CustomEvent('trigger-location-access-error'));
                                 },
                                 {
                                     enableHighAccuracy: true,
@@ -230,94 +230,106 @@
             </div>
 
             <script>
-            document.addEventListener('livewire:init', function () {
-                    Livewire.on('triggerLocationAction', (actionType) => {
-                        window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
-                        if (navigator.geolocation) {
-                            requestLocation(actionType, 0); // Start with 0 retries
-                        } else {
-                            console.log('Location services are not supported by this browser.');
-                            window.dispatchEvent(new CustomEvent('end-loading'));
-                            window.dispatchEvent(new CustomEvent('trigger-location-error'));
-                        }
+document.addEventListener('livewire:init', function () {
+    Livewire.on('triggerLocationAction', (actionType) => {
+        console.log('Triggering location action:', actionType);
+        window.dispatchEvent(new CustomEvent('start-loading', { detail: { action: actionType } }));
+        if (navigator.geolocation) {
+            requestLocation(actionType);
+        } else {
+            console.log('Location services are not supported by this browser.');
+            window.dispatchEvent(new CustomEvent('end-loading'));
+            window.dispatchEvent(new CustomEvent('trigger-location-access-error'));
+        }
+    });
+
+    function requestLocation(actionType) {
+        const options = {
+            enableHighAccuracy: true,
+            timeout: 5000, // 5 seconds timeout
+            maximumAge: 0
+        };
+
+        // console.log('Requesting location with options:', options);
+
+        navigator.geolocation.getCurrentPosition(
+            (position) => handlePosition(position, actionType),
+            (error) => handleError(error),
+            options
+        );
+    }
+
+    function handlePosition(position, actionType) {
+        const { latitude, longitude, accuracy } = position.coords;
+        // console.log(`Position received - Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
+
+        getAddressFromCoordinates(latitude, longitude, actionType, accuracy);
+
+        // window.dispatchEvent(new CustomEvent('end-loading'));
+    }
+
+    function handleError(error) {
+        console.error('Geolocation error:', error);
+
+        // switch (error.code) {
+        //     case error.PERMISSION_DENIED:
+        //         console.error('User denied the request for Geolocation.');
+        //         break;
+        //     case error.POSITION_UNAVAILABLE:
+        //         console.error('Location information is unavailable.');
+        //         break;
+        //     case error.TIMEOUT:
+        //         console.error('The request to get user location timed out.');
+        //         break;
+        //     case error.UNKNOWN_ERROR:
+        //         console.error('An unknown error occurred.');
+        //         break;
+        // }
+
+        window.dispatchEvent(new CustomEvent('end-loading'));
+        window.dispatchEvent(new CustomEvent('trigger-location-access-error'));
+    }
+
+    function getAddressFromCoordinates(lat, lng, actionType, acc) {
+        const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
+
+        // console.log('Fetching address from coordinates:', lat, lng);
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                if (data && data.address) {
+                    const address = [
+                        data.address.road,
+                        data.address.city || data.address.town || data.address.village,
+                        data.address.state,
+                        data.address.country
+                    ].filter(Boolean).join(', ');
+
+                    // console.log('Address found:', address);
+
+                    Livewire.dispatch('checkLocation', { 
+                        address: address,
+                        action: actionType,
+                        accuracy: acc,
                     });
-
-                function requestLocation(actionType, retries) {
-                    navigator.geolocation.getCurrentPosition(
-                        (position) => handlePosition(position, actionType, retries),
-                        (error) => handleError(error, retries),
-                        {
-                            enableHighAccuracy: true,
-                            timeout: 5000, // 10 seconds timeout
-                            maximumAge: 0 // No cached position
-                        }
-                    );
+                } else {
+                    // console.error('Geocoding error:', data);
+                    window.dispatchEvent(new CustomEvent('trigger-location-access-error'));
                 }
+            })
+            .catch(error => {
+                // console.error('Fetch error:', error);
+                window.dispatchEvent(new CustomEvent('trigger-location-access-error'));
+            })
+            // .finally(() => {
+            //     window.dispatchEvent(new CustomEvent('end-loading'));
+            // });
+    }
+});
 
-                function handlePosition(position, actionType, retries) {
-                    const { latitude, longitude, accuracy } = position.coords;
-                    console.log(`Latitude: ${latitude}, Longitude: ${longitude}, Accuracy: ${accuracy} meters`);
 
-                    if (accuracy < 50 || retries >= 2) { // Proceed if accuracy is acceptable or after max retries
-                        getAddressFromCoordinates(latitude, longitude, actionType, accuracy);
-                        if(retries >= 2){
-                            window.dispatchEvent(new CustomEvent('take-picture-attempt'));
-                        }
-                    } else {
-                        console.warn('Accuracy is not sufficient, retrying...');
-                        setTimeout(() => requestLocation(actionType, retries + 1), 5000); // Retry after 5 seconds
-                    }
-                }
 
-                function handleError(error, actionType, retries) {
-                    console.error('Geolocation error:', error);
-                    if (retries < 2) { // Retry up to 3 times (0, 1, 2)
-                        console.warn('Retrying due to geolocation error...');
-                        setTimeout(() => requestLocation(actionType, retries + 1), 5000); // Retry after 5 seconds
-                    } else {
-                        console.error('Failed to retrieve location after multiple attempts.');
-                        // Continue even after retries if needed
-                        // You may still want to dispatch end-loading and error events
-                        window.dispatchEvent(new CustomEvent('end-loading'));
-                        window.dispatchEvent(new CustomEvent('trigger-location-error'));
-                    }
-                }
-
-                function getAddressFromCoordinates(lat, lng, actionType, acc) {
-                    const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}&addressdetails=1`;
-
-                    fetch(url)
-                        .then(response => response.json())
-                        .then(data => {
-                            if (data && data.address) {
-                                const address = [
-                                    data.address.road,
-                                    data.address.city || data.address.town || data.address.village,
-                                    data.address.state,
-                                    data.address.country
-                                ].filter(Boolean).join(', ');
-
-                                console.log('Address:', address);
-                                Livewire.dispatch('checkLocation', { 
-                                    address: address,
-                                    action: actionType,
-                                    accuracy: acc,
-                                });
-
-                                window.dispatchEvent(new CustomEvent('end-loading')); // End loading when done
-                            } else {
-                                console.error('Geocoding error:', data);
-                                window.dispatchEvent(new CustomEvent('end-loading'));
-                                window.dispatchEvent(new CustomEvent('trigger-location-error'));
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Fetch error:', error);
-                            window.dispatchEvent(new CustomEvent('end-loading'));
-                            window.dispatchEvent(new CustomEvent('trigger-location-error'));
-                        });
-                }
-            });
 
 
             document.addEventListener('livewire:init', function () {
@@ -562,8 +574,7 @@
                 @trigger-success-checkin.window="showToast = true; toastType = 'success'; toastMessage = 'Checked In Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 6000)"
                 @trigger-success-checkout.window="showToast = true; toastType = 'success'; toastMessage = 'Checked Out Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 6000)"
                 @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-location-error.window="showToast = true; toastType = 'error'; toastMessage = 'Location access is blocked. Please enable it in your browser settings.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-                @take-picture-attempt.window="showToast = true; toastType = 'warning'; toastMessage = 'Weak Internet Connection. Please take a photo of your time-in along with yourself for verification.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+                @trigger-location-access-error.window="showToast = true; toastType = 'error'; toastMessage = 'Location access is blocked. Please enable it in your browser settings.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
             <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                 x-show="showToast"

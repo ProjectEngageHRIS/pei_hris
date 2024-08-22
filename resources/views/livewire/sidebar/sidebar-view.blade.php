@@ -6,7 +6,7 @@
             <!-- Menu Button when smaller than large screen -->
             <div x-data="{ openMobileBar: false }" class="relative inline-block text-left">
                 <!-- Button to toggle dropdown -->
-                <button @click="openMobileBar = !openMobileBar" @mouseover="openMobileBar = true"   class="pr-4 xl:hidden" id="barDropdownButton">
+                <button @click="openMobileBar = !openMobileBar"  class="pr-4 xl:hidden" id="barDropdownButton">
                     <svg class="size-8 text-customGray1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"/>
                     </svg>
