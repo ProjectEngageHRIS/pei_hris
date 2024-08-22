@@ -87,7 +87,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5V5h14v-.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                                     <path fill-rule="evenodd" d="M15 7H1v4.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V7ZM3 10.25a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1-.75-.75Zm3.75-.75a.75.75 0 0 0 0 1.5h2.5a.75.75 0 0 0 0-1.5h-2.5Z" clip-rule="evenodd" />
-                                </svg> Payroll
+                                </svg> Payslip
                             </a>
                             <div x-data="{ tasksMobileOpen: false }" class="relative group">
                                 <div @click="tasksMobileOpen = true" @click.away="tasksMobileOpen = false" id="tasksBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('TasksTable') || request()->routeIs('AssignedTasksTable') || request()->routeIs('TasksForm') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
@@ -176,7 +176,7 @@
 
 
                 <!-- Approval Button -->
-                @if(in_array($role_id, [4, 6, 7]))
+                @if(in_array($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15]))
                     <div x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -188,8 +188,29 @@
                         <!-- Approval Dropdown -->
                         <div x-show="approvalPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="approveDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="py-1">
-                                <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
-                                <a href="{{ route('ApproveHrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @if (in_array($employeeEmail, [
+                                    'seal.projectengage@gmail.com',
+                                    "jsodsod@projectengage.com.ph",
+                                    "sherwinmalabanan@sltemps.com",
+                                    "esalvador@projectengage.com.ph",
+                                    "kcastro@projectengage.com.ph",
+                                    "jazz@wesearch.com.ph",
+                                    "rmaubay@projectengage.com.ph",
+                                    "jmb@sltemps.com",
+                                    "spm_2009@wesearch.com.ph",
+                                    "rb@sltemps.com",
+                                    "mbaniqued@projectengage.com.ph",
+                                    "rosanne.espedido@sltemps.com",
+                                    "trishesporlas@wesearch.com.ph",
+                                    "ecapistrano@projectengage.com.ph",
+                                    "khriziemisenas@sltemps.com",
+                                    "chisilva@sltemps.com"
+                                ]))
+                                    <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
+                                @endif
+                                @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13 ]))
+                                    <a href="{{ route('ApproveHrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -200,7 +221,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                             <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5V5h14v-.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                             <path fill-rule="evenodd" d="M15 7H1v4.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V7ZM3 10.25a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1-.75-.75Zm3.75-.75a.75.75 0 0 0 0 1.5h2.5a.75.75 0 0 0 0-1.5h-2.5Z" clip-rule="evenodd" />
-                        </svg> Payroll
+                        </svg> Payslip
                     </button>
                 </a>
                 <!-- Tasks Button -->
