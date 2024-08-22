@@ -1066,24 +1066,41 @@
                                                 </div>
                                             </div>
                                             
-                                            <!-- Modal Footer -->
-                                            <div class="flex items-center  p-4 border-t border-gray-200 rounded-b">
-                                                <button @click="window.location.href = '{{ route('EmployeesView', ['index' => $employee->employee_id]) }}'"
-                                                        type="button"
-                                                        class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
-                                                    Edit / View
-                                                </button>
-                                                <button @click="openDeactivateModal('{{ $employee->employee_id }}')"
+                                        <!-- Modal Footer -->
+                                        <div class="flex items-center p-4 border-t border-gray-200 rounded-b">
+                                            <!-- Edit / View Button -->
+                                            <button @click="window.location.href = '{{ route('EmployeesView', ['index' => $employee->employee_id]) }}'"
                                                     type="button"
-                                                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">
+                                                    class="flex items-center text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-3">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L6.832 19.82a4.5 4.5 0 0 1-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 0 1 1.13-1.897L16.863 4.487Zm0 0L19.5 7.125" />
+                                                </svg>
+                                                Edit / View
+                                            </button>
+                                            
+                                            <!-- Deactivate Button -->
+                                            <button @click="openDeactivateModal('{{ $employee->employee_id }}')"
+                                                    type="button"
+                                                    class="flex items-center py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 hover:text-red-700 rounded-lg">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-3">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
+                                                </svg>
                                                 Deactivate
-                                                </button>
+                                            </button>
+
+                                            @if($employee->active != 1)
+                                                <!-- Delete Button -->
                                                 <button @click="openDeleteModal('{{ $employee->employee_id }}')"
                                                         type="button"
-                                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">
+                                                        class="flex items-center py-2.5 px-5 ms-3 text-sm font-medium text-white bg-red-700 border border-red-800 hover:bg-red-800 hover:border-red-900 rounded-lg">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-3">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                    </svg>
                                                     Delete
                                                 </button>
-                                            </div>
+                                            @endif
+                                        </div>
+
                                         </div>
                                     </div>
                                 </td>
@@ -1150,11 +1167,77 @@
                     </div>
             </div>
          </div>
+
+         <div x-cloak x-data="{ openWarningModal: false }" x-ref="warning-modal-ref"
+         x-init="
+         $el.addEventListener('warning-modal-open', (event) => {
+             $wire.set('currentFormId', event.detail);
+             openWarningModal = true;
+         });
+         $el.addEventListener('modal-close', () => openWarningModal = false);"
+         tabindex="-1" 
+         id="warning-modal"
+         class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50"
+         x-show="openWarningModal"
+         x-transition:enter="transition ease-out duration-300"
+         x-transition:enter-start="opacity-0"
+         x-transition:enter-end="opacity-100"
+         x-transition:leave="transition ease-in duration-200"
+         x-transition:leave-start="opacity-100"
+         x-transition:leave-end="opacity-0">
+        <div class="relative w-full max-w-md max-h-full p-4"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="transform opacity-0 scale-90"
+             x-transition:enter-end="transform opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="transform opacity-100 scale-100"
+             x-transition:leave-end="transform opacity-0 scale-90"
+             style="z-index: 60;">
+            <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                <button @click="openWarningModal = false" 
+                        type="button" 
+                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+                <div class="p-4 text-center md:p-5">
+                    <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                    </svg>
+                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm Account Deletion</h3>
+                    <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">Please ensure that you have considered the following before proceeding:</p>
+                    <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                        <li>Verify that the employee's account details are correct and complete.</li>
+                        <li>Ensure that any important data or files associated with this account have been backed up.</li>
+                        <li>Confirm that you have the necessary permissions to delete this account.</li>
+                        <li>Review and confirm that the deletion complies with company policies and regulations.</li>
+                    </ul>
+                    <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of permanently deleting this account.</p>
+                    
+                    <button id="addWarningButton" wire:click.prevent="deleteEmployee" 
+                            type="submit" 
+                            class="text-white bg-customGreen hover:bg-green-700 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                        Yes, Delete
+                    </button>
+                    <button @click="openWarningModal = false" 
+                            type="button" 
+                            class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                        No, Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
       </div>
       
       <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
       @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Created'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
       @trigger-success-deactivate.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deactivated'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
+      @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deleted'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
       @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; setTimeout(() => showToast = false, 3000)">
       <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
           <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
@@ -1184,8 +1267,8 @@
           </div>
       </div>
           <!-- Loading screen -->
-        <div wire:loading wire:target="submit, deactivateEmployee" class="load-over z-50">
-            <div wire:loading wire:target="submit, deactivateEmployee" class="loading-overlay z-50">
+        <div wire:loading wire:target="submit, deactivateEmployee, deleteEmployee" class="load-over z-50">
+            <div wire:loading wire:target="submit, deactivateEmployee, deleteEmployee" class="loading-overlay z-50">
                 <div class="flex flex-col items-center justify-center">
                     <div class="spinner"></div>
                     <p>Processing...</p>
@@ -1204,6 +1287,14 @@
         const modal = document.getElementById('deactivate-modal');
         if (modal) {
             const event = new CustomEvent('deactivate-modal-open', { detail: id });
+            modal.dispatchEvent(event);
+        }
+    }
+
+    function openDeleteModal(id) {
+        const modal = document.getElementById('warning-modal');
+        if (modal) {
+            const event = new CustomEvent('warning-modal-open', { detail: id });
             modal.dispatchEvent(event);
         }
     }
@@ -1246,6 +1337,27 @@
             const alpineData = Alpine.$data(modal);
             // Update the state
             alpineData.deactivateModal = false; // Open the modal
+        });
+        Livewire.on('triggerDeleteSuccess', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-success-delete'));
+            const modal = document.querySelector(`[x-ref="deactivate-modal-ref"]`);
+            const view_modal = document.querySelector(`[x-ref="view-modal"]`);
+            const warning_modal = document.querySelector(`[x-ref="warning-modal-ref"]`);
+            
+            const alpineData = Alpine.$data(modal);
+            const viewModal = Alpine.$data(view_modal);
+            const warningModal = Alpine.$data(warning_modal);
+
+            viewModal.openViewModal = false;
+            warningModal.openWarningModal = false;
+            alpineData.warningModal = false; // Open the modal
+        });
+        Livewire.on('triggerDeleteError', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-error'));
+            const warning_modal = document.querySelector(`[x-ref="warning-modal-ref"]`);
+            
+            const warningModal = Alpine.$data(warning_modal);
+            warningModal.openWarningModal = false;
         });
     });
 

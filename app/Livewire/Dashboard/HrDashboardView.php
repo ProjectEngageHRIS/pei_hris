@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
 class HrDashboardView extends Component
@@ -334,31 +335,44 @@ public $govt_professional_exam_taken=[];
 
     public function deleteEmployee(){
         $loggedInUser = auth()->user();
+    
         try {
-            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+            // Check user authorization
+            if (!in_array($loggedInUser->role_id, [6, 7, 61024])) {
                 throw new \Exception('Unauthorized Access');
             }
-
-            if(!$this->currentFormId){
+    
+            // Check if currentFormId is set
+            if (!$this->currentFormId) {
                 throw new \Exception('No Current Form ID');
             }
-
-            $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
-            $employee->active = 0;
-            $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
-            $user->banned_flag = 0;
     
-            $employee->save();
-            $user->save();
-
-            $this->dispatch('triggerDeactivateSuccess');
-
+            // Start a database transaction
+            DB::beginTransaction();
+    
+            // Find and delete the employee record
+            $employee = Employee::where('employee_id', $this->currentFormId)->firstOrFail();
+            $user = User::where('employee_id', $this->currentFormId)->firstOrFail();
+    
+            $employee->delete();
+            $user->delete();
+    
+            // Commit the transaction
+            DB::commit();
+    
+            // Dispatch success event
+            $this->dispatch('triggerDeleteSuccess');
+    
+        } catch (ModelNotFoundException $e) {
+            // Handle case where records are not found
+            Log::channel('hrdashboard')->error('Employee or User not found: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId);
+            $this->dispatch('triggerDeleteError');
+    
         } catch (\Exception $e) {
-            // Log the exception for further investigation
-            Log::channel('hrdashboard')->error('Failed to deactivate an Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
-
-            // Dispatch a failure event with an error message
-            $this->dispatch('triggerDeactivateError');
+            // Handle other exceptions
+            Log::channel('hrdashboard')->error('Failed to delete Employee: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId . ' | User ID: ' . $loggedInUser->employee_id);
+            DB::rollBack();
+            $this->dispatch('triggerDeleteError');
         }
     }
 
