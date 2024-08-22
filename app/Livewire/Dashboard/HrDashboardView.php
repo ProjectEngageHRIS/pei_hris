@@ -106,6 +106,8 @@ public $govt_professional_exam_taken=[];
 
     public $role_id;
 
+    public $currentFormId;
+
     public $employeeTypesFilter = [
         'INTERNALS' => false,
         'OJT' => false,
@@ -298,6 +300,66 @@ public $govt_professional_exam_taken=[];
         }
 
         $this->validate($stepRules);
+    }
+
+    public function deactivateEmployee(){
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+
+            if(!$this->currentFormId){
+                throw new \Exception('No Current Form ID');
+            }
+
+            $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
+            $employee->active = 0;
+            $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
+            $user->banned_flag = 0;
+    
+            $employee->save();
+            $user->save();
+
+            $this->dispatch('triggerDeactivateSuccess');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to deactivate an Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerDeactivateError');
+        }
+    }
+
+    public function deleteEmployee(){
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+
+            if(!$this->currentFormId){
+                throw new \Exception('No Current Form ID');
+            }
+
+            $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
+            $employee->active = 0;
+            $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
+            $user->banned_flag = 0;
+    
+            $employee->save();
+            $user->save();
+
+            $this->dispatch('triggerDeactivateSuccess');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to deactivate an Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerDeactivateError');
+        }
     }
 
 

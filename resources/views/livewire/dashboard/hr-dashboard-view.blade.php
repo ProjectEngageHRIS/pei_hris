@@ -980,95 +980,53 @@
                                 <td class="px-6 py-4  " >
                                     {{$employee->start_of_employment}}
                                 </td>
-                                <td class="items-center text-center py-4">
-                                    <div x-data="{ isOpen: false }" @click.away="isOpen = false" class="">
-                                        <!-- Three dots button to toggle dropdown -->
-                                        <button @click="isOpen = !isOpen" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-
-                                        <!-- Dropdown menu -->
-                                        <div x-show="isOpen" class="absolute right-0 mt-2 z-40 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                                            @if ($employee->status != "Cancelled")
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    <li>
-                                                    <a wire:click.prevent="showEmployeeDetails({{ $employee->employee_id }})"
-            onclick="location.href='{{ route('EmployeesForm', ['index' => $employee->employee_id]) }}'"
-            class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">
-            View
-            </a>
-                                                    </li>
-                                                    <li>
-                                                        <a id="cancel_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white" @click="openDeactivateModal('{{ $employee->employee_id }}')">Deactivate</a>
-                                                    </li>
-                                                </ul>
-                                            @else
-                                                <!-- Dropdown content -->
-                                                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                    <li>
-                                                        <a id="view_button_{{ $employee->employee_id }}" class="block px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" href="{{ route('AddEmployee', ['index' => $employee->form_id]) }}">View</a>
-                                                    </li>
-                                                </ul>
-                                            @endif
-                                        </div>
+                                <td x-data="{currentViewModal: null, openViewModal: false}" x-ref="view-modal" class="items-center py-4 text-center">
+                                    <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
+                                        <!-- View Button -->
+                                        <a @click="openViewModal = true; currentViewModal = '{{$loop->index}}' " class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
+                                            View
+                                        </a>
                                     </div>
-                                </td>
-
-                                <div id="popup-modal_{{ $employee->employee_id }}" tabindex="-1" class="hidden fixed top-0 left-0 right-0 bottom-0 z-50 flex justify-center items-center overflow-y-auto overflow-x-hidden w-full h-full bg-gray-800 bg-opacity-50">
-                                    <div class="relative p-4 w-full max-w-md max-h-full">
-                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                            <button type="button" @click="hideDeactivateModal('{{ $employee->employee_id }}')"  data-modal-hide="popup-modal" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" >
-                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                                </svg>
-                                                <span class="sr-only">Close modal</span>
-                                            </button>
-                                            <div class="p-4 md:p-5">
-                                                <div class="p-4 md:p-5 text-center">
-                                                    <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                    </svg>
-                                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm Deactivation?</h3>
-                                                    <button wire:click="cancelForm('{{$employee->form_id}}')"  class="text-white bg-red-600 hover:bg-red-800   font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                        Yes
-                                                    </button>
-                                                    <button @click="hideDeactivateModal('{{ $employee->employee_id }}')" data-modal-hide="popup-modal" id="close_button" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100  focus:z-10  dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                                                        No
-                                                    </button>
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div id="view-modal_{{ $employee->employee_id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50">
-                                    <div class="relative w-full max-w-2xl max-h-full p-4">
-                                        <!-- Modal content -->
-                                        <div class="relative bg-white rounded-lg shadow ">
-                                            <!-- Modal header -->
-                                            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                                        <!-- Modal Background -->
+                                        <div x-show="openViewModal && currentViewModal == '{{ $loop->index }}'"
+                                            x-transition:enter="transition ease-out duration-300"
+                                            x-transition:enter-start="opacity-0"
+                                            x-transition:enter-end="opacity-100"
+                                            x-transition:leave="transition ease-in duration-200"
+                                            x-transition:leave-start="opacity-100"
+                                            x-transition:leave-end="opacity-0"
+                                            tabindex="-1"
+                                            aria-hidden="true"
+                                            class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50">
+                                        
+                                        <!-- Modal Content -->
+                                        <div x-show="openViewModal && currentViewModal == '{{ $loop->index }}'"
+                                                x-transition:enter="transition ease-out duration-300"
+                                                x-transition:enter-start="transform opacity-0 scale-90"
+                                                x-transition:enter-end="transform opacity-100 scale-100"
+                                                x-transition:leave="transition ease-in duration-200"
+                                                x-transition:leave-start="transform opacity-100 scale-100"
+                                                x-transition:leave-end="transform opacity-0 scale-90"
+                                                class="relative w-full max-w-2xl max-h-full p-4 bg-white rounded-lg shadow">
+                                            
+                                            <!-- Modal Header -->
+                                            <div class="flex items-center justify-between p-4 border-b rounded-t">
                                                 <h3 class="text-xl font-semibold text-gray-900">
                                                     Employee Information
                                                 </h3>
-                                                <button type="button" onclick="hideViewModal('{{ $employee->employee_id }}')" data-modal-hide="view-modal_{{ $employee->employee_id }}" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                <button @click="openViewModal = false"
+                                                        class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                     </svg>
                                                     <span class="sr-only">Close modal</span>
                                                 </button>
                                             </div>
-                                            <!-- Modal body -->
-                                            <div class="flex p-4 ml-2 md:p-5">
+                                            
+                                            <!-- Modal Body -->
+                                            <div class="flex p-4">
                                                 <!-- Right Picture Area -->
                                                 <div class="flex items-start justify-center mr-5 w-44">
-                                                    {{-- @php
-                                                        $employee_image = $this->getImage($employee->emp_image ?? null);
-                                                    @endphp --}}
                                                     @if($employee_image)
                                                         <img class="w-full h-auto border-4 border-gray-200 rounded-lg shadow-2xl" src="data:image/gif;base64,{{ base64_encode($employee_image) }}" alt="Profile Picture">
                                                     @else
@@ -1107,53 +1065,96 @@
                                                     </p>
                                                 </div>
                                             </div>
-                                            <!-- Modal footer -->
-                                            <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                                <button data-modal-hide="view-modal" type="button" class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit</button>
-                                                <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Deactivate</button>
-                                                {{-- <button data-modal-hide="view-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">Delete</button> --}}
+                                            
+                                            <!-- Modal Footer -->
+                                            <div class="flex items-center  p-4 border-t border-gray-200 rounded-b">
+                                                <button @click="window.location.href = '{{ route('EmployeesView', ['index' => $employee->employee_id]) }}'"
+                                                        type="button"
+                                                        class="text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                    Edit / View
+                                                </button>
+                                                <button @click="openDeactivateModal('{{ $employee->employee_id }}')"
+                                                    type="button"
+                                                    class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">
+                                                Deactivate
+                                                </button>
+                                                <button @click="openDeleteModal('{{ $employee->employee_id }}')"
+                                                        type="button"
+                                                        class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-customRed">
+                                                    Delete
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-
-
-
-                                    {{-- <td class="items-center px-6 py-4">
-                                        <button data-dropdown-toggle="dropdown{{$loop->index}}" class="inline-flex items-center p-2 text-sm font-medium text-center text-gray-900 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none dark:text-white focus:ring-gray-50 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-600" type="button">
-                                            <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 4 15">
-                                                <path d="M3.5 1.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 6.041a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Zm0 5.959a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0Z"/>
-                                            </svg>
-                                        </button>
-                                        <div class="hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700" id="dropdown{{$loop->index}}">
-                                            <!-- Dropdown content -->
-                                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200">
-                                                <li>
-                                                    <a onclick="location.href='{{ route('LeaveRequestEdit', ['index' => $employee->id]) }}'"  class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
-                                                </li>
-                                                <li>
-                                                    <a onclick="location.href='{{ route('LeaveRequestPdf', ['index' => $employee->id]) }}'" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">PDF</a>
-                                                </li>
-                                            </ul>
-                                            <div class="py-2">
-                                                <a wire:click="removeLeaveRequest({{$employee->id}})" wire:confirm="Are you sure you want to delete this post?" class="block px-4 py-2 text-black hover:bg-red-600 hover:text-white dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
-                                            </div>
-                                        </div>
-                                    </td> --}}
+                                </td>
                             </tr>
-
-
                         @endforeach
+
+
+                    
                     @endif
                 </tbody>
             </table>
+            
             <div class="p-4 bg-gray-100 w-full rounded-b-lg " wire:scroll>
                     {{ $EmployeeData->links(data : ['scrollTo' => False]) }}
             </div>
           </div>
+         <div x-cloak x-data="{ deactivateModal: false }" x-ref="deactivate-modal-ref" 
+                x-init="
+                $el.addEventListener('deactivate-modal-open', (event) => {
+                    $wire.set('currentFormId', event.detail);
+                    deactivateModal = true;
+                });
+                $el.addEventListener('modal-close', () => deactivateModal = false);"
+                x-show="deactivateModal" 
+                @keydown.window.escape="deactivateModal = false" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                tabindex="-1" 
+                class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
+                id="deactivate-modal">
+                <div x-show="deactivateModal" 
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="transform opacity-0 scale-90"
+                    x-transition:enter-end="transform opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="transform opacity-100 scale-100"
+                    x-transition:leave-end="transform opacity-0 scale-90"
+                    class="relative p-4 w-full max-w-md max-h-full bg-white rounded-lg shadow dark:bg-gray-700"
+                    style="z-index: 60;">
+                    <button type="button" @click="deactivateModal = false"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-4 md:p-5">
+                        <div class="text-center">
+                            <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                            </svg>
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm Deactivation?</h3>
+                            <button wire:click.prevent="deactivateEmployee" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                                Yes
+                            </button>
+                            <button @click="deactivateModal = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                No
+                            </button>
+                        </div>
+                    </div>
+            </div>
+         </div>
       </div>
+      
       <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
       @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Created'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
+      @trigger-success-deactivate.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deactivated'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
       @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; setTimeout(() => showToast = false, 3000)">
       <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
           <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
@@ -1183,8 +1184,8 @@
           </div>
       </div>
           <!-- Loading screen -->
-        <div wire:loading wire:target="submit" class="load-over z-50">
-            <div wire:loading wire:target="submit" class="loading-overlay z-50">
+        <div wire:loading wire:target="submit, deactivateEmployee" class="load-over z-50">
+            <div wire:loading wire:target="submit, deactivateEmployee" class="loading-overlay z-50">
                 <div class="flex flex-col items-center justify-center">
                     <div class="spinner"></div>
                     <p>Processing...</p>
@@ -1198,6 +1199,15 @@
 
 
 <script>
+
+    function openDeactivateModal(id) {
+        const modal = document.getElementById('deactivate-modal');
+        if (modal) {
+            const event = new CustomEvent('deactivate-modal-open', { detail: id });
+            modal.dispatchEvent(event);
+        }
+    }
+
     let currentStep = 1;
     let password = document.getElementById("password");
 
@@ -1217,6 +1227,25 @@
             const alpineData = Alpine.$data(modal);
             // Update the state
             alpineData.showModal = false; // Open the modal
+        });
+        Livewire.on('triggerDeactivateSuccess', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-success-deactivate'));
+            const modal = document.querySelector(`[x-ref="deactivate-modal-ref"]`);
+            const view_modal = document.querySelector(`[x-ref="view-modal"]`);
+            const viewModal = Alpine.$data(view_modal);
+            viewModal.openViewModal = false;
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.deactivateModal = false; // Open the modal
+        });
+        Livewire.on('triggerDeactivateError', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-error'));
+            const modal = document.querySelector(`[x-ref="deactivate-modal-ref"]`);
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.deactivateModal = false; // Open the modal
         });
     });
 

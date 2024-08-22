@@ -362,7 +362,7 @@ Route::middleware(['auth', ])->group(function (){
 
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
-    Route::get('/employees-form/{index}', AddEmployee::class)->name("EmployeesForm");
+    Route::get('/employeesview/{index}', AddEmployee::class)->name("EmployeesView");
     
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 
