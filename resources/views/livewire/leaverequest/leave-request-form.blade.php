@@ -113,8 +113,8 @@
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option value="" selected>Select</option>
                             <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
-                        {{-- 
-                            <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
+                        
+                            {{-- <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                             <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
                             <option value="esalvador@projectengage.com.ph">esalvador@projectengage.com.ph</option>
                             <option value="kcastro@projectengage.com.ph">kcastro@projectengage.com.ph</option>
@@ -122,9 +122,9 @@
                             <option value="rmaubay@projectengage.com.ph">rmaubay@projectengage.com.ph</option>
                             <option value="jmb@sltemps.com">jmb@sltemps.com</option>
                             <option value="spm_2009@wesearch.com.ph">spm_2009@wesearch.com.ph</option>
-                            <option value="rb@sltemps.com">rb@sltemps.com</option>
+                            <option value="rb@sltemps.com">rb@sltemps.com</option> --}}
                             <option value="mbaniqued@projectengage.com.ph">mbaniqued@projectengage.com.ph</option>
-                            <option value="rosanne.espedido@sltemps.com">rosanne.espedido@sltemps.com</option>
+                            {{-- <option value="rosanne.espedido@sltemps.com">rosanne.espedido@sltemps.com</option>
                             <option value="trishesporlas@wesearch.com.ph">trishesporlas@wesearch.com.ph</option>
                             <option value="ecapistrano@projectengage.com.ph">ecapistrano@projectengage.com.ph</option>
                             <option value="khriziemisenas@sltemps.com">khriziemisenas@sltemps.com</option>
