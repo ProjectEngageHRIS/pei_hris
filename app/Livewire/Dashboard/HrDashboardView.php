@@ -104,6 +104,8 @@ public $govt_professional_exam_taken=[];
 
     public $loggedInUser;
 
+    public $role_id;
+
     public $employeeTypesFilter = [
         'INTERNALS' => false,
         'OJT' => false,
