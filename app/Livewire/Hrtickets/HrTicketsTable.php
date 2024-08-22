@@ -25,9 +25,12 @@ class HrTicketsTable extends Component
     public $date_filter;
 
     public $status_filter;
+    public $type_filter;
+
 
     public $dateFilterName = "All";
     public $statusFilterName = "All";
+    public $typeFilterName = "All";
 
     public $search = "";
 
@@ -118,6 +121,37 @@ class HrTicketsTable extends Component
                 $this->statusFilterName = "All";
                 break;
         }
+
+        switch ($this->type_filter) {
+            case '1':
+                $query->where('type_of_ticket', 'HR Internal');
+                $this->typeFilterName = "HR Internal";
+                break;
+            case '2':
+                $query->where('type_of_ticket', 'Internal Control');
+                $this->typeFilterName = "Internal Control";
+                break;
+            case '3':
+                $query->where('type_of_ticket', 'HR Operations');
+                $this->typeFilterName = "HR Operations";
+                break;
+            case '4':
+                $query->where('type_of_request', 'HR');
+                $this->typeFilterName = "HR";
+                break;
+            case '5':
+                $query->where('type_of_request', 'Office Admin');
+                $this->typeFilterName = "Office Admin";
+                break;
+            case '6':
+                $query->where('type_of_request', 'Procurement');
+                $this->typeFilterName = "Procurement";
+                break;
+            default:
+                $this->typeFilterName = "All";
+                break;
+        }
+        
 
 
         if(strlen($this->search) >= 1){
