@@ -446,25 +446,25 @@
             <table class="w-full pb-4 text-sm text-left text-gray-500 h-fit rtl:text-right dark:text-gray-400" style="overflow-y:hidden;" >
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             No.
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Employee Information
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Date Filled
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center" colspan="3">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap" colspan="3">
                             Description
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center" colspan="2">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap" colspan="2">
                             Report
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Actions
                         </th>
                         
@@ -473,18 +473,17 @@
                 <div>
                     <div>
                         <tbody class="pb-4">
-
                         @if ($ItTicketData->isEmpty())
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
-                                    <th scope="col" colspan="10" class="justify-center" style="padding-bottom: 40px"> 
-                                        <div class="flex justify-center " style="padding-top: 40px">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                            </svg>
-                                            <p class="items-center text-xl font-semibold text-customRed "> Nothing to show</p>
-                                        </div>
-                                    </th>
-                                </tr>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
+                                <th scope="col" colspan="10" class="justify-center" style="padding-bottom: 40px"> 
+                                    <div class="flex justify-center " style="padding-top: 40px">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                        </svg>
+                                        <p class="items-center text-xl font-semibold text-customRed"> Nothing to show</p>
+                                    </div>
+                                </th>
+                            </tr>
                         @else
                             @php
                                 $ctr = 0;
@@ -495,12 +494,7 @@
                                 $ctr = $ctr + 1;
                             @endphp
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    {{-- <td class="w-4 p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td> --}}
+                                    
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                         {{$pageIndex + $ctr}}
                                     </th>
@@ -553,7 +547,7 @@
                                     <td class="px-6 py-4 text-center " colspan="3">
                                         {{$it_ticket->description}}
                                     </td>
-                                    <td class="px-6 py-4 text-center " colspan="2">
+                                    <td class="px-6 py-4 text-center" colspan="2">
                                         {{$it_ticket->report ?? 'Not Applicable'}}
                                     </td>
                                 
@@ -567,7 +561,7 @@
                                             @if ($it_ticket->status != "Cancelled" && $it_ticket->status != "Completed")
                                             <button @click="openButtonCrudModal('{{$it_ticket->form_id}}', '{{$it_ticket->status}}')"
                                                 type="button" 
-                                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
+                                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer text-nowrap hover:text-red-600">
                                                 Change Status
                                             </button>
                                             @endif

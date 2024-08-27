@@ -1,11 +1,10 @@
-<header class="px-2 py-4 bg-white">
-    <nav class="flex justify-between items-center w-[99%] mx-auto">
+<header class="antialiased">
+    <nav class="min-w-[350px] flex items-center justify-between w-full px-2 py-4 bg-white">
         <!-- Left Section: Image and Text -->
         <div class="flex flex-row items-center">
             <!-- Menu Button when smaller than large screen -->
-
             <div class="relative inline-block text-left">
-                <button class="pr-4 xl:hidden" id="barDropdownButton">
+                <button class="pl-4 xl:hidden" id="barDropdownButton">
                     <svg class="size-8 text-customGray1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"/>
                     </svg>
@@ -29,8 +28,8 @@
                 </div>
             </div>
             <a href="{{route('ItDashboard')}}">
-                <div class="flex item-center">
-                    <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
+                <div class="flex pl-4 xl:pl-6 item-center">
+                    <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="mr-3 size-10">
                     <div class="flex flex-col">
                         <span class="text-sm text-customGray">Powered by</span>
                         <span class="text-lg font-semibold text-nowrap text-customRed">SL Groups</span>
