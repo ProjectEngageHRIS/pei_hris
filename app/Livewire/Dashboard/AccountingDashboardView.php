@@ -264,6 +264,7 @@ class AccountingDashboardView extends Component
             return $this->dispatch('triggerSuccess',  type: 'Status');
         } catch (\Exception $e) {
             // Log the exception for further investigation
+            $this->dispatch('trigger-error');
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
             return redirect()->to(route('EmployeeDashboard'));
         }
@@ -307,9 +308,10 @@ class AccountingDashboardView extends Component
         ]);
 
         try {
-            if(!in_array($loggedInUser->role_id, [3, 61024])){
-                throw new \Exception('Unauthorized Access');
-            } 
+                throw new \Exception('test');
+                if(!in_array($loggedInUser->role_id, [3, 61024])){
+                    throw new \Exception('Unauthorized Access');
+                } 
                 $parts = explode(' | ', $this->selectedEmployee);
                 $payroll_exists = Payroll::where('target_employee', $parts[1])
                                                 ->where('phase',  $this->payroll_phase)
@@ -355,19 +357,22 @@ class AccountingDashboardView extends Component
                 $this->dispatch('triggerSuccess', type: 'Add');
         } catch (\Exception $e) {
             // Log the exception for further investigation
+            $this->dispatch('trigger-error');
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
-            return redirect()->to(route('EmployeeDashboard'));
+            // return redirect()->to(route('EmployeeDashboard'));
         }
     }
 
 
 
     public function editPayroll($employee_id){
-        // dd($this->start_date, $this->end_date, $this->payroll_picture);
-        // foreach($this->rules as $rule => $validationRule){
-        //     $this->validate([$rule => $validationRule]);
-        //     $this->resetValidation();
-        // }   
+        $this->validate([
+            'payroll_phase' => 'required|in:1st Half,2nd Half',  // Removed the space after comma
+            'payroll_month' => 'required|in:January,February,March,April,May,June,July,August,September,October,November,December',  // Add your actual months or valid values here
+            'payroll_year' => 'required|digits:4|integer',  // Added validation rule for year
+            'payroll_picture' => 'required|url:https',
+        ]);
+
         $loggedInUser = auth()->user();
 
         try {
@@ -385,7 +390,7 @@ class AccountingDashboardView extends Component
                 $payroll->employee_id = $loggedInUser->employee_id;
                 $payroll->payroll_picture = $this->payroll_picture;
             } else {
-                dump('Error');
+                $this->dispatch('trigger-error');
             }
 
 
@@ -404,29 +409,30 @@ class AccountingDashboardView extends Component
                 $payroll_status->month = $payroll->month;
                 $payroll_status->status = "Approved";
                 $payroll_status->save();
-                $payroll->update();
+                $payroll->save();
             } else {
                 $payroll_status_data->status = "Approved";
-                $payroll_status_data->update();
-                $payroll->update();
+                $payroll_status_data->save();
+                $payroll->save();
             }
 
-            return $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+            $this->dispatch('triggerSuccess');
         } catch (\Exception $e) {
             // Log the exception for further investigation
+            $this->dispatch('trigger-error');
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
-            return redirect()->to(route('EmployeeDashboard'));
         }
 
     }
 
     public function addPayroll($employee_id){
-        // dd($this->start_date, $this->end_date, $this->payroll_picture);
+        $this->validate([
+            'payroll_phase' => 'required|in:1st Half,2nd Half',  // Removed the space after comma
+            'payroll_month' => 'required|in:January,February,March,April,May,June,July,August,September,October,November,December',  // Add your actual months or valid values here
+            'payroll_year' => 'required|digits:4|integer',  // Added validation rule for year
+            'payroll_picture' => 'required|url:https',
+        ]);
 
-        // foreach($this->rules as $rule => $validationRule){
-        //     $this->validate([$rule => $validationRule]);
-        //     $this->resetValidation();
-        // }   
         $loggedInUser = auth()->user();
 
         try {
@@ -455,23 +461,23 @@ class AccountingDashboardView extends Component
                 $payroll_status->phase = $payroll->phase;
                 $payroll_status->year = $payroll->year;
                 $payroll_status->month = $payroll->month;
-                // if($start_date->day  15) $payroll->month_phase = '1st Half'
                 $payroll_status->status = "Approved";
                 $payroll_status->save();
                 $payroll->save();
-
                 return $this->dispatch('trigger-success-add');
             }        
 
             $payroll_status_data->status = "Approved";
-            $payroll_status_data->update();
-            $payroll->update();
+            $payroll_status_data->save();
+            $payroll->save();
 
             return $this->dispatch('trigger-success-add');
         } catch (\Exception $e) {
+            $this->dispatch('trigger-error');
+
             // Log the exception for further investigation
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
-            return redirect()->to(route('EmployeeDashboard'));
+            // return redirect()->to(route('EmployeeDashboard'));
         }
 
     }
@@ -511,20 +517,26 @@ class AccountingDashboardView extends Component
             return $this->dispatch('trigger-success-delete');
 
         } catch (\Exception $e) {
+            $this->dispatch('trigger-error');
+
             // Log the exception for further investigation
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
-            return redirect()->to(route('EmployeeDashboard'));
+            // return redirect()->to(route('EmployeeDashboard'));
         }
     }
 
     public function addNote(){
+        $this->validate([
+            'note' => 'required|string|min:5',
+        ]);
         try {
             $note = new Accountingnotes();
             $note->employee_id = auth()->user()->employee_id;
             $note->note = $this->note;
             $note->save();
-            $this->dispatch('trigger-success-add-note');
+            $this->dispatch('triggerSuccess', type: 'Notes');
         }  catch (\Exception $e) {
+
             // Log the exception for further investigation
             Log::channel('accountingerrors')->error('Failed to add Note: ' . $e->getMessage());
 

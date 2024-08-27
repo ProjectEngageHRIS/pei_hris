@@ -326,7 +326,7 @@
                     <!-- Modal body -->
                     <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
                         <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
-                            <div wire:ignore>
+                            <div>
                                 <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
                                 <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                     <option>Select </option>
@@ -461,10 +461,10 @@
             </div>
             <!-- Notes Section -->
             <div class="w-full bg-white rounded-lg shadow-lg">
-                <div class="pt-4 pb-4">
+                <div x-data="{openNotes: false}" class="pt-4 pb-4">
                     <p class="flex justify-between mr-6">
                         <span class="mb-4 ml-4 text-base font-semibold text-customGray1">Notes</span>
-                        <button id="open-modal" class="mb-3 ml-4 text-yellow-400 hover:text-yellow-600">
+                        <button @click="openNotes = true" class="mb-3 ml-4 text-yellow-400 hover:text-yellow-600">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="size-4">
                                 <path d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z" />
                             </svg>
@@ -472,34 +472,60 @@
                     </p>
 
                     <!-- Main modal -->
-                    <div id="default-modal" tabindex="-1" aria-hidden="true" class="fixed inset-0 z-50 items-center justify-center hidden w-full h-full overflow-x-hidden overflow-y-auto bg-gray-900 bg-opacity-50">
-                        <div class="relative w-full max-w-2xl max-h-full p-4">
-                            <!-- Modal content -->
-                            <div class="relative bg-white rounded-lg shadow">
-                                <!-- Modal header -->
-                                <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
+                    <div x-cloak x-ref="notes-modal" 
+                        x-show="openNotes" 
+                        @keydown.window.escape="open = false" 
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="opacity-0"
+                        x-transition:enter-end="opacity-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="opacity-100"
+                        x-transition:leave-end="opacity-0"
+                        tabindex="-1" 
+                        class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
+                        id="notes-modal">
+                        <div x-show="openNotes" 
+                        x-transition:enter="transition ease-out duration-300"
+                        x-transition:enter-start="transform opacity-0 scale-90"
+                        x-transition:enter-end="transform opacity-100 scale-100"
+                        x-transition:leave="transition ease-in duration-200"
+                        x-transition:leave-start="transform opacity-100 scale-100"
+                        x-transition:leave-end="transform opacity-0 scale-90"
+                        class="relative p-4 w-full max-w-xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700">
+                            <div class="relative w-full max-w-2xl max-h-full p-4">
+                                <!-- Modal content -->
+                                <div class="relative bg-white rounded-lg shadow">
+                                    <!-- Modal header -->
+                                    <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
 
-                                <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
-                                    <h3 class="text-xl font-semibold text-gray-900">
-                                        Add new note
-                                    </h3>
-                                    <button type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto" data-modal-hide="default-modal">
-                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                        </svg>
-                                        <span class="sr-only">Close modal</span>
-                                    </button>
+                                    <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                                        <h3 class="text-xl font-semibold text-gray-900">
+                                            Add new note
+                                        </h3>
+                                        <button @click="openNotes = !openNotes" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto" >
+                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                            </svg>
+                                            <span class="sr-only">Close modal</span>
+                                        </button>
+                                    </div>
+                                    <!-- Modal body -->
+                                    <div class="p-4 space-y-4 md:p-5" id="note_container">
+                                        <textarea class="w-full h-40 p-2 border rounded-lg focus:ring-2 focus:border-customRed focus:ring-customRed" wire:model="note" placeholder="Type your note here..."></textarea>
+                                        @error('note')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                x-data x-init="document.getElementById('note_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('note_container').focus();" >
+                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                    <!-- Modal footer -->
+                                    <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
+                                        <button type="submit" type="button" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
+                                        <button @click="openNotes = !openNotes" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
+                                    </div>
+                                    </form>
                                 </div>
-                                <!-- Modal body -->
-                                <div class="p-4 space-y-4 md:p-5">
-                                    <textarea class="w-full h-40 p-2 border rounded-lg focus:ring-2 focus:border-customRed focus:ring-customRed" wire:model="note" placeholder="Type your note here..."></textarea>
-                                </div>
-                                <!-- Modal footer -->
-                                <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                    <button type="submit" data-modal-hide="default-modal" type="button" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
-                                    <button data-modal-hide="default-modal" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
-                                </div>
-                                </form>
                             </div>
                         </div>
                     </div>
@@ -618,9 +644,23 @@
                                                 <!-- Main modal -->
                                                 <div  x-show="openPayrollEditModal && currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
-                                                    <div x-show="openPayrollEditModal" class="fixed inset-0 bg-black opacity-50"></div>
+                                                    <div x-show="openPayrollEditModal"
+                                                        x-transition:enter="transition ease-out duration-300"
+                                                        x-transition:enter-start="opacity-0"
+                                                        x-transition:enter-end="opacity-100"
+                                                        x-transition:leave="transition ease-in duration-200"
+                                                        x-transition:leave-start="opacity-100"
+                                                        x-transition:leave-end="opacity-0"
+                                                         class="fixed inset-0 bg-black opacity-50"></div>
                                         
-                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full  h-auto max-w-md  p-4 bg-white rounded-lg shadow-lg">
+                                                    <div x-show="openPayrollEditModal"                          
+                                                        x-transition:enter="transition ease-out duration-300"
+                                                        x-transition:enter-start="transform opacity-0 scale-90"
+                                                        x-transition:enter-end="transform opacity-100 scale-100"
+                                                        x-transition:leave="transition ease-in duration-200"
+                                                        x-transition:leave-start="transform opacity-100 scale-100"
+                                                        x-transition:leave-end="transform opacity-0 scale-90" 
+                                                        id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full  h-auto max-w-md  p-4 bg-white rounded-lg shadow-lg">
                                                         <!-- Modal content -->
                                                         <div class="relative bg-white rounded-lg shadow">
                                                             <!-- Modal header -->
@@ -686,10 +726,25 @@
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
+                                                <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" 
+                                                    class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
-                                                    <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                    <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative overflow-y-auto overflow-x-hidden  w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
+                                                    <div x-show="openAddPayrollModal" 
+                                                        x-transition:enter="transition ease-out duration-300"
+                                                        x-transition:enter-start="opacity-0"
+                                                        x-transition:enter-end="opacity-100"
+                                                        x-transition:leave="transition ease-in duration-200"
+                                                        x-transition:leave-start="opacity-100"
+                                                        x-transition:leave-end="opacity-0"
+                                                        class="fixed inset-0 bg-black opacity-50">
+                                                    </div>
+                                                    <div id="add-payroll-modal_{{ $loop->index }}"  x-show="openAddPayrollModal" 
+                                                        x-transition:enter="transition ease-out duration-300"
+                                                        x-transition:enter-start="opacity-0"
+                                                        x-transition:enter-end="opacity-100"
+                                                        x-transition:leave="transition ease-in duration-200"
+                                                        x-transition:leave-start="opacity-100"
+                                                        x-transition:leave-end="opacity-0" tabindex="-1" aria-hidden="true" class="relative overflow-y-auto overflow-x-hidden  w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
                                                         <!-- Modal content -->
                                                         <div class="relative bg-white rounded-lg shadow ">
                                                                 <!-- Modal header -->
@@ -718,7 +773,7 @@
                                                                     "
                                                                     :class="isScrollable ? 'mb-4' : ''" 
                                                                     class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
-                                                                    <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')" method="POST">
+                                                                    <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')"  method="POST">
                                                                         @csrf
                                                                         <div class="grid grid-cols-2 gap-4" >
                                                                                 <div>
@@ -824,10 +879,22 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed  inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'"
+                                                         class="fixed  inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
-                                                        <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg  p-4 bg-white rounded-lg shadow-lg">
+                                                        <div x-show="openAddPayrollModal"                                                         
+                                                        x-transition:leave="transition ease-in duration-400"
+                                                        x-transition:leave-start="opacity-100"
+                                                        x-transition:leave-end="opacity-0"
+                                                        class="fixed inset-0 bg-black opacity-50"></div>
+                                                        <div x-show="openAddPayrollModal" id="add-payroll-modal_{{ $loop->index }}" 
+                                                            x-transition:enter="transition ease-out duration-300"
+                                                            x-transition:enter-start="transform opacity-0 scale-90"
+                                                            x-transition:enter-end="transform opacity-100 scale-100"
+                                                            x-transition:leave="transition ease-in duration-400"
+                                                            x-transition:leave-start="transform opacity-100 scale-100"
+                                                            x-transition:leave-end="transform opacity-0 scale-90"
+                                                        class="relative w-full max-w-lg  p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
@@ -965,7 +1032,7 @@
                                                                                         </ul>
                                                                                         <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
                                                                                         
-                                                                                        <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                                                        <button id="addWarningButton" @click=" openAddWarningButton = false" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                             Yes
                                                                                         </button>
                                                                                         <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
@@ -974,7 +1041,7 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div  x-show="openCancelPrompt" id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                                                                    <div x-show="openCancelPrompt" x-ref="delete-modal" id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
                                                                         <div class="relative w-full max-w-md max-h-full p-4">
                                                                             <div class="relative bg-white rounded-lg shadow">
                                                                                 <!-- Close button -->
@@ -1113,7 +1180,13 @@
                 const alpineData = Alpine.$data(modal);
                 alpineData.addTargetPayroll = false; // Open the modal
 
-            } else {
+            }  else if(event.type == "Notes"){
+                window.dispatchEvent(new CustomEvent('trigger-success-add-note'));
+                const modal = document.querySelector(`[x-ref="notes-modal"]`);
+                const alpineData = Alpine.$data(modal);
+                alpineData.openNotes = false; // Open the modal
+            }
+                else {
                 window.dispatchEvent(new CustomEvent('trigger-success-update'));
                 const modal = document.querySelector(`[x-ref="modals"]`);
                 // Access Alpine data
@@ -1121,7 +1194,10 @@
                 // Update the state
                 if(event.type == "Status"){
                     alpineData.openPayrollEditModal = false; // Open the modal
-                }
+                } else if (event.type == "Edit"){
+                    alpineData.openAddPayrollModal = false; // Open the modal
+                    alpineData.currentAddModal = null; // Open the modal
+                } 
             }
         });
     });
