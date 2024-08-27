@@ -1,470 +1,472 @@
 <div>
-    <div class="flex flex-row gap-4 items-center">
-        <div class="rounded-lg hover:text-customRed">
-            <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
-                <div>
-                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
-                        <span x-text="selectedhalfOfMonth ? selectedhalfOfMonth : 'Select'"></span>
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
-                    <div class="py-1">
-                        <a href="#" @click.prevent="selectedhalfOfMonth = '1st Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">1st Half</a>
-                        <a href="#" @click.prevent="selectedhalfOfMonth = '2nd Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2nd Half</a>
-                    </div>
-                </div>
-                <input type="hidden" id="halfOfMonthFilter" name="halfOfMonthFilter" wire:model.live="halfOfMonthFilter" x-model="selectedhalfOfMonth" required>
-            </div>
-        </div>
-
-        <div class="rounded-lg hover:text-customRed">
-            <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
-                <div>
-                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
-                        <span x-text="selectedMonth ? selectedMonth : 'Select'"></span>
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
-                    <div class="py-1">
-                        <a href="#" @click.prevent="selectedMonth = 'January'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">January </a>
-                        <a href="#" @click.prevent="selectedMonth = 'February'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">February</a>
-                        <a href="#" @click.prevent="selectedMonth = 'March'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">March</a>
-                        <a href="#" @click.prevent="selectedMonth = 'April'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">April</a>
-                        <a href="#" @click.prevent="selectedMonth = 'May'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">May</a>
-                        <a href="#" @click.prevent="selectedMonth = 'June'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">June</a>
-                        <a href="#" @click.prevent="selectedMonth = 'July'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">July</a>
-                        <a href="#" @click.prevent="selectedMonth = 'August'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">August</a>
-                        <a href="#" @click.prevent="selectedMonth = 'September'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">September</a>
-                        <a href="#" @click.prevent="selectedMonth = 'October'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">October</a>
-                        <a href="#" @click.prevent="selectedMonth = 'November'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">November</a>
-                        <a href="#" @click.prevent="selectedMonth = 'December'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">December</a>
-                    </div>
-                </div>
-                <input type="hidden" id="monthFilter" name="monthFilter" wire:model.live="monthFilter" x-model="selectedMonth" required>
-            </div>
-        </div>
-
-        <div class="rounded-lg hover:text-customRed">
-            <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block text-left w-full">
-                <div>
-                    <button @click="open = !open" type="button" class="inline-flex justify-between items-center w-full bg-navButton shadow h-10 font-medium rounded-lg text-sm p-3 text-gray-900">
-                        <span x-text="selectedYear ? selectedYear : 'Select'"></span>
-                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
-                        </svg>
-                    </button>
-                </div>
-                <div x-show="open" class="absolute z-10 w-fit mt-2 space-y-2 bg-white border rounded shadow-lg">
-                    <div class="py-1">
-                        <a href="#" @click.prevent="selectedYear = '2024'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2024 </a>
-                        <a href="#" @click.prevent="selectedYear = '2023'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2023</a>
-                        <a href="#" @click.prevent="selectedYear = '2022'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2022</a>
-                        <a href="#" @click.prevent="selectedYear = '2021'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2021</a>
-                        <a href="#" @click.prevent="selectedYear = '2020'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2020</a>
-                        <a href="#" @click.prevent="selectedYear = '2019'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2019</a>
-                        <a href="#" @click.prevent="selectedYear = '2018'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2018</a>
-                        <a href="#" @click.prevent="selectedYear = '2017'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2017</a>
-                        <a href="#" @click.prevent="selectedYear = '2016'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2016</a>
-                        <a href="#" @click.prevent="selectedYear = '2015'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2015</a>
-                        <a href="#" @click.prevent="selectedYear = '2014'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2014</a>
-                        <a href="#" @click.prevent="selectedYear = '2013'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2013</a>
-                    </div>
-                </div>
-                <input type="hidden" id="yearFilter" name="yearFilter" wire:model.live="yearFilter" x-model="selectedYear" required>
-            </div>
-        </div>
-
-        <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll" class="load-over z-50">
-            <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay z-50">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="spinner"></div>
-                    <p>Updating...</p>
-                </div>
-            </div>
-            <div wire:loading wire:target="deletePayroll, editPayroll, addPayroll" class="loading-overlay z-50">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="spinner"></div>
-                    <p>Uploading...</p>
-                </div>
-            </div>
-        </div>
-        <style>
-            .load-over {
-                position: fixed;
-                background: rgba(255, 255, 255, 0.8);
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-            .loading-overlay {
-                position: fixed;
-                top: 40%;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 9999;
-                font-family: Arial, sans-serif;
-                color: #AC0C2E;
-                pointer-events: none; /* Makes sure the overlay is not interactable */
-            }
-    
-            .spinner {
-                border: 8px solid rgba(172, 12, 46, 0.3);
-                border-top: 8px solid #AC0C2E;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                animation: spin 1s linear infinite;
-                margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
-            }
-    
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-    
-            .loading-overlay p {
-                margin: 0;
-                font-size: 18px;
-                font-weight: bold;
-            }
-        </style>
-    </div>
-
-
-    <div class="flex items-center justify-end mb-4">
-        
-        <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only "></label>
-        
-        <div class="flex flex-row pr-2 relative">
-            <label for="table-search" class="sr-only">Search</label>
-            <div class="">
-                <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
-                    <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
-                    </svg>
-                </div>
-                <input type="text" wire:model.live="search" id="table-search-users" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 w-full max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
-            </div>
-            <!-- Filter Sidebar -->
-            <div class="absolute rounded-lg right-3 hover:text-customRed" x-data="{
-                filterOpen: false,
-                employeeTypeOpen: false,
-                departmentOpen: false,
-                companyOpen: false,
-                statusOpen: false,
-                genderOpen: false,
-                employeeTypeCount: 0,
-                departmentCount: 0,
-                companyCount: 0,
-                statusCount: 0,
-                genderCount: 0,
-
-                updateEmployeeTypeCount() {
-                    this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
-                },
-                updateDepartmentCount() {
-                    this.departmentCount = document.querySelectorAll('.departmentOpen .filter-checkbox:checked').length;
-                },
-                updateCompanyCount() {
-                    this.companyCount = document.querySelectorAll('.companyOpen .filter-checkbox:checked').length;
-                },
-                updateStatusCount() {
-                    this.statusCount = document.querySelectorAll('.statusOpen .filter-checkbox:checked').length;
-                },
-                clearAllFilters() {
-                    document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
-                    this.employeeTypeCount = 0;
-                    this.departmentCount = 0;
-                    this.companyCount = 0;
-                    this.statusCount = 0;
-                    this.genderCount = 0;
-
-                }
-                }">
-
-                <!-- Filter Icon Button -->
-                <button @click="filterOpen = !filterOpen" class="size-10 right-0">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                    </svg>
-                </button>
-                <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
-                    <!-- Clear All Button -->
-                    <div class="px-4 py-2">
-                        <button wire:click="clearAllFilters" @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
-                            Clear All
-                        </button>
-                    </div>
-                    <!-- Employee Type Dropdown Button -->
-                    <div class="px-2">
-                        <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                            Employee Type
-                            <span class="float-right">&#9662;</span>
-                            <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
-                        </button>
-                        <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2 employeeTypeOpen">
-                            <hr class="my-4 border-gray-300">
-                            {{-- @foreach($employeeTypesFilter as $type => $checked) --}}
-                              <div class="flex items-center px-4 py-2">
-                                  <input type="checkbox" wire:model.live="employeeTypesFilter.Internals"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                  <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
-                              </div>
-                              <div class="flex items-center px-4 py-2">
-                                  <input type="checkbox" wire:model.live="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                  <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
-                              </div>
-                              <div class="flex items-center px-4 py-2">
-                                  <input type="checkbox" wire:model.live="employeeTypesFilter.PEI-CCS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                  <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
-                              </div>
-                              <div class="flex items-center px-4 py-2">
-                                  <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                  <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
-                              </div>
-                              <div class="flex items-center px-4 py-2">
-                                  <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                  <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
-                              </div>
-                              <div class="flex items-center px-4 py-2">
-                                  <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                  <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
-                              </div>
-                          {{-- @endforeach --}}
-                        </div>
-                    </div>
-                    <!-- Department Dropdown Button -->
-                    <div class="px-2">
-                        <button @click="departmentOpen = !departmentOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                            Department
-                            <span class="float-right">&#9662;</span>
-                            <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
-                        </button>
-                        <div x-show="departmentOpen" @click.away="departmentOpen = false" class="w-full mt-2 space-y-2 departmentOpen">
-                            <hr class="my-4 border-gray-300">
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.HR AND ADMIN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Overseas Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.PEI/SL Temps DO-174" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Corporate Accounting and Finance" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Accounting Operations" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Company Dropdown Button -->
-                    <div class="px-2">
-                        <button @click="companyOpen = !companyOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                            Company
-                            <span class="float-right">&#9662;</span>
-                            <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
-                        </button>
-                        <div x-show="companyOpen" @click.away="companyOpen = false" class="w-full mt-2 space-y-2 companyOpen">
-                            <hr class="my-4 border-gray-300">
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="departmentTypesFilter.SL SEARCH"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="departmentTypesFilter.SL TEMPS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="departmentTypesFilter.PEI-UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Gender Dropdown Button -->
-                    <div class="px-2 pb-2">
-                        <button @click="genderOpen = !genderOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                            Gender
-                            <span class="float-right">&#9662;</span>
-                            <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
-                        </button>
-                        <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
-                            <hr class="my-4 border-gray-300">
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
-                            </div>
-                            <div class="flex items-center px-4 py-2">
-                                <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
-                                <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- Add user button -->
-        <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
-            Add Payroll
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-2">
-                <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
-              </svg>
-        </button>
-        <!-- Main modal -->
-        <div wire:ignore.self id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
-            <div class="relative w-full max-w-lg max-h-full p-4">
-                <!-- Modal content -->
-                <div class="relative bg-white rounded-lg shadow ">
-                    <!-- Modal header -->
-                    <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
-                        <h3 class="text-xl font-semibold text-gray-900 ">
-                            Add new Payroll
-                        </h3>
-                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
-                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+    <div class="flex flex-col justify-between mb-4 md:flex-row gap-y-4">
+        <div class="flex flex-row items-center w-full gap-2 md:gap-4">
+            <div class="rounded-lg hover:text-customRed">
+                <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                    <div>
+                        <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow text-nowrap bg-navButton">
+                            <span x-text="selectedhalfOfMonth ? selectedhalfOfMonth : 'Select'"></span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
                             </svg>
-                            <span class="sr-only">Close modal</span>
                         </button>
                     </div>
-                    <!-- Modal body -->
-                    <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
-                        <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
-                            <div>
-                                <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
-                                <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                    <option>Select </option>
-                                    @foreach($employeeNames as $name)
-                                        <option value="{{$name}}">{{$name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div>
-                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
-                                <input type="text" name="fullname" id="fullname" disabled value="{{$selectedEmployeeEmail}}" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
-                            </div>
+                    <div x-show="open" class="absolute z-10 mt-2 space-y-2 bg-white border rounded shadow-lg w-fit">
+                        <div class="py-1">
+                            <a href="#" @click.prevent="selectedhalfOfMonth = '1st Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">1st Half</a>
+                            <a href="#" @click.prevent="selectedhalfOfMonth = '2nd Half'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2nd Half</a>
+                        </div>
+                    </div>
+                    <input type="hidden" id="halfOfMonthFilter" name="halfOfMonthFilter" wire:model.live="halfOfMonthFilter" x-model="selectedhalfOfMonth" required>
+                </div>
+            </div>
 
-                            <hr class="border-gray-700">
+            <div class="rounded-lg hover:text-customRed">
+                <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                    <div>
+                        <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow bg-navButton">
+                            <span x-text="selectedMonth ? selectedMonth : 'Select'"></span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div x-show="open" class="absolute z-10 mt-2 space-y-2 bg-white border rounded shadow-lg w-fit">
+                        <div class="py-1">
+                            <a href="#" @click.prevent="selectedMonth = 'January'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">January </a>
+                            <a href="#" @click.prevent="selectedMonth = 'February'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">February</a>
+                            <a href="#" @click.prevent="selectedMonth = 'March'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">March</a>
+                            <a href="#" @click.prevent="selectedMonth = 'April'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">April</a>
+                            <a href="#" @click.prevent="selectedMonth = 'May'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">May</a>
+                            <a href="#" @click.prevent="selectedMonth = 'June'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">June</a>
+                            <a href="#" @click.prevent="selectedMonth = 'July'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">July</a>
+                            <a href="#" @click.prevent="selectedMonth = 'August'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">August</a>
+                            <a href="#" @click.prevent="selectedMonth = 'September'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">September</a>
+                            <a href="#" @click.prevent="selectedMonth = 'October'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">October</a>
+                            <a href="#" @click.prevent="selectedMonth = 'November'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">November</a>
+                            <a href="#" @click.prevent="selectedMonth = 'December'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">December</a>
+                        </div>
+                    </div>
+                    <input type="hidden" id="monthFilter" name="monthFilter" wire:model.live="monthFilter" x-model="selectedMonth" required>
+                </div>
+            </div>
 
-                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
-                                <div>
-                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
-                                    <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                        <option value="" selected>Select Phase</option>
-                                        <option value="1st Half">1st Half</option>
-                                        <option value="2nd Half">2nd Half</option>
-                                    </select>
+            <div class="rounded-lg hover:text-customRed">
+                <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                    <div>
+                        <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow bg-navButton">
+                            <span x-text="selectedYear ? selectedYear : 'Select'"></span>
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                            </svg>
+                        </button>
+                    </div>
+                    <div x-show="open" class="absolute z-10 mt-2 space-y-2 bg-white border rounded shadow-lg w-fit">
+                        <div class="py-1">
+                            <a href="#" @click.prevent="selectedYear = '2024'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2024 </a>
+                            <a href="#" @click.prevent="selectedYear = '2023'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2023</a>
+                            <a href="#" @click.prevent="selectedYear = '2022'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2022</a>
+                            <a href="#" @click.prevent="selectedYear = '2021'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2021</a>
+                            <a href="#" @click.prevent="selectedYear = '2020'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2020</a>
+                            <a href="#" @click.prevent="selectedYear = '2019'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2019</a>
+                            <a href="#" @click.prevent="selectedYear = '2018'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2018</a>
+                            <a href="#" @click.prevent="selectedYear = '2017'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2017</a>
+                            <a href="#" @click.prevent="selectedYear = '2016'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2016</a>
+                            <a href="#" @click.prevent="selectedYear = '2015'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2015</a>
+                            <a href="#" @click.prevent="selectedYear = '2014'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2014</a>
+                            <a href="#" @click.prevent="selectedYear = '2013'; open = false;" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">2013</a>
+                        </div>
+                    </div>
+                    <input type="hidden" id="yearFilter" name="yearFilter" wire:model.live="yearFilter" x-model="selectedYear" required>
+                </div>
+            </div>
+
+            <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll" class="z-50 load-over">
+                <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="z-50 loading-overlay">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="spinner"></div>
+                        <p>Updating...</p>
+                    </div>
+                </div>
+                <div wire:loading wire:target="deletePayroll, editPayroll, addPayroll" class="z-50 loading-overlay">
+                    <div class="flex flex-col items-center justify-center">
+                        <div class="spinner"></div>
+                        <p>Uploading...</p>
+                    </div>
+                </div>
+            </div>
+            <style>
+                .load-over {
+                    position: fixed;
+                    background: rgba(255, 255, 255, 0.8);
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                }
+                .loading-overlay {
+                    position: fixed;
+                    top: 40%;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    z-index: 9999;
+                    font-family: Arial, sans-serif;
+                    color: #AC0C2E;
+                    pointer-events: none; /* Makes sure the overlay is not interactable */
+                }
+        
+                .spinner {
+                    border: 8px solid rgba(172, 12, 46, 0.3);
+                    border-top: 8px solid #AC0C2E;
+                    border-radius: 50%;
+                    width: 60px;
+                    height: 60px;
+                    animation: spin 1s linear infinite;
+                    margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
+                }
+        
+                @keyframes spin {
+                    0% {
+                        transform: rotate(0deg);
+                    }
+                    100% {
+                        transform: rotate(360deg);
+                    }
+                }
+        
+                .loading-overlay p {
+                    margin: 0;
+                    font-size: 18px;
+                    font-weight: bold;
+                }
+            </style>
+        </div>  
+
+        <div class="flex items-center justify-between gap-4 md:justify-end">
+            <div class="relative flex flex-row">
+                <div>
+                    <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
+                        <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+                        </svg>
+                    </div>
+                    <input type="text" wire:model.live="search" id="table-search-users" class="flex w-56 px-10 text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                </div>
+                <!-- Filter Sidebar -->
+                <div class="absolute rounded-lg right-3 hover:text-customRed" x-data="{
+                    filterOpen: false,
+                    employeeTypeOpen: false,
+                    departmentOpen: false,
+                    companyOpen: false,
+                    statusOpen: false,
+                    genderOpen: false,
+                    employeeTypeCount: 0,
+                    departmentCount: 0,
+                    companyCount: 0,
+                    statusCount: 0,
+                    genderCount: 0,
+
+                    updateEmployeeTypeCount() {
+                        this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
+                    },
+                    updateDepartmentCount() {
+                        this.departmentCount = document.querySelectorAll('.departmentOpen .filter-checkbox:checked').length;
+                    },
+                    updateCompanyCount() {
+                        this.companyCount = document.querySelectorAll('.companyOpen .filter-checkbox:checked').length;
+                    },
+                    updateStatusCount() {
+                        this.statusCount = document.querySelectorAll('.statusOpen .filter-checkbox:checked').length;
+                    },
+                    clearAllFilters() {
+                        document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
+                        this.employeeTypeCount = 0;
+                        this.departmentCount = 0;
+                        this.companyCount = 0;
+                        this.statusCount = 0;
+                        this.genderCount = 0;
+
+                    }
+                    }">
+
+                    <!-- Filter Icon Button -->
+                    <button @click="filterOpen = !filterOpen" class="right-0 size-10">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                        </svg>
+                    </button>
+                    <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
+                        <!-- Clear All Button -->
+                        <div class="px-4 py-2">
+                            <button wire:click="clearAllFilters" @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
+                                Clear All
+                            </button>
+                        </div>
+                        <!-- Employee Type Dropdown Button -->
+                        <div class="px-2">
+                            <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                Employee Type
+                                <span class="float-right">&#9662;</span>
+                                <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
+                            </button>
+                            <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2 employeeTypeOpen">
+                                <hr class="my-4 border-gray-300">
+                                {{-- @foreach($employeeTypesFilter as $type => $checked) --}}
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="employeeTypesFilter.Internals"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
                                 </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="employeeTypesFilter.PEI-CCS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
+                                </div>
+                            {{-- @endforeach --}}
+                            </div>
+                        </div>
+                        <!-- Department Dropdown Button -->
+                        <div class="px-2">
+                            <button @click="departmentOpen = !departmentOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                Department
+                                <span class="float-right">&#9662;</span>
+                                <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
+                            </button>
+                            <div x-show="departmentOpen" @click.away="departmentOpen = false" class="w-full mt-2 space-y-2 departmentOpen">
+                                <hr class="my-4 border-gray-300">
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.HR AND ADMIN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Overseas Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.PEI/SL Temps DO-174" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Corporate Accounting and Finance" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Accounting Operations" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Company Dropdown Button -->
+                        <div class="px-2">
+                            <button @click="companyOpen = !companyOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                Company
+                                <span class="float-right">&#9662;</span>
+                                <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
+                            </button>
+                            <div x-show="companyOpen" @click.away="companyOpen = false" class="w-full mt-2 space-y-2 companyOpen">
+                                <hr class="my-4 border-gray-300">
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="departmentTypesFilter.SL SEARCH"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="departmentTypesFilter.SL TEMPS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="departmentTypesFilter.PEI-UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Gender Dropdown Button -->
+                        <div class="px-2 pb-2">
+                            <button @click="genderOpen = !genderOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                Gender
+                                <span class="float-right">&#9662;</span>
+                                <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
+                            </button>
+                            <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
+                                <hr class="my-4 border-gray-300">
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
+                                </div>
+                                <div class="flex items-center px-4 py-2">
+                                    <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                    <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add user button -->
+            <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="max-[450px]:hidden inline-flex items-center px-4 py-2 text-sm font-medium text-white rounded-lg shadow text-nowrap bg-customRed hover:bg-red-700 hover:text-white">
+                Add Payroll
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-2">
+                    <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="min-[450px]:hidden inline-flex items-center px-2 py-2 text-sm font-medium text-white rounded-lg shadow text-nowrap bg-customRed hover:bg-red-700 hover:text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4">
+                    <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
+                </svg>
+            </button>
+            <!-- Main modal -->
+            <div wire:ignore.self id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
+                <div class="relative w-full max-w-lg max-h-full p-4">
+                    <!-- Modal content -->
+                    <div class="relative bg-white rounded-lg shadow ">
+                        <!-- Modal header -->
+                        <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 ">
+                            <h3 class="text-xl font-semibold text-gray-900 ">
+                                Add new Payroll
+                            </h3>
+                            <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
+                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                </svg>
+                                <span class="sr-only">Close modal</span>
+                            </button>
+                        </div>
+                        <!-- Modal body -->
+                        <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
+                            <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
                                 <div>
-                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
-                                    <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                        <option value="" selected>Select Month</option>
-                                        @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
-                                            <option value="{{ $month }}">{{ $month }}</option>
+                                    <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
+                                    <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                        <option>Select </option>
+                                        @foreach($employeeNames as $name)
+                                            <option value="{{$name}}">{{$name}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div>
-                                    <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
-                                    <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                        <option value="" selected>Select Year</option>
-                                        @foreach(range(2000, date('Y')) as $year)
-                                            <option value="{{ $year }}">{{ $year }}</option>
-                                        @endforeach
-                                    </select>
+                                    <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                    <input type="text" name="fullname" id="fullname" disabled value="{{$selectedEmployeeEmail}}" class="bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" placeholder="Enter Full Name" required>
                                 </div>
-                            </div>
 
-                            <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
-                                {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
-                                <label for="payroll_picture"
-                                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
-                                    <span class="text-red-600">*</span></label>
-                                <div id="payroll_picture" class="grid grid-cols-1">
-                                    <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
-                                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                    </textarea>
-                                    @error('payroll_picture')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                            x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
-                                                <span class="text-xs text-red-500" > {{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-                            </div>
+                                <hr class="border-gray-700">
 
-                            <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
-                            {{-- <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button> --}}
-                            <div x-show="openAddWarningButton" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
-                                <div class="relative w-full max-w-md max-h-full p-4">
-                                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                        <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
-                                            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                            </svg>
-                                            <span class="sr-only">Close modal</span>
-                                        </button>
-                                            <div class="p-4 text-center md:p-5">
-                                                <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
-                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                                </svg>
-                                                <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
-                                                    <li>Verify the file exists and can be accessed.</li>
-                                                    <li>Ensure the employee's email has been added as a viewer.</li>
-                                                    <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
-                                                    <li>Review and modify these rules if necessary.</li>
-                                                </ul>
-                                                <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
-                                                
-                                                <button id="addWarningButton1" @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                                    Yes
-                                                </button>
-                                                <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
-                                            </div>
+                                <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                    <div>
+                                        <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
+                                        <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                            <option value="" selected>Select Phase</option>
+                                            <option value="1st Half">1st Half</option>
+                                            <option value="2nd Half">2nd Half</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
+                                        <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                            <option value="" selected>Select Month</option>
+                                            @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
+                                                <option value="{{ $month }}">{{ $month }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
+                                        <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                            <option value="" selected>Select Year</option>
+                                            @foreach(range(2000, date('Y')) as $year)
+                                                <option value="{{ $year }}">{{ $year }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+
+                                <div id="payroll_picture_container"  class="grid grid-cols-1 rounded-lg shadow ">
+                                    {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
+                                    <label for="payroll_picture"
+                                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
+                                        <span class="text-red-600">*</span></label>
+                                    <div id="payroll_picture" class="grid grid-cols-1">
+                                        <textarea type="text" rows="3" id="payroll_picture" name="payroll_picture" wire:model="payroll_picture"
+                                            class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                        </textarea>
+                                        @error('payroll_picture')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                x-data x-init="document.getElementById('payroll_picture_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_picture_container').focus();" >
+                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <button @click="openAddWarningButton = true;" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
+                                {{-- <button id="submit-button" type="submit" class="w-full text-white bg-customRed hover:bg-red-900  font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Update Payroll Status</button> --}}
+                                <div x-show="openAddWarningButton" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                    <div class="relative w-full max-w-md max-h-full p-4">
+                                        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+                                            <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                                </svg>
+                                                <span class="sr-only">Close modal</span>
+                                            </button>
+                                                <div class="p-4 text-center md:p-5">
+                                                    <svg class="w-12 h-12 mx-auto mb-4 text-customRed dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                                    </svg>
+                                                    <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
+                                                    <ul class="pl-5 mb-5 text-sm text-left text-gray-600 list-disc dark:text-gray-300">
+                                                        <li>Verify the file exists and can be accessed.</li>
+                                                        <li>Ensure the employee's email has been added as a viewer.</li>
+                                                        <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
+                                                        <li>Review and modify these rules if necessary.</li>
+                                                    </ul>
+                                                    <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="font-semibold text-customGreen">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="font-semibold text-customRed">implications</span> of proceeding.</p>
+                                                    
+                                                    <button id="addWarningButton1" @click="openAddPayrollModal = false; openAddWarningButton = false " data-modal-hide="add-targeted-payroll" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                                        Yes
+                                                    </button>
+                                                    <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
 
 
+                        </div>
                     </div>
                 </div>
             </div>
@@ -527,13 +529,13 @@
                     </div>
 
                     @if ($NotesData->isEmpty())
-                    <tr class="bg-white border-b hover:bg-gray-50 ">
+                    <tr class="bg-white border-b hover:bg-gray-50">
                         <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
-                            <div class="flex justify-center ">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="size-5 mr-1" style="margin-top: 3px;">
+                            <div class="flex justify-center p-8">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="mr-1 size-5" style="margin-top: 3px;">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
-                                <p class="items-center text-base font-semibold text-customRed "> Nothing to show</p>
+                                <p class="items-center text-base font-semibold text-customRed"> Nothing to show</p>
                             </div>
                         </th>
                     </tr>
@@ -557,7 +559,7 @@
                         </div>
                         @endforeach
                         @if ($NotesData->count() > 10)
-                        <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
+                        <div class="max-w-full p-4 bg-gray-100 rounded-b-lg " >
                             {{ $NotesData->links(data : ['scrollTo' => False]) }}
                         </div>
                         @endif
@@ -567,9 +569,9 @@
         </div>
         <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 shadow-lg h-fit rounded-8px">
             <div>
-                <div  class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100  h-fit rounded-8px sm:grid-cols-2 ">
+                <div  class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 h-fit rounded-8px sm:grid-cols-2 ">
                     @if (count($EmployeeData) === 0)
-                    <div  class="w-full flex py-10  col-span-2 justify-center items-center bg-white rounded-lg shadow-lg gap-4 text-customGray1">
+                    <div  class="flex items-center justify-center w-full col-span-2 gap-4 py-10 bg-white rounded-lg shadow-lg text-customGray1">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-8 text-customRed">
                             <path fillRule="evenodd" d="M10.5 3.75a6.75 6.75 0 1 0 0 13.5 6.75 6.75 0 0 0 0-13.5ZM2.25 10.5a8.25 8.25 0 1 1 14.59 5.28l4.69 4.69a.75.75 0 1 1-1.06 1.06l-4.69-4.69A8.25 8.25 0 0 1 2.25 10.5Z" clipRule="evenodd" />
                         </svg>
@@ -632,7 +634,7 @@
                                         <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')   }">
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex items-center mt-1 text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
@@ -642,13 +644,13 @@
                                                     <!-- Backdrop -->
                                                     <div x-show="openPayrollEditModal" class="fixed inset-0 bg-black opacity-50"></div>
                                         
-                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full  h-auto max-w-md  p-4 bg-white rounded-lg shadow-lg">
+                                                    <div id="edit-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full h-auto max-w-md p-4 bg-white rounded-lg shadow-lg">
                                                         <!-- Modal content -->
                                                         <div class="relative bg-white rounded-lg shadow">
                                                             <!-- Modal header -->
-                                                            <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
+                                                            <div class="sticky top-0 z-10 flex items-center justify-between p-4 bg-white border-b rounded-t xl:p-5">
                                                                 <h3 class="text-xl font-semibold text-gray-900">Edit Account Details</h3>
-                                                                <button @click="openPayrollEditModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <button @click="openPayrollEditModal = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                     </svg>
@@ -705,13 +707,13 @@
                                                 <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
                                                     <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                    <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative overflow-y-auto overflow-x-hidden  w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
+                                                    <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg p-4 overflow-x-hidden overflow-y-auto bg-white rounded-lg shadow-lg">
                                                         <!-- Modal content -->
                                                         <div class="relative bg-white rounded-lg shadow ">
                                                                 <!-- Modal header -->
-                                                                <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
+                                                                <div class="sticky top-0 z-10 flex items-center justify-between p-4 bg-white border-b rounded-t xl:p-5">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Add Payroll For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -783,7 +785,7 @@
                                                                                 </select>
                                                                             </div>
                                                                         </div>
-                                                                        <div id="payroll_picture_container"  class="grid grid-cols-1  rounded-lg shadow  ">
+                                                                        <div id="payroll_picture_container"  class="grid grid-cols-1 rounded-lg shadow ">
                                                                             {{-- <h2 ><span class="font-bold text-red-700">Date Earned Description</span> <span class="text-red-600">*</span>  (Max: 200 characters only)</h2> --}}
                                                                             <label for="payroll_picture"
                                                                                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white ">Payroll Photo Link
@@ -803,7 +805,7 @@
 
                                                                         <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payroll</button>
                                                                         
-                                                                        <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                                        <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
                                                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                                                     <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -817,13 +819,13 @@
                                                                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                             </svg>
                                                                                             <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                                                            <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                                            <ul class="pl-5 mb-5 text-sm text-left text-gray-600 list-disc dark:text-gray-300">
                                                                                                 <li>Verify the file exists and can be accessed.</li>
                                                                                                 <li>Ensure the employee's email has been added as a viewer.</li>
                                                                                                 <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
                                                                                                 <li>Review and modify these rules if necessary.</li>
                                                                                             </ul>
-                                                                                            <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                                                            <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="font-semibold text-customGreen">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="font-semibold text-customRed">implications</span> of proceeding.</p>
                                                                                             
                                                                                             <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                                 Yes
@@ -840,16 +842,16 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed  inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                         <!-- Backdrop -->
                                                         <div x-show="openAddPayrollModal" class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg  p-4 bg-white rounded-lg shadow-lg">
+                                                        <div id="add-payroll-modal_{{ $loop->index }}" tabindex="-1" aria-hidden="true" class="relative w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
-                                                                <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <div class="sticky top-0 z-10 flex items-center justify-between p-4 bg-white border-b rounded-t xl:p-5">
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Payroll of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="font-semibold text-customRed">{{$monthFilter}} {{$yearFilter}}</span> </h3>
+                                                                    <button @click="openAddPayrollModal = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -959,7 +961,7 @@
                                                                         <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payroll</button>
                                                                     </div>
                                                                         
-                                                                    <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
+                                                                    <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                         <div class="relative w-full max-w-md max-h-full p-4">
                                                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
                                                                                 <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
@@ -973,13 +975,13 @@
                                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                         </svg>
                                                                                         <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Before proceeding, please ensure the following:</h3>
-                                                                                        <ul class="list-disc text-left pl-5 mb-5 text-sm text-gray-600 dark:text-gray-300">
+                                                                                        <ul class="pl-5 mb-5 text-sm text-left text-gray-600 list-disc dark:text-gray-300">
                                                                                             <li>Verify the file exists and can be accessed.</li>
                                                                                             <li>Ensure the employee's email has been added as a viewer.</li>
                                                                                             <li>Confirm that access is restricted to the employee and authorized personnel only (you).</li>
                                                                                             <li>Review and modify these rules if necessary.</li>
                                                                                         </ul>
-                                                                                        <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="text-customGreen font-semibold">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="text-customRed font-semibold">implications</span> of proceeding.</p>
+                                                                                        <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">By clicking <span class="font-semibold text-customGreen">"Yes"</span>, you confirm that you have verified the above details and understand the <span class="font-semibold text-customRed">implications</span> of proceeding.</p>
                                                                                         
                                                                                         <button id="addWarningButton" @click="openAddPayrollModal = false; openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                             Yes
@@ -990,11 +992,11 @@
                                                                         </div>
                                                                     </div>
 
-                                                                    <div  x-show="openCancelPrompt" id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 left-0 right-0 bottom-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
+                                                                    <div  x-show="openCancelPrompt" id="popup-modal_{{ $loop->index }}" tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
                                                                         <div class="relative w-full max-w-md max-h-full p-4">
                                                                             <div class="relative bg-white rounded-lg shadow">
                                                                                 <!-- Close button -->
-                                                                                <button type="button" @click="openCancelPrompt = false" class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+                                                                                <button type="button" @click="openCancelPrompt = false" class="absolute inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg top-3 right-3 hover:bg-gray-200 hover:text-gray-900">
                                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                                     </svg>
@@ -1028,7 +1030,7 @@
                     @endif
             </div>
 
-            <div class="p-4 bg-gray-100 w-full rounded-b-lg " wire:scroll>
+            <div class="w-full p-4 bg-gray-100 rounded-b-lg " wire:scroll>
                 {{ $EmployeeData->links(data : ['scrollTo' => False]) }}
             </div>
         </div>
@@ -1037,7 +1039,7 @@
         
     </div>
 
-    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center w-full h-full bg-gray-800 bg-opacity-50">
+    <div id="toast-container-checkin" tabindex="-1" class="fixed inset-0 z-50 items-center justify-center hidden w-full min-w-[320px] h-full bg-gray-800 bg-opacity-50">
         <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
             <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
                 <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
