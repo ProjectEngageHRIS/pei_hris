@@ -80,70 +80,7 @@
             </div>
         </div>
 
-        <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll" class="load-over z-50">
-            <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay z-50">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="spinner"></div>
-                    <p>Updating...</p>
-                </div>
-            </div>
-            <div wire:loading wire:target="deletePayroll, editPayroll, addPayroll" class="loading-overlay z-50">
-                <div class="flex flex-col justify-center items-center">
-                    <div class="spinner"></div>
-                    <p>Uploading...</p>
-                </div>
-            </div>
-        </div>
-        <style>
-            .load-over {
-                position: fixed;
-                background: rgba(255, 255, 255, 0.8);
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-            }
-            .loading-overlay {
-                position: fixed;
-                top: 40%;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                z-index: 9999;
-                font-family: Arial, sans-serif;
-                color: #AC0C2E;
-                pointer-events: none; /* Makes sure the overlay is not interactable */
-            }
-    
-            .spinner {
-                border: 8px solid rgba(172, 12, 46, 0.3);
-                border-top: 8px solid #AC0C2E;
-                border-radius: 50%;
-                width: 60px;
-                height: 60px;
-                animation: spin 1s linear infinite;
-                margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
-            }
-    
-            @keyframes spin {
-                0% {
-                    transform: rotate(0deg);
-                }
-                100% {
-                    transform: rotate(360deg);
-                }
-            }
-    
-            .loading-overlay p {
-                margin: 0;
-                font-size: 18px;
-                font-weight: bold;
-            }
-        </style>
+
     </div>
 
 
@@ -629,7 +566,7 @@
                                         @else 
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
-                                        <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')   }">
+                                        <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')}" x-ref="modals" >
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
                                                 <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
@@ -674,7 +611,7 @@
                                                                         <label for="dept" class="block mb-2 text-sm font-medium text-customGray1">Department</label>
                                                                         <input type="text" name="dept" id="dept" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->department }}" disabled>
                                                                     </div>
-                                                                    <div>
+                                                                    <div id="payroll_status_container">
                                                                         <label for="payroll_status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
                                                                         <select name="payroll_status" id="status" wire:model.change="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                             <option value="" selected>Select Status</option>
@@ -683,8 +620,14 @@
                                                                             <option value="Overdue">Overdue</option>
                                                                             <option value="Draft">Draft</option>
                                                                         </select>
+                                                                        @error('payroll_status')
+                                                                            <div class="text-sm transition transform alert alert-danger"
+                                                                                x-data x-init="document.getElementById('payroll_status_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_status_container').focus();" >
+                                                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                                            </div>
+                                                                        @enderror
                                                                     </div>
-                                                                    <button type="submit" @click="openPayrollEditModal = false" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Account</button>
+                                                                    <button type="submit"  class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Account</button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -1036,27 +979,24 @@
         </div>
         
     </div>
-
-    <div id="toast-container-checkin" tabindex="-1" class="hidden fixed inset-0 z-50 items-center justify-center w-full h-full bg-gray-800 bg-opacity-50">
-        <div id="toast-success-checkin" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60 dark:text-gray-400 dark:bg-gray-800" role="alert">
-            <div class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 text-green-500 bg-green-100 rounded-lg dark:bg-green-800 dark:text-green-200">
-                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                </svg>
-                <span class="sr-only">Check icon</span>
+    <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll" class="load-over z-50">
+        <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay z-50">
+            <div class="flex flex-col justify-center items-center">
+                <div class="spinner"></div>
+                <p>Updating...</p>
             </div>
-            <div id="toast-message-checkin" class="text-sm font-normal ms-3">Updated</div>
-            <button id="close-toast-checkin" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8 dark:text-gray-500 dark:hover:text-white dark:bg-gray-800 dark:hover:bg-gray-700" data-dismiss-target="toast-container-checkin" aria-label="Close">
-                <span class="sr-only">Close</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
+        </div>
+        <div wire:loading wire:target="deletePayroll, editPayroll, addPayroll" class="loading-overlay z-50">
+            <div class="flex flex-col justify-center items-center">
+                <div class="spinner"></div>
+                <p>Uploading...</p>
+            </div>
         </div>
     </div>
 
     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
     @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-success-update.window="showToast = true; toastType = 'success'; toastMessage = 'Updated Payroll Status Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-add-note.window="showToast = true; toastType = 'success'; toastMessage = 'Added Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
@@ -1125,16 +1065,13 @@
 
     document.addEventListener('livewire:init', function () {
         Livewire.on('triggerSuccess', (event) => {
-            const toastContainer = document.getElementById('toast-container-checkin');
-            let toastMessage = document.getElementById('toast-message-checkin');
-            // const modal = document.getElementById('toast-success-checkin');
-            if (toastContainer && toastMessage) {
-                setTimeout(() => {
-                    toastContainer.classList.remove('hidden');
-                }, 10); // Hide after 5 seconds
-                setTimeout(() => {
-                    toastContainer.classList.add('hidden');
-                }, 3000); // Hide after 5 seconds
+            window.dispatchEvent(new CustomEvent('trigger-success-update'));
+            const modal = document.querySelector(`[x-ref="modals"]`);
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            if(event.type == "Status"){
+                alpineData.openPayrollEditModal = false; // Open the modal
             }
         });
     });

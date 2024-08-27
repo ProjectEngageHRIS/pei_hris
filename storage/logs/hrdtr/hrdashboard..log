@@ -5,3 +5,7 @@
 [2024-08-19 15:56:19] local.ERROR: Failed to View HR Dashboard Table: Unauthorized Access | 6  
 [2024-08-19 15:56:27] local.ERROR: Failed to View HR Dashboard Table: Unauthorized Access | 6  
 [2024-08-19 15:56:40] local.ERROR: Failed to View HR Dashboard Table: Unauthorized Access | 6  
+[2024-08-22 17:25:33] local.ERROR: Failed to deactivate an Employee: Unauthorized Access | SLEA9999  
+[2024-08-22 17:25:33] local.ERROR: Failed to deactivate an Employee: Unauthorized Access | SLEA9999  
+[2024-08-22 17:50:27] local.ERROR: Failed to delete Employee: Test | Employee ID: SLE0010 | User ID: SLEA9999  
+[2024-08-27 16:27:03] local.ERROR: Failed to View HR Dashboard Table: Unauthorized Access | 3  

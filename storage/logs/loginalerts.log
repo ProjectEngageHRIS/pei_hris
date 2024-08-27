@@ -187,3 +187,6 @@
 [2024-08-19 16:40:34] local.INFO: [Illuminate\Auth\Events\Login] User SLE0002 logged in from 127.0.0.1 {"employee_id":"SLE0002","email":"eugene.labadie@stanton.com"} 
 [2024-08-21 17:34:50] local.INFO: [Illuminate\Auth\Events\Failed] User SLEA9999 login failed from 127.0.0.1 {"employee_id":"SLEA9999","0":"email"} 
 [2024-08-21 17:34:56] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-08-22 15:35:06] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0001 logged out from 127.0.0.1 {"employee_id":"SLE0001","email":""} 
+[2024-08-22 15:35:54] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"seal.projectengage@gmail.com"} 
+[2024-08-27 16:01:57] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":""} 

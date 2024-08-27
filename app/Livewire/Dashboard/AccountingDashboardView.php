@@ -227,6 +227,13 @@ class AccountingDashboardView extends Component
 
     public function submit($employee_id){
         $loggedInUser = auth()->user();
+        // Validate input data
+        $this->validate([
+            // 'phase' => 'required|in:1st Half,2nd Half',  // Removed the space after comma
+            // 'month' => 'required|in:January,February,March,April,May,June,July,August,September,October,November,December',  // Add your actual months or valid values here
+            // 'year' => 'required|digits:4|integer',  // Added validation rule for year
+            'payroll_status' => 'required|in:Awaiting Approval,Approved,Overdue,Draft',  // Added validation rule for payroll_status
+        ]);
         try {
             if(!in_array($loggedInUser->role_id, [3, 61024])){
                 throw new \Exception('Unauthorized Access');
@@ -248,19 +255,18 @@ class AccountingDashboardView extends Component
                 $payroll_status->year = $this->payroll_year;
                 $payroll_status->status = $this->payroll_status;
                 $payroll_status->save();
-                return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
+                return $this->dispatch('triggerSuccess', type: 'Status');
             }        
     
             $payroll_status_data->status = $this->payroll_status;
             $payroll_status_data->update();
     
-            return $this->dispatch('triggerSuccess', ['message' => 'Payroll Updated!']);
+            return $this->dispatch('triggerSuccess',  type: 'Status');
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
             return redirect()->to(route('EmployeeDashboard'));
         }
-
     }
 
     public function resetEditField(){

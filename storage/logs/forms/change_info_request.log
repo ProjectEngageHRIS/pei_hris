@@ -13,3 +13,7 @@
 [2024-08-12 17:04:23] local.ERROR: Failed to update Change Request: Property [$employeeHistory] not found on component: [my-approvals.change-information.approve-change-information-table] | SLE0002  
 [2024-08-20 18:21:38] local.ERROR: Failed to update Change Request: Unauthorized Access | {"employee_id":"SLE0002","role_id":3,"email":"eugene.labadie@stanton.com","banned_flag":1,"created_at":"2024-08-15T06:27:14.000000Z","updated_at":"2024-08-15T06:27:15.000000Z"}  
 [2024-08-20 18:21:40] local.ERROR: Failed to View/Approve Change Information Table: Unauthorized Access | 3  
+[2024-08-22 16:42:36] local.ERROR: Failed to update Change Request: Object of class App\Models\User could not be converted to int | SLEA9999  
+[2024-08-22 16:43:40] local.ERROR: Failed to update Change Request: Object of class App\Models\User could not be converted to int | SLEA9999  
+[2024-08-22 16:44:09] local.ERROR: Failed to update Change Request: Object of class App\Models\User could not be converted to int | SLEA9999  
+[2024-08-22 16:44:23] local.ERROR: Failed to update Change Request: Object of class App\Models\User could not be converted to int | SLEA9999  
