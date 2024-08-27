@@ -299,55 +299,65 @@ class AccountingDashboardView extends Component
 
     public function addTargetPayroll(){
         $loggedInUser = auth()->user();
+        $this->validate([
+            'payroll_phase' => 'required|in:1st Half,2nd Half',  // Removed the space after comma
+            'payroll_month' => 'required|in:January,February,March,April,May,June,July,August,September,October,November,December',  // Add your actual months or valid values here
+            'payroll_year' => 'required|digits:4|integer',  // Added validation rule for year
+            'payroll_picture' => 'required|url:https',
+        ]);
 
         try {
             if(!in_array($loggedInUser->role_id, [3, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
-        // foreach($this->rules as $rule => $validationRule){
-        //     $this->validate([$rule => $validationRule]);
-        //     $this->resetValidation();
-        // }   
+                $parts = explode(' | ', $this->selectedEmployee);
+                $payroll_exists = Payroll::where('target_employee', $parts[1])
+                                                ->where('phase',  $this->payroll_phase)
+                                                ->where('month',  $this->payroll_month)
+                                                ->where('year',   $this->payroll_year)
+                                                ->select('month', 'year', 'employee_id', 'target_employee')->first();
 
-        $payroll = new Payroll();
-        $payroll->employee_id = $loggedInUser->employee_id;
-        $parts = explode(' | ', $this->selectedEmployee);
-        $payroll->target_employee = $parts[1];
-        $payroll->phase = $this->payroll_phase;
-        $payroll->month = $this->payroll_month;
-        $payroll->year = $this->payroll_year;
-        $payroll->payroll_picture = $this->payroll_picture;
+                if($payroll_exists){
+                    $this->dispatch('trigger-already-exists');
+                    return ;
+                }
 
-        $payroll->save();
+                $payroll = new Payroll();
+                $payroll->employee_id = $loggedInUser->employee_id;
+                $payroll->target_employee = $parts[1];
+                $payroll->phase = $this->payroll_phase;
+                $payroll->month = $this->payroll_month;
+                $payroll->year = $this->payroll_year;
+                $payroll->payroll_picture = $this->payroll_picture;
+
+                $payroll->save();
 
 
-        $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
-                                        ->where('phase',  $this->payroll_phase)
-                                        ->where('month',  $this->payroll_month)
-                                        ->where('year',   $this->payroll_year)
-                                        ->whereNull('deleted_at')
-                                        ->select('month', 'year', 'employee_id', 'status', 'id')->first();
-        if(!$payroll_status_data){
-            $payroll_status = new PayrollStatus();
-            $payroll_status->employee_id = $loggedInUser->employee_id;
-            $payroll_status->target_employee = $payroll->target_employee;
-            $payroll_status->phase = $payroll->phase;
-            $payroll_status->year = $payroll->year;
-            $payroll_status->month = $payroll->month;
-            // if($start_date->day  15) $payroll->month_phase = '1st Half'
-        }        
+                $payroll_status_data = PayrollStatus::where('target_employee', $payroll->target_employee)
+                                                ->where('phase',  $this->payroll_phase)
+                                                ->where('month',  $this->payroll_month)
+                                                ->where('year',   $this->payroll_year)
+                                                ->whereNull('deleted_at')
+                                                ->select('month', 'year', 'employee_id', 'status', 'id')->first();
+                if(!$payroll_status_data){
+                    $payroll_status = new PayrollStatus();
+                    $payroll_status->employee_id = $loggedInUser->employee_id;
+                    $payroll_status->target_employee = $payroll->target_employee;
+                    $payroll_status->phase = $payroll->phase;
+                    $payroll_status->year = $payroll->year;
+                    $payroll_status->month = $payroll->month;
+                    // if($start_date->day  15) $payroll->month_phase = '1st Half'
+                }        
 
-        $payroll_status->status = "Approved";
-        $payroll_status->save();
+                $payroll_status->status = "Approved";
+                $payroll_status->save();
 
-        $this->dispatch('triggerSuccess', ['message' => 'Payroll Added!']);
+                $this->dispatch('triggerSuccess', type: 'Add');
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('accountingerrors')->error('Failed to Update Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id );
             return redirect()->to(route('EmployeeDashboard'));
         }
-
-
     }
 
 

@@ -84,7 +84,7 @@
     </div>
 
 
-    <div class="flex items-center justify-end mb-4">
+    <div x-data="{addTargetPayroll: false}" x-ref="add-target-modal" class="flex items-center justify-end mb-4">
         
         <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only "></label>
         
@@ -278,14 +278,36 @@
             </div>
         </div>
         <!-- Add user button -->
-        <button data-modal-target="add-targeted-payroll" data-modal-toggle="add-targeted-payroll" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
+        <button @click="addTargetPayroll = true" class="inline-flex items-center text-white bg-customRed shadow hover:bg-red-700 hover:text-white font-medium rounded-lg text-sm px-4 py-2 ml-4 h-[42px]">
             Add Payslip
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 ml-2">
                 <path fill-rule="evenodd" d="M19.5 21a3 3 0 0 0 3-3V9a3 3 0 0 0-3-3h-5.379a.75.75 0 0 1-.53-.22L11.47 3.66A2.25 2.25 0 0 0 9.879 3H4.5a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h15Zm-6.75-10.5a.75.75 0 0 0-1.5 0v2.25H9a.75.75 0 0 0 0 1.5h2.25v2.25a.75.75 0 0 0 1.5 0v-2.25H15a.75.75 0 0 0 0-1.5h-2.25V10.5Z" clip-rule="evenodd" />
               </svg>
         </button>
         <!-- Main modal -->
-        <div wire:ignore.self id="add-targeted-payroll" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full xl:inset-0 h-[calc(100%-1rem)] max-h-full">
+        <div x-cloak 
+            x-show="addTargetPayroll" 
+            @keydown.window.escape="addTargetPayroll = false" 
+            x-transition:enter="transition ease-out duration-300"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            tabindex="-1" 
+            class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
+            id="add-target-modal">
+        <div x-show="addTargetPayroll" 
+             id="add-targeted-payroll"
+             tabindex="-1" 
+             aria-hidden="true" 
+             class="relative p-4 w-full max-w-lg max-h-full bg-white rounded-lg shadow dark:bg-gray-700"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="transform opacity-0 scale-90"
+             x-transition:enter-end="transform opacity-100 scale-100"
+             x-transition:leave="transition ease-in duration-200"
+             x-transition:leave-start="transform opacity-100 scale-100"
+             x-transition:leave-end="transform opacity-0 scale-90">
             <div class="relative w-full max-w-lg max-h-full p-4">
                 <!-- Modal content -->
                 <div class="relative bg-white rounded-lg shadow ">
@@ -294,7 +316,7 @@
                         <h3 class="text-xl font-semibold text-gray-900 ">
                             Add new Payslip
                         </h3>
-                        <button type="button" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " data-modal-hide="add-targeted-payroll">
+                        <button type="button" @click="addTargetPayroll = !addTargetPayroll" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center  " >
                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                             </svg>
@@ -304,7 +326,7 @@
                     <!-- Modal body -->
                     <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
                         <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
-                            <div>
+                            <div wire:ignore>
                                 <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
                                 <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                     <option>Select </option>
@@ -321,15 +343,21 @@
                             <hr class="border-gray-700">
 
                             <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
-                                <div>
+                                <div id="payroll_phase_container">
                                     <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
                                     <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                         <option value="" selected>Select Phase</option>
                                         <option value="1st Half">1st Half</option>
                                         <option value="2nd Half">2nd Half</option>
                                     </select>
+                                    @error('payroll_phase')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('payroll_phase_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_phase_container').focus();" >
+                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
                                 </div>
-                                <div>
+                                <div id="payroll_month_container">
                                     <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
                                     <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                         <option value="" selected>Select Month</option>
@@ -337,8 +365,14 @@
                                             <option value="{{ $month }}">{{ $month }}</option>
                                         @endforeach
                                     </select>
+                                    @error('payroll_month')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('payroll_month_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_month_container').focus();" >
+                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
                                 </div>
-                                <div>
+                                <div id="payroll_year_container">
                                     <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
                                     <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                         <option value="" selected>Select Year</option>
@@ -346,6 +380,12 @@
                                             <option value="{{ $year }}">{{ $year }}</option>
                                         @endforeach
                                     </select>
+                                    @error('payroll_year')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('payroll_year_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('payroll_year_container').focus();" >
+                                                <span class="text-xs text-red-500" > {{$message}}</span>
+                                        </div>
+                                    @enderror
                                 </div>
                             </div>
 
@@ -405,6 +445,7 @@
                     </div>
                 </div>
             </div>
+        </div>
         </div>
     </div>
 
@@ -566,7 +607,7 @@
                                         @else 
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
-                                        <div x-cloak x-data="{ openPayrollEditModal: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')}" x-ref="modals" >
+                                        <div x-cloak x-data="{ openPayrollEditModal: false, addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')}" x-ref="modals" >
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
                                                 <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
@@ -1001,7 +1042,8 @@
     @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-add-note.window="showToast = true; toastType = 'success'; toastMessage = 'Added Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete-note.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+    @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payroll Already Exists for this Employee. Manually Edit It.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
     <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
     <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
         x-show="showToast"
@@ -1065,13 +1107,21 @@
 
     document.addEventListener('livewire:init', function () {
         Livewire.on('triggerSuccess', (event) => {
-            window.dispatchEvent(new CustomEvent('trigger-success-update'));
-            const modal = document.querySelector(`[x-ref="modals"]`);
-            // Access Alpine data
-            const alpineData = Alpine.$data(modal);
-            // Update the state
-            if(event.type == "Status"){
-                alpineData.openPayrollEditModal = false; // Open the modal
+            if (event.type == "Add"){
+                window.dispatchEvent(new CustomEvent('trigger-success-add'));
+                const modal = document.querySelector(`[x-ref="add-target-modal"]`);
+                const alpineData = Alpine.$data(modal);
+                alpineData.addTargetPayroll = false; // Open the modal
+
+            } else {
+                window.dispatchEvent(new CustomEvent('trigger-success-update'));
+                const modal = document.querySelector(`[x-ref="modals"]`);
+                // Access Alpine data
+                const alpineData = Alpine.$data(modal);
+                // Update the state
+                if(event.type == "Status"){
+                    alpineData.openPayrollEditModal = false; // Open the modal
+                }
             }
         });
     });
