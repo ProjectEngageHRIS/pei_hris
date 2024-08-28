@@ -308,7 +308,6 @@ class AccountingDashboardView extends Component
         ]);
 
         try {
-                throw new \Exception('test');
                 if(!in_array($loggedInUser->role_id, [3, 61024])){
                     throw new \Exception('Unauthorized Access');
                 } 

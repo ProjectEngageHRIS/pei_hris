@@ -28,11 +28,6 @@
 
                     {{-- Phase Filter --}}
                     <button id="dropdownRadioButton" data-dropdown-toggle="phaseDropdown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                        <svg class="w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="m13.001 19.927 2.896 1.773c1.52.93 3.405-.442 2.992-2.179l-1.06-4.452 3.468-2.978c1.353-1.162.633-3.382-1.142-3.525L15.603 8.2l-1.754-4.226A1.973 1.973 0 0 0 13 3v16.927ZM10.999 3c-.36.205-.663.53-.848.974L8.397 8.2l-4.552.366c-1.775.143-2.495 2.363-1.142 3.525l3.468 2.978-1.06 4.452c-.413 1.737 1.472 3.11 2.992 2.178l2.896-1.773V3Z"/>
-                          </svg>
-                          
-                          
                         {{$phaseFilterName}}
                         <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -65,11 +60,6 @@
 
                     {{-- Month Filter --}}
                     <button id="dropdownRadioButton" data-dropdown-toggle="monthDropdown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                        <svg class="w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M5 5a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1h1a1 1 0 0 0 1-1 1 1 0 1 1 2 0 1 1 0 0 0 1 1 2 2 0 0 1 2 2v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V7a2 2 0 0 1 2-2ZM3 19v-7a1 1 0 0 1 1-1h16a1 1 0 0 1 1 1v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Zm6.01-6a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm-10 4a1 1 0 1 1 2 0 1 1 0 0 1-2 0Zm6 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0Zm2 0a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z" clip-rule="evenodd"/>
-                        </svg>
-                          
-                          
                         {{$monthFilterName}}
                         <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -81,79 +71,79 @@
                         <ul class="p-3 space-y-1 text-sm text-gray-700" aria-labelledby="dropdownRadioButton">
                             <li>
                                 <label for="monthFilter-radio-12" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-12" type="radio" wire:model.live="monthFilter" value="12" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-12" type="radio" wire:model.live="monthFilter" value="0" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-12" class="cursor-pointer"> &nbsp; All </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-0" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-0" type="radio" wire:model.live="monthFilter" value="0" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-0" type="radio" wire:model.live="monthFilter" value="January" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-0" class="cursor-pointer"> &nbsp; January </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-1" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-1" type="radio" wire:model.live="monthFilter" value="1" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-1" type="radio" wire:model.live="monthFilter" value="February" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-1" class="cursor-pointer"> &nbsp; February </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-2" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-2" type="radio" wire:model.live="monthFilter" value="2" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-2" type="radio" wire:model.live="monthFilter" value="March" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-2" class="cursor-pointer"> &nbsp; March </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-3" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-3" type="radio" wire:model.live="monthFilter" value="3" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-3" type="radio" wire:model.live="monthFilter" value="April" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-3" class="cursor-pointer"> &nbsp; April </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-4" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-4" type="radio" wire:model.live="monthFilter" value="4" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-4" type="radio" wire:model.live="monthFilter" value="May" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-4" class="cursor-pointer"> &nbsp; May </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-5" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-5" type="radio" wire:model.live="monthFilter" value="5" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-5" type="radio" wire:model.live="monthFilter" value="June" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-5" class="cursor-pointer"> &nbsp; June </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-6" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-6" type="radio" wire:model.live="monthFilter" value="6" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-6" type="radio" wire:model.live="monthFilter" value="July" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-6" class="cursor-pointer"> &nbsp; July </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-7" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-7" type="radio" wire:model.live="monthFilter" value="7" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-7" type="radio" wire:model.live="monthFilter" value="August" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-7" class="cursor-pointer"> &nbsp; August </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-8" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-8" type="radio" wire:model.live="monthFilter" value="8" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-8" type="radio" wire:model.live="monthFilter" value="September" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-8" class="cursor-pointer"> &nbsp; September </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-9" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-9" type="radio" wire:model.live="monthFilter" value="9" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-9" type="radio" wire:model.live="monthFilter" value="October" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-9" class="cursor-pointer"> &nbsp; October </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-10" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-10" type="radio" wire:model.live="monthFilter" value="10" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-10" type="radio" wire:model.live="monthFilter" value="November" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-10" class="cursor-pointer"> &nbsp; November </label>
                                 </label>
                             </li>
                             <li>
                                 <label for="monthFilter-radio-11" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white">
-                                    <input id="monthFilter-radio-11" type="radio" wire:model.live="monthFilter" value="11" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
+                                    <input id="monthFilter-radio-11" type="radio" wire:model.live="monthFilter" value="December" name="monthFilter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2">
                                     <label for="monthFilter-radio-11" class="cursor-pointer"> &nbsp; December </label>
                                 </label>
                             </li>
@@ -162,11 +152,6 @@
 
                     {{-- Year Filter --}}
                     <button id="dropdownRadioButton" data-dropdown-toggle="yearDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
-                        <svg class="w-4 h-4 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 9h6m-6 3h6m-6 3h6M6.996 9h.01m-.01 3h.01m-.01 3h.01M4 5h16a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1Z"/>
-                        </svg>
-                          
-                          
                         {{$yearFilterName}}
                         <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
