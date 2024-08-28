@@ -284,7 +284,6 @@
                 <th scope="col" class="px-6 py-3 text-center"> Time Out </th>
                 <th scope="col" class="px-6 py-3 text-center"> Undertime </th>
                 <th scope="col" class="px-6 py-3 text-center"> Overtime </th>
-                <th scope="col" class="px-6 py-3 text-center"> Locations: </th>
             </tr>
         </thead>
         <div>

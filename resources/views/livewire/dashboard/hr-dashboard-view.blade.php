@@ -64,7 +64,7 @@
                 </svg>
             </button>
             <!-- Main modal -->
-            <div x-show="showModal"
+            <div x-cloak x-show="showModal"
                 x-transition:enter="transition ease-out duration-300"
                 x-transition:enter-start="opacity-0"
                 x-transition:enter-end="opacity-100"
@@ -688,7 +688,7 @@
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                             </svg>
                         </button>
-                        <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
+                        <div x-cloak x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
                             <!-- Clear All Button -->
                             <div class="px-4 py-2">
                                 <button wire:click="clearAllFilters" @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
@@ -908,7 +908,7 @@
                                 <td class="px-6 py-4 " >
                                     {{$employee->start_of_employment}}
                                 </td>
-                                <td x-data="{currentViewModal: null, openViewModal: false}" x-ref="view-modal" class="items-center py-4 text-center">
+                                <td x-cloak x-data="{currentViewModal: null, openViewModal: false}" x-ref="view-modal" class="items-center py-4 text-center">
                                     <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
                                         <!-- View Button -->
                                         <a @click="openViewModal = true; currentViewModal = '{{$loop->index}}' " class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600 ">
@@ -1158,7 +1158,7 @@
     
       </div>
       
-      <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
+      <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
             @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Created'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
             @trigger-success-deactivate.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deactivated'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
             @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deleted'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
