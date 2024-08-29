@@ -365,188 +365,302 @@
                 </div>
 
             </div>
-            <div class="flex flex-row pr-2">
+            {{-- Search bar  --}}
+            <div class="flex flex-row overflow-hidden justify-self-end">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
-                        <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <svg class="text-gray-500 size-3 sm:size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users" wire:model.change="search" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-80 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                    <input type="text" id="table-search-users" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 </div>
                 <!-- Filter Sidebar -->
-                <div class="absolute rounded-lg right-8 hover:text-customRed">
-                    <div x-data="{
-                        filterOpen: false,
-                        employeeTypeOpen: false,
-                        departmentOpen: false,
-                        companyOpen: false,
-                        genderOpen: false,
-                        employeeTypeCount: 0,
-                        departmentCount: 0,
-                        companyCount: 0,
-                        genderCount: 0,
-                        updateEmployeeTypeCount() {
-                            this.employeeTypeCount = document.querySelectorAll('.employeeTypeOpen .filter-checkbox:checked').length;
-                        },
-                        updateDepartmentCount() {
-                            this.departmentCount = document.querySelectorAll('.departmentOpen .filter-checkbox:checked').length;
-                        },
-                        updateCompanyCount() {
-                            this.companyCount = document.querySelectorAll('.companyOpen .filter-checkbox:checked').length;
-                        },
-                        updateGenderCount() {
-                            this.genderCount = document.querySelectorAll('.genderOpen .filter-checkbox:checked').length;
-                        },
-                        clearAllFilters() {
-                            document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
-                            this.employeeTypeCount = 0;
-                            this.departmentCount = 0;
-                            this.companyCount = 0;
-                            this.genderCount = 0;
-                        }
-                        }" class="relative">
-
-                        <!-- Filter Icon Button -->
-                        <button @click="filterOpen = !filterOpen" class="flex items-center justify-center w-10 h-10 right-1">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 ml-3 text-customGray hover:text-customRed">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
-                            </svg>
-                        </button>
-                        <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 w-64 mt-2 space-y-2 bg-white border rounded shadow-lg right-1">
-                            <!-- Clear All Button -->
-                            <div class="px-4 py-2">
-                                <button wire:click="clearAllFilters" @click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
-                                    Clear All
-                                </button>
-                            </div>
-                            <!-- Employee Type Dropdown Button -->
-                            <div class="px-2">
-                                <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                    Employee Type
-                                    <span class="float-right">&#9662;</span>
-                                    <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
-                                </button>
-                                <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2 employeeTypeOpen">
-                                    <hr class="my-4 border-gray-300">
-                                    {{-- @foreach($employeeTypesFilter as $type => $checked) --}}
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="employeeTypesFilter.Internals"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
+                <div x-data="{
+                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
+                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    filterOpen: false,
+                    employeeTypeOpen: false,
+                    departmentTypeOpen: false,
+                    insideDepartmentTypeOpen: false,
+                    genderTypeOpen: false,
+                    employeeTypeCount: 0,
+                    departmentCount: 0,
+                    companyCount: 0,
+                    genderCount: 0,
+                    clearAllFilters() {
+                        document.querySelectorAll('.filter-checkbox').forEach(checkbox => checkbox.checked = false);
+                        this.employeeTypeCount = 0;
+                        this.departmentCount = 0;
+                        this.companyCount = 0;
+                        this.genderCount = 0;
+                        @this.set('genderTypesFilter', this.genderTypesFilter);
+                        @this.set('departmentTypesFilter', this.departmentTypesFilter);
+                        @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
+                        @this.set('employeeTypesFilter', this.employeeTypesFilter);
+                    }, 
+                    applyAllFilters(){
+                        @this.set('genderTypesFilter', this.genderTypesFilter);
+                        @this.set('departmentTypesFilter', this.departmentTypesFilter);
+                        @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
+                        @this.set('employeeTypesFilter', this.employeeTypesFilter);
+                    }
+                    }" class="absolute rounded-lg right-3 hover:text-customRed">
+    
+                    <!-- Filter Icon Button -->
+                    <button @click="filterOpen = !filterOpen" class="size-9 right-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-4 sm:size-6 text-customGray hover:text-customRed">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
+                        </svg>
+                    </button>
+                    <div x-cloak  x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-80 right-1">
+                        <!-- Clear All Button -->
+                        <div class="px-4 py-2">
+                            <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
+                                Clear All
+                            </button>
+                        </div>
+                        <!-- Employee Type Dropdown Button -->
+                        <div x-data="{ 
+                            {{-- employeeTypeCount: 0,  // Add employeeTypeCount to x-data --}}
+                            init() {
+                                this.updateEmployeeTypeCount();  // Initialize employeeTypeCount on component mount
+                            },
+                            clearEmployeeFilters() {
+                                // Iterate over all keys and set them to false
+                                Object.keys(this.employeeTypesFilter).forEach(key => {
+                                    this.employeeTypesFilter[key] = false;
+                                });
+                                this.updateEmployeeTypeCount();  // Update employeeTypeCount when filters are cleared
+                            },
+                            updateEmployeeTypeCount() {
+                                // Calculate the count of checked filters
+                                this.employeeTypeCount = Object.keys(this.employeeTypesFilter).filter(key => this.employeeTypesFilter[key]).length;
+                            }
+                            }" x-init="init()">
+                                <div class="px-2">
+                                    <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                        Employee Type
+                                        <span class="float-right">&#9662;</span>
+                                        <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
+                                    </button>
+                                    <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
+                                        <hr class="my-4 border-gray-300">
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['INTERNAL EMPLOYEE']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Internal Employee</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['PEI-CCS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['RAPID MOBILITY']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
+                                        </div>
+                                        <!-- More checkboxes... -->
+                                        <div class="flex px-4 py-2 space-x-2">
+                                            <!-- Clear Filters Button -->
+                                            <button @click="clearEmployeeFilters(); $wire.set('employeeTypesFilter', employeeTypesFilter);" class="w-full px-4 py-2 text-xs font-medium bg-gray-200 rounded text-customGray1 hover:bg-gray-300">
+                                                Clear Filters
+                                            </button>
+                                            <!-- Apply Filters Button -->
+                                            <button @click="$wire.set('employeeTypesFilter', employeeTypesFilter); employeeTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white rounded bg-customRed hover:bg-red-700">
+                                                Apply Filters
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="employeeTypesFilter.PEI-CCS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
-                                    </div>
-                                {{-- @endforeach --}}
                                 </div>
-                            </div>
-                            <!-- Department Dropdown Button -->
+                        </div>
+                        <!-- Department Dropdown Button -->
+                        <div x-data="{ 
+                            init() {
+                                this.updateDepartmentCount();  // Initialize departmentCount on component mount
+                            },
+                            clearInsideDepartmentFilters() {
+                                // Iterate over all keys and set them to false
+                                Object.keys(this.insideDepartmentTypesFilter).forEach(key => {
+                                    this.insideDepartmentTypesFilter[key] = false;
+                                });
+                                this.updateDepartmentCount();  // Update departmentCount when filters are cleared
+                            },
+                            updateDepartmentCount() {
+                                // Calculate the count of checked filters
+                                this.departmentCount = Object.keys(this.insideDepartmentTypesFilter).filter(key => this.insideDepartmentTypesFilter[key]).length;
+                            }
+                        }">
                             <div class="px-2">
-                                <button @click="departmentOpen = !departmentOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                <button @click="insideDepartmentTypeOpen = !insideDepartmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
                                     Department
                                     <span class="float-right">&#9662;</span>
                                     <span x-show="departmentCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="departmentCount"></span>
                                 </button>
-                                <div x-show="departmentOpen" @click.away="departmentOpen = false" class="w-full mt-2 space-y-2 departmentOpen">
+                                <div x-show="insideDepartmentTypeOpen" @click.away="insideDepartmentTypeOpen = false" class="w-full mt-2 space-y-2 insideDepartmentTypeOpen">
                                     <hr class="my-4 border-gray-300">
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.HR AND ADMIN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter['HR AND ADMIN']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">HR and Admin</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter.Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">Recruitment</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter.CXS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">CXS</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Overseas Recruitment" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter['Overseas Recruitment']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">Overseas Recruitment</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.PEI/SL Temps DO-174" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter['PEI/SL Temps DO-174']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">PEI/SL Temps DO-174</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Corporate Accounting and Finance" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter['Corporate Accounting and Finance']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">Corporate Accounting and Finance</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="insideDepartmentTypesFilter.Accounting Operations" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
+                                        <input type="checkbox" x-model="insideDepartmentTypesFilter['Accounting Operations']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateDepartmentCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">Accounting Operations</label>
+                                    </div>
+                                    <div class="flex px-4 py-2 space-x-2">
+                                        <!-- Clear Filters Button -->
+                                        <button @click="clearInsideDepartmentFilters(); $wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium bg-gray-200 rounded text-customGray1 hover:bg-gray-300">
+                                            Clear Filters
+                                        </button>
+                                        <!-- Apply Filters Button -->
+                                        <button @click="$wire.set('insideDepartmentTypesFilter', insideDepartmentTypesFilter); insideDepartmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white rounded bg-customRed hover:bg-red-700">
+                                            Apply Filters
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Company Dropdown Button -->
+                        </div>
+                        <!-- Company Dropdown Button -->
+                        <div x-data="{ 
+                            init() {
+                                this.updateCompanyCount();  // Initialize companyCount on component mount
+                            },
+                            clearCompanyFilters() {
+                                // Iterate over all keys and set them to false
+                                Object.keys(this.departmentTypesFilter).forEach(key => {
+                                    this.departmentTypesFilter[key] = false;
+                                });
+                                this.updateCompanyCount();  // Update companyCount when filters are cleared
+                            },
+                            updateCompanyCount() {
+                                // Calculate the count of checked filters
+                                this.companyCount = Object.keys(this.departmentTypesFilter).filter(key => this.departmentTypesFilter[key]).length;
+                            }
+                        }">
                             <div class="px-2">
-                                <button @click="companyOpen = !companyOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                <button @click="departmentTypeOpen = !departmentTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
                                     Company
                                     <span class="float-right">&#9662;</span>
                                     <span x-show="companyCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="companyCount"></span>
                                 </button>
-                                <div x-show="companyOpen" @click.away="companyOpen = false" class="w-full mt-2 space-y-2 companyOpen">
+                                <div x-show="departmentTypeOpen" @click.away="departmentTypeOpen = false" class="w-full mt-2 space-y-2 departmentTypeOpen">
                                     <hr class="my-4 border-gray-300">
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                        <input type="checkbox" x-model="departmentTypesFilter.PEI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">PEI</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="departmentTypesFilter.SL SEARCH"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                        <input type="checkbox" x-model="departmentTypesFilter['SL SEARCH']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">SL SEARCH</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="departmentTypesFilter.SL TEMPS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                        <input type="checkbox" x-model="departmentTypesFilter['SL TEMPS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">SL TEMPS</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                        <input type="checkbox" x-model="departmentTypesFilter.WESEARCH" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">WESEARCH</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="departmentTypesFilter.PEI-UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
+                                        <input type="checkbox" x-model="departmentTypesFilter['PEI-UPSKILLS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateCompanyCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">PEI-UPSKILLS</label>
+                                    </div>
+                                    <div class="flex px-4 py-2 space-x-2">
+                                        <!-- Clear Filters Button -->
+                                        <button @click="clearCompanyFilters(); $wire.set('departmentTypesFilter', departmentTypesFilter);" class="w-full px-4 py-2 text-xs font-medium bg-gray-200 rounded text-customGray1 hover:bg-gray-300">
+                                            Clear Filters
+                                        </button>
+                                        <!-- Apply Filters Button -->
+                                        <button @click="$wire.set('departmentTypesFilter', departmentTypesFilter); departmentTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white rounded bg-customRed hover:bg-red-700">
+                                            Apply Filters
+                                        </button>
                                     </div>
                                 </div>
                             </div>
-                            <!-- Gender Dropdown Button -->
+                        </div>
+                        <!-- Gender Dropdown Button -->
+                        <div x-data="{ 
+                                clearGenderFilters() {
+                                    // Iterate over all keys and set them to false
+                                    Object.keys(this.genderTypesFilter).forEach(key => {
+                                        this.genderTypesFilter[key] = false;
+                                    });
+                                    this.updateGenderCount(); // Update count after clearing filters
+                                },
+                                updateGenderCount() {
+                                    // Update count using document.querySelectorAll
+                                    this.genderCount = Object.keys(this.genderTypesFilter).filter(key => this.genderTypesFilter[key]).length;
+
+                                    {{-- this.genderCount = document.querySelectorAll('.genderTypeOpen .filter-checkbox:checked').length; --}}
+                                }
+                            }">
                             <div class="px-2 pb-2">
-                                <button @click="genderOpen = !genderOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                <button @click="genderTypeOpen = !genderTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
                                     Gender
                                     <span class="float-right">&#9662;</span>
                                     <span x-show="genderCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="genderCount"></span>
                                 </button>
-                                <div x-show="genderOpen" @click.away="genderOpen = false" class="w-full mt-2 space-y-2 genderOpen">
+                                <div x-show="genderTypeOpen" @click.away="genderTypeOpen = false" class="w-full mt-2 space-y-2 genderTypeOpen">
                                     <hr class="my-4 border-gray-300">
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                        <input type="checkbox" x-model="genderTypesFilter.Female" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">Female</label>
                                     </div>
                                     <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" wire:model.live="genderTypesFilter.Male"  class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
+                                        <input type="checkbox" x-model="genderTypesFilter.Male" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateGenderCount">
                                         <label class="ml-2 text-xs font-medium text-customGray1">Male</label>
+                                    </div>
+                                    <div class="flex px-4 py-2 space-x-2">
+                                        <!-- Clear Filters Button -->
+                                        <button @click="clearGenderFilters(); $wire.set('genderTypesFilter', genderTypesFilter);" class="w-full px-4 py-2 text-xs font-medium bg-gray-200 rounded text-customGray1 hover:bg-gray-300">
+                                            Clear Filters
+                                        </button>
+                                        <!-- Apply Filters Button -->
+                                        <button @click="$wire.set('genderTypesFilter', genderTypesFilter); genderTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white rounded bg-customRed hover:bg-red-700">
+                                            Apply Filters
+                                        </button>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div x-show="employeeTypeOpen == false && genderTypeOpen == false && departmentTypeOpen == false && insideDepartmentTypeOpen == false" class="flex justify-between px-4 py-2 pb-6 space-x-2">
+                            <!-- Apply All Button -->
+                            <button @click="applyAllFilters();" class="w-full text-xs font-medium text-right text-customRed hover:text-red-900">
+                                Apply All
+                            </button>
                         </div>
                     </div>
                 </div>

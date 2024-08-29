@@ -31,14 +31,14 @@ class HrDashboardView extends Component
     public $stepData = [];
     public $add_employee;
     public $new_user;
-public $emergencyContact;
-public $govtProfessionalExamTaken;
-public $employee_history=[];
-public $employeeHistory;
-public $moveToNextStep;
-public $moveToPreviousStep;
- public $validatedData;
-public $govt_professional_exam_taken=[];
+    public $emergencyContact;
+    public $govtProfessionalExamTaken;
+    public $employee_history=[];
+    public $employeeHistory;
+    public $moveToNextStep;
+    public $moveToPreviousStep;
+    public $validatedData;
+    public $govt_professional_exam_taken=[];
     public $tin_num;
     public $hdmf_num;
     public $phic_num;
@@ -110,11 +110,11 @@ public $govt_professional_exam_taken=[];
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INTERNAL EMPLOYEE' => false,
         'OJT' => false,
         'PEI-CCS' => false,
         'RAPID' => false,
-        'RAPIDMOBILITY' => false,
+        'RAPID MOBILITY' => false,
         'UPSKILLS' => false,
     ];
 
@@ -123,8 +123,8 @@ public $govt_professional_exam_taken=[];
         'Recruitment' => false,
         'CXS' => false,
         'Overseas Recruitment' => false,
-        'PEI/SLTEMPSDO174' => false,
-        'CAF' => false,
+        'PEI/SL Temps DO-174' => false,
+        'Corporate Accounting and Finance' => false,
         'ACCOUNTING ' => false,
     ];
 
