@@ -216,52 +216,52 @@
                                 // Calculate the count of checked filters
                                 this.employeeTypeCount = Object.keys(this.employeeTypesFilter).filter(key => this.employeeTypesFilter[key]).length;
                             }
-                        }" x-init="init()">
-                            <div class="px-2">
-                                <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
-                                    Employee Type
-                                    <span class="float-right">&#9662;</span>
-                                    <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
-                                </button>
-                                <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
-                                    <hr class="my-4 border-gray-300">
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" x-model="employeeTypesFilter.Internals" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Internals</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" x-model="employeeTypesFilter['PEI-CCS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" x-model="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" x-model="employeeTypesFilter.RAPIDMOBILITY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
-                                    </div>
-                                    <div class="flex items-center px-4 py-2">
-                                        <input type="checkbox" x-model="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                        <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
-                                    </div>
-                                    <!-- More checkboxes... -->
-                                    <div class="flex px-4 py-2 space-x-2">
-                                        <!-- Clear Filters Button -->
-                                        <button @click="clearEmployeeFilters(); $wire.set('employeeTypesFilter', employeeTypesFilter);" class="w-full px-4 py-2 text-xs font-medium bg-gray-200 rounded text-customGray1 hover:bg-gray-300">
-                                            Clear Filters
-                                        </button>
-                                        <!-- Apply Filters Button -->
-                                        <button @click="$wire.set('employeeTypesFilter', employeeTypesFilter); employeeTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white rounded bg-customRed hover:bg-red-700">
-                                            Apply Filters
-                                        </button>
+                            }" x-init="init()">
+                                <div class="px-2">
+                                    <button @click="employeeTypeOpen = !employeeTypeOpen" class="w-full px-4 py-2 text-sm font-medium text-left text-customGray1 hover:text-customRed">
+                                        Employee Type
+                                        <span class="float-right">&#9662;</span>
+                                        <span x-show="employeeTypeCount > 0" class="ml-2 text-xs font-medium text-customRed" x-text="employeeTypeCount"></span>
+                                    </button>
+                                    <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
+                                        <hr class="my-4 border-gray-300">
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['INTERNAL EMPLOYEE']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Internal Employee</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['PEI-CCS']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">PEI-CCS</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.RAPID" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Rapid</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['RAPID MOBILITY']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Rapid Mobility</label>
+                                        </div>
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.UPSKILLS" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Upskills</label>
+                                        </div>
+                                        <!-- More checkboxes... -->
+                                        <div class="flex px-4 py-2 space-x-2">
+                                            <!-- Clear Filters Button -->
+                                            <button @click="clearEmployeeFilters(); $wire.set('employeeTypesFilter', employeeTypesFilter);" class="w-full px-4 py-2 text-xs font-medium bg-gray-200 rounded text-customGray1 hover:bg-gray-300">
+                                                Clear Filters
+                                            </button>
+                                            <!-- Apply Filters Button -->
+                                            <button @click="$wire.set('employeeTypesFilter', employeeTypesFilter); employeeTypeOpen = false;" class="w-full px-4 py-2 text-xs font-medium text-white rounded bg-customRed hover:bg-red-700">
+                                                Apply Filters
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                         </div>
                         <!-- Department Dropdown Button -->
                         <div x-data="{ 

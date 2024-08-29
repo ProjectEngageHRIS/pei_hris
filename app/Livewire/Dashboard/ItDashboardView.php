@@ -41,11 +41,11 @@ class ItDashboardView extends Component
     ];
 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INTERNAL EMPLOYEE' => false,
         'OJT' => false,
         'PEI-CCS' => false,
         'RAPID' => false,
-        'RAPIDMOBILITY' => false,
+        'RAPID MOBILITY' => false,
         'UPSKILLS' => false,
     ];
 
