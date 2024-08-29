@@ -20,7 +20,6 @@ class CreateEmployee extends Component
     public $trainingsSeminars;
     public $index;
     public $active = 1;
-    public $removeHistory;
     public $employeeRecord;
     public $files;
 
