@@ -119,6 +119,7 @@ use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\ChangeInformation\ApproveChangeInformationRequest;
+use App\Livewire\HrPortal\CreateEmployee;
 
 /*
 |--------------------------------------------------------------------------
@@ -307,6 +308,8 @@ Route::middleware(['auth', ])->group(function (){
     Route::get("/hrtickets/approverequests/approve/{index}", ApproveHrTicketsForm::class)->name('ApproveHrTicketsForm');
 
     Route::get("/humanresource/dailytimerecord", HrDailyTimeRecord::class)->name('HrDailyTimeRecord');
+
+    Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
 
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 
