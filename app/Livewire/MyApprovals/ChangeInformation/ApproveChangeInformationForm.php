@@ -63,8 +63,6 @@ class ApproveChangeInformationForm extends Component
     public $status;
 
     public function mount($index){
-        $loggedInUser = auth()->user();
-
         $this->index = $index;
 
         try {
@@ -133,14 +131,25 @@ class ApproveChangeInformationForm extends Component
 
 
     public function editForm($index){
-        $loggedInUser = auth()->user()->employee_id;
-        $changeInfoData =  ChangeInformation::where('uuid', $this->index)->first();
-        
-        if(!$changeInfoData || $changeInfoData->employee_id != $loggedInUser){
-            return False;
-        }
+        $loggedInUser = auth()->user();
+        try {
+            $changeInfoData =  ChangeInformation::where('uuid', $this->index)->first();
+            
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
 
-        return $changeInfoData ;
+            if(!$changeInfoData){
+                return False;
+            }
+            return $changeInfoData ;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage() . ' | ' . $loggedInUser);
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+        }
     }
 
 
@@ -270,6 +279,7 @@ class ApproveChangeInformationForm extends Component
 
    
     public function changeStatus(){
+        $loggedInUser = auth()->user()->employee_id;
         try {
             if($this->status == "Approved"){
                 $changeInformationStatus = ChangeInformation::where('uuid', $this->index)->first();
@@ -393,15 +403,11 @@ class ApproveChangeInformationForm extends Component
     
             return redirect()->to(route('ApproveChangeInformationTable'));
         } catch (\Exception $e) {
-            dd($e);
             // Log the exception for further investigation
-            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage());
+            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage() . ' | ' . $loggedInUser);
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
-
-            // Optionally, you could redirect the user to an error page or show an error message
-            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
 
     }

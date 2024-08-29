@@ -103,28 +103,37 @@ class ApproveLeaverequestForm extends Component
         // $this->salary = $employeeRecord->salary;
         // $this->is_faculty = $employeeRecord->is_faculty;
 
-        $this->form_id = $leaverequest->form_id;
         $this->status = $leaverequest->status;
-
-        $this->application_date = $leaverequest->application_date;
-        $this->mode_of_application = $leaverequest->mode_of_application;
         $this->supervisor_email = $leaverequest->supervisor_email;
-        $this->num_of_days_work_days_applied = $leaverequest->num_of_days_work_days_applied;
-        $this->full_half = $leaverequest->full_or_half;
-        $this->inclusive_start_date = $leaverequest->inclusive_start_date;
-        $this->inclusive_end_date = $leaverequest->inclusive_end_date;
-        $this->date_earned = $leaverequest->date_earned;
-        $this->earned_description = $leaverequest->earned_description;
-        $this->commutation = $leaverequest->commutation;
-        $this->purpose_type = $leaverequest->purpose_type;
-        $this->reason = $leaverequest->reason;
-        $this->deduct_to = $leaverequest->deduct_to;
+        $this->application_date = $leaverequest->application_date;
+
+        $this->mode_of_application = $leaverequest->mode_of_application;
+        // dd($leaverequest->mode_of_application == "Credit Leave");
+        if($this->mode_of_application == "Credit Leave"){
+            $this->inclusive_start_date = $leaverequest->date_earned;
+            $this->inclusive_end_date = $leaverequest->credit_application;
+            $this->earned_description = $leaverequest->earned_description;
+            $this->full_half = $leaverequest->full_or_half;
+
+            // dd($this->earned_description , $leaverequest->earned_description);
+        } else if($this->mode_of_application == "Advise Slip"){
+            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
+            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->purpose_type = $leaverequest->purpose_type;
+            $this->full_half = $leaverequest->logout_time;
+        } 
+        else{
+            $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
+            $this->num_of_days_work_days_applied = $formattedValue ;
+            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
+            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->deduct_to = $leaverequest->deduct_to;
+            $this->full_half = $leaverequest->full_or_half;
+        }
 
         if($leaverequest->commutation_signature_of_appli){
             $this->commutation_signature_of_appli = " ";
         }
-
-       
     }
 
     public function editLeaveRequest($index){

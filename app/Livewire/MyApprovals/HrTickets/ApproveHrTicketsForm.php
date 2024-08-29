@@ -116,7 +116,7 @@ class ApproveHrTicketsForm extends Component
 
         $this->index = $index;
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'employee_email', 'employee_id', 'current_position')
-                                    ->where('employee_id', $loggedInUser->employee_id)
+                                    ->where('employee_id', $hrticketdata->employee_id)
                                     ->first();
 
         $this->available_credits = $employeeRecord->vacation_credits + $employeeRecord->sick_credits;
@@ -230,6 +230,7 @@ class ApproveHrTicketsForm extends Component
                 else if($hrticketdata->sub_type_of_request == "Request to Buy/Book/Avail Service"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->request_link = $hrticketdata->request_link;
+                    $this->purpose = $hrticketdata->purpose;
                 }
             }
 
@@ -336,33 +337,34 @@ class ApproveHrTicketsForm extends Component
     public function editForm($index){
         $loggedInUser = auth()->user();
         try {
-            if(!in_array($loggedInUser->role_id, [10, 11, 12])){
+            if(!in_array($loggedInUser->role_id, [6, 7, 10, 11, 12, 13, 61024])){
                 throw new \Exception('Unauthorized Access');
             }
+
             $hr_ticket = Hrticket::where('uuid', $index)->first();
             if (!$hr_ticket) {
                 throw new \Exception('No Record Found');
             }
             if($hr_ticket->type_of_ticket == "HR Internal"){
                 if($hr_ticket->type_of_request == "HR"){
-                    if($loggedInUser->role_id != 11){
+                    if(!in_array($loggedInUser->role_id, [6, 7, 11, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Office Admin"){
-                    if($loggedInUser->role_id != 12){
+                    if(!in_array($loggedInUser->role_id, [6, 7, 12, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Procurement"){
-                    if($loggedInUser->role_id != 13){
+                    if(!in_array($loggedInUser->role_id, [6, 7, 13, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 }
-            } else if($hr_ticket->type_of_ticket == "HR Internal Control"){
-                if($loggedInUser->role_id != 9){
+            } else if($hr_ticket->type_of_ticket == "Internal Control"){
+                if(!in_array($loggedInUser->role_id, [6, 7, 9, 61024])){
                     throw new \Exception('Unauthorized Access');
                 }
             } else if($hr_ticket->type_of_ticket == "HR Operations"){
-                if($loggedInUser->role_id != 10){
+                if(!in_array($loggedInUser->role_id, [6, 7, 10, 61024])){
                     throw new \Exception('Unauthorized Access');
                 }
             } else {

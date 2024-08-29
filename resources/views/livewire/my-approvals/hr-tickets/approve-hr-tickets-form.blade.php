@@ -1173,7 +1173,7 @@
                         </div>
                     </div>
                 @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Procurement" && $sub_type_of_request == "Request to Buy/Book/Avail Service")
-                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Product/Service Specifications</label>
                             <div id="type_of_hrconcern">
@@ -1200,6 +1200,20 @@
                                 @enderror
                             </div>
                         </div>
+                        <div id="purpose_container" class="col-span-1">
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Request</label>
+                            <div id="purpose">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" disabled
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-inner border border-gray-300">
+                                </textarea>
+                                @error('purpose')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
                     </div>
                 @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Reimbursements")
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">

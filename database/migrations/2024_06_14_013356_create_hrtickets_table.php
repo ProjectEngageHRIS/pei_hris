@@ -31,7 +31,7 @@ return new class extends Migration
             $table->string('request_extra', 255)->nullable();
             $table->string('request_assigned', 255)->nullable();
             $table->text('request_link')->nullable();
-            $table->date('request_date')->nullable();
+            $table->dateTime('request_date')->nullable();
             $table->json('request_others')->nullable();
             $table->dateTime('cancelled_at')->nullable();
             $table->timestamps();

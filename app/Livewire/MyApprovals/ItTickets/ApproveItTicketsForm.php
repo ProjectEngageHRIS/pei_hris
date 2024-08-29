@@ -32,7 +32,7 @@ class ApproveItTicketsForm extends Component
         $loggedInUser = auth()->user();
 
         try {
-            $it_ticket= $this->editForm($index);
+            $it_ticket = $this->editForm($index);
             // $this->authorize('update', [$leaverequest]);
         } catch (AuthorizationException $e) {
             return redirect()->to(route('ApproveItTicketsTable'));
@@ -41,7 +41,7 @@ class ApproveItTicketsForm extends Component
         $this->index = $index;
 
         $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department',  'employee_email')
-                                    ->where('employee_id', $loggedInUser->employee_id)
+                                    ->where('employee_id', $it_ticket->employee_id)
                                     ->first(); 
         $this->first_name = $employeeRecord->first_name;
         $this->middle_name = $employeeRecord->middle_name;
@@ -57,13 +57,23 @@ class ApproveItTicketsForm extends Component
 
 
     public function editForm($index){
-        $loggedInUser = auth()->user()->employee_id;
-        $it_ticket =  Ittickets::where('uuid', $this->index)->first();
-        
-        if(!$it_ticket){
-            return ;
+        $loggedInUser = auth()->user();
+        try {
+            $it_ticket =  Ittickets::where('uuid', $this->index)->first();
+            
+            if(!in_array($loggedInUser->role_id, [14, 15, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+            if(!$it_ticket){
+                return ;
+            }
+            return $it_ticket ;
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('ittickets')->error('Failed to update IT Ticket: ' . $e->getMessage() . ' | '. $loggedInUser->employee_id);
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
         }
-        return $it_ticket ;
     }
 
 
@@ -72,7 +82,7 @@ class ApproveItTicketsForm extends Component
         try {
             $form = Ittickets::where('form_id', $this->form_id)->first();
             if($form){
-                if(in_array($loggedInUser->role_id, [11])){
+                if(in_array($loggedInUser->role_id, [11, 61024])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {

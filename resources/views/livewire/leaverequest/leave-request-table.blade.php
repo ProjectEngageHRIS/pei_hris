@@ -357,17 +357,18 @@
                                     </td>
                                     <td class="px-6 py-4 text-center whitespace-nowrap">
                                         @if ($leaverequest->mode_of_application == "Credit Leave")
-                                            <span class="font-medium text-gray-700">Date Earned:</span> {{$leaverequest->inclusive_start_date}} <br>
-                                            <span class="font-medium text-gray-700">Date to Apply:</span> {{$leaverequest->inclusive_end_date}} <br>
+                                            <span class="font-medium text-gray-700">Date Earned:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y g:i A')}} <br>
+                                            <span class="font-medium text-gray-700">Date to Apply:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y g:i A')}} <br>
                                             <span class="font-medium text-gray-700">Earned Description: <br> </span> {{$leaverequest->earned_description}} <br>
                                         @elseif ($leaverequest->mode_of_application == "Advise Slip")
-                                            <span class="font-medium text-gray-700">Date Requested:</span> {{$leaverequest->inclusive_start_date}} <br>
-                                            <span class="font-medium text-gray-700">Actual Schedule:</span> {{$leaverequest->inclusive_end_date}} <br>
+                                            <span class="font-medium text-gray-700">Date Requested:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y g:i A')}} <br>
+                                            <span class="font-medium text-gray-700">Actual Schedule:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y g:i A')}} <br>
                                             <span class="font-medium text-gray-700">Purpose Type:</span> {{$leaverequest->purpose_type}} <br>
+                                            <span class="font-medium text-gray-700">Log Out Time:</span>  {{ \Carbon\Carbon::parse($leaverequest->full_or_half)->format('F j, Y g:i A') }} <br>
                                             <span class="font-medium text-gray-700">Reason: <br></span> {{$leaverequest->reason}} <br>
                                         @else
-                                            <span class="font-medium text-gray-700">Start Date:</span> {{$leaverequest->inclusive_start_date}} <br>
-                                            <span class="font-medium text-gray-700">End Date:</span> {{$leaverequest->inclusive_end_date}}
+                                            <span class="font-medium text-gray-700">Start Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y g:i A')}} <br>
+                                            <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y g:i A')}}
                                         @endif
                                     </td>
                                     <td class="items-center py-4 text-center">
@@ -381,7 +382,7 @@
                                                 <button @click="openCancelModal('{{$leaverequest->uuid}}')"
                                                     type="button" 
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
-                                                    Change Status
+                                                    Cancel
                                                 </button>
                                             @endif
                                         </div>
@@ -518,14 +519,6 @@
                 </div>
             </div>
         </div>
-        
-        
-        
-        
-        
-
-        
-        
     </div>
 </div>
 </div>

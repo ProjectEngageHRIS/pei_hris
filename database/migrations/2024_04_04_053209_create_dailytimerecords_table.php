@@ -21,6 +21,9 @@ return new class extends Migration
             $table->boolean('late')->nullable();
             $table->decimal('overtime', 8, 2)->nullable();
             $table->decimal('undertime', 8, 2)->nullable();
+            $table->string('time_in_location')->nullable();
+            $table->string('time_out_location')->nullable();
+
             // $table->boolean('status')->nullable();
             // $table->smallInteger('is_legal_special')
             // $table->string('attendance_id')->primary();

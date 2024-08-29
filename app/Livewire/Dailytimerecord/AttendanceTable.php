@@ -326,6 +326,8 @@ class AttendanceTable extends Component
                                          'overtime',
                                          'undertime',
                                          'late',
+                                         'time_in_location',
+                                         'time_out_location',
                                          );
 
         

@@ -93,8 +93,10 @@ use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
+use App\Livewire\Changeinformation\ChangeInformationView;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Livewire\Changeinformation\ChangeInformationTable;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
 use App\Livewire\Sidebar\Notifications\NotificationsTable;
@@ -117,6 +119,7 @@ use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\ChangeInformation\ApproveChangeInformationRequest;
+use App\Livewire\HrPortal\CreateEmployee;
 
 /*
 |--------------------------------------------------------------------------
@@ -182,7 +185,7 @@ Route::middleware(['auth'])->group(function (){
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
-    Route::get("/it", ItDashboardView::class)->name('ItDashboard');
+    Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
 
 
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
@@ -199,7 +202,12 @@ Route::middleware(['auth'])->group(function (){
 
     Route::get('/profile/{media}/{filename}', [Employeeinformation::class, 'privateStorage'])->name('privateStorage');
 
-    Route::get('/changeinformation', ChangeInformation::class)->name('changeInformation');
+    Route::get('/changeinformation', ChangeInformationTable::class)->name('ChangeInformationTable');
+
+    Route::get('/changeinformation/form', ChangeInformation::class)->name('changeInformation');
+
+    Route::get('/changeinformation/view/{index}', ChangeInformationView::class)->name('ChangeInformationView');
+
 
     Route::get('/changeinformationrequests', ApproveChangeInformationTable::class)->name('ApproveChangeInformationTable');
     
@@ -301,6 +309,8 @@ Route::middleware(['auth', ])->group(function (){
 
     Route::get("/humanresource/dailytimerecord", HrDailyTimeRecord::class)->name('HrDailyTimeRecord');
 
+    Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
+
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 
     // Route::get('/hrtickets/{index}', [::class, 'download'])->name('downloadTeachPermit');
@@ -355,7 +365,7 @@ Route::middleware(['auth', ])->group(function (){
 
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
-    Route::get("/employees/add", AddEmployee::class)->name("EmployeesForm");
+    Route::get('/employeesview/{index}', AddEmployee::class)->name("EmployeesView");
     
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 

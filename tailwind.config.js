@@ -31,8 +31,8 @@ module.exports = {
       activeButton: '#BC2847',
       disabledButton: '#9E9E9E',
       customYellow: "#F4EB00",
-      gray: colors.coolGray,
-      blue: colors.lightBlue,
+      gray: colors.gray,
+      blue: colors.sky,
       red: colors.rose,
       pink: colors.fuchsia,
       amber: {

@@ -8,6 +8,7 @@ use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithPagination;
 use Livewire\WithoutUrlPagination;
+use Illuminate\Support\Facades\Log;
 
 class AssignedTasksTable extends Component
 {
@@ -25,6 +26,9 @@ class AssignedTasksTable extends Component
 
     public $search = "";
     
+    public $status;
+
+    public $currentFormId;
 
     public function search()
     {
@@ -79,8 +83,8 @@ class AssignedTasksTable extends Component
                 $this->statusFilterName = "Pending";
                 break;
             case '3':
-                $query->where('status', 'Declined');
-                $this->statusFilterName = "Declined";
+                $query->where('status', 'Cancelled');
+                $this->statusFilterName = "Cancelled";
                 break;
             default:
                 $this->statusFilterName = "All";
@@ -99,20 +103,30 @@ class AssignedTasksTable extends Component
         ]);
     }
 
-    public function cancelForm($index){
+    public function changeStatus(){
+        $loggedInUser = auth()->user();
+        try {
+            $form = Mytasks::find($this->currentFormId);
+            if($form){
+                if($form->employee_id == $loggedInUser->employee_id){
+                    $dataToUpdate = ['status' => $this->status];
+                    $form->update($dataToUpdate);
+                    $this->dispatch('triggerSuccess'); 
+                } else {
+                    throw new \Exception('Unauthorized Access');
+                }
+            } else {
+                throw new \Exception('No Record Found');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('tasks')->error('Failed to update Task: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
 
-        $employee_id = auth()->user()->employee_id;
-        $data = Mytasks::where('employee_id', $employee_id)
-                                    ->where('uuid', $index)
-                                    ->select('form_id', 'status', 'cancelled_at') 
-                                    ->first();
-        if ($data) {
-            $data->status = "Cancelled";
-            $data->cancelled_at = now();
-            $data->update();
+            // Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
         }
 
-        return redirect()->route('AssignedTasksTable');
     }
 
 }

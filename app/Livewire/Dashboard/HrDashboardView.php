@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Livewire\Features\SupportPagination\WithoutUrlPagination;
 
 class HrDashboardView extends Component
@@ -104,6 +105,10 @@ public $govt_professional_exam_taken=[];
 
     public $loggedInUser;
 
+    public $role_id;
+
+    public $currentFormId;
+
     public $employeeTypesFilter = [
         'INTERNALS' => false,
         'OJT' => false,
@@ -179,6 +184,20 @@ public $govt_professional_exam_taken=[];
     }
 
     public function mount(){
+
+        $loggedInUser = auth()->user()->role_id;
+        try {
+            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+            if(in_array($loggedInUser, [7, 8, 61024, 14,])){
+                $this->loggedInUser = True;
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to View HR Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            return redirect()->to(route('EmployeeDashboard'));
+        }
 
         $this->active = $this->active == 1 ? true : false;
 
@@ -284,6 +303,79 @@ public $govt_professional_exam_taken=[];
         $this->validate($stepRules);
     }
 
+    public function deactivateEmployee(){
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+
+            if(!$this->currentFormId){
+                throw new \Exception('No Current Form ID');
+            }
+
+            $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
+            $employee->active = 0;
+            $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
+            $user->banned_flag = 0;
+    
+            $employee->save();
+            $user->save();
+
+            $this->dispatch('triggerDeactivateSuccess');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to deactivate an Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerDeactivateError');
+        }
+    }
+
+    public function deleteEmployee(){
+        $loggedInUser = auth()->user();
+    
+        try {
+            // Check user authorization
+            if (!in_array($loggedInUser->role_id, [6, 7, 61024])) {
+                throw new \Exception('Unauthorized Access');
+            }
+    
+            // Check if currentFormId is set
+            if (!$this->currentFormId) {
+                throw new \Exception('No Current Form ID');
+            }
+    
+            // Start a database transaction
+            DB::beginTransaction();
+    
+            // Find and delete the employee record
+            $employee = Employee::where('employee_id', $this->currentFormId)->firstOrFail();
+            $user = User::where('employee_id', $this->currentFormId)->firstOrFail();
+    
+            $employee->delete();
+            $user->delete();
+    
+            // Commit the transaction
+            DB::commit();
+    
+            // Dispatch success event
+            $this->dispatch('triggerDeleteSuccess');
+    
+        } catch (ModelNotFoundException $e) {
+            // Handle case where records are not found
+            Log::channel('hrdashboard')->error('Employee or User not found: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId);
+            $this->dispatch('triggerDeleteError');
+    
+        } catch (\Exception $e) {
+            // Handle other exceptions
+            Log::channel('hrdashboard')->error('Failed to delete Employee: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId . ' | User ID: ' . $loggedInUser->employee_id);
+            DB::rollBack();
+            $this->dispatch('triggerDeleteError');
+        }
+    }
+
 
     public function submit()
     {
@@ -319,6 +411,7 @@ public $govt_professional_exam_taken=[];
             $add_employee->department = $sanitized_department;
             $add_employee->inside_department = $sanitized_inside_department;
             $add_employee->employee_type = $sanitized_employee_type;
+            $this->home_address = "dadsd";
             $add_employee->home_address = $this->home_address;
             $add_employee->provincial_address = $this->provincial_address;
             $add_employee->phone_number = $this->phone_number;
@@ -386,6 +479,7 @@ public $govt_professional_exam_taken=[];
                 $new_user = new User();
                 $new_user->email = $this->employee_email;
                 $new_user->employee_id = $this->employee_id; // Save employee_id
+                $new_user->role_id = $this->role_id;
                 // Set additional fields as needed, such as name, password, role, etc.
                 $new_user->password = bcrypt('defaultpassword'); // Set a default password or prompt to change it later
                 $new_user->save();
@@ -463,11 +557,8 @@ if (isset($add_employee->employee_email)) {
 
 
 
-        $this->js("alert('Employee Created!')");
-        return redirect()->to(route('HumanResourceDashboard'));
-
+        $this->dispatch('triggerSuccess');
     }
-
 
     private function generateNewEmployeeId()
     {

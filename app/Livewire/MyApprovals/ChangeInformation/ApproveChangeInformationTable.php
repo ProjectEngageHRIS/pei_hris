@@ -233,8 +233,9 @@ class ApproveChangeInformationTable extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
+
         try {
-            if ($loggedInUser->role_id != 9 && $loggedInUser->role_id != 10){
+            if (!in_array($loggedInUser->role_id, [6, 7, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
             if($this->status == "Approved"){
@@ -350,6 +351,8 @@ class ApproveChangeInformationTable extends Component
     
                 
             }
+
+
             
             $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)
                                                             ->update(['Status' => $this->status,

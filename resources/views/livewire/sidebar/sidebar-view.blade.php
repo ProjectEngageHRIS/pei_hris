@@ -6,14 +6,14 @@
             <!-- Menu Button when smaller than large screen -->
             <div x-data="{ openMobileBar: false }" class="relative inline-block text-left">
                 <!-- Button to toggle dropdown -->
-                <button @click="openMobileBar = !openMobileBar" @mouseover="openMobileBar = true"   class="pr-4 xl:hidden" id="barDropdownButton">
+                <button @click="openMobileBar = !openMobileBar"  class="pr-4 xl:hidden" id="barDropdownButton">
                     <svg class="size-8 text-customGray1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"/>
                     </svg>
                 </button>
                 
                 <!-- Dropdown Menu -->
-                <div x-show="openMobileBar" 
+                <div x-cloak  x-show="openMobileBar" 
                      @click.away="openMobileBar = false" 
                      {{-- @mouseleave="openMobileBar = false" --}}
                      x-transition:enter="transition ease-out duration-300" 
@@ -51,7 +51,7 @@
                                         <a href="{{ route('LeaveRequestTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Request</a>
                                         <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                                         <a href="{{ route('ItHelpDeskTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
-                                        <a href="{{ route('changeInformation') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
+                                        <a href="{{ route('ChangeInformationTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
                                         <hr class="border-gray-400">
                                         <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Overtime Approval</a>
                                         <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Undertime Approval</a>
@@ -87,7 +87,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                     <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5V5h14v-.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                                     <path fill-rule="evenodd" d="M15 7H1v4.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V7ZM3 10.25a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1-.75-.75Zm3.75-.75a.75.75 0 0 0 0 1.5h2.5a.75.75 0 0 0 0-1.5h-2.5Z" clip-rule="evenodd" />
-                                </svg> Payroll
+                                </svg> Payslip
                             </a>
                             <div x-data="{ tasksMobileOpen: false }" class="relative group">
                                 <div @click="tasksMobileOpen = true" @click.away="tasksMobileOpen = false" id="tasksBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('TasksTable') || request()->routeIs('AssignedTasksTable') || request()->routeIs('TasksForm') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
@@ -153,12 +153,12 @@
                         </svg> Requests
                     </button>
                     <!-- Request Dropdown -->
-                    <div x-show="requestPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="requestsDropdownMenu" class="absolute z-10 mt-2 w-40 bg-white rounded-md shadow-lg">
+                    <div x-cloak  x-show="requestPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="requestsDropdownMenu" class="absolute z-10 mt-2 w-40 bg-white rounded-md shadow-lg">
                         <div class="py-1">
                             <a href="{{ route('LeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Request</a>
                             <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                             <a href="{{ route('ItHelpDeskTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
-                            <a href="{{ route('changeInformation') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
+                            <a href="{{ route('ChangeInformationTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
                             <hr class="border-gray-400">
                             <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Overtime Approval</a>
                             <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Undertime Approval</a>
@@ -176,8 +176,8 @@
 
 
                 <!-- Approval Button -->
-                @if(in_array($role_id, [4, 6, 7]))
-                    <div x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
+                @if(in_array($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15]))
+                    <div  x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -186,10 +186,31 @@
                             </svg> Approvals
                         </button>
                         <!-- Approval Dropdown -->
-                        <div x-show="approvalPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="approveDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div x-cloak  x-show="approvalPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="approveDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="py-1">
-                                <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
-                                <a href="{{ route('ApproveHrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @if (in_array($employeeEmail, [
+                                    'seal.projectengage@gmail.com',
+                                    "jsodsod@projectengage.com.ph",
+                                    "sherwinmalabanan@sltemps.com",
+                                    "esalvador@projectengage.com.ph",
+                                    "kcastro@projectengage.com.ph",
+                                    "jazz@wesearch.com.ph",
+                                    "rmaubay@projectengage.com.ph",
+                                    "jmb@sltemps.com",
+                                    "spm_2009@wesearch.com.ph",
+                                    "rb@sltemps.com",
+                                    "mbaniqued@projectengage.com.ph",
+                                    "rosanne.espedido@sltemps.com",
+                                    "trishesporlas@wesearch.com.ph",
+                                    "ecapistrano@projectengage.com.ph",
+                                    "khriziemisenas@sltemps.com",
+                                    "chisilva@sltemps.com"
+                                ]))
+                                    <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
+                                @endif
+                                @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13 ]))
+                                    <a href="{{ route('ApproveHrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -200,7 +221,7 @@
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                             <path d="M2.5 3A1.5 1.5 0 0 0 1 4.5V5h14v-.5A1.5 1.5 0 0 0 13.5 3h-11Z" />
                             <path fill-rule="evenodd" d="M15 7H1v4.5A1.5 1.5 0 0 0 2.5 13h11a1.5 1.5 0 0 0 1.5-1.5V7ZM3 10.25a.75.75 0 0 1 .75-.75h.5a.75.75 0 0 1 0 1.5h-.5a.75.75 0 0 1-.75-.75Zm3.75-.75a.75.75 0 0 0 0 1.5h2.5a.75.75 0 0 0 0-1.5h-2.5Z" clip-rule="evenodd" />
-                        </svg> Payroll
+                        </svg> Payslip
                     </button>
                 </a>
                 <!-- Tasks Button -->
@@ -213,7 +234,7 @@
                         </svg> Tasks
                     </button>
                     <!-- Task Dropdown -->
-                    <div x-show="tasksPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="tasksDropdownMenu" class="absolute z-10  w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div x-cloak  x-show="tasksPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="tasksDropdownMenu" class="absolute z-10  w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="py-1">
                             <a href="{{ route('TasksTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">My Tasks</a>
                             <a href="{{ route('AssignedTasksTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assigned Tasks</a>

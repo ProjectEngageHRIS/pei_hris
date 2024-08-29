@@ -52,7 +52,7 @@ class DashboardView extends Component
     public $employee_name;
 
     public $position;
-    protected $listeners = ['timeIn' => 'checkIn', 'timeOut' => 'checkOut'];
+    protected $listeners = ['timeIn' => 'checkIn', 'timeOut' => 'checkOut', 'checkLocation' => 'updateLocation', 'refresh' => '$refresh'];
 
     public $department;
 
@@ -60,9 +60,9 @@ class DashboardView extends Component
 
     public $role_id;
 
-    public $leave_requests;
+    // public $leave_requests;
 
-    public $tasks;
+    // public $tasks;
 
     public $leaveIndicator = False;
 
@@ -107,19 +107,6 @@ class DashboardView extends Component
         $this->department = $employeeInformation->department;
         $this->employeeImage = $employeeInformation->emp_image;
 
-        $this->leave_requests = Leaverequest::where('employee_id', $loggedInUser->employee_id)
-                                    // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
-                                    ->orderBy('inclusive_start_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
-                                    ->take(5)
-                                    ->select('inclusive_start_date', 'inclusive_end_date', 'form_id')
-                                    ->get();
-
-        $this->tasks = Mytasks::whereJsonContains('target_employees', $loggedInUser->employee_id)
-                            // ->where('inclusive_start_date', '>', now()) // Replace 'inclusive_start_date' with the appropriate column name
-                            ->orderBy('application_date', 'asc') // Replace 'inclusive_start_date' with the appropriate column name
-                            ->take(5)
-                            ->select('task_title', 'form_id')
-                            ->get();
 
         $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
         if($leaveIndicator){
@@ -273,10 +260,28 @@ class DashboardView extends Component
         return $image;
     }
 
+    public $location;
+    public $accuracy;
+
+
+    public function updateLocation($address, $action, $accuracy)
+    {
+        // $address = $data['address'];
+        // $actionType = $data['action'];
+        $this->location = $address;
+        
+        $this->accuracy = $accuracy;
+        if ($action === 'Check In') {
+            $this->checkIn();
+        } elseif ($action === 'Check Out') {
+            $this->checkOut(); // Assuming you have a checkOut method
+        }
+    }
+
 
     public function checkIn()
     {
-
+        // $this->dispatch('triggerLocation');
         try {
             $employee_id = auth()->user()->employee_id;
             // $time = Dailytimerecord::where('attendance_date', now()->toDateString())->where('employee_id', $employee_id)->first(); // assuming 'attendance_date' is stored as a date only
@@ -293,15 +298,16 @@ class DashboardView extends Component
                 $dtr->attendance_date = Carbon::today()->toDateString();
                 $dtr->time_in = Carbon::now()->toDateTimeString();
                 $lateCheckerParse = Carbon::parse($dtr->time_in);
-                $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0); 
+                $endOfCheckInTime = Carbon::today()->setTime(10, 01, 0);
+                $dtr->time_in_location = $this->location . '(' . $this->accuracy . 'm)'; 
                 if($lateCheckerParse->greaterThanOrEqualTo($endOfCheckInTime)) $dtr->late = 1;
                 // $dtr->time_in = "2024-06-21 6:52:59"; // Remove or comment out this line if using the current time
                 $dtr->save();
-
                 $this->dispatch('trigger-success-checkin');
-
                 $this->timeInFlag = true;
                 $this->timeOutFlag = false;
+                $this->dispatch('refreshPage');
+
             } else {
                 // $this->js("alert('You have already checked in today! Try Again Tomorrow')");
             }
@@ -313,11 +319,14 @@ class DashboardView extends Component
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('time-in-and-out')->error('Failed to time In: ' . $e->getMessage());
+            $this->dispatch('end-loading');
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
             // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
+        $this->dispatch('end-loading');
+
     }
 
 
@@ -337,13 +346,13 @@ class DashboardView extends Component
 
             
             if($time->type == null){
-                // dd($time->time_out != null);
                 if($time->time_out == null){
                         $loggedInUser = auth()->user()->employee_id;
                         $dtr = $time;
                         $dtr->employee_id = $loggedInUser;
                         $dtr->attendance_date = Carbon::today()->toDateString();
                         $dtr->time_out = Carbon::now()->toDateTimeString();
+                        $dtr->time_out_location = $this->location . '(' . $this->accuracy . 'm)';
                         $timeIn = Carbon::parse($dtr->time_in);
                         $timeOut = Carbon::parse($dtr->time_out);
                         $differenceInSeconds = $timeIn->diffInSeconds($timeOut);
@@ -421,17 +430,18 @@ class DashboardView extends Component
             }
             
         } catch (\Exception $e) {
-            dd($e);
             // Log the exception for further investigation
             Log::channel('time-in-and-out')->error('Failed to time out: ' . $e->getMessage());
+            $this->dispatch('stopLoading');
+
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerError');
 
             // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
-    
-    
+        $this->dispatch('stopLoading');
+
     }
     public function leaveRequest(){
         $dtr = new Dailytimerecord();
@@ -512,14 +522,27 @@ class DashboardView extends Component
             $this->currentTimeIn = '00:00:00';
             $this->timeOutFlag = true;
         }
+
         
-        $activities = Activities::whereNull('deleted_at')->get();
-        
+        $leave_requests = Leaverequest::where('employee_id', $loggedInUser)
+                ->orderBy('inclusive_start_date', 'asc')
+                ->take(5)
+                ->select('inclusive_start_date', 'inclusive_end_date', 'uuid')
+                ->get(); // Ensure to call get() to execute the query and get the results
+
+        $tasks = Mytasks::whereJsonContains('target_employees', $loggedInUser)
+                ->orderBy('application_date', 'asc')
+                ->take(5)
+                ->select('task_title', 'uuid')
+                ->get(); // Ensure to call get() to execute the query and get the results
+
+        $activities = Activities::whereNull('deleted_at')->get(); // Ensure to call get() to execute the query and get the results
+
         return view('livewire.dashboard.dashboard-view', [
-            // 'data' => $this->filter($this->filter),
+            'leave_requests' => $leave_requests,
+            'tasks' => $tasks,
             'activities' => $activities,
         ]);
-
       
     }
 }

@@ -45,6 +45,12 @@ class PayrollTable extends Component
         return redirect()->to(route('PayrollView', ['date' => $start_date]));
     }
 
+    public function mount(){
+        $date = Carbon::now();
+        $this->monthFilter = $date->format('F');
+        $this->yearFilter = $date->format('Y');
+    }
+
 
 
     public function render()
@@ -69,51 +75,51 @@ class PayrollTable extends Component
         }
 
         switch ($this->monthFilter) {
-            case '0':
+            case 'January':
                 $query->where('month', 'January');
                 $this->monthFilterName = "January";
                 break;
-            case '1':
+            case 'February':
                 $query->where('month', 'February');
                 $this->monthFilterName = "February";
                 break;
-            case '2':
+            case 'March':
                 $query->where('month', 'March');
                 $this->monthFilterName = "March";
                 break;
-            case '3':
+            case 'April':
                 $query->where('month', 'April');
                 $this->monthFilterName = "April";
                 break;
-            case '4':
+            case 'May':
                 $query->where('month', 'May');
                 $this->monthFilterName = "May";
                 break;
-            case '5':
+            case 'June':
                 $query->where('month', 'June');
                 $this->monthFilterName = "June";
                 break;
-            case '6':
+            case 'July':
                 $query->where('month', 'July');
                 $this->monthFilterName = "July";
                 break;
-            case '7':
+            case 'August':
                 $query->where('month', 'August');
                 $this->monthFilterName = "August";
                 break;
-            case '8':
+            case 'September':
                 $query->where('month', 'September');
                 $this->monthFilterName = "September";
                 break;
-            case '9':
+            case 'October':
                 $query->where('month', 'October');
                 $this->monthFilterName = "October";
                 break;
-            case '10':
+            case 'November':
                 $query->where('month', 'November');
                 $this->monthFilterName = "November";
                 break;
-            case '11':
+            case 'December':
                 $query->where('month', 'December');
                 $this->monthFilterName = "December";
                 break;

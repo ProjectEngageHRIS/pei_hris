@@ -183,7 +183,7 @@
                                 <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Date Requested
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
+                                <input disabled type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
                                     class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_start_date')
@@ -196,7 +196,7 @@
                                 <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">Actual Schedule
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                <input disabled type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                     class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_end_date')
@@ -219,6 +219,7 @@
                                     <option value="Job/School/PESO Fair">Job/School/PESO Fair</option>
                                     <option value="Travel/Assignment/Airline">Travel/Assignment/Airline</option>
                                     <option value="Collection">Collection</option>
+                                    <option value="Others">Others</option>
                                 </select>
                                 @error('purpose_type')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_type_container').focus();" >
@@ -226,19 +227,15 @@
                                     </div>
                                 @enderror
                             </div>
-                            <div id="deduct_to_container" class="col-span-1">
-                                <label class="block mb-2 text-sm font-medium text-gray-900 ">Deduct to?
+                            <div class="col-span-1">
+                                <label for="logout_time" class="block mb-2 text-sm font-medium text-gray-900 ">Log Out Time
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <select disabled id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                    class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                    <option value="" selected>Select</option>
-                                    <option value="Salary">Salary</option>
-                                    <option value="Credits">Credits</option>
-                                </select>
-                                @error('deduct_to')
-                                    <div class="text-sm transition transform alert alert-danger"
-                                    x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();" >
+                                <input type="datetime-local" name="logout_time" id="logout_time" wire:model.live="logout_time" disabled
+                                    class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                    required="">
+                                @error('logout_time')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -363,7 +360,7 @@
                             </div>
                         @enderror
                     </div>
-                    @if ($status != "Cancelled")
+                @if (!in_array($status, ['Cancelled', 'Approved']))
                     <div class="mt-4" x-cloak x-data="{ openCancelModal: false }">
                         <div class="flex flex-row-reverse">
                             <button id="cancel_button"  
@@ -454,7 +451,7 @@
                         </div>
                    
                     </div>
-                 @endif
+                @endif
                 @endif
 
 

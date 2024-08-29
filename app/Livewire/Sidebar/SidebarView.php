@@ -36,7 +36,6 @@ class SidebarView extends Component
 
     public $department;
 
-
     public function mount(){
         $loggedInUser = auth()->user();
         $this->role_id = $loggedInUser->role_id;

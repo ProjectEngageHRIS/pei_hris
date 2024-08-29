@@ -1,7 +1,29 @@
 <div class="flex flex-col space-y-6 ">
-    <!-- New Containers -->
-    <div class="flex flex-row justify-between space-x-4">
-        <div class="flex-1 p-4 bg-white h-[150px] rounded-lg shadow">
+    {{-- Ticket Categories --}}
+    <div class="flex flex-col bg-white divide-y-2 divide-gray-300 rounded-lg shadow xl:hidden">
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Completed Tickets</p>
+            <p class="font-semibold text-right text-md text-customGreen">{{$itTicketTypes['Completed'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Ongoing Tickets</p>
+            <p class="font-semibold text-right text-yellow-500 text-md">{{$itTicketTypes['Ongoing'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Unassigned Tickets</p>
+            <p class="font-semibold text-right text-md text-customGray1">{{$itTicketTypes['Unassigned'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Reported Tickets</p>
+            <p class="font-semibold text-right text-blue-500 text-md">{{$itTicketTypes['Report'] ?? 0}}</p>
+        </div>
+        <div class="flex justify-between p-4">
+            <p class="font-semibold text-md text-customGray">Cancelled Tickets</p>
+            <p class="font-semibold text-right text-md text-customRed">{{$itTicketTypes['Cancelled'] ?? 0}}</p>
+        </div>
+    </div>
+    <div class="flex-row justify-between hidden space-x-4 xl:flex">
+        <div class="flex-1 p-4 bg-white rounded-lg shadow">
             <p class="font-semibold text-md text-customGray">Completed Tickets</p>
             <p class="text-[60px] font-semibold text-right text-customGreen">{{$itTicketTypes['Completed'] ?? 0}}</p>
         </div>
@@ -24,22 +46,21 @@
     </div>
     <!-- Employee Table -->
     <div class="relative shadow-md">
-        <div class="flex flex-row items-start justify-between w-full gap-4 p-4 bg-white rounded-t-lg ">
+        <div class="grid grid-cols-2 gap-4 p-4 overflow-x-hidden bg-white rounded-t-lg">
             <!-- Add user button -->
             <div x-data="{showModal: false}">
-                <button @click="showModal = true;" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5">
+                <button @click="showModal = true;" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5 h-9">
                     Add new ticket
                 </button>
                 <!-- Main modal -->
                 <div x-cloak x-show="showModal" class="fixed inset-0 z-40 bg-black bg-opacity-50" @click="showModal = false"></div>
-        
                 <!-- Modal -->
                 <div x-cloak x-show="showModal" x-transition class="fixed inset-0 z-50 flex items-center justify-center">
                     <div class="relative w-full max-w-md p-4">
                         <!-- Modal content -->
                         <div class="relative h-full bg-white rounded-lg shadow">
                             <!-- Modal header -->
-                            <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
+                            <div class="flex items-center justify-between p-5 border-b rounded-t">
                                 <h3 class="text-xl font-semibold text-gray-900">
                                     Add new ticket
                                 </h3>
@@ -120,17 +141,16 @@
                     </div>
                 </div>
             </div>
-            
             {{-- Search bar  --}}
-            <div class="flex flex-row pr-2">
+            <div class="flex flex-row overflow-hidden justify-self-end">
                 <label for="table-search" class="sr-only">Search</label>
                 <div class="relative">
                     <div class="absolute inset-y-0 flex items-center pointer-events-none rtl:inset-r-0 start-0 ps-3">
-                        <svg class="w-4 h-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                        <svg class="text-gray-500 size-3 sm:size-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users" class="block text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px ps-10 pe-10 max-w-56 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                    <input type="text" id="table-search-users" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
@@ -167,12 +187,12 @@
                     }" class="absolute rounded-lg right-3 hover:text-customRed">
     
                     <!-- Filter Icon Button -->
-                    <button @click="filterOpen = !filterOpen" class="size-10 right-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="w-6 h-6 text-customGray hover:text-customRed">
+                    <button @click="filterOpen = !filterOpen" class="size-9 right-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="size-4 sm:size-6 text-customGray hover:text-customRed">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                         </svg>
                     </button>
-                    <div x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-80 right-1">
+                    <div x-cloak  x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-80 right-1">
                         <!-- Clear All Button -->
                         <div class="px-4 py-2">
                             <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
@@ -426,25 +446,25 @@
             <table class="w-full pb-4 text-sm text-left text-gray-500 h-fit rtl:text-right dark:text-gray-400" style="overflow-y:hidden;" >
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             No.
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Employee Information
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Status
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Date Filled
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center" colspan="3">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap" colspan="3">
                             Description
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center" colspan="2">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap" colspan="2">
                             Report
                         </th>
-                        <th scope="col" class="px-6 py-3 text-center">
+                        <th scope="col" class="px-6 py-3 text-center text-nowrap">
                             Actions
                         </th>
                         
@@ -453,18 +473,17 @@
                 <div>
                     <div>
                         <tbody class="pb-4">
-
                         @if ($ItTicketData->isEmpty())
-                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
-                                    <th scope="col" colspan="10" class="justify-center" style="padding-bottom: 40px"> 
-                                        <div class="flex justify-center " style="padding-top: 40px">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
-                                                <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
-                                            </svg>
-                                            <p class="items-center text-xl font-semibold text-customRed "> Nothing to show</p>
-                                        </div>
-                                    </th>
-                                </tr>
+                            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
+                                <th scope="col" colspan="10" class="justify-center" style="padding-bottom: 40px"> 
+                                    <div class="flex justify-center " style="padding-top: 40px">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-1">
+                                            <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
+                                        </svg>
+                                        <p class="items-center text-xl font-semibold text-customRed"> Nothing to show</p>
+                                    </div>
+                                </th>
+                            </tr>
                         @else
                             @php
                                 $ctr = 0;
@@ -475,12 +494,7 @@
                                 $ctr = $ctr + 1;
                             @endphp
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                    {{-- <td class="w-4 p-4">
-                                        <div class="flex items-center">
-                                            <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                                            <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
-                                        </div>
-                                    </td> --}}
+                                    
                                     <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap dark:text-white">
                                         {{$pageIndex + $ctr}}
                                     </th>
@@ -495,32 +509,32 @@
                                         </div>
                                     </th>
                                     
-                                    @if($it_ticket->status == "Unassigned")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                    @if($it_ticket->status == "Ongoing")
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-yellow-900 bg-yellow-100 rounded-lg text-nowrap me-2">
-                                                Unassigned
+                                                Ongoing
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Completed")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-green-900 bg-green-100 rounded-lg text-nowrap me-2">
                                                 Completed
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Report")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-blue-900 bg-blue-100 rounded-lg text-nowrap me-2">
                                                 Report
                                             </span>
                                         </th>
                                     @elseif($it_ticket->status == "Cancelled")
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-red-900 bg-red-100 rounded-lg text-nowrap me-2">
                                                 Cancelled
                                             </span>
                                         </th>
                                     @else
-                                        <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
+                                        <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap dark:text-white">
                                             <span class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-900 bg-gray-200 rounded-lg text-nowrap me-2">
                                                 Unassigned
                                             </span>
@@ -533,7 +547,7 @@
                                     <td class="px-6 py-4 text-center " colspan="3">
                                         {{$it_ticket->description}}
                                     </td>
-                                    <td class="px-6 py-4 text-center " colspan="2">
+                                    <td class="px-6 py-4 text-center" colspan="2">
                                         {{$it_ticket->report ?? 'Not Applicable'}}
                                     </td>
                                 
@@ -547,7 +561,7 @@
                                             @if ($it_ticket->status != "Cancelled" && $it_ticket->status != "Completed")
                                             <button @click="openButtonCrudModal('{{$it_ticket->form_id}}', '{{$it_ticket->status}}')"
                                                 type="button" 
-                                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
+                                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer text-nowrap hover:text-red-600">
                                                 Change Status
                                             </button>
                                             @endif
