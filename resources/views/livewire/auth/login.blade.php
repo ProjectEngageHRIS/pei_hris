@@ -1,7 +1,7 @@
 @section('title', 'Sign in to your account')
 <main class="grid content-center h-full min-h-screen place-content-center">
     <div class="w-1/2 h-[2px] bg-customRed place-self-center"></div>
-    <section class="flex flex-col w-full gap-6 bg-white shadow-lg rounded-xl min-w-[calc(100vw-80px)] min-[630px]:min-w-[550px]">
+    <section class="flex flex-col w-full gap-6 p-10 bg-white shadow-lg rounded-xl min-w-[calc(100vw-80px)] min-[630px]:min-w-[550px]">
         <div class="self-center">
             <img src="{{ asset('assets\sllogo.png') }}" class="size-14" alt="SL Logo">
         </div>
