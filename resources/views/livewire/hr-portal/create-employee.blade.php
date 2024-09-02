@@ -93,172 +93,143 @@
                             </div>
                         @enderror
                         </div>
-                                            <div class="w-full ">
+                                            <div id="gender_container" class="w-full ">
                                                 <label for="gender"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Gender<span class="text-red-600">*</span></label>
                                                 <select name="gender" id="gender" wire:model="gender"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                ntd=""  >
-                                                <option value="" >Select Sex</option>
-                                            <option value="Male">Male</option>
-                                            <option value="Female">Female</option>
-                                        </select>
-                                        @error('gender')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('gender').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('gender').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd=""  >
+                                                        <option value="" >Select Sex</option>
+                                                    <option value="Male">Male</option>
+                                                    <option value="Female">Female</option>
+                                                </select>
+                                                @error('gender')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('gender_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('gender_container').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
                                             </div>
-                                            <div class="w-full">
+                                            <div id="personal_email_container" class="w-full">
                                                 <label for="personal_email"
                                                 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Personal Email <span class="text-red-600">*</span></label>
                                                 <input type="email" name="personal_email" id="personal_email"  wire:model="personal_email"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd=""  >
                                                     @error('personal_email')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('personal_email').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('personal_email').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('personal_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('personal_email_container').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
-                                            <div class="w-full">
+                                            <div id="employee_email_container" class="w-full">
                                                 <label for="employee_email"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Email <span class="text-red-600">*</span></label>
                                                 <input type="email" name="employee_email" id="employee_email"  wire:model="employee_email"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd=""  >
                                                     @error('employee_email')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('employee_email').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employee_email').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('employee_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employee_email_container').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
-                                            <div class="w-full ">
+                                            <div id="home_address_container" class="w-full ">
                                                 <label for="home_address"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Home Address <span class="text-red-600">*</span></label>
                                                 <textarea type="text" name="home_address" id="home_address"  wire:model="home_address"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" > </textarea>
                                                     @error('home_address')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('home_address').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('home_address').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('home_address_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('home_address_container').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
-                                            <div class="w-full ">
+                                            <div id="provincial_address_container" class="w-full ">
                                                 <label for="provincial_address"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Provincial Address <span class="text-red-600">*</span></label>
                                                 <textarea type="text" name="provincial_address" id="provincial_address" wire:model="provincial_address"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd=""> </textarea>
+                                                @error('provincial_address')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('provincial_address_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('provincial_address_container').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
                                             </div>
 
                                         </div>
 
-                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-4 gap-4 col-span-3 pb-4">
-                                            <div class="w-full ">
+                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-5 gap-4 col-span-3 pb-4">
+                                            <div id="age_container" class="w-full ">
                                                 <label for="age"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Age <span class="text-red-600">*</span></label>
                                                 <input type="number" name="age" id="age"  wire:model="age"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('age')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('age').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('age').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('age_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('age_container').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
-                                            <div class="w-full ">
+                                            <div id="birth_date_container" class="w-full ">
                                                 <label for="birth_date"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Birth Date<span class="text-red-600">*</span></label>
                                                 <input type="date" name="birth_date" id="birth_date" wire:model="birth_date"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('birth_date')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('birth_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('birth_date').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('birth_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('birth_date_container').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
-                                            <div class="w-full">
+                                            <div id="religion_container" class="w-full">
                                                 <label for="religion"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Religion <span class="text-red-600">*</span></label>
                                                 <input type="text" name="religion" id="religion"  wire:model="religion"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('religion')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('religion').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('religion').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('religion_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('religion_container').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
-                                            <div class="w-full" id="civil_status_container">
-                                        <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                            Civil Status
-                                        </label>
-                                        <select name="civil_status" id="civil_status" wire:model="civil_status"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    <option value="" d>Select Civil Status</option>
-                                            <option value="Single">Single</option>
-                                            <option value="Married">Married</option>
-                                            <option value="Widowed">Widowed</option>
-                                            <option value="Divorced">Divorced</option>
-                                            <option value="Separated">Separated</option>
-                                        </select>
-                                        @error('civil_status')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('civil_status').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('civil_status').focus();" >
-                                <span class="text-x s text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                            </div>
+                                        <div class="w-full" id="civil_status_container">
+                                            <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                Civil Status
+                                            </label>
+                                            <select name="civil_status" id="civil_status" wire:model="civil_status"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                <option value="" d>Select Civil Status</option>
+                                                <option value="Single">Single</option>
+                                                <option value="Married">Married</option>
+                                                <option value="Widowed">Widowed</option>
+                                                <option value="Divorced">Divorced</option>
+                                                <option value="Separated">Separated</option>
+                                            </select>
+                                            @error('civil_status')
+                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('civil_status').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('civil_status').focus();" >
+                                                    <span class="text-x s text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
                                         </div>
-
-
-
-                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4 ">
-                                            <div class="w-full ">
-                                                <label for="height"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Height <span class="text-red-600">*</span></label>
-                                                <input type="number" name="height" id="height" wire:model="height"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-00 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    @error('height')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('height').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('height').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                            </div>
-                                            <div class="w-full">
-                                                <label for="weight"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Weight<span class="text-red-600">*</span></label>
-                                                <input type="number" name="weight" id="weight"  wire:model="weight"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="">
-                                                    @error('weight')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('weight').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('weight').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                            </div>
-                                            <div class="w-full">
-                                                <label for="lastname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Phone Number<span class="text-red-600">*</span></label>
-                                                <input type="tel" name="lastname" id="lastname"  wire:model="phone_number"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="">
-                                                    @error('phone_number')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('phone_number').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phone_number').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                            </div>
-
-
+                                        <div id="phone_number_container" class="w-full">
+                                            <label for="lastname"
+                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Phone Number<span class="text-red-600">*</span></label>
+                                            <input type="tel" name="lastname" id="lastname"  wire:model="phone_number"
+                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                ntd="">
+                                                @error('phone_number')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('phone_number_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phone_number_container').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
                                         </div>
-
-
+                                    </div>
 
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4 ">
 
@@ -786,12 +757,8 @@
                                                  <select id="employee_type" name="employee_type" wire:model.live="employee_type"
                                                      class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                                      <option selected>Select</option>
-                                                     <option value="INTERNALS">INTERNALS</option>
+                                                     <option value="INTERNAL EMPLOYEE">INTERNAL EMPLOYEE</option>
                                                      <option value="OJT">OJT</option>
-                                                     <option value="PEI-CSS">PEI-CSS</option>
-                                                     <option value="RAPID">RAPID</option>
-                                                     <option value="RAPID MOBILITY">RAPID MOBILITY</option>
-                                                     <option value="UPSKILLS">UPSKILLS</option>
                                                  </select>
                                                  @error('employee_type')
                                                      <div class="text-sm transition transform alert alert-danger"

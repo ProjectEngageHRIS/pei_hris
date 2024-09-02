@@ -193,7 +193,7 @@ class CreateEmployee extends Component
         'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
-        'employee_type' => 'required|in:INTERNALS,OJT,PEI-CSS,RAPID,RAPID MOBILITY,UPSKILLS',
+        'employee_type' => 'required|in:INTERNAL EMPLOYEE,OJT',
         'sss_num' => ['required', 'numeric', 'digits:10'],
         'tin_num' => ['required', 'numeric', 'digits:12'],
         'phic_num' => ['required', 'numeric', 'digits:12'],
