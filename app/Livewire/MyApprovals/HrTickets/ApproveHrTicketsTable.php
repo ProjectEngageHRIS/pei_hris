@@ -35,13 +35,10 @@ class ApproveHrTicketsTable extends Component
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INTERNAL EMPLOYEE' => false,
         'OJT' => false,
-        'PEI-CCS' => false,
-        'RAPID' => false,
-        'RAPIDMOBILITY' => false,
-        'UPSKILLS' => false,
     ];
+
 
     public $insideDepartmentTypesFilter = [
         'HR AND ADMIN' => false,
