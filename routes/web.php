@@ -21,6 +21,7 @@ use App\Livewire\Auth\Passwords\Reset;
 use App\Livewire\HrPortal\AddEmployee;
 use App\Livewire\Mytasks\MyTasksTable;
 use App\Livewire\Payroll\PayrollTable;
+use App\Livewire\HrPortal\EditEmployee;
 use App\Livewire\Mytasks\MyTasksUpdate;
 use App\Http\Controllers\IpcrController;
 use App\Http\Controllers\OpcrController;
@@ -29,6 +30,7 @@ use App\Livewire\Auth\Passwords\Confirm;
 use App\Livewire\Trainings\TrainingForm;
 use App\Livewire\Trainings\TrainingView;
 use App\Livewire\Dashboard\DashboardView;
+use App\Livewire\HrPortal\CreateEmployee;
 use App\Livewire\HrPortal\EmployeesTable;
 use App\Livewire\Hrtickets\HrTicketsForm;
 use App\Livewire\Hrtickets\HrTicketsView;
@@ -69,9 +71,9 @@ use App\Livewire\Trainings\TrainingPreTestForm;
 use App\Http\Controllers\LeaveRequestController;
 use App\Livewire\Leaverequest\LeaveRequestTable;
 use App\Livewire\Trainings\TrainingPostTestForm;
+
 use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
-
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
@@ -80,17 +82,17 @@ use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
 use App\Livewire\Changeschedule\ChangeScheduleTable;
 use App\Livewire\Payroll\Accounting\AddPayrollTable;
-use App\Livewire\Changeinformation\ChangeInformation;
-use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\Changeinformation\ChangeInformation;
+use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
-use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
-use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
+use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Changeinformation\ChangeInformationView;
@@ -119,7 +121,6 @@ use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\ChangeInformation\ApproveChangeInformationRequest;
-use App\Livewire\HrPortal\CreateEmployee;
 
 /*
 |--------------------------------------------------------------------------
@@ -310,6 +311,8 @@ Route::middleware(['auth', '2fa' ])->group(function (){
     Route::get("/humanresource/dailytimerecord", HrDailyTimeRecord::class)->name('HrDailyTimeRecord');
 
     Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
+
+    Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
 
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 

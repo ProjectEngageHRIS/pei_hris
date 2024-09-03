@@ -297,7 +297,7 @@ class CreateEmployee extends Component
                 ];
             }
 
-            $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
+            $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? '') ;
             $add_employee->employee_history = $jsonEmployeeHistory;
             $add_employee->files = $this->files;
             $add_employee->employee_id = $this->employee_id;

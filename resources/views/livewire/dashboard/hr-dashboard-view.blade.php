@@ -538,7 +538,7 @@
                                         <!-- Modal Footer -->
                                         <div class="flex items-center p-4 border-t border-gray-200 rounded-b">
                                             <!-- Edit / View Button -->
-                                            <button @click="window.location.href = '{{ route('EmployeesView', ['index' => $employee->employee_id]) }}'"
+                                            <button @click="window.location.href = '{{ route('EditEmployee', ['index' => $employee->employee_id]) }}'"
                                                     type="button"
                                                     class="flex items-center text-white bg-red-600 hover:bg-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-3">
