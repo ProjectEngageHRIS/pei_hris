@@ -45,8 +45,6 @@ return new class extends Migration
                 $table->date('birth_date');
                 $table->string('religion', 30);
                 $table->string('birth_place', 100);
-                $table->float('height', 8, 2); // Example precision and scale
-                $table->float('weight', 8, 2); // Example precision and scale
                 $table->string('civil_status', 20);
                 $table->string('name_of_mother', 255);
                 $table->string('name_of_father', 255);
