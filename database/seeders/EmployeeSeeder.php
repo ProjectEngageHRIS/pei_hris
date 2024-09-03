@@ -125,8 +125,6 @@ class EmployeeSeeder extends Seeder
             'birth_date' => '1989-01-01',
             'religion' => 'Not Specified',
             'birth_place' => 'Cityville',
-            'height' => 5.9, // Using example values for precision and scale
-            'weight' => 160, // Using example values for precision and scale
             'civil_status' => 'Single',
             'name_of_mother' => 'Mother Name',
             'name_of_father' => 'Father Name',

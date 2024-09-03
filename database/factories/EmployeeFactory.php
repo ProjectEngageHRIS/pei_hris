@@ -176,8 +176,8 @@ class EmployeeFactory extends Factory
             'birth_date' => $this->faker->date(),
             'religion' => $this->faker->randomElement(['Christianity', 'Islam', 'Hinduism', 'Buddhism', 'None']),
             'birth_place' => $this->faker->sentence(1),
-            'weight' => $this->faker->numberBetween(50, 150), // Generate a random weight between 50 and 150 kg
-            'height' => $this->faker->numberBetween(150, 200),
+            // 'weight' => $this->faker->numberBetween(50, 150), // Generate a random weight between 50 and 150 kg
+            // 'height' => $this->faker->numberBetween(150, 200),
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Divorced', 'Widowed']),
             'spouse' => $this->faker->firstName,
             'names_of_children' => json_encode($namesOfChildren),

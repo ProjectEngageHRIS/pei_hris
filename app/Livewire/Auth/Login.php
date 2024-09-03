@@ -51,24 +51,25 @@ class Login extends Component
         // $credentials = ['employee_id' => $this->email, 'password' => $this->password];
         if (Auth::attempt(['employee_id' => $this->email, 'password' => $this->password], $this->remember)) {
             // For example, you might want to check for a valid device GUID here
-            // $cookieName = 'device_guid_' . $this->email;
-            // $deviceGuid = Cookie::get($cookieName);
-            // if ($deviceGuid != null) {
-            //     if ($this->isValidDevice($this->email, $deviceGuid)) {
-            //         return redirect()->route('LoginDashboard');
+            $cookieName = 'device_guid_' . $this->email;
+            $deviceGuid = Cookie::get($cookieName);
+            $user = auth()->user();
+            if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null ) {
+                if ($this->isValidDevice($this->email, $deviceGuid)) {
+                    return redirect()->route('LoginDashboard');
 
-            //     } else {
-            //         session(['auth_user_id' => $this->email]);
-            //         $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
-            //         return redirect()->to($url);
-            //         // return redirect()->route('MFAVerify');
-            //     }
-            // } else {
-            //     // Handle case where device GUID is not found
-            //     session(['auth_user_id' => $this->email]);
-            //     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
-            //     return redirect()->to($url);
-            // }
+                } else {
+                    session(['auth_user_id' => $this->email]);
+                    $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+                    return redirect()->to($url);
+                    // return redirect()->route('MFAVerify');
+                }
+            } else {
+                // Handle case where device GUID is not found
+                session(['auth_user_id' => $this->email]);
+                $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+                return redirect()->to($url);
+            }
             $loggedInUser = auth()->user()->role_id;
 
             if ($loggedInUser == 1) {

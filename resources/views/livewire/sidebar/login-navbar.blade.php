@@ -25,7 +25,9 @@
                     @else
                         <img class="w-8 h-8 rounded-full me-2" src="{{ asset( 'assets/defaultuser.png') }}" alt="user photo"> 
                     @endif
-                    {{$employee_name}}
+                    @if(request()->routeIs('LoginDashboard'))
+                        {{$employee_name}}
+                    @endif
                     <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                     </svg>
@@ -33,10 +35,12 @@
 
                 <!-- Dropdown menu -->
                 <div id="dropdownAvatarName" class="absolute right-0 z-10 hidden mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-lg shadow-lg w-44 dark:bg-customRed dark:divide-customRed top-12">
-                    <div class="px-4 py-3 text-sm text-customGray1 dark:text-white">
-                        <div class="font-medium">{{$department}}</div>
-                        <div class="truncate text-customRed">{{$employee_id}}</div>
-                    </div>
+                    @if(request()->routeIs('LoginDashboard'))
+                        <div class="px-4 py-3 text-sm text-customGray1 dark:text-white">
+                            <div class="font-medium">{{$department}}</div>
+                            <div class="truncate text-customRed">{{$employee_id}}</div>
+                        </div>
+                    @endif
                     <div class="py-2">
                         <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-customGray1 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Sign out</a>
                     </div>

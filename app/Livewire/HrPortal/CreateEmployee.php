@@ -336,8 +336,6 @@ class CreateEmployee extends Component
             $add_employee->personal_email = $this->personal_email;
             $add_employee->phone_number = $this->phone_number;
             $add_employee->birth_place = $this->birth_place;
-            $add_employee->height = $this->height;
-            $add_employee->weight = $this->weight;
             $add_employee->civil_status = $this->civil_status;
             $add_employee->name_of_mother = $this->name_of_mother;
             $add_employee->name_of_father = $this->name_of_father;

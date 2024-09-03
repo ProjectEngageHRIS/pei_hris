@@ -10,18 +10,27 @@
         <div class="flex flex-col items-center">
             <img src="{{ asset('assets/sllogo.png') }}" class="mr-2 h-auto max-h-[90px]" alt="SL Logo">
             <h1 class="mt-4 text-xl font-bold text-customRed">SL Groups</h1>
+
+            @if($QR_Image)
+                <p class="mt-4 text-md font-bold text-gray-800">Scan the code using Google Authenticator</p>
+                {!! $QR_Image !!}
+            @endif
         </div>
+       
 
             <form wire:submit.prevent="checkOtp">
                 <div class="mt-6">
-                
-                    <label class="block mb-2 text-xs font-medium leading-5 text-customGray1">Enter OTP that we've sent to your email</label>
-                    <label class="block mb-2 text-xs font-medium leading-5 text-customGray1">Please wait for 30 seconds before resending an OTP</label>
-
-                    <label for="otp" class="block text-xs font-semibold leading-5 text-customGray1">
-                        Enter OTP <span style="color:#AC0C2E">*</span>
+                   
+                    <label class="block mb-2 text-md text-center font-medium leading-5 mb-2 text-customGray1">
+                        Please enter the <span class="text-customRed">6-digit OTP</span> displayed in your Google Authenticator app to verify your identity.
                     </label>
-                    <input wire:model="otp" type="text" id="otp" required class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-customRed focus:ring-customRed  transition duration-150 ease-in-out sm:text-sm sm:leading-5 custom-border @error('otp') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
+            
+                    <!-- OTP Input Field Label -->
+                    <label for="otp" class="block text-xs font-semibold leading-5 mb-2 text-customGray1">
+                        One-Time Password (OTP) <span style="color:#AC0C2E">*</span>
+                    </label>
+
+                    <input wire:model="otp" type="text" id="otp" required placeholder="Enter your 6-digit OTP" class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md placeholder-gray-400 focus:outline-none focus:border-customRed focus:ring-customRed  transition duration-150 ease-in-out sm:text-sm sm:leading-5 custom-border @error('otp') border-red-300 text-red-900 placeholder-red-300 focus:border-red-300 focus:ring-red @enderror" />
                     @error('otp')
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
@@ -30,11 +39,6 @@
                     Verify OTP
                 </button>
             </form> 
-            <form wire:submit.prevent="resendOtp">
-                <button id="resend-otp-button" type="submit" style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md shadow bg-customRed" onclick="startResendCountdown()" @if($resendDisabled) disabled @endif>
-                        Resend OTP
-                </button>
-            </form>
     </div>
 </div>
 

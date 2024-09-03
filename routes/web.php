@@ -180,7 +180,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/verify', [VerifyController::class, 'verify'])
     ->name('verify');
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth', '2fa'])->group(function (){
     Route::get("/dashboard", LoginDashboard::class)->name('LoginDashboard');
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
@@ -217,7 +217,7 @@ Route::middleware(['auth'])->group(function (){
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware('auth', '2fa')->group(function () {
     Route::get('/change-password', PasswordChange::class)->name('password.change');
 });
 
@@ -232,7 +232,7 @@ Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.
 
 
 
-Route::middleware(['auth', ])->group(function () {
+Route::middleware(['auth', '2fa' ])->group(function () {
 
     Route::get("/leaverequest/requests/{type?}", LeaveRequestTable::class)->name('LeaveRequestTable');
 
@@ -252,7 +252,7 @@ Route::middleware(['auth', ])->group(function () {
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
 
     Route::get("/helpdesk/requests", ItHelpDeskTable::class)->name('ItHelpDeskTable');
 
@@ -271,7 +271,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
 
     Route::get("/mytasks/requests", MyTasksTable::class)->name('TasksTable');
 
@@ -293,7 +293,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
 
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
 
@@ -326,7 +326,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
     Route::get("/activities", ActivitiesGallery::class)->name('ActivitiesGallery');
 
     // Route::get("/activities/form", ActivitiesForm::class)->name('ActivitiesForm');
@@ -338,7 +338,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
     Route::get("/trainings", TrainingGallery::class)->name('TrainingGallery');
 
     Route::get("/trainings/form", TrainingForm::class)->name('TrainingForm');
@@ -353,7 +353,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
     Route::get("/dailytimerecord", AttendanceTable::class)->name('AttendanceTable');
 
     Route::get("/dailytimerecord/pdf/{dates}", [AttendancePdfController::class, 'turnToPdf'])->name('AttendancePdf');
@@ -361,7 +361,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
 
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
@@ -380,7 +380,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth', '2fa' ])->group(function (){
 
     Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
