@@ -35,7 +35,7 @@
                     <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
                     @enderror
                 </div>
-                <button type="submit" style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md shadow bg-customRed">
+                <button type="submit" @disabled($tooManyLoginAttempts) style="background: #AC0C2E" class="w-full px-4 py-2 mt-4 text-sm font-medium text-white transition duration-150 ease-in-out rounded-md shadow bg-customRed">
                     Verify OTP
                 </button>
             </form> 

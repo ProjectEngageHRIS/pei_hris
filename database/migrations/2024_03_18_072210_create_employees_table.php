@@ -50,10 +50,10 @@ return new class extends Migration
                 $table->string('name_of_father', 255);
                 $table->string('spouse', 255)->nullable();
                 $table->longText('names_of_children')->nullable();
-                $table->string('sss_num', 100)->nullable();
-                $table->string('tin_num', 100)->nullable();
-                $table->string('phic_num', 100)->nullable();
-                $table->string('hdmf_num', 100)->nullable();
+                $table->text('sss_num')->nullable();
+                $table->text('tin_num')->nullable();
+                $table->text('phic_num')->nullable();
+                $table->text('hdmf_num')->nullable();
                 $table->json('emergency_contact')->nullable();
                 $table->string('emp_image')->nullable();
                 $table->json('employee_history')->nullable();

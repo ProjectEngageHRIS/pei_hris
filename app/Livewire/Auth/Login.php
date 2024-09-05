@@ -34,7 +34,7 @@ class Login extends Component
         $this->validate();
 
         $throttleKey = strtolower($this->email);
-        $maxAttempts = 3; // Maximum number of attempts allowed
+        $maxAttempts = 5; // Maximum number of attempts allowed
         $decayMinutes = 1; // Time period in minutes to limit the attempts
         
         // Check if too many attempts have been made
@@ -55,9 +55,10 @@ class Login extends Component
             $deviceGuid = Cookie::get($cookieName);
             $user = auth()->user();
             if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null ) {
+                RateLimiter::clear($throttleKey);
+                
                 if ($this->isValidDevice($this->email, $deviceGuid)) {
                     return redirect()->route('LoginDashboard');
-
                 } else {
                     session(['auth_user_id' => $this->email]);
                     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
@@ -173,9 +174,9 @@ class Login extends Component
     private function isValidDevice($userId, $deviceGuid)
     {
         $exists =  UserDevices::where('user_id', $userId)
-                            ->where('device_guid', $deviceGuid)
-                            ->where('expires_at', '>', now())
-                            ->exists();
+                                ->where('device_guid', $deviceGuid)
+                                ->where('expires_at', '>', now())
+                                ->exists();
         return $exists;
     }
 

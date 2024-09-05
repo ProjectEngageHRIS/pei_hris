@@ -283,10 +283,11 @@ class CreateEmployee extends Component
             $add_employee->emergency_contact = json_encode($this->emergency_contact);
             $add_employee->employee_history = json_encode($this->employee_history);
 
-            $add_employee->names_of_children = Crypt::encrypt(json_encode($this->names_of_children));            $add_employee->sss_num = $this->sss_num;
-            $add_employee->tin_num = $this->tin_num;
-            $add_employee->phic_num = $this->phic_num;
-            $add_employee->hdmf_num = $this->hdmf_num;
+            $add_employee->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));            
+            $add_employee->sss_num = Crypt::encryptString($this->sss_num);
+            $add_employee->tin_num = Crypt::encryptString($this->tin_num);
+            $add_employee->phic_num = Crypt::encryptString($this->phic_num);
+            $add_employee->hdmf_num = Crypt::encryptString($this->hdmf_num);
 
             foreach($this->employeeHistory ?? [] as $history){
                 $jsonEmployeeHistory[] = [

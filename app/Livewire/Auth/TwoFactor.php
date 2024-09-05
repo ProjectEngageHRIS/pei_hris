@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Cookie;
 use PragmaRX\Google2FAQRCode\Google2FA;
+use Illuminate\Support\Facades\RateLimiter;
 use App\Events\ResetPasswordSendOtpSuccessful;
 
 class TwoFactor extends Component
@@ -144,9 +145,27 @@ class TwoFactor extends Component
     //     }
     // }
 
+    public $tooManyLoginAttempts;
+
     public function checkOtp()
     {
-        $this->validate(['otp' => 'required|string|min:6|max:6']);
+
+        $this->validate(['otp' => 'required|string']);
+
+        $throttleKey = strtolower($this->email);
+        $maxAttempts = 10; // Maximum number of attempts allowed
+        $decayMinutes = 1; // Time period in minutes to limit the attempts
+        
+        // Check if too many attempts have been made
+        if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
+            $this->addError('otp', 'Too many Wrong Attemps. Please try again in ' . RateLimiter::availableIn($throttleKey) . ' seconds.');
+            $this->tooManyLoginAttempts = true;
+            return;
+        }
+        
+        // Otherwise, record the attempt
+        RateLimiter::hit($throttleKey, $decayMinutes * 60); // Decay time in seconds
+        
         $user_id = auth()->user();
         $user = User::where('employee_id', $user_id->employee_id)->first();
         $google2fa = new Google2FA();
@@ -159,21 +178,21 @@ class TwoFactor extends Component
             $user->save();
             $userDevice = new UserDevices;
             $userDevice->user_id = $user->employee_id;
-            $userDevice->expires_at = now()->addDays(30);
+            $userDevice->expires_at = now()->addMonths(2);
             $userDevice->last_used_at = now();
             $userDevice->save();
 
             // Cookie::queue('device_guid', $userDevice->device_guid, 43200);
             $cookieName = 'device_guid_' . $user->employee_id;
             Cookie::queue(Cookie::make($cookieName, $userDevice->device_guid, 43200));
+            RateLimiter::clear($throttleKey);
             // Cookie::queue(Cookie::make('device_guid', $userDevice->device_guid, 43200, null, null, true, true));
             if($user->role_id == 1){
                 return redirect()->to(route('EmployeeDashboard'));
             }
             return redirect()->to(route('LoginDashboard'));
         } else {
-            // The code is incorrect
-            dd('code incorrect');
+            $this->addError('otp', 'Wrong OTP.');
         }
     }
 

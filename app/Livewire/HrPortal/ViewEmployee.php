@@ -5,12 +5,9 @@ namespace App\Livewire\HrPortal;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Contracts\Encryption\DecryptException;
 
-class EditEmployee extends Component
+class ViewEmployee extends Component
 {
     public $sss_num;
     public $trainingsSeminars;
@@ -107,14 +104,10 @@ class EditEmployee extends Component
 
         if ($employeeRecord) {
             // Assign each property from the employeeRecord
-            // try {
-                $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
-                $this->phic_num = Crypt::decryptString($employeeRecord->phic_num);
-                $this->hdmf_num = Crypt::decryptString($employeeRecord->hdmf_num);
-                $this->sss_num = Crypt::decryptString($employeeRecord->sss_num);
-            // } catch (DecryptException $e) {
-            //     continue;
-            // }
+            $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
+            $this->phic_num = Crypt::decryptString($employeeRecord->phic_num);
+            $this->hdmf_num = Crypt::decryptString($employeeRecord->hdmf_num);
+            $this->sss_num = Crypt::decryptString($employeeRecord->sss_num);
             $this->emergency_contact = $employeeRecord->emergency_contact;
             $this->role_id = $employeeRecord->role_id;
 
@@ -249,7 +242,7 @@ class EditEmployee extends Component
         'emergency_contact.address' => 'required|min:5|max:500',
         'emergency_contact.cellphone_number' => ['required','numeric','regex:/^09[0-9]{9}$/' ],
 
-       'employeeHistory' => 'nullable|array|max:5',
+        'employeeHistory' => 'nullable|array|max:5',
         'employeeHistory.*.name_of_company' => 'required|string|min:2|max:75',
         'employeeHistory.*.prev_position' => 'required|string|min:2|max:75',
         'employeeHistory.*.start_date' => 'required|date|before_or_equal:employeeHistory.*.end_date',
@@ -370,12 +363,12 @@ class EditEmployee extends Component
         $employee_data->department = $this->department; // Assuming $this->company represents the department
         $employee_data->inside_department = $this->inside_department; // Assuming $this->department represents the department details
         $employee_data->employee_type = $this->employee_type;
-        $employee_data->sss_num = Crypt::encryptString($this->sss_num);
-        $employee_data->tin_num = Crypt::encryptString($this->tin_num);
-        $employee_data->phic_num = Crypt::encryptString($this->phic_num);
-        $employee_data->hdmf_num = Crypt::encryptString($this->hdmf_num);
+        $employee_data->sss_num = $this->sss_num;
+        $employee_data->tin_num = $this->tin_num;
+        $employee_data->phic_num = $this->phic_num;
+        $employee_data->hdmf_num = $this->hdmf_num;
         $employee_data->files = $this->files;
-        $employee_data->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));
+        $employee_data->names_of_children = Crypt::encrypt(json_encode($this->names_of_children));
         $employee_data->sss_num = $this->sss_num;
 
         // Family Information
@@ -444,9 +437,9 @@ class EditEmployee extends Component
 
         return redirect()->to(route('HumanResourceDashboard'));
     }
-
+    
     public function render()
     {
-        return view('livewire.hr-portal.edit-employee');
+        return view('livewire.hr-portal.view-employee');
     }
 }

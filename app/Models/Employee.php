@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Dailytimerecord;
 use Spatie\MediaLibrary\HasMedia;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Model;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -37,7 +38,10 @@ class Employee extends Model
         'emp_psa_marriage_certif' => 'array',
         'emp_service_record_from_other_govt_agency' => 'array',
         'emp_approved_clearance_prev_employer' => 'array',
-        'other_documents' => 'array'
+        'other_documents' => 'array',
+        'sss_num' => 'encrypted',
+        'tin_num' => 'encrypted',
+        'phic_num' => 'encrypted',
+        'hdmf_num' => 'encrypted',
     ];
-    
 }

@@ -22,6 +22,7 @@ use App\Livewire\HrPortal\AddEmployee;
 use App\Livewire\Mytasks\MyTasksTable;
 use App\Livewire\Payroll\PayrollTable;
 use App\Livewire\HrPortal\EditEmployee;
+use App\Livewire\HrPortal\ViewEmployee;
 use App\Livewire\Mytasks\MyTasksUpdate;
 use App\Http\Controllers\IpcrController;
 use App\Http\Controllers\OpcrController;
@@ -70,8 +71,8 @@ use App\Livewire\Teachpermit\TeachPermitUpdate;
 use App\Livewire\Trainings\TrainingPreTestForm;
 use App\Http\Controllers\LeaveRequestController;
 use App\Livewire\Leaverequest\LeaveRequestTable;
-use App\Livewire\Trainings\TrainingPostTestForm;
 
+use App\Livewire\Trainings\TrainingPostTestForm;
 use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
@@ -81,16 +82,16 @@ use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
 use App\Livewire\Changeschedule\ChangeScheduleTable;
-use App\Livewire\Payroll\Accounting\AddPayrollTable;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
 // use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
+use App\Livewire\Payroll\Accounting\AddPayrollTable;
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
-use App\Livewire\Requestdocuments\RequestDocumentForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
 // use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
+use App\Livewire\Requestdocuments\RequestDocumentForm;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
@@ -313,6 +314,9 @@ Route::middleware(['auth', '2fa' ])->group(function (){
     Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
 
     Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
+
+    Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
+
 
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 
