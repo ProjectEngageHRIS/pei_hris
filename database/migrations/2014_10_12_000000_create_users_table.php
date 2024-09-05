@@ -20,7 +20,7 @@ return new class extends Migration
             $table->boolean('twofactor_approved')->default(False);
             $table->text('twofactor_secret')->nullable();
             $table->string('password');
-            $table->boolean('banned_flag')->default(1);
+            $table->boolean('banned_flag')->default(0);
             $table->rememberToken();
             $table->timestamps();
         });
