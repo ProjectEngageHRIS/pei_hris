@@ -1,5 +1,5 @@
-<main class="h-full min-h-[calc(100vh-80px)] grid content-center p-8 min-[500px]:px-40 min-[900px]px-64 place-content-center">
-    <div class="w-max gap-4 grid grid-cols-1 min-[500px]:grid-cols-2 min-[900px]:grid-cols-4">
+<main class="h-full min-h-[calc(100vh-80px)] grid content-center p-8 min-[500px]:px-40 min-[900px]:px-64 place-content-center">
+    <div class="w-max gap-4 flex flex-col min-[900px]:flex-row">
         <div class="col-span-1">
             <button type="button" onclick="location.href='{{ route('EmployeeDashboard') }}'" class="text-white rounded-lg bg-customRed size-44 hover:bg-red-600">
                 <div class="flex flex-col items-center gap-4 px-8">
@@ -47,5 +47,4 @@
             </div>
         @endif
     </div>
-</main>
 </main>

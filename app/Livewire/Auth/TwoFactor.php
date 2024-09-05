@@ -47,7 +47,6 @@ class TwoFactor extends Component
         $user = auth()->user();
         $google2fa = new Google2FA();
 
-
         if($user->twofactor_approved && $user->twofactor_secret != null){
             $this->secret =  Crypt::decryptString($user->twofactor_secret);
         } else {
@@ -64,86 +63,6 @@ class TwoFactor extends Component
         }
 
     }
-
-    // public function sendOtp()
-    // {
-    //     // $this->validate(['email' => 'required|email']);
-    //     $user = User::where('employee_id', $this->user_id)->first();
-    //     $user_email = $user->email;
-    //     if ($user) {
-    //         $otp = mt_rand(100000, 999999);
-
-    //         OtpVerification::updateOrCreate(
-    //             ['email' => $user_email],
-    //             [
-    //                 'email' => $user_email,
-    //                 'otp' => bcrypt($otp),
-    //                 'expires_at' => now()->addMinutes(5)
-    //             ]
-    //         );
-
-    //         Mail::to($user_email)->send(new ResetPasswordMail($otp));
-    //         $this->otpSent = true;
-    //         $this->js("alert('OTP Sent');");
-    //         $this->startCountdown();
-    //         ResetPasswordSendOtpSuccessful::dispatch($user_email);
-    //         // Enable resend button after countdown ends
-    //     } else {
-    //         $this->addError('email', 'The email address does not match our records.');
-    //     }
-
-    //     ResetPasswordSendOtp::dispatch($user_email);
-
-    //     return;
-    // }
-
-    // public function startCountdown()
-    // {
-    //     $this->otpSent = true;
-    //     $this->countdown = 30; // Countdown timer in seconds
-    //     $this->countdownTimer();
-
-    // }
-
-    // public function countdownTimer()
-    // {
-    //     $this->resendDisabled = true; // Enable resend button after countdown ends
-
-    //     if ($this->countdown > 0) {
-    //         $this->countdown--;
-    //         $this->dispatch('countdown', ['count' => $this->countdown]);
-    //         // Delay for  handled
-    //         $this->resendDisabled = true; // Enable resend button after countdown ends
-    //         $this->resendDisabled = false; // Enable resend button after countdown ends
-
-
-    //     }
-    // }
-
-    // public function resendOtp()
-    // {
-    //     $user = User::where('employee_id', $this->user_id)->first();
-    //     $user_email = $user->email;
-
-    //     if ($user) {
-    //         $otp = mt_rand(100000, 999999);
-
-    //         OtpVerification::updateOrCreate(
-    //             ['email' => $user_email],
-    //             [
-    //                 'email' => $user_email,
-    //                 'otp' => bcrypt($otp),
-    //                 'expires_at' => now()->addMinutes(5)
-    //             ]
-    //         );
-
-    //         Mail::to($user_email)->send(new ResetPasswordMail($otp));
-    //         $this->otpSent = true;
-    //         $this->js("alert('You can now resend OTP');");
-    //         $this->resendDisabled = true; // Disable resend button again
-    //         $this->startCountdown();
-    //     }
-    // }
 
     public $tooManyLoginAttempts;
 
