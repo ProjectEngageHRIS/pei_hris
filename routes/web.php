@@ -99,6 +99,7 @@ use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Changeinformation\ChangeInformationView;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Livewire\Admin\ItReset2fa;
 use App\Livewire\Changeinformation\ChangeInformationTable;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
@@ -399,6 +400,9 @@ Route::middleware(['auth', '2fa' ])->group(function (){
 
 });
 
-Route::middleware(('auth'))->group(function () {
-    Route::get("/itchangepassword", ItChangePassword::class)->name('ItChangePassword');
+Route::middleware(['auth', '2fa'])->group(function () {
+    Route::get("/it-change-password", ItChangePassword::class)->name('ItChangePassword');
+    
+    Route::get("/it-reset-2fa", ItReset2fa::class)->name('ItReset2Fa');
+
 });

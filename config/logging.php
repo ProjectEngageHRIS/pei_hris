@@ -197,6 +197,11 @@ return [
             'path' => storage_path('logs/admin/it-change-password.log'),
             'level' => 'error',
         ],
+        'it_reset_2fa' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/admin/it-reset-2fa.log'),
+            'level' => 'error',
+        ],
         'employee_change_password' => [
             'driver' => 'single',
             'path' => storage_path('logs/employee/employee-change-password..log'),
