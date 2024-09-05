@@ -8,6 +8,7 @@ use App\Models\UserDevices;
 use App\Events\otpInputAttempt;
 use App\Mail\ResetPasswordMail;
 use App\Models\OtpVerification;
+use Illuminate\Support\Facades\Log;
 use App\Events\ResetPasswordSendOtp;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Cookie;
 use PragmaRX\Google2FAQRCode\Google2FA;
 use Illuminate\Support\Facades\RateLimiter;
 use App\Events\ResetPasswordSendOtpSuccessful;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class TwoFactor extends Component
 {
@@ -48,7 +50,12 @@ class TwoFactor extends Component
         $google2fa = new Google2FA();
 
         if($user->twofactor_approved && $user->twofactor_secret != null){
-            $this->secret =  Crypt::decryptString($user->twofactor_secret);
+            try {
+                $this->secret =  Crypt::decryptString($user->twofactor_secret);
+            } catch (DecryptException $e) {
+                $this->addError('otp', 'Something went Wrong. Please Contact IT Support');
+                Log::channel('loginlog')->error('Failed to Decrypt the Secret Key: ' . $e->getMessage() . ' | ' . $user->employee_id);
+            }
         } else {
             $this->secret = $google2fa->generateSecretKey();
             // Check if the secret key is of valid length
@@ -70,22 +77,28 @@ class TwoFactor extends Component
     {
 
         $this->validate(['otp' => 'required|string']);
+        $user_id = auth()->user();
 
-        $throttleKey = strtolower($this->email);
+        $throttleKey = strtolower($user_id->employee_id);
         $maxAttempts = 10; // Maximum number of attempts allowed
         $decayMinutes = 1; // Time period in minutes to limit the attempts
+        $ip = \Request::getClientIp(true);
         
         // Check if too many attempts have been made
         if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
             $this->addError('otp', 'Too many Wrong Attemps. Please try again in ' . RateLimiter::availableIn($throttleKey) . ' seconds.');
             $this->tooManyLoginAttempts = true;
+            $attempts = RateLimiter::attempts($throttleKey);
+            Log::channel('loginlog')->warning('Too many OTP attempts for ' . $user_id->employee_id .  ' seconds. From IP: ' . $ip . ' | Attempts: ' . $attempts);
+
             return;
         }
         
         // Otherwise, record the attempt
         RateLimiter::hit($throttleKey, $decayMinutes * 60); // Decay time in seconds
+        $attempts = RateLimiter::attempts($throttleKey); // Get the number of attempts after hitting
+
         
-        $user_id = auth()->user();
         $user = User::where('employee_id', $user_id->employee_id)->first();
         $google2fa = new Google2FA();
     

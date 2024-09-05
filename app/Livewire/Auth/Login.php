@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\UserDevices;
 use App\Events\bannedAccount;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cookie;
@@ -36,50 +37,54 @@ class Login extends Component
         $throttleKey = strtolower($this->email);
         $maxAttempts = 5; // Maximum number of attempts allowed
         $decayMinutes = 1; // Time period in minutes to limit the attempts
+        $ip = \Request::getClientIp(true);
         
         // Check if too many attempts have been made
         if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
-            $this->addError('email', 'Too many login attempts. Please try again in ' . RateLimiter::availableIn($throttleKey) . ' seconds.');
+            $retryAfter = RateLimiter::availableIn($throttleKey);
+            $attempts = RateLimiter::attempts($throttleKey);
+            Log::channel('loginlog')->warning('Too many login attempts for ' . $this->email . '. Please try again in ' . $retryAfter . ' seconds. From IP: ' . $ip . ' | Attempts: ' . $attempts);
+            $this->addError('email', 'Too many login attempts. Please try again in ' . $retryAfter . ' seconds.');
             $this->tooManyLoginAttempts = true;
             return;
         }
         
-        // Otherwise, record the attempt
+        // Record the attempt
         RateLimiter::hit($throttleKey, $decayMinutes * 60); // Decay time in seconds
-
+        $attempts = RateLimiter::attempts($throttleKey); // Get the number of attempts after hitting
+        // Log::channel('loginlog')->info('Login attempt recorded for ' . $this->email . ' at ' . now() . ' From IP: ' . $ip . ' | Attempts: ' . $attempts);
+        
         // Check if the credentials are valid
-        // $credentials = ['employee_id' => $this->email, 'password' => $this->password];
         if (Auth::attempt(['employee_id' => $this->email, 'password' => $this->password], $this->remember)) {
             // For example, you might want to check for a valid device GUID here
+            Log::channel('loginlog')->info('Successful login for user ' . $this->email . ' from IP ' . $ip);
+            
             $cookieName = 'device_guid_' . $this->email;
             $deviceGuid = Cookie::get($cookieName);
             $user = auth()->user();
-            if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null ) {
+            if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null) {
                 RateLimiter::clear($throttleKey);
-                
                 if ($this->isValidDevice($this->email, $deviceGuid)) {
                     return redirect()->route('LoginDashboard');
                 } else {
                     session(['auth_user_id' => $this->email]);
                     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
                     return redirect()->to($url);
-                    // return redirect()->route('MFAVerify');
                 }
             } else {
-                // Handle case where device GUID is not found
                 session(['auth_user_id' => $this->email]);
                 $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
                 return redirect()->to($url);
             }
+        
             $loggedInUser = auth()->user()->role_id;
-
             if ($loggedInUser == 1) {
                 return redirect()->route('EmployeeDashboard');
             }
             return redirect()->route('LoginDashboard');
-            
         } else {
             // Invalid credentials
+            Log::channel('loginlog')->error('Failed login attempt for user ' . $this->email . ' from IP ' . $ip);
             $this->addError('email', trans('auth.failed'));
         }
 

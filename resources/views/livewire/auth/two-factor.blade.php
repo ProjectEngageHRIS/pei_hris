@@ -13,7 +13,7 @@
             </div>
         
             @if($QR_Image)
-                <p class="mt-4 text-md font-bold text-gray-800">Scan the code using Google Authenticator</p>
+                <p class="mt-4 text-md font-bold text-center text-gray-800">Scan the code using Google Authenticator <br> or Set Up Manually</p>
                 {!! $QR_Image !!}
             @endif
         
@@ -60,7 +60,7 @@
                             <li>Tap on the '+' icon to add a new account.</li>
                             <li>Select 'Enter a setup key'.</li>
                             <li>For 'Account Name', enter <strong>SL Groups</strong>.</li>
-                            <li>For 'Secret Key', enter <strong>{{ $secret }}</strong>.</li>
+                            <li>For 'Setup Key', enter <strong>{{ $secret }}</strong>.</li>
                             <li>Tap 'Add' to complete the setup.</li>
                             <li>Click 'Close' below here, and verify the OTP from your authenticator.</li>
                         </ul>
