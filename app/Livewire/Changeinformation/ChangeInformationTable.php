@@ -74,20 +74,16 @@ class ChangeInformationTable extends Component
 
         switch ($this->status_filter) {
             case '1':
-                $query->where('status',  'Completed');
-                $this->statusFilterName = "Completed";
+                $query->where('status',  'Approved');
+                $this->statusFilterName = "Approved";
                 break;
             case '2':
-                $query->where('status', 'Ongoing');
-                $this->statusFilterName = "Ongoing";
+                $query->where('status', 'Pending');
+                $this->statusFilterName = "Pending";
                 break;
             case '3':
-                $query->where('status', 'Report');
-                $this->statusFilterName = "Report";
-                break;
-            case '4':
-                $query->where('status', 'Unassigned');
-                $this->statusFilterName = "Unassigned";
+                $query->where('status', 'Declined');
+                $this->statusFilterName = "Declined";
                 break;
             case '4':
                 $query->where('status', 'Cancelled');

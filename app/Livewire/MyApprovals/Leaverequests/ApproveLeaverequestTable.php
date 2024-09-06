@@ -156,6 +156,10 @@ class ApproveLeaverequestTable extends Component
                 $query->where('status', 'Declined');
                 $this->statusFilterName = "Declined";
                 break;
+            case '4':
+                $query->where('status', 'Cancelled');
+                $this->statusFilterName = "Cancelled";
+                break;
             default:
                 $this->statusFilterName = "All";
                 break;

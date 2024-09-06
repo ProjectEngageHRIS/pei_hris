@@ -82,7 +82,7 @@
                         <li>
                             <label for="status_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-200 hover:text-customGray1">
                                 <input id="status_filter-radio-0" type="radio" wire:model.live="status_filter" value="0" name="status_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
-                                <label for="status_filter-radio-0" class="ml-2 cursor-pointer">All</label>
+                                <label for="status_filter-radio-0" class="cursor-pointer ml-2">All</label>
                             </label>
                         </li>   
                         <li>
@@ -98,6 +98,11 @@
                         <li>
                             <label for="status_filter-radio-3"class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customRed hover:text-white ">
                                 <input id="status_filter-radio-3" type="radio" wire:model.live="status_filter" value="3" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="status_filter-radio-3" class="cursor-pointer">&nbsp; Declined</label>  </input>
+                            </label>
+                        </li>
+                        <li>
+                            <label for="status_filter-radio-4"class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-600 hover:text-white ">
+                                <input id="status_filter-radio-4" type="radio" wire:model.live="status_filter" value="4" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-600 ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="status_filter-radio-3" class="cursor-pointer">&nbsp; Cancelled</label>  </input>
                             </label>
                         </li>
                     </ul>

@@ -165,31 +165,31 @@ class HrTicketsTable extends Component
         ]);
     }
 
-    public function download($reference_num){
-        $leaveRequestData = Leaverequest::where('reference_num', $reference_num)->first();
-        $image = base64_decode($leaveRequestData->leave_form);
-        $finfo = new finfo(FILEINFO_MIME_TYPE);
-        $contentType = $finfo->buffer($image);
-        // dd($contentType);
-        switch($contentType){
-            case "application/pdf":
-                $fileName = "leaverequest.pdf";
-                break;
-            case "image/jpeg":
-                $fileName = "leaverequest.jpg";
-                break;
-            case "image/png":
-                $fileName = "leaverequest.png";
-                break;
-            default:
-                abort(404);
-        }
-        return Response::make($image, 200, [
-            'Content-Type' => $contentType,
-            'Content-Disposition' => 'attachment; filename="'.$fileName.'"'
-        ]);
+    // public function download($reference_num){
+    //     $leaveRequestData = Leaverequest::where('reference_num', $reference_num)->first();
+    //     $image = base64_decode($leaveRequestData->leave_form);
+    //     $finfo = new finfo(FILEINFO_MIME_TYPE);
+    //     $contentType = $finfo->buffer($image);
+    //     // dd($contentType);
+    //     switch($contentType){
+    //         case "application/pdf":
+    //             $fileName = "leaverequest.pdf";
+    //             break;
+    //         case "image/jpeg":
+    //             $fileName = "leaverequest.jpg";
+    //             break;
+    //         case "image/png":
+    //             $fileName = "leaverequest.png";
+    //             break;
+    //         default:
+    //             abort(404);
+    //     }
+    //     return Response::make($image, 200, [
+    //         'Content-Type' => $contentType,
+    //         'Content-Disposition' => 'attachment; filename="'.$fileName.'"'
+    //     ]);
     
-    }
+    // }
 
     public function cancelForm(){
         try{
