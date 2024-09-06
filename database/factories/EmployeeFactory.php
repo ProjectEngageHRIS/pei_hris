@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Employee;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -181,10 +182,10 @@ class EmployeeFactory extends Factory
             'civil_status' => $this->faker->randomElement(['Single', 'Married', 'Divorced', 'Widowed']),
             'spouse' => $this->faker->firstName,
             'names_of_children' => json_encode($namesOfChildren),
-            'sss_num' => $this->faker->numerify('###########'),
-            'tin_num' => $this->faker->numerify('###-###-###-###'), // Adjust format as needed
-            'phic_num' => $this->faker->numerify('##-#########-#'), // Adjust format as needed
-            'hdmf_num' => $this->faker->numerify('####-####-####'), // Adjust format as needed
+            'sss_num' => Crypt::encryptString($this->faker->numerify('###########')),
+            'tin_num' => Crypt::encryptString($this->faker->numerify('###-###-###-###')), // Adjust format as needed
+            'phic_num' => Crypt::encryptString($this->faker->numerify('##-#########-#')), // Adjust format as needed
+            'hdmf_num' => Crypt::encryptString($this->faker->numerify('####-####-####')), // Adjust format as needed
             'emergency_contact' => json_encode($emergencyContact),
 
 

@@ -5,7 +5,9 @@ namespace App\Livewire\HrPortal;
 use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Contracts\Encryption\DecryptException;
 
 class ViewEmployee extends Component
 {
@@ -104,10 +106,16 @@ class ViewEmployee extends Component
 
         if ($employeeRecord) {
             // Assign each property from the employeeRecord
-            $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
-            $this->phic_num = Crypt::decryptString($employeeRecord->phic_num);
-            $this->hdmf_num = Crypt::decryptString($employeeRecord->hdmf_num);
-            $this->sss_num = Crypt::decryptString($employeeRecord->sss_num);
+            try {
+                throw new \Exception('test');
+                $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
+                $this->phic_num = Crypt::decryptString($employeeRecord->phic_num);
+                $this->hdmf_num = Crypt::decryptString($employeeRecord->hdmf_num);
+                $this->sss_num = Crypt::decryptString($employeeRecord->sss_num);
+            } catch (DecryptException $e) {
+                Log::channel('employee_info')->error('Failed to Decrypt Information: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+                $this->dispatch('trigger-error');
+            }
             $this->emergency_contact = $employeeRecord->emergency_contact;
             $this->role_id = $employeeRecord->role_id;
 

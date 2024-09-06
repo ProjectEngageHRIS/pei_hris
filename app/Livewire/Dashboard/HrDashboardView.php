@@ -317,7 +317,7 @@ class HrDashboardView extends Component
             $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
             $employee->active = 0;
             $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
-            $user->banned_flag = 0;
+            $user->banned_flag = 1;
     
             $employee->save();
             $user->save();
@@ -330,6 +330,36 @@ class HrDashboardView extends Component
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerDeactivateError');
+        }
+    }
+
+    public function activateEmployee(){
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+
+            if(!$this->currentFormId){
+                throw new \Exception('No Current Form ID');
+            }
+
+            $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
+            $employee->active = 1;
+            $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
+            $user->banned_flag = 0;
+    
+            $employee->save();
+            $user->save();
+
+            $this->dispatch('triggerActivateSuccess');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to activate an Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerActivateError');
         }
     }
 

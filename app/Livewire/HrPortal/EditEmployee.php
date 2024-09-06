@@ -6,6 +6,7 @@ use App\Models\User;
 use Livewire\Component;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Encryption\DecryptException;
@@ -106,15 +107,17 @@ class EditEmployee extends Component
         $employeeRecord  = Employee::where('employee_id', $this->employee_id)->first();
 
         if ($employeeRecord) {
+            $loggedInUser = auth()->user();
             // Assign each property from the employeeRecord
-            // try {
+            try {
                 $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
                 $this->phic_num = Crypt::decryptString($employeeRecord->phic_num);
                 $this->hdmf_num = Crypt::decryptString($employeeRecord->hdmf_num);
                 $this->sss_num = Crypt::decryptString($employeeRecord->sss_num);
-            // } catch (DecryptException $e) {
-            //     continue;
-            // }
+            } catch (DecryptException $e) {
+                Log::channel('employee_info')->error('Failed to Decrypt Information: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+                $this->dispatch('trigger-error');
+            }
             $this->emergency_contact = $employeeRecord->emergency_contact;
             $this->role_id = $employeeRecord->role_id;
 
@@ -326,121 +329,136 @@ class EditEmployee extends Component
             $this->resetValidation();
         }
 
-        // Find the employee record by ID (assuming employee_id is unique)
-        $employee_data = Employee::where('employee_id', $this->employee_id)->first();
+        $loggedInUser = auth()->user();
 
-        if (!$employee_data) {
-            // Handle the case where the employee record is not found
-            $this->js("alert('Employee record not found!')");
-            return;
+        try {
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+
+            // Find the employee record by ID (assuming employee_id is unique)
+            $employee_data = Employee::where('employee_id', $this->employee_id)->first();
+
+            if (!$employee_data) {
+                // Handle the case where the employee record is not found
+                $this->js("alert('Employee record not found!')");
+                return;
+            }
+
+            if($this->employeeHistory){
+                foreach($this->employeeHistory as $history){
+                    $jsonEmployeeHistory[] = [
+                        'name_of_company' => $history['name_of_company'],
+                        'prev_position' => $history['prev_position'],
+                        'start_date' => $history['start_date'],
+                        'end_date' => $history['end_date'],
+                    ];
+                }
+            }
+
+            $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? '') ;
+
+            // Update the employee record with new data
+            $employee_data->first_name = $this->first_name;
+            $employee_data->middle_name = $this->middle_name;
+            $employee_data->last_name = $this->last_name;
+            $employee_data->phone_number = $this->phone_number;
+            $employee_data->landline_number = $this->landline_number;
+            $employee_data->employee_email = $this->employee_email;
+            $employee_data->age = $this->age; // Assign age here correctly
+            $employee_data->birth_date = $this->birth_date;
+            $employee_data->religion = $this->religion;
+            $employee_data->gender = $this->gender;
+
+            $employee_data->nickname = $this->nickname;
+            $employee_data->home_address = $this->home_address;
+            $employee_data->provincial_address = $this->provincial_address;
+            $employee_data->civil_status = $this->civil_status;
+
+            // Work Related
+            $employee_data->start_of_employment = $this->start_of_employment;
+            $employee_data->current_position = $this->current_position;
+            $employee_data->department = $this->department; // Assuming $this->company represents the department
+            $employee_data->inside_department = $this->inside_department; // Assuming $this->department represents the department details
+            $employee_data->employee_type = $this->employee_type;
+            $employee_data->sss_num = Crypt::encryptString($this->sss_num);
+            $employee_data->tin_num = Crypt::encryptString($this->tin_num);
+            $employee_data->phic_num = Crypt::encryptString($this->phic_num);
+            $employee_data->hdmf_num = Crypt::encryptString($this->hdmf_num);
+            $employee_data->files = $this->files;
+            $employee_data->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));
+            $employee_data->sss_num = $this->sss_num;
+
+            // Family Information
+            $employee_data->name_of_father = $this->name_of_father;
+            // $employee_data->e = $this->name_of_father;
+            $employee_data->emergency_contact = json_encode($this->emergency_contact);
+
+            $employee_data->name_of_mother = $this->name_of_mother;
+            $employee_data->spouse = $this->spouse; // Assuming $this->name_of_spouse represents spouse details
+            // $employee_data->names_of_children = $this->names_of_children;
+            // $employee_data->emergency_contact = $this->emergency_contact;
+
+            // School Information
+            $employee_data->high_school_school = $this->high_school_school;
+            $employee_data->high_school_date_graduated = $this->high_school_date_graduated;
+            $employee_data->college_school = $this->college_school;
+            $employee_data->college_course = $this->college_course;
+            $employee_data->college_date_graduated = $this->college_date_graduated;
+            $employee_data->vocational_school = $this->vocational_school;
+            $employee_data->vocational_course = $this->vocational_course;
+            $employee_data->vocational_date_graduated = $this->vocational_date_graduated;
+            $employee_data->birth_place = $this->birth_place;
+
+            $formattedNamesString = '';
+
+            foreach ($this->names_of_children as $name) {
+                $formattedNamesString .= $name . PHP_EOL;
+            }
+
+            // Convert the formatted array to a JSON-encoded string
+            $formattedNamesString = rtrim($formattedNamesString, PHP_EOL);
+
+            $employee_data->names_of_children = $formattedNamesString;
+
+            $this->emergencyContact = $this->emergencyContact ?? [];
+
+            // Prepare JSON array
+            $jsonEmergencyContact = [];
+
+            foreach($this->emergencyContact as $emergenC) {
+                $jsonEmergencyContact[] = [
+                    'contact_person' => $emergenC['contact_person'] ?? '', // Default to empty string if not set
+                    'relationship' => $emergenC['relationship'] ?? '', // Default to empty string if not set
+                    'address' => $emergenC['address'] ?? '', // Default to empty string if not set
+                    'relationship' => $emergenC['cellphone_number'] ?? '', // Default to empty string if not set
+
+                ];
+            }
+
+            $existing_user = User::where('email', $this->employee_email)->first();
+            if ($existing_user) {
+                // Update the existing user if needed
+                $existing_user->email = $this->employee_email;
+                $existing_user->employee_id = $this->employee_id;
+                $existing_user->role_id = $this->role_id;
+                $existing_user->save();
+            }
+
+
+            $jsonEmergencyContact = json_encode($jsonEmergencyContact);
+            $employee_data->employee_history = $jsonEmployeeHistory;
+            // Save the updated employee data
+            $employee_data->save();
+
+            $this->dispatch('trigger-success'); 
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('employee_info')->error('Failed to update Employee Information: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            $this->dispatch('trigger-error');
         }
-
-
-        foreach($this->employeeHistory as $history){
-            $jsonEmployeeHistory[] = [
-                'name_of_company' => $history['name_of_company'],
-                'prev_position' => $history['prev_position'],
-                'start_date' => $history['start_date'],
-                'end_date' => $history['end_date'],
-            ];
-        }
-
-        $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
-
-        // Update the employee record with new data
-        $employee_data->first_name = $this->first_name;
-        $employee_data->middle_name = $this->middle_name;
-        $employee_data->last_name = $this->last_name;
-        $employee_data->phone_number = $this->phone_number;
-        $employee_data->landline_number = $this->landline_number;
-        $employee_data->employee_email = $this->employee_email;
-        $employee_data->age = $this->age; // Assign age here correctly
-        $employee_data->birth_date = $this->birth_date;
-        $employee_data->religion = $this->religion;
-        $employee_data->gender = $this->gender;
-
-        $employee_data->nickname = $this->nickname;
-        $employee_data->home_address = $this->home_address;
-        $employee_data->provincial_address = $this->provincial_address;
-        $employee_data->civil_status = $this->civil_status;
-
-        // Work Related
-        $employee_data->start_of_employment = $this->start_of_employment;
-        $employee_data->current_position = $this->current_position;
-        $employee_data->department = $this->department; // Assuming $this->company represents the department
-        $employee_data->inside_department = $this->inside_department; // Assuming $this->department represents the department details
-        $employee_data->employee_type = $this->employee_type;
-        $employee_data->sss_num = Crypt::encryptString($this->sss_num);
-        $employee_data->tin_num = Crypt::encryptString($this->tin_num);
-        $employee_data->phic_num = Crypt::encryptString($this->phic_num);
-        $employee_data->hdmf_num = Crypt::encryptString($this->hdmf_num);
-        $employee_data->files = $this->files;
-        $employee_data->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));
-        $employee_data->sss_num = $this->sss_num;
-
-        // Family Information
-        $employee_data->name_of_father = $this->name_of_father;
-        // $employee_data->e = $this->name_of_father;
-        $employee_data->emergency_contact = json_encode($this->emergency_contact);
-
-        $employee_data->name_of_mother = $this->name_of_mother;
-        $employee_data->spouse = $this->spouse; // Assuming $this->name_of_spouse represents spouse details
-        // $employee_data->names_of_children = $this->names_of_children;
-        // $employee_data->emergency_contact = $this->emergency_contact;
-
-        // School Information
-        $employee_data->high_school_school = $this->high_school_school;
-        $employee_data->high_school_date_graduated = $this->high_school_date_graduated;
-        $employee_data->college_school = $this->college_school;
-        $employee_data->college_course = $this->college_course;
-        $employee_data->college_date_graduated = $this->college_date_graduated;
-        $employee_data->vocational_school = $this->vocational_school;
-        $employee_data->vocational_course = $this->vocational_course;
-        $employee_data->vocational_date_graduated = $this->vocational_date_graduated;
-        $employee_data->birth_place = $this->birth_place;
-
-        $formattedNamesString = '';
-
-        foreach ($this->names_of_children as $name) {
-            $formattedNamesString .= $name . PHP_EOL;
-        }
-
-        // Convert the formatted array to a JSON-encoded string
-        $formattedNamesString = rtrim($formattedNamesString, PHP_EOL);
-
-        $employee_data->names_of_children = $formattedNamesString;
-
-        $this->emergencyContact = $this->emergencyContact ?? [];
-
-        // Prepare JSON array
-        $jsonEmergencyContact = [];
-
-        foreach($this->emergencyContact as $emergenC) {
-            $jsonEmergencyContact[] = [
-                'contact_person' => $emergenC['contact_person'] ?? '', // Default to empty string if not set
-                'relationship' => $emergenC['relationship'] ?? '', // Default to empty string if not set
-                'address' => $emergenC['address'] ?? '', // Default to empty string if not set
-                'relationship' => $emergenC['cellphone_number'] ?? '', // Default to empty string if not set
-
-            ];
-        }
-
-        $existing_user = User::where('email', $this->employee_email)->first();
-        if ($existing_user) {
-            // Update the existing user if needed
-            $existing_user->email = $this->employee_email;
-            $existing_user->employee_id = $this->employee_id;
-            $existing_user->role_id = $this->role_id;
-            $existing_user->save();
-        }
-
-
-        $jsonEmergencyContact = json_encode($jsonEmergencyContact);
-        $employee_data->employee_history = $jsonEmployeeHistory;
-        // Save the updated employee data
-        $employee_data->save();
-
-        $this->js("alert('Employee Information Updated!')");
 
         return redirect()->to(route('HumanResourceDashboard'));
     }

@@ -574,6 +574,15 @@
                                                         Deactivate
                                                     </button>
                                                 @else
+                                                    {{-- Activate Button --}}
+                                                    <button @click="openActivateModal('{{ $employee->employee_id }}')"
+                                                        type="button"
+                                                        class="flex items-center py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white border border-gray-300 hover:bg-gray-100 hover:text-red-700 rounded-lg">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5 mr-3">
+                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 3.75H6.912a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H15M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859M12 3v8.25m0 0-3-3m3 3 3-3" />
+                                                        </svg>
+                                                        Activate
+                                                    </button>
                                                     <!-- Delete Button -->
                                                     <button @click="openDeleteModal('{{ $employee->employee_id }}')"
                                                         type="button"
@@ -600,6 +609,7 @@
         <div class="w-full p-4 bg-gray-100 rounded-b-lg " wire:scroll>
             {{ $EmployeeData->links(data : ['scrollTo' => False]) }}
         </div>
+
         <div x-cloak x-data="{ deactivateModal: false }" x-ref="deactivate-modal-ref" 
                 x-init="
                 $el.addEventListener('deactivate-modal-open', (event) => {
@@ -644,6 +654,57 @@
                                 Yes
                             </button>
                             <button @click="deactivateModal = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                No
+                            </button>
+                        </div>
+                    </div>
+            </div>
+        </div>
+
+        <div x-cloak x-data="{ activateModal: false }" x-ref="activate-modal-ref" 
+                x-init="
+                $el.addEventListener('activate-modal-open', (event) => {
+                    $wire.set('currentFormId', event.detail);
+                    activateModal = true;
+                });
+                $el.addEventListener('modal-close', () => activateModal = false);"
+                x-show="activateModal" 
+                @keydown.window.escape="activateModal = false" 
+                x-transition:enter="transition ease-out duration-300"
+                x-transition:enter-start="opacity-0"
+                x-transition:enter-end="opacity-100"
+                x-transition:leave="transition ease-in duration-200"
+                x-transition:leave-start="opacity-100"
+                x-transition:leave-end="opacity-0"
+                tabindex="-1" 
+                class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
+                id="activate-modal">
+                <div x-show="activateModal" 
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="transform opacity-0 scale-90"
+                    x-transition:enter-end="transform opacity-100 scale-100"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="transform opacity-100 scale-100"
+                    x-transition:leave-end="transform opacity-0 scale-90"
+                    class="relative p-4 w-full max-w-md max-h-full bg-white rounded-lg shadow dark:bg-gray-700"
+                    style="z-index: 60;">
+                    <button type="button" @click="activateModal = false"
+                            class="absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                        </svg>
+                        <span class="sr-only">Close modal</span>
+                    </button>
+                    <div class="p-4 md:p-5">
+                        <div class="text-center">
+                            <svg class="mx-auto mb-4 text-red-600 w-12 h-12 dark:text-gray-200" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                            </svg>
+                            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">Confirm Activation?</h3>
+                            <button wire:click.prevent="activateEmployee" class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm px-5 py-2.5">
+                                Yes
+                            </button>
+                            <button @click="activateModal = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
                                 No
                             </button>
                         </div>
@@ -719,6 +780,7 @@
       
       <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
             @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Created'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
+            @trigger-success-activate.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Activated'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
             @trigger-success-deactivate.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deactivated'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
             @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Deleted'; openConfirmation = false; setTimeout(() => showToast = false, 3000)"
             @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; setTimeout(() => showToast = false, 3000)">
@@ -750,8 +812,8 @@
                 </div>
         </div>
             <!-- Loading screen -->
-            <div wire:loading wire:target="submit, deactivateEmployee, deleteEmployee, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over z-50">
-                <div wire:loading wire:target="submit, deactivateEmployee, deleteEmployee, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay z-50">
+            <div wire:loading wire:target="submit, deactivateEmployee, deleteEmployee, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, activateEmployee" class="load-over z-50">
+                <div wire:loading wire:target="submit, deactivateEmployee, deleteEmployee, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, activateEmployee" class="loading-overlay z-50">
                     <div class="flex flex-col items-center justify-center">
                         <div class="spinner"></div>
                         <p>Processing...</p>
@@ -767,6 +829,14 @@
         const modal = document.getElementById('deactivate-modal');
         if (modal) {
             const event = new CustomEvent('deactivate-modal-open', { detail: id });
+            modal.dispatchEvent(event);
+        }
+    }
+
+    function openActivateModal(id) {
+        const modal = document.getElementById('activate-modal');
+        if (modal) {
+            const event = new CustomEvent('activate-modal-open', { detail: id });
             modal.dispatchEvent(event);
         }
     }
@@ -798,6 +868,25 @@
             const alpineData = Alpine.$data(modal);
             // Update the state
             alpineData.showModal = false; // Open the modal
+        });
+        Livewire.on('triggerActivateSuccess', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-success-activate'));
+            const modal = document.querySelector(`[x-ref="activate-modal-ref"]`);
+            const view_modal = document.querySelector(`[x-ref="view-modal"]`);
+            const viewModal = Alpine.$data(view_modal);
+            viewModal.openViewModal = false;
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.activateModal = false; // Open the modal
+        });
+        Livewire.on('triggerActivateError', (itemId) => {
+            window.dispatchEvent(new CustomEvent('trigger-error'));
+            const modal = document.querySelector(`[x-ref="activate-modal-ref"]`);
+            // Access Alpine data
+            const alpineData = Alpine.$data(modal);
+            // Update the state
+            alpineData.activateModal = false; // Open the modal
         });
         Livewire.on('triggerDeactivateSuccess', (itemId) => {
             window.dispatchEvent(new CustomEvent('trigger-success-deactivate'));

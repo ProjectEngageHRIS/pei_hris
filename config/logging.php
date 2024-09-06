@@ -154,7 +154,12 @@ return [
         ],
         'hrdashboard' => [
             'driver' => 'single',
-            'path' => storage_path('logs/hrdtr/hrdashboard..log'),
+            'path' => storage_path('logs/hrdtr/hrdashboard.log'),
+            'level' => 'error',
+        ],
+        'employee_info' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/hrdtr/employee_info.log'),
             'level' => 'error',
         ],
         'leaverequests' => [

@@ -705,7 +705,6 @@
                                                     <option value="13">Procurement (HR Internal Tickets)</option>
                                                     <option value="14">IT Lead</option>
                                                     <option value="15">IT Support</option>
-
                                                 </select>
                                                 @error('role_id')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();" >
@@ -874,7 +873,7 @@
     <button @click="showModal = true" type="button" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">Submit</button>
 
     <!-- Confirmation Modal -->
-    <div x-show="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+    <div x-cloak x-show="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
         <div class="bg-white p-6 rounded-lg shadow-lg">
             <h2 class="text-lg font-semibold text-gray-700">Confirm Submission</h2>
             <p class="mt-4 text-gray-600">Are you sure you want to submit the changes?</p>
@@ -884,20 +883,50 @@
             </div>
         </div>
     </div>
-
-
-                <!-- Loading screen -->
-                <div wire:loading wire:target="submit" class="load-over">
-                    <div wire:loading wire:target="submit" class="loading-overlay">
-                        <div class="flex flex-col justify-center items-center">
-                            <div class="spinner"></div>
-                            <p>Changing Employee Information...</p>
-                        </div>
-
-                    </div>
-                    </form>
-
+    <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
+        @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
+        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
+        <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
+        <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
+            x-show="showToast"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-90"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-90">
+        <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
+            <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+            </svg>
+            <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
+            </svg>
+            <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
+        </div>
+        <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
+        <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
+            <span class="sr-only">Close</span>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
                 </div>
+            </div>
+    </div>
+
+    <!-- Loading screen -->
+    <div wire:loading wire:target="submit" class="load-over">
+        <div wire:loading wire:target="submit" class="loading-overlay">
+            <div class="flex flex-col justify-center items-center">
+                <div class="spinner"></div>
+                <p>Changing Employee Information...</p>
+            </div>
+
+        </div>
+        </form>
+
+    </div>
 
     </section>
 
