@@ -57,6 +57,7 @@ return new class extends Migration
                 $table->json('emergency_contact')->nullable();
                 $table->string('emp_image')->nullable();
                 $table->json('employee_history')->nullable();
+                $table->string('files_link')->nullable();
                 $table->string('files')->nullable();
                 $table->date('start_of_employment');
                 $table->date('end_of_employment')->nullable();

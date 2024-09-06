@@ -85,6 +85,7 @@ class CreateEmployee extends Component
 
     public $trainings_seminars=[];
     public $age;
+    public $files_link;
 
     public $religion;
     public $birth_place;
@@ -196,7 +197,10 @@ class CreateEmployee extends Component
         'phic_num' => ['required', 'numeric', 'digits:12'],
         'hdmf_num' => ['required', 'numeric', 'digits:12'],
         'employee_id' => ['nullable', 'regex:/^SLE\d{4}$/', 'unique:employees,employee_id'],
-        'files' => 'required|url',
+        'files_link' => 'required|url',
+        'files' => 'nullable|array|max:5',
+        'files.*.name_of_file' => 'required|string|min:2|max:75',
+        'files.*.completed' => 'nullable|boolean',
 
         'password' => [
     'required',
@@ -249,6 +253,11 @@ class CreateEmployee extends Component
         'names_of_children.*' => 'Child\'s Name',
     ];
 
+    public function addFile()
+    {
+        $this->files[] = ['name_of_file' => '', 'completed' =>''];
+    }
+
     public function submit()
     {
         foreach($this->rules as $rule => $validationRule){
@@ -287,7 +296,7 @@ class CreateEmployee extends Component
                 $add_employee->emergency_contact = json_encode($this->emergency_contact);
                 $add_employee->employee_history = json_encode($this->employee_history);
     
-                $add_employee->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));            
+                $add_employee->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));
                 $add_employee->sss_num = Crypt::encryptString($this->sss_num);
                 $add_employee->tin_num = Crypt::encryptString($this->tin_num);
                 $add_employee->phic_num = Crypt::encryptString($this->phic_num);
@@ -304,9 +313,19 @@ class CreateEmployee extends Component
                     }
                 }
     
+                foreach($this->files ?? [] as $Files){
+                    $jsonFiles[] = [
+                        'name_of_file' => $Files['name_of_file'],
+                        'completed' => $Files['completed'],
+    
+                    ];
+                }
+
+                $add_employee->files_link = $this->files_link;
                 $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? '') ;
+                $jsonFiles = json_encode($jsonFiles ?? '') ;
                 $add_employee->employee_history = $jsonEmployeeHistory;
-                $add_employee->files = $this->files;
+                $add_employee->files = $jsonFiles;
                 $add_employee->employee_id = $this->employee_id;
                 $add_employee->first_name = $this->first_name;
                 $add_employee->middle_name = $this->middle_name;
@@ -369,53 +388,6 @@ class CreateEmployee extends Component
                 $add_employee->save();
                 $existing_user = User::where('email', $this->employee_email)->first();
                 $existing_user = User::where('email', $this->employee_email)->first();
-                $this->trainingsSeminars = $this->trainingsSeminars ?? [];
-    
-                // Prepare JSON array
-                $jsongovttrainingsSeminars = [];
-        
-                foreach($this->trainingsSeminars as $TS) {
-                    $jsongovttrainingsSeminars[] = [
-                        'exam_name' => $TS['training_name'] ?? '', // Default to empty string if not set
-                      // Default to empty string if not set
-        
-                    ];
-                }
-        
-        
-                $this->govtProfessionalExamTaken = $this->govtProfessionalExamTaken ?? [];
-        
-                // Prepare JSON array
-                $jsongovtProfessionalExamTaken = [];
-        
-                foreach($this->govtProfessionalExamTaken as $GPE) {
-                    $jsongovtProfessionalExamTaken[] = [
-                        'exam_name' => $GPE['exam_name'] ?? '', // Default to empty string if not set
-                        'exam_rating' => $GPE['exam_rating'] ?? '', // Default to empty string if not set
-                      // Default to empty string if not set
-        
-                    ];
-                }
-        
-                $this->emergencyContact = $this->emergencyContact ?? [];
-        
-                // Prepare JSON array
-                $jsonEmergencyContact = [];
-        
-                foreach($this->emergencyContact ?? [] as $emergenC) {
-                    $jsonEmergencyContact[] = [
-                        'contact_person' => $emergenC['contact_person'], // Default to empty string if not set
-                        'relationship' => $emergenC['relationship'], // Default to empty string if not set
-                        'address' => $emergenC['address'], // Default to empty string if not set
-                        'relationship' => $emergenC['cellphone_number'], // Default to empty string if not set
-        
-                    ];
-                }
-                // Encode the array to JSON
-                $jsongovttrainingsSeminars = json_encode($jsongovttrainingsSeminars ?? ' ');
-                $jsongovtProfessionalExamTaken = json_encode($jsongovtProfessionalExamTaken ?? ' ');
-                $jsonEmergencyContact = json_encode($jsonEmergencyContact);
-
                 if ($existing_user) {
                     // Update the existing user if needed
                     $existing_user->email = $this->employee_email;
@@ -442,7 +414,59 @@ class CreateEmployee extends Component
                 if (isset($add_employee->employee_email)) {
                 Mail::to($add_employee->employee_email)->send(new CreateMailEmployee($employeeRecord, $add_employee, $new_user));
                 }
+                // Assuming $add_employee is an instance of your employee model
+    
             });
+    
+            $this->trainingsSeminars = $this->trainingsSeminars ?? [];
+    
+            // Prepare JSON array
+            $jsongovttrainingsSeminars = [];
+    
+            foreach($this->trainingsSeminars as $TS) {
+                $jsongovttrainingsSeminars[] = [
+                    'exam_name' => $TS['training_name'] ?? '', // Default to empty string if not set
+                  // Default to empty string if not set
+    
+                ];
+            }
+    
+    
+            $this->govtProfessionalExamTaken = $this->govtProfessionalExamTaken ?? [];
+    
+            // Prepare JSON array
+            $jsongovtProfessionalExamTaken = [];
+    
+            foreach($this->govtProfessionalExamTaken as $GPE) {
+                $jsongovtProfessionalExamTaken[] = [
+                    'exam_name' => $GPE['exam_name'] ?? '', // Default to empty string if not set
+                    'exam_rating' => $GPE['exam_rating'] ?? '', // Default to empty string if not set
+                  // Default to empty string if not set
+    
+                ];
+            }
+    
+            $this->emergencyContact = $this->emergencyContact ?? [];
+    
+            // Prepare JSON array
+            $jsonEmergencyContact = [];
+    
+            foreach($this->emergencyContact ?? [] as $emergenC) {
+                $jsonEmergencyContact[] = [
+                    'contact_person' => $emergenC['contact_person'], // Default to empty string if not set
+                    'relationship' => $emergenC['relationship'], // Default to empty string if not set
+                    'address' => $emergenC['address'], // Default to empty string if not set
+                    'relationship' => $emergenC['cellphone_number'], // Default to empty string if not set
+    
+                ];
+            }
+    
+    
+            // Encode the array to JSON
+    
+            $jsongovttrainingsSeminars = json_encode($jsongovttrainingsSeminars ?? ' ');
+            $jsongovtProfessionalExamTaken = json_encode($jsongovtProfessionalExamTaken ?? ' ');
+            $jsonEmergencyContact = json_encode($jsonEmergencyContact);
             $this->dispatch('trigger-success'); 
             return redirect()->to(route('HumanResourceDashboard'));
 
