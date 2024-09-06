@@ -218,7 +218,7 @@
                     <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
                         <svg class="w-5 h-5 text-gray-900 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
                     </div>
-                    <input type="text" id="table-search" wire:model.live="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed border-text " placeholder="Search like: 2024-01-01 ">
+                    <input type="text" id="table-search" wire:model.live.debounce.250ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 w-80 bg-gray-50 focus:ring-customRed focus:border-customRed border-text " placeholder="Search like: 2024-01-01 ">
                 </div>
             </div>
             <table class="w-full pb-4 text-sm text-left text-gray-500 h-fit rtl:text-right " style="overflow-y:hidden;" >
@@ -501,7 +501,7 @@
             {{ $LeaveRequestData->links() }}
         </div>
         
-        <div wire:loading wire:target="president_status_filter, supervisor_status_filter, date_filter" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
+        <div wire:loading wire:target="president_status_filter, supervisor_status_filter, date_filter, search" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
             <div class="z-50 mt-4">
                 <div id="toast-container" class="flex items-center justify-center w-full h-full">
                     <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 border-6 border-white text-customRed bg-white bg-opacity-90 rounded-lg shadow"

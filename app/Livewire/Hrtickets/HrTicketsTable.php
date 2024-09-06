@@ -152,12 +152,21 @@ class HrTicketsTable extends Component
                 break;
         }
         
-
-
         if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('application_date', 'like', '%' . $term . '%')
+                      ->orWhere('concerned_employee', 'like', '%' . $term . '%')
+                      ->orWhere('type_of_ticket', 'like', '%' . $term . '%')
+                      ->orWhere('type_of_request', 'like', '%' . $term . '%')
+                      ->orWhere('sub_type_of_request', 'like', '%' . $term . '%')
+                      ->orWhere('purpose', 'like', '%' . $term . '%');
+                    //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                }
+            })->orderBy('application_date', 'desc')->paginate(5);
         } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
 
         return view('livewire.hrtickets.hr-tickets-table', [
