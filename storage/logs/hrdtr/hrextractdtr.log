@@ -1,6 +1,0 @@
-[2024-07-29 19:16:51] local.INFO: User with the employee ID of SLE0005 has extracted DTR from 127.0.0.1  
-[2024-08-05 16:10:12] local.INFO: User with the employee ID of SLE0001 has extracted DTR from 127.0.0.1  
-[2024-08-08 13:14:09] local.INFO: User with the employee ID of SLE0001 has extracted DTR from 127.0.0.1  
-[2024-08-12 11:15:45] local.INFO: User with the employee ID of SLE0002 has extracted DTR from 127.0.0.1  
-[2024-08-16 08:49:43] local.ERROR: Failed to view Approve HR DTR Table: Unauthorized Access | 6  
-[2024-08-27 16:07:42] local.ERROR: Failed to view Approve HR DTR Table: Unauthorized Access | 10  
