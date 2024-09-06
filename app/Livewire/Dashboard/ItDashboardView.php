@@ -160,20 +160,34 @@ class ItDashboardView extends Component
         }
         
 
-        if(strlen($this->search) >= 1){
+        if (strlen($this->search) >= 1) {
             $searchTerms = explode(' ', $this->search);
+        
+            // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
-                    $q->orWhere('first_name', 'like', '%' . $term . '%')
-                      ->orWhere('last_name', 'like', '%' . $term . '%')
-                      ->orWhere('department', 'like', '%' . $term . '%')
-                      ->orWhere('current_position', 'like', '%' . $term . '%')
-                      ->orWhere('employee_type', 'like', '%' . $term . '%')
-                      ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                    $q->orWhereHas('employee', function ($query) use ($term) {
+                        $query->where('first_name', 'like', '%' . $term . '%')
+                              ->orWhere('last_name', 'like', '%' . $term . '%')
+                              ->orWhere('department', 'like', '%' . $term . '%')
+                              ->orWhere('current_position', 'like', '%' . $term . '%')
+                              ->orWhere('employee_type', 'like', '%' . $term . '%');
+                    })
+                    ->orWhere('application_date', 'like', '%' . $term . '%')
+                    ->orWhere('status', 'like', '%' . $term . '%')
+                    ->orWhere('description', 'like', '%' . $term . '%')
+                    ->orWhere('report', 'like', '%' . $term . '%');
                 }
-            })->orderBy('created_at', 'desc')->paginate(6);
+            })->orderBy('created_at', 'desc');
         } else {
-            $results = $query->orderBy('created_at', 'desc')->paginate(6);
+            // If no search term, return all records
+            $results = $query->orderBy('created_at', 'desc');
+        }
+
+        if($this->statusFilterName == "Cancelled"){
+            $results = $results->paginate(5);
+        } else {
+            $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
         }
 
         $counts = Ittickets::select(DB::raw('
