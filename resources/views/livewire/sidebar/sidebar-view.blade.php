@@ -1,12 +1,11 @@
-<header class="antialiased ">
-    <nav class="fixed flex justify-between items-center w-full mx-auto top-0 z-50  pb-4 bg-white border-gray-200 px-4 lg:px-6 py-2.5 dark:bg-gray-800">
-    {{-- <nav class="flex justify-between items-center w-[99%] mx-auto"> --}}
+<header class="antialiased">
+    <nav class="min-w-[350px] flex items-center justify-between w-full px-2 py-4 bg-white">
         <!-- Left Section: Image and Text -->
         <div class="flex flex-row items-center">
             <!-- Menu Button when smaller than large screen -->
             <div x-data="{ openMobileBar: false }" class="relative inline-block text-left">
                 <!-- Button to toggle dropdown -->
-                <button @click="openMobileBar = !openMobileBar"  class="pr-4 xl:hidden" id="barDropdownButton">
+                <button @click="openMobileBar = !openMobileBar"  class="pl-4 xl:hidden" id="barDropdownButton">
                     <svg class="size-8 text-customGray1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 16">
                         <path d="M2 3.75A.75.75 0 0 1 2.75 3h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 3.75ZM2 8a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75A.75.75 0 0 1 2 8Zm0 4.25a.75.75 0 0 1 .75-.75h10.5a.75.75 0 0 1 0 1.5H2.75a.75.75 0 0 1-.75-.75Z"/>
                     </svg>
@@ -46,7 +45,7 @@
                                     </svg>
                                 </div>
                                 <!-- Nested Dropdown Menu -->
-                                <ul x-show="requestMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="requestBDropdownMenu" class="absolute top-0 z-10  w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
+                                <ul x-show="requestMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="requestBDropdownMenu" class="absolute top-0 z-10 w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                     <div class="py-1">
                                         <a href="{{ route('LeaveRequestTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Request</a>
                                         <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
@@ -75,7 +74,7 @@
                                         </svg>
                                     </div>
                                     <!-- Nested Dropdown Menu -->
-                                    <ul x-show="approvalMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="approveBDropdownMenu" class="absolute top-0 z-10  w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
+                                    <ul x-show="approvalMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="approveBDropdownMenu" class="absolute top-0 z-10 w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                         <div class="py-1">
                                             <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             <a href="{{ route('ApproveHrTicketsTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
@@ -100,7 +99,7 @@
                                     </svg>
                                 </div>
                                 <!-- Nested Dropdown Menu -->
-                                <ul x-show="tasksMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="tasksBDropdownMenu" class="absolute top-0 z-10  w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
+                                <ul x-show="tasksMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="tasksBDropdownMenu" class="absolute top-0 z-10 w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                     <div class="py-1">
                                     <a href="{{ route('TasksTable') }}" wire:navigate:hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">My Tasks</a>
                                     <a href="{{ route('AssignedTasksTable') }}" wire:navigate:hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assigned Tasks</a>
@@ -113,7 +112,7 @@
                 </div>
             </div>
             <a href="{{route('EmployeeDashboard')}}">
-                <div class="flex ml-2 item-center">
+                <div class="flex pl-4 xl:pl-6 item-center">
                     <img src="{{ asset('assets\sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
                     <div class="flex flex-col">
                         <span class="text-sm text-customGray">Powered by</span>
@@ -123,7 +122,7 @@
             </a>
         </div>
         <!-- Center Section: Navigation Buttons -->
-        <div class="invisible xl:visible xl:static absolute min-h-fit left-0 top-[9%] w-auto flex items-center px-5">
+        <div class="hidden xl:flex xl:static absolute min-h-fit left-0 top-[9%] w-auto items-center px-5">
             <ul class="flex items-center gap-x-5">
                 <!-- Home Button -->
                 <a href="{{ route('EmployeeDashboard') }}" wire:navigate.hover class="w-32"> 
@@ -153,7 +152,7 @@
                         </svg> Requests
                     </button>
                     <!-- Request Dropdown -->
-                    <div x-cloak  x-show="requestPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="requestsDropdownMenu" class="absolute z-10 mt-2 w-40 bg-white rounded-md shadow-lg">
+                    <div x-cloak  x-show="requestPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="requestsDropdownMenu" class="absolute z-10 w-40 mt-2 bg-white rounded-md shadow-lg">
                         <div class="py-1">
                             <a href="{{ route('LeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Request</a>
                             <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
@@ -234,7 +233,7 @@
                         </svg> Tasks
                     </button>
                     <!-- Task Dropdown -->
-                    <div x-cloak  x-show="tasksPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="tasksDropdownMenu" class="absolute z-10  w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                    <div x-cloak  x-show="tasksPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="tasksDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="py-1">
                             <a href="{{ route('TasksTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">My Tasks</a>
                             <a href="{{ route('AssignedTasksTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Assigned Tasks</a>
