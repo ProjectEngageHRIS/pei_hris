@@ -15,7 +15,6 @@
             @if($QR_Image)
                 <p class="mt-4 text-md font-bold text-center text-gray-800">Scan the code using Google Authenticator <br> or Set Up Manually</p>
                 {!! $QR_Image !!}
-            @endif
         
             <p class="mt-4 text-sm text-red-600 font-bold">Never share your setup key with anyone.</p>
         
@@ -68,6 +67,8 @@
                     </div>
                 </div>
             </div>
+            @endif
+
         </div>
        
         <form wire:submit.prevent="checkOtp">
