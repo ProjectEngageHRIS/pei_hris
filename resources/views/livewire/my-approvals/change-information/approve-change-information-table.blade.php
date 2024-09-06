@@ -114,7 +114,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" wire:model.change="search" class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner min-w-72h-10 ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                <input type="text" id="table-search-users" wire:model.live.debounce.250ms="search" class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner min-w-72h-10 ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 <!-- Filter Sidebar -->
                 <div x-data="{
                     employeeTypesFilter: @entangle('employeeTypesFilter'), 
@@ -637,8 +637,8 @@
     <div class="w-full p-4 bg-gray-100 rounded-b-lg">
         {{ $ChangeInfoData->links() }}
     </div>
-    <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="z-50 load-over">
-        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="z-50 loading-overlay">
+    <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search, date_filter, status_filter" class="z-50 load-over">
+        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search, date_filter, status_filter" class="z-50 loading-overlay">
             <div class="flex flex-col items-center justify-center">
                 <div class="spinner"></div>
                 <p>Updating...</p>

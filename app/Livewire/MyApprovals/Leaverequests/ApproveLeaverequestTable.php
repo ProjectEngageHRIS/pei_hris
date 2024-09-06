@@ -208,29 +208,42 @@ class ApproveLeaverequestTable extends Component
             });
         }
 
-
         // if(strlen($this->search) >= 1){
         //     $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
         // } else {
         //     $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
         // }
 
-            if(strlen($this->search) >= 1){
-                $searchTerms = explode(' ', $this->search);
-                $results = $query->where(function ($q) use ($searchTerms) {
-                    foreach ($searchTerms as $term) {
-                        $q->orWhere('first_name', 'like', '%' . $term . '%')
-                        ->orWhere('last_name', 'like', '%' . $term . '%')
-                        ->orWhere('department', 'like', '%' . $term . '%')
-                        ->orWhere('current_position', 'like', '%' . $term . '%')
-                        ->orWhere('employee_type', 'like', '%' . $term . '%')
-                        ->orWhere('start_of_employment', 'like', '%' . $term . '%');
-                    }
-                })->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
-            } else {
-                $results = $query->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
-            }
+        if (strlen($this->search) >= 1) {
+            $searchTerms = explode(' ', $this->search);
+        
+            // Add conditions to search through relevant fields
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhereHas('employee', function ($query) use ($term) {
+                        $query->where('first_name', 'like', '%' . $term . '%')
+                              ->orWhere('last_name', 'like', '%' . $term . '%')
+                              ->orWhere('department', 'like', '%' . $term . '%')
+                              ->orWhere('current_position', 'like', '%' . $term . '%')
+                              ->orWhere('employee_type', 'like', '%' . $term . '%');
+                    })
+                    ->orWhere('application_date', 'like', '%' . $term . '%')
+                    ->orWhere('mode_of_application', 'like', '%' . $term . '%')
+                    ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
+                    ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
+                    ->orWhere('reason', 'like', '%' . $term . '%');
+                }
+            })->orderBy('created_at', 'desc');
+        } else {
+            // If no search term, return all records
+            $results = $query->orderBy('created_at', 'desc');
+        }
 
+        if($this->statusFilterName == "Cancelled"){
+            $results = $results->paginate(5);
+        } else {
+            $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
+        }
         
         if(in_array($loggedInUser->role_id, [4, 6])){
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
@@ -241,7 +254,6 @@ class ApproveLeaverequestTable extends Component
                 'LeaveRequestData' => $results,
             ])->layout('components.layouts.hr-navbar');
         }
-       
     }
 
     // public function download($reference_num){
