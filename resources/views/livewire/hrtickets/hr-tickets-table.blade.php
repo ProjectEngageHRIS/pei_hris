@@ -845,7 +845,17 @@
 
 
         <!-- Loading screen -->
-        <div wire:loading wire:target="submit, cancelForm, search, date_filter, status_filter, type_filter" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
+        <div wire:loading wire:target="submit, cancelForm" class="load-over z-50">
+            <div wire:loading wire:target="submit, cancelForm" class="loading-overlay z-50">
+                <div class="flex flex-col items-center justify-center">
+                    <div class="spinner"></div>
+                    <p>Cancelling your Request...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Loading screen -->
+        <div wire:loading wire:target="search, date_filter, status_filter, type_filter" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
             <div class="z-50 mt-4">
                 <div id="toast-container" class="flex items-center justify-center w-full h-full">
                     <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 border-6 border-white text-customRed bg-white bg-opacity-90 rounded-lg shadow"

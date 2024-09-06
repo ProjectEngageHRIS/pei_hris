@@ -205,7 +205,8 @@ class ApproveChangeInformationTable extends Component
             $searchTerms = explode(' ', $this->search);
             $results = $query->where(function ($q) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
-                    $q->orWhere('first_name', 'like', '%' . $term . '%')
+                    $q->orWhere('application_date', 'like', '%' . $term . '%')
+                      ->orWhere('first_name', 'like', '%' . $term . '%')
                       ->orWhere('last_name', 'like', '%' . $term . '%')
                       ->orWhere('department', 'like', '%' . $term . '%')
                       ->orWhere('current_position', 'like', '%' . $term . '%')

@@ -500,7 +500,18 @@
         <div class="w-full p-4 bg-gray-100 rounded-b-lg">
             {{ $LeaveRequestData->links() }}
         </div>
+
+        <!-- Loading screen -->
+        <div wire:loading wire:target="submit, cancelForm" class="load-over z-50">
+            <div wire:loading wire:target="submit, cancelForm" class="loading-overlay z-50">
+                <div class="flex flex-col items-center justify-center">
+                    <div class="spinner"></div>
+                    <p>Cancelling your Request...</p>
+                </div>
+            </div>
+        </div>
         
+        <!-- Loading screen -->
         <div wire:loading wire:target="president_status_filter, supervisor_status_filter, date_filter, search" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
             <div class="z-50 mt-4">
                 <div id="toast-container" class="flex items-center justify-center w-full h-full">
