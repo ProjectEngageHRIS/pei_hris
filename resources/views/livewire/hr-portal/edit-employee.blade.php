@@ -29,7 +29,7 @@
     </nav>
     <form wire:submit.prevent="submit" method="POST">
     @csrf
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> Create an Employee</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> Edit Employee Information</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
 
@@ -846,7 +846,7 @@
                                             <div class="w-full ">
                                                 <label for="firstname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
-                                                <input type="sss_num" name="sss_num" id="sss_num"  wire:model="sss_num"
+                                                <input type="text" name="sss_num" id="sss_num"  wire:model="sss_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('sss_num')
@@ -859,7 +859,7 @@
                                             <div class="w-full ">
                                                 <label for="tin_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
-                                                <input type="number" name="tin_num" id="tin_num" wire:model="tin_num"
+                                                <input type="text" name="tin_num" id="tin_num" wire:model="tin_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('tin_num')
@@ -872,7 +872,7 @@
                                             <div class="w-full">
                                                 <label for="phic_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">PHIC Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="phic_num" id="phic_num"  wire:model="phic_num"
+                                                <input type="text" name="phic_num" id="phic_num"  wire:model="phic_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('phic_num')
@@ -885,7 +885,7 @@
                                             <div class="w-full">
                                                 <label for="hdmf_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">HDMF Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
+                                                <input type="text" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('hdmf_num')

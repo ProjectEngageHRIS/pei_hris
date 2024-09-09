@@ -511,6 +511,6 @@ class CreateEmployee extends Component
 
     public function render()
     {
-        return view('livewire.hr-portal.create-employee');
+        return view('livewire.hr-portal.create-employee')->layout('components.layouts.hr-navbar');
     }
 }

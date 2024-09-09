@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('HumanResourceDashboard')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Dashboard</a>
+            <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,7 +22,7 @@
             <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">View</span>
+            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Create</span>
             </div>
         </li>
         </ol>
@@ -429,7 +429,9 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="grid grid-cols-2 gap-4">
+
+                             </div>
+                             <div class="grid grid-cols-2 gap-4">
                                     <div class="mt-5">
                                         <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Start Date <span class="text-red-600">*</span></label>
@@ -495,7 +497,6 @@
 
                                      </div>
                                 </div>
-                             </div>
                              </div>
 
                              <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
@@ -848,7 +849,7 @@
                                             <div class="w-full ">
                                                 <label for="firstname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
-                                                <input type="sss_num" name="sss_num" id="sss_num"  wire:model="sss_num"
+                                                <input type="text" name="sss_num" id="sss_num"  wire:model="sss_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" disabled>
                                                     @error('sss_num')
@@ -861,7 +862,7 @@
                                             <div class="w-full ">
                                                 <label for="tin_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
-                                                <input type="number" name="tin_num" id="tin_num" wire:model="tin_num"
+                                                <input type="text" name="tin_num" id="tin_num" wire:model="tin_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" disabled>
                                                     @error('tin_num')
@@ -874,7 +875,7 @@
                                             <div class="w-full">
                                                 <label for="phic_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">PHIC Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="phic_num" id="phic_num"  wire:model="phic_num"
+                                                <input type="text" name="phic_num" id="phic_num"  wire:model="phic_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" disabled>
                                                     @error('phic_num')
@@ -887,7 +888,7 @@
                                             <div class="w-full">
                                                 <label for="hdmf_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">HDMF Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
+                                                <input type="text" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd=""disabled >
                                                     @error('hdmf_num')
@@ -927,11 +928,6 @@
 </div>
 
 
-
-
-                             </div>
-
-
-
-                            </div>
+</div>
+</div>
 

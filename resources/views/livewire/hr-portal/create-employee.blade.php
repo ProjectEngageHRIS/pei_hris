@@ -846,7 +846,7 @@
                                             <div class="w-full ">
                                                 <label for="firstname"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
-                                                <input type="sss_num" name="sss_num" id="sss_num"  wire:model="sss_num"
+                                                <input type="text" name="sss_num" id="sss_num"  wire:model="sss_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('sss_num')
@@ -859,7 +859,7 @@
                                             <div class="w-full ">
                                                 <label for="tin_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
-                                                <input type="number" name="tin_num" id="tin_num" wire:model="tin_num"
+                                                <input type="text" name="tin_num" id="tin_num" wire:model="tin_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('tin_num')
@@ -872,7 +872,7 @@
                                             <div class="w-full">
                                                 <label for="phic_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">PHIC Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="phic_num" id="phic_num"  wire:model="phic_num"
+                                                <input type="text" name="phic_num" id="phic_num"  wire:model="phic_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('phic_num')
@@ -885,7 +885,7 @@
                                             <div class="w-full">
                                                 <label for="hdmf_num"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">HDMF Number <span class="text-red-600">*</span></label>
-                                                <input type="number" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
+                                                <input type="text" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >
                                                     @error('hdmf_num')
@@ -1031,7 +1031,7 @@
                 <button wire:click="submit()" type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">Create Account</button>
 
 
-                <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
+                <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
                 @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Created'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
                 @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
                 <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">

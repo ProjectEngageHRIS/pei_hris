@@ -163,7 +163,6 @@ class EditEmployee extends Component
             $this->employee_history = $employeeRecord->employeeHistory;
             $this->civil_status = $employeeRecord->civil_status;
             $this->files_link = $employeeRecord->files_link;
-            $this->sss_num = $employeeRecord->sss_num;
 
             $this->name_of_mother = $employeeRecord->name_of_mother;
             $this->name_of_father = $employeeRecord->name_of_father;
@@ -509,7 +508,7 @@ class EditEmployee extends Component
     }
     public function render()
     {
-        return view('livewire.hr-portal.edit-employee');
+        return view('livewire.hr-portal.edit-employee')->layout('components.layouts.hr-navbar');
     }
 }
 
