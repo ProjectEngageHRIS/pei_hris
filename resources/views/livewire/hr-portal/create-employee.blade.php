@@ -938,7 +938,7 @@
                                                         }"
                                                         class="relative flex items-center w-full">
                                                         <input type="password" name="password" id="password" x-model="password" wire:model.live="password" placeholder="••••••••"
-                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            class="bg-gray-50 border border-gray-300 mt-4 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             required>
                                                         <button type="button" class="absolute right-12 bottom-1 mb-1 text-customGray1 hover:text-customRed" @click="generatePassword()">
                                                             Generate
