@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee</a>
+            <a href="{{route('HumanResourceDashboard')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Dashboard</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,14 +22,14 @@
             <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Create</span>
+            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Edit</span>
             </div>
         </li>
         </ol>
     </nav>
     <form wire:submit.prevent="submit" method="POST">
     @csrf
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> Edit Employee Information </h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> Create an Employee</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
 
@@ -124,7 +124,7 @@
                                             <div id="employee_email_container" class="w-full">
                                                 <label for="employee_email"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Email <span class="text-red-600">*</span></label>
-                                                <input type="email" name="employee_email" id="employee_email"  wire:model="employee_email"
+                                                <input type="email" name="employee_email" id="employee_email" wire:model.live="employee_email"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd=""  >
                                                     @error('employee_email')
@@ -310,7 +310,6 @@
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
-                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
                                         <div>
                                 <div class="w-full">
                                     <label for="names_of_children"
@@ -319,27 +318,25 @@
                                     </label>
 
                                     @foreach ($names_of_children as $index => $name)
-    <div class="mb-2">
-        <input type="text" id="names_of_children[{{ $index }}]" name="names_of_children[{{ $index }}]" wire:model="names_of_children.{{ $index }}"
-            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            ntd>
-        @error('names_of_children.' . $index)
-            <span class="text-red-600 text-sm">{{ $message }}</span>
-        @enderror
+                                        <div class="mb-2">
+                                            <input type="text" id="names_of_children[{{ $index }}]" name="names_of_children[{{ $index }}]" wire:model="names_of_children.{{ $index }}"
+                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                ntd>
+                                                @error('names_of_children.' . $index)
+                <span class="text-red-600 text-sm">{{ $message }}</span>
+            @enderror
 
-        <button type="button" wire:click="removeChild({{ $index }})"
-            class="text-red-600 text-sm">
-            Remove
-        </button>
-    </div>
-@endforeach
-
+                                            <button type="button" wire:click="removeChild({{ $index }})"
+                                                class="text-red-600 text-sm">
+                                                Remove
+                                            </button>
+                                        </div>
+                                    @endforeach
                                 </div>
 
     <button type="button" wire:click="addChild"
     class="mt-2 px-4 py-2 bg-customRed text-white rounded-lg">        Add Child
     </button>
-</div>
 </div>
 </div>
 </div>
@@ -416,78 +413,78 @@
                             $ctr = 0
                         @endphp
                         @if ($employeeHistory)
-                            @foreach ($employeeHistory as $index => $history)
-                                <div class="bg-white rounded-lg ">
-                                    <div class="col-span-5">
-                                        <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                            <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
-                                                <span>No. {{$ctr + 1 }}</span>
-                                            </li>
-                                            <li class="">
-                                                <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                                type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
-                                                class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100">
-                                                    <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                        <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                    </svg>
-                                                </button>
-                                            </li>
-                                        </ul>
+                        @foreach ($employeeHistory as $index => $history)
+                        <div class="bg-white rounded-lg ">
+                            <div class="col-span-5">
+                                <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                    <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
+                                        <span>No. {{$ctr + 1 }}</span>
+                                    </li>
+                                    <li class="">
+                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
+                                        type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100">
+                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="border border-gray=200 border-solid p-6 ">
+                                    <div  id="employeeHistory_{{$index}}_name_of_company_container">
+                                        <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Company Name
+                                            <span class="text-red-600">*</span></label>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        @error('employeeHistory.' . $index . '.name_of_company')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
+                                                <span class="text-xs text-red-500 "> {{$message}}</span>
+                                            </div>
+                                        @enderror
                                     </div>
-                                    <div class="border border-gray=200 border-solid p-6 ">
-                                            <div  id="employeeHistory_{{$index}}_name_of_company_container">
-                                                <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Company Name
-                                                    <span class="text-red-600">*</span></label>
-                                                <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                                @error('employeeHistory.' . $index . '.name_of_company')
-                                                    <div class="text-sm transition transform alert alert-danger"
-                                                            x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                        <span class="text-xs text-red-500 "> {{$message}}</span>
-                                                    </div>
-                                                @enderror
+                                    <div class="mt-5 ">
+                                        <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Position <span class="text-red-600">*</span></label>
+                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        @error('employeeHistory.' . $index . '.prev_position')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
+                                                <span class="text-xs text-red-500 "> {{$message}}</span>
                                             </div>
-                                            <div class="mt-5 ">
-                                                <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                    Position <span class="text-red-600">*</span></label>
-                                                <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                                @error('employeeHistory.' . $index . '.prev_position')
-                                                    <div class="text-sm transition transform alert alert-danger"
-                                                            x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
-                                                        <span class="text-xs text-red-500 "> {{$message}}</span>
-                                                    </div>
-                                                @enderror
-                                            </div>
+                                        @enderror
+                                    </div>
 
-                                        <div class="grid grid-cols-2 gap-4">
-                                            <div class="mt-5">
-                                                <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                    Start Date <span class="text-red-600">*</span></label>
-                                                <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                                @error('employeeHistory.' . $index . '.start_date')
-                                                    <div class="text-sm transition transform alert alert-danger"
-                                                            x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
-                                                        <span class="text-xs text-red-500 "> {{$message}}</span>
-                                                    </div>
-                                                @enderror
+                                <div class="grid grid-cols-2 gap-4">
+                                    <div class="mt-5">
+                                        <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            Start Date <span class="text-red-600">*</span></label>
+                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        @error('employeeHistory.' . $index . '.start_date')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
+                                                <span class="text-xs text-red-500 "> {{$message}}</span>
                                             </div>
-                                            <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
-                                                <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                                    End Date <span class="text-red-600">*</span></label>
-                                                <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                                @error('employeeHistory.' . $index . '.end_date')
-                                                    <div class="text-sm transition transform alert alert-danger"
-                                                            x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
-                                                        <span class="text-xs text-red-500 "> {{$message}}</span>
-                                                    </div>
-                                                @enderror
+                                        @enderror
+                                    </div>
+                                    <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
+                                        <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                            End Date <span class="text-red-600">*</span></label>
+                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                        @error('employeeHistory.' . $index . '.end_date')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
+                                                <span class="text-xs text-red-500 "> {{$message}}</span>
                                             </div>
-                                        </div>
+                                        @enderror
                                     </div>
                                 </div>
-                            @php
-                                $ctr += 1;
-                            @endphp
-                            @endforeach
+                            </div>
+                        </div>
+                        @php
+                            $ctr += 1;
+                        @endphp
+                        @endforeach
                         @endif
                         <script>
                             document.addEventListener('livewire:init', () => {
@@ -605,49 +602,6 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                            <p class="font-bold text-base text-customRed pb-4"> Vocational School</p>
-                                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
-                                                <div class="w-full ">
-                                                    <label for="vocational_school"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
-                                                    <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd="" >
-                                                        @error('vocational_school')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_school').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                                </div>
-                                                <div class="w-full ">
-                                                    <label for="vocational_course"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course </label>
-                                                    <input type="text" name="vocational_course" id="vocational_course" wire:model="vocational_course"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd="" >
-                                                        @error('vocational_course')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_course').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                                </div>
-                                                <div class="w-full ">
-                                                    <label for="vocational_date_graduated"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
-                                                    <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd="" >
-                                                        @error('vocational_date_graduated')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_date_graduated').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                                </div>
-
-                                            </div>
-
-                                        </div>
                                 </div>
                             </div>
                              </div>
@@ -655,7 +609,124 @@
 
 
                             </div>
+                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                <div class="grid grid-cols-1 col-span-3 gap-4 ">
+                                     <div>
+                                     <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2">
+                    <h2 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
+                    <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="files_container">
+                        <div class="w-full ">
+                            <label for="files"
+                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Link <span class="text-red-600">*</span></label>
+                            <textarea type="url" rows="2" name="files" id="files_link"  wire:model="files_link"
+                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                ntd=""> </textarea>
+                                @error('files_link')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('files_link').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_link').focus();" >
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
 
+                        </div>
+                        @php
+                            $ctr = 0
+                        @endphp
+                        @if ($files)
+                        @foreach ($files as $index => $Files)
+                        <div class="bg-white rounded-lg ">
+                            <div class="col-span-5">
+                                <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                    <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
+                                        <span>No. {{$ctr + 1 }}</span>
+                                    </li>
+                                    <li class="">
+                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
+                                        type="button" name="add" wire:click.prevent="removeFile({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100">
+                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="border border-gray-200 border-solid p-6">
+    <div class="flex space-x-4">
+        <!-- File Name Input -->
+        <div id="files_{{$index}}_name_of_file_container" class="flex-1">
+            <label for="files_{{$index}}_name_of_file" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                File Name <span class="text-red-600">*</span>
+            </label>
+            <input type="text" id="files_{{$index}}_name_of_file" name="files_{{$index}}_name_of_file" wire:model.blur="files.{{$index}}.name_of_file" placeholder="Enter File Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+            @error('files.' . $index . '.name_of_file')
+                <div class="text-sm transition transform alert alert-danger"
+                    x-data x-init="document.getElementById('files_{{$index}}_name_of_file_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_name_of_file_container').focus();">
+                    <span class="text-xs text-red-500"> {{$message}}</span>
+                </div>
+            @enderror
+        </div>
+
+        <!-- Toggle Switch for Completed -->
+        <div class="flex items-center pt-7"> <!-- Add pt-1 here to push everything down -->
+    <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" wire:model="files.{{$index}}.completed" class="sr-only peer">
+        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed?</span>
+    </label>
+    @error('files.' . $index . '.completed')
+        <div class="text-sm transition transform alert alert-danger"
+            x-data x-init="document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_completed').focus();">
+            <span class="text-xs text-red-500"> {{$message}}</span>
+        </div>
+    @enderror
+</div>
+
+    </div>
+</div>
+
+                        </div>
+                        @php
+                            $ctr += 1;
+                        @endphp
+                        @endforeach
+                        @endif
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-files', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('files_' + index + '_name_of_file').value = element.name_of_file;
+                                        document.getElementById('files_' + index + '_completed').value = element.completed;
+
+                                    });
+                                });
+                            });
+                        </script>
+                        <div class="flex justify-center">
+                            <button type="button" name="add" wire:click.prevent="addFile" class="flex items-center text-customRed hover:bg-customRed shadow border hover:text-white bg-navButton font-medium rounded-8px text-sm px-5 py-2.5 me-2 mb-2">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                                    <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
+                                </svg>
+                                Add File
+                            </button>
+                        </div>
+                        @php
+                            if(isset($index) == False){
+                                $index = 0;
+                            }
+                        @endphp
+
+                    </div>
+                </div>
+
+
+                                     </div>
+                                </div>
+                             </div>
                     <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <h2  class="font-bold text-customRed">Onboarding</h2>
@@ -688,7 +759,7 @@
                                             </div>
                                             <div class="gap-2 flex flex-col">
                                                 <label for="role_id" class="block text-sm font-medium text-customGray1">Roles <span class="text-red-600">*</span></label>
-                                                <select name="role_id" id="role_id" wire:model.live="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                                <select name="role_id" id="role_id" wire:model="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                     <option selected>Select a Role</option>
                                                     <option value="1">Employee</option>
                                                     <option value="2"> HR Employee</option>
@@ -757,7 +828,7 @@
                                              <div class="w-full">
                                                  <label for="employee_type"
                                                      class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Type <span class="text-red-600">*</span></label>
-                                                 <select id="employee_type" name="employee_type" wire:model="employee_type"
+                                                 <select id="employee_type" name="employee_type" wire:model.live="employee_type"
                                                      class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
                                                      <option selected>Select</option>
                                                      <option value="INTERNAL EMPLOYEE">Internal Employee</option>
@@ -839,19 +910,53 @@
                                             </div>
 
 
+<script>
+// function generatePassword() {
+//     const length = Math.floor(Math.random() * (20 - 8 + 1)) + 8; // Random length between 8 and 20
+//     const lowerCharset = "abcdefghijklmnopqrstuvwxyz";
+//     const upperCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+//     const numberCharset = "0123456789";
+//     const specialCharset = "@$!%*?&";
+//     const allCharset = lowerCharset + upperCharset + numberCharset + specialCharset;
 
-                                        </div>
-                                        <div class="w-full ">
-                                            <label for="files"
-                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Microsoft Folder Link for  <span class="text-customRed">201 Files and Other Necessary Files</span> <span class="text-red-600">*</span></label>
-                                            <textarea type="url" rows="2" name="files" id="files"  wire:model="files"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                ntd=""> </textarea>
-                                                @error('files')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('files').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+//     let password = "";
+//     password += lowerCharset.charAt(Math.floor(Math.random() * lowerCharset.length));
+//     password += upperCharset.charAt(Math.floor(Math.random() * upperCharset.length));
+//     password += numberCharset.charAt(Math.floor(Math.random() * numberCharset.length));
+//     password += specialCharset.charAt(Math.floor(Math.random() * specialCharset.length));
+
+//     for (let i = password.length; i < length; i++) {
+//         password += allCharset.charAt(Math.floor(Math.random() * allCharset.length));
+//     }
+
+//     // Shuffle the password to avoid predictable patterns
+//     password = password.split('').sort(() => 0.5 - Math.random()).join('');
+
+//     document.getElementById('password').value = password;
+//     $wire.set('password', password);
+// }
+
+
+    function togglePassword() {
+        const passwordField = document.getElementById('password');
+        const eyeOpen = document.getElementById('eyeopen');
+        const eyeClose = document.getElementById('eyeclose');
+
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            eyeOpen.classList.add('hidden');
+            eyeClose.classList.remove('hidden');
+        } else {
+            passwordField.type = 'password';
+            eyeOpen.classList.remove('hidden');
+            eyeClose.classList.add('hidden');
+        }
+    }
+</script>
+</div>
+
+
+
 
                                         </div>
 
@@ -883,7 +988,7 @@
             </div>
         </div>
     </div>
-    <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
+    <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
         @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
         @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
         <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
@@ -915,18 +1020,18 @@
             </div>
     </div>
 
-    <!-- Loading screen -->
-    <div wire:loading wire:target="submit" class="load-over">
-        <div wire:loading wire:target="submit" class="loading-overlay">
-            <div class="flex flex-col justify-center items-center">
-                <div class="spinner"></div>
-                <p>Changing Employee Information...</p>
-            </div>
+                <!-- Loading screen -->
+                <div wire:loading wire:target="submit" class="load-over">
+                    <div wire:loading wire:target="submit" class="loading-overlay">
+                        <div class="flex flex-col justify-center items-center">
+                            <div class="spinner"></div>
+                            <p>Creating Employee...</p>
+                        </div>
 
-        </div>
-        </form>
+                    </div>
+                    </form>
 
-    </div>
+                </div>
 
     </section>
 

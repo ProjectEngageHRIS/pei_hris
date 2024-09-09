@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee</a>
+            <a href="{{route('HumanResourceDashboard')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Dashboard</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,7 +22,7 @@
             <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Create</span>
+            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">View</span>
             </div>
         </li>
         </ol>
@@ -312,7 +312,7 @@
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
                                         <div>
-                                <div class="w-full">
+                                        <div class="w-full">
                                     <label for="names_of_children"
                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">
                                         Children's Name <span class="text-red-600">*</span>
@@ -429,31 +429,7 @@
                                     </li>
                                 </ul>
                             </div>
-                            <div class="border border-gray=200 border-solid p-6 ">
-                                    <div  id="employeeHistory_{{$index}}_name_of_company_container">
-                                        <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Company Name
-                                            <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required disabled></input>
-                                        @error('employeeHistory.' . $index . '.name_of_company')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-5 ">
-                                        <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            Position <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required disabled></input>
-                                        @error('employeeHistory.' . $index . '.prev_position')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-
-                                <div class="grid grid-cols-2 gap-4">
+                            <div class="grid grid-cols-2 gap-4">
                                     <div class="mt-5">
                                         <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
                                             Start Date <span class="text-red-600">*</span></label>
@@ -520,6 +496,8 @@
                                      </div>
                                 </div>
                              </div>
+                             </div>
+
                              <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4  ">
                                     <h2 class="font-bold text-customRed"> School Information</h2>
@@ -638,13 +616,119 @@
                                         </div>
                                 </div>
                             </div>
+                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                                <div class="grid grid-cols-1 col-span-3 gap-4 ">
+                                     <div>
+                                     <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2">
+                    <h2 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
+                    <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="files_container">
+                        <div class="w-full ">
+                            <label for="files"
+                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Link <span class="text-red-600">*</span></label>
+                            <textarea type="url" rows="2" name="files" id="files_link"  wire:model="files_link"
+                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                ntd="" disabled> </textarea>
+                                @error('files_link')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('files_link').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_link').focus();" >
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+
+                        </div>
+                        @php
+                            $ctr = 0
+                        @endphp
+                        @if ($files)
+                        @foreach ($files as $index => $Files)
+                        <div class="bg-white rounded-lg ">
+                            <div class="col-span-5">
+                                <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                    <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
+                                        <span>No. {{$ctr + 1 }}</span>
+                                    </li>
+                                    <li class="">
+                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
+                                        type="button" name="add" wire:click.prevent="removeFile({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100" disabled>
+                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                            </svg>
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="border border-gray-200 border-solid p-6">
+    <div class="flex space-x-4">
+        <!-- File Name Input -->
+        <div id="files_{{$index}}_name_of_file_container" class="flex-1">
+            <label for="files_{{$index}}_name_of_file" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                File Name <span class="text-red-600">*</span>
+            </label>
+            <input type="text" id="files_{{$index}}_name_of_file" name="files_{{$index}}_name_of_file" wire:model.blur="files.{{$index}}.name_of_file" placeholder="Enter File Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" disabled>
+            @error('files.' . $index . '.name_of_file')
+                <div class="text-sm transition transform alert alert-danger"
+                    x-data x-init="document.getElementById('files_{{$index}}_name_of_file_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_name_of_file_container').focus();">
+                    <span class="text-xs text-red-500"> {{$message}}</span>
+                </div>
+            @enderror
+        </div>
+
+        <!-- Toggle Switch for Completed -->
+        <div class="flex items-center pt-7"> <!-- Add pt-1 here to push everything down -->
+    <label class="inline-flex items-center cursor-pointer">
+        <input type="checkbox" wire:model="files.{{$index}}.completed" class="sr-only peer" disabled>
+        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed?</span>
+    </label>
+    @error('files.' . $index . '.completed')
+        <div class="text-sm transition transform alert alert-danger"
+            x-data x-init="document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_completed').focus();">
+            <span class="text-xs text-red-500"> {{$message}}</span>
+        </div>
+    @enderror
+</div>
+
+    </div>
+</div>
+
+                        </div>
+                        @php
+                            $ctr += 1;
+                        @endphp
+                        @endforeach
+                        @endif
+                        <script>
+                            document.addEventListener('livewire:init', () => {
+                                Livewire.on('update-files', (data) => {
+                                    // alert(JSON.stringify(data)); // Ensure the data received here is correct
+                                    // Parse the JSON data into a JavaScript array
+                                    const dataArray = JSON.parse(data);
+
+                                    // Iterate over the array elements
+                                    dataArray.forEach((element, index) => {
+                                        document.getElementById('files_' + index + '_name_of_file').value = element.name_of_file;
+                                        document.getElementById('files_' + index + '_completed').value = element.completed;
+
+                                    });
+                                });
+                            });
+                        </script>
+
+                        @php
+                            if(isset($index) == False){
+                                $index = 0;
+                            }
+                        @endphp
+
+                    </div>
+                </div>
+
+
+                                     </div>
+                                </div>
                              </div>
 
-
-
-                            </div>
-
-                    <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <h2  class="font-bold text-customRed">Onboarding</h2>
                                      <div>
@@ -830,19 +914,6 @@
 
 
                                         </div>
-                                        <div class="w-full ">
-                                            <label for="files"
-                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Microsoft Folder Link for  <span class="text-customRed">201 Files and Other Necessary Files</span> <span class="text-red-600">*</span></label>
-                                            <textarea type="url" rows="2" name="files" id="files"  wire:model="files"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                ntd="" disabled> </textarea>
-                                                @error('files')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('files').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-
-                                        </div>
 
                                      </div>
                                      <div class="items-center">
@@ -852,38 +923,15 @@
         <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active?</span>
     </label>
 </div>
-    <div x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-        @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
-        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
-        <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
-        <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
-            x-show="showToast"
-            x-transition:enter="transition ease-out duration-200"
-            x-transition:enter-start="opacity-0 scale-90"
-            x-transition:enter-end="opacity-100 scale-100"
-            x-transition:leave="transition ease-in duration-200"
-            x-transition:leave-start="opacity-100 scale-100"
-            x-transition:leave-end="opacity-0 scale-90">
-        <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
-            <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-            </svg>
-            <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
-            </svg>
-            <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
-        </div>
-        <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
-        <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
-            <span class="sr-only">Close</span>
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-            </button>
-                </div>
-            </div>
-    </div>
 </div>
 </div>
 
-</div>
+
+
+
+                             </div>
+
+
+
+                            </div>
+

@@ -1071,7 +1071,7 @@
     const getChartOptions1 = () => {
       return {
           series: @json($employee_type),
-          colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5"],
+          colors: ["#E7B145", "#E77945", ],
           chart: {
           height: 420,
           width: "100%",
@@ -1092,7 +1092,7 @@
               }
           },
           },
-          labels: ["Internals", "OJT", "PEI-CCS", "Rapid", "Rapid Mobility", "Upskills"],
+          labels: ["Internal Employee", "OJT"],
           dataLabels: {
           enabled: true,
           style: {

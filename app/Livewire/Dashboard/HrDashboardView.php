@@ -202,7 +202,7 @@ class HrDashboardView extends Component
         $this->active = $this->active == 1 ? true : false;
 
         $combinedCounts = Employee::select(
-            DB::raw('COUNT(CASE WHEN employee_type = "Internals" THEN 1 END) as Internals'),
+            DB::raw('COUNT(CASE WHEN employee_type = "Internal Employee" THEN 1 END) as Internals'),
             DB::raw('COUNT(CASE WHEN employee_type = "OJT" THEN 1 END) as OJT'),
             DB::raw('COUNT(CASE WHEN employee_type = "PEI-CSS" THEN 1 END) as PEICSS'),
             DB::raw('COUNT(CASE WHEN employee_type = "RAPID" THEN 1 END) as RAPID'),
@@ -227,10 +227,6 @@ class HrDashboardView extends Component
         $this->employee_type = [
             $combinedCounts->Internals ?? 0,
             $combinedCounts->OJT ?? 0,
-            $combinedCounts->PEICSS ?? 0,
-            $combinedCounts->RAPID ?? 0,
-            $combinedCounts->RAPIDMOBILITY ?? 0,
-            $combinedCounts->UPSKILLS ?? 0
         ];
 
         $this->inside_department = [
