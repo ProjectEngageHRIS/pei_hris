@@ -107,7 +107,6 @@ class ViewEmployee extends Component
         if ($employeeRecord) {
             // Assign each property from the employeeRecord
             try {
-                throw new \Exception('test');
                 $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
                 $this->phic_num = Crypt::decryptString($employeeRecord->phic_num);
                 $this->hdmf_num = Crypt::decryptString($employeeRecord->hdmf_num);

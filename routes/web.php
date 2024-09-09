@@ -311,8 +311,7 @@ Route::middleware(['auth' ])->group(function (){
 
     Route::get("/humanresource/dailytimerecord", HrDailyTimeRecord::class)->name('HrDailyTimeRecord');
 
-
-
+    Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
 
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 
@@ -398,8 +397,6 @@ Route::middleware(['auth' ])->group(function (){
 Route::middleware(['auth', '2fa'])->group(function () {
 
     Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
-
-    Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
 
     Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
 
