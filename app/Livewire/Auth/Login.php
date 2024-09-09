@@ -78,13 +78,12 @@ class Login extends Component
                         $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
                         return redirect()->to($url);
                     }
-                } 
+                } else {
+                    session(['auth_user_id' => $this->email]);
+                    $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+                    return redirect()->to($url);
+                }
             }
-            // else {
-            //     session(['auth_user_id' => $this->email]);
-            //     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
-            //     return redirect()->to($url);
-            // }
         
             if ($user->role_id == 1) {
                 return redirect()->route('EmployeeDashboard');

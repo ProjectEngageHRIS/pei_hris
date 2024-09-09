@@ -30,7 +30,7 @@ class LoginDashboard extends Component
             $this->is_accounting = True;
             // return redirect()->to(route('AccountingDashboard'));
         }
-        if(in_array($role_id, [14])){
+        if(in_array($role_id, [14, 15])){
             $this->is_it = True;
         }
         if(in_array($role_id, [6])){
