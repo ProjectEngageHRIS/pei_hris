@@ -227,11 +227,11 @@ class EditEmployee extends Component
     }
     protected $rules = [
         'first_name' => 'required|max:500',
-        'middle_name' => 'nullable|max:500',
+        'middle_name' => 'max:500',
         'last_name' => 'required|min:1|max:500',
-        'nickname' => 'nullable|max:500',
+        'nickname' => 'max:500',
         'gender' => 'required|in:Male,Female',
-        'personal_email' => 'nullable|email:rfc,dns',
+        'personal_email' => 'email:rfc,dns',
         'employee_email' => 'required|email:rfc,dns',
         'home_address' => 'required|min:5|max:500',
         'provincial_address' => 'required|min:10|max:500',
@@ -240,11 +240,11 @@ class EditEmployee extends Component
         'religion' => 'required|min:3|max:500',
         'civil_status' => 'required|in:Single,Married,Widowed,Divorced,Separated',
         'phone_number' => ['required','numeric','regex:/^09[0-9]{9}$/' ],
-        'birth_place' => 'required|max:500',
+        'birth_place' => 'max:500',
         'profile_summary' => 'required|min:5|max:500',
         'name_of_father' => 'required|min:5|max:500',
         'name_of_mother' => 'required|min:5|max:500',
-        'spouse' => 'required|min:5|max:500',
+        'spouse' => 'nullable|max:500',
         'names_of_children' => 'nullable|array', // Ensure it's an array with at least one entry
         'names_of_children.*' => 'required|string|max:255',
         'emergency_contact.contact_person' => 'required|string|min:2|max:100',
@@ -263,27 +263,35 @@ class EditEmployee extends Component
         'college_school' => 'required|min:1|max:500',
         'college_course' => 'required|min:2|max:500',
         'college_date_graduated' => 'required|date',
-        'vocational_school' => 'nullable|min:1|max:500',
-        'vocational_course' => 'nullable|min:1|max:500',
-        'vocational_date_graduated' => 'nullable|date',
-
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
         'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,OJT',
-        'sss_num' => ['required', 'numeric', 'digits:10'],
-        'tin_num' => ['required', 'numeric', 'digits:12'],
-        'phic_num' => ['required', 'numeric', 'digits:12'],
-        'hdmf_num' => ['required', 'numeric', 'digits:12'],
-        'files' => 'required|url',
+        'sss_num' => ['required', 'numeric',],
+        'tin_num' => ['required', 'numeric',],
+        'phic_num' => ['required', 'numeric', ],
+        'hdmf_num' => ['required', 'numeric', ],
+        'employee_id' => ['nullable',  'unique:employees,employee_id'],
+        // 'files_link' => 'required|url',
+        // 'files' => 'nullable|array|max:5',
+        // 'files.*.name_of_file' => 'required|string|min:2|max:75',
+        // 'files.*.completed' => 'nullable|boolean',
 
-
-
-
+        'password' => [
+    'required',
+    'string',                   // The password must be a string.
+    'min:8',                    // The password must be at least 8 characters long.
+    'max:20',                   // The password must not exceed 20 characters.
+    'regex:/[a-z]/',            // The password must contain at least one lowercase letter.
+    'regex:/[A-Z]/',            // The password must contain at least one uppercase letter.
+    'regex:/[0-9]/',            // The password must contain at least one number.
+    'regex:/[@$!%*?&]/',        // The password must contain at least one special character.
+    ],
 
     ];
+
 
     protected $validationAttributes = [
         'employeeHistory' => 'Employee History',

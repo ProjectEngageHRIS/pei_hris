@@ -33,16 +33,16 @@ class ItChangePassword extends Component
     }
 
     protected $rules = [
-        'email' => 'required|email',
-        'old_password' => 'required|string',
-        // 'password' => 'required|string|min:8|confirmed',
-        'selectedEmployee' => 'required|regex:/^[A-Za-z\s]+ \| SLE[A-Z]?\d{4}$/',   
+        // 'email' => 'required|email',
+        // 'old_password' => 'required|string',
+        'password' => 'required|string|min:8|confirmed',
+        // 'selectedEmployee' => 'required|regex:/^[A-Za-z\s]+ \| SLE[A-Z]?\d{4}$/',   
     ];
     
 
     public function changePassword()
     {
-        $this->validate();
+        // $this->validate();
         $this->validate([
             'password' => [
                 'required',
@@ -55,7 +55,6 @@ class ItChangePassword extends Component
                 'confirmed'
             ],
         ]);
-
         $user = auth()->user();
         // dd($user->role_id == 061024 && $user->employee_id == 200000000);
         try {

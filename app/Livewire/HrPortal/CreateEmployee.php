@@ -209,8 +209,6 @@ class CreateEmployee extends Component
     'regex:/[@$!%*?&]/',        // The password must contain at least one special character.
     ],
 
-
-
     ];
 
     protected $validationAttributes = [
