@@ -50,7 +50,7 @@
                     <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="w-10 h-10 mr-3">
                     <div class="flex flex-col">
                         <span class="text-sm text-customGray">Powered by</span>
-                        <span class="text-lg font-semibold text-nowrap text-customRed">SL Groups</span>
+                        <span class="text-lg font-semibold text-nowrap text-customRed">SL Group</span>
                     </div>
                 </div>
             </a>
