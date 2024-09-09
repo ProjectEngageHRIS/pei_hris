@@ -398,9 +398,9 @@ Route::middleware(['auth', '2fa'])->group(function () {
 
     Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
 
-    Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
+    // Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
 
-    Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
+    // Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
 
     Route::get("/it-change-password", ItChangePassword::class)->name('ItChangePassword');
     
