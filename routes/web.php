@@ -225,7 +225,7 @@ Route::middleware('auth')->group(function () {
 
 // Route::get('/password-reset', PasswordReset::class)->name('PasswordReset');
 
-// Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.signed', 'custom.throttle']);
+Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.signed', 'custom.throttle']);
 
 
 

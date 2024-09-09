@@ -124,7 +124,7 @@
                                             <div id="employee_email_container" class="w-full">
                                                 <label for="employee_email"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Email <span class="text-red-600">*</span></label>
-                                                <input type="email" name="employee_email" id="employee_email"  wire:model="employee_email"
+                                                <input type="email" name="employee_email" id="employee_email" wire:model.live="employee_email"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd=""  >
                                                     @error('employee_email')

@@ -4,12 +4,12 @@
     <title>New Employee Created!</title>
 </head>
 <body>
-    <p>Dear {{ $add_employee->first_name }},</p>
+    <p>Dear {{ $new_user->first_name }},</p>
     <p>Please check the details below for your login credentials</p>
     <p>Details:</p>
     <ul>
-        <li>Employee ID: {{ $add_employee->employee_id }}</li>
-        <li>Password: {{ $new_user->password }}</li>
+        <li>Employee ID: {{ $new_user->employee_id }}</li>
+        <li>Password: {{ $password }}</li>
 
     </ul>
 

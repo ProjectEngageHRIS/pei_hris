@@ -262,10 +262,14 @@ class CreateEmployee extends Component
 
     public function submit()
     {
+
+
         foreach($this->rules as $rule => $validationRule){
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
         }
+
+
 
         $loggedInUser = auth()->user();
 
@@ -368,7 +372,6 @@ class CreateEmployee extends Component
                 $add_employee->name_of_mother = $this->name_of_mother;
                 $add_employee->name_of_father = $this->name_of_father;
                 $add_employee->spouse = $this->spouse;
-    
                 $formattedNamesString = '';
     
                 foreach ($this->names_of_children as $name) {
@@ -411,10 +414,10 @@ class CreateEmployee extends Component
     
                 }
                 // Send an email to the existing employee
-                $new_user = Employee::where('employee_id', '$add_employee->employee_id')->first();
+                $new_user = Employee::where('employee_id', $add_employee->employee_id)->select('employee_id', 'first_name')->first();
                 // Assuming $add_employee is an instance of a new employee record or has an 'employee_email' property
                 if (isset($add_employee->employee_email)) {
-                Mail::to($add_employee->employee_email)->send(new CreateMailEmployee($employeeRecord, $add_employee, $new_user));
+                Mail::to($add_employee->employee_email)->send(new CreateMailEmployee($new_user, $this->password));
                 }
                 // Assuming $add_employee is an instance of your employee model
     
