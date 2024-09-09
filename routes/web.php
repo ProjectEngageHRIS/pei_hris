@@ -313,6 +313,10 @@ Route::middleware(['auth' ])->group(function (){
 
     Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
 
+    Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
+
+    Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
+
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 
     // Route::get('/hrtickets/{index}', [::class, 'download'])->name('downloadTeachPermit');
@@ -397,10 +401,6 @@ Route::middleware(['auth' ])->group(function (){
 Route::middleware(['auth', '2fa'])->group(function () {
 
     Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
-
-    // Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
-
-    // Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
 
     Route::get("/it-change-password", ItChangePassword::class)->name('ItChangePassword');
     
