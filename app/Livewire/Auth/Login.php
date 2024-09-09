@@ -62,27 +62,31 @@ class Login extends Component
             $cookieName = 'device_guid_' . $this->email;
             $deviceGuid = Cookie::get($cookieName);
             $user = auth()->user();
+            
             if($user->banned_flag == 1) {
                 $this->addError('email', 'Account Banned/Deactivated. Contact IT Support');
                 Log::channel('loginlog')->info('User with banned/deactivated account tried to login ' . $this->email . ' from IP ' . $ip);
                 return;
-            } else if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null) {
-                RateLimiter::clear($throttleKey);
-                if ($this->isValidDevice($this->email, $deviceGuid)) {
-                    return redirect()->route('LoginDashboard');
-                } else {
-                    session(['auth_user_id' => $this->email]);
-                    $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
-                    return redirect()->to($url);
-                }
-            } else {
-                session(['auth_user_id' => $this->email]);
-                $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
-                return redirect()->to($url);
+            } 
+            else if($user->role_id == 61024) {
+                if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null) {
+                    RateLimiter::clear($throttleKey);
+                    if ($this->isValidDevice($this->email, $deviceGuid)) {
+                        return redirect()->route('LoginDashboard');
+                    } else {
+                        session(['auth_user_id' => $this->email]);
+                        $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+                        return redirect()->to($url);
+                    }
+                } 
             }
+            // else {
+            //     session(['auth_user_id' => $this->email]);
+            //     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
+            //     return redirect()->to($url);
+            // }
         
-            $loggedInUser = auth()->user()->role_id;
-            if ($loggedInUser == 1) {
+            if ($user->role_id == 1) {
                 return redirect()->route('EmployeeDashboard');
             }
             return redirect()->route('LoginDashboard');
