@@ -151,7 +151,7 @@ class CreateEmployee extends Component
         'nickname' => 'max:500',
         'gender' => 'required|in:Male,Female',
         'personal_email' => 'email:rfc,dns',
-        'employee_email' => 'required|email:rfc,dns',
+        'employee_email' => 'required|email:rfc,dns|unique:employees,employee_email',
         'home_address' => 'required|min:5|max:500',
         'provincial_address' => 'required|min:10|max:500',
         'age' => 'required|numeric|min:18|max:100',
@@ -500,7 +500,7 @@ class CreateEmployee extends Component
             $newIdNumber = $latestIdNumber + 1;
 
             // Format the new ID with leading zeros
-            $newId = 'SLE' . str_pad($newIdNumber, 5, '0', STR_PAD_LEFT);
+            $newId = 'SLE' . str_pad($newIdNumber, 4, '0', STR_PAD_LEFT);
         } else {
             // If no employees exist, start with the initial ID
             $newId = $initialId;
