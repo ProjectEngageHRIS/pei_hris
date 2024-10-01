@@ -937,7 +937,7 @@
                                                 <div>
                                                     <label for="category" class="block mb-2 text-sm font-semibold text-gray-900">Status</label>
                                                     <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                                        <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
+                                                        <option class="hover:bg-customRed hover:text-white" value="Approved">Completed</option>
                                                         <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
                                                         <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
                                                         <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
