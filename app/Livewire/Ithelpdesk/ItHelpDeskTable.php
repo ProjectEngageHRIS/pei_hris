@@ -110,9 +110,15 @@ class ItHelpDeskTable extends Component
                       ->orWhere('description', 'like', '%' . $term . '%')
                       ->orWhere('report', 'like', '%' . $term . '%');
                 }
-            })->orderBy('application_date', 'desc')->paginate(5);
-        } else {
-            $results = $query->orderBy('application_date', 'desc')->paginate(5);
+            });
+        } 
+
+        $loggedInUser = auth()->user()->role_id;
+        
+        if($loggedInUser == 61024){
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        } else{
+            $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(6);
         }
 
         return view('livewire.ithelpdesk.it-help-desk-table', [

@@ -681,13 +681,13 @@ if (isset($add_employee->employee_email)) {
                       ->orWhere('employee_type', 'like', '%' . $term . '%')
                       ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                 }
-            })->orderBy('created_at', 'desc')->paginate(5);
-        } else {
-            if($loggedInUser == 61024){
-                $results = $query->orderBy('created_at', 'desc')->paginate(5);
-            } else{
-                $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(5);
-            }
+            });
+        }
+
+        if($loggedInUser == 61024){
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        } else{
+            $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(5);
         }
 
         // $results = $query->orderBy('created_at', 'desc')->paginate(5);
