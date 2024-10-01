@@ -319,7 +319,7 @@ class ApproveHrTicketsTable extends Component
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if(in_array($loggedInUser->role_id, [9, 10, 11, 12, 13])){
+                if(in_array($loggedInUser->role_id, [6, 7, 9, 10, 11, 12, 13, 61024])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];
