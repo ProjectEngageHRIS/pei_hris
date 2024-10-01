@@ -213,7 +213,7 @@ class HrTicketsView extends Component
                     $this->request_requested = $hrticketdata->request_requested;
                     $this->request_assigned = $hrticketdata->request_assigned;
                     $this->request_extra = $hrticketdata->request_extra;
-                    $this->request_date = $hrticketdata->request_date;
+                    $this->request_date = Carbon::parse($hrticketdata->request_date)->toDateString();
                 }
                 else if($hrticketdata->sub_type_of_request == "Repairs/Maintenance"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
