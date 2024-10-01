@@ -34,6 +34,10 @@ class ApproveLeaverequestTable extends Component
 
     public $currentFormId;
 
+    public $key;
+
+    public $person;
+
     public $employeeTypesFilter = [
         'INTERNAL EMPLOYEE' => false,
         'OJT' => false,
@@ -78,7 +82,8 @@ class ApproveLeaverequestTable extends Component
         $this->resetPage();
     }
 
-    public function mount(){
+    public function mount($type = null){
+        $this->key = $type;
         $loggedInUser = auth()->user()->role_id;
         try {
             if(!in_array($loggedInUser, [4, 6, 7, 8, 14, 61024])){
@@ -104,16 +109,20 @@ class ApproveLeaverequestTable extends Component
         // Define the base query with the necessary relations
         $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
-        // Apply conditions based on the logged-in email
-        if ($loggedInEmail === "spm_2009@wesearch.com.ph") {
-        // if ($loggedInEmail === "seal.projectengage@gmail.com") {
-            $query->where(function ($query) use ($loggedInEmail) {
-                $query->where('approved_by_supervisor', '1');
-            })->orWhere(function ($query) use ($loggedInEmail) {
+        if($this->key == "list"){
+            // 
+        } else{
+            // Apply conditions based on the logged-in email
+            if ($loggedInEmail === "spm_2009@wesearch.com.ph") {
+                // if ($loggedInEmail === "seal.projectengage@gmail.com") {
+                    $query->where(function ($query) use ($loggedInEmail) {
+                        $query->where('approved_by_supervisor', '1');
+                    })->orWhere(function ($query) use ($loggedInEmail) {
+                        $query->where('supervisor_email', $loggedInEmail);
+                    });
+            } else {
                 $query->where('supervisor_email', $loggedInEmail);
-            });
-        } else {
-            $query->where('supervisor_email', $loggedInEmail);
+            }
         }
 
         switch ($this->date_filter) {
@@ -245,7 +254,7 @@ class ApproveLeaverequestTable extends Component
             $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
         }
         
-        if(in_array($loggedInUser->role_id, [4, 6])){
+        if($this->key != "list"){
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
                 'LeaveRequestData' => $results,
             ]);
@@ -256,31 +265,8 @@ class ApproveLeaverequestTable extends Component
         }
     }
 
-    // public function download($reference_num){
-    //     $leaveRequestData = Leaverequest::where('reference_num', $reference_num)->first();
-    //     $image = base64_decode($leaveRequestData->leave_form);
-    //     $finfo = new finfo(FILEINFO_MIME_TYPE);
-    //     $contentType = $finfo->buffer($image);
-    //     // dd($contentType);
-    //     switch($contentType){
-    //         case "application/pdf":
-    //             $fileName = "leaverequest.pdf";
-    //             break;
-    //         case "image/jpeg":
-    //             $fileName = "leaverequest.jpg";
-    //             break;
-    //         case "image/png":
-    //             $fileName = "leaverequest.png";
-    //             break;
-    //         default:
-    //             abort(404);
-    //     }
-    //     return Response::make($image, 200, [
-    //         'Content-Type' => $contentType,
-    //         'Content-Disposition' => 'attachment; filename="'.$fileName.'"'
-    //     ]);
-    
-    // }
+ 
+
 
 
     public function getEmployeeName($employee_id){
@@ -290,6 +276,7 @@ class ApproveLeaverequestTable extends Component
     
     public function changeStatus(){
         $loggedInUser = auth()->user();
+
         try {
             if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
                 throw new \Exception('Unauthorized Access');
@@ -298,40 +285,75 @@ class ApproveLeaverequestTable extends Component
                 throw new \Exception('Unauthorized Access');
             }
             $role = $loggedInUser->role_id;
-            DB::transaction(function () use ($role) {
+           
                 // Fetch the leave request data
                 $leaverequestdata = Leaverequest::where('form_id', $this->currentFormId)->first();
                 if (!$leaverequestdata) {
                     return;
                 }
 
-                if($this->status == "Completed"){
-                    if ($role == 4) {
-                        $leaverequestdata->approved_by_supervisor = 1;
-                        if ($leaverequestdata->approved_by_president == 1) {
-                            $leaverequestdata->status = "Approved";
+                if($this->status == "Completed" || $this->status == "Approved"){
+                    if($this->key == "list"){
+                        if (in_array($role , [4, 6, 7, 8, 61024])) {
+                            if ($this->person == "President"){
+                                if ($leaverequestdata->approved_by_president == 1) {
+                                    $leaverequestdata->status = "Approved";
+                                }
+                            } else if ($this->person == "Supervisor"){
+                                $leaverequestdata->approved_by_supervisor = 1;
+                            }
+
+                        } 
+                        // else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                        //     if($role == 6){ // President Role
+                        //         $leaverequestdata->approved_by_supervisor = 1;
+                        //         $leaverequestdata->approved_by_president = 1;
+                        //         $leaverequestdata->status = "Approved";
+                        //     }
+                        // } else if ($role == 6) {
+                        //     $leaverequestdata->approved_by_president = 1;
+                        //     if ($leaverequestdata->approved_by_supervisor == 1) {
+                        //         $leaverequestdata->status = "Approved";
+                        //     }
+                        // } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
+                        //     if($role == 7){ // Hr Head Role
+                        //         $leaverequestdata->approved_by_supervisor = 1;
+                        //         if ($leaverequestdata->approved_by_president == 1) {
+                        //             $leaverequestdata->status = "Approved";
+                        //         }
+                        //     }
+                        // } 
+                        else {
+                            throw new \Exception('Unauthorized Access');
                         }
-                    } else if($leaverequestdata->supervisor_email == "seal.projectengage@gmail.com"){
-                    // } else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
-                        if($role == 6){ // President Role
-                            $leaverequestdata->approved_by_supervisor = 1;
-                            $leaverequestdata->approved_by_president = 1;
-                            $leaverequestdata->status = "Approved";
-                        }
-                    } else if ($role == 6) {
-                        $leaverequestdata->approved_by_president = 1;
-                        if ($leaverequestdata->approved_by_supervisor == 1) {
-                            $leaverequestdata->status = "Approved";
-                        }
-                    } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
-                        if($role == 7){ // Hr Head Role
+                    } else {
+                        if (in_array($role , [4, 61024])) {
                             $leaverequestdata->approved_by_supervisor = 1;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = "Approved";
                             }
+                        } 
+                        else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
+                            if($role == 6){ // President Role
+                                $leaverequestdata->approved_by_supervisor = 1;
+                                $leaverequestdata->approved_by_president = 1;
+                                $leaverequestdata->status = "Approved";
+                            }
+                        } else if ($role == 6) {
+                            $leaverequestdata->approved_by_president = 1;
+                            if ($leaverequestdata->approved_by_supervisor == 1) {
+                                $leaverequestdata->status = "Approved";
+                            }
+                        } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
+                            if($role == 7){ // Hr Head Role
+                                $leaverequestdata->approved_by_supervisor = 1;
+                                if ($leaverequestdata->approved_by_president == 1) {
+                                    $leaverequestdata->status = "Approved";
+                                }
+                            }
+                        } else {
+                            throw new \Exception('Unauthorized Access');
                         }
-                    } else {
-                        throw new \Exception('Unauthorized Access');
                     }
 
                     if($leaverequestdata->approved_by_supervisor == 1 && $leaverequestdata->approved_by_president == 1){
@@ -395,6 +417,12 @@ class ApproveLeaverequestTable extends Component
                     }
                 } else {
                     $leaverequestdata->status = $this->status;
+                    // if($this->key == "list"){
+                    //     if($this->status == "Pending" || $this->status == "Declined"){
+                    //         $leaverequestdata->approved_by_supervisor = 0;
+                    //         $leaverequestdata->approved_by_president = 0;
+                    //     }
+                    // }
                 }
                 
                 // $leaverequestdata->status = $this->status;
@@ -402,7 +430,6 @@ class ApproveLeaverequestTable extends Component
                 $leaverequestdata->update();
         
                 $this->dispatch('triggerSuccess'); 
-            });
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('leaverequests')->error('Failed to update Leave Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);

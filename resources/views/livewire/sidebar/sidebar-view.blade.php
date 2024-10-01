@@ -51,15 +51,6 @@
                                         <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                                         <a href="{{ route('ItHelpDeskTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
                                         <a href="{{ route('ChangeInformationTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
-                                        <hr class="border-gray-400">
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Overtime Approval</a>
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Undertime Approval</a>
-                                        <a href="{{ route('LeaveRequestTable', ['type' => 'adviseslip']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Advise Slip</a>
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'coe'])  }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Certificate of Employment</a>
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'procurement']) }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Procurement</a>
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'internalcontrol']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Internal Audit</a>
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'requestmeeting'])  }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Meeting Request</a>
-                                        <a href="{{ route('HrTicketsTable', ['type' => 'officeadmin']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Office Admin</a>
                                     </div>
                                 </ul>
                             </div>
@@ -158,15 +149,6 @@
                             <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                             <a href="{{ route('ItHelpDeskTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
                             <a href="{{ route('ChangeInformationTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Change Personal Information</a>
-                            <hr class="border-gray-400">
-                            <a href="{{ route('HrTicketsTable', ['type' => 'overtime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Overtime Approval</a>
-                            <a href="{{ route('HrTicketsTable', ['type' => 'undertime']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Undertime Approval</a>
-                            <a href="{{ route('LeaveRequestTable', ['type' => 'adviseslip']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Advise Slip</a>
-                            <a href="{{ route('HrTicketsTable', ['type' => 'coe'])  }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Certificate of Employment</a>
-                            <a href="{{ route('HrTicketsTable', ['type' => 'procurement']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Procurement</a>
-                            <a href="{{ route('HrTicketsTable', ['type' => 'internalcontrol']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Internal Audit</a>
-                            <a href="{{ route('HrTicketsTable', ['type' => 'requestmeeting'])  }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Meeting Request</a>
-                            <a href="{{ route('HrTicketsTable', ['type' => 'officeadmin']) }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Office Admin</a>
                         </div>
                     </div>
                 </div>
@@ -175,7 +157,7 @@
 
 
                 <!-- Approval Button -->
-                @if(in_array($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15]))
+                @if(in_array($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024]))
                     <div  x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -188,7 +170,7 @@
                         <div x-cloak  x-show="approvalPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="approveDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="py-1">
                                 @if (in_array($employeeEmail, [
-                                    'seal.projectengage@gmail.com',
+                                    'itproject@gmail.com',
                                     "jsodsod@projectengage.com.ph",
                                     "sherwinmalabanan@sltemps.com",
                                     "esalvador@projectengage.com.ph",
@@ -207,7 +189,7 @@
                                 ]))
                                     <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
-                                @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13 ]))
+                                @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13, 61024 ]))
                                     <a href="{{ route('ApproveHrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                             </div>
