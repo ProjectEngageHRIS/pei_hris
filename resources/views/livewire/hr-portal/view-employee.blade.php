@@ -834,8 +834,15 @@
                                                  <select id="employee_type" name="employee_type" wire:model="employee_type"
                                                      class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                      <option selected>Select</option>
+                                                     <option value="INDEPENDENT CONSULTANT">Independent Consultant</option>
+                                                     <option value="INDEPENDENT CONTRACTOR">Independent Contractor</option>
                                                      <option value="INTERNAL EMPLOYEE">Internal Employee</option>
-                                                     <option value="OJT">OJT</option>
+                                                     <option value="INTERN">Intern</option>
+                                                     <option value="INTERN">Intern</option>
+                                                     <option value="PROBI">Probi</option>
+                                                     <option value="PROJECT BASED">Project Based</option>
+                                                     <option value="REGULAR">Regular</option>
+                                                     <option value="RELIVER">Reliver</option>
                                                  </select>
                                                  @error('employee_type')
                                                      <div class="text-sm transition transform alert alert-danger"
