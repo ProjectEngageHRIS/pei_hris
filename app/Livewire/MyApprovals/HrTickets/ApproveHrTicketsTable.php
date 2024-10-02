@@ -41,7 +41,7 @@ class ApproveHrTicketsTable extends Component
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
-        'PROBI' => false,
+        'PROBISIONARY' => false,
         'PROJECT BASED' => false,
         'REGULAR' => false,
         'RELIVER' => false,

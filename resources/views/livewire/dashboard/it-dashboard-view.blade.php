@@ -250,10 +250,11 @@
                                             <label class="ml-2 text-xs font-medium text-customGray1">Intern</label>
                                         </div>
 
+
                                         <!-- Probi -->
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" x-model="employeeTypesFilter.PROBI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                            <label class="ml-2 text-xs font-medium text-customGray1">Probi</label>
+                                            <input type="checkbox" x-model="employeeTypesFilter.PROBISIONARY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Probisionary</label>
                                         </div>
 
                                         <!-- Project Based -->
@@ -273,6 +274,7 @@
                                             <input type="checkbox" x-model="employeeTypesFilter.RELIVER" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Reliver</label>
                                         </div>
+                                        
                                         <!-- More checkboxes... -->
                                         <div class="flex px-4 py-2 space-x-2">
                                             <!-- Clear Filters Button -->
