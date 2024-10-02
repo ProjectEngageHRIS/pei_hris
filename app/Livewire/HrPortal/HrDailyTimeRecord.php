@@ -81,12 +81,15 @@ class HrDailyTimeRecord extends Component
 
     // Filters 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
+        'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBI' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
-        'PEI-CCS' => false,
-        'RAPID' => false,
-        'RAPIDMOBILITY' => false,
-        'UPSKILLS' => false,
     ];
 
     public $insideDepartmentTypesFilter = [

@@ -37,7 +37,14 @@ class ApproveHrTicketsTable extends Component
     public $currentFormId;
 
     public $employeeTypesFilter = [
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBI' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
     ];
 

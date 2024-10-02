@@ -41,12 +41,15 @@ class ItDashboardView extends Component
     ];
 
     public $employeeTypesFilter = [
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBI' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
-        'PEI-CCS' => false,
-        'RAPID' => false,
-        'RAPID MOBILITY' => false,
-        'UPSKILLS' => false,
     ];
 
     public $insideDepartmentTypesFilter = [

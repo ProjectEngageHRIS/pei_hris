@@ -250,14 +250,54 @@
                                     </button>
                                     <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
                                         <hr class="my-4 border-gray-300">
+                                        <!-- Independent Consultant -->
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONSULTANT']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Independent Consultant</label>
+                                        </div>
+
+                                        <!-- Independent Contractor -->
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONTRACTOR']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Independent Contractor</label>
+                                        </div>
+
+                                        <!-- Internal Employee -->
                                         <div class="flex items-center px-4 py-2">
                                             <input type="checkbox" x-model="employeeTypesFilter['INTERNAL EMPLOYEE']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
                                             <label class="ml-2 text-xs font-medium text-customGray1">Internal Employee</label>
                                         </div>
+
+                                        <!-- Intern -->
                                         <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" x-model="employeeTypesFilter.OJT" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                            <label class="ml-2 text-xs font-medium text-customGray1">OJT</label>
+                                            <input type="checkbox" x-model="employeeTypesFilter.INTERN" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Intern</label>
                                         </div>
+
+                                        <!-- Probi -->
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.PROBI" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Probi</label>
+                                        </div>
+
+                                        <!-- Project Based -->
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter['PROJECT BASED']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Project Based</label>
+                                        </div>
+
+                                        <!-- Regular -->
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.REGULAR" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Regular</label>
+                                        </div>
+
+                                        <!-- Reliver -->
+                                        <div class="flex items-center px-4 py-2">
+                                            <input type="checkbox" x-model="employeeTypesFilter.RELIVER" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
+                                            <label class="ml-2 text-xs font-medium text-customGray1">Reliver</label>
+                                        </div>
+                                        
                                         <!-- More checkboxes... -->
                                         <div class="flex px-4 py-2 space-x-2">
                                             <!-- Clear Filters Button -->

@@ -39,7 +39,14 @@ class ApproveLeaverequestTable extends Component
     public $person;
 
     public $employeeTypesFilter = [
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBI' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
     ];
 
