@@ -313,8 +313,13 @@ class ApproveLeaverequestTable extends Component
                                     $leaverequestdata->approved_by_supervisor = 0;
                                 }
                             }
-                            if($leaverequestdata->approved_by_president == 1 && $leaverequestdata->approved_by_supervisor = 1){
+
+                            if($leaverequestdata->approved_by_president == 1 && $leaverequestdata->approved_by_supervisor == 1){
                                 $leaverequestdata->status = "Approved";
+                            } else if ($leaverequestdata->approved_by_president == 0 && $leaverequestdata->approved_by_supervisor == 0){
+                                $leaverequestdata->status = "Declined";
+                            } else{
+                                $leaverequestdata->status = "Pending";
                             }
 
                         } 

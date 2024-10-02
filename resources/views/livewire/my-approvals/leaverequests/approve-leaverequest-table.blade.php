@@ -527,7 +527,7 @@
                                         <td class="items-center py-4 text-center">
                                             <div class="flex items-center justify-center space-x-2">
                                                 <!-- View Button -->
-                                                <a onclick="location.href='{{ route('ApproveLeaveRequestForm', ['index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600">
+                                                <a onclick="location.href='{{ route('ApproveListLeaveRequestForm', ['type' => 'list', 'index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600">
                                                     Edit
                                                 </a>
                                                 <!-- Change Status Button -->
@@ -575,7 +575,7 @@
                                             <div class="grid grid-cols-1 gap-4 mb-4 " x-data="{typeOfKey: @entangle('key'), typeOfStatus: @entangle('status')}">
                                                 <div>
                                                     <label for="category" class="block mb-2 text-sm font-semibold text-gray-900">Status</label>
-                                                    <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                                    <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                                         <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                                         <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
                                                         <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
@@ -584,7 +584,7 @@
                                                 <template x-if="typeOfKey  === 'list' && (typeOfStatus === 'Approved'  || typeOfStatus === 'Declined') ">
                                                     <div id="person_container">
                                                         <label for="person" class="block mb-2 text-sm font-semibold text-gray-900">As</label>
-                                                        <select id="person" wire:model="person" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                                        <select id="person" wire:model.live="person" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                                             <option class="hover:bg-customRed hover:text-white" value="Null">Select</option>
                                                             <option class="hover:bg-customRed hover:text-white" value="President">President</option>
                                                             <option class="hover:bg-customRed hover:text-white" value="Supervisor">Supervisor</option>
@@ -596,7 +596,6 @@
                                                         @enderror
                                                     </div>
                                                 </template>
-                                                
                                                 <button @click="openConfirmation = true" id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-self-end">
                                                     Update
                                                 </button>

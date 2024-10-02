@@ -252,6 +252,9 @@ Route::middleware(['auth' , '2fa'])->group(function () {
 
     Route::get("leaverequest/approverequests/approve/{index}", ApproveLeaverequestForm::class)->name('ApproveLeaveRequestForm'); 
 
+    Route::get("leaverequest/approverequests/approve/{type?}/{index}", ApproveLeaverequestForm::class)->name('ApproveListLeaveRequestForm'); 
+
+
     // Route::get('/leaverequest/{index}', [LeaveRequestTable::class, 'download'])->name('downloadLeave');
 });
 
