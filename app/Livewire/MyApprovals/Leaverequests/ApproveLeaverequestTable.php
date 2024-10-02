@@ -275,6 +275,11 @@ class ApproveLeaverequestTable extends Component
     }
     
     public function changeStatus(){
+
+        if($this->status != "Pending"){
+            $this->validate(['person' => 'required|in:President,Supervisor']);
+        }
+
         $loggedInUser = auth()->user();
 
         try {
@@ -292,15 +297,24 @@ class ApproveLeaverequestTable extends Component
                     return;
                 }
 
-                if($this->status == "Completed" || $this->status == "Approved"){
+                if($this->status == "Completed" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
                         if (in_array($role , [4, 6, 7, 8, 61024])) {
                             if ($this->person == "President"){
-                                if ($leaverequestdata->approved_by_president == 1) {
-                                    $leaverequestdata->status = "Approved";
+                                if($this->status == "Approved"){
+                                    $leaverequestdata->approved_by_president = 1;
+                                } else if ($this->status == "Declined"){
+                                    $leaverequestdata->approved_by_president = 0;
                                 }
                             } else if ($this->person == "Supervisor"){
-                                $leaverequestdata->approved_by_supervisor = 1;
+                                if($this->status == "Approved"){
+                                    $leaverequestdata->approved_by_supervisor = 1;
+                                } else if ($this->status == "Declined"){
+                                    $leaverequestdata->approved_by_supervisor = 0;
+                                }
+                            }
+                            if($leaverequestdata->approved_by_president == 1 && $leaverequestdata->approved_by_supervisor = 1){
+                                $leaverequestdata->status = "Approved";
                             }
 
                         } 
@@ -424,8 +438,6 @@ class ApproveLeaverequestTable extends Component
                     //     }
                     // }
                 }
-                
-                // $leaverequestdata->status = $this->status;
         
                 $leaverequestdata->update();
         

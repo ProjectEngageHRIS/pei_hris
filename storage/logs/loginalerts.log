@@ -8,3 +8,17 @@
 [2024-10-01 14:54:36] local.ERROR: Failed login attempt for user SLEA9999 from IP 127.0.0.1  
 [2024-10-01 15:02:43] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
 [2024-10-01 15:02:43] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:10] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-02 08:56:10] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:10] local.INFO: User with banned/deactivated account tried to login SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:11] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-02 08:56:11] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:11] local.INFO: User with banned/deactivated account tried to login SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:38] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-02 08:56:38] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:47] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-02 08:56:47] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:56:48] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-02 08:56:48] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-02 08:59:16] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-02 08:59:16] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
