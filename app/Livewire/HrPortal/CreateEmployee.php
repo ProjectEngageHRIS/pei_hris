@@ -187,7 +187,7 @@ class CreateEmployee extends Component
         'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
-        'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBI,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR,INDEPENDENT CONSULTANT',
+        'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR,INDEPENDENT CONSULTANT',
         'sss_num' => ['required', 'numeric',],
         'tin_num' => ['required', 'numeric',],
         'phic_num' => ['required', 'numeric', ],
@@ -413,6 +413,7 @@ class CreateEmployee extends Component
                 }
                 // Send an email to the existing employee
                 $new_user = Employee::where('employee_id', $add_employee->employee_id)->select('employee_id', 'first_name')->first();
+
                 // Assuming $add_employee is an instance of a new employee record or has an 'employee_email' property
                 if (isset($add_employee->employee_email)) {
                 Mail::to($add_employee->employee_email)->send(new CreateMailEmployee($new_user, $this->password));
