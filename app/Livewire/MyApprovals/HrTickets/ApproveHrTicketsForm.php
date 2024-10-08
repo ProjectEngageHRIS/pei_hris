@@ -3,6 +3,7 @@
 namespace App\Livewire\MyApprovals\HrTickets;
 
 use Exception;
+use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
@@ -199,7 +200,7 @@ class ApproveHrTicketsForm extends Component
                     $this->request_requested = $hrticketdata->request_requested;
                     $this->request_assigned = $hrticketdata->request_assigned;
                     $this->request_extra = $hrticketdata->request_extra;
-                    $this->request_date = $hrticketdata->request_date;
+                    $this->request_date = Carbon::parse($hrticketdata->request_date)->toDateString();
                 }
                 else if($hrticketdata->sub_type_of_request == "Repairs/Maintenance"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
@@ -286,24 +287,24 @@ class ApproveHrTicketsForm extends Component
             if($form){
                 if($form->type_of_ticket == "HR Internal"){
                     if($form->type_of_request == "HR"){
-                        if($loggedInUser->role_id != 11){
+                        if(!in_array($loggedInUser->role_id, [6, 7, 11, 61024])){
                             throw new \Exception('Unauthorized Access');
                         }
                     } else if($form->type_of_request == "Office Admin"){
-                        if($loggedInUser->role_id != 12){
+                        if(!in_array($loggedInUser->role_id, [6, 7, 12, 61024])){
                             throw new \Exception('Unauthorized Access');
                         }
                     } else if($form->type_of_request == "Procurement"){
-                        if($loggedInUser->role_id != 13){
+                        if(!in_array($loggedInUser->role_id, [6, 7, 13, 61024])){
                             throw new \Exception('Unauthorized Access');
                         }
                     }
                 } else if($form->type_of_ticket == "HR Internal Control"){
-                    if($loggedInUser->role_id != 9){
+                    if(!in_array($loggedInUser->role_id, [6, 7, 9, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($form->type_of_ticket == "HR Operations"){
-                    if($loggedInUser->role_id != 10){
+                    if(!in_array($loggedInUser->role_id, [6, 7, 10, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 } else {
@@ -319,7 +320,6 @@ class ApproveHrTicketsForm extends Component
             } else {
                 throw new \Exception('No Record Fond');
             }
-            dd('test');
             $this->dispatch('trigger-success');
             return redirect()->to(route('ApproveHrTicketsTable'));
         } catch (\Exception $e) {

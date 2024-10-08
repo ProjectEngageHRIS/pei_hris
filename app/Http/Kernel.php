@@ -46,6 +46,9 @@ class Kernel extends HttpKernel
         ],
     ];
 
+    protected $routeMiddleware = [
+    ];
+
     /**
      * The application's middleware aliases.
      *
@@ -67,5 +70,6 @@ class Kernel extends HttpKernel
         'custom.signed' => \App\Http\Middleware\CustomValidateSignature::class,
         'otp.verified' => \App\Http\Middleware\EnsureOtpVerified::class,
         'custom.throttle' => \App\Http\Middleware\CustomThrottle::class,
+        '2fa' => \App\Http\Middleware\Google2FAMiddleware::class
     ];
 }

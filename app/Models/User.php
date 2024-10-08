@@ -3,10 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Support\Facades\Crypt;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -44,6 +46,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'twofactor_secret',
+        'twofactor_approved'
     ];
 
     /**
@@ -54,6 +58,8 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
+        'twofactor_secret',
+        'twofactor_approved'
     ];
 
     /**
@@ -68,5 +74,19 @@ class User extends Authenticatable
     public function devices()
     {
         return $this->hasMany(UserDevices::class);
+    }
+
+    public function setGoogle2faSecretAttribute($value)
+    {
+        $this->attributes['twofactor_secret'] = Crypt::encryptString($value);
+    }
+    
+    public function getGoogle2faSecretAttribute($value)
+    {
+        try {
+            return Crypt::decryptString($value);
+        } catch (DecryptException $e) {
+            return null;
+        }
     }
 }

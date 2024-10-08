@@ -31,14 +31,14 @@ class HrDashboardView extends Component
     public $stepData = [];
     public $add_employee;
     public $new_user;
-public $emergencyContact;
-public $govtProfessionalExamTaken;
-public $employee_history=[];
-public $employeeHistory;
-public $moveToNextStep;
-public $moveToPreviousStep;
- public $validatedData;
-public $govt_professional_exam_taken=[];
+    public $emergencyContact;
+    public $govtProfessionalExamTaken;
+    public $employee_history=[];
+    public $employeeHistory;
+    public $moveToNextStep;
+    public $moveToPreviousStep;
+    public $validatedData;
+    public $govt_professional_exam_taken=[];
     public $tin_num;
     public $hdmf_num;
     public $phic_num;
@@ -110,12 +110,15 @@ public $govt_professional_exam_taken=[];
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
+        'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBISIONARY' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
-        'PEI-CCS' => false,
-        'RAPID' => false,
-        'RAPIDMOBILITY' => false,
-        'UPSKILLS' => false,
     ];
 
     public $insideDepartmentTypesFilter = [
@@ -123,8 +126,8 @@ public $govt_professional_exam_taken=[];
         'Recruitment' => false,
         'CXS' => false,
         'Overseas Recruitment' => false,
-        'PEI/SLTEMPSDO174' => false,
-        'CAF' => false,
+        'PEI/SL Temps DO-174' => false,
+        'Corporate Accounting and Finance' => false,
         'ACCOUNTING ' => false,
     ];
 
@@ -202,7 +205,7 @@ public $govt_professional_exam_taken=[];
         $this->active = $this->active == 1 ? true : false;
 
         $combinedCounts = Employee::select(
-            DB::raw('COUNT(CASE WHEN employee_type = "Internals" THEN 1 END) as Internals'),
+            DB::raw('COUNT(CASE WHEN employee_type = "Internal Employee" THEN 1 END) as Internals'),
             DB::raw('COUNT(CASE WHEN employee_type = "OJT" THEN 1 END) as OJT'),
             DB::raw('COUNT(CASE WHEN employee_type = "PEI-CSS" THEN 1 END) as PEICSS'),
             DB::raw('COUNT(CASE WHEN employee_type = "RAPID" THEN 1 END) as RAPID'),
@@ -227,10 +230,6 @@ public $govt_professional_exam_taken=[];
         $this->employee_type = [
             $combinedCounts->Internals ?? 0,
             $combinedCounts->OJT ?? 0,
-            $combinedCounts->PEICSS ?? 0,
-            $combinedCounts->RAPID ?? 0,
-            $combinedCounts->RAPIDMOBILITY ?? 0,
-            $combinedCounts->UPSKILLS ?? 0
         ];
 
         $this->inside_department = [
@@ -317,7 +316,7 @@ public $govt_professional_exam_taken=[];
             $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
             $employee->active = 0;
             $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
-            $user->banned_flag = 0;
+            $user->banned_flag = 1;
     
             $employee->save();
             $user->save();
@@ -330,6 +329,36 @@ public $govt_professional_exam_taken=[];
 
             // Dispatch a failure event with an error message
             $this->dispatch('triggerDeactivateError');
+        }
+    }
+
+    public function activateEmployee(){
+        $loggedInUser = auth()->user();
+        try {
+            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            }
+
+            if(!$this->currentFormId){
+                throw new \Exception('No Current Form ID');
+            }
+
+            $employee = Employee::where('employee_id', $this->currentFormId)->select('employee_id', 'active')->first();
+            $employee->active = 1;
+            $user = User::where('employee_id', $this->currentFormId)->select('banned_flag', 'employee_id')->first();
+            $user->banned_flag = 0;
+    
+            $employee->save();
+            $user->save();
+
+            $this->dispatch('triggerActivateSuccess');
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrdashboard')->error('Failed to activate an Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerActivateError');
         }
     }
 
@@ -603,77 +632,6 @@ if (isset($add_employee->employee_email)) {
             Log::channel('hrdashboard')->error('Failed to View HR Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
             return redirect()->to(route('EmployeeDashboard'));
         }
-        
-        // dump($this->employeeTypesFilter);
-        // sleep(3);
-
-    // // Cache combined counts to avoid recalculating on every request
-    // $combinedCounts = Cache::remember('employee_combined_counts', 60, function () {
-    //     return Employee::select(
-    //         DB::raw('COUNT(CASE WHEN employee_type = "Internals" THEN 1 END) as Internals'),
-    //         DB::raw('COUNT(CASE WHEN employee_type = "OJT" THEN 1 END) as OJT'),
-    //         DB::raw('COUNT(CASE WHEN employee_type = "PEI-CSS" THEN 1 END) as PEICSS'),
-    //         DB::raw('COUNT(CASE WHEN employee_type = "RAPID" THEN 1 END) as RAPID'),
-    //         DB::raw('COUNT(CASE WHEN employee_type = "RAPID MOBILITY" THEN 1 END) as RAPIDMOBILITY'),
-    //         DB::raw('COUNT(CASE WHEN employee_type = "UPSKILLS" THEN 1 END) as UPSKILLS'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "HR and Admin" THEN 1 END) as HRandAdmin'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "Recruitment" THEN 1 END) as Recruitment'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "CXS" THEN 1 END) as CXS'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "Overseas Recruitment" THEN 1 END) as OverseasRecruitment'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "PEI/SL Temps DO-174" THEN 1 END) as PEISLTemps'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "Corporate Accounting and Finance" THEN 1 END) as CorporateAccounting'),
-    //         DB::raw('COUNT(CASE WHEN inside_department = "Accounting Operations" THEN 1 END) as AccountingOperations'),
-    //         DB::raw('COUNT(CASE WHEN department = "PEI" THEN 1 END) as PEI'),
-    //         DB::raw('COUNT(CASE WHEN department = "SL SEARCH" THEN 1 END) SLSEARCH'),
-    //         DB::raw('COUNT(CASE WHEN department = "SL TEMPS" THEN 1 END) as SLTEMPS'),
-    //         DB::raw('COUNT(CASE WHEN department = "WESEARCH" THEN 1 END) as WESEARCH'),
-    //         DB::raw('COUNT(CASE WHEN department = "PEI-UPSKILLS" THEN 1 END) as PEIUPSKILLS'),
-    //         DB::raw('COUNT(CASE WHEN gender = "Male" THEN 1 END) as MALE'),
-    //         DB::raw('COUNT(CASE WHEN gender = "Female" THEN 1 END) as FEMALE')
-    //     )->first();
-    // });
-
-    // $this->employee_type = [
-    //     $combinedCounts->Internals ?? 0,
-    //     $combinedCounts->OJT ?? 0,
-    //     $combinedCounts->PEICSS ?? 0,
-    //     $combinedCounts->RAPID ?? 0,
-    //     $combinedCounts->RAPIDMOBILITY ?? 0,
-    //     $combinedCounts->UPSKILLS ?? 0,
-    // ];
-
-    // $this->inside_department = [
-    //     $combinedCounts->HRandAdmin ?? 0,
-    //     $combinedCounts->Recruitment ?? 0,
-    //     $combinedCounts->CXS ?? 0,
-    //     $combinedCounts->OverseasRecruitment ?? 0,
-    //     $combinedCounts->PEISLTemps ?? 0,
-    //     $combinedCounts->CorporateAccounting ?? 0,
-    //     $combinedCounts->AccountingOperations ?? 0,
-    // ];
-
-    // $this->department = [
-    //     $combinedCounts->PEI ?? 0,
-    //     $combinedCounts->SLSEARCH ?? 0,
-    //     $combinedCounts->SLTEMPS ?? 0,
-    //     $combinedCounts->WESEARCH ?? 0,
-    //     $combinedCounts->PEIUPSKILLS ?? 0,
-    // ];
-
-    // $this->gender = [
-    //     $combinedCounts->MALE ?? 0,
-    //     $combinedCounts->FEMALE ?? 0,
-    // ];
-
-        // $query = Employee::query()->select('employee_id',
-        //                                     'first_name',
-        //                                     'middle_name',
-        //                                     'last_name',
-        //                                     'department',
-        //                                     'inside_department',
-        //                                     'start_of_employment',
-        //                                     'current_position',
-        //                                     'employee_type');
 
         $query = Employee::query();
 
@@ -726,12 +684,16 @@ if (isset($add_employee->employee_email)) {
                       ->orWhere('employee_type', 'like', '%' . $term . '%')
                       ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                 }
-            })->orderBy('created_at', 'desc')->paginate(5);
-        } else {
-            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+            });
         }
 
-        $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        if($loggedInUser == 61024){
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        } else{
+            $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(5);
+        }
+
+        // $results = $query->orderBy('created_at', 'desc')->paginate(5);
 
         return view('livewire.dashboard.hr-dashboard-view', [
             'EmployeeData' => $results,

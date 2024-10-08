@@ -15,77 +15,77 @@ class EmployeeSeeder extends Seeder
      */
     public function run(): void
     {
-    $employees = Employee::factory()->count(10)->create();
+    // $employees = Employee::factory()->count(10)->create();
 
-    foreach ($employees as $employee) {
-        User::factory()->create([
-            'employee_id' => $employee->employee_id,
-            'email' => $employee->employee_email,
-            'role_id' => rand(1, 10),
-        ]);
-    }
+    // foreach ($employees as $employee) {
+    //     User::factory()->create([
+    //         'employee_id' => $employee->employee_id,
+    //         'email' => $employee->employee_email,
+    //         'role_id' => rand(1, 10),
+    //     ]);
+    // }
 
-    // Modify and create users for specific employees individually
-    $specificEmployees = [
-        [
-            'first_name' => 'Maximo',
-            'middle_name' => 'Pantaleon',
-            'last_name' => 'Mariano',
-            'department' => 'SL SEARCH',
-            'nickname' => 'Sonny',
-            'current_position' => 'President',
-            'role_id' => 10 // Specific role ID for this employee
-        ],
-        [
-            'first_name' => 'Kristine',
-            'middle_name' => 'Duro',
-            'last_name' => 'Castro',
-            'nickname' => 'Tin',
-            'department' => 'PEI',
-            'current_position' => 'HR Head',
+    // // Modify and create users for specific employees individually
+    // $specificEmployees = [
+    //     [
+    //         'first_name' => 'Maximo',
+    //         'middle_name' => 'Pantaleon',
+    //         'last_name' => 'Mariano',
+    //         'department' => 'SL SEARCH',
+    //         'nickname' => 'Sonny',
+    //         'current_position' => 'President',
+    //         'role_id' => 10 // Specific role ID for this employee
+    //     ],
+    //     [
+    //         'first_name' => 'Kristine',
+    //         'middle_name' => 'Duro',
+    //         'last_name' => 'Castro',
+    //         'nickname' => 'Tin',
+    //         'department' => 'PEI',
+    //         'current_position' => 'HR Head',
 
-            'role_id' => 9 // Specific role ID for this employee
-        ],
-        [
-            'first_name' => 'Marvin',
-            'middle_name' => 'Chan',
-            'last_name' => 'Baniqued',
-            'nickname' => 'Chan',
-            'current_position' => 'ICT Specialist',
-            'department' => 'PEI',
-            'role_id' => 0 // Specific role ID for this employee
-        ],
-        [
-            'first_name' => 'Kris Ria',
-            'middle_name' => 'Castillo',
-            'last_name' => 'Dipasupil',
-            'nickname' => 'Ria',
-            'current_position' => 'IT Specialist',
-            'department' => 'PEI',
-            'role_id' => 11 // Specific role ID for this employee
-        ],
-    ];
+    //         'role_id' => 9 // Specific role ID for this employee
+    //     ],
+    //     [
+    //         'first_name' => 'Marvin',
+    //         'middle_name' => 'Chan',
+    //         'last_name' => 'Baniqued',
+    //         'nickname' => 'Chan',
+    //         'current_position' => 'ICT Specialist',
+    //         'department' => 'PEI',
+    //         'role_id' => 0 // Specific role ID for this employee
+    //     ],
+    //     [
+    //         'first_name' => 'Kris Ria',
+    //         'middle_name' => 'Castillo',
+    //         'last_name' => 'Dipasupil',
+    //         'nickname' => 'Ria',
+    //         'current_position' => 'IT Specialist',
+    //         'department' => 'PEI',
+    //         'role_id' => 11 // Specific role ID for this employee
+    //     ],
+    // ];
 
-        foreach ($specificEmployees as $index => $specificEmployee) {
-            $employee = $employees[$index];
+    //     foreach ($specificEmployees as $index => $specificEmployee) {
+    //         $employee = $employees[$index];
 
-            $employee->update([
-                'first_name' => $specificEmployee['first_name'],
-                'middle_name' => $specificEmployee['middle_name'],
-                'last_name' => $specificEmployee['last_name'],
-                'nickname' => $specificEmployee['nickname'],
-                'current_position' => $specificEmployee['current_position'],
+    //         $employee->update([
+    //             'first_name' => $specificEmployee['first_name'],
+    //             'middle_name' => $specificEmployee['middle_name'],
+    //             'last_name' => $specificEmployee['last_name'],
+    //             'nickname' => $specificEmployee['nickname'],
+    //             'current_position' => $specificEmployee['current_position'],
 
-                'department' => $specificEmployee['department']
-            ]);
+    //             'department' => $specificEmployee['department']
+    //         ]);
 
-            $user = User::where('employee_id', $employee->employee_id)->first();
-            $user->update([
-                'role_id' => $specificEmployee['role_id']
-            ]);
-        }
+    //         $user = User::where('employee_id', $employee->employee_id)->first();
+    //         $user->update([
+    //             'role_id' => $specificEmployee['role_id']
+    //         ]);
+    //     }
 
-        User::factory()->create([
+        User::create([
             'employee_id' => "SLEA9999",
             'email' => 'itproject@gmail.com',
             'password' => Hash::make('superadminpassword'),
@@ -125,8 +125,6 @@ class EmployeeSeeder extends Seeder
             'birth_date' => '1989-01-01',
             'religion' => 'Not Specified',
             'birth_place' => 'Cityville',
-            'height' => 5.9, // Using example values for precision and scale
-            'weight' => 160, // Using example values for precision and scale
             'civil_status' => 'Single',
             'name_of_mother' => 'Mother Name',
             'name_of_father' => 'Father Name',

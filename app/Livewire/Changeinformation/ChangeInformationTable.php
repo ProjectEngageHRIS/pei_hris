@@ -74,20 +74,16 @@ class ChangeInformationTable extends Component
 
         switch ($this->status_filter) {
             case '1':
-                $query->where('status',  'Completed');
-                $this->statusFilterName = "Completed";
+                $query->where('status',  'Approved');
+                $this->statusFilterName = "Approved";
                 break;
             case '2':
-                $query->where('status', 'Ongoing');
-                $this->statusFilterName = "Ongoing";
+                $query->where('status', 'Pending');
+                $this->statusFilterName = "Pending";
                 break;
             case '3':
-                $query->where('status', 'Report');
-                $this->statusFilterName = "Report";
-                break;
-            case '4':
-                $query->where('status', 'Unassigned');
-                $this->statusFilterName = "Unassigned";
+                $query->where('status', 'Declined');
+                $this->statusFilterName = "Declined";
                 break;
             case '4':
                 $query->where('status', 'Cancelled');
@@ -98,11 +94,16 @@ class ChangeInformationTable extends Component
                 break;
         }
 
-
         if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('application_date', 'like', '%' . $term . '%')
+                      ->orWhere('status', 'like', '%' . $term . '%');
+                }
+            })->orderBy('application_date', 'desc')->paginate(5);
         } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
 
         return view('livewire.changeinformation.change-information-table', [

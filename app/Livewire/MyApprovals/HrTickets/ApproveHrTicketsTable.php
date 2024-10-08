@@ -24,9 +24,11 @@ class ApproveHrTicketsTable extends Component
     public $date_filter;
 
     public $status_filter;
+    public $type_filter;
 
     public $dateFilterName = "All";
     public $statusFilterName = "All";
+    public $typeFilterName = "All";
 
     public $search = "";
 
@@ -35,13 +37,17 @@ class ApproveHrTicketsTable extends Component
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
+        'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBISIONARY' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
-        'PEI-CCS' => false,
-        'RAPID' => false,
-        'RAPIDMOBILITY' => false,
-        'UPSKILLS' => false,
     ];
+
 
     public $insideDepartmentTypesFilter = [
         'HR AND ADMIN' => false,
@@ -161,8 +167,42 @@ class ApproveHrTicketsTable extends Component
                 $query->where('status', 'Declined');
                 $this->statusFilterName = "Declined";
                 break;
+            case '4':
+                $query->where('status', 'Cancelled');
+                $this->statusFilterName = "Cancelled";
+                break;
             default:
                 $this->statusFilterName = "All";
+                break;
+        }
+
+        switch ($this->type_filter) {
+            case '1':
+                $query->where('type_of_ticket', 'HR Internal');
+                $this->typeFilterName = "HR Internal";
+                break;
+            case '2':
+                $query->where('type_of_ticket', 'Internal Control');
+                $this->typeFilterName = "Internal Control";
+                break;
+            case '3':
+                $query->where('type_of_ticket', 'HR Operations');
+                $this->typeFilterName = "HR Operations";
+                break;
+            case '4':
+                $query->where('type_of_request', 'HR');
+                $this->typeFilterName = "HR";
+                break;
+            case '5':
+                $query->where('type_of_request', 'Office Admin');
+                $this->typeFilterName = "Office Admin";
+                break;
+            case '6':
+                $query->where('type_of_request', 'Procurement');
+                $this->typeFilterName = "Procurement";
+                break;
+            default:
+                $this->typeFilterName = "All";
                 break;
         }
 
@@ -208,21 +248,37 @@ class ApproveHrTicketsTable extends Component
                 $query->whereIn('gender', $genderTypes);
             });
         }
-
-        if(strlen($this->search) >= 1){
+        if (strlen($this->search) >= 1) {
             $searchTerms = explode(' ', $this->search);
+        
+            // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
                 foreach ($searchTerms as $term) {
-                    $q->orWhere('first_name', 'like', '%' . $term . '%')
-                      ->orWhere('last_name', 'like', '%' . $term . '%')
-                      ->orWhere('department', 'like', '%' . $term . '%')
-                      ->orWhere('current_position', 'like', '%' . $term . '%')
-                      ->orWhere('employee_type', 'like', '%' . $term . '%')
-                      ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                    $q->orWhereHas('employee', function ($query) use ($term) {
+                        $query->where('first_name', 'like', '%' . $term . '%')
+                              ->orWhere('last_name', 'like', '%' . $term . '%')
+                              ->orWhere('department', 'like', '%' . $term . '%')
+                              ->orWhere('current_position', 'like', '%' . $term . '%')
+                              ->orWhere('employee_type', 'like', '%' . $term . '%');
+                    })
+                    ->orWhere('application_date', 'like', '%' . $term . '%')
+                    ->orWhere('application_date', 'like', '%' . $term . '%')
+                    ->orWhere('concerned_employee', 'like', '%' . $term . '%')
+                    ->orWhere('type_of_ticket', 'like', '%' . $term . '%')
+                    ->orWhere('type_of_request', 'like', '%' . $term . '%')
+                    ->orWhere('sub_type_of_request', 'like', '%' . $term . '%')
+                    ->orWhere('purpose', 'like', '%' . $term . '%');
                 }
-            })->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
+            })->orderBy('created_at', 'desc');
         } else {
-            $results = $query->orderBy('created_at', 'desc')->where('status', '!=', 'Deleted')->paginate(6);
+            // If no search term, return all records
+            $results = $query->orderBy('created_at', 'desc');
+        }
+
+        if($this->statusFilterName == "Cancelled"){
+            $results = $results->paginate(5);
+        } else {
+            $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
         }
 
 
@@ -270,7 +326,7 @@ class ApproveHrTicketsTable extends Component
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if(in_array($loggedInUser->role_id, [9, 10, 11, 12, 13])){
+                if(in_array($loggedInUser->role_id, [6, 7, 9, 10, 11, 12, 13, 61024])){
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];

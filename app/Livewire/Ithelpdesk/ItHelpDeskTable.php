@@ -102,9 +102,23 @@ class ItHelpDeskTable extends Component
 
 
         if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
-        } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $searchTerms = explode(' ', $this->search);
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    $q->orWhere('application_date', 'like', '%' . $term . '%')
+                      ->orWhere('status', 'like', '%' . $term . '%')
+                      ->orWhere('description', 'like', '%' . $term . '%')
+                      ->orWhere('report', 'like', '%' . $term . '%');
+                }
+            });
+        } 
+
+        $loggedInUser = auth()->user()->role_id;
+        
+        if($loggedInUser == 61024){
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        } else{
+            $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(6);
         }
 
         return view('livewire.ithelpdesk.it-help-desk-table', [

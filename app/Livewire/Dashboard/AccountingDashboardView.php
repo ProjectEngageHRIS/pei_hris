@@ -21,12 +21,15 @@ class AccountingDashboardView extends Component
 
 
     public $employeeTypesFilter = [
-        'INTERNALS' => false,
+        'INDEPENDENT CONSULTANT' => false,
+        'INDEPENDENT CONTRACTOR' => false,
+        'INTERNAL EMPLOYEE' => false,
+        'INTERN' => false,
+        'PROBISIONARY' => false,
+        'PROJECT BASED' => false,
+        'REGULAR' => false,
+        'RELIVER' => false,
         'OJT' => false,
-        'PEI-CCS' => false,
-        'RAPID' => false,
-        'RAPIDMOBILITY' => false,
-        'UPSKILLS' => false,
     ];
 
     public $insideDepartmentTypesFilter = [
@@ -622,9 +625,15 @@ class AccountingDashboardView extends Component
                       ->orWhere('employee_type', 'like', '%' . $term . '%')
                       ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                 }
-            })->orderBy('created_at', 'desc')->paginate(6);
-        } else {
-            $results = $query->orderBy('created_at', 'desc')->paginate(6);
+            });
+        } 
+
+        $loggedInUser = auth()->user()->role_id;
+        
+        if($loggedInUser == 61024){
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
+        } else{
+            $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(6);
         }
 
         // $results = $query->orderBy('created_at', 'desc')->where('first_name', 'dsjdak')->paginate(5);

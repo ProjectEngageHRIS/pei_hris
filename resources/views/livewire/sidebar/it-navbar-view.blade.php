@@ -23,6 +23,12 @@
                                     <path fill-rule="evenodd" d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z" clip-rule="evenodd" />
                                 </svg> Change Password
                             </a>
+                            <a href="{{ route('ItReset2Fa') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('ItReset2Fa') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-5 h-5 mr-2">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                                Reset 2FA
+                            </a>
                         </ul>
                     </div>
                 </div>
@@ -31,8 +37,7 @@
                 <div class="flex pl-4 xl:pl-6 item-center">
                     <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="mr-3 size-10">
                     <div class="flex flex-col">
-                        <span class="text-sm text-customGray">Powered by</span>
-                        <span class="text-lg font-semibold text-nowrap text-customRed">SL Groups</span>
+                        <span class="text-xl font-semibold text-nowrap text-customRed mt-2">SL Group</span>
                     </div>
                 </div>
             </a>
@@ -54,6 +59,14 @@
                             <path fill-rule="evenodd" d="M12 1.5a5.25 5.25 0 0 0-5.25 5.25v3a3 3 0 0 0-3 3v6.75a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3v-6.75a3 3 0 0 0-3-3v-3c0-2.9-2.35-5.25-5.25-5.25Zm3.75 8.25v-3a3.75 3.75 0 1 0-7.5 0v3h7.5Z" clip-rule="evenodd" />
                           </svg>
                             Change Password
+                    </button>
+                </a>
+                <a href="{{ route('ItReset2Fa') }}" class="w-50">
+                    <button class="w-50 font-sans text-sm font-medium  px-4 shadow h-7 rounded-8px {{ request()->routeIs('ItReset2Fa') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="inline-block w-4 h-4 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                            Reset 2fa
                     </button>
                 </a>
             </ul>
@@ -144,6 +157,11 @@
                         <li>
                             <a href="{{route('EmployeeDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Employee Portal</a>
                         </li>
+                        @if($role_id == 61024)
+                            <li>
+                                <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Choose Portal</a>
+                            </li>
+                        @endif
                     </ul>
                     <div class="py-2">
                         <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-customGray1 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Sign out</a>

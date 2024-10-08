@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee</a>
+            <a href="{{route('HumanResourceDashboard')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Dashboard</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,14 +22,14 @@
             <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Create</span>
+            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Edit</span>
             </div>
         </li>
         </ol>
     </nav>
     <form wire:submit.prevent="submit" method="POST">
     @csrf
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> Create an Employee</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white"> Edit Employee Information</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
 
@@ -618,11 +618,11 @@
                         <div class="w-full ">
                             <label for="files"
                                 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Link <span class="text-red-600">*</span></label>
-                            <textarea type="url" rows="2" name="files" id="files"  wire:model="files_link"
+                            <textarea type="url" rows="2" name="files" id="files_link"  wire:model="files_link"
                                 class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                 ntd=""> </textarea>
                                 @error('files_link')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('files').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files').focus();" >
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('files_link').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_link').focus();" >
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
                                 @enderror
@@ -914,62 +914,7 @@
                                                      </div>
                                                  @enderror
                                             </div>
-                                            <div class="flex flex-row w-full relative">
-                                                <div class="flex flex-col w-full">
-                                                    <label for="password" class="block text-sm font-medium text-customGray1">Password <span class="text-red-600">*</span></label>
-                                                    <div x-data="{
-                                                            password: '',
-                                                            generatePassword() {
-                                                                const length = Math.floor(Math.random() * (20 - 8 + 1)) + 8; // Random length between 8 and 20
-                                                                const lowerCharset = 'abcdefghijklmnopqrstuvwxyz';
-                                                                const upperCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                                                                const numberCharset = '0123456789';
-                                                                const specialCharset = '@$!%*?&';
-                                                                const allCharset = lowerCharset + upperCharset + numberCharset + specialCharset;
 
-                                                                let password = '';
-                                                                password += lowerCharset.charAt(Math.floor(Math.random() * lowerCharset.length));
-                                                                password += upperCharset.charAt(Math.floor(Math.random() * upperCharset.length));
-                                                                password += numberCharset.charAt(Math.floor(Math.random() * numberCharset.length));
-                                                                password += specialCharset.charAt(Math.floor(Math.random() * specialCharset.length));
-
-                                                                for (let i = password.length; i < length; i++) {
-                                                                    password += allCharset.charAt(Math.floor(Math.random() * allCharset.length));
-                                                                }
-
-                                                                // Shuffle the password to avoid predictable patterns
-                                                                this.password = password.split('').sort(() => 0.5 - Math.random()).join('');
-                                                                $wire.set('password', this.password); // Update Livewire component property
-                                                            }
-                                                        }"
-                                                        class="relative flex items-center w-full">
-                                                        <input type="password" name="password" id="password" x-model="password" wire:model.live="password" placeholder="••••••••"
-                                                            class="bg-gray-50 border border-gray-300 mt-4 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            required>
-                                                        <button type="button" class="absolute right-12 bottom-1 mb-1 text-customGray1 hover:text-customRed" @click="generatePassword()">
-                                                            Generate
-                                                        </button>
-                                                        <button type="button" class="absolute right-2 bottom-1 mb-2 text-customGray1 hover:text-customRed" onclick="togglePassword()">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4" id="eyeopen">
-                                                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-                                                                <path fillRule="evenodd" d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" clipRule="evenodd" />
-                                                            </svg>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 hidden" id="eyeclose">
-                                                                <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                                                                <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                                                                <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    @error('password')
-                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('password').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('password').focus();" >
-                                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
-
-
-</div>
 
 <script>
 // function generatePassword() {
@@ -1034,40 +979,52 @@
 </div>
 
                 </div>
-                <button wire:click="submit()" type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">Create Account</button>
+                <div x-data="{ showModal: false }">
+    <!-- Submit Button -->
+    <button @click="showModal = true" type="button" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">Submit</button>
 
-
-                <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Created'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
-                <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
-                <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
-                    x-show="showToast"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-90"
-                    x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-90">
-                <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
-                    <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
-                    </svg>
-                    <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
-                </div>
-                <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
-                <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                        </svg>
-                    </button>
-                        </div>
-                    </div>
+    <!-- Confirmation Modal -->
+    <div x-cloak x-show="showModal" class="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-75">
+        <div class="bg-white p-6 rounded-lg shadow-lg">
+            <h2 class="text-lg font-semibold text-gray-700">Confirm Submission</h2>
+            <p class="mt-4 text-gray-600">Are you sure you want to submit the changes?</p>
+            <div class="mt-6 flex justify-end">
+                <button @click="showModal = false" type="button" class="px-4 py-2 mr-2 text-sm font-medium text-gray-600 bg-gray-200 rounded-lg hover:bg-gray-300">Cancel</button>
+                <button @click="showModal = false; $wire.submit()" type="button" class="px-4 py-2 text-sm font-medium text-white bg-customRed rounded-lg hover:bg-red-600">Confirm</button>
             </div>
+        </div>
+    </div>
+    <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
+        @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
+        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
+        <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
+        <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
+            x-show="showToast"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 scale-90"
+            x-transition:enter-end="opacity-100 scale-100"
+            x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100 scale-100"
+            x-transition:leave-end="opacity-0 scale-90">
+        <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
+            <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+            </svg>
+            <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
+            </svg>
+            <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
+        </div>
+        <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
+        <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
+            <span class="sr-only">Close</span>
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                </svg>
+            </button>
+                </div>
+            </div>
+    </div>
 
                 <!-- Loading screen -->
                 <div wire:loading wire:target="submit" class="load-over">

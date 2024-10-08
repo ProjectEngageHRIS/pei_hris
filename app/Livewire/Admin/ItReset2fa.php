@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Validation\Rules\Password;
 
-class ItChangePassword extends Component
+class ItReset2fa extends Component
 {
     public $email;
     public $old_password;
@@ -32,29 +32,15 @@ class ItChangePassword extends Component
         }
     }
 
-    protected $rules = [
-        // 'email' => 'required|email',
-        // 'old_password' => 'required|string',
-        'password' => 'required|string|min:8|confirmed',
-        // 'selectedEmployee' => 'required|regex:/^[A-Za-z\s]+ \| SLE[A-Z]?\d{4}$/',   
-    ];
+    // protected $rules = [
+    //     'selectedEmployee' => 'required|regex:/^[A-Za-z\s]+ \| SLE[A-Z]?\d{4}$/',   
+    // ];
     
 
-    public function changePassword()
+    public function reset2FA()
     {
         // $this->validate();
-        $this->validate([
-            'password' => [
-                'required',
-                'string',
-                Password::min(8)
-                    ->mixedCase()
-                    ->numbers()
-                    ->symbols()
-                    ->uncompromised(),
-                'confirmed'
-            ],
-        ]);
+
         $user = auth()->user();
         // dd($user->role_id == 061024 && $user->employee_id == 200000000);
         try {
@@ -63,7 +49,8 @@ class ItChangePassword extends Component
                 $employee_id = trim($parts[1]);
                 // $this->validate(['employeeId' => 'required|regex:/^SLE[A-Z]?\d{4}$/']);
                 $target_employee = User::where('employee_id', $employee_id)->first();
-                $target_employee->password = Hash::make($this->password);
+                $target_employee->twofactor_secret = Null;
+                $target_employee->twofactor_approved = False;
                 $target_employee->save();
     
                 $this->dispatch('trigger-success');
@@ -71,14 +58,13 @@ class ItChangePassword extends Component
                 // Send email notification
                 // Mail::to($user->email)->send(new PasswordChanged($user));
     
-                session()->flash('message', 'Password changed successfully! Check your email for confirmation.');
-                return redirect()->to('/employee');
+                return redirect()->to(route('ItDashboard'));
             } else {
                 throw new \Exception('Unauthorized Access');
             }   
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('it_change_password')->error('Failed to update Password: ' . $e->getMessage() . ' | ' . $user->employee_id);
+            Log::channel('it_reset_2fa')->error('Failed to Reset OTP: ' . $e->getMessage() . ' | ' . $user->employee_id);
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');
@@ -87,6 +73,6 @@ class ItChangePassword extends Component
     
     public function render()
     {
-        return view('livewire.admin.it-change-password')->layout('components.layouts.it-navbar');
+        return view('livewire.admin.it-reset2fa')->layout('components.layouts.it-navbar');
     }
 }

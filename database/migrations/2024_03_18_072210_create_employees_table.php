@@ -45,20 +45,19 @@ return new class extends Migration
                 $table->date('birth_date');
                 $table->string('religion', 30);
                 $table->string('birth_place', 100);
-                $table->float('height', 8, 2); // Example precision and scale
-                $table->float('weight', 8, 2); // Example precision and scale
                 $table->string('civil_status', 20);
                 $table->string('name_of_mother', 255);
                 $table->string('name_of_father', 255);
                 $table->string('spouse', 255)->nullable();
                 $table->longText('names_of_children')->nullable();
-                $table->string('sss_num', 100)->nullable();
-                $table->string('tin_num', 100)->nullable();
-                $table->string('phic_num', 100)->nullable();
-                $table->string('hdmf_num', 100)->nullable();
+                $table->text('sss_num')->nullable();
+                $table->text('tin_num')->nullable();
+                $table->text('phic_num')->nullable();
+                $table->text('hdmf_num')->nullable();
                 $table->json('emergency_contact')->nullable();
                 $table->string('emp_image')->nullable();
                 $table->json('employee_history')->nullable();
+                $table->string('files_link')->nullable();
                 $table->string('files')->nullable();
                 $table->date('start_of_employment');
                 $table->date('end_of_employment')->nullable();

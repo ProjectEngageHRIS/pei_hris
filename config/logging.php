@@ -154,7 +154,12 @@ return [
         ],
         'hrdashboard' => [
             'driver' => 'single',
-            'path' => storage_path('logs/hrdtr/hrdashboard..log'),
+            'path' => storage_path('logs/hrdtr/hrdashboard.log'),
+            'level' => 'error',
+        ],
+        'employee_info' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/hrdtr/employee_info.log'),
             'level' => 'error',
         ],
         'leaverequests' => [
@@ -195,6 +200,11 @@ return [
         'it_change_password' => [
             'driver' => 'single',
             'path' => storage_path('logs/admin/it-change-password.log'),
+            'level' => 'error',
+        ],
+        'it_reset_2fa' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/admin/it-reset-2fa.log'),
             'level' => 'error',
         ],
         'employee_change_password' => [

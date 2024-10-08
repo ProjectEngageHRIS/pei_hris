@@ -211,9 +211,9 @@ class LeaveRequestTable extends Component
                       ->orWhere('reason', 'like', '%' . $term . '%');
                     //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                 }
-            })->orderBy('application_date', 'desc')->where('status', '!=', 'Cancelled')->paginate(6);
+            })->orderBy('application_date', 'desc')->paginate(5);
         } else {
-            $results = $query->orderBy('application_date', 'desc')->where('status', '!=', 'Cancelled')->paginate(6);
+            $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
 
         

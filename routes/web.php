@@ -21,6 +21,8 @@ use App\Livewire\Auth\Passwords\Reset;
 use App\Livewire\HrPortal\AddEmployee;
 use App\Livewire\Mytasks\MyTasksTable;
 use App\Livewire\Payroll\PayrollTable;
+use App\Livewire\HrPortal\EditEmployee;
+use App\Livewire\HrPortal\ViewEmployee;
 use App\Livewire\Mytasks\MyTasksUpdate;
 use App\Http\Controllers\IpcrController;
 use App\Http\Controllers\OpcrController;
@@ -29,6 +31,7 @@ use App\Livewire\Auth\Passwords\Confirm;
 use App\Livewire\Trainings\TrainingForm;
 use App\Livewire\Trainings\TrainingView;
 use App\Livewire\Dashboard\DashboardView;
+use App\Livewire\HrPortal\CreateEmployee;
 use App\Livewire\HrPortal\EmployeesTable;
 use App\Livewire\Hrtickets\HrTicketsForm;
 use App\Livewire\Hrtickets\HrTicketsView;
@@ -68,10 +71,10 @@ use App\Livewire\Teachpermit\TeachPermitUpdate;
 use App\Livewire\Trainings\TrainingPreTestForm;
 use App\Http\Controllers\LeaveRequestController;
 use App\Livewire\Leaverequest\LeaveRequestTable;
+
 use App\Livewire\Trainings\TrainingPostTestForm;
 use App\Http\Controllers\AttendancePdfController;
 use App\Livewire\Dailytimerecord\AttendanceTable;
-
 use App\Livewire\Leaverequest\LeaveRequestUpdate;
 use App\Http\Controllers\RequestDocumentController;
 use App\Livewire\Changeschedule\ChangeScheduleForm;
@@ -79,23 +82,24 @@ use App\Livewire\Dashboard\AccountingDashboardView;
 use App\Livewire\Onboarding\EmployeeOnboardingForm;
 use App\Livewire\Payroll\Accounting\AddPayrollForm;
 use App\Livewire\Changeschedule\ChangeScheduleTable;
+// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
+// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\Payroll\Accounting\AddPayrollTable;
 use App\Livewire\Changeinformation\ChangeInformation;
 use App\Livewire\Changeschedule\ChangeScheduleUpdate;
-// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestForm;
-// use App\Livewire\Approverequests\Leaverequest\ApproveLeaveRequestTable;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrForm;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrForm;
+// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
+// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Requestdocuments\RequestDocumentForm;
 use App\Livewire\Approverequests\Ipcr\ApproveIpcrTable;
 use App\Livewire\Approverequests\Opcr\ApproveOpcrTable;
-// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationForm;
-// use App\Livewire\Approverequests\Changeinformation\ApproveChangeInformationTable;
 use App\Livewire\Requestdocuments\RequestDocumentTable;
 use App\Livewire\Requestdocuments\RequestDocumentUpdate;
 use App\Livewire\Changeinformation\ChangeInformationView;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksView;
 use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Livewire\Admin\ItReset2fa;
 use App\Livewire\Changeinformation\ChangeInformationTable;
 use App\Livewire\Mytasks\Assignedtasks\AssignedTasksTable;
 use App\Livewire\Payroll\Accounting\AccountingPayrollForm;
@@ -119,7 +123,6 @@ use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationForm;
 use App\Livewire\Approverequests\Requestdocument\ApproveRequestDocumentTable;
 use App\Livewire\MyApprovals\ChangeInformation\ApproveChangeInformationTable;
 use App\Livewire\Approverequests\ChangeInformation\ApproveChangeInformationRequest;
-use App\Livewire\HrPortal\CreateEmployee;
 
 /*
 |--------------------------------------------------------------------------
@@ -180,12 +183,11 @@ Route::middleware('auth')->group(function () {
 Route::get('/verify', [VerifyController::class, 'verify'])
     ->name('verify');
 
-Route::middleware(['auth'])->group(function (){
+Route::middleware(['auth', '2fa'])->group(function (){
     Route::get("/dashboard", LoginDashboard::class)->name('LoginDashboard');
     Route::get("/employee", DashboardView::class)->name('EmployeeDashboard');
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
-    Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
 
 
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
@@ -217,11 +219,11 @@ Route::middleware(['auth'])->group(function (){
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', '2fa'])->group(function () {
     Route::get('/change-password', PasswordChange::class)->name('password.change');
 });
 
-Route::get('/password-reset', PasswordReset::class)->name('PasswordReset');
+// Route::get('/password-reset', PasswordReset::class)->name('PasswordReset');
 
 Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.signed', 'custom.throttle']);
 
@@ -232,7 +234,7 @@ Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.
 
 
 
-Route::middleware(['auth', ])->group(function () {
+Route::middleware(['auth' , '2fa'])->group(function () {
 
     Route::get("/leaverequest/requests/{type?}", LeaveRequestTable::class)->name('LeaveRequestTable');
 
@@ -246,13 +248,18 @@ Route::middleware(['auth', ])->group(function () {
 
     Route::get("leaverequest/approverequests", ApproveLeaverequestTable::class)->name('ApproveLeaveRequestTable');
 
+    Route::get("leaverequest/approverequests/{type?}", ApproveLeaverequestTable::class)->name('ListLeaveRequestTable');
+
     Route::get("leaverequest/approverequests/approve/{index}", ApproveLeaverequestForm::class)->name('ApproveLeaveRequestForm'); 
+
+    Route::get("leaverequest/approverequests/approve/{type?}/{index}", ApproveLeaverequestForm::class)->name('ApproveListLeaveRequestForm'); 
+
 
     // Route::get('/leaverequest/{index}', [LeaveRequestTable::class, 'download'])->name('downloadLeave');
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/helpdesk/requests", ItHelpDeskTable::class)->name('ItHelpDeskTable');
 
@@ -271,7 +278,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/mytasks/requests", MyTasksTable::class)->name('TasksTable');
 
@@ -293,7 +300,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
 
@@ -311,6 +318,10 @@ Route::middleware(['auth', ])->group(function (){
 
     Route::get('/humanresource/create-employee', CreateEmployee::class)->name('createEmployee');
 
+    Route::get('/editemployees/{index}', EditEmployee::class)->name("EditEmployee");
+
+    Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
+
     // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
 
     // Route::get('/hrtickets/{index}', [::class, 'download'])->name('downloadTeachPermit');
@@ -326,7 +337,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/activities", ActivitiesGallery::class)->name('ActivitiesGallery');
 
     // Route::get("/activities/form", ActivitiesForm::class)->name('ActivitiesForm');
@@ -338,7 +349,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/trainings", TrainingGallery::class)->name('TrainingGallery');
 
     Route::get("/trainings/form", TrainingForm::class)->name('TrainingForm');
@@ -353,7 +364,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/dailytimerecord", AttendanceTable::class)->name('AttendanceTable');
 
     Route::get("/dailytimerecord/pdf/{dates}", [AttendancePdfController::class, 'turnToPdf'])->name('AttendancePdf');
@@ -361,7 +372,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
 
@@ -380,7 +391,7 @@ Route::middleware(['auth', ])->group(function (){
 });
 
 
-Route::middleware(['auth', ])->group(function (){
+Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
@@ -392,6 +403,12 @@ Route::middleware(['auth', ])->group(function (){
 
 });
 
-Route::middleware(('auth'))->group(function () {
-    Route::get("/itchangepassword", ItChangePassword::class)->name('ItChangePassword');
+Route::middleware(['auth', '2fa'])->group(function () {
+
+    Route::get("/infosupport", ItDashboardView::class)->name('ItDashboard');
+
+    Route::get("/it-change-password", ItChangePassword::class)->name('ItChangePassword');
+    
+    Route::get("/it-reset-2fa", ItReset2fa::class)->name('ItReset2Fa');
+
 });

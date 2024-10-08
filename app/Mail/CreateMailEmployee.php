@@ -17,17 +17,17 @@ class CreateMailEmployee extends Mailable
      * Create a new message instance.
      */
     public $new_user;
-    public $add_employee;
+    public $password;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($new_user, $add_employee)
+    public function __construct($new_user, $password)
     {
         $this->new_user = $new_user;
-        $this->add_employee = $add_employee;
+        $this->password = $password;
 
     }
     /**

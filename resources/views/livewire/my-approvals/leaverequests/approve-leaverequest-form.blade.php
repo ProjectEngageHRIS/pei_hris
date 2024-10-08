@@ -113,7 +113,6 @@
                             class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option selected value="{{$supervisor_email}}" selected>{{$supervisor_email}}</option>
                             {{-- <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option> --}}
-                        {{-- 
                             <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                             <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
                             <option value="esalvador@projectengage.com.ph">esalvador@projectengage.com.ph</option>
@@ -128,7 +127,7 @@
                             <option value="trishesporlas@wesearch.com.ph">trishesporlas@wesearch.com.ph</option>
                             <option value="ecapistrano@projectengage.com.ph">ecapistrano@projectengage.com.ph</option>
                             <option value="khriziemisenas@sltemps.com">khriziemisenas@sltemps.com</option>
-                            <option value="chisilva@sltemps.com">chisilva@sltemps.com</option> --}}
+                            <option value="chisilva@sltemps.com">chisilva@sltemps.com</option>
                         </select>
                         @error('supervisor_email')
                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supervisor_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supervisor_email_container').focus();" >
@@ -392,17 +391,31 @@
                             </div>
                             <!-- Modal body -->
                             <div class="p-4 md:p-5">
-                                <div class="grid grid-cols-1 gap-4 mb-4 ">
+                                <div class="grid grid-cols-1 gap-4 mb-4 " x-data="{typeOfKey: @entangle('key'), typeOfStatus: @entangle('status')}">
                                     <div>
-                                        <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
-                                        <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                            <option class="hover:bg-customRed hover:text-white" value="Completed">Approved</option>
+                                        <label for="category" class="block mb-2 text-sm font-semibold text-gray-900">Status</label>
+                                        <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                            <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
                                             <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
-                                            {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Cancelled</option> --}}
                                         </select>
                                     </div>
-                                    <button @click="openConfirmation = true" id="updateButton" type="button"  class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">
+                                    <template x-if="typeOfKey  === 'list' && (typeOfStatus === 'Approved' || typeOfStatus === 'Declined') ">
+                                        <div id="person_container">
+                                            <label for="person" class="block mb-2 text-sm font-semibold text-gray-900">As</label>
+                                            <select id="person" wire:model.live="person" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                                <option class="hover:bg-customRed hover:text-white" value="Null">Select</option>
+                                                <option class="hover:bg-customRed hover:text-white" value="President">President</option>
+                                                <option class="hover:bg-customRed hover:text-white" value="Supervisor">Supervisor</option>
+                                            </select>
+                                            @error('person')
+                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('person_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('person_container').focus();" >
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </template>
+                                    <button @click="openConfirmation = true" id="updateButton" type="button" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-self-end">
                                         Update
                                     </button>
                                 </div>
@@ -432,7 +445,7 @@
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                         </svg>
                                         <h3 class="mb-5 text-lg font-normal text-gray-900 dark:text-gray-400">Are you sure you want to proceed</h3>
-                                        <button type="button" wire:click="changeStatus" class="text-white bg-amber-600 hover:bg-amber-800 dark:focus:ring-amber-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
+                                        <button type="button" @click="openConfirmation = false" wire:click="changeStatus" class="text-white bg-amber-600 hover:bg-amber-800 dark:focus:ring-amber-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                             Yes
                                         </button>
                                         <button @click="openConfirmation = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-amber-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" >
