@@ -8,8 +8,10 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use App\Models\Dailytimerecord;
+use App\Mail\ApproveLeaveRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Access\AuthorizationException;
 
@@ -341,6 +343,9 @@ class ApproveLeaverequestForm extends Component
                 // $leaverequestdata->status = $this->status;
         
                 $leaverequestdata->update();
+
+                Mail::to($leaverequestdata->employee->employee_email)
+                ->send(new ApproveLeaveRequest($leaverequestdata, $this->person));
         
                 $this->dispatch('trigger-success'); 
             });

@@ -9,9 +9,11 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use App\Models\Dailytimerecord;
+use App\Mail\ApproveLeaveRequest;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 
 class ApproveLeaverequestTable extends Component
@@ -450,8 +452,11 @@ class ApproveLeaverequestTable extends Component
                     //     }
                     // }
                 }
-        
+                
                 $leaverequestdata->update();
+
+                Mail::to($leaverequestdata->employee->employee_email)
+                ->send(new ApproveLeaveRequest($leaverequestdata, $this->person));
         
                 $this->dispatch('triggerSuccess'); 
         } catch (\Exception $e) {

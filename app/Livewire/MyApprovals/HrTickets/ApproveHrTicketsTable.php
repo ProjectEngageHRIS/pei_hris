@@ -10,8 +10,10 @@ use App\Models\Employee;
 use App\Models\Hrticket;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
+use App\Mail\ApproveHrTicket;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 
 class ApproveHrTicketsTable extends Component
@@ -333,6 +335,14 @@ class ApproveHrTicketsTable extends Component
                     } else {
                         $dataToUpdate = ['status' => $this->status];
                     }
+
+                    // Send email to the employee who requested the ticket
+                    $employee = $form->employee; // Assuming Hrticket has a relationship to Employee
+                    if ($employee && $employee->employee_email) {
+                        // Ensure you have a mailable class named StatusChangedMail
+                        Mail::to($employee->employee_email)->send(new ApproveHrTicket($form));
+                    }
+                    
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess'); 
                 } else {

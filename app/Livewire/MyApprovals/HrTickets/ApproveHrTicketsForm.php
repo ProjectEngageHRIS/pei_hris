@@ -7,9 +7,11 @@ use Carbon\Carbon;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Hrticket;
+use App\Mail\ApproveHrTicket;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveHrTicketsForm extends Component
@@ -299,7 +301,7 @@ class ApproveHrTicketsForm extends Component
                             throw new \Exception('Unauthorized Access');
                         }
                     }
-                } else if($form->type_of_ticket == "HR Internal Control"){
+                } else if($form->type_of_ticket == "Internal Control"){
                     if(!in_array($loggedInUser->role_id, [6, 7, 9, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
@@ -315,10 +317,15 @@ class ApproveHrTicketsForm extends Component
                 } else {
                     $dataToUpdate = ['status' => $this->status];
                 }
+                $employee = $form->employee;
+                if ($employee && $employee->employee_email) {
+                    // Ensure you have a mailable class named StatusChangedMail
+                    Mail::to($employee->employee_email)->send(new ApproveHrTicket($form));
+                }
                 $form->update($dataToUpdate);
                 $this->dispatch('trigger-success'); 
             } else {
-                throw new \Exception('No Record Fond');
+                throw new \Exception('No Record Found');
             }
             $this->dispatch('trigger-success');
             return redirect()->to(route('ApproveHrTicketsTable'));
