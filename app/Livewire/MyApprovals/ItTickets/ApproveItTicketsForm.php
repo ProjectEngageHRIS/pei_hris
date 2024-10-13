@@ -5,8 +5,10 @@ namespace App\Livewire\MyApprovals\ItTickets;
 use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
+use App\Mail\ApproveItTicket;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ApproveItTicketsForm extends Component
@@ -91,6 +93,10 @@ class ApproveItTicketsForm extends Component
                         $dataToUpdate = ['status' => $this->status];
                     }
                     $form->update($dataToUpdate);
+
+                    $employeeEmail = Employee::where('employee_id', $form->employee_id)->value('employee_email');
+                    Mail::to($employeeEmail)->send(new ApproveItTicket($form));
+                    
                     $this->dispatch('trigger-success'); 
                 } else {
                     throw new \Exception('Unauthorized Access');

@@ -7,9 +7,11 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
 use Livewire\WithPagination;
+use App\Mail\ApproveItTicket;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ItDashboardView extends Component
 {
@@ -257,6 +259,9 @@ class ItDashboardView extends Component
                         $dataToUpdate = ['status' => $this->status];
                     }
                     $form->update($dataToUpdate);
+                    $employeeEmail = Employee::where('employee_id', $form->employee_id)->value('employee_email');
+                    Mail::to($employeeEmail)->send(new ApproveItTicket($form));
+                    
                     $this->dispatch('triggerSuccess', type: "edit"); 
                 } else {
                     throw new \Exception('Unauthorized Access');
