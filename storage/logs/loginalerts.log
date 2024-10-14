@@ -26,3 +26,5 @@
 [2024-10-13 12:34:17] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
 [2024-10-13 12:34:18] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
 [2024-10-13 12:34:18] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-14 12:15:20] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-14 12:15:20] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  

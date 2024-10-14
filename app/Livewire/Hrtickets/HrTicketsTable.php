@@ -102,8 +102,8 @@ class HrTicketsTable extends Component
 
         switch ($this->status_filter) {
             case '1':
-                $query->where('status',  'Approved');
-                $this->statusFilterName = "Approved";
+                $query->where('status',  'Completed');
+                $this->statusFilterName = "Completed";
                 break;
             case '2':
                 $query->where('status', 'Pending');

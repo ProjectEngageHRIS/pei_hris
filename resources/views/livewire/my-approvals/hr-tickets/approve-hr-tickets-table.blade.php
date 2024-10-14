@@ -89,7 +89,7 @@
                         </li>   
                         <li>
                             <label for="status_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customGreen hover:text-white ">
-                                <input id="status_filter-radio-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> <label for="status_filter-radio-1" class="cursor-pointer">&nbsp; Approved </label> </input>
+                                <input id="status_filter-radio-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> <label for="status_filter-radio-1" class="cursor-pointer">&nbsp; Completed </label> </input>
                             </label>
                         </li>
                         <li>
@@ -540,16 +540,16 @@
                                                         <path fill-rule="evenodd" d="M8 7V2.221a2 2 0 0 0-.5.365L3.586 6.5a2 2 0 0 0-.365.5H8Zm2 0V2h7a2 2 0 0 1 2 2v.126a5.087 5.087 0 0 0-4.74 1.368v.001l-6.642 6.642a3 3 0 0 0-.82 1.532l-.74 3.692a3 3 0 0 0 3.53 3.53l3.694-.738a3 3 0 0 0 1.532-.82L19 15.149V20a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Z" clip-rule="evenodd"/>
                                                         <path fill-rule="evenodd" d="M17.447 8.08a1.087 1.087 0 0 1 1.187.238l.002.001a1.088 1.088 0 0 1 0 1.539l-.377.377-1.54-1.542.373-.374.002-.001c.1-.102.22-.182.353-.237Zm-2.143 2.027-4.644 4.644-.385 1.924 1.925-.385 4.644-4.642-1.54-1.54Zm2.56-4.11a3.087 3.087 0 0 0-2.187.909l-6.645 6.645a1 1 0 0 0-.274.51l-.739 3.693a1 1 0 0 0 1.177 1.176l3.693-.738a1 1 0 0 0 .51-.274l6.65-6.646a3.088 3.088 0 0 0-2.185-5.275Z" clip-rule="evenodd"/>
                                                     </svg>    
-                                                    {{ $hrticket->status }} &nbsp;
+                                                    Pending &nbsp;
                                                 </span>
                                             </th>
-                                        @elseif($hrticket->status == "Approved")
+                                        @elseif($hrticket->status == "Completed")
                                             <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 capitalize whitespace-nowrap">
                                                 <span  class="inline-flex items-center px-2 py-1 text-xs font-medium text-center text-gray-200 bg-green-700 rounded-lg hover:bg-green-800 focus:ring-4 focus:outline-none focus:ring-green-300 me-2">
                                                     <svg class="w-6 h-6 mr-1 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
                                                     </svg>
-                                                    {{ $hrticket->status }} &nbsp;
+                                                    Completed &nbsp;
                                                 </span>
                                             </th>
                                         @else
@@ -931,12 +931,12 @@
                                                     Edit
                                                 </a>
                                                 <!-- Change Status Button -->
-                                                @if ($hrticket->status != "Cancelled" && $hrticket->status != "Completed")
-                                                <button @click="openButtonCrudModal('{{$hrticket->form_id}}', '{{$hrticket->status}}')"
-                                                    type="button" 
-                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
-                                                    Change Status
-                                                </button>
+                                                @if ($hrticket->status != "Cancelled" && $hrticket->status != "Completed" && $hrticket->status != "Declined")
+                                                    <button @click="openButtonCrudModal('{{$hrticket->form_id}}', '{{$hrticket->status}}')"
+                                                        type="button" 
+                                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
+                                                        Change Status
+                                                    </button>
                                                 @endif
                                             </div>
                                         </td>
@@ -977,11 +977,9 @@
                                                 <div>
                                                     <label for="category" class="block mb-2 text-sm font-semibold text-gray-900">Status</label>
                                                     <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                                        <option class="hover:bg-customRed hover:text-white" value="Approved">Completed</option>
+                                                        <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
                                                         <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                                        <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                                        <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
-                                                        <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
+                                                        <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
                                                     </select>
                                                 </div>
                                                 <button @click="openConfirmation = true" id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-self-end">
