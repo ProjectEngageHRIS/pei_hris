@@ -379,10 +379,6 @@
                         <td class="px-6 py-4 text-center whitespace-nowrap">
                             {{$data->overtime}}
                         </td>
-                        <td class="px-6 py-4 text-center whitespace-nowrap">
-                            <span class="font-semibold">Time In:</span> {{$data->time_in_location ?? 'N/A'}} <br>
-                            <span class="font-semibold">Time Out: </span> {{$data->time_out_location ?? 'N/A'}}
-                        </td>
                     </tr>
                     @endforeach
                 @endif
