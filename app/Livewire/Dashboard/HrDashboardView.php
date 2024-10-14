@@ -110,7 +110,6 @@ class HrDashboardView extends Component
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,

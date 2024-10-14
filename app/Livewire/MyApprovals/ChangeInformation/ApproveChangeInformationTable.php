@@ -41,7 +41,6 @@ class ApproveChangeInformationTable extends Component
     // ];
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,

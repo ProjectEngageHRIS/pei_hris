@@ -402,12 +402,6 @@
                                     </button>
                                     <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
                                         <hr class="my-4 border-gray-300">
-                                        <!-- Independent Consultant -->
-                                        <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONSULTANT']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                            <label class="ml-2 text-xs font-medium text-customGray1">Independent Consultant</label>
-                                        </div>
-
                                         <!-- Independent Contractor -->
                                         <div class="flex items-center px-4 py-2">
                                             <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONTRACTOR']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
