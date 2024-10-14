@@ -18,7 +18,6 @@
         <li><strong>Date Requested: {{ $leaverequestdata->inclusive_start_date }}</strong></li>
         <li><strong>Actual Schedule: {{ $leaverequestdata->inclusive_end_date }}</strong></li>
 
-
     </ul>
 
     <p>If you have any questions, please feel free to contact HR.</p>

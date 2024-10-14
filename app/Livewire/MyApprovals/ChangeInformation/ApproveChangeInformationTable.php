@@ -7,9 +7,11 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
 use Livewire\WithPagination;
+use App\Mail\ApproveChangeInfo;
 use App\Models\ChangeInformation;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ApproveChangeInformationTable extends Component
 {
@@ -257,14 +259,22 @@ class ApproveChangeInformationTable extends Component
         try {
             if (!in_array($loggedInUser->role_id, [6, 7, 61024])){
                 throw new \Exception('Unauthorized Access');
-            } 
-            if($this->status == "Approved"){
-                $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)->first();
+            }
+            $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)->first();
 
-                if(!$changeInformationStatus){
-                    throw new \Exception('No Record Found');
-                }
-                $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
+            if(!$changeInformationStatus){
+                throw new \Exception('No Change Request Record Found');
+            }
+
+            $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
+
+            if(!$employee){
+                throw new \Exception('No Employee Record Found');
+            }
+            
+
+            if($this->status == "Approved"){
+
                 $employee->first_name = $changeInformationStatus->first_name;
                 $employee->middle_name = $changeInformationStatus->middle_name;
                 $employee->last_name = $changeInformationStatus->last_name;
@@ -359,25 +369,25 @@ class ApproveChangeInformationTable extends Component
                     'updated_at' => now(),
                 ];
     
-                
-                Employee::where('employee_id', $changeInformationStatus->employee_id)
-                                    ->update($updateData);
-                
-                // $this->js("alert('Change Information Request Submitted!')"); 
-    
                 $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
     
                 $employee->employee_history = $jsonEmployeeHistory;
-    
-                
+
+                                
+                Employee::where('employee_id', $changeInformationStatus->employee_id)
+                                    ->update($updateData);
             }
 
 
             
-            $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)
-                                                            ->update(['Status' => $this->status,
-                                                                    'updated_at' => now() ]);
+            $changeInformationStatus->update(['Status' => $this->status,
+                                              'updated_at' => now() ]);
     
+            if ($employee && $employee->employee_email) {
+                // Ensure you have a mailable class named StatusChangedMail
+                Mail::to($employee->employee_email)->send(new ApproveChangeInfo($changeInformationStatus));
+            }
+
             $this->dispatch('triggerSuccess');
 
             return redirect()->to(route('ApproveChangeInformationTable'));

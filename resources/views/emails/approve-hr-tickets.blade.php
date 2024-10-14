@@ -8,7 +8,7 @@
 
     <p>Hello  {{ $employee->first_name }}, </p>
 
-    <p>Your leave request has been updated. Here are the details:</p>
+    <p>Your Hr Ticket has been updated. Here are the details:</p>
 
     <ul>
 

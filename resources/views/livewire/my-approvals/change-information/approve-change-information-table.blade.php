@@ -517,7 +517,7 @@
                                                     Edit
                                                 </a>
                                                 <!-- Change Status Button -->
-                                                @if ($change_info->status != "Cancelled" && $change_info->status != "Completed")
+                                                @if ($change_info->status != "Cancelled" && $change_info->status != "Completed" &&  $change_info->status != "Declined")
                                                 <button @click="openButtonCrudModal('{{$change_info->form_id}}', '{{$change_info->status}}')"
                                                     type="button" 
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
@@ -594,9 +594,7 @@
                                             <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                                 <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                                 <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                                {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Report</option> --}}
-                                                {{-- <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option> --}}
-                                                <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
+                                                <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
                                             </select>
                                         </div>
                                         <button @click="openConfirmation = true" id="updateButton" type="submit" class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center justify-self-end">
