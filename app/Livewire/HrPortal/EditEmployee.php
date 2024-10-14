@@ -122,6 +122,7 @@ class EditEmployee extends Component
                 Log::channel('employee_info')->error('Failed to Decrypt Information: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
                 $this->dispatch('trigger-error');
             }
+
             $this->emergency_contact = $employeeRecord->emergency_contact;
             $this->role_id = $employeeRecord->role_id;
 
@@ -442,7 +443,6 @@ class EditEmployee extends Component
         $employee_data->hdmf_num = Crypt::encryptString($this->hdmf_num);
         $employee_data->files = $this->files;
         $employee_data->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));
-        $employee_data->sss_num = $this->sss_num;
 
         // Family Information
         $employee_data->name_of_father = $this->name_of_father;
