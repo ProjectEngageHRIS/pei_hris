@@ -97,7 +97,7 @@
                     <!-- Approval Dropdown -->
                     <div id="approveDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                         <div class="py-1">
-                            <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
+                            <a href="{{ route('ListLeaveRequestTable', ['index' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                             <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                             <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Changes</a>
                         </div>

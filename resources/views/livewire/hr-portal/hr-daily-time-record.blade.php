@@ -175,7 +175,7 @@
     <section class="w-full bg-white rounded-lg shadow">
         <div class="grid grid-cols-1 gap-2 p-4 md:grid-cols-2">
             {{-- Filters --}}
-            <div class="flex flex-row gap-1 sm:gap-2">
+            <div class="flex flex-row gap-1 sm:gap-3">
                 {{-- Phase Filter --}}
                 <button id="dropdownRadioButton" data-dropdown-toggle="daysDropdown" class="text-nowrap shadow hover:text-white inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-xs md:text-sm px-2 md:px-3 py-1.5" type="button">
                     Day {{$dayFilterName}}
@@ -329,7 +329,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" class="w-full h-10 text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                <input type="text" id="table-search-users" class="w-full h-10 text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" style="min-width: 268px" placeholder="Search for users">
                 <div x-data="{
                     employeeTypesFilter: @entangle('employeeTypesFilter'), 
                     insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 

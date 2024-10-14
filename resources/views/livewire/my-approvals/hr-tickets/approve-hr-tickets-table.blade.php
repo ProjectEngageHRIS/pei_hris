@@ -17,9 +17,9 @@
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve HR Tickets</h2>
     <section class="w-full bg-white rounded-lg shadow">
         <div class="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2">
-            <div class="flex flex-row gap-2">
+            <div class="flex flex-row gap-1">
                    {{-- Date Filter --}}
-                   <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
+                <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-50 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4 me-3">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                     </svg>
@@ -176,7 +176,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" wire:model.live.debounce.350ms="search" class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner min-w-72h-10 ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                <input type="text" id="table-search-users" wire:model.live.debounce.350ms="search" class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner h-10 ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" style="min-width: 268px" placeholder="Search for users">
                 <!-- Filter Sidebar -->
                 <div x-data="{
                     employeeTypesFilter: @entangle('employeeTypesFilter'), 
