@@ -29,7 +29,7 @@
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl">Approve HR Ticket Form</h2>
     <p class="mb-4 text-lg font-semibold text-customRed"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
-    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
+    <form wire:submit.prevent="changeStatus" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         @csrf
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
@@ -1619,6 +1619,14 @@
             </div>
         {{-- @endif --}}
     </form>
+    <div wire:loading wire:target="changeStatus" class="load-over z-50">
+        <div wire:loading wire:target="changeStatus" class="loading-overlay z-50">
+            <div class="flex flex-col justify-center items-center">
+                <div class="spinner"></div>
+                <p>Updating...</p>
+            </div>
+        </div>
+    </div>
 </div>
 <script>
     // document.addEventListener('DOMContentLoaded', (event) => {

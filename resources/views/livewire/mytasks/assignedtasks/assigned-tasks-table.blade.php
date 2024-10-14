@@ -102,7 +102,7 @@
                             </li>   
                             <li>
                                 <label for="status_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customGreen hover:text-white ">
-                                    <input id="status_filter-radio-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> <label for="status_filter-radio-1" class="cursor-pointer">&nbsp; Approved </label> </input>
+                                    <input id="status_filter-radio-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> <label for="status_filter-radio-1" class="cursor-pointer">&nbsp; Completed </label> </input>
                                 </label>
                             </li>
                             <li>
@@ -248,7 +248,7 @@
                                                 View
                                             </a>
                                             <!-- Cancel Button -->
-                                            @if ($my_task->status != "Cancelled" && $my_task->status != "Approved" )
+                                            @if ($my_task->status == "Pending" )
                                                 <button @click="openButtonCrudModal('{{$my_task->form_id}}', '{{$my_task->status}}')"
                                                     type="button" 
                                                     class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
@@ -343,7 +343,7 @@
                             </div>
                         </div>
                         <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                                @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Leave Request Updated'; setTimeout(() => showToast = false, 3000)"
+                                @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Task Updated'; setTimeout(() => showToast = false, 3000)"
                                 @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.';  setTimeout(() => showToast = false, 3000)">
                             <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                             <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
@@ -388,6 +388,14 @@
             {{ $TasksData->links() }}
         </div>
         
+        <div wire:loading wire:target="changeStatus" class="load-over z-50">
+            <div wire:loading wire:target="changeStatus" class="loading-overlay z-50">
+                <div class="flex flex-col justify-center items-center">
+                    <div class="spinner"></div>
+                    <p>Updating...</p>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div> 

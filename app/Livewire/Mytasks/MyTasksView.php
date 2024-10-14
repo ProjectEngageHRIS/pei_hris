@@ -82,6 +82,7 @@ class MyTasksView extends Component
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
         }
+
         foreach($this->employeeNames as $employee){
             $employee_id = explode('| ', $employee);
             if(in_array($employee_id[1], $task->target_employees)){

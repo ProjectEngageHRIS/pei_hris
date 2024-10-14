@@ -282,7 +282,7 @@ class ApproveHrTicketsForm extends Component
 
     }
 
-    public function submit(){
+    public function changeStatus(){
         $loggedInUser = auth()->user();
         try {
             $form = Hrticket::where('form_id', $this->form_id)->first();

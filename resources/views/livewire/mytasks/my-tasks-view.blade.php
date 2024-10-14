@@ -102,7 +102,8 @@
                                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Target Employees<span class="text-red-600">*</span></label>
                                         <select disabled multiple style="width:100%; background:gray;" class="js-example-basic-multiple disabled-select mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
                                             @foreach($employeeNames as $name)
-                                               <option value="{{$name}}">{{$name}}</option>
+                                            <option @if (in_array($name, $target_employees)) selected @endif 
+                                            value="{{$name}}">{{$name}}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -169,7 +170,7 @@
             </form>
 
         <!-- Change Status Button -->
-        <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse mt-10">
+        {{-- <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse mt-10">
             <button @click="openCrudModal = true" type="button" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
                 Change Status
             </button>
@@ -200,10 +201,8 @@
                             <div>
                                 <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
                                 <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
+                                    <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
                                     <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                    <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                    <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
                                     <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
                                 </select>
                             </div>
@@ -281,7 +280,7 @@
                             </div>
                         </div>
             </div>
-        </div>
+        </div> --}}
             
         </div>
 
