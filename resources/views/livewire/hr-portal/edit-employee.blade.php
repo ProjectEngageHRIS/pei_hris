@@ -613,7 +613,7 @@
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <div>
                                      <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2">
-                    <h2 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
+                    <h2 class="block mb-2 text-sm font-medium text-customGray"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
                     <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="files_container">
                         <div class="w-full ">
                             <label for="files"

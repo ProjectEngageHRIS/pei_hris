@@ -209,7 +209,7 @@
                                         <div wire:ignore class="col-span-4">
                                             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Visible To List<span class="text-red-600">*</span></label>
                                             <select multiple style="width:100%; background:gray;" class="js-example-basic-multiple mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
-                                                <optgroup label="Employee Names" ></optgroup>
+                                                <optgroup label="Choices" ></optgroup>
                                                 <option value="PEI">PEI</option>
                                                 <option value="SL SEARCH">SL SEARCH</option>
                                                 <option value="SL TEMPS">SL TEMPS</option>         
