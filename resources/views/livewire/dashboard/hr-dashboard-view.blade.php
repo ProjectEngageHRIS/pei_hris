@@ -524,8 +524,8 @@
                                                 </div>
                                                 <!-- Left Content Area -->
                                                 <div class="w-3/4 space-y-4">
-                                                    <p class="flex items-center text-sm leading-relaxed text-customRed">
-                                                        <span class="font-semibold">Employee Number:</span>
+                                                    <p class="flex items-center text-sm leading-relaxed text-customRed ">
+                                                        <span class="font-semibold">Employee ID:</span>
                                                         <span class="ml-2 whitespace-nowrap">{{$employee->employee_id}}</span>
                                                     </p>
                                                     <p class="flex items-center text-sm leading-relaxed text-customGray1">
