@@ -183,7 +183,11 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
                                                 <option value="">Select a publisher</option>
                                                 <option value="You">You</option>
-                                                <option value="Department">Your Department</option>
+                                                <option value="PEI">PEI</option>
+                                                <option value="SL SEARCH">SL SEARCH</option>
+                                                <option value="SL TEMPS">SL TEMPS</option>         
+                                                <option value="WESEARCH">WESEARCH</option>      
+                                                <option value="PEI-UPSKILLS">PEI-UPSKILLS</option>  
                                             </select>
                                             @error('publisher')
                                                 <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
@@ -587,12 +591,12 @@
                                                         <select id="publisher_{{$loop->index}}" name="publisher"  :disabled="isDisabled" :class="{ 'text-gray-500': isDisabled }"
                                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed">
                                                             <option value="">Select a publisher</option>
-                                                            <option value="You">You</option>
-                                                            <option value="PEI">PEI</option>
-                                                            <option value="SL SEARCH">SL SEARCH</option>
-                                                            <option value="SL TEMPS">SL TEMPS</option>         
-                                                            <option value="WESEARCH">WESEARCH</option>      
-                                                            <option value="PEI-UPSKILLS">PEI-UPSKILLS</option>   
+                                                            <option @if(!in_array($data->visible_to_list, ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"] )) selected @endif value="You">You</option>
+                                                            <option @if("PEI" == $data->publisher) selected @endif value="PEI">PEI</option>
+                                                            <option @if("SL SEARCH" == $data->publisher) selected @endif  value="SL SEARCH">SL SEARCH</option>
+                                                            <option @if("SL TEMPS" == $data->publisher) selected @endif value="SL TEMPS">SL TEMPS</option>         
+                                                            <option @if("WESEARCH" == $data->publisher) selected @endif value="WESEARCH">WESEARCH</option>      
+                                                            <option @if("PEI-UPSKILLS" == $data->publisher) selected @endif value="PEI-UPSKILLS">PEI-UPSKILLS</option>   
                                                         </select>
                                                         @error('publisher')
                                                             <div class="transition transform alert alert-danger" x-init="$el.closest('form').scrollIntoView()">
@@ -631,33 +635,34 @@
                                                                 <span class="text-red-500 text-xs xl:whitespace-nowrap">{{$message }}</span>
                                                             </div> 
                                                         @enderror
+                                                        <script>
+                                                            $(document).ready(function() {
+                                                                
+                                                                $('.js-example-basic-multiple').select2({
+                                                                    placeholder: 'Select an option',
+                                                                    closeOnSelect: false,
+                                                                }).on('select2:open', function() {
+                                                                    // Apply Tailwind CSS classes to the Select2 dropdown
+                                                                    $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed');
+                                                                    $('.select2-results__options').addClass('p-2 ');
+                                                                }).on('change', function() {
+                                                                    let data = $(this).val();
+                                                                    console.log(data);
+                                                                    @this.visible_to_list = data;
+                                                                });
+                                                                $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed p-2');
+                                                        
+                                                                // Toggle modal visibility when form submission is completed
+                                                                Livewire.on('formSubmitted', () => {
+                                                                    $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
+                                                                });
+                                                            });
+                                                        </script>
                                                     </div>
                                                 </div>
 
 
-                                                <script>
-                                                    $(document).ready(function() {
-                                                        
-                                                        $('.js-example-basic-multiple').select2({
-                                                            placeholder: 'Select an option',
-                                                            closeOnSelect: false,
-                                                        }).on('select2:open', function() {
-                                                            // Apply Tailwind CSS classes to the Select2 dropdown
-                                                            $('.select2-dropdown').addClass(' bg-gray-50 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-customRed dark:focus:border-customRed');
-                                                            $('.select2-results__options').addClass('p-2 ');
-                                                        }).on('change', function() {
-                                                            let data = $(this).val();
-                                                            console.log(data);
-                                                            @this.visible_to_list = data;
-                                                        });
-                                                        $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed p-2');
-                                                
-                                                        // Toggle modal visibility when form submission is completed
-                                                        Livewire.on('formSubmitted', () => {
-                                                            $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
-                                                        });
-                                                    });
-                                                </script>
+
                                                 
                                                 
                                                 

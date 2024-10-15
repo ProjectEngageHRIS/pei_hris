@@ -217,6 +217,7 @@ class ActivitiesGallery extends Component
 
             $activitydata->save();
             $this->dispatch('triggerSuccess');
+
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('activities')->error('Failed to Create Announcement: ' . $e->getMessage());
