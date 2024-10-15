@@ -1228,7 +1228,7 @@
     @trigger-success-add-note.window="showToast = true; toastType = 'success'; toastMessage = 'Added Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete-note.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payroll Already Exists for this Employee. Manually Edit It.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payroll Already Exists for this Employee. Manually Edit It or Refresh Page.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
     <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
     <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
         x-show="showToast"

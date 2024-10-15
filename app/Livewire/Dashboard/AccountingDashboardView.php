@@ -315,6 +315,7 @@ class AccountingDashboardView extends Component
                 } 
                 $parts = explode(' | ', $this->selectedEmployee);
                 $payroll_exists = Payroll::where('target_employee', $parts[1])
+                                                ->whereNull('deleted_at')
                                                 ->where('phase',  $this->payroll_phase)
                                                 ->where('month',  $this->payroll_month)
                                                 ->where('year',   $this->payroll_year)
@@ -512,8 +513,8 @@ class AccountingDashboardView extends Component
                 $payroll_status_data->deleted_at = now();
                 $payroll->employee_id = $loggedInUser->employee_id;
                 $payroll->deleted_at = now();
-                $payroll_status_data->update();
-                $payroll->update();
+                $payroll_status_data->delete();
+                $payroll->delete();
             } 
             return $this->dispatch('trigger-success-delete');
 
