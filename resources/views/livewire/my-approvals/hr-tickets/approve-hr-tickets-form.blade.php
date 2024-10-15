@@ -717,7 +717,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Departure</label>
-                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required disabled
+                            <input type="datetime-local" name="request_date" id="request_date" wire:model.live="request_date" required disabled
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg shadow-inner block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
@@ -727,7 +727,7 @@
                         </div>
                         <div class="col-span-1">
                             <label for="request_requested" class="block mb-2 text-sm font-medium text-gray-900">Date and Time of Pick-Up</label>
-                            <input type="date" name="request_requested" id="request_requested" wire:model.live="request_requested" required disabled
+                            <input type="datetime-local" name="request_requested" id="request_requested" wire:model.live="request_requested" required disabled
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg shadow-inner block w-full p-2.5">
                             @error('request_requested')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();">
