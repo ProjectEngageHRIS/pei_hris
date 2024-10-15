@@ -656,8 +656,8 @@ document.addEventListener('livewire:init', function () {
             const now = new Date().toLocaleTimeString('en-US', options);
             document.getElementById('current-time').textContent = now;
         }
-        setInterval(updateTime, 1000); // Update every second
         updateTime2(); // Initial call to display time immediately
+        requestAnimationFrame(updateTimeSmooth);
 
     document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(updateTimeSmooth);
