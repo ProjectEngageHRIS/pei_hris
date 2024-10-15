@@ -52,15 +52,15 @@
                     
                 
                     <!-- Content below the SVG -->
-                    <div wire:ignore class="w-full">
-                        <div wire:poll.1ms class="flex flex-col mt-5 mb-6 items-center">
+                    <div  class="w-full">
+                        <div class="flex flex-col mt-5 mb-6 items-center">
                             <p class="text-sm font-regular text-customGray1">{{ now()->format('F j, Y') }}</p>
                             <p id="current-time" class="text-sm text-customGray1 font-regular">{{ now('Asia/Manila')->format('g:i:s A') }}</p>
                             <hr class="my-4 border-gray-300 w-full">
                         </div>
                 
                         @if ($leaveIndicator)
-                        <div class="flex justify-center w-full px-4 mb-4">
+                        <div wire:ignore class="flex justify-center w-full px-4 mb-4">
                             <p class="text-base text-center">
                                 You are currently on <br>
                                 <span class="font-semibold text-customRed"> {{$leaveIndicator}}</span>. <br>
@@ -650,6 +650,14 @@ document.addEventListener('livewire:init', function () {
         updateTime();
         requestAnimationFrame(updateTimeSmooth);
     }
+
+    function updateTime2() {
+            const options = { timeZone: 'Asia/Manila', hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            const now = new Date().toLocaleTimeString('en-US', options);
+            document.getElementById('current-time').textContent = now;
+        }
+        setInterval(updateTime, 1000); // Update every second
+        updateTime2(); // Initial call to display time immediately
 
     document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(updateTimeSmooth);
