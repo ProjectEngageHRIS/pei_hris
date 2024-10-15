@@ -47,7 +47,7 @@ class MyTasksView extends Component
                 return redirect()->to(route('TasksTable'));
             }
             $target_employees = json_decode($task->target_employees);
-            if(!in_array($loggedInUser, $target_employees)){
+            if(!in_array($loggedInUser->employee_id, $target_employees)){
                 return redirect()->to(route('TasksTable'));
             }
         } catch (AuthorizationException $e) {
