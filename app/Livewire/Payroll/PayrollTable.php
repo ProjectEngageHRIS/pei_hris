@@ -41,9 +41,9 @@ class PayrollTable extends Component
         $this->resetPage();
     }
 
-    public function view($start_date){
-        return redirect()->to(route('PayrollView', ['date' => $start_date]));
-    }
+    // public function view($start_date){
+    //     return redirect()->to(route('PayrollView', ['date' => $start_date]));
+    // }
 
     public function mount(){
         $date = Carbon::now();
@@ -265,8 +265,6 @@ class PayrollTable extends Component
         $loggedInUser = auth()->user()->role_id;
         if($payroll->target_employee != $loggedInUser) return redirect()->to(route('PayrollTable'));
         else return redirect()->to($payroll->payroll_picture);
-
-
     }
 
     

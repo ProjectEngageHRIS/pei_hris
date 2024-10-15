@@ -15,12 +15,12 @@
                 <svg class="w-3 h-3 mx-1 text-gray-500 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <a href="{{route('PayrollTable')}}" class="text-sm font-semibold ms-1 text-gray-00 hover:text-customRed md:ms-2 ">Payroll</a>
+                <a href="{{route('PayrollTable')}}" class="text-sm font-semibold ms-1 text-gray-00 hover:text-customRed md:ms-2 ">Payslip</a>
                 </div>
             </li>
             </ol>
         </nav>
-        <h2 class="mb-8 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Payroll</h2>
+        <h2 class="mb-8 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Payslip</h2>
 
         <div class="overflow-x-auto bg-white rounded-t-lg shadow-md ">
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
@@ -250,8 +250,8 @@
                                      <td class="items-center py-4 text-center">
                                         <div class="flex items-center justify-center space-x-2" x-data="{ isOpen: false }">
                                             <!-- View Button -->
-                                            <a wire:click="downloadPayroll('{{$data->payroll_id}}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-customGreen cursor-pointer hover:text-yellow-600 ">
-                                                View Payroll
+                                            <a wire:click="redirectToPayroll('{{$data->payroll_id}}')" class="inline-flex items-center px-4 py-2 text-sm font-medium text-customGreen cursor-pointer hover:text-yellow-600 ">
+                                                View Payslip
                                             </a>
                                         </div>
                                     </td>
