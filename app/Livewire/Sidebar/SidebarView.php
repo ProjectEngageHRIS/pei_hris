@@ -49,7 +49,7 @@ class SidebarView extends Component
         // dd($this->role);
         $this->employeeImage = $employee->emp_image;
         $this->employeeName = $employee->first_name. ' ' . $employee->middle_name . ' ' . $employee->last_name;
-        $this->employeeEmail = $loggedInUser->email;
+        $this->employeeEmail = $employee->employee_email;
 
 
 

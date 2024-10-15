@@ -169,6 +169,7 @@
                         <div x-cloak  x-show="approvalPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="approveDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="py-1">
                                 @if (in_array($employeeEmail, [
+                                    // 'seal.projectengage@gmail.com',
                                     'itproject@gmail.com',
                                     "jsodsod@projectengage.com.ph",
                                     "sherwinmalabanan@sltemps.com",

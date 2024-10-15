@@ -53,7 +53,7 @@
                 
                     <!-- Content below the SVG -->
                     <div wire:ignore class="w-full">
-                        <div class="flex flex-col mt-5 mb-6 items-center">
+                        <div wire:poll.1ms class="flex flex-col mt-5 mb-6 items-center">
                             <p class="text-sm font-regular text-customGray1">{{ now()->format('F j, Y') }}</p>
                             <p id="current-time" class="text-sm text-customGray1 font-regular">{{ now('Asia/Manila')->format('g:i:s A') }}</p>
                             <hr class="my-4 border-gray-300 w-full">

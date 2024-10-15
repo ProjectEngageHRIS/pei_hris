@@ -284,8 +284,10 @@ class ApproveLeaverequestTable extends Component
     
     public function changeStatus(){
 
-        if($this->status != "Pending"){
-            $this->validate(['person' => 'required|in:President,Supervisor']);
+        if($this->key == "list"){
+            if($this->status != "Pending"){
+                $this->validate(['person' => 'required|in:President,Supervisor']);
+            }
         }
 
         $loggedInUser = auth()->user();
@@ -305,7 +307,7 @@ class ApproveLeaverequestTable extends Component
                     return;
                 }
 
-                if($this->status == "Completed" || $this->status == "Approved" || $this->status == "Declined"){
+                if($this->status == "Pending" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
                         if (in_array($role , [4, 6, 7, 8, 61024])) {
                             if ($this->person == "President"){
@@ -354,28 +356,40 @@ class ApproveLeaverequestTable extends Component
                             throw new \Exception('Unauthorized Access');
                         }
                     } else {
+                        $verdict = Null;
+                        $status = Null;
+                        if($this->status == "Approved"){
+                            $verdict = 1;
+                            $status = "Approved";
+                        } else if($this->status == "Pending"){
+                            $verdict = Null;
+                            $status = "Pending";
+                        } else {
+                            $verdict = 0;
+                            $status = "Declined";
+                        }
                         if (in_array($role , [4, 61024])) {
-                            $leaverequestdata->approved_by_supervisor = 1;
+                            $leaverequestdata->approved_by_supervisor = $verdict;
                             if ($leaverequestdata->approved_by_president == 1) {
-                                $leaverequestdata->status = "Approved";
+                                $leaverequestdata->status = $status ;
                             }
                         } 
                         else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                             if($role == 6){ // President Role
-                                $leaverequestdata->approved_by_supervisor = 1;
-                                $leaverequestdata->approved_by_president = 1;
-                                $leaverequestdata->status = "Approved";
+                                $leaverequestdata->approved_by_supervisor = $verdict;
+                                $leaverequestdata->approved_by_president = $verdict;
+                                $leaverequestdata->status = $status ;
                             }
                         } else if ($role == 6) {
-                            $leaverequestdata->approved_by_president = 1;
+                            $leaverequestdata->approved_by_president = $verdict;
                             if ($leaverequestdata->approved_by_supervisor == 1) {
-                                $leaverequestdata->status = "Approved";
+                                $leaverequestdata->status = $status ;
                             }
                         } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
                             if($role == 7){ // Hr Head Role
-                                $leaverequestdata->approved_by_supervisor = 1;
+                                $leaverequestdata->approved_by_supervisor = $verdict;
                                 if ($leaverequestdata->approved_by_president == 1) {
-                                    $leaverequestdata->status = "Approved";
+                                    $leaverequestdata->status = $status ;
                                 }
                             }
                         } else {
