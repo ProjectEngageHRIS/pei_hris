@@ -24,7 +24,7 @@
             Generate Record
         </button>
         <!-- Modal Background Overlay -->
-        <div x-cloak x-show="showModal" class="fixed inset-0 z-40 bg-black bg-opacity-50" @click="showModal = false">
+        <div x-cloak x-show="showModal" class="fixed inset-0 z-40 bg-black bg-opacity-50" >
             <!-- Modal -->
             <div x-transition class="fixed inset-0 z-50 flex items-center justify-center p-8">
                 <div class="relative w-full max-w-md p-4 bg-white rounded-lg shadow">
@@ -756,10 +756,16 @@
         {{ $DtrData->links(data : ['scrollTo' => false])}}
     </div>
     <div wire:loading wire:target="selectedDate, search, generateRecord, dayFilter, monthFilter, yearFilter, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search" class="z-50 load-over">
-        <div wire:loading wire:target="selectedDate, search, generateRecord, dayFilter, monthFilter, yearFilter, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search" class="loading-overlay">
+        <div wire:loading wire:target="selectedDate, search, dayFilter, monthFilter, yearFilter, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search" class="loading-overlay z-50">
             <div class="flex flex-col items-center justify-center">
                 <div class="spinner"></div>
                 <p>Updating Table...</p>
+            </div>
+        </div>
+        <div wire:loading wire:target="generateRecord" class="loading-overlay z-50">
+            <div class="flex flex-col items-center justify-center">
+                <div class="spinner"></div>
+                <p>Generating Excel...</p>
             </div>
         </div>
     </div>
