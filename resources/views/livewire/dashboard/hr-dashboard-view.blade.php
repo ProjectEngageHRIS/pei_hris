@@ -1088,6 +1088,7 @@
             changeStep(event.step);
         });
     });
+
     const getChartOptions1 = () => {
       return {
           series: @json($employee_type),
@@ -1103,7 +1104,7 @@
                 "#B345E7", // Example color
             ],
           chart: {
-          height: 420,
+          height: 400,
           width: "100%",
           type: "pie",
           },
@@ -1116,22 +1117,20 @@
               labels: {
               show: true,
               },
-              size: "100%",
+              size: "50%",
               dataLabels: {
               offset: -25
               }
           },
           },
           labels: [
-                'Independent Consultant',
                 'Independent Contractor',
                 'Internal Employee',
                 'Intern',
-                'Probi',
+                'Probisionary',
                 'Project Based',
                 'Regular',
                 'Reliver',
-                'OJT',
             ],
           dataLabels: {
           enabled: true,
@@ -1140,8 +1139,8 @@
           },
           },
           legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
+            position: "bottom",
+            fontFamily: "Inter, sans-serif",
           },
           yaxis: {
           labels: {
@@ -1181,196 +1180,201 @@
       }
 
       const getChartOptions2 = () => {
-      return {
-          series: @json($inside_department),
-          colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["HR and Admin", "Recruitment", "CXS", "Overseas Recruitment", "PEI/SL Temps DO-174", "Corporate Accounting and Finance", "Accounting Operations"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          },
-      }
+        return {
+            series: @json($inside_department),
+            colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
+            chart: {
+            height: 420,
+            width: "100%",
+            type: "pie",
+            },
+            stroke: {
+            colors: ["white"],
+            lineCap: "",
+            },
+            plotOptions: {
+            pie: {
+                labels: {
+                show: true,
+                },
+                size: "100%",
+                dataLabels: {
+                offset: -25
+                }
+            },
+            },
+            labels: ["HR and Admin", "Recruitment", "CXS", "Overseas Recruitment", "PEI/SL Temps DO-174", "Corporate Accounting and Finance", "Accounting Operations"],
+            dataLabels: {
+            enabled: true,
+            style: {
+                fontFamily: "Inter, sans-serif",
+            },
+            },
+            legend: {
+            position: "bottom",
+            fontFamily: "Inter, sans-serif",
+            },
+            yaxis: {
+            labels: {
+                formatter: function (value) {
+                return value
+                },
+            },
+            },
+            xaxis: {
+            labels: {
+                formatter: function (value) {
+                return value
+                },
+            },
+            axisTicks: {
+                show: false,
+            },
+            axisBorder: {
+                show: false,
+            },
+            },
+        }
       }
 
       const getChartOptions3 = () => {
-      return {
-          series: @json($department),
-          colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          },
-      }
-      }
+        return {
+            series: @json($department),
+            colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
+            chart: {
+                height: "75%", // Same height as Chart 1 and 2
+                width: "100%", // Responsive width
+                type: "pie",
+            },
+            stroke: {
+                colors: ["white"],
+                lineCap: "",
+            },
+            plotOptions: {
+                pie: {
+                    labels: {
+                        show: true,
+                    },
+                    size: "70%", // Ensure this matches the other charts
+                    dataLabels: {
+                        offset: -25
+                    }
+                },
+            },
+            labels: ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"],
+            dataLabels: {
+                enabled: true,
+                style: {
+                    fontFamily: "Inter, sans-serif",
+                },
+            },
+            legend: {
+                position: "bottom",
+                fontFamily: "Inter, sans-serif",
+                margin: 20, // Adjust this value for top/bottom padding
+                markers: {
+                    width: 12, // Width of legend markers
+                    height: 12, // Height of legend markers
+                },
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value
+                    },
+                },
+            },
+            xaxis: {
+                labels: {
+                    formatter: function (value) {
+                        return value
+                    },
+                },
+                axisTicks: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: false,
+                },
+            },
+        }
+        }
 
-      const getChartOptions4 = () => {
-      return {
-          series: @json($gender),
-          colors: ["#45E5E7", "#E745A5"],
-          chart: {
-          height: 420,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "100%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: ["Male", "Female"],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-          position: "bottom",
-          fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          },
-      }
+    const getChartOptions4 = () => {
+        return {
+            series: @json($gender),
+            colors: ["#45E5E7", "#E745A5"],
+            chart: {
+            height: "70%",
+            width: "100%",
+            type: "pie",
+            },
+            stroke: {
+            colors: ["white"],
+            lineCap: "",
+            },
+            plotOptions: {
+            pie: {
+                labels: {
+                show: true,
+                },
+                size: "100%",
+                dataLabels: {
+                offset: -25
+                }
+            },
+            },
+            labels: ["Male", "Female"],
+            dataLabels: {
+            enabled: true,
+            style: {
+                fontFamily: "Inter, sans-serif",
+            },
+            },
+            legend: {
+            position: "bottom",
+            fontFamily: "Inter, sans-serif",
+            },
+            yaxis: {
+            labels: {
+                formatter: function (value) {
+                return value
+                },
+            },
+            },
+            xaxis: {
+            labels: {
+                formatter: function (value) {
+                return value
+                },
+            },
+            axisTicks: {
+                show: false,
+            },
+            axisBorder: {
+                show: false,
+            },
+            },
+        }
       }
 
       if (document.getElementById("pie-chart-1") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
-      chart.render();
+        const chart = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
+        chart.render();
       }
 
       if (document.getElementById("pie-chart-2") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-2"), getChartOptions2());
-      chart.render();
+        const chart = new ApexCharts(document.getElementById("pie-chart-2"), getChartOptions2());
+        chart.render();
       }
 
       if (document.getElementById("pie-chart-3") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-3"), getChartOptions3());
-      chart.render();
+        const chart = new ApexCharts(document.getElementById("pie-chart-3"), getChartOptions3());
+        chart.render();
       }
 
       if (document.getElementById("pie-chart-4") && typeof ApexCharts !== 'undefined') {
-      const chart = new ApexCharts(document.getElementById("pie-chart-4"), getChartOptions4());
-      chart.render();
+        const chart = new ApexCharts(document.getElementById("pie-chart-4"), getChartOptions4());
+        chart.render();
       }
 </script>

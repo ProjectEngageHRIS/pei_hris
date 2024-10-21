@@ -204,12 +204,13 @@ class HrDashboardView extends Component
         $this->active = $this->active == 1 ? true : false;
 
         $combinedCounts = Employee::select(
-            DB::raw('COUNT(CASE WHEN employee_type = "Internal Employee" THEN 1 END) as Internals'),
-            DB::raw('COUNT(CASE WHEN employee_type = "OJT" THEN 1 END) as OJT'),
-            DB::raw('COUNT(CASE WHEN employee_type = "PEI-CSS" THEN 1 END) as PEICSS'),
-            DB::raw('COUNT(CASE WHEN employee_type = "RAPID" THEN 1 END) as RAPID'),
-            DB::raw('COUNT(CASE WHEN employee_type = "RAPID MOBILITY" THEN 1 END) as RAPIDMOBILITY'),
-            DB::raw('COUNT(CASE WHEN employee_type = "UPSKILLS" THEN 1 END) as UPSKILLS'),
+            DB::raw('COUNT(CASE WHEN employee_type = "INDEPENDENT CONTRACTOR" THEN 1 END) as IndenpendentContractor'),
+            DB::raw('COUNT(CASE WHEN employee_type = "INTERNAL EMPLOYEE" THEN 1 END) as InternalEmployee'),
+            DB::raw('COUNT(CASE WHEN employee_type = "INTERN" THEN 1 END) as Intern'),
+            DB::raw('COUNT(CASE WHEN employee_type = "PROBISIONARY" THEN 1 END) as Probisionary'),
+            DB::raw('COUNT(CASE WHEN employee_type = "PROJECT BASED" THEN 1 END) as ProjectBased'),
+            DB::raw('COUNT(CASE WHEN employee_type = "REGULAR" THEN 1 END) as Regular'),
+            DB::raw('COUNT(CASE WHEN employee_type = "RELIVER" THEN 1 END) as Reliver'),
             DB::raw('COUNT(CASE WHEN inside_department = "HR and Admin" THEN 1 END) as HRandAdmin'),
             DB::raw('COUNT(CASE WHEN inside_department = "Recruitment" THEN 1 END) as Recruitment'),
             DB::raw('COUNT(CASE WHEN inside_department = "CXS" THEN 1 END) as CXS'),
@@ -227,8 +228,13 @@ class HrDashboardView extends Component
         )->first();
 
         $this->employee_type = [
-            $combinedCounts->Internals ?? 0,
-            $combinedCounts->OJT ?? 0,
+            $combinedCounts->IndenpendentContractor ?? 0,
+            $combinedCounts->InternalEmployee ?? 0,
+            $combinedCounts->Intern ?? 0,
+            $combinedCounts->Probisionary ?? 0,
+            $combinedCounts->ProjectBased ?? 0,
+            $combinedCounts->InternalEmployee ?? 0,
+            $combinedCounts->Regular ?? 0,
         ];
 
         $this->inside_department = [
@@ -253,6 +259,8 @@ class HrDashboardView extends Component
             $combinedCounts->MALE ?? 0,
             $combinedCounts->FEMALE ?? 0,
         ];
+
+
     }
 
     // public function search()
