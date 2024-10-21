@@ -112,8 +112,8 @@
                         <select id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option value="" selected>Select</option>
-                            {{-- <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option> --}}
-                            <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
+                            <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
+                            {{-- <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                             <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
                             <option value="esalvador@projectengage.com.ph">esalvador@projectengage.com.ph</option>
                             <option value="kcastro@projectengage.com.ph">kcastro@projectengage.com.ph</option>
@@ -127,7 +127,7 @@
                             <option value="trishesporlas@wesearch.com.ph">trishesporlas@wesearch.com.ph</option>
                             <option value="ecapistrano@projectengage.com.ph">ecapistrano@projectengage.com.ph</option>
                             <option value="khriziemisenas@sltemps.com">khriziemisenas@sltemps.com</option>
-                            <option value="chisilva@sltemps.com">chisilva@sltemps.com</option>
+                            <option value="chisilva@sltemps.com">chisilva@sltemps.com</option> --}}
                         </select>
                         @error('supervisor_email')
                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supervisor_email_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supervisor_email_container').focus();" >
