@@ -437,7 +437,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
                     <h3 class="text-xl font-semibold text-gray-900">
-                        Add new Payroll
+                        Add new Payslip
                     </h3>
                     <button type="button" @click="addTargetPayroll = !addTargetPayroll" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="add-targeted-payroll">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -448,8 +448,8 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
-                    <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
+                <div class="p-4 xl:p-5 overflow-y-auto max-h-96 " x-data="{ openAddWarningButton: false }">
+                    <form class="space-y-4 " wire:submit.prevent="addTargetPayroll" method="POST">
                         <div>
                             <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
                             <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
@@ -593,7 +593,7 @@
                     <!-- Main modal -->
                     <div x-cloak x-ref="notes-modal" 
                         x-show="openNotes" 
-                        @keydown.window.escape="open = false" 
+                        @keydown.window.escape="openNotes = false" 
                         x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0"
                         x-transition:enter-end="opacity-100"
@@ -603,51 +603,53 @@
                         tabindex="-1" 
                         class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
                         id="notes-modal">
+                        
                         <div x-show="openNotes" 
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="transform opacity-0 scale-90"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="transform opacity-100 scale-100"
-                        x-transition:leave-end="transform opacity-0 scale-90"
-                        class="relative p-4 w-full max-w-xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700">
-                            <div class="relative w-full max-w-2xl max-h-full p-4">
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="transform opacity-0 scale-90"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-90"
+                            class="relative w-full max-w-xl max-h-[90vh] bg-white rounded-lg shadow dark:bg-gray-700 overflow-hidden mx-4">
+                            
+                            <div class="relative w-full max-h-full p-4 overflow-y-auto">
                                 <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow">
-                                    <!-- Modal header -->
-                                    <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
-
+                                <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
                                     <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
                                         <h3 class="text-xl font-semibold text-gray-900">
                                             Add new note
                                         </h3>
-                                        <button @click="openNotes = !openNotes" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto" >
+                                        <button @click="openNotes = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                             </svg>
                                             <span class="sr-only">Close modal</span>
                                         </button>
                                     </div>
+
                                     <!-- Modal body -->
                                     <div class="p-4 space-y-4 md:p-5" id="note_container">
                                         <textarea class="w-full h-40 p-2 border rounded-lg focus:ring-2 focus:border-customRed focus:ring-customRed" wire:model="note" placeholder="Type your note here..."></textarea>
                                         @error('note')
                                             <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('note_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('note_container').focus();" >
-                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                <span class="text-xs text-red-500">{{$message}}</span>
                                             </div>
                                         @enderror
                                     </div>
+
                                     <!-- Modal footer -->
                                     <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                        <button type="submit" type="button" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
-                                        <button @click="openNotes = !openNotes" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
+                                        <button type="submit" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
+                                        <button @click="openNotes = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
                                     </div>
-                                    </form>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Notes List -->
                     @if ($NotesData->isEmpty())
                         <tr class="bg-white border-b hover:bg-gray-50 ">
                             <th scope="col" colspan="9" class="justify-center " style="padding-bottom: 40px">
@@ -665,27 +667,23 @@
                             $pageIndex = ($NotesData->currentpage() - 1) * $NotesData->perpage() + $ctr;
                         @endphp
                         @foreach ($NotesData as $index => $note)
-                        @php
-                            $ctr = $ctr + 1;
-                        @endphp
+                            @php
+                                $ctr = $ctr + 1;
+                            @endphp
 
-                        <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                            <span>• #{{$pageIndex + $ctr}} - {{$note->note}}</span>
-                            <button id="delete-note" class="p-2" wire:click.prevent="deleteNote({{$note->id}})">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                                    <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                        </div>
+                            <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
+                                <span>• #{{$pageIndex + $ctr}} - {{$note->note}}</span>
+                                <button id="delete-note" class="p-2" wire:click.prevent="deleteNote({{$note->id}})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
+                                        <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5A.75.75 0 0 1 9.95 6Zm3.75 0a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 13.7 6Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
                         @endforeach
-                        @if ($NotesData->count() > 10)
-                        <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
-                            {{ $NotesData->links(data : ['scrollTo' => False]) }}
-                        </div>
-                        @endif
                     @endif
                 </div>
             </div>
+
         </div>
         <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 shadow-lg h-fit rounded-8px">
             <div>
@@ -792,7 +790,7 @@
                                                                 </button>
                                                             </div>
                                                             <!-- Modal body -->
-                                                            <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto ">
+                                                            <div class="p-4 xl:p-5  overflow-y-auto" style="max-height: 27rem; ">
                                                                 <form class="space-y-4" wire:submit.prevent="submit('{{ $employee->employee_id }}')" method="POST">
                                                                     <div>
                                                                         <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
@@ -890,7 +888,7 @@
                                                                         });
                                                                     "
                                                                     :class="isScrollable ? 'mb-4' : ''" 
-                                                                    class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
+                                                                    class="p-4 xl:p-5  overflow-y-auto" style="max-height: 28rem;">
                                                                     <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')"  method="POST">
                                                                         @csrf
                                                                         <div class="grid grid-cols-2 gap-4" >
@@ -1040,7 +1038,7 @@
                                                                     });
                                                                 "
                                                                 :class="isScrollable ? 'mb-4' : ''" 
-                                                                class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
+                                                                class="p-4 xl:p-5 overflow-y-auto" style="max-height: 28rem;">
                                                                 {{-- <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto"> --}}
                                                                     <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
                                                                         @csrf
@@ -1222,13 +1220,13 @@
 
     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
     @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-success-update.window="showToast = true; toastType = 'success'; toastMessage = 'Updated Payroll Status Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-success-update.window="showToast = true; toastType = 'success'; toastMessage = 'Updated Payslip Status Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-add-note.window="showToast = true; toastType = 'success'; toastMessage = 'Added Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete-note.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payroll Already Exists for this Employee. Manually Edit It or Refresh Page.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payslip Already Exists for this Employee. Manually Edit It or Refresh Page.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
     <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
     <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
         x-show="showToast"
