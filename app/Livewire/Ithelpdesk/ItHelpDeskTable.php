@@ -91,7 +91,7 @@ class ItHelpDeskTable extends Component
                 $query->where('status', 'Unassigned');
                 $this->statusFilterName = "Unassigned";
                 break;
-            case '4':
+            case '5':
                 $query->where('status', 'Cancelled');
                 $this->statusFilterName = "Cancelled";
                 break;
