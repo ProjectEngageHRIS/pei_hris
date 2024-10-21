@@ -114,8 +114,11 @@ class ApproveHrTicketsTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user()->role_id;
-        $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
 
+        $query = Hrticket::whereHas('employee', function($q) {
+            $q->whereNull('deleted_at'); // Filter out deleted employees
+        })->with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
+        
         if(in_array($loggedInUser, [11, 12, 13])){
             $query->where('type_of_ticket', 'HR Internal');
         } else if($loggedInUser == 9){

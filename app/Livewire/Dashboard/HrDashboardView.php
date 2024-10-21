@@ -361,48 +361,48 @@ class HrDashboardView extends Component
         }
     }
 
-    public function deleteEmployee(){
-        $loggedInUser = auth()->user();
+    // public function deleteEmployee(){
+    //     $loggedInUser = auth()->user();
     
-        try {
-            // Check user authorization
-            if (!in_array($loggedInUser->role_id, [6, 7, 61024])) {
-                throw new \Exception('Unauthorized Access');
-            }
+    //     try {
+    //         // Check user authorization
+    //         if (!in_array($loggedInUser->role_id, [6, 7, 61024])) {
+    //             throw new \Exception('Unauthorized Access');
+    //         }
     
-            // Check if currentFormId is set
-            if (!$this->currentFormId) {
-                throw new \Exception('No Current Form ID');
-            }
+    //         // Check if currentFormId is set
+    //         if (!$this->currentFormId) {
+    //             throw new \Exception('No Current Form ID');
+    //         }
     
-            // Start a database transaction
-            DB::beginTransaction();
+    //         // Start a database transaction
+    //         DB::beginTransaction();
     
-            // Find and delete the employee record
-            $employee = Employee::where('employee_id', $this->currentFormId)->firstOrFail();
-            $user = User::where('employee_id', $this->currentFormId)->firstOrFail();
+    //         // Find and delete the employee record
+    //         $employee = Employee::where('employee_id', $this->currentFormId)->firstOrFail();
+    //         $user = User::where('employee_id', $this->currentFormId)->firstOrFail();
     
-            $employee->delete();
-            $user->delete();
+    //         $employee->delete();
+    //         $user->delete();
     
-            // Commit the transaction
-            DB::commit();
+    //         // Commit the transaction
+    //         DB::commit();
     
-            // Dispatch success event
-            $this->dispatch('triggerDeleteSuccess');
+    //         // Dispatch success event
+    //         $this->dispatch('triggerDeleteSuccess');
     
-        } catch (ModelNotFoundException $e) {
-            // Handle case where records are not found
-            Log::channel('hrdashboard')->error('Employee or User not found: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId);
-            $this->dispatch('triggerDeleteError');
+    //     } catch (ModelNotFoundException $e) {
+    //         // Handle case where records are not found
+    //         Log::channel('hrdashboard')->error('Employee or User not found: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId);
+    //         $this->dispatch('triggerDeleteError');
     
-        } catch (\Exception $e) {
-            // Handle other exceptions
-            Log::channel('hrdashboard')->error('Failed to delete Employee: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId . ' | User ID: ' . $loggedInUser->employee_id);
-            DB::rollBack();
-            $this->dispatch('triggerDeleteError');
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         // Handle other exceptions
+    //         Log::channel('hrdashboard')->error('Failed to delete Employee: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId . ' | User ID: ' . $loggedInUser->employee_id);
+    //         DB::rollBack();
+    //         $this->dispatch('triggerDeleteError');
+    //     }
+    // }
 
 
     public function submit()

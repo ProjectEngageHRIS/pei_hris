@@ -115,7 +115,9 @@ class ApproveLeaverequestTable extends Component
         $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
 
         // Define the base query with the necessary relations
-        $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
+        $query = Leaverequest::whereHas('employee', function($q) {
+            $q->where('active', '!=', '0'); // Filter out deleted employees
+        })->with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
         if($this->key == "list"){
             // 
