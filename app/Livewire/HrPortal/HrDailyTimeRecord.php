@@ -408,13 +408,13 @@ class HrDailyTimeRecord extends Component
     
         // Aggregate counts
         $counts = Dailytimerecord::select(DB::raw('
-            SUM(CASE WHEN type = "No Time In" AND time_in IS NULL THEN 1 ELSE 0 END) AS `Absent`,
-            SUM(CASE WHEN type is NULL AND late = 1 THEN 1 ELSE 0 END) AS `Late`,
-            SUM(CASE WHEN type = "Whole Day" THEN 1 ELSE 0 END) AS `Wholeday`,
-            SUM(CASE WHEN type = "Overtime" THEN 1 ELSE 0 END) AS `Overtime`,
-            SUM(CASE WHEN type = "Undertime" THEN 1 ELSE 0 END) AS `Undertime`,
-            SUM(CASE WHEN type is NULL AND time_out IS NULL THEN 1 ELSE 0 END) AS `No Time Out`,
-            SUM(CASE WHEN type LIKE "%Leave" THEN 1 ELSE 0 END) AS `Leave`
+            COALESCE(SUM(CASE WHEN type = "No Time In" AND time_in IS NULL THEN 1 ELSE 0 END), 0) AS `Absent`,
+            COALESCE(SUM(CASE WHEN type IS NULL AND late = 1 THEN 1 ELSE 0 END), 0) AS `Late`,
+            COALESCE(SUM(CASE WHEN type = "Whole Day" THEN 1 ELSE 0 END), 0) AS `Wholeday`,
+            COALESCE(SUM(CASE WHEN type = "Overtime" THEN 1 ELSE 0 END), 0) AS `Overtime`,
+            COALESCE(SUM(CASE WHEN type = "Undertime" THEN 1 ELSE 0 END), 0) AS `Undertime`,
+            COALESCE(SUM(CASE WHEN type IS NULL AND time_out IS NULL THEN 1 ELSE 0 END), 0) AS `No Time Out`,
+            COALESCE(SUM(CASE WHEN type LIKE "%Leave" THEN 1 ELSE 0 END), 0) AS `Leave`
         '))
         ->whereYear('attendance_date', $this->yearFilter ?? Carbon::now()->year)
         ->whereMonth('attendance_date', $this->monthFilter ?? Carbon::now()->month)
@@ -423,6 +423,7 @@ class HrDailyTimeRecord extends Component
 
         // Map the counts to the dtrTypes
         $this->dtrTypes = array_merge($this->dtrTypes, $counts->toArray());
+        
     
         return view('livewire.hr-portal.hr-daily-time-record', [
             'DtrData' => $results,
