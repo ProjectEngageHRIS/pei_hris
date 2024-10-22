@@ -15,9 +15,10 @@
         </li>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Leave Request</h2>
-    <section class="w-full bg-white rounded-lg shadow">
-        <div class="grid grid-cols-1 gap-2 p-4 sm:grid-cols-2">
-            <div class="flex flex-row gap-2">
+    <div class="w-full pb-4 mt-4  bg-white rounded-t-lg shadow-md" >
+        <div class="p-4 overflow-x-auto ">
+            <div class="flex  flex-wrap pb-1 items-center justify-between w-full  space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
+                <div class="flex space-x-3 pl-1" style="padding-bottom: 0.05rem">
                 {{-- Date Filter --}}
                 <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm px-3 py-1.5" type="button">
                     <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -417,6 +418,7 @@
                         </div>
                     </div>
                 </div>
+            </div>
             </div>
         </div>
         <div class="overflow-x-auto">

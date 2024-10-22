@@ -44,169 +44,171 @@
         </div>
 
         <div class="w-full  mt-4  bg-white rounded-t-lg shadow-md" >
-            <div class="flex flex-wrap items-center justify-between p-4 space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
-                <div class="flex space-x-2 overflow-x-auto pl-1" style="padding-bottom: 0.05rem">
-                   {{-- Date Filter --}}
-                   <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm  py-1.5"  type="button">
-                        <svg class="w-3 h-3 me-3"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
-                        </svg>
-                        {{$dateFilterName}}
-                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg>
-                    </button>
+            <div class="p-4 overflow-x-auto ">
+                <div class="flex  flex-wrap pb-1 items-center justify-between w-full  space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
+                    <div class="flex space-x-3 pl-1" style="padding-bottom: 0.05rem">
+                    {{-- Date Filter --}}
+                    <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm  py-1.5" style="padding-left: 0.60rem; padding-right: 0.60rem "  type="button">
+                            <svg class="w-3 h-3 me-3"  aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
+                            </svg>
+                            {{$dateFilterName}}
+                            <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
 
-                    <!-- Dropdown menu -->
-                    <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                            <li>
-                                <label for="date_filter-radio-0" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-0" type="radio" wire:model.live="date_filter" value="0" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-0" class="cursor-pointer"> &nbsp; All </label> </input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="date_filter-radio-1" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-1" type="radio" wire:model.live="date_filter" value="1" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white hover focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-1" class="cursor-pointer"> &nbsp;  Today </label> </input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="date_filter-radio-2" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input checked="" id="date_filter-radio-2" type="radio" wire:model.live="date_filter" value="2" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-2" class="cursor-pointer"> &nbsp; This Week </label> </input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="date_filter-radio-3" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-3" type="radio" wire:model.live="date_filter" value="3" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="date_filter-radio-3" class="cursor-pointer"> &nbsp; This Month </label></input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="date_filter-radio-4" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-4" class="cursor-pointer"> &nbsp; Last 6 Months </label> </input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="date_filter-radio-5" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
-                                    <input id="date_filter-radio-5" type="radio" wire:model.live="date_filter" value="5" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="date_filter-radio-5" class="cursor-pointer"> &nbsp; This Year</label>  </input>
-                                </label>
-                            </li>
-                        </ul>
+                        <!-- Dropdown menu -->
+                        <div id="dateDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                            <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
+                                <li>
+                                    <label for="date_filter-radio-0" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                        <input id="date_filter-radio-0" type="radio" wire:model.live="date_filter" value="0" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-0" class="cursor-pointer"> &nbsp; All </label> </input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="date_filter-radio-1" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                        <input id="date_filter-radio-1" type="radio" wire:model.live="date_filter" value="1" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white hover focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-1" class="cursor-pointer"> &nbsp;  Today </label> </input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="date_filter-radio-2" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                        <input checked="" id="date_filter-radio-2" type="radio" wire:model.live="date_filter" value="2" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-2" class="cursor-pointer"> &nbsp; This Week </label> </input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="date_filter-radio-3" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                        <input id="date_filter-radio-3" type="radio" wire:model.live="date_filter" value="3" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="date_filter-radio-3" class="cursor-pointer"> &nbsp; This Month </label></input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="date_filter-radio-4" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                        <input id="date_filter-radio-4" type="radio" wire:model.live="date_filter" value="4" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="date_filter-radio-4" class="cursor-pointer"> &nbsp; Last 6 Months </label> </input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="date_filter-radio-5" class="flex items-center p-2 cursor-pointer text-gray-900 rounded hover:bg-customRed hover:text-white ">
+                                        <input id="date_filter-radio-5" type="radio" wire:model.live="date_filter" value="5" name="date_filter-radio" class="w-4 h-4 cursor-pointer bg-gray-100 border-gray-300 text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 ">  <label for="date_filter-radio-5" class="cursor-pointer"> &nbsp; This Year</label>  </input>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {{-- Status Filter --}}
+                        <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 p-2 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm  py-1.5" style="padding-left: 0.60rem; padding-right: 0.60rem "   type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3"s>
+                                <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
+                            </svg>
+                            {{$statusFilterName}}
+                            <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="statusDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                            <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
+                                <li>
+                                    <label for="status_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-200 hover:text-customGray1">
+                                        <input id="status_filter-radio-0" type="radio" wire:model.live="status_filter" value="0" name="status_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
+                                        <label for="status_filter-radio-0" class="cursor-pointer ml-2">All</label>
+                                    </label>
+                                </li>   
+                                <li>
+                                    <label for="status_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customGreen hover:text-white ">
+                                        <input id="status_filter-radio-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> <label for="status_filter-radio-1" class="cursor-pointer">&nbsp; Completed </label> </input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="status_filter-radio-2" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-500 hover:text-white ">
+                                        <input checked="" id="status_filter-radio-2" type="radio" wire:model.live="status_filter" value="2" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2 "> <label for="status_filter-radio-2" class="cursor-pointer"> &nbsp; Pending </label></input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="status_filter-radio-4"class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customRed hover:text-white ">
+                                        <input id="status_filter-radio-4" type="radio" wire:model.live="status_filter" value="4" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="status_filter-radio-4" class="cursor-pointer">&nbsp; Declined</label>  </input>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="status_filter-radio-4"class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-600 hover:text-white ">
+                                        <input id="status_filter-radio-4" type="radio" wire:model.live="status_filter" value="4" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-600 ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="status_filter-radio-3" class="cursor-pointer">&nbsp; Cancelled</label>  </input>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
+
+                        {{-- Type Filter --}}
+                        <button id="dropdownRadioButton" data-dropdown-toggle="typeDropdown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 p-2 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm  py-1.5" style="padding-left: 0.60rem; padding-right: 0.60rem "  type="button">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3">
+                                <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                            </svg>
+                            
+                            
+                            {{$typeFilterName}}
+                            <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                            </svg>
+                        </button>
+
+                        <!-- Dropdown menu -->
+                        <div id="typeDropdown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                            <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
+                                <li>
+                                    <label for="type_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-300 hover:text-black">
+                                        <input id="type_filter-radio-0" type="radio" wire:model.live="type_filter" value="0" name="type_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
+                                        <label for="type_filter-radio-0" class="cursor-pointer ml-2">All</label>
+                                    </label>
+                                </li>   
+                                <li>
+                                    <label for="type_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-green-600 hover:text-white">
+                                        <input id="type_filter-radio-1" type="radio" wire:model.live="type_filter" value="1" name="type_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2"> 
+                                        <label for="type_filter-radio-1" class="cursor-pointer">&nbsp; HR Internal</label>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="type_filter-radio-2" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-600 hover:text-white">
+                                        <input checked="" id="type_filter-radio-2" type="radio" wire:model.live="type_filter" value="2" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2"> 
+                                        <label for="type_filter-radio-2" class="cursor-pointer" > &nbsp; Internal Control</label>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="type_filter-radio-3" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-700 hover:text-white">
+                                        <input id="type_filter-radio-3" type="radio" wire:model.live="type_filter" value="3" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-700 ring-2 ring-white focus:ring-red-700 focus:ring-2"> 
+                                        <label for="type_filter-radio-3" class="cursor-pointer">&nbsp; HR Operations</label>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="type_filter-radio-4" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-blue-600 hover:text-white">
+                                        <input id="type_filter-radio-4" type="radio" wire:model.live="type_filter" value="4" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-blue-600 ring-2 ring-white focus:ring-blue-600 focus:ring-2"> 
+                                        <label for="type_filter-radio-4" class="cursor-pointer">&nbsp; HR</label>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="type_filter-radio-5" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-purple-600 hover:text-white">
+                                        <input id="type_filter-radio-5" type="radio" wire:model.live="type_filter" value="5" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-purple-600 ring-2 ring-white focus:ring-purple-600 focus:ring-2"> 
+                                        <label for="type_filter-radio-5" class="cursor-pointer">&nbsp; Office Admin</label>
+                                    </label>
+                                </li>
+                                <li>
+                                    <label for="type_filter-radio-6" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-teal-600 hover:text-white">
+                                        <input id="type_filter-radio-6" type="radio" wire:model.live="type_filter" value="6" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-teal-600 ring-2 ring-white focus:ring-teal-600 focus:ring-2"> 
+                                        <label for="type_filter-radio-6" class="cursor-pointer">&nbsp; Procurement</label>
+                                    </label>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
-
-                    {{-- Status Filter --}}
-                    <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 p-2 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm  py-1.5"   type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3"s>
-                            <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
-                        </svg>
-                        {{$statusFilterName}}
-                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg>
-                    </button>
-
-                    <!-- Dropdown menu -->
-                    <div id="statusDropDown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                            <li>
-                                <label for="status_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-200 hover:text-customGray1">
-                                    <input id="status_filter-radio-0" type="radio" wire:model.live="status_filter" value="0" name="status_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
-                                    <label for="status_filter-radio-0" class="cursor-pointer ml-2">All</label>
-                                </label>
-                            </li>   
-                            <li>
-                                <label for="status_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customGreen hover:text-white ">
-                                    <input id="status_filter-radio-1" type="radio" wire:model.live="status_filter" value="1" name="status_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2 "> <label for="status_filter-radio-1" class="cursor-pointer">&nbsp; Completed </label> </input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="status_filter-radio-2" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-500 hover:text-white ">
-                                    <input checked="" id="status_filter-radio-2" type="radio" wire:model.live="status_filter" value="2" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2 "> <label for="status_filter-radio-2" class="cursor-pointer"> &nbsp; Pending </label></input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="status_filter-radio-4"class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-customRed hover:text-white ">
-                                    <input id="status_filter-radio-4" type="radio" wire:model.live="status_filter" value="4" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-customRed ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="status_filter-radio-4" class="cursor-pointer">&nbsp; Declined</label>  </input>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="status_filter-radio-4"class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-600 hover:text-white ">
-                                    <input id="status_filter-radio-4" type="radio" wire:model.live="status_filter" value="4" name="status_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-600 ring-2 ring-white focus:ring-customRed focus:ring-2 "> <label for="status_filter-radio-3" class="cursor-pointer">&nbsp; Cancelled</label>  </input>
-                                </label>
-                            </li>
-                        </ul>
+                    <label for="table-search" class="sr-only">Search</label>
+                    <div class="relative max-[567px]:pl-1  ">
+                        <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
+                            <svg class="w-5 h-5 text-gray-900" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <input type="text" id="table-search" wire:model.live.debounce.250ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-full max-[567px]:w-282 lg:w-full xl:w-full"  placeholder="Search like: 2024-01-01">
                     </div>
-
-                    {{-- Type Filter --}}
-                    <button id="dropdownRadioButton" data-dropdown-toggle="typeDropdown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 p-2 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm  py-1.5"  type="button">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3">
-                            <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
-                          </svg>
-                          
-                          
-                        {{$typeFilterName}}
-                        <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                        </svg>
-                    </button>
-
-                    <!-- Dropdown menu -->
-                    <div id="typeDropdown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                        <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                            <li>
-                                <label for="type_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-300 hover:text-black">
-                                    <input id="type_filter-radio-0" type="radio" wire:model.live="type_filter" value="0" name="type_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
-                                    <label for="type_filter-radio-0" class="cursor-pointer ml-2">All</label>
-                                </label>
-                            </li>   
-                            <li>
-                                <label for="type_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-green-600 hover:text-white">
-                                    <input id="type_filter-radio-1" type="radio" wire:model.live="type_filter" value="1" name="type_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2"> 
-                                    <label for="type_filter-radio-1" class="cursor-pointer">&nbsp; HR Internal</label>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="type_filter-radio-2" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-600 hover:text-white">
-                                    <input checked="" id="type_filter-radio-2" type="radio" wire:model.live="type_filter" value="2" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2"> 
-                                    <label for="type_filter-radio-2" class="cursor-pointer" > &nbsp; Internal Control</label>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="type_filter-radio-3" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-700 hover:text-white">
-                                    <input id="type_filter-radio-3" type="radio" wire:model.live="type_filter" value="3" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-700 ring-2 ring-white focus:ring-red-700 focus:ring-2"> 
-                                    <label for="type_filter-radio-3" class="cursor-pointer">&nbsp; HR Operations</label>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="type_filter-radio-4" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-blue-600 hover:text-white">
-                                    <input id="type_filter-radio-4" type="radio" wire:model.live="type_filter" value="4" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-blue-600 ring-2 ring-white focus:ring-blue-600 focus:ring-2"> 
-                                    <label for="type_filter-radio-4" class="cursor-pointer">&nbsp; HR</label>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="type_filter-radio-5" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-purple-600 hover:text-white">
-                                    <input id="type_filter-radio-5" type="radio" wire:model.live="type_filter" value="5" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-purple-600 ring-2 ring-white focus:ring-purple-600 focus:ring-2"> 
-                                    <label for="type_filter-radio-5" class="cursor-pointer">&nbsp; Office Admin</label>
-                                </label>
-                            </li>
-                            <li>
-                                <label for="type_filter-radio-6" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-teal-600 hover:text-white">
-                                    <input id="type_filter-radio-6" type="radio" wire:model.live="type_filter" value="6" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-teal-600 ring-2 ring-white focus:ring-teal-600 focus:ring-2"> 
-                                    <label for="type_filter-radio-6" class="cursor-pointer">&nbsp; Procurement</label>
-                                </label>
-                            </li>
-                        </ul>
-                    </div>
+                    
                 </div>
-                <label for="table-search" class="sr-only">Search</label>
-                <div class="relative max-[567px]:pl-1">
-                    <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
-                        <svg class="w-5 h-5 text-gray-900" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
-                        </svg>
-                    </div>
-                    <input type="text" id="table-search" wire:model.live.debounce.250ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text max-[567px]:w-250 lg:w-full xl:w-full"  placeholder="Search like: 2024-01-01">
-                </div>
-                
             </div>
             <div class="overflow-x-auto">
                 <table class="w-full pb-4 text-sm text-left text-gray-500 h-fit rtl:text-right dark:text-gray-400" style="overflow-y:hidden;" >
@@ -255,7 +257,7 @@
                             @if ($HrTicketData->isEmpty())
                                     <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
                                         <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px">
-                                            <div class="flex sm:justify-start pl-12 md:pl-0 md:justify-center items-center" style="padding-top: 40px">
+                                            <div class="flex sm:justify-start pl-14 md:pl-0 md:justify-center items-center" style="padding-top: 40px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mr-2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                                 </svg>
