@@ -44,8 +44,8 @@
         
         
         <div class="w-full  mt-4  bg-white rounded-t-lg shadow-md" >
-            <div class="flex  flex-wrap items-center justify-between w-full p-4 space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
-                <div class="flex space-x-3 pl-1 overflow-x-auto   " style="padding-bottom: 0.05rem">
+            <div class="flex  flex-wrap overflow-x-auto  items-center justify-between w-full p-4 space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
+                <div class="flex space-x-3 pl-1  justify-between   " style="padding-bottom: 0.05rem">
                     <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 w-full md:w-auto p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" style="padding-left: 0.60rem; padding-right: 0.60rem " type="button">
                         <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                             <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
@@ -217,7 +217,7 @@
                     </div> 
                 </div>
                 <label for="table-search" class="sr-only">Search</label>
-                <div class="relative max-[567px]:pl-1 overflow-x-auto">
+                <div class="relative max-[567px]:pl-1 ">
                     <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
                         <svg class="w-5 h-5 text-gray-900" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
