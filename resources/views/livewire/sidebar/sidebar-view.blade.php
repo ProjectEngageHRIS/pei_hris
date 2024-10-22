@@ -89,7 +89,7 @@
                                                 <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             @endif
                                             @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13, 61024 ]))
-                                                <a href="{{ route('ApproveHrTicketsTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
+                                                <a href="{{ route('ApproveHrTicketsTable') }}"   class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
                                             @endif
                                         </div>
                                     </ul>
@@ -212,7 +212,7 @@
                                     <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
                                 @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13, 61024 ]))
-                                    <a href="{{ route('ApproveHrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                    <a href="{{ route('ApproveHrTicketsTable') }}"  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                             </div>
                         </div>

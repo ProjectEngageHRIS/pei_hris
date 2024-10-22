@@ -16,8 +16,7 @@
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Leave Request</h2>
     <div class="w-full pb-4 mt-4  bg-white rounded-t-lg shadow-md" >
-        <div class="p-4 overflow-x-auto ">
-            <div class="flex  flex-wrap pb-1 items-center justify-between w-full  space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
+        <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
                 <div class="flex space-x-3 pl-1" style="padding-bottom: 0.05rem">
                 {{-- Date Filter --}}
                 <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm px-3 py-1.5" type="button">
@@ -114,7 +113,7 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" wire:model.live.debounce.350ms="search" class="w-full text-sm text-gray-900 border border-gray-300 rounded-lg shadow-inner h-10 ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users" style="min-width: 268px">
+                <input type="text" id="table-search-users" wire:model.live.debounce.350ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-full  min-[390px]:w-261 " placeholder="Search for users">
                 <!-- Filter Sidebar -->
                 <div x-data="{
                     employeeTypesFilter: @entangle('employeeTypesFilter'), 
@@ -155,7 +154,7 @@
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                         </svg>
                     </button>
-                    <div x-cloak x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-80 right-1">
+                    <div x-cloak x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-40 sm:w-80  right-1">
                         <!-- Clear All Button -->
                         <div class="px-4 py-2">
                             <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
@@ -420,7 +419,6 @@
                 </div>
             </div>
             </div>
-        </div>
         <div class="overflow-x-auto">
             <table class="w-full pb-4 overflow-x-scroll text-sm text-left text-gray-500 h-fit">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-100 ">
