@@ -76,7 +76,7 @@ module.exports = {
       },
       width: {
         '114': '114px',
-        '250': '250px',
+        '282': '282px',
       },
       height: {
         '32': '32px',
