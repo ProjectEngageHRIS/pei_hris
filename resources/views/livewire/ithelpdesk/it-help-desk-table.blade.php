@@ -35,7 +35,7 @@
 
         <div class="w-full pb-4 mt-4  bg-white rounded-t-lg shadow-md" >
             <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
-                <div class="flex space-x-1 overflow-x-auto" style="padding-bottom: 0.05rem">
+                <div class="flex space-x-1 overflow-x-auto pl-1" style="padding-bottom: 0.05rem">
                    {{-- Date Filter --}}
                    <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm px-3 py-1.5" type="button">
                     <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -131,11 +131,13 @@
                     </div>  
                 </div>
                 <label for="table-search" class="sr-only">Search</label>
-                <div class="relative">
+                <div class="relative max-[567px]:pl-1">
                     <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none rtl:inset-r-0 rtl:right-0 ps-3">
-                        <svg class="w-5 h-5 text-gray-900 " aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+                        <svg class="w-5 h-5 text-gray-900" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+                        </svg>
                     </div>
-                    <input type="text" id="table-search" wire:model.live.debounce.350ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text" style="width: 267px" placeholder="Search like: 2024-01-01 ">
+                    <input type="text" id="table-search" wire:model.live.debounce.250ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text max-[567px]:w-250 lg:w-full xl:w-full"  placeholder="Search like: 2024-01-01">
                 </div>
             </div>
             <div class="overflow-x-auto">
@@ -174,11 +176,11 @@
                                 @if ($ItTicketData->isEmpty())
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
                                             <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
-                                                <div class="flex justify-center " style="padding-top: 40px">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mt-1 mr-5">
+                                                <div class="flex sm:justify-start pl-12 md:pl-0 md:justify-center items-center" style="padding-top: 40px">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mr-2">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                                     </svg>
-                                                    <p class="text-customRed text-xl font-semibold items-center  "> Nothing to show</p>
+                                                    <p class="text-xl font-semibold text-customRed">Nothing to show</p>
                                                 </div>
                                             </th>
                                         </tr>
