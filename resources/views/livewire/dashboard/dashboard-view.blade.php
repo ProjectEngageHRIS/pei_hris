@@ -419,7 +419,7 @@ document.addEventListener('livewire:init', function () {
                 </div>
             <div class="flex items-center mb-6 px-15">
                 <a href="{{ route('AttendanceTable') }}" class="w-full">
-                    <button class="flex items-center px-3 ml-2 text-sm font-medium shadow bg-navButton w-58 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"> Generate Daily Log Record </button>
+                    <button class="flex items-center px-3 ml-2 text-sm font-medium shadow bg-navButton w-58 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white"> Check Daily Log </button>
                 </a>
             </div>
         </div>
@@ -507,7 +507,7 @@ document.addEventListener('livewire:init', function () {
                         {{-- <a href="{{route('TasksTable')}}"  id="myButton" class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
                            My Tasks
                         </a> --}} 
-                        <a href="#" @click="getLocalStorage"  id="myButton" class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
+                        <a href="{{route('TasksTable')}}"  id="myButton" class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
                             My Tasks
                          </a>
                         <a href="{{route('HrTicketsTable')}}"  id="navButton"  class="flex items-center justify-center px-4 mb-2 ml-4 mr-4 text-sm font-medium shadow bg-navButton w-55 h-7 text-activeButton rounded-8px hover:bg-customRed hover:text-white">
