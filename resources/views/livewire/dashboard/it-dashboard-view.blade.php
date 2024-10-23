@@ -150,7 +150,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users" wire:model.live.debounce.250ms="search" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                    <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
