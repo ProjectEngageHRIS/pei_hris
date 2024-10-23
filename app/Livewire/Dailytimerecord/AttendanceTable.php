@@ -90,6 +90,7 @@ class AttendanceTable extends Component
         $currentMonth = $now->month;
         $currentDay = $now->day;
         $currentMonthName = $now->format('F');
+        $this->dayFilter = "all";
         $this->currentYear = $currentYear;
         $this->currentMonth = $currentMonth;
         $this->currentMonthName = $currentMonthName;
@@ -132,6 +133,7 @@ class AttendanceTable extends Component
 
         $this->setGraph();
         $this->chartFilter = "Weekly";
+
         // $employeeInformation = Employee::where('employee_id', $loggedInUser)
         //                         ->select( 'sick_credits', 'vacation_credits', 'first_name', 'gender')->first();
         // $this->firstName = $employeeInformation->first_name;

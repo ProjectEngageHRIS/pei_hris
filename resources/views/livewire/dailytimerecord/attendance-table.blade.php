@@ -1,6 +1,6 @@
 <div  x-init="initFlowbite();" class="p-4 main-content">
     <div class="rounded-lg ">
-        <nav class="flex mb-2" aria-label="Breadcrumb">
+        <nav class="flex mb-4" aria-label="Breadcrumb">
             <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
                 <li class="inline-flex items-center">
                     <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed ">
@@ -19,8 +19,8 @@
                 </li>
             </ol>
         </nav>
-        <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Daily Time Record</h2>
-        <div class="flex justify-end mt-6">
+        <h2 class="text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Daily Time Record</h2>
+        <div class="flex justify-end mt-7">
             <button id="generate-record-btn" class="place-items-end mb-2 font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="inline-block w-4 h-4 mr-2">
                 <path d="M5.75 7.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM5 10.25a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0ZM10.25 7.5a.75.75 0 1 0 0 1.5.75.75 0 0 0 0-1.5ZM7.25 8.25a.75.75 0 1 1 1.5 0 .75.75 0 0 1-1.5 0ZM8 9.5A.75.75 0 1 0 8 11a.75.75 0 0 0 0-1.5Z" />
@@ -298,7 +298,7 @@
                     @if ($DtrData->isEmpty())
                     <tr class="bg-white border-b hover:bg-gray-50 ">
                         <th scope="col" colspan="8" class="justify-center" style="padding-bottom: 40px">
-                            <div class="flex sm:justify-start pl-14 md:pl-0 md:justify-center items-center" style="padding-top: 40px">
+                            <div class="flex max-[600px]:justify-start pl-14 md:pl-0 justify-center items-center" style="padding-top: 40px">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mr-2">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                 </svg>
@@ -393,17 +393,30 @@
         </div>
     </table>
 </div>
-<div wire:loading wire:target="selectedDate, search, generateRecord" class="load-over z-50">
-    <div wire:loading wire:target="selectedDate, search" class="loading-overlay">
-        <div class="flex flex-col justify-center items-center">
-            <div class="spinner"></div>
-            <p>Updating Table...</p>
-        </div>
-    </div>
+<div wire:loading wire:target="generateRecord" class="load-over z-50">
     <div wire:loading wire:target="generateRecord" class="loading-overlay">
         <div class="flex flex-col justify-center items-center">
             <div class="spinner"></div>
             <p>Exporting your Records...</p>
+        </div>
+    </div>
+</div>
+
+<div wire:loading wire:target="electedDate, dayFilter, monthFilter, yearFilter, search" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
+    <div class="z-50 mt-4">
+        <div id="toast-container" class="flex items-center justify-center w-full h-full">
+            <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 border-6 border-white text-customRed bg-white bg-opacity-90 rounded-lg shadow"
+                style="top: 90px; left: 50%; transform: translateX(-50%); z-index: 60;"
+                role="alert">
+                <div role="status">
+                    <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-customRed" viewBox="0 0 100 101" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                        <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                    </svg>
+                    <span class="sr-only">Loading...</span>
+                </div>
+                <div class="text-sm font-normal ms-3 text-center">Updating Table</div>
+            </div>
         </div>
     </div>
 </div>

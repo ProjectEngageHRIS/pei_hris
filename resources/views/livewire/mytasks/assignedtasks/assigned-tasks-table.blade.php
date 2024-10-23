@@ -170,7 +170,7 @@
                             @if ($TasksData->isEmpty())
                                     <tr class="bg-white border-b hover:bg-gray-50 ">
                                         <th scope="col" colspan="9" class="justify-center" style="padding-bottom: 40px"> 
-                                            <div class="flex sm:justify-start pl-14 md:pl-0 md:justify-center items-center" style="padding-top: 40px">
+                                            <div class="flex max-[600px]:justify-start pl-14 md:pl-0 justify-center items-center" style="padding-top: 40px">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="black" class="w-6 h-6 mr-2">
                                                     <path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
                                                 </svg>
