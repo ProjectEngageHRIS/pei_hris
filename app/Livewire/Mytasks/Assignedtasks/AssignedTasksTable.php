@@ -92,10 +92,43 @@ class AssignedTasksTable extends Component
         }
 
 
-        if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
+        if (strlen($this->search) >= 1) {
+            // Remove commas from the search input and explode into terms
+            $searchTerms = explode(' ', preg_replace('/,/', '', $this->search));
+            
+            $results = $query->where(function ($q) use ($searchTerms) {
+                foreach ($searchTerms as $term) {
+                    // Handle different formats for full date matching
+                    $parsedFullDate = null;
+                    $parsedYMDDate = null;
+        
+                    // Try to parse "October 1 2024" or "October 01 2024" format
+                    if (\DateTime::createFromFormat('F j Y', $term) !== false) {
+                        $parsedFullDate = Carbon::createFromFormat('F j Y', $term);
+                    } elseif (\DateTime::createFromFormat('F d Y', $term) !== false) {
+                        $parsedFullDate = Carbon::createFromFormat('F d Y', $term);
+                    }
+        
+                    // Try to parse "2024-10-11" format
+                    if (\DateTime::createFromFormat('Y-m-d', $term) !== false) {
+                        $parsedYMDDate = Carbon::createFromFormat('Y-m-d', $term);
+                    }
+        
+                    // Add date conditions to the query
+                    if ($parsedFullDate) {
+                        $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                    } elseif ($parsedYMDDate) {
+                        $q->orWhereDate('application_date', '=', $parsedYMDDate->format('Y-m-d'));
+                    } else {
+                        // Fallback to searching other fields
+                        $q->orWhere('application_date', 'like', '%' . $term . '%')
+                          ->orWhere('task_title', 'like', '%' . $term . '%')
+                          ->orWhere('assigned_task', 'like', '%' . $term . '%');
+                    }
+                }
+            })->orderBy('application_date', 'desc')->paginate(5);
         } else {
-            $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
 
         return view('livewire.mytasks.assignedtasks.assigned-tasks-table', [

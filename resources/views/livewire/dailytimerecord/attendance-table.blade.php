@@ -49,7 +49,7 @@
         </div>
     </div> <br>
     <div class="col-span-3 gap-4">
-        <div class="w-full col-span-2 p-4 pb-4 bg-white rounded-lg shadow md:p-4 ">
+        <div class="w-full col-span-2 p-4 pb-4 bg-white rounded-lg shadow md:p-4 overflow-x-auto ">
             <div class="flex justify-between">
                 <div>
                     <p class="text-2xl font-bold text-customRed " style="word-break: break-word;">Summary</p>
@@ -60,7 +60,7 @@
                     </svg>
                 </div>
             </div>
-            <div id="area-chart"></div>
+            <div id="area-chart" class="w-full"></div>
             <div class="grid items-center justify-between grid-cols-1 border-t border-gray-200 ">
                 <div class="flex items-center justify-between">
                     <!-- Button -->
@@ -90,7 +90,7 @@
         <div class="p-4 overflow-x-auto">
             <div class="inline-block min-w-full box-border">
                 <div class="flex flex-wrap pb-1 items-center justify-between w-full  space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
-                    <div class="flex space-x-1 overflow-x-auto pl-1" style="padding-bottom: 0.05rem">
+                    <div class="flex space-x-2 overflow-x-auto pl-1" style="padding-bottom: 0.05rem">
  
                     {{-- Phase Filter --}}
                     <button id="dropdownRadioButton" data-dropdown-toggle="daysDropdown" class="shadow hover:text-white z-20 inline-flex items-center justify-center h-10 p-2 min-w-[80px] hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5 px-3" type="button">
@@ -272,7 +272,7 @@
                                 <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                             </svg>
                         </div>
-                        <input type="text" id="table-search" wire:model.live.debounce.250ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-full max-[567px]:w-282 lg:w-full xl:w-full"  placeholder="Search like: 2024-01-01">
+                        <input type="text" id="table-search" wire:model.live.debounce.250ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text  max-[567px]:w-264  w-64 "  placeholder="Search like: January 1, 2024">
                     </div>
                 </div>
             </div>

@@ -249,32 +249,51 @@ class ApproveHrTicketsTable extends Component
                 $query->whereIn('gender', $genderTypes);
             });
         }
+
         if (strlen($this->search) >= 1) {
-            $searchTerms = explode(' ', $this->search);
-        
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
+
             // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhereHas('employee', function ($query) use ($term) {
-                        $query->where('first_name', 'like', '%' . $term . '%')
-                              ->orWhere('last_name', 'like', '%' . $term . '%')
-                              ->orWhere('department', 'like', '%' . $term . '%')
-                              ->orWhere('current_position', 'like', '%' . $term . '%')
-                              ->orWhere('employee_type', 'like', '%' . $term . '%');
-                    })
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('concerned_employee', 'like', '%' . $term . '%')
-                    ->orWhere('type_of_ticket', 'like', '%' . $term . '%')
-                    ->orWhere('type_of_request', 'like', '%' . $term . '%')
-                    ->orWhere('sub_type_of_request', 'like', '%' . $term . '%')
-                    ->orWhere('purpose', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F d Y', $searchTerms);
+                }
+
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhereHas('employee', function ($query) use ($term) {
+                            $query->where('first_name', 'like', '%' . $term . '%')
+                                ->orWhere('last_name', 'like', '%' . $term . '%')
+                                ->orWhere('department', 'like', '%' . $term . '%')
+                                ->orWhere('current_position', 'like', '%' . $term . '%')
+                                ->orWhere('employee_type', 'like', '%' . $term . '%');
+                        })
+                        ->orWhere('application_date', 'like', '%' . $term . '%')
+                        ->orWhere('concerned_employee', 'like', '%' . $term . '%')
+                        ->orWhere('type_of_ticket', 'like', '%' . $term . '%')
+                        ->orWhere('type_of_request', 'like', '%' . $term . '%')
+                        ->orWhere('sub_type_of_request', 'like', '%' . $term . '%')
+                        ->orWhere('purpose', 'like', '%' . $term . '%');
+                    }
                 }
             })->orderBy('created_at', 'desc');
         } else {
             // If no search term, return all records
             $results = $query->orderBy('created_at', 'desc');
         }
+
 
         if($this->statusFilterName == "Cancelled"){
             $results = $results->paginate(5);

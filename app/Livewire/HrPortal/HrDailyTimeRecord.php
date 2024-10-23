@@ -402,9 +402,50 @@ class HrDailyTimeRecord extends Component
     
         $query->whereYear('attendance_date', $this->yearFilter ?? $dateToday->year);
         $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
+
+        if (strlen($this->search) >= 1) {
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
+        
+            // Handle different formats for full date matching
+            $parsedFullDate = null;
+            $parsedYMDDate = null;
+        
+            // Try to parse "October 1 2024" or "October 01 2024" format
+            if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                $parsedFullDate = Carbon::createFromFormat('F j Y', $searchTerms);
+            } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                $parsedFullDate = Carbon::createFromFormat('F d Y', $searchTerms);
+            }
+        
+            // Try to parse "2024-10-11" format
+            if (\DateTime::createFromFormat('Y-m-d', $searchTerms) !== false) {
+                $parsedYMDDate = Carbon::createFromFormat('Y-m-d', $searchTerms);
+            }
+        
+            $results = $query->where(function ($q) use ($parsedFullDate, $parsedYMDDate, $searchTerms) {
+                if ($parsedFullDate) {
+                    // If the search is an exact full date (e.g., "October 1 2024" or "October 01 2024")
+                    $q->whereDate('attendance_date', '=', $parsedFullDate->format('Y-m-d'));
+                } elseif ($parsedYMDDate) {
+                    // If the search is in the Y-m-d format (e.g., "2024-10-11")
+                    $q->whereDate('attendance_date', '=', $parsedYMDDate->format('Y-m-d'));
+                } else {
+                    // Fallback to more general searches (e.g., month or day)
+                    $q->orWhereRaw("DATE_FORMAT(attendance_date, '%M') = ?", [$searchTerms]) // Exact match for October
+                      ->orWhereRaw("DATE_FORMAT(attendance_date, '%M %c') = ?", [$searchTerms]) // Match for October 1 (ignoring leading zero)
+                      ->orWhereRaw("DATE_FORMAT(attendance_date, '%M %e') = ?", [$searchTerms]) // Match for October 1 without leading zero
+                      ->orWhere('type', 'like', '%' . $searchTerms . '%'); // For searching by 'type'
+                }
+            })->orderBy('attendance_date', 'desc')->paginate(5);
+        } else {
+            $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
+        }
     
         // Calculate counts for each type
         $results = $query->orderBy('created_at', 'desc')->paginate(5);
+
+
     
         // Aggregate counts
         $counts = Dailytimerecord::select(DB::raw('
@@ -420,6 +461,8 @@ class HrDailyTimeRecord extends Component
         ->whereMonth('attendance_date', $this->monthFilter ?? Carbon::now()->month)
         ->whereDay('attendance_date', $this->dayFilter ?? Carbon::now()->day)
         ->first();
+
+        
 
         // Map the counts to the dtrTypes
         $this->dtrTypes = array_merge($this->dtrTypes, $counts->toArray());

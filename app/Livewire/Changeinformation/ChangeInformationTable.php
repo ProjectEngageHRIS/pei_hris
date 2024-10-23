@@ -94,17 +94,36 @@ class ChangeInformationTable extends Component
                 break;
         }
 
-        if(strlen($this->search) >= 1){
-            $searchTerms = explode(' ', $this->search);
+        if (strlen($this->search) >= 1) {
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhere('application_date', 'like', '%' . $term . '%')
-                      ->orWhere('status', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+        
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = Carbon::createFromFormat('F d Y', $searchTerms);
+                }
+        
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhere('application_date', 'like', '%' . $term . '%')
+                          ->orWhere('status', 'like', '%' . $term . '%');
+                    }
                 }
             })->orderBy('application_date', 'desc')->paginate(5);
         } else {
             $results = $query->orderBy('application_date', 'desc')->paginate(5);
         }
+        
 
         return view('livewire.changeinformation.change-information-table', [
             'ChangeInfoData' => $results,
