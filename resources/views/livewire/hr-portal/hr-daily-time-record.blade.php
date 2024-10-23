@@ -750,20 +750,25 @@
                                             @endif
                                         </td>
                                         @php
-                                            $timeIn = \Carbon\Carbon::parse($data->time_in);
-                                            $timeOut = null;
-                                            if($data->time_out != null) {
-                                                $timeOut = \Carbon\Carbon::parse($data->time_out);
-                                                if($timeIn->isSameDay($timeOut)){
-                                                    $timeIn = $timeIn->format('H:i:s');
-                                                    $timeOut = $timeOut->format('H:i:s');
-                                                }
-                                            } else {
-                                                $timeIn = $timeIn->format('H:i:s');
-                                            }
+                                            // Default values for timeIn and timeOut
+                                            $timeIn = "-";
+                                            $timeOut = "-";
                                         
+                                            if($data->time_in) {
+                                                $timeIn = \Carbon\Carbon::parse($data->time_in)->format('H:i:s');
+                                        
+                                                if ($data->time_out) {
+                                                    $timeOut = \Carbon\Carbon::parse($data->time_out);
+                                        
+                                                    // If time_in and time_out are on the same day, format both
+                                                    if ($timeOut->isSameDay($data->time_in)) {
+                                                        $timeOut = $timeOut->format('H:i:s');
+                                                    } else {
+                                                        $timeOut = "-";  // Set timeOut as "-" if not on the same day
+                                                    }
+                                                }
+                                            }
                                         @endphp
-                
                                         <td class="px-6 py-4 text-center whitespace-nowrap"> {{ $timeIn }} </td>
                                         <td class="px-6 py-4 text-center whitespace-nowrap"> {{ $timeOut }} </td>
                                         <td class="px-6 py-4 text-center whitespace-nowrap"> {{$data->undertime}} </td>
