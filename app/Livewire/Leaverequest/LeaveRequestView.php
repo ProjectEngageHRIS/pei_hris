@@ -89,7 +89,7 @@ class LeaveRequestView extends Component
 
         $this->index = $index;
         
-        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position',)
+        $employeeRecord = Employee::select('first_name', 'middle_name', 'last_name', 'department', 'employee_id', 'current_position', 'vacation_credits', 'sick_credits')
                                     ->where('employee_id', $loggedInUser->employee_id)
                                     ->first();   
 
@@ -105,14 +105,14 @@ class LeaveRequestView extends Component
         // $this->salary = $employeeRecord->salary;
         // $this->is_faculty = $employeeRecord->is_faculty;
 
-        $this->status = "Pending";
+        $this->status = $leaverequest->status;
         $this->supervisor_email = $leaverequest->supervisor_email;
         $this->application_date = $leaverequest->application_date;
 
         $this->mode_of_application = $leaverequest->mode_of_application;
         // dd($leaverequest->mode_of_application == "Credit Leave");
         if($this->mode_of_application == "Credit Leave"){
-            $this->inclusive_start_date = $leaverequest->date_earned;
+            $this->date_earned = $leaverequest->inclusive_end_date;
             $this->inclusive_end_date = $leaverequest->credit_application;
             $this->earned_description = $leaverequest->earned_description;
             $this->full_half = $leaverequest->full_or_half;
@@ -142,7 +142,6 @@ class LeaveRequestView extends Component
         $this->inclusive_end_date = $leaverequest->inclusive_end_date;
         $this->full_half = $leaverequest->full_or_half;
         $this->logout_time = $leaverequest->full_or_half;
-        $this->date_earned = $leaverequest->date_earned;
         $this->earned_description = $leaverequest->earned_description;
         $this->commutation = $leaverequest->commutation;
         $this->purpose_type = $leaverequest->purpose_type;

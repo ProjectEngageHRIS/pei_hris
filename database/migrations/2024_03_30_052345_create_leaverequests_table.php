@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('supervisor_email', 100)->nullable();
             $table->date('application_date')->default(now());
             $table->string('mode_of_application', 20)->nullable();
-            $table->date('inclusive_start_date')->nullable();
-            $table->date('inclusive_end_date')->nullable();
+            $table->datetime('inclusive_start_date')->nullable();
+            $table->datetime('inclusive_end_date')->nullable();
             $table->string('full_or_half', 20)->nullable();
             $table->string('deduct_to', 20)->nullable();
             $table->decimal('num_of_days_work_days_applied')->nullable();
