@@ -219,7 +219,8 @@ class LeaveRequestTable extends Component
                           ->orWhere('mode_of_application', 'like', '%' . $term . '%')
                           ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
                           ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
-                          ->orWhere('reason', 'like', '%' . $term . '%');
+                          ->orWhere('reason', 'like', '%' . $term . '%')
+                          ->orWhere('status', 'like', '%' . $term . '%');
                         //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                     }
                 }

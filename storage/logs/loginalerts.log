@@ -37,3 +37,5 @@
 [2024-10-21 16:13:09] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"jeqelymyb@mailinator.com"} 
 [2024-10-21 16:13:09] local.INFO: Successful login for user SLE0001 from IP 127.0.0.1  
 [2024-10-21 16:20:51] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0001 logged out from 127.0.0.1 {"employee_id":"SLE0001","email":"jeqelymyb@mailinator.com"} 
+[2024-10-24 13:35:49] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-25 09:29:39] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 

@@ -20,7 +20,7 @@
             </li>
             </ol>
         </nav>
-        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Leave Request</h2>
+        <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Leave Requests</h2>
         <div class="flex flex-col gap-4 sm:flex-row sm:justify-between">
             <div class="flex flex-col sm:flex-row w-full gap-4 justify-stretch">
                 <div class="w-full sm:w-auto p-4 bg-white border border-gray-200 rounded-lg shadow">
@@ -369,8 +369,8 @@
                                         </td>
                                         <td class="px-6 py-4 text-center whitespace-nowrap">
                                             @if ($leaverequest->mode_of_application == "Credit Leave")
-                                                <span class="font-medium text-gray-700">Date Earned:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y g:i A')}} <br>
-                                                <span class="font-medium text-gray-700">Date to Apply:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y g:i A')}} <br>
+                                                <span class="font-medium text-gray-700">Date Earned:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y')}} <br>
+                                                <span class="font-medium text-gray-700">Date to Apply:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y')}} <br>
                                                 <span class="font-medium text-gray-700">Earned Description: <br> </span> {{$leaverequest->earned_description}} <br>
                                             @elseif ($leaverequest->mode_of_application == "Advise Slip")
                                                 <span class="font-medium text-gray-700">Date Requested:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y g:i A')}} <br>
@@ -379,8 +379,8 @@
                                                 <span class="font-medium text-gray-700">Log Out Time:</span>  {{ \Carbon\Carbon::parse($leaverequest->full_or_half)->format('F j, Y g:i A') }} <br>
                                                 <span class="font-medium text-gray-700">Reason: <br></span> {{$leaverequest->reason}} <br>
                                             @else
-                                                <span class="font-medium text-gray-700">Start Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y g:i A')}} <br>
-                                                <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y g:i A')}}
+                                                <span class="font-medium text-gray-700">Start Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y')}} <br>
+                                                <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y')}}
                                             @endif
                                         </td>
                                         <td class="items-center py-4 text-center">

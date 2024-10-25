@@ -101,51 +101,55 @@ class LeaveRequestForm extends Component
     }
 
     public function updated($keys){
-        if(in_array($keys, ['inclusive_start_date', 'inclusive_end_date', 'full_half']) && !in_array($this->mode_of_application, ['Advise Slip', 'Credit Leave'])){
+        if (in_array($keys, ['inclusive_start_date', 'inclusive_end_date', 'full_half']) && !in_array($this->mode_of_application, ['Advise Slip', 'Credit Leave'])) {
             
             $startDate = Carbon::parse($this->inclusive_start_date);
             $endDate = Carbon::parse($this->inclusive_end_date);
-            $totalDays = $startDate->diffInDays($endDate) + 1; // Include end date
-            $totalMinutes = $startDate->diffInMinutes($endDate);
+            
+            // Initialize workday count
+            $workdays = 0;
+            
+            // Loop through each day between start and end date
+            for ($date = $startDate; $date->lte($endDate); $date->addDay()) {
+                // Check if the day is not a weekend (Saturday=6, Sunday=7)
+                if ($date->isWeekday()) {
+                    $workdays++;
+                }
+            }
     
-            $leaveDayOption = $this->full_half; // Make sure this variable is set based on the selected option
+            $leaveDayOption = $this->full_half; // The leave option selected
     
             switch ($leaveDayOption) {
                 case 'Start Full':
                 case 'End Full':
                     // Full day on Start or End Day
-                    $this->num_of_days_work_days_applied = number_format(($totalDays - 1) + 0.5, 3); // Full day for the remaining days plus half day
+                    $this->num_of_days_work_days_applied = number_format(($workdays - 1) + 0.5, 3); // Full day for the remaining days plus half day
                     break;
     
                 case 'Both Full':
                     // Full day on both Start and End Day
-                    $this->num_of_days_work_days_applied = number_format($totalDays, 3); // Full days for all
+                    $this->num_of_days_work_days_applied = number_format($workdays, 3); // Full days for all
                     break;
     
                 case 'Start Half':
                 case 'End Half':
                     // Half day on Start or End Day
-                    $this->num_of_days_work_days_applied = number_format(($totalDays - 1) + 0.5, 3); // Full day for remaining days plus half day
+                    $this->num_of_days_work_days_applied = number_format(($workdays - 1) + 0.5, 3); // Full day for remaining days plus half day
                     break;
     
                 case 'Both Half':
                     // Half day on both Start and End Day
-                    $this->num_of_days_work_days_applied = number_format($totalDays - 1 + 1, 3); // Full day for all days except start and end, plus half day for start and end
+                    $this->num_of_days_work_days_applied = number_format($workdays - 1 + 1, 3); // Full day for all days except start and end, plus half day for start and end
                     break;
     
                 default:
                     // Default case if no valid option selected
-                    $this->num_of_days_work_days_applied = number_format($totalDays, 3);
+                    $this->num_of_days_work_days_applied = number_format($workdays, 3);
                     break;
             }
-    
-            // If needed, convert to hours or other units
-            // $this->num_of_days_work_days_applied = number_format($hoursLeave, 3);
-            
-            
         }
-
     }
+    
 
     // public function addleaveRequestTimeFrame(){
     //     $this->leaveRequestTimeFrame[] = ['start_date' => '', 'end_date' => '', 'full_half' => ''];

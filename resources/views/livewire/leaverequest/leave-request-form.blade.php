@@ -22,12 +22,12 @@
             <svg class="w-3 h-3 text-gray-600 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Create</span>
+            <span class="ms-1 text-sm font-semibold text-gray-900 md:ms-2 dark:text-gray-400">Form</span>
             </div>
         </li>
         </ol>
     </nav> 
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Create a new Leave Request</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Leave Request Form</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
             <form wire:submit.prevent="submit" method="POST" x-data="{typeOfLeave: @entangle('mode_of_application')}">
@@ -37,21 +37,21 @@
                 <div class="mt-2 grid grid-cols-1 gap-4 min-[902px]:grid-cols-6">
                     <div class="col-span-1 min-[902px]:col-span-2">
                         <label for="firstname"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">First name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">First Name <span class="text-red-600">*</span></label>
                         <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                     <div class="col-span-1 min-[902px]:col-span-2">
                         <label for="middlename"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Middle name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Middle Name <span class="text-red-600">*</span></label>
                         <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
                     </div>
                     <div class="col-span-1 min-[902px]:col-span-2">
                         <label for="lastname"
-                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Last name <span class="text-red-600">*</span></label>
+                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap ">Last Name <span class="text-red-600">*</span></label>
                         <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                             required="" disabled>
@@ -76,11 +76,11 @@
                 <h2 class="font-bold text-customRed">Leave Information</h2>
                 <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
                     <div class="col-span-1">
-                        <label for="application_date" class="block mb-2 text-sm font-medium text-customGray ">Date of Filing
+                        <label for="application_date" class="block mb-2 text-sm font-medium text-customGray">Date of Filing
                             <span class="text-red-600">*</span>
                         </label>
                         <input type="date" wire:model="application_date"
-                            class="bg-gray-50 shadow-inner border border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-400 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                             placeholder="Date of Filling" disabled>
                     </div>
                     <div class="col-span-1">
@@ -288,7 +288,7 @@
                                         <h2 class="col-span-1 whitespace-nowrap font-bold text-customRed">Leave Request Time Frame</h2>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 ">
                                             <div class="col-span-1">
-                                                <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date/Time
+                                                <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date
                                                     <span class="text-red-600">*</span>
                                                 </label>
                                                 <input type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
@@ -301,7 +301,7 @@
                                                 @enderror
                                             </div>
                                             <div class="col-span-1">
-                                                <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
+                                                <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date <span class="text-red-600">*</span></label>
                                                 <input type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
                                                     required="">
@@ -358,7 +358,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-span-1">
+                                        <div class="col-span-1" >
                                             <label for="available_credits" class="block mb-2 text-sm font-medium text-customGray ">Available Credits <span class="text-red-600">*</span></label>
                                             <input type="number" name="available_credits" id="available_credits" wire:model="available_credits"
                                                 class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
@@ -369,7 +369,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div id="deduct_to_container" class="col-span-1">
+                                        <div id="deduct_to_container" class="col-span-1" x-data="{availableCredits: @entangle('available_credits'), creditsDeducted: @entangle('num_of_days_work_days_applied')}">
                                             <label class="block mb-2 text-sm font-medium text-gray-900 ">Deduct to?
                                                 <span class="text-red-600">*</span>
                                             </label>
@@ -377,7 +377,9 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                 <option value="">Select </option>
                                                 <option value="Salary">Salary</option>
-                                                <option value="Credits">Credits</option>
+                                                <template x-if="availableCredits >= creditsDeducted">
+                                                    <option value="Credits">Credits</option>
+                                                </template>
                                             </select>
                                             @error('deduct_to')
                                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();" >
@@ -395,7 +397,7 @@
                                 <span class="text-gray-900"><span class="text-red-600">*</span>
                             </label>
                             <textarea type="text" rows="10" id="reason" name="reason" wire:model="reason"
-                                placeholder="Write your reason of filing here. Maximum of 500 only."
+                                placeholder="Kindly state the reason for filing this leave request within 500 characters."
                                 class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
                             </textarea>
                             @error('reason')
