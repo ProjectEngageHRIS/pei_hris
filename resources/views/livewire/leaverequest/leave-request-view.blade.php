@@ -351,7 +351,7 @@
                         <div class="flex flex-row-reverse">
                             <button id="cancel_button"  
                                 type="button" 
-                                class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow"
+                                class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 shadow"
                                 @click="openCancelModal = true">
                                 Cancel Request
                             </button>

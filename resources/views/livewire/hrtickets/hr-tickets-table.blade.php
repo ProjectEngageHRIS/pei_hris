@@ -368,12 +368,15 @@
                                                 <span class="font-semibold text-gray-700">Type of Concern: </span>{{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} 
-                                            
                                             @elseif($hrticket->sub_type_of_request == "Payroll-related Concerns")
                                                 <span class="font-semibold text-gray-700">Payroll Date: </span>{{$hrticket->request_date}} <br>
                                                 <span class="font-semibold text-gray-700">Type of Concern: </span>    {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>    {{$hrticket->purpose }} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>    {{$hrticket->request_link }} 
+                                            @elseif($hrticket->sub_type_of_request == "Request for a Meeting")
+                                                <span class="font-semibold text-gray-700">Meeting Date: </span>{{$hrticket->request_date}} <br>
+                                                <span class="font-semibold text-gray-700">Target Person: </span>    {{$hrticket->request_requested}} <br>
+                                                <span class="font-semibold text-gray-700">Purpose: </span>    {{$hrticket->purpose }} <br>
                                             @elseif($hrticket->sub_type_of_request == "Certificate of Remittances")
                                                 <span class="font-semibold text-gray-700">Type of Remittance Certificate: </span>  {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Account Assigned: </span> {{$hrticket->request_assigned}} <br>
