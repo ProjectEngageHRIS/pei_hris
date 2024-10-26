@@ -72,7 +72,6 @@ class HrTicketsTable extends Component
             $query = Hrticket::where('employee_id', $loggedInUser->employee_id);
         }
 
-
         switch ($this->date_filter) {
             case '1': // Today
                 $startOfDay = Carbon::today(); // Start of today (00:00:00)
@@ -82,22 +81,22 @@ class HrTicketsTable extends Component
                 break;
     
             case '2': // Last 7 Days
-                $query->whereBetween('application_date', [Carbon::today()->subDays(6), Carbon::today()]);
+                $query->whereBetween('application_date', [Carbon::today()->subDays(7), Carbon::now()]);
                 $this->dateFilterName = "Last 7 Days";
                 break;
     
             case '3': // Last 30 Days
-                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
+                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::now()]);
                 $this->dateFilterName = "Last 30 Days";
                 break;
     
             case '4': // Last 6 Months
-                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
+                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::now()]);
                 $this->dateFilterName = "Last 6 Months";
                 break;
     
             case '5': // Last Year
-                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
+                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::now()]);
                 $this->dateFilterName = "Last Year";
                 break;
             default: // All
