@@ -95,7 +95,7 @@ class ItHelpDeskForm extends Component
 
     
     protected $rules = [
-        'description' => 'required|string|min:10|max:5120'
+        'description' => 'required|string|min:1|max:5120'
       ];
   
       protected $validationAttributes = [
@@ -118,6 +118,7 @@ class ItHelpDeskForm extends Component
             $itticket = new Ittickets();
     
             $itticket->employee_id = $loggedInUser->employee_id;
+            $itticket->application_date = now();
             $itticket->status = "Unassigned";
             $itticket->description = $this->description;
             $itticket->save();
