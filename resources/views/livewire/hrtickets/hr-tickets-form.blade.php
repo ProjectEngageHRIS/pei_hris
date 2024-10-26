@@ -243,13 +243,13 @@
                             <label for="type_of_request" class="block mb-2 text-sm font-medium text-gray-900">Commutation
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
+                            <div class="grid grid-cols-1 gap-2 w-full md:grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="with_compensation" wire:model="type_of_hrconcern" value="With Compensation">
                                     <label for="with_compensation" class="text-sm font-medium">With Compensation</label>
                                 </div>
                                 <div>
-                                    <input type="radio" required class="ml-2 text-customRed border-customRed focus:ring-customRed" id="without_compensation" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Without Compensation">
+                                    <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" id="without_compensation" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Without Compensation">
                                     <label for="without_compensation" class="text-sm font-medium">Without Compensation</label><br>
                                 </div>
                             </div>
