@@ -400,19 +400,32 @@ class EditEmployee extends Component
                     'end_date' => $history['end_date'],
                 ];
             }
+            if($jsonEmployeeHistory){
+                $jsonEmployeeHistory = json_encode($jsonEmployeeHistory) ;
+                $employee_data->employee_history = $jsonEmployeeHistory;
+            } 
+        } else {
+            $employee_data->employee_history = Null;
         }
+
         if($this->files){
-            foreach($this->files as $Files){
+            foreach($this->files ?? [] as $Files){
                 $jsonFiles[] = [
                     'name_of_file' => $Files['name_of_file'],
                     'completed' => $Files['completed'],
+
                 ];
             }
+            $jsonFiles = json_encode($jsonFiles ?? Null) ;
+            $employee_data->files = $jsonFiles;
+            // if($jsonFiles){
+            //     dd($jsonFiles);
+            // }
+        } else {
+            $employee_data->files = Null;
         }
 
         $employee_data->files_link = $this->files_link;
-        $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? '') ;
-        $jsonFiles = json_encode($this->files) ;
 
         // Update the employee record with new data
         $employee_data->first_name = $this->first_name;
@@ -497,8 +510,7 @@ class EditEmployee extends Component
         }
 
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);
-        $employee_data->employee_history = $jsonEmployeeHistory;
-        // Save the updated employee data
+        
         $employee_data->save();
 
         $this->dispatch('trigger-success');

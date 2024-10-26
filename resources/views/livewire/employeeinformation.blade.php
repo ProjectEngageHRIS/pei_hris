@@ -92,8 +92,8 @@
                             </div>
                         @endif
                         <h3 class="text-base font-semibold text-customRed">Educational History: </h3>
-                        <p class="my-4 text-justify"><b class="text-sm font-medium text-customGray1">□ College @ <span class="text-sm font-medium text-customGray1">{{$college_educational_history['school']}}</span> - <span class="text-sm font-medium text-customGray1">{{$college_educational_history['course']}}</span> | From {{$college_educational_history['year_graduated']}} To {{$record->end_date}} </b> </p>
-                        <p class="my-4 text-justify"><b class="text-sm font-medium text-customGray1">□ High School @ <span class="text-sm font-medium text-customGray1">{{$hs_educational_history['school']}}</span> - <span class="text-sm font-medium text-customGray1">{{$hs_educational_history['course']}}</span> | From {{$hs_educational_history['year_graduated']}} To {{$record->end_date}} </b> </p>
+                        <p class="my-4 text-justify"><b class="text-sm font-medium text-customGray1">□ College at <span class="text-sm font-medium text-customGray1">{{$college_educational_history['school']}}</span> - <span class="text-sm font-medium text-customGray1">{{$college_educational_history['course']}}</span> |  {{\Carbon\Carbon::createFromDate($college_educational_history['year_graduated'], 10, 1)->format('F j, Y');}} </b> </p>
+                        <p class="my-4 text-justify"><b class="text-sm font-medium text-customGray1">□ High School at <span class="text-sm font-medium text-customGray1">{{$hs_educational_history['school']}}</span> - <span class="text-sm font-medium text-customGray1">{{$hs_educational_history['course']}}</span> |  {{\Carbon\Carbon::createFromDate($hs_educational_history['year_graduated'], 10, 1)->format('F j, Y');}}  </b> </p>
                     </div>
                 @else
                 <div class="flex flex-col px-8 py-6 mb-2 bg-white border border-gray-200 rounded-b-lg shadow-sm items-left justify-left">

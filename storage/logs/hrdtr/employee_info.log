@@ -21,3 +21,11 @@
 [2024-10-14 13:31:23] local.ERROR: Failed to Decrypt Information: The payload is invalid. | SLEA9999  
 [2024-10-14 13:31:24] local.ERROR: Failed to Decrypt Information: The payload is invalid. | SLEA9999  
 [2024-10-14 13:31:38] local.ERROR: Failed to Decrypt Information: The payload is invalid. | SLEA9999  
+[2024-10-26 20:22:58] local.ERROR: Failed to Create Employee: Undefined variable $jsonEmployeeHistory | SLEA9999  
+[2024-10-26 20:22:58] local.ERROR: Failed to Create Employee: Undefined variable $jsonEmployeeHistory | SLEA9999  
+[2024-10-26 20:23:15] local.ERROR: Failed to Create Employee: Undefined variable $jsonFiles | SLEA9999  
+[2024-10-26 20:23:15] local.ERROR: Failed to Create Employee: Undefined variable $jsonFiles | SLEA9999  
+[2024-10-26 20:25:04] local.ERROR: Failed to Create Employee: Undefined variable $jsonEmployeeHistory | SLEA9999  
+[2024-10-26 20:25:04] local.ERROR: Failed to Create Employee: Undefined variable $jsonEmployeeHistory | SLEA9999  
+[2024-10-26 20:26:45] local.ERROR: Failed to Create Employee: Undefined variable $jsonEmployeeHistory | SLEA9999  
+[2024-10-26 20:26:45] local.ERROR: Failed to Create Employee: Undefined variable $jsonEmployeeHistory | SLEA9999  

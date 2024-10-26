@@ -91,10 +91,15 @@ class ChangeInformation extends Component
         // $this->placeholder_phone = $employee->phone;
         // $this->placeholder_birth_date = $employee->birth_date;
         // $this->placeholder_address = $employee->address;
-
-        if($employee->employee_history != null){
+        // dd($employee->employee_history);
+        if (!empty($employee->employee_history)) {
+            dd('test');
             $this->employeeHistory = json_decode($employee->employee_history, true);
+        } else {
+            $this->employeeHistory[] = ['name_of_company' => '', 'prev_position' => '', 'start_date' => '', 'end_date' => ''];
         }
+
+
 
         $this->emp_image= $employee->emp_image ;
         $this->religion = $employee->religion ;

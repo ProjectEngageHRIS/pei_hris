@@ -305,7 +305,7 @@ class CreateEmployee extends Component
                 $add_employee->tin_num = Crypt::encryptString($this->tin_num);
                 $add_employee->phic_num = Crypt::encryptString($this->phic_num);
                 $add_employee->hdmf_num = Crypt::encryptString($this->hdmf_num);
-    
+                
                 if($this->employeeHistory){
                     foreach($this->employeeHistory as $history){
                         $jsonEmployeeHistory[] = [
@@ -315,21 +315,35 @@ class CreateEmployee extends Component
                             'end_date' => $history['end_date'],
                         ];
                     }
-                }
-    
-                foreach($this->files ?? [] as $Files){
-                    $jsonFiles[] = [
-                        'name_of_file' => $Files['name_of_file'],
-                        'completed' => $Files['completed'],
-    
-                    ];
+                    if($jsonEmployeeHistory){
+                        $jsonEmployeeHistory = json_encode($jsonEmployeeHistory) ;
+                        $add_employee->employee_history = $jsonEmployeeHistory;
+                    } 
+                } else {
+                    $add_employee->employee_history = Null;
                 }
 
+                if($this->files){
+                    foreach($this->files ?? [] as $Files){
+                        $jsonFiles[] = [
+                            'name_of_file' => $Files['name_of_file'],
+                            'completed' => $Files['completed'],
+        
+                        ];
+                    }
+                    $jsonFiles = json_encode($jsonFiles ?? Null) ;
+                    $add_employee->files = $jsonFiles;
+                    // if($jsonFiles){
+                    //     dd($jsonFiles);
+                    // }
+                } else {
+                    $add_employee->files = Null;
+                }
+
+
+
                 $add_employee->files_link = $this->files_link;
-                $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? '') ;
-                $jsonFiles = json_encode($jsonFiles ?? '') ;
-                $add_employee->employee_history = $jsonEmployeeHistory;
-                $add_employee->files = $jsonFiles;
+
                 $add_employee->employee_id = $this->employee_id;
                 $add_employee->first_name = $this->first_name;
                 $add_employee->middle_name = $this->middle_name;
