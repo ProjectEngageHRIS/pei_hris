@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('AssignedTasksTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">My Tasks</a>
+            <a href="{{route('TasksTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">My Tasks</a>
             </div>
         </li>
         <li aria-current="page">
@@ -98,15 +98,17 @@
                                             class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                             required="">
                                     </div>
-                                    <div wire:ignore class="">
-                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Target Employees<span class="text-red-600">*</span></label>
-                                        <select disabled multiple style="width:100%; background:gray;" class="js-example-basic-multiple disabled-select mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
-                                            @foreach($employeeNames as $name)
-                                            <option @if (in_array($name, $target_employees)) selected @endif 
-                                            value="{{$name}}">{{$name}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div>
+                                        <label for="name" class="block mb-2 text-sm font-semibold  text-gray-900 dark:text-white">Target Employees<span class="text-red-600">*</span></label>
+                                        <div class="w-full border border-gray-900 p-2.5 rounded-lg">
+                                            <ul class="list-disc pl-5">
+                                                @foreach($target_employees as $name)
+                                                    <li class="mb-1 text-gray-900">{{ $name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
+                                    
                                 </div>
                                 {{-- Date Of Filling --}}
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
