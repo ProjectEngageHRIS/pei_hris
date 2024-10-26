@@ -48,28 +48,33 @@ class ItHelpDeskTable extends Component
         $query = Ittickets::where('employee_id', $loggedInUser->employee_id);
 
         switch ($this->date_filter) {
-            case '1':
-                $query->whereDate('application_date',  Carbon::today());
+            case '1': // Today
+                $startOfDay = Carbon::today(); // Start of today (00:00:00)
+                $endOfDay = Carbon::today()->endOfDay(); // End of today (23:59:59)
+                $query->whereBetween('application_date', [$startOfDay, $endOfDay]);
                 $this->dateFilterName = "Today";
                 break;
-            case '2':
-                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
+    
+            case '2': // Last 7 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(6), Carbon::today()]);
                 $this->dateFilterName = "Last 7 Days";
                 break;
-            case '3':
+    
+            case '3': // Last 30 Days
                 $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
-                $this->dateFilterName = "Last 30 days";
+                $this->dateFilterName = "Last 30 Days";
                 break;
-            case '4':
+    
+            case '4': // Last 6 Months
                 $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-                // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
                 $this->dateFilterName = "Last 6 Months";
                 break;
-            case '5':
+    
+            case '5': // Last Year
                 $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
                 $this->dateFilterName = "Last Year";
                 break;
-            default:
+            default: // All
                 $this->dateFilterName = "All";
                 break;
         }
