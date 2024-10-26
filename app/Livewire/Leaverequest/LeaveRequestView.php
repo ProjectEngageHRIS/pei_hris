@@ -127,8 +127,8 @@ class LeaveRequestView extends Component
         else{
             $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
             $this->num_of_days_work_days_applied = $formattedValue ;
-            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
-            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->inclusive_start_date = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');
+            $this->inclusive_end_date = Carbon::parse($leaverequest->inclusive_end_date)->format('Y-m-d');
             $this->deduct_to = $leaverequest->deduct_to;
             $this->full_half = $leaverequest->full_or_half;
         }
@@ -138,8 +138,6 @@ class LeaveRequestView extends Component
         $this->mode_of_application = $leaverequest->mode_of_application;
         $this->supervisor_email = $leaverequest->supervisor_email;
         $this->num_of_days_work_days_applied = $leaverequest->num_of_days_work_days_applied;
-        $this->inclusive_start_date = $leaverequest->inclusive_start_date;
-        $this->inclusive_end_date = $leaverequest->inclusive_end_date;
         $this->full_half = $leaverequest->full_or_half;
         $this->logout_time = $leaverequest->full_or_half;
         $this->earned_description = $leaverequest->earned_description;
@@ -147,6 +145,8 @@ class LeaveRequestView extends Component
         $this->purpose_type = $leaverequest->purpose_type;
         $this->reason = $leaverequest->reason;
         $this->deduct_to = $leaverequest->deduct_to;
+
+
 
         if($leaverequest->commutation_signature_of_appli){
             $this->commutation_signature_of_appli = " ";

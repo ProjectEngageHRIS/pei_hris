@@ -182,7 +182,7 @@
                                 <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Date Requested
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
+                                <input disabled type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
                                     class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_start_date')
@@ -195,7 +195,7 @@
                                 <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">Actual Schedule
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                <input disabled type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                     class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_end_date')

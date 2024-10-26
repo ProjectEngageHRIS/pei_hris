@@ -55,7 +55,7 @@ class AssignedTasksTable extends Component
                 break;
     
             case '2': // Last 7 Days
-                $query->whereBetween('application_date', [Carbon::today()->subDays(6), Carbon::today()]);
+                $query->whereBetween('application_date', [Carbon::today()->subDays(7), Carbon::today()]);
                 $this->dateFilterName = "Last 7 Days";
                 break;
     
