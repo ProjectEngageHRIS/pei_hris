@@ -1052,19 +1052,26 @@
                             <div id="supplies_request.ballpen_black_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_black" class="text-sm font-medium text-gray-900">Ballpen Black</label>
-                                    <input type="number" id="supplies_request.ballpen_black" name="supplies_request.ballpen_black" wire:model="supplies_request.ballpen_black"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
+                                    <input type="number" id="supplies_request.ballpen_black" name="supplies_request.ballpen_black" 
+                                           wire:model="supplies_request.ballpen_black" min="0"
+                                           oninput="this.value = this.value < 0 ? 0 : this.value"
+                                           class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                     @error('supplies_request.ballpen_black')
-                                        <div class="text-sm transition transform alert alert-danger"x-data x-init="document.getElementById('supplies_request.ballpen_black').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_black').focus();">
+                                        <div class="text-sm transition transform alert alert-danger" 
+                                             x-data x-init="document.getElementById('supplies_request.ballpen_black').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_black').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
                                     @enderror
                                 </div>
+                                
                             </div>
                             <div id="supplies_request.ballpen_blue_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_blue" class="text-sm font-medium text-gray-900">Ballpen Blue</label>
-                                    <input type="number" id="supplies_request.ballpen_blue" name="supplies_request.ballpen_blue" wire:model="supplies_request.ballpen_blue"
+                                    <input type="number" id="supplies_request.ballpen_blue" name="supplies_request.ballpen_blue" 
+                                        wire:model="supplies_request.ballpen_blue"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                     @error('supplies_request.ballpen_blue')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.ballpen_blue').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_blue').focus();">
@@ -1077,6 +1084,8 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_red" class="text-sm font-medium text-gray-900">Ballpen Red</label>
                                     <input type="number" id="supplies_request.ballpen_red" name="supplies_request.ballpen_red" wire:model="supplies_request.ballpen_red"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.ballpen_red')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.ballpen_red').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_red').focus();">
@@ -1088,7 +1097,10 @@
                             <div id="supplies_request.pencil_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.pencil" class="text-sm font-medium text-gray-900">Pencil</label>
-                                    <input type="number" id="supplies_request.pencil" name="supplies_request.pencil" wire:model="supplies_request.pencil"
+                                    <input type="number" id="supplies_request.pencil" name="supplies_request.pencil" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.pencil"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.pencil')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.pencil').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.pencil').focus();">
@@ -1100,8 +1112,11 @@
                             <div id="supplies_request.highlighter_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.highlighter" class="text-sm font-medium text-gray-900">Highlighter</label>
-                                    <input type="number" id="supplies_request.highlighter" name="supplies_request.highlighter" wire:model="supplies_request.highlighter"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
+                                    <input type="number" id="supplies_request.highlighter" name="supplies_request.highlighter" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.highlighter"
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner bord\er-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.highlighter')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.highlighter').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.highlighter').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1112,7 +1127,10 @@
                             <div id="supplies_request.permanent_marker_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.permanent_marker" class="text-sm font-medium text-gray-900">Permanent Marker</label>
-                                    <input type="number" id="supplies_request.permanent_marker" name="supplies_request.permanent_marker" wire:model="supplies_request.permanent_marker"
+                                    <input type="number" id="supplies_request.permanent_marker" name="supplies_request.permanent_marker" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.permanent_marker"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.permanent_marker')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.permanent_marker').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.permanent_marker').focus();">
@@ -1124,7 +1142,10 @@
                             <div id="supplies_request.correction_tape_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.correction_tape" class="text-sm font-medium text-gray-900">Correction Tape</label>
-                                    <input type="number" id="supplies_request.correction_tape" name="supplies_request.correction_tape" wire:model="supplies_request.correction_tape"
+                                    <input type="number" id="supplies_request.correction_tape" name="supplies_request.correction_tape" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.correction_tape"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.correction_tape')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.correction_tape').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.correction_tape').focus();">
@@ -1136,7 +1157,10 @@
                             <div id="supplies_request.l_green_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_green_exp_folder" class="text-sm font-medium text-gray-900">Green Expandable Folder (L)</label>
-                                    <input type="number" id="supplies_request.l_green_exp_folder" name="supplies_request.l_green_exp_folder" wire:model="supplies_request.l_green_exp_folder"
+                                    <input type="number" id="supplies_request.l_green_exp_folder" name="supplies_request.l_green_exp_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_green_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_green_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_green_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_green_exp_folder').focus();">
@@ -1148,7 +1172,10 @@
                             <div id="supplies_request.s_green_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_green_exp_folder" class="text-sm font-medium text-gray-900">Green Expandable Folder (S)</label>
-                                    <input type="number" id="supplies_request.s_green_exp_folder" name="supplies_request.s_green_exp_folder" wire:model="supplies_request.s_green_exp_folder"
+                                    <input type="number" id="supplies_request.s_green_exp_folder" name="supplies_request.s_green_exp_folder" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_green_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_green_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_green_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_green_exp_folder').focus();">
@@ -1160,7 +1187,10 @@
                             <div id="supplies_request.l_brown_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_brown_exp_folder" class="text-sm font-medium text-gray-900">Brown Expandable Folder (L)</label>
-                                    <input type="number" id="supplies_request.l_brown_exp_folder" name="supplies_request.l_brown_exp_folder" wire:model="supplies_request.l_brown_exp_folder"
+                                    <input type="number" id="supplies_request.l_brown_exp_folder" name="supplies_request.l_brown_exp_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_brown_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_brown_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_brown_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_brown_exp_folder').focus();">
@@ -1172,7 +1202,10 @@
                             <div id="supplies_request.s_brown_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_brown_exp_folder" class="text-sm font-medium text-gray-900">Brown Expandable Folder (S)</label>
-                                    <input type="number" id="supplies_request.s_brown_exp_folder" name="supplies_request.s_brown_exp_folder" wire:model="supplies_request.s_brown_exp_folder"
+                                    <input type="number" id="supplies_request.s_brown_exp_folder" name="supplies_request.s_brown_exp_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_brown_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_brown_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_brown_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_brown_exp_folder').focus();">
@@ -1184,7 +1217,10 @@
                             <div id="supplies_request.scissors_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.scissors" class="text-sm font-medium text-gray-900">Scissors</label>
-                                    <input type="number" id="supplies_request.scissors" name="supplies_request.scissors" wire:model="supplies_request.scissors"
+                                    <input type="number" id="supplies_request.scissors" name="supplies_request.scissors"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.scissors"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.scissors')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.scissors').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.scissors').focus();">
@@ -1196,7 +1232,10 @@
                             <div id="supplies_request.white_envelope_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.white_envelope" class="text-sm font-medium text-gray-900">White Envelope</label>
-                                    <input type="number" id="supplies_request.white_envelope" name="supplies_request.white_envelope" wire:model="supplies_request.white_envelope"
+                                    <input type="number" id="supplies_request.white_envelope" name="supplies_request.white_envelope"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value" 
+                                        wire:model="supplies_request.white_envelope"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.white_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.white_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.white_envelope').focus();">
@@ -1210,7 +1249,10 @@
                             <div id="supplies_request.calculator_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.calculator" class="text-sm font-medium text-gray-900">Calculator</label>
-                                    <input type="number" id="supplies_request.calculator" name="supplies_request.calculator" wire:model="supplies_request.calculator"
+                                    <input type="number" id="supplies_request.calculator" name="supplies_request.calculator"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.calculator"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.calculator')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.calculator').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.calculator').focus();">
@@ -1222,7 +1264,10 @@
                             <div id="supplies_request.binder_two_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_two" class="text-sm font-medium text-gray-900">Binder Clips (2")</label>
-                                    <input type="number" id="supplies_request.binder_two" name="supplies_request.binder_two" wire:model="supplies_request.binder_two"
+                                    <input type="number" id="supplies_request.binder_two" name="supplies_request.binder_two"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.binder_two"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.binder_two')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_two').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_two').focus();">
@@ -1234,7 +1279,10 @@
                             <div id="supplies_request.binder_one_fourth_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_one_fourth" class="text-sm font-medium text-gray-900">Binder Clips (1 1/4")</label>
-                                    <input type="number" id="supplies_request.binder_one_fourth" name="supplies_request.binder_one_fourth" wire:model="supplies_request.binder_one_fourth"
+                                    <input type="number" id="supplies_request.binder_one_fourth" name="supplies_request.binder_one_fourth"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.binder_one_fourth"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.binder_one_fourth')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_one_fourth').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_one_fourth').focus();">
@@ -1246,7 +1294,10 @@
                             <div id="supplies_request.binder_three_fourth_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_three_fourth" class="text-sm font-medium text-gray-900">Binder Clips (3/4")</label>
-                                    <input type="number" id="supplies_request.binder_three_fourth" name="supplies_request.binder_three_fourth" wire:model="supplies_request.binder_three_fourth"
+                                    <input type="number" id="supplies_request.binder_three_fourth" name="supplies_request.binder_three_fourth"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.binder_three_fourth"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.binder_three_fourth')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_three_fourth').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_three_fourth').focus();">
@@ -1258,7 +1309,10 @@
                             <div id="supplies_request.l_metal_clips_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_metal_clips" class="text-sm font-medium text-gray-900">Metal Paper Clips (L)</label>
-                                    <input type="number" id="supplies_request.l_metal_clips" name="supplies_request.l_metal_clips" wire:model="supplies_request.l_metal_clips"
+                                    <input type="number" id="supplies_request.l_metal_clips" name="supplies_request.l_metal_clips"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_metal_clips"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.l_metal_clips')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_metal_clips').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_metal_clips').focus();">
@@ -1270,7 +1324,10 @@
                             <div id="supplies_request.s_metal_clips_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_metal_clips" class="text-sm font-medium text-gray-900">Metal Paper Clips (L)</label>
-                                    <input type="number" id="supplies_request.s_metal_clips" name="supplies_request.s_metal_clips" wire:model="supplies_request.s_metal_clips"
+                                    <input type="number" id="supplies_request.s_metal_clips" name="supplies_request.s_metal_clips"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_metal_clips"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.s_metal_clips')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_metal_clips').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_metal_clips').focus();">
@@ -1282,7 +1339,10 @@
                             <div id="supplies_request.stapler_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.stapler" class="text-sm font-medium text-gray-900">Stapler</label>
-                                    <input type="number" id="supplies_request.stapler" name="supplies_request.stapler" wire:model="supplies_request.stapler"
+                                    <input type="number" id="supplies_request.stapler" name="supplies_request.stapler"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.stapler"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.stapler')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.stapler').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.stapler').focus();">
@@ -1294,7 +1354,10 @@
                             <div id="supplies_request.stapler_wire_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.stapler_wire" class="text-sm font-medium text-gray-900">Stapler Wire</label>
-                                    <input type="number" id="supplies_request.stapler_wire" name="supplies_request.stapler_wire" wire:model="supplies_request.stapler_wire"
+                                    <input type="number" id="supplies_request.stapler_wire" name="supplies_request.stapler_wire"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.stapler_wire"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.stapler_wire')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.stapler_wire').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.stapler_wire').focus();">
@@ -1306,7 +1369,10 @@
                             <div id="supplies_request.scotch_tape_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.scotch_tape" class="text-sm font-medium text-gray-900">Scotch Tape</label>
-                                    <input type="number" id="supplies_request.scotch_tape" name="supplies_request.scotch_tape" wire:model="supplies_request.scotch_tape"
+                                    <input type="number" id="supplies_request.scotch_tape" name="supplies_request.scotch_tape"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.scotch_tape"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.scotch_tape')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.scotch_tape').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.scotch_tape').focus();">
@@ -1318,7 +1384,10 @@
                             <div id="supplies_request.l_brown_envelope_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_brown_envelope" class="text-sm font-medium text-gray-900">Brown Envelope (L)</label>
-                                    <input type="number" id="supplies_request.l_brown_envelope" name="supplies_request.l_brown_envelope" wire:model="supplies_request.l_brown_envelope"
+                                    <input type="number" id="supplies_request.l_brown_envelope" name="supplies_request.l_brown_envelope"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_brown_envelope"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.l_brown_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_brown_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_brown_envelope').focus();">
@@ -1330,7 +1399,10 @@
                             <div id="supplies_request.s_brown_envelope_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_brown_envelope" class="text-sm font-medium text-gray-900">Brown Envelope (S)</label>
-                                    <input type="number" id="supplies_request.s_brown_envelope" name="supplies_request.s_brown_envelope" wire:model="supplies_request.s_brown_envelope"
+                                    <input type="number" id="supplies_request.s_brown_envelope" name="supplies_request.s_brown_envelope"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_brown_envelope"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.s_brown_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_brown_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_brown_envelope').focus();">
@@ -1342,7 +1414,10 @@
                             <div id="supplies_request.post_it_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.post_it" class="text-sm font-medium text-gray-900">Post It</label>
-                                    <input type="number" id="supplies_request.post_it" name="supplies_request.post_it" wire:model="supplies_request.post_it"
+                                    <input type="number" id="supplies_request.post_it" name="supplies_request.post_it"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.post_it"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     {{-- @error('supplies_request.post_it')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.post_it').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.post_it').focus();">
@@ -1354,7 +1429,10 @@
                             <div id="supplies_request.white_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.white_folder" class="text-sm font-medium text-gray-900">White Folder</label>
-                                    <input type="number" id="supplies_request.white_folder" name="supplies_request.white_folder" wire:model="supplies_request.white_folder"
+                                    <input type="number" id="supplies_request.white_folder" name="supplies_request.white_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.white_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
 
                                 </div>

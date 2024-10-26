@@ -327,8 +327,7 @@
                                         <td class="px-6 py-4 text-center whitespace-nowrap">
                                             {{$hrticket->type_of_request}}
                                         </td>
-                                        <td class="px-6 py-4 text-center">
-                                        
+                                        <td  class="px-6 py-4 text-center ">
                                             @if($hrticket->type_of_request == "Reimbursements")
                                                 <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
@@ -418,45 +417,40 @@
                                                     
                                                     <div class="">
                                                         @php $ctr_request = 0; @endphp
-                                                        <div class="grid grid-cols-3 gap-2 font-semibold">
-                                                            <div class="col-span-1">#</div>
-                                                            <div class="col-span-1">Name</div>
+                                                        <div class="grid grid-cols-1 lg:grid-cols-2  font-semibold">
+                                                            <div class="col-span-1"># - Name</div>
                                                             <div class="col-span-1">Quantity</div>
                                                         </div>
                                                     
                                                         <div class="flex flex-col space-y-2 mt-2">
                                                             @if($supplies_request['ballpen_black'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Ballpen (Black)</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Ballpen (Black):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['ballpen_black'] }}</div>
                                                                 </div>
                                                             @endif
                                                     
                                                             @if($supplies_request['ballpen_blue'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Ballpen (Blue)</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Ballpen (Blue): </div>
                                                                     <div class="col-span-1">{{ $supplies_request['ballpen_blue'] }}</div>
                                                                 </div>
                                                             @endif
                                                     
                                                             @if($supplies_request['ballpen_red'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Ballpen (Red)</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Ballpen (Red): </div>
                                                                     <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
                                                                 </div>
                                                             @endif
                                                     
                                                             @if($supplies_request['ballpen_red'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Ballpen (Red)</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Ballpen (Red): </div>
                                                                     <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
                                                                 </div>
                                                             @endif
@@ -465,9 +459,8 @@
 
                                                     @if($supplies_request['pencil'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Pencil</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Pencil: </div>
                                                                     <div class="col-span-1">{{ $supplies_request['pencil'] }}</div>
                                                                 </div>
                                                             @endif
@@ -476,9 +469,8 @@
 
                                                     @if($supplies_request['highlighter'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Highlighter</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Highlighter: </div>
                                                                     <div class="col-span-1">{{ $supplies_request['highlighter'] }}</div>
                                                                 </div>
                                                             @endif
@@ -487,9 +479,8 @@
 
                                                     @if($supplies_request['permanent_marker'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Permanent Marker</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Permanent Marker: </div>
                                                                     <div class="col-span-1">{{ $supplies_request['permanent_marker'] }}</div>
                                                                 </div>
                                                             @endif
@@ -498,9 +489,8 @@
                                                     
                                                     @if($supplies_request['correction_tape'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Correction Tape</div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Correction Tape: </div>
                                                                     <div class="col-span-1">{{ $supplies_request['correction_tape'] }}</div>
                                                                 </div>
                                                             @endif
@@ -509,9 +499,8 @@
 
                                                     @if($supplies_request['l_green_exp_folder'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Green Expandable Folder (L)                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Green Expandable Folder (L):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['l_green_exp_folder'] }}</div>
                                                                 </div>
                                                             @endif
@@ -520,9 +509,8 @@
 
                                                     @if($supplies_request['s_green_exp_folder'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Green Expandable Folder (S)                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Green Expandable Folder (S):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['s_green_exp_folder'] }}</div>
                                                                 </div>
                                                             @endif
@@ -531,9 +519,8 @@
 
                                                     @if($supplies_request['l_brown_exp_folder'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Brown Expandable Folder (L)                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Brown Expandable Folder (L):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['l_brown_exp_folder'] }}</div>
                                                                 </div>
                                                             @endif
@@ -542,9 +529,8 @@
                                                     
                                                     @if($supplies_request['s_brown_exp_folder'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Brown Expandable Folder (S)                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Brown Expandable Folder (S):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['s_brown_exp_folder'] }}</div>
                                                                 </div>
                                                             @endif
@@ -553,9 +539,8 @@
 
                                                     @if($supplies_request['scissors'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Scissors                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Scissors:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['scissors'] }}</div>
                                                                 </div>
                                                             @endif
@@ -564,9 +549,8 @@
 
                                                     @if($supplies_request['white_envelope'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">White Envelope                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. White Envelope:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['white_envelope'] }}</div>
                                                                 </div>
                                                             @endif
@@ -575,9 +559,8 @@
 
                                                     @if($supplies_request['calculator'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Calculator                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Calculator:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['calculator'] }}</div>
                                                                 </div>
                                                             @endif
@@ -586,9 +569,8 @@
 
                                                     @if($supplies_request['binder_two'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Binder Clips (2")                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Binder Clips (2"):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['binder_two'] }}</div>
                                                                 </div>
                                                             @endif
@@ -597,9 +579,8 @@
 
                                                     @if($supplies_request['binder_one_fourth'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Binder Clips (1 1/4")                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Binder Clips (1 1/4"):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['binder_one_fourth'] }}</div>
                                                                 </div>
                                                             @endif
@@ -608,9 +589,8 @@
 
                                                     @if($supplies_request['binder_three_fourth'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Binder Clips (3/4")                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Binder Clips (3/4"):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['binder_three_fourth'] }}</div>
                                                                 </div>
                                                             @endif
@@ -619,9 +599,8 @@
 
                                                     @if($supplies_request['l_metal_clips'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Metal Paper Clips (L)                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Metal Paper Clips (L):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['l_metal_clips'] }}</div>
                                                                 </div>
                                                             @endif
@@ -630,9 +609,8 @@
 
                                                     @if($supplies_request['binder_one_fourth'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Binder Clips (1 1/4")                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Binder Clips (1 1/4"): </div>
                                                                     <div class="col-span-1">{{ $supplies_request['binder_one_fourth'] }}</div>
                                                                 </div>
                                                             @endif
@@ -641,9 +619,8 @@
 
                                                     @if($supplies_request['s_metal_clips'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Metal Paper Clips (S)                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Metal Paper Clips (S):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['s_metal_clips'] }}</div>
                                                                 </div>
                                                             @endif
@@ -652,9 +629,8 @@
 
                                                     @if($supplies_request['stapler'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Stapler                                                               </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Stapler:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['stapler'] }}</div>
                                                                 </div>
                                                             @endif
@@ -663,9 +639,8 @@
 
                                                     @if($supplies_request['stapler_wire'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Stapler Wire                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Stapler Wire:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['stapler_wire'] }}</div>
                                                                 </div>
                                                             @endif
@@ -674,9 +649,8 @@
 
                                                     @if($supplies_request['scotch_tape'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Scotch Tape                                                               </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Scotch Tape:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['scotch_tape'] }}</div>
                                                                 </div>
                                                             @endif
@@ -685,9 +659,8 @@
 
                                                     @if($supplies_request['l_brown_envelope'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Brown Envelope (L)                                                               </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Brown Envelope (L):</div>
                                                                     <div class="col-span-1">{{ $supplies_request['l_brown_envelope'] }}</div>
                                                                 </div>
                                                             @endif
@@ -696,9 +669,8 @@
 
                                                     @if($supplies_request['post_it'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">Post It                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Post It:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['post_it'] }}</div>
                                                                 </div>
                                                             @endif
@@ -707,9 +679,8 @@
 
                                                     @if($supplies_request['white_envelope'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">White Envelope                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. White Envelope:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['white_envelope'] }}</div>
                                                                 </div>
                                                             @endif
@@ -718,16 +689,15 @@
 
                                                     @if($supplies_request['white_folder'] > 0)
                                                                 @php $ctr_request += 1; @endphp
-                                                                <div class="grid grid-cols-3 gap-2">
-                                                                    <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                    <div class="col-span-1">White Folder                                                                </div>
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. White Folder:</div>
                                                                     <div class="col-span-1">{{ $supplies_request['white_folder'] }}</div>
                                                                 </div>
                                                             @endif
                                                         </div>
                                                     </div>
                                                     {{-- @endforeach --}}
-                                            @endif>
+                                            @endif
                                             @endif
                                         </td>
 

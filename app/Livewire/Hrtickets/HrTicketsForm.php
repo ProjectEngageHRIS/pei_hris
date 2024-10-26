@@ -543,21 +543,19 @@ class HrTicketsForm extends Component
                     $this->validate([
                         'supplies_request' => function ($attribute, $value, $fail) {
                             $hasFilled = false;
-                    
+                            $hasNegativeAndZero = false;
                             foreach ($this->supplies_request as $supply => $quantity) {
-                                if (!empty($quantity)) {
+                                if (!empty($quantity) && $quantity > 0) {
                                     $hasFilled = true;
                                     break;
-                                }
+                                } 
                             }
                     
                             if (!$hasFilled) {
-                                $fail('At Least One Supply request Must Be Filled.');
-                            }
+                                $fail('At Least One Supply request Must Be Filled and Must be greater than 1');
+                            } 
                         },
                     ]);
-
-                    // $hrticketdata->request_others = json_encode($this->supplies_request);
                 }
             }
             else if($this->type_of_request == "Procurement"){
