@@ -962,10 +962,10 @@
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Passenger/s Name
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div id="purpose">
+                            <div id="account_client_hr_ops">
                                 <input type="text" name="account_client_hr_ops" id="account_client_hr_ops" wire:model.live="account_client_hr_ops" required
                                     class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                @error('purpose')
+                                @error('account_client_hr_ops')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('account_client_hr_ops_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('account_client_hr_ops_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
