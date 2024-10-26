@@ -276,12 +276,12 @@ class HrTicketsForm extends Component
             if($this->type_of_request == "HR"){
                 if($this->sub_type_of_request == "Certificate of Employment"){
                     $this->validate([
-                        'purpose' => 'required|min:1|max:50000|string', 
+                        'purpose' => 'required|min:1|max:5000|string', 
                         'type_of_hrconcern' => 'required|in:Without Compensation,With Compensation'
                     ], [
                         'purpose.required' => 'The Purpose Field Is Required.',
                         'purpose.min' => 'The Purpose Must Be At Least 1 Characters.',
-                        'purpose.max' => 'The Purpose May Not Be Greater Than 50000 Characters.',
+                        'purpose.max' => 'The Purpose May Not Be Greater Than 5000 Characters.',
                         'purpose.string' => 'The Purpose Must Be A String.',
                         'type_of_hrconcern.required' => 'The Commutation Field Is Required.',
                         'type_of_hrconcern.in' => 'The Selected Commutation Is Invalid.',
@@ -289,8 +289,8 @@ class HrTicketsForm extends Component
                     
                 } else if( $this->sub_type_of_request == "Request for Consultation"){
                     $this->validate([
-                        'purpose' => 'required|min:1|max:50000|string', 
-                        'type_of_hrconcern' => 'required|in:Without Compensation,With Compensation'
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'type_of_hrconcern' => 'required|in:High (Urgent),Medium (Within the day),Low (Can be attended the next day)'
                     ], [
                         'purpose.required' => 'The Purpose Field Is Required.',
                         'purpose.min' => 'The Purpose Must Be At Least 1 Characters.',
@@ -302,7 +302,7 @@ class HrTicketsForm extends Component
                 }
                 else if($this->sub_type_of_request == "HMO-related Concerns"){
                     $this->validate([
-                        'purpose' => 'required|min:1|max:50000|string', 
+                        'purpose' => 'required|min:1|max:5000|string', 
                         'type_of_hrconcern' => 'required|in:Availment of Service,Card Replacement,Reimbursement,Request for Enrollment,Request for Deletion',
                         'request_link' => 'required|url:https'
                     ], [
@@ -320,7 +320,7 @@ class HrTicketsForm extends Component
                     
                 } else if($this->sub_type_of_request == "Leave Concerns"){
                     $this->validate([
-                        'purpose' => 'required|min:1|max:50000|string', 
+                        'purpose' => 'required|min:1|max:5000|string', 
                         'type_of_hrconcern' => 'required|in:Leave Credits,Changes on Filed Leaves,Cancellation of Leaves',
                         'request_link' => 'required|url'
                     ], [
@@ -339,7 +339,7 @@ class HrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Payroll-related Concerns"){
                     $this->validate([
                         'request_date' => 'required|date',
-                        'purpose' => 'required|min:1|max:50000|string', 
+                        'purpose' => 'required|min:1|max:5000|string', 
                         'type_of_hrconcern' => 'required|in:Overtime Pay,Holiday Pay,Deductions,Others,Request for Deletion',
                         'request_link' => 'required|url'
                     ], [
@@ -362,7 +362,7 @@ class HrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Request for a Meeting"){
                     $this->validate([
                         'request_date' => 'required|date',
-                        'purpose' => 'required|min:1|max:50000|string', 
+                        'purpose' => 'required|min:1|max:5000|string', 
                         'request_requested' => 'required'
                     ], [
                         'request_date.required' => 'The Date of Meeting Is Required.',
@@ -415,13 +415,13 @@ class HrTicketsForm extends Component
                     }
                     $this->validate([
                         'request_date' => 'required|date',
-                        'purpose' => 'required|min:1|max:50000|string'
+                        'purpose' => 'required|min:1|max:5000|string'
                     ], [
                         'request_date.required' => 'The Date Start field is required.',
                         'request_date.date' => 'The Date Start must be a valid date.',
                         'purpose.required' => 'The Purpose field is required.',
                         'purpose.min' => 'The Purpose must be at least 1 characters.',
-                        'purpose.max' => 'The Purpose may not be greater than 50000 characters.',
+                        'purpose.max' => 'The Purpose may not be greater than 5000 characters.',
                         'purpose.string' => 'The Purpose must be a string.'
                     ]);
                 }
@@ -481,14 +481,14 @@ class HrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Repairs/Maintenance"){
                     $this->validate([
                         'type_of_hrconcern' => 'required|in:Electrical,Plumbing,HVAC,Structural,Safety Concerns,Equipment/Machinery,Environmental,Accessibility,General Maintenance,Security,Others',
-                        'purpose' => 'required|min:10|max:50000|string',
+                        'purpose' => 'required|min:10|max:5000|string',
                     ], [
                         'type_of_hrconcern.required' => 'The Type Of Repairs And Maintenance Request Field Is Required.',
                         'type_of_hrconcern.in' => 'The Selected Type Of Repairs And Maintenance Request Is Invalid.',
                     
                         'purpose.required' => 'The Concerned Area Field Is Required.',
                         'purpose.min' => 'The Concerned Area Must Be At Least 10 Characters.',
-                        'purpose.max' => 'The Concerned Area May Not Be Greater Than 50000 Characters.',
+                        'purpose.max' => 'The Concerned Area May Not Be Greater Than 5000 Characters.',
                         'purpose.string' => 'The Concerned Area Must Be A String.',
                     ]);
                     
@@ -498,7 +498,7 @@ class HrTicketsForm extends Component
                         'request_date' => 'required|date',
                         'request_requested' => 'required|date',
                         'account_client_hr_ops' => 'required|string|min:10',
-                        'purpose' => 'required|min:10|max:50000|string',
+                        'purpose' => 'required|min:10|max:5000|string',
                     ], [
                         'request_date.required' => 'The Date And Time Of Departure Field Is Required.',
                         'request_date.date' => 'The Date And Time Of Departure Must Be A Valid Date.',
@@ -512,7 +512,7 @@ class HrTicketsForm extends Component
                     
                         'purpose.required' => 'The Address Of Destination Field Is Required.',
                         'purpose.min' => 'The Address Of Destination Must Be At Least 10 Characters.',
-                        'purpose.max' => 'The Address Of Destination May Not Be Greater Than 50000 Characters.',
+                        'purpose.max' => 'The Address Of Destination May Not Be Greater Than 5000 Characters.',
                         'purpose.string' => 'The Address Of Destination Must Be A String.',
                     ]);
                 }
@@ -521,7 +521,7 @@ class HrTicketsForm extends Component
                         'request_date' => 'required|date',
                         'request_requested' => 'required|date',
                         'type_of_hrconcern' => 'required|in:Training Room,Villa Office',
-                        'purpose' => 'required|min:10|max:50000|string',
+                        'purpose' => 'required|min:10|max:5000|string',
                     ], [
                         'request_date.required' => 'The Start Date Field Is Required.',
                         'request_date.date' => 'The Start Date Must Be A Valid Date.',
@@ -534,7 +534,7 @@ class HrTicketsForm extends Component
                     
                         'purpose.required' => 'The Purpose Of Booking Field Is Required.',
                         'purpose.min' => 'The Purpose Of Booking Must Be At Least 10 Characters.',
-                        'purpose.max' => 'The Purpose Of Booking May Not Be Greater Than 50000 Characters.',
+                        'purpose.max' => 'The Purpose Of Booking May Not Be Greater Than 5000 Characters.',
                         'purpose.string' => 'The Purpose Of Booking Must Be A String.',
                     ]);
                     
@@ -562,7 +562,7 @@ class HrTicketsForm extends Component
                 if($this->sub_type_of_request == "Request for Quotation"){
                     $this->validate([
                         'type_of_hrconcern' => 'required|min:10|string',
-                        'purpose' => 'required|min:10|max:50000|string',
+                        'purpose' => 'required|min:10|max:5000|string',
                         'request_link' => 'required|url:https',
                     ], [
                         'type_of_hrconcern.required' => 'The Quotation Specifications Field Is Required.',
@@ -582,7 +582,7 @@ class HrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Request to Buy/Book/Avail Service"){
                     $this->validate([
                         'type_of_hrconcern' => 'required|min:10|string',
-                        'purpose' => 'required|min:10|max:50000|string',
+                        'purpose' => 'required|min:10|max:5000|string',
                         'request_link' => 'required|url:https',
                     ], [
                         'type_of_hrconcern.required' => 'The Product/Service Specifications Field Is Required.',
@@ -607,7 +607,7 @@ class HrTicketsForm extends Component
             if($this->type_of_request == "Reimbursements"){
                 $this->validate([
                     'request_date' => 'required|date',
-                    'purpose' => 'required|min:10|max:50000|string',
+                    'purpose' => 'required|min:10|max:5000|string',
                     'request_link' => 'required|url:https',
                 ], [
                     'request_date.required' => 'The Cut-Off Date Field Is Required.',
@@ -651,12 +651,12 @@ class HrTicketsForm extends Component
             }
             else if($this->type_of_request == "Liquidation"){
                 $this->validate([
-                    'purpose' => 'required|min:10|max:50000|string',
+                    'purpose' => 'required|min:10|max:5000|string',
                     'request_link' => 'required|url:https',
                 ], [
                     'purpose.required' => 'The Liquidation Coverage Field Is Required.',
                     'purpose.min' => 'The Liquidation Coverage Must Be At Least 10 Characters.',
-                    'purpose.max' => 'The Liquidation Coverage May Not Be Greater Than 50000 Characters.',
+                    'purpose.max' => 'The Liquidation Coverage May Not Be Greater Than 5000 Characters.',
                     'purpose.string' => 'The Liquidation Coverage Must Be A String.',
                 
                     'request_link.required' => 'The Liquidation Concern Link Field Is Required.',
@@ -676,22 +676,22 @@ class HrTicketsForm extends Component
                     'type_of_pe_hr_ops.required' => 'The Type of Performance Monitoring Request Field Is Required.',
                     'type_of_pe_hr_ops.in' => 'The Selected Type of Performance Monitoring Request Is Invalid.',
                 
-                    'account_client_hr_ops.required' => 'The Type of Client\'s Account Field Is Required.',
-                    'account_client_hr_ops.in' => 'The Selected Type of Client\'s Account Is Invalid.',
+                    'account_client_hr_ops.required' => 'The Account/Client Field Is Required.',
+                    'account_client_hr_ops.in' => 'The Account/Client Account Is Invalid.',
                 ]);
                 
             }
             else if($this->type_of_request == "Incident Report"){
                 $this->validate([
                     'type_of_hrconcern' => 'required|in:High,Medium,Low',
-                    'purpose' => 'required|min:10|max:50000|string'
+                    'purpose' => 'required|min:10|max:5000|string'
                 ], [
                     'type_of_hrconcern.required' => 'The Level of Offense Field Is Required.',
                     'type_of_hrconcern.in' => 'The Selected Level of Offense Is Invalid.',
                 
                     'purpose.required' => 'The Incident Report Field Is Required.',
                     'purpose.min' => 'The Incident Report Must Be At Least 10 Characters.',
-                    'purpose.max' => 'The Incident Report May Not Be Greater Than 50000 Characters.',
+                    'purpose.max' => 'The Incident Report May Not Be Greater Than 5000 Characters.',
                     'purpose.string' => 'The Incident Report Must Be A String.',
                 ]);
                 
@@ -708,13 +708,13 @@ class HrTicketsForm extends Component
             else if($this->type_of_request == "Request for Employee Files"){
                 $this->validate([
                     'request_requested' => 'required|min:10|string',
-                    'purpose' => 'required|min:10|max:50000|string'
+                    'purpose' => 'required|min:10|max:5000|string'
                 ], [
                     'request_requested.required' => 'The Document/s Needed Field Is Required.',
                     'request_requested.min' => 'The Document/s Needed Must Be At Least 10 Characters.',
                     'purpose.required' => 'The Purpose of Employee Files Request Field Is Required.',
                     'purpose.min' => 'The Purpose of Employee Files Request Must Be At Least 10 Characters.',
-                    'purpose.max' => 'The Purpose of Employee Files Request May Not Be Greater Than 50000 Characters.',
+                    'purpose.max' => 'The Purpose of Employee Files Request May Not Be Greater Than 5000 Characters.',
                 ]);
             }
         } 

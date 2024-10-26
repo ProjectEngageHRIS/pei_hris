@@ -193,9 +193,9 @@ class HrTicketsTable extends Component
                           ->orWhere('purpose', 'like', '%' . $term . '%');
                     }
                 }
-            })->orderBy('application_date', 'desc')->paginate(5);
+            })->orderBy('created_at', 'desc')->paginate(5);
         } else {
-            $results = $query->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
         }
         
         

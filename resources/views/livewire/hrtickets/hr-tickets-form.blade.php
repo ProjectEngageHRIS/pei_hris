@@ -290,7 +290,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm shadow-inner text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -361,7 +361,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
@@ -415,8 +415,8 @@
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Leave Concern Description
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                            <div id="purpose"> 
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed" placeholder="Please provide a brief description here.">
                                 </textarea>
                                 @error('purpose')
@@ -472,7 +472,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
@@ -525,7 +525,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -619,7 +619,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -792,83 +792,83 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="grid grid-cols-1 md:grid-cols-5 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow lg:col-span-2">
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong>1. Electrical Issues Checklist</strong></h1>
-                                <li> <span  class="text-customRed ">◦ </span>  Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦ </span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong>1. Electrical Issues Checklist:</strong></h1>
+                                <li class="ml-4"> <span  class="text-customRed ">◦ </span>  Malfunctioning outlets or switches</li>
+                                <li class="ml-4"> <span class="text-customRed">◦ </span> Flickering or dimming lights</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
                             </ul>
                             <ul class="col-span-1">
                                 <h1 class="text-customRed"><strong>2. Plumbing Problems: </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Leaking faucets or pipes</li>
-                                <li> <span class="text-customRed">◦</span> Clogged drains or toilets</li>
-                                <li> <span class="text-customRed">◦</span> Running toilets</li>
-                                <li> <span class="text-customRed">◦</span> Low water pressure</li>
-                                <li> <span class="text-customRed">◦</span> Water heater issues</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Leaking faucets or pipes</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Clogged drains or toilets</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Running toilets</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Low water pressure</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Water heater issues</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong>3. Electrical Issues Checklist </strong> </h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong>3. HVAC (Heating, Ventilation, and Air Conditioning): </strong> </h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Heating or cooling system not working</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Poor air quality</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Strange odors coming from vents</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Air vents blocked or not blowing air</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Thermostat malfunctioning</li>
                             </ul>
                             <ul class="col-span-1">
                                 <h1 class="text-customRed"><strong> 4. Structural Issues: </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Cracks or holes in walls or ceilings</li>
-                                <li> <span class="text-customRed">◦</span> Damaged or loose tiles or flooring</li>
-                                <li> <span class="text-customRed">◦</span> Broken windows or doors</li>
-                                <li> <span class="text-customRed">◦</span> Issues with elevators or escalators</li>
-                                <li> <span class="text-customRed">◦</span> Sagging or uneven floors</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Cracks or holes in walls or ceilings</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Damaged or loose tiles or flooring</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken windows or doors</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with elevators or escalators</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Sagging or uneven floors</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong>5. Safety Concerns </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Broken handrails or guardrails</li>
-                                <li> <span class="text-customRed">◦</span> Loose or unstable furniture</li>
-                                <li> <span class="text-customRed">◦</span> Damaged fire safety equipment (fire alarms, extinguishers, etc.)</li>
-                                <li> <span class="text-customRed">◦</span> Missing or damaged safety signs</li>
-                                <li> <span class="text-customRed">◦</span> Slippery or uneven surfaces</li>
+                                <h1 class="text-customRed"><strong>5. Safety Concerns: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken handrails or guardrails</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Loose or unstable furniture</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Damaged fire safety equipment (fire alarms, extinguishers, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Missing or damaged safety signs</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Slippery or uneven surfaces</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong> 6. Equipment and Machinery </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning office equipment (printers, computers, etc.)</li>
-                                <li> <span class="text-customRed">◦</span> Broken or jammed machinery in manufacturing or industrial settings</li>
-                                <li> <span class="text-customRed">◦</span> Issues with tools or equipment in workshops or construction sites</li>
-                                <li> <span class="text-customRed">◦</span> Safety guards or mechanisms not functioning properly</li>
+                                <h1 class="text-customRed"><strong> 6. Equipment and Machinery: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Malfunctioning office equipment (printers, computers, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken or jammed machinery in manufacturing or industrial settings</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with tools or equipment in workshops or construction sites</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Safety guards or mechanisms not functioning properly</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong> 7. Environmental Concerns </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Pest infestations (rodents, insects, etc.)</li>
-                                <li> <span class="text-customRed">◦</span> Mold or mildew growth</li>
-                                <li> <span class="text-customRed">◦</span> Environmental hazards (asbestos, lead paint, etc.)</li>
-                                <li> <span class="text-customRed">◦</span> Water leaks or flooding</li>
-                                <li> <span class="text-customRed">◦</span> Ventilation problems leading to stuffy or overly hot/cold areas</li>
+                                <h1 class="text-customRed"><strong> 7. Environmental Concerns: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Pest infestations (rodents, insects, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Mold or mildew growth</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Environmental hazards (asbestos, lead paint, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Water leaks or flooding</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Ventilation problems leading to stuffy or overly hot/cold areas</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong> 8. Accessibility </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Broken or malfunctioning wheelchair ramps or lifts</li>
-                                <li> <span class="text-customRed">◦</span> Inaccessible doorways or pathways</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Issues with automatic doors or door openers</li>
-                                <li> <span class="text-customRed">◦</span> Lack of accessible restroom facilities</li>
+                                <h1 class="text-customRed"><strong> 8. Accessibility: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken or malfunctioning wheelchair ramps or lifts</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Inaccessible doorways or pathways</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with automatic doors or door openers</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Lack of accessible restroom facilities</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong>9. General Maintenance </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Painting or repainting needs</li>
-                                <li> <span class="text-customRed">◦</span> Cleaning or janitorial requests</li>
-                                <li> <span class="text-customRed">◦</span> Replacing damaged or worn-out furnishings</li>
-                                <li> <span class="text-customRed">◦</span> Repairing or replacing damaged fencing or barriers</li>
-                                <li> <span class="text-customRed">◦</span> Graffiti removal</li>
+                                <h1 class="text-customRed"><strong>9. General Maintenance: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Painting or repainting needs</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Cleaning or janitorial requests</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Replacing damaged or worn-out furnishings</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Repairing or replacing damaged fencing or barriers</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Graffiti removal</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1 class="text-customRed"><strong> 10. Security Concerns </strong></h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning security cameras or alarms</li>
-                                <li> <span class="text-customRed">◦</span> Broken locks or doors</li>
-                                <li> <span class="text-customRed">◦</span> Unsecured entry points</li>
-                                <li> <span class="text-customRed">◦</span> Damage to fences or barriers</li>
-                                <li> <span class="text-customRed">◦</span> Issues with access control systems</li>
+                                <h1 class="text-customRed"><strong> 10. Security Concerns: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Malfunctioning security cameras or alarms</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken locks or doors</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Unsecured entry points</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Damage to fences or barriers</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with access control systems</li>
                             </ul>
                         </div>
                         <div class="col-span-1">
@@ -977,7 +977,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <input type="text" name="purpose" id="purpose" wire:model="purpose" required
+                                <input type="text" name="purpose" id="purpose" wire:model="purpose" required 
                                     class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1038,7 +1038,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
@@ -1476,7 +1476,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -1542,7 +1542,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -1575,7 +1575,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -1605,12 +1605,12 @@
                 
                 <template x-if="typeOfTicket === 'Internal Control' && typeOfRequest === 'Tools and Equipment'">
                     {{-- @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Tools and Equipment") --}}
-                    <div x-data="{typeOfHrConcern: $wire.entangle($type_of_hrconcern)}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
+                            <div class="grid w-full grid-cols-1 sm:grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" name="condition_availability" id="new" wire:model="condition_availability" value="New">
                                     <label for="New" class="text-sm font-medium">New</label>
@@ -1765,7 +1765,7 @@
                             </div>
                         </div>
                         <div class="col-span-1">
-                            <label for="account_client_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Client's Account
+                            <label for="account_client_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Account/Client 
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="account_client_hr_opscontainer">
@@ -1791,7 +1791,7 @@
                             <label for="type_of_hrconcerns" class="block mb-2 text-sm font-medium text-gray-900">Level of Offense
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-3 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
+                            <div class="grid w-full grid-cols-1 sm:grid-cols-3 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="High" wire:model="type_of_hrconcern" value="High" required>
                                     <label for="High" class="text-sm font-medium">High</label>
@@ -1816,7 +1816,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
