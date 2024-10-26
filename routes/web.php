@@ -231,8 +231,6 @@ Route::middleware(['auth' , '2fa'])->group(function () {
 
     Route::get("/leaverequest/form/{type?}", LeaveRequestForm::class)->name('LeaveRequestForm');
 
-    Route::get("/leaverequest/edit/{index}", LeaveRequestUpdate::class)->name('LeaveRequestEdit');
-
     Route::get("/leaverequest/view/{index}", LeaveRequestView::class)->name('LeaveRequestView');
 
     Route::get("leaverequest/approverequests", ApproveLeaverequestTable::class)->name('ApproveLeaveRequestTable');
@@ -251,8 +249,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/helpdesk/form", ItHelpDeskForm::class)->name('ItHelpDeskForm');
 
-    Route::get("/helpdesk/edit/{index}", ItHelpDeskUpdate::class)->name('ItHelpDeskUpdate');
-
     Route::get("/helpdesk/view/{index}", ItHelpDeskView::class)->name('ItHelpDeskView');
 
     Route::get("/helpdesk/approverequests", ApproveItTicketsTable::class)->name('ApproveItHelpDeskTable');
@@ -267,8 +263,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/mytasks/form", MyTasksForm::class)->name('TasksForm');
 
-    Route::get("/mytasks/edit/{index}", MyTasksUpdate::class)->name('TasksUpdate');
-
     Route::get("/mytasks/view/{index}", MyTasksView::class)->name('MyTasksView');
 
     Route::get("/assignedtasks", AssignedTasksTable::class)->name('AssignedTasksTable');
@@ -282,8 +276,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
 
     Route::get("/hrtickets/form/{type?}", HrTicketsForm::class)->name('HrTicketsForm');
-
-    Route::get("/hrtickets/edit/{index}", HrTicketsUpdate::class)->name('HrTicketsUpdate');
 
     Route::get("/hrtickets/view/{index}", HrTicketsView::class)->name('HrTicketsView');
 
@@ -322,16 +314,10 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
 Route::middleware(['auth' , '2fa'])->group(function (){
 
-    Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
-
-    Route::get('/employeesview/{index}', AddEmployee::class)->name("EmployeesView");
-    
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 
     // Route::get("/human", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
-    Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
-    
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");
@@ -341,10 +327,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
 Route::middleware(['auth' , '2fa'])->group(function (){
 
-    Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
-
-    Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
-    
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");
