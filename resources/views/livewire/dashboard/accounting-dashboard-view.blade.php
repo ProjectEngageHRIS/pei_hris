@@ -699,7 +699,9 @@
                         @foreach ($EmployeeData as $employee )
                                 <div wire:key="{{ $employee->employee_id }}"  class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
                                     <div class="flex justify-between">
-                                        <h2 class="font-semibold text-gray-900 text-md text-nowrap">{{$employee->first_name}} {{$employee->middle_name  }} {{$employee->last_name}}</h2>
+                                        <h2 class="font-semibold text-gray-900 text-md whitespace-normal">
+                                            {{$employee->first_name}} {{$employee->middle_name}} {{$employee->last_name}}
+                                        </h2>
                                         @if ($employee->department == "PEI")
                                             <span class="px-2 py-1 text-xs text-yellow-500 bg-yellow-100 rounded-8px text-nowrap">PEI</span>
                                         @elseif ($employee->department == "SL SEARCH")
