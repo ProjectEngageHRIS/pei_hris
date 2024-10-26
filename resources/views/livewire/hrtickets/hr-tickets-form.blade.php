@@ -28,7 +28,7 @@
         </ol>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">HR Ticket Form</h2>
-    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg"  x-data="{ typeOfTicket: @entangle('type_of_ticket'), typeOfRequest: @entangle('type_of_request'), subTypeOfRequest: @entangle('sub_type_of_request')}">
+    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg"  x-data="{ typeOfTicket: $wire.entangle('type_of_ticket'), typeOfRequest: $wire.entangle('type_of_request'), subTypeOfRequest: $wire.entangle('sub_type_of_request'), typeOfHrConcern: $wire.entangle('type_of_hrconcern')}">
         @csrf
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
@@ -540,7 +540,7 @@
                 </template>
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Certificate of Remittances'">
                 {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Certificate of Remittances") --}}
-                    <div x-data="{typeOfHrConcern: @entangle('type_of_hrconcern'), requestAssigned: $wire.entangle('request_assigned')}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div x-data="{requestAssigned: $wire.entangle('request_assigned')}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div class="col-span-1">
                             <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Remittance Certificate
                                 <span class="text-red-600">*</span>
@@ -713,6 +713,9 @@
                             {{-- @if ($type_of_hrconcern == "Others") --}}
                             <template x-if="typeOfHrConcern === 'Others'">
                                 <div id="messengerial_other_type_container" class="mt-4">
+                                    <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                        <span class="text-red-600">*</span>
+                                    </label>
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
@@ -895,6 +898,9 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="messengerial_other_type_container"  class="mt-4">
+                                    <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                        <span class="text-red-600">*</span>
+                                    </label>
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     </textarea>
@@ -1625,8 +1631,8 @@
                             <label class="block mb-2 text-sm font-medium text-gray-900">Equipment Type
                                 <span class="text-red-600">*</span>
                             </label>
-                            <select id="type_of_hrconcern" name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                <option value=""selected>Select</option>
+                            <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                <option value="" selected>Select</option>
                                 <option value="Laptop">Laptop</option>
                                 <option value="Printer">Printer</option>
                                 <option value="Monitor">Monitor</option>
@@ -1639,15 +1645,19 @@
                                 <option value="Extension Cord">Extension Cord</option>
                                 <option value="Others">Others</option>
                             </select>
+                            
                             @error('type_of_hrconcern')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                             {{-- @if ($type_of_hrconcern == "Others") --}}
-                            <template x-if="typeOfHrConcern === 'Others">
+                            <template x-if="typeOfHrConcern === 'Others'">
                                 <div id="purpose_container" class="mt-4">
                                     <div id="purpose">
+                                        <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                            <span class="text-red-600">*</span>
+                                        </label>
                                         <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                             class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                         </textarea>
