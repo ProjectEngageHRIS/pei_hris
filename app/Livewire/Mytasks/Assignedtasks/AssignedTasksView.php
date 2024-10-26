@@ -116,7 +116,7 @@ class AssignedTasksView extends Component
                     }
                     $form->update($dataToUpdate);
                     $this->dispatch('trigger-success'); 
-                    return redirect()->to(route('TasksTable'));
+                    return redirect()->to(route('AssignedTasksTable'));
                 }
             } else {
                 $this->dispatch('trigger-error'); 
