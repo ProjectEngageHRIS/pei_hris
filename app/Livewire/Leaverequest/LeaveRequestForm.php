@@ -120,31 +120,13 @@ class LeaveRequestForm extends Component
             $leaveDayOption = $this->full_half; // The leave option selected
     
             switch ($leaveDayOption) {
-                case 'Start Full':
-                case 'End Full':
-                    // Full day on Start or End Day
-                    $this->num_of_days_work_days_applied = number_format(($workdays - 1) + 0.5, 3); // Full day for the remaining days plus half day
-                    break;
-    
-                case 'Both Full':
-                    // Full day on both Start and End Day
-                    $this->num_of_days_work_days_applied = number_format($workdays, 3); // Full days for all
-                    break;
-    
-                case 'Start Half':
-                case 'End Half':
+                case 'Half Day':
                     // Half day on Start or End Day
-                    $this->num_of_days_work_days_applied = number_format(($workdays - 1) + 0.5, 3); // Full day for remaining days plus half day
+                    $this->num_of_days_work_days_applied = number_format(($workdays - 1) + 0.5, 1); // Full day for remaining days plus half day
                     break;
-    
-                case 'Both Half':
-                    // Half day on both Start and End Day
-                    $this->num_of_days_work_days_applied = number_format($workdays - 1 + 1, 3); // Full day for all days except start and end, plus half day for start and end
-                    break;
-    
                 default:
                     // Default case if no valid option selected
-                    $this->num_of_days_work_days_applied = number_format($workdays, 3);
+                    $this->num_of_days_work_days_applied = number_format($workdays, 0);
                     break;
             }
         }

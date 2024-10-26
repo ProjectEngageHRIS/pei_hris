@@ -313,7 +313,7 @@
                                             </div>
                                             <div class="col-span-1">
                                                 <div id="full_half_container" class="col-span-1">
-                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full/Undertime on End Day
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/ Full/ Undertime on End Day
                                                         <span class="text-red-600">*</span>
                                                     </label>
                                                     <select id="purpose_type" name="full_half" wire:model.live="full_half"
@@ -349,7 +349,7 @@
                                         <h2 class="col-span-1 min-[902px]:col-span-3 font-bold text-customRed">Leave Credits</h2>
                                         <div class="col-span-1">
                                             <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-customGray ">Number of Days <span class="text-red-600">*</span></label>
-                                            <input type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
+                                            <input type="number" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
                                                 class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                                 disabled>
                                             @error('num_of_days_work_days_applied')
