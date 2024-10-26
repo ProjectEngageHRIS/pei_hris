@@ -129,7 +129,7 @@
                         <tr>
 
                             <th scope="col" class="px-6 py-3 text-center">
-                                No.
+                                Form No.
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
                                 Task Assigner
@@ -175,18 +175,18 @@
                                         </th>
                                     </tr>
                             @else
-                                @php
+                                {{-- @php
                                     $ctr = 0;
                                     $pageIndex = ($TasksData->currentpage() - 1) * $TasksData->perpage() + $ctr;
-                                @endphp
+                                @endphp --}}
                                 @foreach ($TasksData as $index => $my_task)
-                                @php
+                                {{-- @php
                                     $ctr = $ctr + 1;
-                                @endphp
+                                @endphp --}}
                                     <tr class="bg-white border-b hover:bg-gray-50 ">
 
                                         <th scope="row" class="px-6 py-4 font-medium text-center text-gray-900 whitespace-nowrap ">
-                                            {{$pageIndex + $ctr}}
+                                            {{$my_task->form_id}}
                                         </th>
                                         <td class="px-6 py-4 font-semibold text-center text-gray-900 whitespace-nowrap">
                                             @php

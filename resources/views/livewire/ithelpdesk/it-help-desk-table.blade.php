@@ -155,7 +155,7 @@
                                 </div>
                             </th> --}}
                             <th scope="col" class="px-6 py-3 text-center">
-                                No.
+                                Form No.
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
                                 Status
@@ -189,14 +189,14 @@
                                             </th>
                                         </tr>
                                 @else
-                                    @php
+                                    {{-- @php
                                         $ctr = 0;
                                         $pageIndex = ($ItTicketData->currentpage() - 1) * $ItTicketData->perpage() + $ctr;
-                                    @endphp
+                                    @endphp --}}
                                     @foreach ($ItTicketData as $index => $it_ticket)
-                                    @php
+                                    {{-- @php
                                         $ctr = $ctr + 1;
-                                    @endphp
+                                    @endphp --}}
                                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                             {{-- <td class="w-4 p-4">
                                                 <div class="flex items-center">
@@ -205,7 +205,8 @@
                                                 </div>
                                             </td> --}}
                                             <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                {{$pageIndex + $ctr}}
+                                                {{-- {{$pageIndex + $ctr}} --}}
+                                                {{$it_ticket->form_id}}
                                             </th>
                                             @if($it_ticket->status == "Unassigned")
                                             <th scope="row" class="px-6 py-4 text-center font-medium text-gray-900 whitespace-nowrap dark:text-white capitalize">
