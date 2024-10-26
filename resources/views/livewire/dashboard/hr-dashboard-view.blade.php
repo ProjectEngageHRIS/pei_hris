@@ -77,10 +77,10 @@
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,

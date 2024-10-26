@@ -470,7 +470,7 @@
 
 
                         </div>
-                        <div x-data="{ showSubmitButton: @entangle('showSubmitButton') }">
+                        <div x-data="{ showSubmitButton: $wire.entangle('showSubmitButton') }">
     <!-- Edit Button -->
     <button
         type="button"

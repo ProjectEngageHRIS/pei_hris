@@ -11,7 +11,7 @@
         <form wire:submit.prevent="changePassword" class="mt-4"> <!-- Adjusted mt-6 to mt-4 -->
 
             <div x-data="{
-                old_password: @entangle('old_password'),
+                old_password: $wire.entangle('old_password'),
                 showPassword: false,
             }"
             class="mt-4"> <!-- Adjusted mt-6 to mt-4 -->
@@ -48,7 +48,7 @@
         </div>
         
         <div x-data="{
-                password: @entangle('password'),
+                password: $wire.entangle('password'),
                 showPassword: false,
                 length: false,
                 uppercase: false,

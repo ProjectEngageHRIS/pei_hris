@@ -178,10 +178,10 @@
                 <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-full  min-[390px]:w-261 " placeholder="Search for users">
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,

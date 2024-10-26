@@ -116,10 +116,10 @@
                 <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-full  min-[390px]:w-261 " placeholder="Search for users">
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,
@@ -606,7 +606,7 @@
                                         </div>
                                         <!-- Modal body -->
                                         <div class="p-4 md:p-5">
-                                            <div class="grid grid-cols-1 gap-4 mb-4 " x-data="{typeOfKey: @entangle('key'), typeOfStatus: @entangle('status')}">
+                                            <div class="grid grid-cols-1 gap-4 mb-4 " x-data="{typeOfKey: $wire.entangle('key'), typeOfStatus: $wire.entangle('status')}">
                                                 <div>
                                                     <label for="category" class="block mb-2 text-sm font-semibold text-gray-900">Status</label>
                                                     <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">

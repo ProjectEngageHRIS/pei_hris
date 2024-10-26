@@ -30,7 +30,7 @@
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Leave Request Form</h2>
     <section class="bg-white dark:bg-gray-900 pb-24 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
-            <form wire:submit.prevent="submit" method="POST" x-data="{typeOfLeave: @entangle('mode_of_application')}">
+            <form wire:submit.prevent="submit" method="POST" x-data="{typeOfLeave: $wire.entangle('mode_of_application')}">
                 @csrf
                 {{-- Information field --}}
                 <h2 class="font-bold text-customRed">Information</h2>
@@ -369,7 +369,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div id="deduct_to_container" class="col-span-1" x-data="{availableCredits: @entangle('available_credits'), creditsDeducted: @entangle('num_of_days_work_days_applied')}">
+                                        <div id="deduct_to_container" class="col-span-1" x-data="{availableCredits: $wire.entangle('available_credits'), creditsDeducted: $wire.entangle('num_of_days_work_days_applied')}">
                                             <label class="block mb-2 text-sm font-medium text-gray-900 ">Deduct to?
                                                 <span class="text-red-600">*</span>
                                             </label>

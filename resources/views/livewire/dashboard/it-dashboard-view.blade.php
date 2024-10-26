@@ -154,10 +154,10 @@
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,
@@ -594,7 +594,7 @@
                         @endif
                         </tbody>
                         
-                    <div x-cloak x-data="{ openCrudModal: false, currentFormId: null, openConfirmation: false, reportField: @entangle('status') }" x-ref="crudModal"
+                    <div x-cloak x-data="{ openCrudModal: false, currentFormId: null, openConfirmation: false, reportField: $wire.entangle('status') }" x-ref="crudModal"
                         x-init="
                             $el.addEventListener('modal-open', (event) => {
                                 $wire.set('status', event.detail.status)

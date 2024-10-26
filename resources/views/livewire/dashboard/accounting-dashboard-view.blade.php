@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-between mb-4 md:flex-row gap-y-4">
         <div class="flex flex-row items-center w-full gap-2 md:gap-4">
             <div class="rounded-lg hover:text-customRed">
-                <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                <div x-data="{ open: false, selectedhalfOfMonth: $wire.entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                     <div>
                         <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow text-nowrap bg-navButton">
                             <span x-text="selectedhalfOfMonth ? selectedhalfOfMonth : 'Select'"></span>
@@ -22,7 +22,7 @@
             </div>
 
             <div class="rounded-lg hover:text-customRed">
-                <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                <div x-data="{ open: false, selectedMonth: $wire.entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                     <div>
                         <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow bg-navButton">
                             <span x-text="selectedMonth ? selectedMonth : 'Select'"></span>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="rounded-lg hover:text-customRed">
-                <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                <div x-data="{ open: false, selectedYear: $wire.entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                     <div>
                         <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow bg-navButton">
                             <span x-text="selectedYear ? selectedYear : 'Select'"></span>
@@ -94,10 +94,10 @@
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,
@@ -749,7 +749,7 @@
                                         @else 
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
-                                        <div x-cloak x-data="{ openPayrollEditModal: false, addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')}" x-ref="modals" >
+                                        <div x-cloak x-data="{ openPayrollEditModal: false, addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: $wire.entangle('payroll_picture')}" x-ref="modals" >
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
                                                 <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
