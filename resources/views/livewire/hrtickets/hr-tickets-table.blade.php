@@ -336,7 +336,7 @@
                                                 <span class="font-semibold text-gray-700">Equipment Type: </span>{{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br> 
                                             @elseif($hrticket->type_of_request == "Cash Advance")
-                                                <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{$hrticket->request_date}} <br>
+                                                <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{Carbon\Carbon::parse($hrticket->request_date)->format('F j, Y')}}<br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
                                             @elseif($hrticket->type_of_request == "Liquidation")
                                                 <span class="font-semibold text-gray-700">Liquidation Coverage: </span>{{$hrticket->purpose}} <br>
@@ -358,7 +358,7 @@
                                                 <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
                                             @elseif($hrticket->type_of_request == "Request for Employee Files")
                                                 <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br> 
-                                                <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->document_requested}} <br>
+                                                <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->request_requested}} <br>
 
                                             @elseif($hrticket->sub_type_of_request == "Certificate of Employment" || $hrticket->sub_type_of_request == "Request for Consultation" )
                                                 <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br>

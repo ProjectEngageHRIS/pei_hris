@@ -639,7 +639,7 @@ class HrTicketsForm extends Component
             else if($this->type_of_request == "Cash Advance"){
                 $this->validate([
                     'request_date' => 'required|date',
-                    'request_link' => 'required|url:https',
+                    'request_link' => 'required|url',
                 ], [
                     'request_date.required' => 'The Date of Cash Advance Request Field Is Required.',
                     'request_date.date' => 'The Date of Cash Advance Request Must Be A Valid Date.',
@@ -652,7 +652,7 @@ class HrTicketsForm extends Component
             else if($this->type_of_request == "Liquidation"){
                 $this->validate([
                     'purpose' => 'required|min:10|max:5000|string',
-                    'request_link' => 'required|url:https',
+                    'request_link' => 'required|url',
                 ], [
                     'purpose.required' => 'The Liquidation Coverage Field Is Required.',
                     'purpose.min' => 'The Liquidation Coverage Must Be At Least 10 Characters.',
