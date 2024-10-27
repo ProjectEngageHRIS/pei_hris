@@ -206,7 +206,7 @@
                         @this.set('insideDepartmentTypesFilter', this.insideDepartmentTypesFilter);
                         @this.set('employeeTypesFilter', this.employeeTypesFilter);
                     }
-                    }" class="flex flex-wrap items-center justify-between  space-y-4 flex-column sm:flex-row min-[530px]:space-y-0">
+                    }" class="flex flex-wrap items-center justify-between  space-y-4 flex-column sm:flex-row min-[529px]:space-y-0">
                     <div class="flex space-x-1">
 
                         {{-- Phase Filter --}}
@@ -387,7 +387,7 @@
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                             </svg>
                         </div>
-                        <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-264 min-[530px]:w-32 min-[575px]:w-36 min-[590px]:w-40 min-[625px]:w-44 min-[640px]:w-48 min-[655px]:w-52 min-[670px]:w-56 min-[685px]:w-60 min-[700px]:w-300" placeholder="Search">
+                        <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-264 min-[529px]:w-32 min-[575px]:w-36 min-[590px]:w-40 min-[625px]:w-44 min-[640px]:w-48 min-[655px]:w-52 min-[670px]:w-56 min-[685px]:w-60 min-[700px]:w-300" placeholder="Search">
                         <div class="absolute rounded-lg -right-1 hover:text-customRed">
             
                             <!-- Filter Icon Button -->
