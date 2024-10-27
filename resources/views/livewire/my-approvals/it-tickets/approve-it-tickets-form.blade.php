@@ -28,7 +28,8 @@
         </ol>
     </nav> 
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Edit IT Ticket</h2>
-    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <p class="my-4 text-customRed  text-lg">Ticket Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
 
     <section class="bg-white dark:bg-gray-900 pb-8 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">

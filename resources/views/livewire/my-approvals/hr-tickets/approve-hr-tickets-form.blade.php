@@ -28,7 +28,8 @@
         </ol>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl">Approve HR Ticket Request</h2>
-    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed">No. {{$form_id}}</span>  </p>
+    <p class="my-4 text-customRed  text-lg">Ticket Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
     <form wire:submit.prevent="changeStatus" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         @csrf
         {{-- Information field --}}

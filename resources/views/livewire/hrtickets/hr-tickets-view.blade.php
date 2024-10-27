@@ -28,7 +28,8 @@
         </ol>
     </nav>
     <h2 class="mb-2 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl dark:text-white">View HR Ticket </h2>
-    <p class="mb-4 text-lg font-semibold text-customRed"> Ticket  <span class="text-customRed">No. {{$form_id}}</span>  </p>
+    <p class="my-4 text-customRed  text-lg">Ticket Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
     <form method="GET" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
