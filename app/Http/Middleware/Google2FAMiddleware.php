@@ -61,10 +61,10 @@ class Google2FAMiddleware
                 $request->session()->invalidate();
                 // $request->session()->regenerateToken();
         
-                return redirect()->to(route('home'));
+                return redirect()->route('home');
             }
         }
-
+        
         return $next($request);
     }
 }

@@ -150,6 +150,8 @@ class HrDashboardView extends Component
     public $genderFilter;
     public $search;
 
+    public $employee_role_id;
+
     public function clearAllFilters()
     {
         $this->employeeTypesFilter = [];
@@ -188,11 +190,12 @@ class HrDashboardView extends Component
     public function mount(){
 
         $loggedInUser = auth()->user()->role_id;
+        $this->employee_role_id = $loggedInUser;
         try {
             if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
-            if(in_array($loggedInUser, [2, 7, 8, 61024, 14,])){
+            if(in_array($loggedInUser, [7, 8, 61024, 14])){
                 $this->loggedInUser = True;
             }
         } catch (\Exception $e) {
@@ -628,7 +631,7 @@ if (isset($add_employee->employee_email)) {
 
         $loggedInUser = auth()->user()->role_id;
         try {
-            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+            if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
             if(in_array($loggedInUser, [7, 8, 61024, 14,])){
