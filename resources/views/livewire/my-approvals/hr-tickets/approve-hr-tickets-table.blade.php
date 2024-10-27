@@ -176,7 +176,7 @@
                     </svg>
                 </div>
                 
-                <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-264 min-[524px]:w-30 min-[540px]:w-32 min-[555px]:w-36 min-[570px]:w-40 min-[585px]:w-44 min-[600px]:w-48  min-[616px]:w-52  min-[635px]:w-56 min-[650px]:w-60 min-[710px]:w-300" placeholder="Search">
+                <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-264min=[507px]:w-28 min-[524px]:w-30 min-[540px]:w-32 min-[555px]:w-36 min-[570px]:w-40 min-[585px]:w-44 min-[600px]:w-48  min-[616px]:w-52  min-[635px]:w-56 min-[650px]:w-60 min-[710px]:w-300" placeholder="Search">
                 <!-- Filter Sidebar -->
                 <div x-data="{
                     employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
