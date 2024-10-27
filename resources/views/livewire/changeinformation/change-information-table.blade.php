@@ -34,7 +34,7 @@
         <div class="w-full  mt-4  bg-white rounded-t-lg shadow-md" >
             <div class="p-4 overflow-x-auto ">
                 <div class="inline-block min-w-full box-border">
-                    <div class="flex  flex-wrap pb-1 items-center justify-between w-full  space-y-4 min-[567px]:space-y-0  flex-column sm:flex-row ">
+                    <div class="flex  flex-wrap pb-1 items-center justify-between w-full  space-y-4 min-[507px]:space-y-0  flex-column sm:flex-row ">
                         <div class="flex space-x-3 pl-1" style="padding-bottom: 0.05rem">
                         {{-- Date Filter --}}
                         <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center justify-center h-10 p-2 max-[620px]:min-w-[127px] hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5 px-4" type="button">
@@ -134,7 +134,7 @@
                                     <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
                                 </svg>
                             </div>
-                            <input type="text" id="table-search" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text max-[567px]:w-264  w-64"  placeholder="Search like: January 1, 2024">
+                            <input type="text" id="table-search" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-264 min-[507px]:w-24 min-[524px]:w-28 min-[540px]:w-32 min-[555px]:w-36 min-[570px]:w-40 min-[585px]:w-44 min-[600px]:w-48  min-[616px]:w-52  min-[635px]:w-56 min-[650px]:w-60 min-[710px]:w-300"  placeholder="Search like: January 1, 2024">
                         </div>
                     </div>
                 </div>

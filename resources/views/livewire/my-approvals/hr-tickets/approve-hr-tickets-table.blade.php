@@ -16,7 +16,7 @@
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve HR Tickets</h2>
     <div class="w-full pb-4 mt-4  bg-white rounded-t-lg shadow-md" >
-        <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row sm:space-y-0">
+        <div class="flex flex-wrap items-center justify-between p-4 pb-4 space-y-4 flex-column sm:flex-row min-[524px]:space-y-0">
             <div class="flex space-x-1 overflow-x-auto" style="padding-bottom: 0.05rem">
                    {{-- Date Filter --}}
                 <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
@@ -175,7 +175,8 @@
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                     </svg>
                 </div>
-                <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-full  min-[390px]:w-261 " placeholder="Search for users">
+                
+                <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="block p-2 text-sm rounded-lg shadow-inner ps-10 bg-gray-50 focus:ring-customRed focus:border-customRed border-text w-264 min-[524px]:w-30 min-[540px]:w-32 min-[555px]:w-36 min-[570px]:w-40 min-[585px]:w-44 min-[600px]:w-48  min-[616px]:w-52  min-[635px]:w-56 min-[650px]:w-60 min-[710px]:w-300" placeholder="Search">
                 <!-- Filter Sidebar -->
                 <div x-data="{
                     employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
@@ -211,7 +212,7 @@
                     }" class="absolute rounded-lg -right-1 hover:text-customRed">
     
                     <!-- Filter Icon Button -->
-                    <button @click="filterOpen = !filterOpen" class="size-9">
+                    <button @click="filterOpen = !filterOpen" class="size-9" style="margin-top: 2px">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" class="text-gray-600 size-6 hover:text-customRed">
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                         </svg>

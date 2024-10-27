@@ -189,10 +189,10 @@ class HrDashboardView extends Component
 
         $loggedInUser = auth()->user()->role_id;
         try {
-            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+            if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
-            if(in_array($loggedInUser, [7, 8, 61024, 14,])){
+            if(in_array($loggedInUser, [2, 7, 8, 61024, 14,])){
                 $this->loggedInUser = True;
             }
         } catch (\Exception $e) {

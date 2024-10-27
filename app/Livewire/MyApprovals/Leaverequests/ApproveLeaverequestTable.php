@@ -27,8 +27,13 @@ class ApproveLeaverequestTable extends Component
 
     public $status_filter;
 
+    public $supervisor_status_filter;
+    public $president_status_filter;
+
     public $dateFilterName = "All";
     public $statusFilterName = "All";
+    public $supervisorFilterName = "All";
+    public $presidentFilterName = "All";
 
     public $search = "";
 
@@ -186,6 +191,43 @@ class ApproveLeaverequestTable extends Component
                 $this->statusFilterName = "All";
                 break;
         }
+
+        switch ($this->supervisor_status_filter) {
+            case '1':
+                $query->where('approved_by_supervisor', 1);
+                $this->supervisorFilterName = "Approved";
+                break;
+            case '2':
+                $query->whereNull('approved_by_supervisor');
+                $this->supervisorFilterName = "Pending";
+                break;
+            case '3':
+                $query->where('approved_by_supervisor', 0);
+                $this->supervisorFilterName = "Declined";
+                break;
+            default:
+                $this->supervisorFilterName = "All";
+                break;
+        }
+
+        switch ($this->president_status_filter) {
+            case '1':
+                $query->where('approved_by_president', 1);
+                $this->presidentFilterName = "Approved";
+                break;
+            case '2':
+                $query->whereNull('approved_by_president');
+                $this->presidentFilterName = "Pending";
+                break;
+            case '3':
+                $query->where('approved_by_president', 0);
+                $this->presidentFilterName = "Declined";
+                break;
+            default:
+                $this->presidentFilterName = "All";
+                break;
+        }
+
 
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
             return $this->employeeTypesFilter[$key];
