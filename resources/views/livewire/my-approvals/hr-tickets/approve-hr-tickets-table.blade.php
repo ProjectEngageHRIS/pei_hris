@@ -221,7 +221,7 @@
                             </button>
                         </div>
                     </div>
-                    <div x-cloak  x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-50 mt-2 right-[67px] top-[300px] min-[520px]:right-[63px] min-[520px]:top-[265px] space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-40 sm:w-80">
+                    <div x-cloak  x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-50 mt-2 right-5 min-[407px]:right-[67px] top-[300px] min-[520px]:right-[63px] min-[520px]:top-[265px] space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-40 sm:w-80">
                         <!-- Clear All Button -->
                         <div class="px-4 py-2">
                             <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
