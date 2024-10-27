@@ -15,7 +15,7 @@
         </li>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Leave Request</h2>
-    <div class="w-full  bg-white rounded-t-lg shadow-md" >
+    <div class="w-full bg-white rounded-t-lg shadow-md" >
         <div class="p-4 overflow-x-auto">
             <div class="inline-block min-w-full box-border">
                 <div  x-data="{
