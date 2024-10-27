@@ -32,7 +32,6 @@ class ApproveItTicketsForm extends Component
 
     public function mount($index){
         $loggedInUser = auth()->user();
-
         try {
             $it_ticket = $this->editForm($index);
             // $this->authorize('update', [$leaverequest]);

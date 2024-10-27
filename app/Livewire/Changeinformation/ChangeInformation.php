@@ -93,11 +93,11 @@ class ChangeInformation extends Component
         // $this->placeholder_address = $employee->address;
         // dd($employee->employee_history);
         if (!empty($employee->employee_history)) {
-            dd('test');
             $this->employeeHistory = json_decode($employee->employee_history, true);
-        } else {
-            $this->employeeHistory[] = ['name_of_company' => '', 'prev_position' => '', 'start_date' => '', 'end_date' => ''];
-        }
+        } 
+        // else {
+        //     $this->employeeHistory[] = ['name_of_company' => '', 'prev_position' => '', 'start_date' => '', 'end_date' => ''];
+        // }
 
 
 
@@ -400,18 +400,22 @@ class ChangeInformation extends Component
             //     }
             // }
             
-            foreach($this->employeeHistory as $history){
-                $jsonEmployeeHistory[] = [
-                    'name_of_company' => $history['name_of_company'],
-                    'prev_position' => $history['prev_position'],
-                    'start_date' => $history['start_date'],
-                    'end_date' => $history['end_date'],
-                ];
+            if($this->employeeHistory){
+                foreach($this->employeeHistory as $history){
+                    $jsonEmployeeHistory[] = [
+                        'name_of_company' => $history['name_of_company'],
+                        'prev_position' => $history['prev_position'],
+                        'start_date' => $history['start_date'],
+                        'end_date' => $history['end_date'],
+                    ];
+                }
+                if($jsonEmployeeHistory){
+                    $jsonEmployeeHistory = json_encode($jsonEmployeeHistory) ;
+                    $employee->employee_history = $jsonEmployeeHistory;
+                } 
+            } else {
+                $employee->employee_history = Null;
             }
-
-            $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
-
-            $employee->employee_history = $jsonEmployeeHistory;
 
 
             $this->dispatch('trigger-success');

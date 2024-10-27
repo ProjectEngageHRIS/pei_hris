@@ -251,8 +251,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/helpdesk/view/{index}", ItHelpDeskView::class)->name('ItHelpDeskView');
 
-    Route::get("/helpdesk/approverequests", ApproveItTicketsTable::class)->name('ApproveItHelpDeskTable');
-
     Route::get("/helpdesk/approverequests/{index}", ApproveItTicketsForm::class)->name('ApproveItHelpDeskForm');
 });
 

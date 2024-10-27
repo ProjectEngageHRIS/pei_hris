@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('profile')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Profile</a>
+            <a href="{{route('profile')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Approve Information Update</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,12 +22,14 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 hover:text-customRed ">Change Personal Information</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 hover:text-customRed ">Approve</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Change Information Request</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Appreve Information Update Request</h2>
+    <p class="mb-4 text-customRed font-semibold text-lg"> Form  <span class="text-customRed">No. {{$form_id}}</span>  </p>
+
     <section class="px-8 pb-10 bg-white rounded-lg ">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">

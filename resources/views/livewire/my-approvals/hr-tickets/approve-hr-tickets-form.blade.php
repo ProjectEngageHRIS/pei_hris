@@ -22,13 +22,13 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-customRed ms-1 md:ms-2">Approve HR Ticket Form</span>
+            <span class="text-sm font-semibold text-customRed ms-1 md:ms-2">Approve</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl">Approve HR Ticket Form</h2>
-    <p class="mb-4 text-lg font-semibold text-customRed"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl">Approve HR Ticket Request</h2>
+    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed">No. {{$form_id}}</span>  </p>
     <form wire:submit.prevent="changeStatus" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         @csrf
         {{-- Information field --}}

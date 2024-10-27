@@ -100,6 +100,8 @@ class ApproveLeaverequestForm extends Component
                                     ->first();   
 
         // $departmentName = DB::table('departments')->where('department_id', $employeeRecord->department_id)->value('department_name');
+
+        $this->form_id = $leaverequest->form_id;
         
         $this->available_credits = $employeeRecord->vacation_credits + $employeeRecord->sick_credits;
         $this->employee_id = $employeeRecord->employee_id;
