@@ -15,7 +15,6 @@ return new class extends Migration
             $table->bigIncrements('form_id');
             $table->uuid('uuid')->unique();
             $table->string('employee_id');
-            // $table->string('reference_num')->primary();
             $table->string('status', 20);
             $table->date('application_date')->default(now());
             $table->string('concerned_employee', 500);

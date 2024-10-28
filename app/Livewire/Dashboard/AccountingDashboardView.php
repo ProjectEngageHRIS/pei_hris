@@ -21,7 +21,6 @@ class AccountingDashboardView extends Component
 
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -273,7 +272,7 @@ class AccountingDashboardView extends Component
         }
     }
 
-    public function resetEditField(){
+    public function resetEditField($var){
         $this->payroll_status = null;
     }
 
@@ -285,6 +284,10 @@ class AccountingDashboardView extends Component
         $this->start_date = null;
         $this->end_date = null;
         $this->payroll_picture = null;
+    }
+
+    public function resetErrors(){
+        $this->resetErrorBag();
     }
 
     protected $rules = [
@@ -316,6 +319,7 @@ class AccountingDashboardView extends Component
                 } 
                 $parts = explode(' | ', $this->selectedEmployee);
                 $payroll_exists = Payroll::where('target_employee', $parts[1])
+                                                ->whereNull('deleted_at')
                                                 ->where('phase',  $this->payroll_phase)
                                                 ->where('month',  $this->payroll_month)
                                                 ->where('year',   $this->payroll_year)
@@ -428,12 +432,28 @@ class AccountingDashboardView extends Component
     }
 
     public function addPayroll($employee_id){
-        $this->validate([
-            'payroll_phase' => 'required|in:1st Half,2nd Half',  // Removed the space after comma
-            'payroll_month' => 'required|in:January,February,March,April,May,June,July,August,September,October,November,December',  // Add your actual months or valid values here
-            'payroll_year' => 'required|digits:4|integer',  // Added validation rule for year
-            'payroll_picture' => 'required|url:https',
-        ]);
+        $this->validate(
+            [
+                'payroll_phase' => 'required|in:1st Half,2nd Half',
+                'payroll_month' => 'required|in:January,February,March,April,May,June,July,August,September,October,November,December',
+                'payroll_year' => 'required|digits:4|integer',
+                'payroll_picture' => 'required|url:https',
+            ],
+            [
+                'payroll_phase.required' => 'The Phase field is required.',
+                'payroll_phase.in' => 'The selected Phase must be either 1st Half or 2nd Half.',
+                
+                'payroll_month.required' => 'The Month field is required.',
+                'payroll_month.in' => 'The selected Month must be one of the following: January, February, March, April, May, June, July, August, September, October, November, or December.',
+                
+                'payroll_year.required' => 'The Year field is required.',
+                'payroll_year.digits' => 'The Year must be exactly 4 digits.',
+                'payroll_year.integer' => 'The Year must be a valid integer.',
+                
+                'payroll_picture.required' => 'The Payslip Photo Link field is required.',
+                'payroll_picture.url' => 'The Payslip Photo Link must be a valid URL',
+            ]
+        );
 
         $loggedInUser = auth()->user();
 
@@ -513,8 +533,8 @@ class AccountingDashboardView extends Component
                 $payroll_status_data->deleted_at = now();
                 $payroll->employee_id = $loggedInUser->employee_id;
                 $payroll->deleted_at = now();
-                $payroll_status_data->update();
-                $payroll->update();
+                $payroll_status_data->delete();
+                $payroll->delete();
             } 
             return $this->dispatch('trigger-success-delete');
 

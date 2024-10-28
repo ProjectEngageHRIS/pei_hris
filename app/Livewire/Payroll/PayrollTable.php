@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use App\Models\Payroll;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 
 class PayrollTable extends Component
@@ -41,9 +42,9 @@ class PayrollTable extends Component
         $this->resetPage();
     }
 
-    public function view($start_date){
-        return redirect()->to(route('PayrollView', ['date' => $start_date]));
-    }
+    // public function view($start_date){
+    //     return redirect()->to(route('PayrollView', ['date' => $start_date]));
+    // }
 
     public function mount(){
         $date = Carbon::now();
@@ -57,7 +58,7 @@ class PayrollTable extends Component
     {
         $loggedInUser = auth()->user();
 
-        $query = Payroll::where('target_employee', $loggedInUser->employee_id)->select('target_employee', 'month', 'phase', 'year');
+        $query = Payroll::where('target_employee', $loggedInUser->employee_id)->select('target_employee', 'month', 'phase', 'year', 'payroll_id');
         
         
         switch ($this->phaseFilter) {
@@ -260,14 +261,30 @@ class PayrollTable extends Component
         
     }
 
-    public function redirectToPayroll($payroll_id){
-        $payroll = Payroll::where('payroll_id', 'target_employee', 'payroll_picture')->first();
-        $loggedInUser = auth()->user()->role_id;
-        if($payroll->target_employee != $loggedInUser) return redirect()->to(route('PayrollTable'));
-        else return redirect()->to($payroll->payroll_picture);
+    public function redirectToPayroll($payroll_id) {
+        $loggedInUser = auth()->user()->employee_id;
 
+        try {
+            $payroll = Payroll::where('payroll_id', $payroll_id)->select('payroll_id', 'target_employee', 'payroll_picture')->first();
 
+            if(!$payroll){
+                throw new \Exception('No Payroll Can be Found');
+            }
+            if(!$payroll->payroll_picture){
+                throw new \Exception('No Link Exists');
+            }
+        
+            if ($payroll->target_employee != $loggedInUser) {
+                return route('PayrollTable');
+            } else {
+                return $payroll->payroll_picture;
+            }
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('accountingerrors')->error('Failed to View Payslip: ' . $e->getMessage() . ' | ' . $loggedInUser);
+            $this->dispatch('trigger-error');            
+        }
     }
 
-    
 }

@@ -3,7 +3,7 @@
         <div style="width: 35px; height: 1px; left: 0%; top: 0px; border-radius:100px;  position: absolute; background: linear-gradient(90deg, #E5E7EB 0%, rgba(229, 231, 235, 0.99) 7%, rgba(229, 231, 235, 0.96) 13%, rgba(229, 231, 235, 0.92) 20%, rgba(229, 231, 235, 0.85) 27%, rgba(229, 231, 235, 0.77) 33%, rgba(229, 231, 235, 0.67) 40%, rgba(229, 231, 235, 0.56) 47%, rgba(229, 231, 235, 0.44) 53%, rgba(229, 231, 235, 0.33) 60%, rgba(229, 231, 235, 0.23) 67%, rgba(229, 231, 235, 0.15) 73%, rgba(229, 231, 235, 0.08) 80%, rgba(229, 231, 235, 0.04) 87%, rgba(229, 231, 235, 0.01) 93%, rgba(229, 231, 235, 0) 100%)"></div>
         <div style="width: 35px; height: 1px; left: 72%; top: 0px; position: absolute; transform: rotate(180deg); transform-origin: 0 0; background: linear-gradient(90deg, #E5E7EB 0%, rgba(229, 231, 235, 0) 100%)"></div>
     </div>
-    <div class="px-4 py-8 bg-white shadow sm:rounded-lg sm:px-10 mt-4"> <!-- Adjusted mt-20 to mt-4 -->
+    <div class="px-4 py-8 bg-white shadow rounded-lg sm:px-10 mt-4"> <!-- Adjusted mt-20 to mt-4 -->
         <div class="flex flex-col items-center">
             <h1 class="mt-4 text-xl font-bold text-customRed">Change Password</h1>
         </div>
@@ -111,12 +111,12 @@
                  @enderror
             
                 <style>
-                    #password {
-                        user-select: none; /* Prevents text selection */
-                        -webkit-user-select: none; /* Chrome, Safari, and Opera */
-                        -moz-user-select: none; /* Firefox */
-                        -ms-user-select: none; /* Internet Explorer/Edge */
-                    }
+                    /* #password {
+                        user-select: none; 
+                        -webkit-user-select: none; 
+                        -moz-user-select: none; 
+                        -ms-user-select: none; 
+                    } */
                     input::-ms-reveal,
                     input::-ms-clear {
                         display: none;
@@ -222,7 +222,7 @@
         </div>
     </div>
 </div>
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', () => {
         const passwordField = document.getElementById('password');
         const confirmPasswordField = document.getElementById('confirm-password');
@@ -243,4 +243,4 @@
             confirmPasswordField.addEventListener('contextmenu', (e) => e.preventDefault());
         }
     });
-</script>
+</script> --}}

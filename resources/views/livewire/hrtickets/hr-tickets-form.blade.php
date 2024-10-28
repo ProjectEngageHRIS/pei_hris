@@ -22,30 +22,30 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-customRed ms-1 md:ms-2">Apply for HR Ticket</span>
+            <span class="text-sm font-semibold text-customRed ms-1 md:ms-2">Form</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">Apply For HR Ticket</h2>
-    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg"  x-data="{ typeOfTicket: @entangle('type_of_ticket'), typeOfRequest: @entangle('type_of_request'), subTypeOfRequest: @entangle('sub_type_of_request')}">
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl">HR Ticket Form</h2>
+    <form wire:submit.prevent="submit" method="POST" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg"  x-data="{ typeOfTicket: $wire.entangle('type_of_ticket'), typeOfRequest: $wire.entangle('type_of_request'), subTypeOfRequest: $wire.entangle('sub_type_of_request'), typeOfHrConcern: $wire.entangle('type_of_hrconcern')}">
         @csrf
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
             <h2 class="font-bold text-customRed">Employee Information</h2>
             <div class="grid grid-cols-1 min-[902px]:grid-cols-6 gap-4">
                 <div class="col-span-1 min-[902px]:col-span-2">
-                    <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">First name</label>
+                    <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">First Name</label>
                     <input type="text" name="firstname" id="firstname"  value="{{$first_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-2">
-                    <label for="middlename" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Middle name</label>
+                    <label for="middlename" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Middle Name</label>
                     <input type="text" name="middlename" id="middlename" value="{{$middle_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
                 <div class="col-span-1 min-[902px]:col-span-2">
-                    <label for="lastname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Last name</label>
+                    <label for="lastname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap">Last Name</label>
                     <input type="text" name="lastname" id="lastname"  value="{{$last_name}}" required="" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg shadow-inner focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 </div>
@@ -154,6 +154,7 @@
                             class="bg-gray-50 border border-gray-900 text-gray-900 text-sm shadow-inner rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             <option selected>Select</option>
                             <option value="Certificate of Remittances">Certificate of Remittances </option>
+                            <option value="Government-Mandated Benefits Concern">Government-Mandated Benefits Concerns</option>
                             <option value="Messengerial">Messengerial</option>
                             <option value="Repairs/Maintenance">Repairs/Maintenance</option>
                             <option value="Book a Car">Book a Car</option>
@@ -197,7 +198,6 @@
                             class="bg-gray-50 border border-gray-900 shadow-inner text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             <option selected>Select</option>
                             <option value="Manpower Request Form">Manpower Request Form</option>
-                            <option value="Government-Mandated Benefits Concern">Government-Mandated Benefits Concerns</option>
                             <option value="Certificate of Employment">Certificate of Employment</option>
                             <option value="HMO-related Concerns">HMO-Related Concerns</option>
                             <option value="Payroll-related Concerns">Payroll-Related Concerns</option>
@@ -230,7 +230,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
-                                class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
+                                class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed" placeholder="Please share the purpose here.">
                             </textarea>
                             @error('purpose')
                                 <div class="text-sm transition transform alert alert-danger"
@@ -243,13 +243,13 @@
                             <label for="type_of_request" class="block mb-2 text-sm font-medium text-gray-900">Commutation
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
+                            <div class="grid grid-cols-1 gap-2 w-full md:grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="with_compensation" wire:model="type_of_hrconcern" value="With Compensation">
                                     <label for="with_compensation" class="text-sm font-medium">With Compensation</label>
                                 </div>
                                 <div>
-                                    <input type="radio" required class="ml-2 text-customRed border-customRed focus:ring-customRed" id="without_compensation" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Without Compensation">
+                                    <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" id="without_compensation" name="type_of_hrconcern" wire:model="type_of_hrconcern" value="Without Compensation">
                                     <label for="without_compensation" class="text-sm font-medium">Without Compensation</label><br>
                                 </div>
                             </div>
@@ -290,7 +290,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm shadow-inner text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -361,7 +361,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
@@ -415,9 +415,9 @@
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Leave Concern Description
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
+                            <div id="purpose"> 
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed" placeholder="Please provide a brief description here.">
                                 </textarea>
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger"
@@ -433,7 +433,7 @@
                             </label>
                             <div id="request_link">
                                 <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed" placeholder="Please enter the link here.">
                                 </textarea>
                                 @error('request_link')
                                     <div class="text-sm transition transform alert alert-danger"
@@ -456,7 +456,7 @@
                                     class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                     <option value=""selected>Select</option>
                                     <option value="High (Urgent)">High (Urgent)</option>
-                                    <option value="Medium (Within the day) ">Medium (Within the day)</option>
+                                    <option value="Medium (Within the day)">Medium (Within the day)</option>
                                     <option value="Low (Can be attended the next day)">Low (Can be attended the next day)</option>
                                 </select>
                                 @error('type_of_hrconcern')
@@ -472,7 +472,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
@@ -492,7 +492,7 @@
                             <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date of Meeting
                                 <span class="text-red-600">*</span>
                             </label>
-                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
+                            <input type="datetime-local" name="request_date" id="request_date" wire:model.live="request_date" required
                                 class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg shadow-inner focus:ring-customRed focus:border-customRed block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger"
@@ -525,7 +525,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -538,7 +538,112 @@
                         </div>
                     </div>
                 </template>
-                <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'HR' && subTypeOfRequest === 'Government-Mandated Benefits Concern'">
+                <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Certificate of Remittances'">
+                {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Certificate of Remittances") --}}
+                    <div x-data="{requestAssigned: $wire.entangle('request_assigned')}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                        <div class="col-span-1">
+                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Remittance Certificate
+                                <span class="text-red-600">*</span>
+                            </label>
+                            <div id="type_of_hrconcern_container">
+                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
+                                    <option value="SSS">SSS</option>
+                                    <option value="PHILHEALTH">PHILHEALTH</option>
+                                    <option value="HDMF">HDMF</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                                @error('type_of_hrconcern')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                            {{-- @if ($type_of_hrconcern == "Others") --}}
+                            <template x-if="typeOfHrConcern === 'Others'">
+                                <div id="remittance_request_others_container" class="mt-4">
+                                    <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                        <span class="text-red-600">*</span>
+                                    </label>
+                                    <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed" placeholder="Please Enter The Other Type of Remittance Certificate Here">
+                                </textarea>
+                                    @error('remittance_request_others')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('remittance_request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('remittance_request_others_container').focus();">
+                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </template>
+                        </div>
+                        <div class="col-span-1">
+                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Account Assigned
+                                <span class="text-red-600">*</span>
+                            </label>
+                            <div id="request_assigned_container">
+                                <select name="request_assigned" required wire:model.live="request_assigned" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                    <option value=""selected>Select</option>
+                                    <option value="PEI">PEI</option>
+                                    <option value="SL TEMPS">SL TEMPS</option>
+                                    <option value="SL SEARCH">SL SEARCH</option>
+                                    <option value="WESEARCH">WESEARCH</option>
+                                    <option value="Others">Others</option>
+                                </select>
+                                @error('request_assigned')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_assigned_containers').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_assigned_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <template x-if="requestAssigned === 'Others'">
+                                <div id="request_others_container" class="mt-4">
+                                    <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                        <span class="text-red-600">*</span>
+                                    </label>
+                                    <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others" required
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed " placeholder="Please Enter The Other Type of Account Signed Here">
+                                    </textarea>
+                                    @error('request_extra')
+                                        <div class="text-sm transition transform alert alert-danger"
+                                            x-data x-init="document.getElementById('request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_others_container').focus();">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                        </div>
+                                    @enderror
+                                </div>
+                            </template>
+                        </div>
+                        <div id="purpose_container" class="col-span-1">
+                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Requesting
+                                <span class="text-red-600">*</span>
+                            </label>
+                            <div id="purpose">
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
+                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
+                                </textarea>
+                                @error('purpose')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-span-1">
+                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date Start
+                                <span class="text-red-600">*</span>
+                            </label>
+                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
+                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed shadow-inner focus:border-customRed block w-full p-2.5">
+                            @error('request_date')
+                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
+                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                </div>
+                            @enderror
+                        </div>
+                    </div>
+                </template>
+                <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Government-Mandated Benefits Concern'">
                     {{-- @if ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Government-Mandated Benefits Concern") --}}
                         <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                             <div class="col-span-1 items-center justify-center">
@@ -582,112 +687,13 @@
                             </div>
                         </div>
                 </template>
-                <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Certificate of Remittances'">
-                {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Certificate of Remittances") --}}
-                    <div x-data="{typeOfHrConcern: @entangle('type_of_hrconcern'), requestAssigned: $wire.entangle('request_assigned')}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <div class="col-span-1">
-                            <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Type of Remittance Certificate
-                                <span class="text-red-600">*</span>
-                            </label>
-                            <div id="type_of_hrconcern_container">
-                                <select name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option value=""selected>Select</option>
-                                    <option value="SSS">SSS</option>
-                                    <option value="PHILHEALTH">PHILHEALTH</option>
-                                    <option value="HDMF">HDMF</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                                @error('type_of_hrconcern')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
-                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                    </div>
-                                @enderror
-                            </div>
-                            {{-- @if ($type_of_hrconcern == "Others") --}}
-                            <template x-if="typeOfHrConcern === 'Others'">
-                                <div id="remittance_request_others_container" class="mt-4">
-                                    <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                </textarea>
-                                    @error('remittance_request_others')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                            x-data x-init="document.getElementById('remittance_request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('remittance_request_others_container').focus();">
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-                            </template>
-                        </div>
-                        <div class="col-span-1">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900">Account Assigned
-                                <span class="text-red-600">*</span>
-                            </label>
-                            <div id="request_assigned_container">
-                                <select name="request_assigned" required wire:model.live="request_assigned" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                    <option value=""selected>Select</option>
-                                    <option value="PEI">PEI</option>
-                                    <option value="SL TEMPS">SL TEMPS</option>
-                                    <option value="SL SEARCH">SL SEARCH</option>
-                                    <option value="WESEARCH">WESEARCH</option>
-                                    <option value="Others">Others</option>
-                                </select>
-                                @error('request_assigned')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_assigned_containers').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_assigned_container').focus();">
-                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                    </div>
-                                @enderror
-                            </div>
-
-                            <template x-if="requestAssigned === 'Others'">
-                                <div id="request_others_container" class="mt-4">
-                                    <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    </textarea>
-                                    @error('request_extra')
-                                        <div class="text-sm transition transform alert alert-danger"
-                                            x-data x-init="document.getElementById('request_others_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_others_container').focus();">
-                                                <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-                            </template>
-                        </div>
-                        <div id="purpose_container" class="col-span-1">
-                            <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Purpose of Requesting
-                                <span class="text-red-600">*</span>
-                            </label>
-                            <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
-                                    class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 shadow-inner focus:ring-customRed focus:border-customRed">
-                                </textarea>
-                                @error('purpose')
-                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
-                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                    </div>
-                                @enderror
-                            </div>
-                        </div>
-                        <div class="col-span-1">
-                            <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900">Date Start
-                                <span class="text-red-600">*</span>
-                            </label>
-                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required
-                                class="bg-gray-50 border border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed shadow-inner focus:border-customRed block w-full p-2.5">
-                            @error('request_date')
-                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
-                                    <span class="text-xs text-red-500">{{$message}}</span>
-                                </div>
-                            @enderror
-                        </div>
-                    </div>
-                </template>
 
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Messengerial'">
 
                 {{-- @if ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Messengerial") --}}
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-6">
                         <div x-data="{typeOfHrConcern: $wire.entangle('type_of_hrconcern')}" class="col-span-1 lg:col-span-2">
-                            <label for="request_assigned" class="block mb-2 text-sm font-medium text-gray-900"> Type of Messengerial Request
+                            <label for="type_of_hrconcern_container" class="block mb-2 text-sm font-medium text-gray-900"> Type of Messengerial Request
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="type_of_hrconcern_container">
@@ -707,6 +713,9 @@
                             {{-- @if ($type_of_hrconcern == "Others") --}}
                             <template x-if="typeOfHrConcern === 'Others'">
                                 <div id="messengerial_other_type_container" class="mt-4">
+                                    <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                        <span class="text-red-600">*</span>
+                                    </label>
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
@@ -781,86 +790,85 @@
                 <template x-if="typeOfTicket === 'HR Internal' && typeOfRequest === 'Office Admin' && subTypeOfRequest === 'Repairs/Maintenance'">
                     {{-- @elseif ($type_of_ticket == "HR Internal" && $type_of_request == "Office Admin" && $sub_type_of_request == "Repairs/Maintenance") --}}
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
-                        <div class="grid grid-cols-5 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow lg:col-span-2">
+                        <div class="grid grid-cols-1 md:grid-cols-5 col-span-1 gap-4 p-4 border border-gray-200 rounded-lg shadow lg:col-span-2">
                             <ul class="col-span-1">
-                                <h1>1. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦ </span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦ </span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong>1. Electrical Issues Checklist:</strong></h1>
+                                <li class="ml-4"> <span  class="text-customRed ">◦ </span>  Malfunctioning outlets or switches</li>
+                                <li class="ml-4"> <span class="text-customRed">◦ </span> Flickering or dimming lights</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>2. Plumbing Problems:</h1>
-                                <li> <span class="text-customRed">◦</span> Leaking faucets or pipes</li>
-                                <li> <span class="text-customRed">◦</span> Clogged drains or toilets</li>
-                                <li> <span class="text-customRed">◦</span> Running toilets</li>
-                                <li> <span class="text-customRed">◦</span> Low water pressure</li>
-                                <li> <span class="text-customRed">◦</span> Water heater issues</li>
+                                <h1 class="text-customRed"><strong>2. Plumbing Problems: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Leaking faucets or pipes</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Clogged drains or toilets</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Running toilets</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Low water pressure</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Water heater issues</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>3. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong>3. HVAC (Heating, Ventilation, and Air Conditioning): </strong> </h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Heating or cooling system not working</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Poor air quality</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Strange odors coming from vents</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Air vents blocked or not blowing air</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Thermostat malfunctioning</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>4. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong> 4. Structural Issues: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Cracks or holes in walls or ceilings</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Damaged or loose tiles or flooring</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken windows or doors</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with elevators or escalators</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Sagging or uneven floors</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>5. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong>5. Safety Concerns: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken handrails or guardrails</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Loose or unstable furniture</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Damaged fire safety equipment (fire alarms, extinguishers, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Missing or damaged safety signs</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Slippery or uneven surfaces</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>6. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong> 6. Equipment and Machinery: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Malfunctioning office equipment (printers, computers, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken or jammed machinery in manufacturing or industrial settings</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with tools or equipment in workshops or construction sites</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Safety guards or mechanisms not functioning properly</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>7. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong> 7. Environmental Concerns: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Pest infestations (rodents, insects, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Mold or mildew growth</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Environmental hazards (asbestos, lead paint, etc.)</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Water leaks or flooding</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Ventilation problems leading to stuffy or overly hot/cold areas</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>8. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong> 8. Accessibility: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken or malfunctioning wheelchair ramps or lifts</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Inaccessible doorways or pathways</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with automatic doors or door openers</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Lack of accessible restroom facilities</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>9. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong>9. General Maintenance: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Painting or repainting needs</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Cleaning or janitorial requests</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Replacing damaged or worn-out furnishings</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Repairing or replacing damaged fencing or barriers</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Graffiti removal</li>
                             </ul>
                             <ul class="col-span-1">
-                                <h1>10. Electrical Issues Checklist</h1>
-                                <li> <span class="text-customRed">◦</span> Malfunctioning outlets or switches</li>
-                                <li> <span class="text-customRed">◦</span> Flickering or dimming lights</li>
-                                <li> <span class="text-customRed">◦</span> Power outages or fluctuations</li>
-                                <li> <span class="text-customRed">◦</span> Broken light fixtures or bulbs</li>
-                                <li> <span class="text-customRed">◦</span> Faulty wiring or exposed wires</li>
+                                <h1 class="text-customRed"><strong> 10. Security Concerns: </strong></h1>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Malfunctioning security cameras or alarms</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Broken locks or doors</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Unsecured entry points</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Damage to fences or barriers</li>
+                                <li class="ml-4"> <span class="text-customRed">◦</span> Issues with access control systems</li>
                             </ul>
                         </div>
                         <div class="col-span-1">
@@ -890,6 +898,9 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="messengerial_other_type_container"  class="mt-4">
+                                    <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                        <span class="text-red-600">*</span>
+                                    </label>
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" required
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     </textarea>
@@ -951,10 +962,10 @@
                             <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Passenger/s Name
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div id="purpose">
+                            <div id="account_client_hr_ops">
                                 <input type="text" name="account_client_hr_ops" id="account_client_hr_ops" wire:model.live="account_client_hr_ops" required
                                     class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                @error('purpose')
+                                @error('account_client_hr_ops')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('account_client_hr_ops_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('account_client_hr_ops_container').focus();">
                                         <span class="text-xs text-red-500">{{$message}}</span>
                                     </div>
@@ -966,7 +977,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <input type="text" name="purpose" id="purpose" wire:model="purpose" required
+                                <input type="text" name="purpose" id="purpose" wire:model="purpose" required 
                                     class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                 @error('purpose')
                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_container').focus();">
@@ -1027,7 +1038,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed ">
                                 </textarea>
                                 @error('purpose')
@@ -1047,19 +1058,26 @@
                             <div id="supplies_request.ballpen_black_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_black" class="text-sm font-medium text-gray-900">Ballpen Black</label>
-                                    <input type="number" id="supplies_request.ballpen_black" name="supplies_request.ballpen_black" wire:model="supplies_request.ballpen_black"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
+                                    <input type="number" id="supplies_request.ballpen_black" name="supplies_request.ballpen_black" 
+                                           wire:model="supplies_request.ballpen_black" min="0"
+                                           oninput="this.value = this.value < 0 ? 0 : this.value"
+                                           class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                     @error('supplies_request.ballpen_black')
-                                        <div class="text-sm transition transform alert alert-danger"x-data x-init="document.getElementById('supplies_request.ballpen_black').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_black').focus();">
+                                        <div class="text-sm transition transform alert alert-danger" 
+                                             x-data x-init="document.getElementById('supplies_request.ballpen_black').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_black').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
                                     @enderror
                                 </div>
+                                
                             </div>
                             <div id="supplies_request.ballpen_blue_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_blue" class="text-sm font-medium text-gray-900">Ballpen Blue</label>
-                                    <input type="number" id="supplies_request.ballpen_blue" name="supplies_request.ballpen_blue" wire:model="supplies_request.ballpen_blue"
+                                    <input type="number" id="supplies_request.ballpen_blue" name="supplies_request.ballpen_blue" 
+                                        wire:model="supplies_request.ballpen_blue"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed">
                                     @error('supplies_request.ballpen_blue')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.ballpen_blue').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_blue').focus();">
@@ -1072,6 +1090,8 @@
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.ballpen_red" class="text-sm font-medium text-gray-900">Ballpen Red</label>
                                     <input type="number" id="supplies_request.ballpen_red" name="supplies_request.ballpen_red" wire:model="supplies_request.ballpen_red"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.ballpen_red')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.ballpen_red').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.ballpen_red').focus();">
@@ -1083,7 +1103,10 @@
                             <div id="supplies_request.pencil_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.pencil" class="text-sm font-medium text-gray-900">Pencil</label>
-                                    <input type="number" id="supplies_request.pencil" name="supplies_request.pencil" wire:model="supplies_request.pencil"
+                                    <input type="number" id="supplies_request.pencil" name="supplies_request.pencil" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.pencil"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.pencil')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.pencil').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.pencil').focus();">
@@ -1095,8 +1118,11 @@
                             <div id="supplies_request.highlighter_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.highlighter" class="text-sm font-medium text-gray-900">Highlighter</label>
-                                    <input type="number" id="supplies_request.highlighter" name="supplies_request.highlighter" wire:model="supplies_request.highlighter"
-                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
+                                    <input type="number" id="supplies_request.highlighter" name="supplies_request.highlighter" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.highlighter"
+                                        class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner bord\er-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.highlighter')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.highlighter').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.highlighter').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
@@ -1107,7 +1133,10 @@
                             <div id="supplies_request.permanent_marker_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.permanent_marker" class="text-sm font-medium text-gray-900">Permanent Marker</label>
-                                    <input type="number" id="supplies_request.permanent_marker" name="supplies_request.permanent_marker" wire:model="supplies_request.permanent_marker"
+                                    <input type="number" id="supplies_request.permanent_marker" name="supplies_request.permanent_marker" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.permanent_marker"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.permanent_marker')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.permanent_marker').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.permanent_marker').focus();">
@@ -1119,7 +1148,10 @@
                             <div id="supplies_request.correction_tape_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.correction_tape" class="text-sm font-medium text-gray-900">Correction Tape</label>
-                                    <input type="number" id="supplies_request.correction_tape" name="supplies_request.correction_tape" wire:model="supplies_request.correction_tape"
+                                    <input type="number" id="supplies_request.correction_tape" name="supplies_request.correction_tape" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.correction_tape"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.correction_tape')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.correction_tape').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.correction_tape').focus();">
@@ -1131,7 +1163,10 @@
                             <div id="supplies_request.l_green_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_green_exp_folder" class="text-sm font-medium text-gray-900">Green Expandable Folder (L)</label>
-                                    <input type="number" id="supplies_request.l_green_exp_folder" name="supplies_request.l_green_exp_folder" wire:model="supplies_request.l_green_exp_folder"
+                                    <input type="number" id="supplies_request.l_green_exp_folder" name="supplies_request.l_green_exp_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_green_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_green_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_green_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_green_exp_folder').focus();">
@@ -1143,7 +1178,10 @@
                             <div id="supplies_request.s_green_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_green_exp_folder" class="text-sm font-medium text-gray-900">Green Expandable Folder (S)</label>
-                                    <input type="number" id="supplies_request.s_green_exp_folder" name="supplies_request.s_green_exp_folder" wire:model="supplies_request.s_green_exp_folder"
+                                    <input type="number" id="supplies_request.s_green_exp_folder" name="supplies_request.s_green_exp_folder" 
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_green_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_green_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_green_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_green_exp_folder').focus();">
@@ -1155,7 +1193,10 @@
                             <div id="supplies_request.l_brown_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_brown_exp_folder" class="text-sm font-medium text-gray-900">Brown Expandable Folder (L)</label>
-                                    <input type="number" id="supplies_request.l_brown_exp_folder" name="supplies_request.l_brown_exp_folder" wire:model="supplies_request.l_brown_exp_folder"
+                                    <input type="number" id="supplies_request.l_brown_exp_folder" name="supplies_request.l_brown_exp_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_brown_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.l_brown_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_brown_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_brown_exp_folder').focus();">
@@ -1167,7 +1208,10 @@
                             <div id="supplies_request.s_brown_exp_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_brown_exp_folder" class="text-sm font-medium text-gray-900">Brown Expandable Folder (S)</label>
-                                    <input type="number" id="supplies_request.s_brown_exp_folder" name="supplies_request.s_brown_exp_folder" wire:model="supplies_request.s_brown_exp_folder"
+                                    <input type="number" id="supplies_request.s_brown_exp_folder" name="supplies_request.s_brown_exp_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_brown_exp_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.s_brown_exp_folder')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_brown_exp_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_brown_exp_folder').focus();">
@@ -1179,7 +1223,10 @@
                             <div id="supplies_request.scissors_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.scissors" class="text-sm font-medium text-gray-900">Scissors</label>
-                                    <input type="number" id="supplies_request.scissors" name="supplies_request.scissors" wire:model="supplies_request.scissors"
+                                    <input type="number" id="supplies_request.scissors" name="supplies_request.scissors"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.scissors"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.scissors')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.scissors').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.scissors').focus();">
@@ -1191,7 +1238,10 @@
                             <div id="supplies_request.white_envelope_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.white_envelope" class="text-sm font-medium text-gray-900">White Envelope</label>
-                                    <input type="number" id="supplies_request.white_envelope" name="supplies_request.white_envelope" wire:model="supplies_request.white_envelope"
+                                    <input type="number" id="supplies_request.white_envelope" name="supplies_request.white_envelope"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value" 
+                                        wire:model="supplies_request.white_envelope"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
                                     @error('supplies_request.white_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.white_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.white_envelope').focus();">
@@ -1205,160 +1255,201 @@
                             <div id="supplies_request.calculator_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.calculator" class="text-sm font-medium text-gray-900">Calculator</label>
-                                    <input type="number" id="supplies_request.calculator" name="supplies_request.calculator" wire:model="supplies_request.calculator"
+                                    <input type="number" id="supplies_request.calculator" name="supplies_request.calculator"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.calculator"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.calculator')
+                                    {{-- @error('supplies_request.calculator')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.calculator').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.calculator').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.binder_two_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_two" class="text-sm font-medium text-gray-900">Binder Clips (2")</label>
-                                    <input type="number" id="supplies_request.binder_two" name="supplies_request.binder_two" wire:model="supplies_request.binder_two"
+                                    <input type="number" id="supplies_request.binder_two" name="supplies_request.binder_two"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.binder_two"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.binder_two')
+                                    {{-- @error('supplies_request.binder_two')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_two').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_two').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.binder_one_fourth_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_one_fourth" class="text-sm font-medium text-gray-900">Binder Clips (1 1/4")</label>
-                                    <input type="number" id="supplies_request.binder_one_fourth" name="supplies_request.binder_one_fourth" wire:model="supplies_request.binder_one_fourth"
+                                    <input type="number" id="supplies_request.binder_one_fourth" name="supplies_request.binder_one_fourth"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.binder_one_fourth"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.binder_one_fourth')
+                                    {{-- @error('supplies_request.binder_one_fourth')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_one_fourth').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_one_fourth').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.binder_three_fourth_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.binder_three_fourth" class="text-sm font-medium text-gray-900">Binder Clips (3/4")</label>
-                                    <input type="number" id="supplies_request.binder_three_fourth" name="supplies_request.binder_three_fourth" wire:model="supplies_request.binder_three_fourth"
+                                    <input type="number" id="supplies_request.binder_three_fourth" name="supplies_request.binder_three_fourth"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.binder_three_fourth"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.binder_three_fourth')
+                                    {{-- @error('supplies_request.binder_three_fourth')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.binder_three_fourth').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.binder_three_fourth').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.l_metal_clips_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_metal_clips" class="text-sm font-medium text-gray-900">Metal Paper Clips (L)</label>
-                                    <input type="number" id="supplies_request.l_metal_clips" name="supplies_request.l_metal_clips" wire:model="supplies_request.l_metal_clips"
+                                    <input type="number" id="supplies_request.l_metal_clips" name="supplies_request.l_metal_clips"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_metal_clips"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.l_metal_clips')
+                                    {{-- @error('supplies_request.l_metal_clips')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_metal_clips').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_metal_clips').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.s_metal_clips_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_metal_clips" class="text-sm font-medium text-gray-900">Metal Paper Clips (L)</label>
-                                    <input type="number" id="supplies_request.s_metal_clips" name="supplies_request.s_metal_clips" wire:model="supplies_request.s_metal_clips"
+                                    <input type="number" id="supplies_request.s_metal_clips" name="supplies_request.s_metal_clips"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_metal_clips"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.s_metal_clips')
+                                    {{-- @error('supplies_request.s_metal_clips')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_metal_clips').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_metal_clips').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.stapler_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.stapler" class="text-sm font-medium text-gray-900">Stapler</label>
-                                    <input type="number" id="supplies_request.stapler" name="supplies_request.stapler" wire:model="supplies_request.stapler"
+                                    <input type="number" id="supplies_request.stapler" name="supplies_request.stapler"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.stapler"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.stapler')
+                                    {{-- @error('supplies_request.stapler')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.stapler').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.stapler').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.stapler_wire_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.stapler_wire" class="text-sm font-medium text-gray-900">Stapler Wire</label>
-                                    <input type="number" id="supplies_request.stapler_wire" name="supplies_request.stapler_wire" wire:model="supplies_request.stapler_wire"
+                                    <input type="number" id="supplies_request.stapler_wire" name="supplies_request.stapler_wire"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.stapler_wire"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.stapler_wire')
+                                    {{-- @error('supplies_request.stapler_wire')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.stapler_wire').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.stapler_wire').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.scotch_tape_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.scotch_tape" class="text-sm font-medium text-gray-900">Scotch Tape</label>
-                                    <input type="number" id="supplies_request.scotch_tape" name="supplies_request.scotch_tape" wire:model="supplies_request.scotch_tape"
+                                    <input type="number" id="supplies_request.scotch_tape" name="supplies_request.scotch_tape"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.scotch_tape"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.scotch_tape')
+                                    {{-- @error('supplies_request.scotch_tape')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.scotch_tape').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.scotch_tape').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.l_brown_envelope_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.l_brown_envelope" class="text-sm font-medium text-gray-900">Brown Envelope (L)</label>
-                                    <input type="number" id="supplies_request.l_brown_envelope" name="supplies_request.l_brown_envelope" wire:model="supplies_request.l_brown_envelope"
+                                    <input type="number" id="supplies_request.l_brown_envelope" name="supplies_request.l_brown_envelope"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.l_brown_envelope"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.l_brown_envelope')
+                                    {{-- @error('supplies_request.l_brown_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.l_brown_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.l_brown_envelope').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.s_brown_envelope_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.s_brown_envelope" class="text-sm font-medium text-gray-900">Brown Envelope (S)</label>
-                                    <input type="number" id="supplies_request.s_brown_envelope" name="supplies_request.s_brown_envelope" wire:model="supplies_request.s_brown_envelope"
+                                    <input type="number" id="supplies_request.s_brown_envelope" name="supplies_request.s_brown_envelope"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.s_brown_envelope"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.s_brown_envelope')
+                                    {{-- @error('supplies_request.s_brown_envelope')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.s_brown_envelope').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.s_brown_envelope').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.post_it_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.post_it" class="text-sm font-medium text-gray-900">Post It</label>
-                                    <input type="number" id="supplies_request.post_it" name="supplies_request.post_it" wire:model="supplies_request.post_it"
+                                    <input type="number" id="supplies_request.post_it" name="supplies_request.post_it"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.post_it"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.post_it')
+                                    {{-- @error('supplies_request.post_it')
                                         <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.post_it').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.post_it').focus();">
                                             <span class="text-xs text-red-500">{{$message}}</span>
                                         </div>
-                                    @enderror
+                                    @enderror --}}
                                 </div>
                             </div>
                             <div id="supplies_request.white_folder_container">
                                 <div class="grid items-center grid-cols-2">
                                     <label for="supplies_request.white_folder" class="text-sm font-medium text-gray-900">White Folder</label>
-                                    <input type="number" id="supplies_request.white_folder" name="supplies_request.white_folder" wire:model="supplies_request.white_folder"
+                                    <input type="number" id="supplies_request.white_folder" name="supplies_request.white_folder"
+                                        min="0"
+                                        oninput="this.value = this.value < 0 ? 0 : this.value"
+                                        wire:model="supplies_request.white_folder"
                                         class="p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border shadow-inner border-gray-900 focus:ring-customRed focus:border-customRed ">
-                                    @error('supplies_request.white_folder')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.white_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.white_folder').focus();">
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
+
                                 </div>
                             </div>
+
                         </div>
+                        @error('supplies_request')
+                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('supplies_request.white_folder').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('supplies_request.white_folder').focus();">
+                                <span class="text-xs text-red-500">{{$message}}</span>
+                            </div>
+                        @enderror
                     </div>
                 </template>
 
@@ -1385,7 +1476,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="4" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -1451,7 +1542,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -1484,7 +1575,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')
@@ -1514,12 +1605,12 @@
                 
                 <template x-if="typeOfTicket === 'Internal Control' && typeOfRequest === 'Tools and Equipment'">
                     {{-- @elseif ($type_of_ticket == "Internal Control" && $type_of_request == "Tools and Equipment") --}}
-                    <div x-data="{typeOfHrConcern: $wire.entangle($type_of_hrconcern)}" class="grid grid-cols-1 gap-4 lg:grid-cols-2">
+                    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
                         <div id="type_of_hrconcern_container" class="col-span-1">
                             <label for="condition_availability" class="block mb-2 text-sm font-medium text-gray-900">Condition/Availability
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
+                            <div class="grid w-full grid-cols-1 sm:grid-cols-2 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" required class="text-customRed border-customRed focus:ring-customRed" name="condition_availability" id="new" wire:model="condition_availability" value="New">
                                     <label for="New" class="text-sm font-medium">New</label>
@@ -1540,8 +1631,8 @@
                             <label class="block mb-2 text-sm font-medium text-gray-900">Equipment Type
                                 <span class="text-red-600">*</span>
                             </label>
-                            <select id="type_of_hrconcern" name="type_of_hrconcern" required wire:model.live="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
-                                <option value=""selected>Select</option>
+                            <select id="type_of_hrconcern" name="type_of_hrconcern" wire:model="type_of_hrconcern" class="bg-gray-50 border shadow-inner border-gray-900 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                <option value="" selected>Select</option>
                                 <option value="Laptop">Laptop</option>
                                 <option value="Printer">Printer</option>
                                 <option value="Monitor">Monitor</option>
@@ -1554,15 +1645,19 @@
                                 <option value="Extension Cord">Extension Cord</option>
                                 <option value="Others">Others</option>
                             </select>
+                            
                             @error('type_of_hrconcern')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('type_of_hrconcern_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('type_of_hrconcern_container').focus();">
                                     <span class="text-xs text-red-500">{{$message}}</span>
                                 </div>
                             @enderror
                             {{-- @if ($type_of_hrconcern == "Others") --}}
-                            <template x-if="typeOfHrConcern === 'Others">
+                            <template x-if="typeOfHrConcern === 'Others'">
                                 <div id="purpose_container" class="mt-4">
                                     <div id="purpose">
+                                        <label for="type_of_hrconcern" class="block mb-2 text-sm font-medium text-gray-900">Others
+                                            <span class="text-red-600">*</span>
+                                        </label>
                                         <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" required
                                             class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                         </textarea>
@@ -1670,7 +1765,7 @@
                             </div>
                         </div>
                         <div class="col-span-1">
-                            <label for="account_client_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Type of Client's Account
+                            <label for="account_client_hr_ops" class="block mb-2 text-sm font-medium text-gray-900">Account/Client 
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="account_client_hr_opscontainer">
@@ -1696,7 +1791,7 @@
                             <label for="type_of_hrconcerns" class="block mb-2 text-sm font-medium text-gray-900">Level of Offense
                                 <span class="text-red-600">*</span>
                             </label>
-                            <div class="grid w-full grid-cols-3 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
+                            <div class="grid w-full grid-cols-1 sm:grid-cols-3 p-4 border border-gray-900 rounded-lg shadow-inner bg-gray-50">
                                 <div>
                                     <input type="radio" class="text-customRed border-customRed focus:ring-customRed" name="type_of_hrconcern" id="High" wire:model="type_of_hrconcern" value="High" required>
                                     <label for="High" class="text-sm font-medium">High</label>
@@ -1721,7 +1816,7 @@
                                 <span class="text-red-600">*</span>
                             </label>
                             <div id="purpose">
-                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required
+                                <textarea type="text" rows="5" id="purpose" name="purpose" wire:model="purpose" required placeholder="Please provide a brief description here."
                                     class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 shadow-inner rounded-lg border border-gray-900 focus:ring-customRed focus:border-customRed">
                                 </textarea>
                                 @error('purpose')

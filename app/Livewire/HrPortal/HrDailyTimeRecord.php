@@ -81,7 +81,6 @@ class HrDailyTimeRecord extends Component
 
     // Filters 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -403,27 +402,71 @@ class HrDailyTimeRecord extends Component
     
         $query->whereYear('attendance_date', $this->yearFilter ?? $dateToday->year);
         $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
+
+        if (strlen($this->search) >= 1) {
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
+        
+            // Handle different formats for full date matching
+            $parsedFullDate = null;
+            $parsedYMDDate = null;
+        
+            // Try to parse "October 1 2024" or "October 01 2024" format
+            if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                $parsedFullDate = Carbon::createFromFormat('F j Y', $searchTerms);
+            } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                $parsedFullDate = Carbon::createFromFormat('F d Y', $searchTerms);
+            }
+        
+            // Try to parse "2024-10-11" format
+            if (\DateTime::createFromFormat('Y-m-d', $searchTerms) !== false) {
+                $parsedYMDDate = Carbon::createFromFormat('Y-m-d', $searchTerms);
+            }
+        
+            $results = $query->where(function ($q) use ($parsedFullDate, $parsedYMDDate, $searchTerms) {
+                if ($parsedFullDate) {
+                    // If the search is an exact full date (e.g., "October 1 2024" or "October 01 2024")
+                    $q->whereDate('attendance_date', '=', $parsedFullDate->format('Y-m-d'));
+                } elseif ($parsedYMDDate) {
+                    // If the search is in the Y-m-d format (e.g., "2024-10-11")
+                    $q->whereDate('attendance_date', '=', $parsedYMDDate->format('Y-m-d'));
+                } else {
+                    // Fallback to more general searches (e.g., month or day)
+                    $q->orWhereRaw("DATE_FORMAT(attendance_date, '%M') = ?", [$searchTerms]) // Exact match for October
+                      ->orWhereRaw("DATE_FORMAT(attendance_date, '%M %c') = ?", [$searchTerms]) // Match for October 1 (ignoring leading zero)
+                      ->orWhereRaw("DATE_FORMAT(attendance_date, '%M %e') = ?", [$searchTerms]) // Match for October 1 without leading zero
+                      ->orWhere('type', 'like', '%' . $searchTerms . '%'); // For searching by 'type'
+                }
+            })->orderBy('attendance_date', 'desc')->paginate(5);
+        } else {
+            $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
+        }
     
         // Calculate counts for each type
         $results = $query->orderBy('created_at', 'desc')->paginate(5);
+
+
     
         // Aggregate counts
         $counts = Dailytimerecord::select(DB::raw('
-            SUM(CASE WHEN type = "No Time In" AND time_in IS NULL THEN 1 ELSE 0 END) AS `Absent`,
-            SUM(CASE WHEN type is NULL AND late = 1 THEN 1 ELSE 0 END) AS `Late`,
-            SUM(CASE WHEN type = "Whole Day" THEN 1 ELSE 0 END) AS `Wholeday`,
-            SUM(CASE WHEN type = "Overtime" THEN 1 ELSE 0 END) AS `Overtime`,
-            SUM(CASE WHEN type = "Undertime" THEN 1 ELSE 0 END) AS `Undertime`,
-            SUM(CASE WHEN type is NULL AND time_out IS NULL THEN 1 ELSE 0 END) AS `No Time Out`,
-            SUM(CASE WHEN type LIKE "%Leave" THEN 1 ELSE 0 END) AS `Leave`
+            COALESCE(SUM(CASE WHEN type = "No Time In" AND time_in IS NULL THEN 1 ELSE 0 END), 0) AS `Absent`,
+            COALESCE(SUM(CASE WHEN type IS NULL AND late = 1 THEN 1 ELSE 0 END), 0) AS `Late`,
+            COALESCE(SUM(CASE WHEN type = "Whole Day" THEN 1 ELSE 0 END), 0) AS `Wholeday`,
+            COALESCE(SUM(CASE WHEN type = "Overtime" THEN 1 ELSE 0 END), 0) AS `Overtime`,
+            COALESCE(SUM(CASE WHEN type = "Undertime" THEN 1 ELSE 0 END), 0) AS `Undertime`,
+            COALESCE(SUM(CASE WHEN type IS NULL AND time_out IS NULL THEN 1 ELSE 0 END), 0) AS `No Time Out`,
+            COALESCE(SUM(CASE WHEN type LIKE "%Leave" THEN 1 ELSE 0 END), 0) AS `Leave`
         '))
         ->whereYear('attendance_date', $this->yearFilter ?? Carbon::now()->year)
         ->whereMonth('attendance_date', $this->monthFilter ?? Carbon::now()->month)
         ->whereDay('attendance_date', $this->dayFilter ?? Carbon::now()->day)
         ->first();
 
+        
+
         // Map the counts to the dtrTypes
         $this->dtrTypes = array_merge($this->dtrTypes, $counts->toArray());
+        
     
         return view('livewire.hr-portal.hr-daily-time-record', [
             'DtrData' => $results,

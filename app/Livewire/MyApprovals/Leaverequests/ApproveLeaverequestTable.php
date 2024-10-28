@@ -9,9 +9,11 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
 use App\Models\Dailytimerecord;
+use App\Mail\ApproveLeaveRequest;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 
 class ApproveLeaverequestTable extends Component
@@ -25,8 +27,13 @@ class ApproveLeaverequestTable extends Component
 
     public $status_filter;
 
+    public $supervisor_status_filter;
+    public $president_status_filter;
+
     public $dateFilterName = "All";
     public $statusFilterName = "All";
+    public $supervisorFilterName = "All";
+    public $presidentFilterName = "All";
 
     public $search = "";
 
@@ -39,7 +46,6 @@ class ApproveLeaverequestTable extends Component
     public $person;
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -133,28 +139,33 @@ class ApproveLeaverequestTable extends Component
         }
 
         switch ($this->date_filter) {
-            case '1':
-                $query->whereDate('application_date',  Carbon::today());
+            case '1': // Today
+                $startOfDay = Carbon::today(); // Start of today (00:00:00)
+                $endOfDay = Carbon::today()->endOfDay(); // End of today (23:59:59)
+                $query->whereBetween('application_date', [$startOfDay, $endOfDay]);
                 $this->dateFilterName = "Today";
                 break;
-            case '2':
-                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
+    
+            case '2': // Last 7 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(7), Carbon::now()]);
                 $this->dateFilterName = "Last 7 Days";
                 break;
-            case '3':
-                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
-                $this->dateFilterName = "Last 30 days";
+    
+            case '3': // Last 30 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::now()]);
+                $this->dateFilterName = "Last 30 Days";
                 break;
-            case '4':
-                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-                // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+    
+            case '4': // Last 6 Months
+                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::now()]);
                 $this->dateFilterName = "Last 6 Months";
                 break;
-            case '5':
-                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
+    
+            case '5': // Last Year
+                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::now()]);
                 $this->dateFilterName = "Last Year";
                 break;
-            default:
+            default: // All
                 $this->dateFilterName = "All";
                 break;
         }
@@ -180,6 +191,43 @@ class ApproveLeaverequestTable extends Component
                 $this->statusFilterName = "All";
                 break;
         }
+
+        switch ($this->supervisor_status_filter) {
+            case '1':
+                $query->where('approved_by_supervisor', 1);
+                $this->supervisorFilterName = "Approved";
+                break;
+            case '2':
+                $query->whereNull('approved_by_supervisor');
+                $this->supervisorFilterName = "Pending";
+                break;
+            case '3':
+                $query->where('approved_by_supervisor', 0);
+                $this->supervisorFilterName = "Declined";
+                break;
+            default:
+                $this->supervisorFilterName = "All";
+                break;
+        }
+
+        switch ($this->president_status_filter) {
+            case '1':
+                $query->where('approved_by_president', 1);
+                $this->presidentFilterName = "Approved";
+                break;
+            case '2':
+                $query->whereNull('approved_by_president');
+                $this->presidentFilterName = "Pending";
+                break;
+            case '3':
+                $query->where('approved_by_president', 0);
+                $this->presidentFilterName = "Declined";
+                break;
+            default:
+                $this->presidentFilterName = "All";
+                break;
+        }
+
 
         $employeeTypes = array_filter(array_keys($this->employeeTypesFilter), function($key) {
             return $this->employeeTypesFilter[$key];
@@ -231,29 +279,48 @@ class ApproveLeaverequestTable extends Component
         // }
 
         if (strlen($this->search) >= 1) {
-            $searchTerms = explode(' ', $this->search);
-        
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
+            
             // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhereHas('employee', function ($query) use ($term) {
-                        $query->where('first_name', 'like', '%' . $term . '%')
-                              ->orWhere('last_name', 'like', '%' . $term . '%')
-                              ->orWhere('department', 'like', '%' . $term . '%')
-                              ->orWhere('current_position', 'like', '%' . $term . '%')
-                              ->orWhere('employee_type', 'like', '%' . $term . '%');
-                    })
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('mode_of_application', 'like', '%' . $term . '%')
-                    ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
-                    ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
-                    ->orWhere('reason', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+        
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F d Y', $searchTerms);
+                }
+        
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhereHas('employee', function ($query) use ($term) {
+                            $query->where('first_name', 'like', '%' . $term . '%')
+                                  ->orWhere('last_name', 'like', '%' . $term . '%')
+                                  ->orWhere('department', 'like', '%' . $term . '%')
+                                  ->orWhere('current_position', 'like', '%' . $term . '%')
+                                  ->orWhere('employee_type', 'like', '%' . $term . '%');
+                        })
+                        ->orWhere('application_date', 'like', '%' . $term . '%')
+                        ->orWhere('mode_of_application', 'like', '%' . $term . '%')
+                        ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
+                        ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
+                        ->orWhere('reason', 'like', '%' . $term . '%');
+                    }
                 }
             })->orderBy('created_at', 'desc');
         } else {
             // If no search term, return all records
             $results = $query->orderBy('created_at', 'desc');
         }
+        
 
         if($this->statusFilterName == "Cancelled"){
             $results = $results->paginate(5);
@@ -283,8 +350,10 @@ class ApproveLeaverequestTable extends Component
     
     public function changeStatus(){
 
-        if($this->status != "Pending"){
-            $this->validate(['person' => 'required|in:President,Supervisor']);
+        if($this->key == "list"){
+            if($this->status != "Pending"){
+                $this->validate(['person' => 'required|in:President,Supervisor']);
+            }
         }
 
         $loggedInUser = auth()->user();
@@ -304,7 +373,7 @@ class ApproveLeaverequestTable extends Component
                     return;
                 }
 
-                if($this->status == "Completed" || $this->status == "Approved" || $this->status == "Declined"){
+                if($this->status == "Pending" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
                         if (in_array($role , [4, 6, 7, 8, 61024])) {
                             if ($this->person == "President"){
@@ -353,28 +422,40 @@ class ApproveLeaverequestTable extends Component
                             throw new \Exception('Unauthorized Access');
                         }
                     } else {
+                        $verdict = Null;
+                        $status = Null;
+                        if($this->status == "Approved"){
+                            $verdict = 1;
+                            $status = "Approved";
+                        } else if($this->status == "Pending"){
+                            $verdict = Null;
+                            $status = "Pending";
+                        } else {
+                            $verdict = 0;
+                            $status = "Declined";
+                        }
                         if (in_array($role , [4, 61024])) {
-                            $leaverequestdata->approved_by_supervisor = 1;
+                            $leaverequestdata->approved_by_supervisor = $verdict;
                             if ($leaverequestdata->approved_by_president == 1) {
-                                $leaverequestdata->status = "Approved";
+                                $leaverequestdata->status = $status ;
                             }
                         } 
                         else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
                             if($role == 6){ // President Role
-                                $leaverequestdata->approved_by_supervisor = 1;
-                                $leaverequestdata->approved_by_president = 1;
-                                $leaverequestdata->status = "Approved";
+                                $leaverequestdata->approved_by_supervisor = $verdict;
+                                $leaverequestdata->approved_by_president = $verdict;
+                                $leaverequestdata->status = $status ;
                             }
                         } else if ($role == 6) {
-                            $leaverequestdata->approved_by_president = 1;
+                            $leaverequestdata->approved_by_president = $verdict;
                             if ($leaverequestdata->approved_by_supervisor == 1) {
-                                $leaverequestdata->status = "Approved";
+                                $leaverequestdata->status = $status ;
                             }
                         } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
                             if($role == 7){ // Hr Head Role
-                                $leaverequestdata->approved_by_supervisor = 1;
+                                $leaverequestdata->approved_by_supervisor = $verdict;
                                 if ($leaverequestdata->approved_by_president == 1) {
-                                    $leaverequestdata->status = "Approved";
+                                    $leaverequestdata->status = $status ;
                                 }
                             }
                         } else {
@@ -450,8 +531,11 @@ class ApproveLeaverequestTable extends Component
                     //     }
                     // }
                 }
-        
+                
                 $leaverequestdata->update();
+
+                Mail::to($leaverequestdata->employee->employee_email)
+                ->send(new ApproveLeaveRequest($leaverequestdata, $this->person));
         
                 $this->dispatch('triggerSuccess'); 
         } catch (\Exception $e) {

@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 mx-1 text-gray-400 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('profile')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Profile</a>
+            <a href="{{route('profile')}}" class="text-sm font-medium text-gray-700 ms-1 hover:text-customRed md:ms-2 ">Approve Information Update</a>
             </div>
         </li>
         <li aria-current="page">
@@ -22,12 +22,15 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 hover:text-customRed ">Change Personal Information</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 hover:text-customRed ">Approve</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Change Information Request</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl ">Appreve Information Update Request</h2>
+    <p class="my-4 text-customRed  text-lg">Form Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
+
     <section class="px-8 pb-10 bg-white rounded-lg ">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
@@ -371,9 +374,7 @@
                                 <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                     <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                     <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                    {{-- <option class="hover:bg-customRed hover:text-white" value="Report">Report</option> --}}
-                                    {{-- <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option> --}}
-                                    <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
+                                    <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>
                                 </select>
                             </div>
                             <button @click="openConfirmation = true" id="updateButton" type="button"  class="inline-flex items-center bg-navButton text-customRed hover:bg-customRed hover:text-white ring-1 ring-customRed shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 justify-self-end">

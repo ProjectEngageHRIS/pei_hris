@@ -8,6 +8,7 @@
         <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
         <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <link rel="icon" type="image/x-icon" href="{{asset('assets\sllogo.png')}}">
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         <title>HR Portal</title>
         @vite(['resources/css/app.css','resources/js/app.js'])
     </head>

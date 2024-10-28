@@ -141,10 +141,6 @@ Route::get('/', function(){
     return redirect()->route('LoginDashboard');
 })->name('home');
 
-
-// Route::get('/onboarding', EmployeeOnboardingForm::class)->name('EmployeeOnboarding');
-
-
 // Route::middleware('')->group(function () {
     Route::get('login', Login::class)
         ->name('login');
@@ -189,16 +185,11 @@ Route::middleware(['auth', '2fa'])->group(function (){
     // Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard')->lazy();
     Route::get("/humanresource", HrDashboardView::class)->name('HumanResourceDashboard');
 
-
     Route::get("/accounting", AccountingDashboardView::class)->name('AccountingDashboard');
 
     Route::get('/password-change', ChangePassword::class)->name('ChangePassword');
 
-
-
     Route::get("/profile", Employeeinformation::class)->name('profile');
-
-    // Route::view('/', 'dashboardview')->name('home');
 
     Route::get('/profile/{file}', [Employeeinformation::class, 'download'])->name('downloadFile');
 
@@ -240,11 +231,7 @@ Route::middleware(['auth' , '2fa'])->group(function () {
 
     Route::get("/leaverequest/form/{type?}", LeaveRequestForm::class)->name('LeaveRequestForm');
 
-    Route::get("/leaverequest/edit/{index}", LeaveRequestUpdate::class)->name('LeaveRequestEdit');
-
     Route::get("/leaverequest/view/{index}", LeaveRequestView::class)->name('LeaveRequestView');
-
-    // Route::get("/leaverequest/pdf/{index}", [LeaveRequestController::class, 'turnToPdf'])->name('LeaveRequestPdf');
 
     Route::get("leaverequest/approverequests", ApproveLeaverequestTable::class)->name('ApproveLeaveRequestTable');
 
@@ -253,9 +240,6 @@ Route::middleware(['auth' , '2fa'])->group(function () {
     Route::get("leaverequest/approverequests/approve/{index}", ApproveLeaverequestForm::class)->name('ApproveLeaveRequestForm'); 
 
     Route::get("leaverequest/approverequests/approve/{type?}/{index}", ApproveLeaverequestForm::class)->name('ApproveListLeaveRequestForm'); 
-
-
-    // Route::get('/leaverequest/{index}', [LeaveRequestTable::class, 'download'])->name('downloadLeave');
 });
 
 
@@ -265,14 +249,7 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/helpdesk/form", ItHelpDeskForm::class)->name('ItHelpDeskForm');
 
-    Route::get("/helpdesk/edit/{index}", ItHelpDeskUpdate::class)->name('ItHelpDeskUpdate');
-
     Route::get("/helpdesk/view/{index}", ItHelpDeskView::class)->name('ItHelpDeskView');
-
-
-    // Route::get("/studypermit/pdf/{index}", [StudyPermitController::class, 'turnToPdf'])->name('StudyPermitPdf');
-
-    Route::get("/helpdesk/approverequests", ApproveItTicketsTable::class)->name('ApproveItHelpDeskTable');
 
     Route::get("/helpdesk/approverequests/{index}", ApproveItTicketsForm::class)->name('ApproveItHelpDeskForm');
 });
@@ -284,19 +261,11 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get("/mytasks/form", MyTasksForm::class)->name('TasksForm');
 
-    Route::get("/mytasks/edit/{index}", MyTasksUpdate::class)->name('TasksUpdate');
-
     Route::get("/mytasks/view/{index}", MyTasksView::class)->name('MyTasksView');
 
     Route::get("/assignedtasks", AssignedTasksTable::class)->name('AssignedTasksTable');
 
     Route::get("/assignedtasks/view/{index}", AssignedTasksView::class)->name('AssignedTasksView');
-
-    // Route::get("/studypermit/pdf/{index}", [StudyPermitController::class, 'turnToPdf'])->name('StudyPermitPdf');
-
-    // Route::get("/studypermit/requests", ApproveStudyPermitTable::class)->name('ApproveStudyPermitTable');
-
-    // Route::get("/studypermit/approve/{index}", ApproveStudyPermitForm::class)->name('ApproveStudyPermitForm');
 });
 
 
@@ -305,8 +274,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/hrtickets/requests/{type?}", HrTicketsTable::class)->name('HrTicketsTable');
 
     Route::get("/hrtickets/form/{type?}", HrTicketsForm::class)->name('HrTicketsForm');
-
-    Route::get("/hrtickets/edit/{index}", HrTicketsUpdate::class)->name('HrTicketsUpdate');
 
     Route::get("/hrtickets/view/{index}", HrTicketsView::class)->name('HrTicketsView');
 
@@ -322,46 +289,17 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
     Route::get('/viewemployees/{index}', ViewEmployee::class)->name("ViewEmployee");
 
-    // Route::get("/humanresource/dailytimerecord", HrAttendance::class)->name('HrAttendance');
-
-    // Route::get('/hrtickets/{index}', [::class, 'download'])->name('downloadTeachPermit');
-
-    // Route::get("/teachpermit/pdf/{index}", [TeachPermitController::class, 'turnToPdf'])->name('TeachPermitPdf');
-
-    // Route::get("/teachpermit/requests", ApproveTeachPermitTable::class)->name('ApproveTeachPermitTable');
-
-    // Route::get("/teachpermit/approve/{index}", ApproveTeachPermitForm::class)->name('ApproveTeachPermitForm');
-
-    // Route::get('/teachpermit/{index}', [TeachPermitTable::class, 'download'])->name('downloadTeachPermit');
-
 });
 
 
 Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/activities", ActivitiesGallery::class)->name('ActivitiesGallery');
 
-    // Route::get("/activities/form", ActivitiesForm::class)->name('ActivitiesForm');
-
-    // Route::get("/activities/form/edit/{index}", ActivitiesUpdate::class)->name('ActivitiesUpdate');
-
     Route::get("/activities/view/{index}", ActivitiesView::class)->name('ActivitiesView');
 
 });
 
 
-Route::middleware(['auth' , '2fa'])->group(function (){
-    Route::get("/trainings", TrainingGallery::class)->name('TrainingGallery');
-
-    Route::get("/trainings/form", TrainingForm::class)->name('TrainingForm');
-
-    Route::get("/trainings/form/edit/{index}", TrainingUpdate::class)->name('TrainingUpdate');
-
-    Route::get("/trainings/view/{index}", TrainingView::class)->name('TrainingView');
-    
-    Route::get("/trainings/pretest/{index}", TrainingPreTestForm::class)->name('TrainingPreTestForm');
-
-    Route::get("/trainings/posttest/{index}", TrainingPostTestForm::class)->name('TrainingPostTestForm');
-});
 
 
 Route::middleware(['auth' , '2fa'])->group(function (){
@@ -374,16 +312,10 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
 Route::middleware(['auth' , '2fa'])->group(function (){
 
-    Route::get("/employees", EmployeesTable::class)->name("EmployeesTable");
-
-    Route::get('/employeesview/{index}', AddEmployee::class)->name("EmployeesView");
-    
     Route::get("/payroll", PayrollTable::class)->name("PayrollTable");
 
     // Route::get("/human", AccountingPayrollTable::class)->name("AccountingPayrollTable");
 
-    Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
-    
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");
@@ -393,10 +325,6 @@ Route::middleware(['auth' , '2fa'])->group(function (){
 
 Route::middleware(['auth' , '2fa'])->group(function (){
 
-    Route::get("/accountingpayroll", AccountingPayrollTable::class)->name("AccountingPayrollTable");
-
-    Route::get("/accountingpayroll/form", AccountingPayrollForm::class)->name("AccountingPayrollForm");
-    
     Route::get("/payroll/pdf/{date}", [PayrolPdfController::class, 'turnToPdf'])->name("PayrollPdf");
 
     Route::get("/payroll/view/{date}", PayrollView::class)->name("PayrollView");

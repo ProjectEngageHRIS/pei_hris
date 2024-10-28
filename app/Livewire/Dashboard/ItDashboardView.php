@@ -7,9 +7,11 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
 use Livewire\WithPagination;
+use App\Mail\ApproveItTicket;
 use Illuminate\Support\Facades\DB;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ItDashboardView extends Component
 {
@@ -41,7 +43,6 @@ class ItDashboardView extends Component
     ];
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -164,28 +165,47 @@ class ItDashboardView extends Component
         
 
         if (strlen($this->search) >= 1) {
-            $searchTerms = explode(' ', $this->search);
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
         
             // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhereHas('employee', function ($query) use ($term) {
-                        $query->where('first_name', 'like', '%' . $term . '%')
-                              ->orWhere('last_name', 'like', '%' . $term . '%')
-                              ->orWhere('department', 'like', '%' . $term . '%')
-                              ->orWhere('current_position', 'like', '%' . $term . '%')
-                              ->orWhere('employee_type', 'like', '%' . $term . '%');
-                    })
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('status', 'like', '%' . $term . '%')
-                    ->orWhere('description', 'like', '%' . $term . '%')
-                    ->orWhere('report', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+        
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F d Y', $searchTerms);
+                }
+        
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhereHas('employee', function ($query) use ($term) {
+                            $query->where('first_name', 'like', '%' . $term . '%')
+                                  ->orWhere('last_name', 'like', '%' . $term . '%')
+                                  ->orWhere('department', 'like', '%' . $term . '%')
+                                  ->orWhere('current_position', 'like', '%' . $term . '%')
+                                  ->orWhere('employee_type', 'like', '%' . $term . '%');
+                        })
+                        ->orWhere('application_date', 'like', '%' . $term . '%')
+                        ->orWhere('status', 'like', '%' . $term . '%')
+                        ->orWhere('description', 'like', '%' . $term . '%')
+                        ->orWhere('report', 'like', '%' . $term . '%');
+                    }
                 }
             })->orderBy('created_at', 'desc');
         } else {
             // If no search term, return all records
             $results = $query->orderBy('created_at', 'desc');
         }
+        
 
         if($this->statusFilterName == "Cancelled"){
             $results = $results->paginate(5);
@@ -257,6 +277,9 @@ class ItDashboardView extends Component
                         $dataToUpdate = ['status' => $this->status];
                     }
                     $form->update($dataToUpdate);
+                    $employeeEmail = Employee::where('employee_id', $form->employee_id)->value('employee_email');
+                    Mail::to($employeeEmail)->send(new ApproveItTicket($form));
+                    
                     $this->dispatch('triggerSuccess', type: "edit"); 
                 } else {
                     throw new \Exception('Unauthorized Access');

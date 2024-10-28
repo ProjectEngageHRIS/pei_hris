@@ -71,8 +71,7 @@ class ItChangePassword extends Component
                 // Send email notification
                 // Mail::to($user->email)->send(new PasswordChanged($user));
     
-                session()->flash('message', 'Password changed successfully! Check your email for confirmation.');
-                return redirect()->to('/employee');
+                return redirect()->to(route('ItDashboard'));
             } else {
                 throw new \Exception('Unauthorized Access');
             }   

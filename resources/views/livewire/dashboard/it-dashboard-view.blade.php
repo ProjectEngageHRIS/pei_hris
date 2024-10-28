@@ -150,14 +150,14 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" id="table-search-users" wire:model.live.debounce.250ms="search" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                    <input type="text" id="table-search-users" wire:model.live.debounce.1000ms="search" class="w-full text-xs text-gray-900 truncate border border-gray-300 shadow-inner sm:text-sm max-w-56 h-9 rounded-8px ps-10 pe-10 bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,
@@ -225,12 +225,6 @@
                                     </button>
                                     <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
                                         <hr class="my-4 border-gray-300">
-
-                                        <!-- Independent Consultant -->
-                                        <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONSULTANT']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                            <label class="ml-2 text-xs font-medium text-customGray1">Independent Consultant</label>
-                                        </div>
 
                                         <!-- Independent Contractor -->
                                         <div class="flex items-center px-4 py-2">
@@ -496,9 +490,7 @@
                         
                     </tr>
                 </thead>
-                <div>
-                    <div>
-                        <tbody class="pb-4">
+                    <tbody class="pb-4">
                         @if ($ItTicketData->isEmpty())
                             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 ">
                                 <th scope="col" colspan="10" class="justify-center" style="padding-bottom: 40px"> 
@@ -592,15 +584,13 @@
                                             </button>
                                             @endif
                                         </div>
-                                    </td>
-                                        
+                                    </td>   
                                 </tr>
-                            
                             @endforeach
                         @endif
-                        </tbody>
-                        
-                    <div x-cloak x-data="{ openCrudModal: false, currentFormId: null, openConfirmation: false, reportField: @entangle('status') }" x-ref="crudModal"
+                    </tbody>
+                    
+                    <div x-cloak x-data="{ openCrudModal: false, currentFormId: null, openConfirmation: false, reportField: $wire.entangle('status') }" x-ref="crudModal"
                         x-init="
                             $el.addEventListener('modal-open', (event) => {
                                 $wire.set('status', event.detail.status)
@@ -697,51 +687,67 @@
 
                     </div>
                     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                    @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited IT Ticket Successfully'; setTimeout(() => showToast = false, 3000)"
-                    @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added IT Ticket Successfully'; setTimeout(() => showToast = false, 3000)"
-                    @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.';  setTimeout(() => showToast = false, 3000)">
-                <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
-                <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
-                    x-show="showToast"
-                    x-transition:enter="transition ease-out duration-200"
-                    x-transition:enter-start="opacity-0 scale-90"
-                    x-transition:enter-end="opacity-100 scale-100"
-                    x-transition:leave="transition ease-in duration-200"
-                    x-transition:leave-start="opacity-100 scale-100"
-                    x-transition:leave-end="opacity-0 scale-90">
-                <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
-                    <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
-                    </svg>
-                    <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
-                    </svg>
-                    <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
-                </div>
-                <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
-                <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
-                    <span class="sr-only">Close</span>
-                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                    </svg>
-                </button>
+                        @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited IT Ticket Successfully'; setTimeout(() => showToast = false, 3000)"
+                        @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added IT Ticket Successfully'; setTimeout(() => showToast = false, 3000)"
+                        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.';  setTimeout(() => showToast = false, 3000)">
+                        <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
+                            <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
+                                x-show="showToast"
+                                x-transition:enter="transition ease-out duration-200"
+                                x-transition:enter-start="opacity-0 scale-90"
+                                x-transition:enter-end="opacity-100 scale-100"
+                                x-transition:leave="transition ease-in duration-200"
+                                x-transition:leave-start="opacity-100 scale-100"
+                                x-transition:leave-end="opacity-0 scale-90">
+                                    <div :class="{'text-green-500 bg-green-100': toastType === 'success', 'text-red-500 bg-red-100': toastType === 'error'}" class="inline-flex items-center justify-center flex-shrink-0 w-8 h-8 rounded-lg">
+                                        <svg x-show="toastType === 'success'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm3.707 8.207-4 4a1 1 0 0 1-1.414 0l-2-2a1 1 0 0 1 1.414-1.414L9 10.586l3.293-3.293a1 1 0 0 1 1.414 1.414Z"/>
+                                        </svg>
+                                        <svg x-show="toastType === 'error'" class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M10 18a8 8 0 1 0-8-8 8 8 0 0 0 8 8Zm-1-13a1 1 0 1 1 2 0v6a1 1 0 0 1-2 0V5Zm0 8a1 1 0 1 1 2 0v.01a1 1 0 0 1-2 0V13Z"/>
+                                        </svg>
+                                        <span class="sr-only" x-text="toastType === 'success' ? 'Success' : 'Error'"></span>
+                                    </div>
+                                    <div class="text-sm font-normal ms-3" x-text="toastMessage"></div>
+                                    <button id="close-toast" type="button" class="ms-auto -mx-1.5 -my-1.5 bg-white text-gray-400 hover:text-gray-900 rounded-lg focus:ring-2 focus:ring-gray-300 p-1.5 hover:bg-gray-100 inline-flex items-center justify-center h-8 w-8" aria-label="Close" @click="showToast = false">
+                                        <span class="sr-only">Close</span>
+                                        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                    </button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-                            
-                    </div>
-                   
-                </div>
             </table>
-            <div class="w-full p-4 bg-gray-100 rounded-b-lg">
-                {{ $ItTicketData->links() }}
-            </div>
         </div>
-        <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search, date_filter, status_filter" class="z-50 load-over">
-            <div wire:loading wire:target="changeStatus, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search, date_filter, status_filter" class="z-50 loading-overlay">
+        <div class="w-full p-4 bg-gray-100 rounded-b-lg">
+            {{ $ItTicketData->links() }}
+        </div>
+        <div wire:loading wire:target="changeStatus" class="z-50 load-over">
+            <div wire:loading wire:target="changeStatus" class="z-50 loading-overlay">
                 <div class="flex flex-col items-center justify-center">
                     <div class="spinner"></div>
                     <p>Updating...</p>
+                </div>
+            </div>
+        </div>
+
+            <!-- Loading screen -->
+        <div wire:loading wire:target="genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search, date_filter, status_filter" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
+            <div class="z-50 mt-12">
+                <div id="toast-container" class="flex items-center justify-center w-full h-full">
+                    <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 border-6 border-customRed text-customRed bg-white bg-opacity-90 rounded-lg shadow"
+                        style="top: 90px; left: 50%; transform: translateX(-50%); z-index: 60;"
+                        role="alert">
+                        <div role="status">
+                            <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-customRed" viewBox="0 0 100 101" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                                <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                            </svg>
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        <div class="text-sm font-normal ms-3 text-center">Updating Table</div>
+                    </div>
                 </div>
             </div>
         </div>

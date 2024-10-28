@@ -122,6 +122,7 @@ class EditEmployee extends Component
                 Log::channel('employee_info')->error('Failed to Decrypt Information: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
                 $this->dispatch('trigger-error');
             }
+
             $this->emergency_contact = $employeeRecord->emergency_contact;
             $this->role_id = $employeeRecord->role_id;
 
@@ -292,7 +293,7 @@ class EditEmployee extends Component
         'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
-        'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR,INDEPENDENT CONSULTANT',
+        'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
         'sss_num' => ['required', 'string',],
         'tin_num' => ['required', 'string',],
         'phic_num' => ['required', 'string', ],
@@ -399,19 +400,32 @@ class EditEmployee extends Component
                     'end_date' => $history['end_date'],
                 ];
             }
+            if($jsonEmployeeHistory){
+                $jsonEmployeeHistory = json_encode($jsonEmployeeHistory) ;
+                $employee_data->employee_history = $jsonEmployeeHistory;
+            } 
+        } else {
+            $employee_data->employee_history = Null;
         }
+
         if($this->files){
-            foreach($this->files as $Files){
+            foreach($this->files ?? [] as $Files){
                 $jsonFiles[] = [
                     'name_of_file' => $Files['name_of_file'],
                     'completed' => $Files['completed'],
+
                 ];
             }
+            $jsonFiles = json_encode($jsonFiles ?? Null) ;
+            $employee_data->files = $jsonFiles;
+            // if($jsonFiles){
+            //     dd($jsonFiles);
+            // }
+        } else {
+            $employee_data->files = Null;
         }
 
         $employee_data->files_link = $this->files_link;
-        $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? '') ;
-        $jsonFiles = json_encode($this->files) ;
 
         // Update the employee record with new data
         $employee_data->first_name = $this->first_name;
@@ -442,7 +456,6 @@ class EditEmployee extends Component
         $employee_data->hdmf_num = Crypt::encryptString($this->hdmf_num);
         $employee_data->files = $this->files;
         $employee_data->names_of_children = Crypt::encryptString(json_encode($this->names_of_children));
-        $employee_data->sss_num = $this->sss_num;
 
         // Family Information
         $employee_data->name_of_father = $this->name_of_father;
@@ -497,8 +510,7 @@ class EditEmployee extends Component
         }
 
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);
-        $employee_data->employee_history = $jsonEmployeeHistory;
-        // Save the updated employee data
+        
         $employee_data->save();
 
         $this->dispatch('trigger-success');

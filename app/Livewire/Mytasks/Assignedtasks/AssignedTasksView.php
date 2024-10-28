@@ -5,6 +5,7 @@ namespace App\Livewire\Mytasks\Assignedtasks;
 use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class AssignedTasksView extends Component
@@ -29,6 +30,10 @@ class AssignedTasksView extends Component
     public $assigned_task;
     public $start_time;
     public $end_time;
+
+    public $status;
+
+    public $current_status;
 
     public function mount($index){
         $loggedInUser = auth()->user();
@@ -75,14 +80,14 @@ class AssignedTasksView extends Component
         $this->target_employees = $selectedEmployees;
 
         $this->form_id = $task->form_id;
+        $this->status = $task->status;
+        $this->current_status = $task->status;
+
         
         $this->task_title = $task->task_title;
         $this->assigned_task = $task->assigned_task;
         $this->start_time = $task->start_time;
         $this->end_time = $task->end_time;
-
-
-
 
     }
 
@@ -96,6 +101,37 @@ class AssignedTasksView extends Component
         }
         return $task ;
     }
+
+    public function changeStatus(){
+        $loggedInUser = auth()->user();
+        try {
+            $form = Mytasks::where('uuid', $this->index)->first();
+            if($form){
+                if($form->employee_id == $loggedInUser->employee_id){
+                    if($this->current_status == "Cancelled"){
+                        $dataToUpdate = ['status' => 'Cancelled',
+                            'cancelled_at' => now()];
+                    } else {
+                        $dataToUpdate = ['status' => $this->current_status];
+                    }
+                    $form->update($dataToUpdate);
+                    $this->dispatch('trigger-success'); 
+                    return redirect()->to(route('AssignedTasksTable'));
+                }
+            } else {
+                $this->dispatch('trigger-error'); 
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('tasks')->error('Failed to update Task Status: ' . $e->getMessage().' | ' . $loggedInUser->employee_id);
+            
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+
+        }
+       
+    }
+
 
 
     public function render()

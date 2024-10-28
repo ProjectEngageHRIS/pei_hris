@@ -621,7 +621,7 @@
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <div>
                                      <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2">
-                    <h2 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
+                    <h2 class="block mb-2 text-sm font-medium text-customGray"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
                     <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="files_container">
                         <div class="w-full ">
                             <label for="files"
@@ -834,7 +834,6 @@
                                                  <select id="employee_type" name="employee_type" wire:model="employee_type"
                                                      class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                      <option selected>Select</option>
-                                                     <option value="INDEPENDENT CONSULTANT">Independent Consultant</option>
                                                      <option value="INDEPENDENT CONTRACTOR">Independent Contractor</option>
                                                      <option value="INTERNAL EMPLOYEE">Internal Employee</option>
                                                      <option value="INTERN">Intern</option>

@@ -31,10 +31,7 @@ return new class extends Migration
             $table->text('address');
             $table->json('employee_history')->nullable();
             $table->text('profile_summary')->nullable();
-
             $table->dateTime('cancelled_at')->nullable();
-
-             //Documents
             $table->string('emp_image')->nullable();
             // $table->string('high_school_school', 100)->nullable();
             // $table->string('high_school_course', 100)->nullable();

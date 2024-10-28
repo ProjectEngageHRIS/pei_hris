@@ -128,31 +128,35 @@ class LeaveRequestTable extends Component
     
         // $query->whereYear('created_at', $this->yearFilter ?? $dateToday->year);
         // $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
-
+        
         switch ($this->date_filter) {
-            case '1':
-                $query->whereDate('application_date',  Carbon::today());
+            case '1': // Today
+                $startOfDay = Carbon::today(); // Start of today (00:00:00)
+                $endOfDay = Carbon::today()->endOfDay(); // End of today (23:59:59)
+                $query->whereBetween('application_date', [$startOfDay, $endOfDay]);
                 $this->dateFilterName = "Today";
                 break;
-            case '2':
-                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), now()]);
-                $this->dateFilterName = "This Week";
+    
+            case '2': // Last 7 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(7), Carbon::now()]);
+                $this->dateFilterName = "Last 7 Days";
                 break;
-            case '3':
-                $query->whereBetween('application_date', [Carbon::today()->startOfMonth(), now()]);
-                $this->dateFilterName = "This Month";
+    
+            case '3': // Last 30 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::now()]);
+                $this->dateFilterName = "Last 30 Days";
                 break;
-            case '4':
-                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), now()]);
-                // $query->where('application_date', '>=', Carbon::today()->subMonths(6));
+    
+            case '4': // Last 6 Months
+                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::now()]);
                 $this->dateFilterName = "Last 6 Months";
                 break;
-            case '5':
-                $query->whereBetween('application_date', [Carbon::today()->subYear(), now()]);
-                // $query->where('application_date', '>=', Carbon::today()->subYear());
-                $this->dateFilterName = "This Year";
+    
+            case '5': // Last Year
+                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::now()]);
+                $this->dateFilterName = "Last Year";
                 break;
-            default:
+            default: // All
                 $this->dateFilterName = "All";
                 break;
         }
@@ -194,27 +198,41 @@ class LeaveRequestTable extends Component
         }
 
 
-        if(strlen($this->search) >= 1){
-            $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->paginate(5);
-        } else {
-            $results = $query->orderBy('application_date', 'desc')->paginate(5);
-        }
-
-        if(strlen($this->search) >= 1){
-            $searchTerms = explode(' ', $this->search);
+        if (strlen($this->search) >= 1) {
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhere('application_date', 'like', '%' . $term . '%')
-                      ->orWhere('mode_of_application', 'like', '%' . $term . '%')
-                      ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
-                      ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
-                      ->orWhere('reason', 'like', '%' . $term . '%');
-                    //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+        
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = Carbon::createFromFormat('F d Y', $searchTerms);
                 }
-            })->orderBy('application_date', 'desc')->paginate(5);
+        
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhere('application_date', 'like', '%' . $term . '%')
+                          ->orWhere('mode_of_application', 'like', '%' . $term . '%')
+                          ->orWhere('inclusive_start_date', 'like', '%' . $term . '%')
+                          ->orWhere('inclusive_end_date', 'like', '%' . $term . '%')
+                          ->orWhere('reason', 'like', '%' . $term . '%')
+                          ->orWhere('status', 'like', '%' . $term . '%');
+                        //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
+                    }
+                }
+            })->orderBy('created_at', 'desc')->paginate(5);
         } else {
-            $results = $query->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
         }
+        
 
         
 

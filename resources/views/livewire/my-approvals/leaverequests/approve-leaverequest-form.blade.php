@@ -28,7 +28,8 @@
         </ol>
     </nav>
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Approve Leave Request</h2>
-    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <p class="my-4 text-customRed  text-lg">Form Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
 
     <section class="px-8 pb-8 mt-10 bg-white rounded-lg dark:bg-gray-900">
         <div class="px-1 pt-8 mx-auto ">
@@ -249,7 +250,7 @@
                                         <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date/Time
                                             <span class="text-red-600">*</span>
                                         </label>
-                                        <input  type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model="inclusive_start_date"
+                                        <input  type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model="inclusive_start_date"
                                             class="bg-gray border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                             required="">
                                         @error('inclusive_start_date')
@@ -260,7 +261,7 @@
                                     </div>
                                     <div class="col-span-1">
                                         <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
-                                        <input disabled type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                        <input disabled type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
                                             required="">
                                         @error('inclusive_end_date')
@@ -275,19 +276,23 @@
                                                 <span class="text-red-600">*</span>
                                             </label>
                                             <select disabled id="purpose_type" name="full_half" wire:model.live="full_half"
-                                                class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                <option value="" selected>Select</option>
-                                                <optgroup label="Full Day Options">
-                                                    <option value="Start Full">Full Day Start | Half Day End</option>
-                                                    <option value="End Full">Full Day End | Half Day Start</option>
-                                                    <option value="Both Full">Full Day Both</option>
-                                                </optgroup>
-                                                <optgroup label="Half Day Options">
-                                                    <option value="Start Half">Half Day Start | Full Day End</option>
-                                                    <option value="End Half">Half Day End | Full Day Start</option>
-                                                    <option value="Both Half">Half Day Both</option>
-                                                </optgroup>
-                                            </select>
+                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                            <option value="" selected>Select</option>
+                                            <option value="Full Day">Full Day</option>
+                                            <option value="Half Day">Half Day</option>
+                                            <option value="Undertime">Undertime</option>
+
+                                            {{-- <optgroup label="Full Day Options">
+                                                <option value="Start Full">Full Day Start | Half Day End</option>
+                                                <option value="End Full">Full Day End | Half Day Start</option>
+                                                <option value="Both Full">Full Day Both</option>
+                                            </optgroup>
+                                            <optgroup label="Half Day Options">
+                                                <option value="Start Half">Half Day Start | Full Day End</option>
+                                                <option value="End Half">Half Day End | Full Day Start</option>
+                                                <option value="Both Half">Half Day Both</option>
+                                            </optgroup> --}}
+                                        </select>
                                             @error('full_half')
                                                 <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('full_half_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('full_half_container').focus();" >

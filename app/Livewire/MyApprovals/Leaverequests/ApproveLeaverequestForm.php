@@ -8,8 +8,10 @@ use App\Models\Employee;
 use App\Models\Leaverequest;
 use Livewire\WithFileUploads;
 use App\Models\Dailytimerecord;
+use App\Mail\ApproveLeaveRequest;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Access\AuthorizationException;
 
@@ -98,6 +100,8 @@ class ApproveLeaverequestForm extends Component
                                     ->first();   
 
         // $departmentName = DB::table('departments')->where('department_id', $employeeRecord->department_id)->value('department_name');
+
+        $this->form_id = $leaverequest->form_id;
         
         $this->available_credits = $employeeRecord->vacation_credits + $employeeRecord->sick_credits;
         $this->employee_id = $employeeRecord->employee_id;
@@ -116,7 +120,7 @@ class ApproveLeaverequestForm extends Component
         $this->mode_of_application = $leaverequest->mode_of_application;
         // dd($leaverequest->mode_of_application == "Credit Leave");
         if($this->mode_of_application == "Credit Leave"){
-            $this->inclusive_start_date = $leaverequest->date_earned;
+            $this->date_earned = $leaverequest->inclusive_end_date;
             $this->inclusive_end_date = $leaverequest->credit_application;
             $this->earned_description = $leaverequest->earned_description;
             $this->full_half = $leaverequest->full_or_half;
@@ -126,22 +130,18 @@ class ApproveLeaverequestForm extends Component
             $this->inclusive_start_date = $leaverequest->inclusive_start_date;
             $this->inclusive_end_date = $leaverequest->inclusive_end_date;
             $this->purpose_type = $leaverequest->purpose_type;
-            $this->logout_time = Carbon::parse($leaverequest->full_or_half)->format('Y-m-d\TH:i');;
+            $this->full_half = $leaverequest->logout_time;
         } 
         else{
             $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
             $this->num_of_days_work_days_applied = $formattedValue ;
-            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
-            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->inclusive_start_date = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');
+            $this->inclusive_end_date = Carbon::parse($leaverequest->inclusive_end_date)->format('Y-m-d');
             $this->deduct_to = $leaverequest->deduct_to;
             $this->full_half = $leaverequest->full_or_half;
         }
 
         $this->reason = $leaverequest->reason;
-
-        if($leaverequest->commutation_signature_of_appli){
-            $this->commutation_signature_of_appli = " ";
-        }
     }
 
     public function editLeaveRequest($index){
@@ -341,6 +341,9 @@ class ApproveLeaverequestForm extends Component
                 // $leaverequestdata->status = $this->status;
         
                 $leaverequestdata->update();
+
+                Mail::to($leaverequestdata->employee->employee_email)
+                ->send(new ApproveLeaveRequest($leaverequestdata, $this->person));
         
                 $this->dispatch('trigger-success'); 
             });

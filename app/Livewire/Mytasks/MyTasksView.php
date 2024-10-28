@@ -47,7 +47,7 @@ class MyTasksView extends Component
                 return redirect()->to(route('TasksTable'));
             }
             $target_employees = json_decode($task->target_employees);
-            if(!in_array($loggedInUser, $target_employees) && $task->employee_id != $loggedInUser->employee_id){
+            if(!in_array($loggedInUser->employee_id, $target_employees)){
                 return redirect()->to(route('TasksTable'));
             }
         } catch (AuthorizationException $e) {
@@ -82,6 +82,7 @@ class MyTasksView extends Component
             $fullName = $employee->first_name . ' ' .  $employee->middle_name . ' ' . $employee->last_name . ' | ' . $employee->employee_id;
             $this->employeeNames[] = $fullName;
         }
+
         foreach($this->employeeNames as $employee){
             $employee_id = explode('| ', $employee);
             if(in_array($employee_id[1], $task->target_employees)){

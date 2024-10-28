@@ -110,7 +110,6 @@ class HrDashboardView extends Component
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -151,6 +150,8 @@ class HrDashboardView extends Component
     public $genderFilter;
     public $search;
 
+    public $employee_role_id;
+
     public function clearAllFilters()
     {
         $this->employeeTypesFilter = [];
@@ -189,11 +190,12 @@ class HrDashboardView extends Component
     public function mount(){
 
         $loggedInUser = auth()->user()->role_id;
+        $this->employee_role_id = $loggedInUser;
         try {
-            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+            if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
-            if(in_array($loggedInUser, [7, 8, 61024, 14,])){
+            if(in_array($loggedInUser, [7, 8, 61024, 14])){
                 $this->loggedInUser = True;
             }
         } catch (\Exception $e) {
@@ -205,12 +207,13 @@ class HrDashboardView extends Component
         $this->active = $this->active == 1 ? true : false;
 
         $combinedCounts = Employee::select(
-            DB::raw('COUNT(CASE WHEN employee_type = "Internal Employee" THEN 1 END) as Internals'),
-            DB::raw('COUNT(CASE WHEN employee_type = "OJT" THEN 1 END) as OJT'),
-            DB::raw('COUNT(CASE WHEN employee_type = "PEI-CSS" THEN 1 END) as PEICSS'),
-            DB::raw('COUNT(CASE WHEN employee_type = "RAPID" THEN 1 END) as RAPID'),
-            DB::raw('COUNT(CASE WHEN employee_type = "RAPID MOBILITY" THEN 1 END) as RAPIDMOBILITY'),
-            DB::raw('COUNT(CASE WHEN employee_type = "UPSKILLS" THEN 1 END) as UPSKILLS'),
+            DB::raw('COUNT(CASE WHEN employee_type = "INDEPENDENT CONTRACTOR" THEN 1 END) as IndenpendentContractor'),
+            DB::raw('COUNT(CASE WHEN employee_type = "INTERNAL EMPLOYEE" THEN 1 END) as InternalEmployee'),
+            DB::raw('COUNT(CASE WHEN employee_type = "INTERN" THEN 1 END) as Intern'),
+            DB::raw('COUNT(CASE WHEN employee_type = "PROBISIONARY" THEN 1 END) as Probisionary'),
+            DB::raw('COUNT(CASE WHEN employee_type = "PROJECT BASED" THEN 1 END) as ProjectBased'),
+            DB::raw('COUNT(CASE WHEN employee_type = "REGULAR" THEN 1 END) as Regular'),
+            DB::raw('COUNT(CASE WHEN employee_type = "RELIVER" THEN 1 END) as Reliver'),
             DB::raw('COUNT(CASE WHEN inside_department = "HR and Admin" THEN 1 END) as HRandAdmin'),
             DB::raw('COUNT(CASE WHEN inside_department = "Recruitment" THEN 1 END) as Recruitment'),
             DB::raw('COUNT(CASE WHEN inside_department = "CXS" THEN 1 END) as CXS'),
@@ -228,8 +231,13 @@ class HrDashboardView extends Component
         )->first();
 
         $this->employee_type = [
-            $combinedCounts->Internals ?? 0,
-            $combinedCounts->OJT ?? 0,
+            $combinedCounts->IndenpendentContractor ?? 0,
+            $combinedCounts->InternalEmployee ?? 0,
+            $combinedCounts->Intern ?? 0,
+            $combinedCounts->Probisionary ?? 0,
+            $combinedCounts->ProjectBased ?? 0,
+            $combinedCounts->InternalEmployee ?? 0,
+            $combinedCounts->Regular ?? 0,
         ];
 
         $this->inside_department = [
@@ -254,6 +262,8 @@ class HrDashboardView extends Component
             $combinedCounts->MALE ?? 0,
             $combinedCounts->FEMALE ?? 0,
         ];
+
+
     }
 
     // public function search()
@@ -362,48 +372,48 @@ class HrDashboardView extends Component
         }
     }
 
-    public function deleteEmployee(){
-        $loggedInUser = auth()->user();
+    // public function deleteEmployee(){
+    //     $loggedInUser = auth()->user();
     
-        try {
-            // Check user authorization
-            if (!in_array($loggedInUser->role_id, [6, 7, 61024])) {
-                throw new \Exception('Unauthorized Access');
-            }
+    //     try {
+    //         // Check user authorization
+    //         if (!in_array($loggedInUser->role_id, [6, 7, 61024])) {
+    //             throw new \Exception('Unauthorized Access');
+    //         }
     
-            // Check if currentFormId is set
-            if (!$this->currentFormId) {
-                throw new \Exception('No Current Form ID');
-            }
+    //         // Check if currentFormId is set
+    //         if (!$this->currentFormId) {
+    //             throw new \Exception('No Current Form ID');
+    //         }
     
-            // Start a database transaction
-            DB::beginTransaction();
+    //         // Start a database transaction
+    //         DB::beginTransaction();
     
-            // Find and delete the employee record
-            $employee = Employee::where('employee_id', $this->currentFormId)->firstOrFail();
-            $user = User::where('employee_id', $this->currentFormId)->firstOrFail();
+    //         // Find and delete the employee record
+    //         $employee = Employee::where('employee_id', $this->currentFormId)->firstOrFail();
+    //         $user = User::where('employee_id', $this->currentFormId)->firstOrFail();
     
-            $employee->delete();
-            $user->delete();
+    //         $employee->delete();
+    //         $user->delete();
     
-            // Commit the transaction
-            DB::commit();
+    //         // Commit the transaction
+    //         DB::commit();
     
-            // Dispatch success event
-            $this->dispatch('triggerDeleteSuccess');
+    //         // Dispatch success event
+    //         $this->dispatch('triggerDeleteSuccess');
     
-        } catch (ModelNotFoundException $e) {
-            // Handle case where records are not found
-            Log::channel('hrdashboard')->error('Employee or User not found: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId);
-            $this->dispatch('triggerDeleteError');
+    //     } catch (ModelNotFoundException $e) {
+    //         // Handle case where records are not found
+    //         Log::channel('hrdashboard')->error('Employee or User not found: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId);
+    //         $this->dispatch('triggerDeleteError');
     
-        } catch (\Exception $e) {
-            // Handle other exceptions
-            Log::channel('hrdashboard')->error('Failed to delete Employee: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId . ' | User ID: ' . $loggedInUser->employee_id);
-            DB::rollBack();
-            $this->dispatch('triggerDeleteError');
-        }
-    }
+    //     } catch (\Exception $e) {
+    //         // Handle other exceptions
+    //         Log::channel('hrdashboard')->error('Failed to delete Employee: ' . $e->getMessage() . ' | Employee ID: ' . $this->currentFormId . ' | User ID: ' . $loggedInUser->employee_id);
+    //         DB::rollBack();
+    //         $this->dispatch('triggerDeleteError');
+    //     }
+    // }
 
 
     public function submit()
@@ -621,7 +631,7 @@ if (isset($add_employee->employee_email)) {
 
         $loggedInUser = auth()->user()->role_id;
         try {
-            if(!in_array($loggedInUser, [7, 8, 9, 10, 11, 12, 13, 61024])){
+            if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
                 throw new \Exception('Unauthorized Access');
             } 
             if(in_array($loggedInUser, [7, 8, 61024, 14,])){

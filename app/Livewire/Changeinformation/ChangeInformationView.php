@@ -62,6 +62,8 @@ class ChangeInformationView extends Component
     public $index;
     public $status;
 
+    public $form_id;
+
     public function mount($index){
         $this->index = $index;
 
@@ -74,6 +76,9 @@ class ChangeInformationView extends Component
         } catch (AuthorizationException $e) {
             return redirect()->to(route('ApproveChangeInformationTable'));
         }
+
+        $this->form_id = $changeInfoData->form_id; 
+
 
         $this->status = $changeInfoData->status;
         $this->first_name = $changeInfoData->first_name;

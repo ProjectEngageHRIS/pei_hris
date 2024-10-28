@@ -214,6 +214,9 @@ class HrTicketsForm extends Component
     //     }
 
     // }
+    public function updated(){
+        $this->resetErrorBag();
+    }
 
     public function resetTypeOfRequest(){
         $this->reset(['type_of_request']);
@@ -268,101 +271,333 @@ class HrTicketsForm extends Component
         // dd($this->supplies_request);
 
         # HR
+        // $test = Hrticket::max('purpose');
         if($this->type_of_ticket == "HR Internal"){
             if($this->type_of_request == "HR"){
                 if($this->sub_type_of_request == "Certificate of Employment"){
-                    $this->validate(['purpose' => 'required|min:10|string', 
-                                     'type_of_hrconcern' => 'required|in:Without Compensation,With Compensation']);
+                    $this->validate([
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'type_of_hrconcern' => 'required|in:Without Compensation,With Compensation'
+                    ], [
+                        'purpose.required' => 'The Purpose Field Is Required.',
+                        'purpose.min' => 'The Purpose Must Be At Least 1 Characters.',
+                        'purpose.max' => 'The Purpose May Not Be Greater Than 5000 Characters.',
+                        'purpose.string' => 'The Purpose Must Be A String.',
+                        'type_of_hrconcern.required' => 'The Commutation Field Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Commutation Is Invalid.',
+                    ]);
+                    
                 } else if( $this->sub_type_of_request == "Request for Consultation"){
-                    $this->validate(['purpose' => 'required|min:10|string', 
-                                     'type_of_hrconcern' => 'required|in:High,Medium,Low']);
+                    $this->validate([
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'type_of_hrconcern' => 'required|in:High (Urgent),Medium (Within the day),Low (Can be attended the next day)'
+                    ], [
+                        'purpose.required' => 'The Purpose Field Is Required.',
+                        'purpose.min' => 'The Purpose Must Be At Least 1 Characters.',
+                        'purpose.max' => 'The Purpose May Not Exceed 50,000 Characters.',
+                        'purpose.string' => 'The Purpose Must Be A Text String.',
+                        'type_of_hrconcern.required' => 'The Type of Consultation Request Field Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type of Consultation Request is Invalid.',
+                    ]);
                 }
                 else if($this->sub_type_of_request == "HMO-related Concerns"){
-                    $this->validate(['purpose' => 'required|min:10|string', 
-                                     'type_of_hrconcern' => 'required|in:Availment of Service,Card Replacement,Reimbursement,Request for Enrollment,Request for Deletion',
-                                    'request_link' => 'required|url:https']);
+                    $this->validate([
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'type_of_hrconcern' => 'required|in:Availment of Service,Card Replacement,Reimbursement,Request for Enrollment,Request for Deletion',
+                        'request_link' => 'required|url:https'
+                    ], [
+                        'purpose.required' => 'The HMO Concern Description Is Required.',
+                        'purpose.min' => 'The HMO Concern Description Must Be At Least 1 Character.',
+                        'purpose.max' => 'The HMO Concern Description May Not Exceed 50,000 Characters.',
+                        'purpose.string' => 'The HMO Concern Description Must Be Text.',
+                        
+                        'type_of_hrconcern.required' => 'The Type Of HMO Concern Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type Of HMO Concern Is Invalid.',
+                        
+                        'request_link.required' => 'The HMO Concern Link Is Required.',
+                        'request_link.url' => 'The HMO Concern Link Must Be A Valid Link.',
+                    ]);
+                    
                 } else if($this->sub_type_of_request == "Leave Concerns"){
-                    $this->validate(['purpose' => 'required|min:10|string', 
-                                    'type_of_hrconcern' => 'required|in:Leave Credits,Changes on Filed Leaves,Cancellation of Leaves',
-                                    'request_link' => 'required|url:https']);
+                    $this->validate([
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'type_of_hrconcern' => 'required|in:Leave Credits,Changes on Filed Leaves,Cancellation of Leaves',
+                        'request_link' => 'required|url'
+                    ], [
+                        'purpose.required' => 'The Leave Concern Description Is Required.',
+                        'purpose.min' => 'The Leave Concern Description Must Be At Least 1 Characters.',
+                        'purpose.max' => 'The Leave Concern Description May Not Exceed 50,000 Characters.',
+                        'purpose.string' => 'The Leave Concern Description Must Be Text.',
+                    
+                        'type_of_hrconcern.required' => 'The Type Of Leave Request Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type Of Leave Request Is Invalid.',
+                    
+                        'request_link.required' => 'The Leave Concern Link Is Required.',
+                        'request_link.url' => 'The Leave Concern Link Must Be A Valid Link.',
+                    ]);
                 }
                 else if($this->sub_type_of_request == "Payroll-related Concerns"){
-                    $this->validate(['request_date' => 'required|date',
-                                    'purpose' => 'required|min:10|string', 
-                                    'type_of_hrconcern' => 'required|in:Overtime Pay,Holiday Pay,Deductions,Others,Request for Deletion',
-                                    'request_link' => 'required|url:https']);
+                    $this->validate([
+                        'request_date' => 'required|date',
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'type_of_hrconcern' => 'required|in:Overtime Pay,Holiday Pay,Deductions,Others,Request for Deletion',
+                        'request_link' => 'required|url'
+                    ], [
+                        'request_date.required' => 'The Payroll Date Is Required.',
+                        'request_date.date' => 'The Payroll Date Must Be A Valid Date.',
+                    
+                        'purpose.required' => 'The Payroll Concern Description Is Required.',
+                        'purpose.min' => 'The Payroll Concern Description Must Be At Least 1 Characters.',
+                        'purpose.max' => 'The Payroll Concern Description May Not Exceed 50,000 Characters.',
+                        'purpose.string' => 'The Payroll Concern Description Must Be Text.',
+                    
+                        'type_of_hrconcern.required' => 'The Type Of Payroll Concern Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type Of Payroll Concern Is Invalid.',
+                    
+                        'request_link.required' => 'The Payroll Concern Link Is Required.',
+                        'request_link.url' => 'The Payroll Concern Link Must Be A Valid URL.',
+                    ]);
+                    
                 }   
                 else if($this->sub_type_of_request == "Request for a Meeting"){
-                    $this->validate(['request_date' => 'required|date',
-                                    'purpose' => 'required|min:10|string', 
-                                    'request_requested' => ['required', 'regex:/^[A-Za-z\s]+\|SLE[A-Z]?\d{4}$/']]);
+                    $this->validate([
+                        'request_date' => 'required|date',
+                        'purpose' => 'required|min:1|max:5000|string', 
+                        'request_requested' => 'required'
+                    ], [
+                        'request_date.required' => 'The Date of Meeting Is Required.',
+                        'request_date.date' => 'The Date of Meeting Must Be A Valid Date.',
+                    
+                        'purpose.required' => 'The Purpose of Meeting Is Required.',
+                        'purpose.min' => 'The Purpose of Meeting Must Be At Least 1 Characters.',
+                        'purpose.max' => 'The Purpose of Meeting May Not Exceed 50,000 Characters.',
+                        'purpose.string' => 'The Purpose of Meeting Must Be Text.',
+                    
+                        'request_requested.required' => 'The Target Person Is Required.'
+                    ]);
                 }
             }
             else if($this->type_of_request == "Office Admin"){
                 if($this->sub_type_of_request == "Certificate of Remittances"){
                     if($this->type_of_hrconcern == "Others"){
-                        $this->validate(['remittance_request_others' => 'required|string|min:5']);
+                        $this->validate([
+                            'remittance_request_others' => 'required|string|min:1',
+                        ], [
+                            'remittance_request_others.required' => 'The Other Type of Remittance Certificate Is Required.',
+                            'remittance_request_others.string' => 'The Other Type of Remittance Certificate Must Be a String.',
+                            'remittance_request_others.min' => 'The Other Type of Remittance Certificate Must Be At Least 1 Characters.'
+                        ]);
                     } else {
-                        $this->validate(['type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others']);
+                        $this->validate([
+                            'type_of_hrconcern' => 'required|in:SSS,PHILHEALTH,HDMF,Others'
+                        ], [
+                            'type_of_hrconcern.required' => 'The Type of Remittance Certificate Is Required.',
+                            'type_of_hrconcern.in' => 'The Selected Type of Remittance Certificate Is Invalid.'
+                        ]);
+                        
                     }
                     if($this->request_assigned == "Others"){
-                        $this->validate(['request_assigned_request_other' => 'required|string|min:5']);
+                        $this->validate([
+                            'request_assigned_request_other' => 'required|string|min:1'
+                        ], [
+                            'request_assigned_request_other.required' => 'The Other Type of Account Assigned field is required.',
+                            'request_assigned_request_other.min' => 'The Other Type of Account Assigned must be at least 1 characters.',
+                            'request_assigned_request_other.string' => 'The Other Type of Account Assigned must be a valid text.'
+                        ]);
                     } else {
-                        $this->validate(['request_assigned' => 'required|in:PEI,SL TEMPS,SL SEARCH,WESEARCH,Others']);
+                        $this->validate([
+                            'request_assigned' => 'required|in:PEI,SL TEMPS,SL SEARCH,WESEARCH,Others'
+                        ], [
+                            'request_assigned.required' => 'The Account Assigned field is required.',
+                            'request_assigned.in' => 'The selected Account Assigned option is invalid.'
+                        ]);
+                        
                     }
-                    $this->validate(['request_date' => 'required|date',
-                                     'purpose' => 'required|min:10|string']);
+                    $this->validate([
+                        'request_date' => 'required|date',
+                        'purpose' => 'required|min:1|max:5000|string'
+                    ], [
+                        'request_date.required' => 'The Date Start field is required.',
+                        'request_date.date' => 'The Date Start must be a valid date.',
+                        'purpose.required' => 'The Purpose field is required.',
+                        'purpose.min' => 'The Purpose must be at least 1 characters.',
+                        'purpose.max' => 'The Purpose may not be greater than 5000 characters.',
+                        'purpose.string' => 'The Purpose must be a string.'
+                    ]);
                 }
                 else if($this->sub_type_of_request == "Government-Mandated Benefits Concern"){
-                    $this->validate(['type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others,SSS Salary Loan for Approval,SSS Calamity Loan for Approval,PAG-IBIG Multi-Purpose Loan for Approval,SSS Maternity Notification,SSS Sickness Notification,Issuance of TIN Number,SSS R1A',
-                                     'request_link' => 'required|url:https']);
+                    $this->validate([
+                        'type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others,SSS Salary Loan for Approval,SSS Calamity Loan for Approval,PAG-IBIG Multi-Purpose Loan for Approval,SSS Maternity Notification,SSS Sickness Notification,Issuance of TIN Number,SSS R1A',
+                        'request_link' => 'required|url:https'
+                    ], [
+                        'type_of_hrconcern.required' => 'The Type Of GMR Concern Field Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type Of GMR Concern Is Invalid.',
+                        'request_link.required' => 'The GMR Concern Link Field Is Required.',
+                        'request_link.url' => 'The GMR Concern Link Must Be A Valid URL.'
+                    ],);
+                    
                 }
                 else if($this->sub_type_of_request == "Messengerial"){
                     if($this->type_of_hrconcern == "Others"){
-                        $this->validate(['messengerial_other_type' => 'required|string|min:5']);
+                        $this->validate([
+                            'messengerial_other_type' => 'required|string|min:1'
+                        ], [
+                            'messengerial_other_type.required' => 'The Other Type Of Messengerial Request Field Is Required.',
+                            'messengerial_other_type.min' => 'The Other Type Of Messengerial Request Must Be At Least 1 Characters.'
+                        ],);
                     } else {
-                        $this->validate(['type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others']);
+                        $this->validate([
+                            'type_of_hrconcern' => 'required|in:Send Document,Pick-Up Document,Collections,Others'
+                        ], [
+                            'type_of_hrconcern.required' => 'The Type Of Messengerial Request Field Is Required.',
+                            'type_of_hrconcern.in' => 'The Selected Type Of Messengerial Request Is Invalid.'
+                        ],);
+                        
                     }
-                    $this->validate(['request_requested' => 'required|string|min:5',
-                                     'request_assigned' => 'required|string|min:5',
-                                     'request_extra' => 'required|string|min:5',
-                                     'request_date' => 'required|date',
-                                    ]);
+
+                    $this->validate([
+                        'request_requested' => 'required|string|min:1',
+                        'request_assigned' => 'required|string|min:1',
+                        'request_extra' => 'required|string|min:1',
+                        'request_date' => 'required|date',
+                    ], [
+                        'request_requested.required' => 'The Company Field Is Required.',
+                        'request_requested.string' => 'The Company Must Be A String.',
+                        'request_requested.min' => 'The Company Must Be At Least 1 Characters.',
+                        
+                        'request_assigned.required' => 'The Contact Person Field Is Required.',
+                        'request_assigned.string' => 'The Contact Person Must Be A String.',
+                        'request_assigned.min' => 'The Contact Person Must Be At Least 1 Characters.',
+                        
+                        'request_extra.required' => 'The Address Of Messengerial Destination Field Is Required.',
+                        'request_extra.string' => 'The Address Of Messengerial Destination Must Be A String.',
+                        'request_extra.min' => 'The Address Of Messengerial Destination Must Be At Least 1 Characters.',
+                        
+                        'request_date.required' => 'The Date Of Messengerial Pick Up Or Send Off Field Is Required.',
+                        'request_date.date' => 'The Date Of Messengerial Pick Up Or Send Off Must Be A Valid Date.'
+                    ]);
+
                 }
                 else if($this->sub_type_of_request == "Repairs/Maintenance"){
                     $this->validate([
                         'type_of_hrconcern' => 'required|in:Electrical,Plumbing,HVAC,Structural,Safety Concerns,Equipment/Machinery,Environmental,Accessibility,General Maintenance,Security,Others',
-                        'purpose' => 'required|min:10|string',
+                        'purpose' => 'required|min:10|max:5000|string',
+                    ], [
+                        'type_of_hrconcern.required' => 'The Type Of Repairs And Maintenance Request Field Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type Of Repairs And Maintenance Request Is Invalid.',
+                    
+                        'purpose.required' => 'The Concerned Area Field Is Required.',
+                        'purpose.min' => 'The Concerned Area Must Be At Least 10 Characters.',
+                        'purpose.max' => 'The Concerned Area May Not Be Greater Than 5000 Characters.',
+                        'purpose.string' => 'The Concerned Area Must Be A String.',
                     ]);
+                    
                 }  
                 else if($this->sub_type_of_request == "Book a Car"){
-                    $this->validate(['request_date' => 'required|date',
-                                     'request_requested' => 'required|date',
-                                     'account_client_hr_ops' => 'required|string|min:10',
-                                     'purpose' => 'required|min:10|string']);
+                    $this->validate([
+                        'request_date' => 'required|date',
+                        'request_requested' => 'required|date',
+                        'account_client_hr_ops' => 'required|string|min:10',
+                        'purpose' => 'required|min:10|max:5000|string',
+                    ], [
+                        'request_date.required' => 'The Date And Time Of Departure Field Is Required.',
+                        'request_date.date' => 'The Date And Time Of Departure Must Be A Valid Date.',
+                    
+                        'request_requested.required' => 'The Date And Time Of Pick-Up Field Is Required.',
+                        'request_requested.date' => 'The Date And Time Of Pick-Up Must Be A Valid Date.',
+                    
+                        'account_client_hr_ops.required' => 'The Passenger/s Name Field Is Required.',
+                        'account_client_hr_ops.string' => 'The Passenger/s Name Must Be A String.',
+                        'account_client_hr_ops.min' => 'The Passenger/s Name Must Be At Least 10 Characters.',
+                    
+                        'purpose.required' => 'The Address Of Destination Field Is Required.',
+                        'purpose.min' => 'The Address Of Destination Must Be At Least 10 Characters.',
+                        'purpose.max' => 'The Address Of Destination May Not Be Greater Than 5000 Characters.',
+                        'purpose.string' => 'The Address Of Destination Must Be A String.',
+                    ]);
                 }
                 else if($this->sub_type_of_request == "Book a Meeting Room"){
-                    $this->validate(['request_date' => 'required|date',
-                                     'request_requested' => 'required|date',
-                                     'type_of_hrconcern' => 'required|in:Training Room,Villa Office|string',
-                                     'purpose' => 'required|min:10|string'
-                                    ]);
+                    $this->validate([
+                        'request_date' => 'required|date',
+                        'request_requested' => 'required|date',
+                        'type_of_hrconcern' => 'required|in:Training Room,Villa Office',
+                        'purpose' => 'required|min:10|max:5000|string',
+                    ], [
+                        'request_date.required' => 'The Start Date Field Is Required.',
+                        'request_date.date' => 'The Start Date Must Be A Valid Date.',
+                    
+                        'request_requested.required' => 'The End Date Field Is Required.',
+                        'request_requested.date' => 'The End Date Must Be A Valid Date.',
+                    
+                        'type_of_hrconcern.required' => 'The Type Of Room Field Is Required.',
+                        'type_of_hrconcern.in' => 'The Selected Type Of Room Is Invalid.',
+                    
+                        'purpose.required' => 'The Purpose Of Booking Field Is Required.',
+                        'purpose.min' => 'The Purpose Of Booking Must Be At Least 10 Characters.',
+                        'purpose.max' => 'The Purpose Of Booking May Not Be Greater Than 5000 Characters.',
+                        'purpose.string' => 'The Purpose Of Booking Must Be A String.',
+                    ]);
+                    
                 }
                 else if($this->sub_type_of_request == "Office Supplies"){
-                    $this->validate(['request_others' => 'required']);
-                    // $hrticketdata->request_others = json_encode($this->supplies_request);
+                    $this->validate([
+                        'supplies_request' => function ($attribute, $value, $fail) {
+                            $hasFilled = false;
+                            $hasNegativeAndZero = false;
+                            foreach ($this->supplies_request as $supply => $quantity) {
+                                if (!empty($quantity) && $quantity > 0) {
+                                    $hasFilled = true;
+                                    break;
+                                } 
+                            }
+                    
+                            if (!$hasFilled) {
+                                $fail('At Least One Supply request Must Be Filled and Must be greater than 1');
+                            } 
+                        },
+                    ]);
                 }
             }
             else if($this->type_of_request == "Procurement"){
                 if($this->sub_type_of_request == "Request for Quotation"){
-                    $this->validate(['type_of_hrconcern' => 'required|min:10|string',
-                                     'purpose' => 'required|min:10|string',
-                                     'request_link' => 'required|url:https']);
+                    $this->validate([
+                        'type_of_hrconcern' => 'required|min:10|string',
+                        'purpose' => 'required|min:10|max:5000|string',
+                        'request_link' => 'required|url:https',
+                    ], [
+                        'type_of_hrconcern.required' => 'The Quotation Specifications Field Is Required.',
+                        'type_of_hrconcern.min' => 'The Quotation Specifications Must Be At Least 10 Characters.',
+                        'type_of_hrconcern.string' => 'The Quotation Specifications Must Be A String.',
+                    
+                        'purpose.required' => 'The Purpose Of Request Field Is Required.',
+                        'purpose.min' => 'The Purpose Of Request Must Be At Least 10 Characters.',
+                        'purpose.max' => 'The Purpose Of Request May Not Be Greater Than 50,000 Characters.',
+                        'purpose.string' => 'The Purpose Of Request Must Be A String.',
+                    
+                        'request_link.required' => 'The Quotation Concern Link Field Is Required.',
+                        'request_link.url' => 'The Quotation Concern Link Must Be A Valid URL.',
+                    ]);
+                    
                 }
                 else if($this->sub_type_of_request == "Request to Buy/Book/Avail Service"){
-                    $this->validate(['type_of_hrconcern' => 'required|min:10|string',
-                                     'purpose' => 'required|min:10|string',
-                                     'request_link' => 'required|url:https']);
+                    $this->validate([
+                        'type_of_hrconcern' => 'required|min:10|string',
+                        'purpose' => 'required|min:10|max:5000|string',
+                        'request_link' => 'required|url:https',
+                    ], [
+                        'type_of_hrconcern.required' => 'The Product/Service Specifications Field Is Required.',
+                        'type_of_hrconcern.min' => 'The Product/Service Specifications Must Be At Least 10 Characters.',
+                        'type_of_hrconcern.string' => 'The Product/Service Specifications Must Be A String.',
+                    
+                        'purpose.required' => 'The Purpose Of Request Field Is Required.',
+                        'purpose.min' => 'The Purpose Of Request Must Be At Least 10 Characters.',
+                        'purpose.max' => 'The Purpose Of Request May Not Be Greater Than 50,000 Characters.',
+                        'purpose.string' => 'The Purpose Of Request Must Be A String.',
+                    
+                        'request_link.required' => 'The Service Concern Link Field Is Required.',
+                        'request_link.url' => 'The Service Concern Link Must Be A Valid URL.',
+                    ]);
+                    
                 }
             }
         }
@@ -370,25 +605,64 @@ class HrTicketsForm extends Component
         # Internal Control
         else if($this->type_of_ticket == "Internal Control"){
             if($this->type_of_request == "Reimbursements"){
-                $this->validate(['request_date' => 'required|date',
-                                 'purpose' => 'required|min:10|string',
-                                 'request_link' => 'required|url:https'
-                                ]);
+                $this->validate([
+                    'request_date' => 'required|date',
+                    'purpose' => 'required|min:10|max:5000|string',
+                    'request_link' => 'required|url:https',
+                ], [
+                    'request_date.required' => 'The Cut-Off Date Field Is Required.',
+                    'request_date.date' => 'The Cut-Off Date Must Be A Valid Date.',
+                
+                    'purpose.required' => 'The Reimbursement Description Field Is Required.',
+                    'purpose.min' => 'The Reimbursement Description Must Be At Least 10 Characters.',
+                    'purpose.max' => 'The Reimbursement Description May Not Be Greater Than 50,000 Characters.',
+                    'purpose.string' => 'The Reimbursement Description Must Be A String.',
+                
+                    'request_link.required' => 'The Reimbursement Concern Link Field Is Required.',
+                    'request_link.url' => 'The Reimbursement Concern Link Must Be A Valid URL.',
+                ]);
+                
             }
             else if($this->type_of_request == "Tools and Equipment"){
-                $this->validate(['condition_availability' => 'required|in:New,Old/Existing Unit',
-                                 'type_of_hrconcern' => 'required|in:Laptop,Printer,Monitor,Mouse,Laptop Charger / Adapter,Keyboard,LAN Dangle,HDMI to LAN Converter,Numeric Keypad,Extension Cord,Others',
-                                ]);
+                $this->validate([
+                    'condition_availability' => 'required|in:New,Old/Existing Unit',
+                    'type_of_hrconcern' => 'required|in:Laptop,Printer,Monitor,Mouse,Laptop Charger / Adapter,Keyboard,LAN Dangle,HDMI to LAN Converter,Numeric Keypad,Extension Cord,Others',
+                ], [
+                    'condition_availability.required' => 'The Condition/Availability Field Is Required.',
+                    'condition_availability.in' => 'The Selected Condition/Availability Is Invalid.',
+                
+                    'type_of_hrconcern.required' => 'The Equipment Type Field Is Required.',
+                    'type_of_hrconcern.in' => 'The Selected Equipment Type Is Invalid.',
+                ]);
+                
             }
             else if($this->type_of_request == "Cash Advance"){
-                $this->validate(['request_date' => 'required|date',
-                                 'request_link' => 'required|url:https'
-                                ]);
+                $this->validate([
+                    'request_date' => 'required|date',
+                    'request_link' => 'required|url',
+                ], [
+                    'request_date.required' => 'The Date of Cash Advance Request Field Is Required.',
+                    'request_date.date' => 'The Date of Cash Advance Request Must Be A Valid Date.',
+                
+                    'request_link.required' => 'The Cash Advance Concern Link Field Is Required.',
+                    'request_link.url' => 'The Cash Advance Concern Link Must Be A Valid URL.',
+                ]);
+                
             }
             else if($this->type_of_request == "Liquidation"){
-                $this->validate(['purpose' => 'required|min:10|string',
-                                 'request_link' => 'required|url:https'
-                                ]);
+                $this->validate([
+                    'purpose' => 'required|min:10|max:5000|string',
+                    'request_link' => 'required|url',
+                ], [
+                    'purpose.required' => 'The Liquidation Coverage Field Is Required.',
+                    'purpose.min' => 'The Liquidation Coverage Must Be At Least 10 Characters.',
+                    'purpose.max' => 'The Liquidation Coverage May Not Be Greater Than 5000 Characters.',
+                    'purpose.string' => 'The Liquidation Coverage Must Be A String.',
+                
+                    'request_link.required' => 'The Liquidation Concern Link Field Is Required.',
+                    'request_link.url' => 'The Liquidation Concern Link Must Be A Valid URL.',
+                ]);
+                
             }
         }
 
@@ -397,24 +671,50 @@ class HrTicketsForm extends Component
             if($this->type_of_request == "Performance Monitoring Request"){
                 $this->validate([
                     'type_of_pe_hr_ops' => 'required|in:3rd Month,5th Month,Annual,Semi-Annual,Employee Movement',
-                    'account_client_hr_ops' => 'required|Option 1,Option 2'
+                    'account_client_hr_ops' => 'required|in:Option 1,Option 2',
+                ], [
+                    'type_of_pe_hr_ops.required' => 'The Type of Performance Monitoring Request Field Is Required.',
+                    'type_of_pe_hr_ops.in' => 'The Selected Type of Performance Monitoring Request Is Invalid.',
+                
+                    'account_client_hr_ops.required' => 'The Account/Client Field Is Required.',
+                    'account_client_hr_ops.in' => 'The Account/Client Account Is Invalid.',
                 ]);
+                
             }
             else if($this->type_of_request == "Incident Report"){
                 $this->validate([
                     'type_of_hrconcern' => 'required|in:High,Medium,Low',
-                    'purpose' => 'required|min:10|string'
+                    'purpose' => 'required|min:10|max:5000|string'
+                ], [
+                    'type_of_hrconcern.required' => 'The Level of Offense Field Is Required.',
+                    'type_of_hrconcern.in' => 'The Selected Level of Offense Is Invalid.',
+                
+                    'purpose.required' => 'The Incident Report Field Is Required.',
+                    'purpose.min' => 'The Incident Report Must Be At Least 10 Characters.',
+                    'purpose.max' => 'The Incident Report May Not Be Greater Than 5000 Characters.',
+                    'purpose.string' => 'The Incident Report Must Be A String.',
                 ]);
+                
             }
             else if($this->type_of_request == "Request for Issuance of Notice/Letter"){
                 $this->validate([
                     'type_of_hrconcern' => 'required|in:End of Assignment,Extension of Assignment/Project,End of Project',
+                ], [
+                    'type_of_hrconcern.required' => 'The Type of Notice Field Is Required.',
+                    'type_of_hrconcern.in' => 'The Selected Type of Notice Is Invalid.',
                 ]);
+                
             }
             else if($this->type_of_request == "Request for Employee Files"){
                 $this->validate([
                     'request_requested' => 'required|min:10|string',
-                    'purpose' => 'required|min:10|string'
+                    'purpose' => 'required|min:10|max:5000|string'
+                ], [
+                    'request_requested.required' => 'The Document/s Needed Field Is Required.',
+                    'request_requested.min' => 'The Document/s Needed Must Be At Least 10 Characters.',
+                    'purpose.required' => 'The Purpose of Employee Files Request Field Is Required.',
+                    'purpose.min' => 'The Purpose of Employee Files Request Must Be At Least 10 Characters.',
+                    'purpose.max' => 'The Purpose of Employee Files Request May Not Be Greater Than 5000 Characters.',
                 ]);
             }
         } 

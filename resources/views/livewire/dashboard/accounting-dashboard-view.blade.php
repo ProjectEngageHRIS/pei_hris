@@ -2,7 +2,7 @@
     <div class="flex flex-col justify-between mb-4 md:flex-row gap-y-4">
         <div class="flex flex-row items-center w-full gap-2 md:gap-4">
             <div class="rounded-lg hover:text-customRed">
-                <div x-data="{ open: false, selectedhalfOfMonth: @entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                <div x-data="{ open: false, selectedhalfOfMonth: $wire.entangle('halfOfMonthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                     <div>
                         <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow text-nowrap bg-navButton">
                             <span x-text="selectedhalfOfMonth ? selectedhalfOfMonth : 'Select'"></span>
@@ -22,7 +22,7 @@
             </div>
 
             <div class="rounded-lg hover:text-customRed">
-                <div x-data="{ open: false, selectedMonth: @entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                <div x-data="{ open: false, selectedMonth: $wire.entangle('monthFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                     <div>
                         <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow bg-navButton">
                             <span x-text="selectedMonth ? selectedMonth : 'Select'"></span>
@@ -52,7 +52,7 @@
             </div>
 
             <div class="rounded-lg hover:text-customRed">
-                <div x-data="{ open: false, selectedYear: @entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
+                <div x-data="{ open: false, selectedYear: $wire.entangle('yearFilter').live }" @click.away="open = false" class="relative inline-block w-full text-left">
                     <div>
                         <button @click="open = !open" type="button" class="inline-flex items-center justify-between w-full h-10 p-3 text-sm font-medium text-gray-900 rounded-lg shadow bg-navButton">
                             <span x-text="selectedYear ? selectedYear : 'Select'"></span>
@@ -90,14 +90,14 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="text" wire:model.live="search" id="table-search-users" class="flex w-56 px-10 text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
+                    <input type="text" wire:model.live.debounce.1000ms="search" id="table-search-users" class="flex w-56 px-10 text-sm text-gray-900 border border-gray-300 shadow-inner rounded-8px bg-gray-50 focus:ring-customRed focus:border-customRed" placeholder="Search for users">
                 </div>
                 <!-- Filter Sidebar -->
                 <div x-data="{
-                    employeeTypesFilter: @entangle('employeeTypesFilter'), 
-                    insideDepartmentTypesFilter: @entangle('insideDepartmentTypesFilter'), 
-                    departmentTypesFilter: @entangle('departmentTypesFilter'), 
-                    genderTypesFilter: @entangle('genderTypesFilter'), 
+                    employeeTypesFilter: $wire.entangle('employeeTypesFilter'), 
+                    insideDepartmentTypesFilter: $wire.entangle('insideDepartmentTypesFilter'), 
+                    departmentTypesFilter: $wire.entangle('departmentTypesFilter'), 
+                    genderTypesFilter: $wire.entangle('genderTypesFilter'), 
                     filterOpen: false,
                     employeeTypeOpen: false,
                     departmentTypeOpen: false,
@@ -132,7 +132,7 @@
                             <path strokeLinecap="round" strokeLinejoin="round" d="M12 3c2.755 0 5.455.232 8.083.678.533.09.917.556.917 1.096v1.044a2.25 2.25 0 0 1-.659 1.591l-5.432 5.432a2.25 2.25 0 0 0-.659 1.591v2.927a2.25 2.25 0 0 1-1.244 2.013L9.75 21v-6.568a2.25 2.25 0 0 0-.659-1.591L3.659 7.409A2.25 2.25 0 0 1 3 5.818V4.774c0-.54.384-1.006.917-1.096A48.32 48.32 0 0 1 12 3Z" />
                         </svg>
                     </button>
-                    <div x-cloak  x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-80 right-1">
+                    <div x-cloak  x-show="filterOpen" @click.away="filterOpen = false" class="absolute z-10 mt-2 space-y-2 overflow-y-auto bg-white border rounded shadow-lg max-h-80 w-80 left-1/2 transform -translate-x-1/2">
                         <!-- Clear All Button -->
                         <div class="px-4 py-2">
                             <button @click="clearAllFilters;" wire:click="clearAllFilters" class="w-full pt-4 text-xs font-medium text-right text-customRed hover:text-red-900">
@@ -165,12 +165,7 @@
                                     </button>
                                     <div x-show="employeeTypeOpen" @click.away="employeeTypeOpen = false" class="w-full mt-2 space-y-2">
                                         <hr class="my-4 border-gray-300">
-                                        <!-- Independent Consultant -->
-                                        <div class="flex items-center px-4 py-2">
-                                            <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONSULTANT']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                            <label class="ml-2 text-xs font-medium text-customGray1">Independent Consultant</label>
-                                        </div>
-
+                                        
                                         <!-- Independent Contractor -->
                                         <div class="flex items-center px-4 py-2">
                                             <input type="checkbox" x-model="employeeTypesFilter['INDEPENDENT CONTRACTOR']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
@@ -442,9 +437,9 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
                     <h3 class="text-xl font-semibold text-gray-900">
-                        Add new Payroll
+                        Add New Payslip
                     </h3>
-                    <button type="button" @click="addTargetPayroll = !addTargetPayroll" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="add-targeted-payroll">
+                    <button type="button" @click="addTargetPayroll = !addTargetPayroll; $wire.resetErrors(); " class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="add-targeted-payroll">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                         </svg>
@@ -453,8 +448,8 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="p-4 xl:p-5" x-data="{ openAddWarningButton: false }">
-                    <form class="space-y-4" wire:submit.prevent="addTargetPayroll" method="POST">
+                <div class="p-4 xl:p-5 overflow-y-auto max-h-96 " x-data="{ openAddWarningButton: false }">
+                    <form class="space-y-4 " wire:submit.prevent="addTargetPayroll" method="POST">
                         <div>
                             <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
                             <select name="selectedEmployee" id="selectedEmployee" wire:model.live="selectedEmployee" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
@@ -545,7 +540,7 @@
                         <div x-show="openAddWarningButton" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                             <div class="relative w-full max-w-md max-h-full p-4">
                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                    <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="openAddWarningButton">
+                                    <button @click="openAddWarningButton = false; $wire.resetErrors(); " type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white" data-modal-hide="openAddWarningButton">
                                         <svg aria-hidden="true" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
                                         </svg>
@@ -598,7 +593,7 @@
                     <!-- Main modal -->
                     <div x-cloak x-ref="notes-modal" 
                         x-show="openNotes" 
-                        @keydown.window.escape="open = false" 
+                        @keydown.window.escape="openNotes = false" 
                         x-transition:enter="transition ease-out duration-300"
                         x-transition:enter-start="opacity-0"
                         x-transition:enter-end="opacity-100"
@@ -608,51 +603,58 @@
                         tabindex="-1" 
                         class="fixed inset-0 z-50 flex justify-center items-center bg-gray-800 bg-opacity-50"
                         id="notes-modal">
+                        
                         <div x-show="openNotes" 
-                        x-transition:enter="transition ease-out duration-300"
-                        x-transition:enter-start="transform opacity-0 scale-90"
-                        x-transition:enter-end="transform opacity-100 scale-100"
-                        x-transition:leave="transition ease-in duration-200"
-                        x-transition:leave-start="transform opacity-100 scale-100"
-                        x-transition:leave-end="transform opacity-0 scale-90"
-                        class="relative p-4 w-full max-w-xl max-h-full bg-white rounded-lg shadow dark:bg-gray-700">
-                            <div class="relative w-full max-w-2xl max-h-full p-4">
+                            x-transition:enter="transition ease-out duration-300"
+                            x-transition:enter-start="transform opacity-0 scale-90"
+                            x-transition:enter-end="transform opacity-100 scale-100"
+                            x-transition:leave="transition ease-in duration-200"
+                            x-transition:leave-start="transform opacity-100 scale-100"
+                            x-transition:leave-end="transform opacity-0 scale-90"
+                            class="relative w-full max-w-xl max-h-[90vh] bg-white rounded-lg shadow dark:bg-gray-700 overflow-hidden mx-4">
+                            
+                            <div class="relative w-full max-h-full p-4 overflow-y-auto">
                                 <!-- Modal content -->
-                                <div class="relative bg-white rounded-lg shadow">
-                                    <!-- Modal header -->
-                                    <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
-
+                                <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
                                     <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
                                         <h3 class="text-xl font-semibold text-gray-900">
-                                            Add new note
+                                            Add New Note
                                         </h3>
-                                        <button @click="openNotes = !openNotes" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto" >
+                                        <button @click="openNotes = false; $wire.resetErrors();" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                             </svg>
                                             <span class="sr-only">Close modal</span>
                                         </button>
                                     </div>
+
                                     <!-- Modal body -->
                                     <div class="p-4 space-y-4 md:p-5" id="note_container">
                                         <textarea class="w-full h-40 p-2 border rounded-lg focus:ring-2 focus:border-customRed focus:ring-customRed" wire:model="note" placeholder="Type your note here..."></textarea>
                                         @error('note')
                                             <div class="text-sm transition transform alert alert-danger"
                                                 x-data x-init="document.getElementById('note_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('note_container').focus();" >
-                                                    <span class="text-xs text-red-500" > {{$message}}</span>
+                                                <span class="text-xs text-red-500">{{$message}}</span>
                                             </div>
                                         @enderror
                                     </div>
+
                                     <!-- Modal footer -->
                                     <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                        <button type="submit" type="button" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
-                                        <button @click="openNotes = !openNotes" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
+                                        <button type="submit" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                              </svg>                                              
+                                            Add Note
+                                        </button>
+                                        <button @click="openNotes = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
                                     </div>
-                                    </form>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
+                    
+                    <!-- Notes List -->
                     @if ($NotesData->isEmpty())
                         <tr class="bg-white border-b hover:bg-gray-50 ">
                             <th scope="col" colspan="9" class="justify-center " style="padding-bottom: 40px">
@@ -670,27 +672,23 @@
                             $pageIndex = ($NotesData->currentpage() - 1) * $NotesData->perpage() + $ctr;
                         @endphp
                         @foreach ($NotesData as $index => $note)
-                        @php
-                            $ctr = $ctr + 1;
-                        @endphp
+                            @php
+                                $ctr = $ctr + 1;
+                            @endphp
 
-                        <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
-                            <span>• #{{$pageIndex + $ctr}} - {{$note->note}}</span>
-                            <button id="delete-note" class="p-2" wire:click.prevent="deleteNote({{$note->id}})">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
-                                    <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5a.75.75 0 0 1 .786-.711Z" clip-rule="evenodd"/>
-                                </svg>
-                            </button>
-                        </div>
+                            <div class="flex items-center justify-between ml-4 text-xs font-medium text-customGray1">
+                                <span>• #{{$pageIndex + $ctr}} - {{$note->note}}</span>
+                                <button id="delete-note" class="p-2" wire:click.prevent="deleteNote({{$note->id}})">
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-4 h-4 mr-4 text-red-700 hover:text-red-500">
+                                        <path fill-rule="evenodd" d="M5 3.25V4H2.75a.75.75 0 0 0 0 1.5h.3l.815 8.15A1.5 1.5 0 0 0 5.357 15h5.285a1.5 1.5 0 0 0 1.493-1.35l.815-8.15h.3a.75.75 0 0 0 0-1.5H11v-.75A2.25 2.25 0 0 0 8.75 1h-1.5A2.25 2.25 0 0 0 5 3.25Zm2.25-.75a.75.75 0 0 0-.75.75V4h3v-.75a.75.75 0 0 0-.75-.75h-1.5ZM6.05 6a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 6.05 6Zm3.9 0a.75.75 0 0 1 .712.787l-.275 5.5a.75.75 0 0 1-1.498-.075l.275-5.5A.75.75 0 0 1 9.95 6Zm3.75 0a.75.75 0 0 1 .787.713l.275 5.5a.75.75 0 0 1-1.498.075l-.275-5.5A.75.75 0 0 1 13.7 6Z" clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
                         @endforeach
-                        @if ($NotesData->count() > 10)
-                        <div class="p-4 bg-gray-100 max-w-full rounded-b-lg " >
-                            {{ $NotesData->links(data : ['scrollTo' => False]) }}
-                        </div>
-                        @endif
                     @endif
                 </div>
             </div>
+
         </div>
         <div class="grid w-full grid-cols-1 gap-2 p-2 bg-gray-100 shadow-lg h-fit rounded-8px">
             <div>
@@ -706,7 +704,9 @@
                         @foreach ($EmployeeData as $employee )
                                 <div wire:key="{{ $employee->employee_id }}"  class="flex flex-col w-full gap-2 p-4 bg-white shadow-sm h-fit rounded-8px">
                                     <div class="flex justify-between">
-                                        <h2 class="font-semibold text-gray-900 text-md text-nowrap">{{$employee->first_name}} {{$employee->middle_name  }} {{$employee->last_name}}</h2>
+                                        <h2 class="font-semibold text-gray-900 text-md whitespace-normal">
+                                            {{$employee->first_name}} {{$employee->middle_name}} {{$employee->last_name}}
+                                        </h2>
                                         @if ($employee->department == "PEI")
                                             <span class="px-2 py-1 text-xs text-yellow-500 bg-yellow-100 rounded-8px text-nowrap">PEI</span>
                                         @elseif ($employee->department == "SL SEARCH")
@@ -756,18 +756,30 @@
                                         @else 
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
-                                        <div x-cloak x-data="{ openPayrollEditModal: false, addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: @entangle('payroll_picture')}" x-ref="modals" >
+                                        <script>
+                                            document.addEventListener('alpine:init', () => {
+                                                Alpine.store('editAccount', {
+                                                    openPayrollEditAccountModal: false,
+                                                    currentEditModal: null
+                                                });
+                                                Alpine.store('addPayroll', {
+                                                    openAddPayrollModal: false,
+                                                    currentAddModal: null
+                                                });
+                                            });
+                                        </script>
+                                        <div x-cloak x-data="{ openPayrollEditAccountModal: false, payrollStatus: $wire.entangle('payroll_status'), addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: $wire.entangle('payroll_picture')}" x-ref="modals" >
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="$store.editAccount.openPayrollEditAccountModal = true; $store.editAccount.currentEditModal = '{{ $loop->index }}';"  class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
                                                 </button>
                                                 <!-- Main modal -->
-                                                <div  x-show="openPayrollEditModal && currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
+                                                <div x-show="$store.editAccount.openPayrollEditAccountModal && $store.editAccount.currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
-                                                    <div x-show="openPayrollEditModal"
+                                                    <div x-show="$store.editAccount.openPayrollEditAccountModal"
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="opacity-0"
                                                         x-transition:enter-end="opacity-100"
@@ -776,7 +788,7 @@
                                                         x-transition:leave-end="opacity-0"
                                                          class="fixed inset-0 bg-black opacity-50"></div>
                                         
-                                                    <div x-show="openPayrollEditModal"                          
+                                                    <div x-show="$store.editAccount.openPayrollEditAccountModal"                          
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="transform opacity-0 scale-90"
                                                         x-transition:enter-end="transform opacity-100 scale-100"
@@ -789,7 +801,7 @@
                                                             <!-- Modal header -->
                                                             <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                 <h3 class="text-xl font-semibold text-gray-900">Edit Account Details</h3>
-                                                                <button @click="openPayrollEditModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <button @click="$store.editAccount.openPayrollEditAccountModal = false;  payrollStatus = ' '; $wire.resetErrors();" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                     </svg>
@@ -797,7 +809,7 @@
                                                                 </button>
                                                             </div>
                                                             <!-- Modal body -->
-                                                            <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto ">
+                                                            <div class="p-4 xl:p-5  overflow-y-auto" style="max-height: 27rem;">
                                                                 <form class="space-y-4" wire:submit.prevent="submit('{{ $employee->employee_id }}')" method="POST">
                                                                     <div>
                                                                         <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
@@ -831,7 +843,12 @@
                                                                             </div>
                                                                         @enderror
                                                                     </div>
-                                                                    <button type="submit"  class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Account</button>
+                                                                    <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900 flex items-center justify-center gap-2 shadow-lg   font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                          </svg>                                                                          
+                                                                        Edit Account
+                                                                    </button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -843,16 +860,16 @@
                                                     if($payroll_exists) $employee_payroll = $payrollMap->get($employee->employee_id);
                                                 @endphp
                                                
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'; payrollPicture = ''; " class="text-red-500 hover:text-red-700">
+                                                <button @click="$store.addPayroll.openAddPayrollModal = true; $store.addPayroll.currentAddModal = '{{ $loop->index }}'; payrollPicture = ''; " class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" 
-                                                    class="fixed inset-0 z-50 flex items-center justify-center">
+                                                <div x-show="$store.addPayroll.openAddPayrollModal && $store.addPayroll.currentAddModal === '{{ $loop->index }}'" 
+                                                    class="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-12">
                                                     <!-- Backdrop -->
-                                                    <div x-show="openAddPayrollModal" 
+                                                    <div x-show="$store.addPayroll.openAddPayrollModal" 
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="opacity-0"
                                                         x-transition:enter-end="opacity-100"
@@ -861,7 +878,7 @@
                                                         x-transition:leave-end="opacity-0"
                                                         class="fixed inset-0 bg-black opacity-50">
                                                     </div>
-                                                    <div id="add-payroll-modal_{{ $loop->index }}"  x-show="openAddPayrollModal" 
+                                                    <div id="add-payroll-modal_{{ $loop->index }}"  x-show="$store.addPayroll.openAddPayrollModal" 
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="opacity-0"
                                                         x-transition:enter-end="opacity-100"
@@ -873,7 +890,7 @@
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Add Payslip For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="$store.addPayroll.openAddPayrollModal = false; $wire.resetErrors(); " wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -895,27 +912,27 @@
                                                                         });
                                                                     "
                                                                     :class="isScrollable ? 'mb-4' : ''" 
-                                                                    class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
+                                                                    class="p-4 xl:p-5  overflow-y-auto" style="max-height: 28rem;">
                                                                     <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')"  method="POST">
                                                                         @csrf
-                                                                        <div class="grid grid-cols-2 gap-4" >
-                                                                                <div>
+                                                                        <div class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-4" >
+                                                                            <div class="grid grid-cols-1 min-[570px]:grid-cols-5 gap-2 col-span-2">
+                                                                                <div class="col-span-1 min-[570px]:col-span-3">
                                                                                     <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }} {{ $employee->middle_name }} {{ $employee->last_name }}" disabled>
                                                                                 </div>
-                                                                                <div>
-                                                                                    
+                                                                                <div class=" col-span-1 min-[570px]:col-span-2">
                                                                                     <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
                                                                                     <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
                                                                                 </div>
-                                                                                <div class="col-span-2">
-                                                                                    <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
-                                                                                    <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
-                                                                                </div>
-                                                                                
+                                                                            </div>
+                                                                            <div class="col-span-1 min-[450px]:col-span-2">
+                                                                                <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                                                                <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
+                                                                            </div>  
                                                                         </div>
                                                                         <hr class="border-gray-700">
-                                                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                        <div class="grid grid-cols-1 min-[480px]:grid-cols-3  gap-4">
                                                                             <div>
                                                                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
                                                                                 <select name="status" id="phase" wire:model="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
@@ -963,12 +980,17 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payslip</button>
+                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                                              </svg>                                                                              
+                                                                            Add Payslip
+                                                                        </button>
                                                                         
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
                                                                                 <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                                                    <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                                    <button @click="openAddWarningButton = false; $wire.resetErrors(); " type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                                         </svg>
@@ -990,7 +1012,9 @@
                                                                                             <button id="addWarningButton" @click=" openAddWarningButton = false " type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                                 Yes
                                                                                             </button>
-                                                                                            <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                            <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                                                                Cancel
+                                                                                            </button>
                                                                                         </div>
                                                                                 </div>
                                                                             </div>
@@ -1002,28 +1026,28 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'"
-                                                         class="fixed  inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="$store.addPayroll.openAddPayrollModal && $store.addPayroll.currentAddModal === '{{ $loop->index }}'"
+                                                         class="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-12">
                                                         <!-- Backdrop -->
-                                                        <div x-show="openAddPayrollModal"                                                         
+                                                        <div x-show="$store.addPayroll.openAddPayrollModal"                                                         
                                                         x-transition:leave="transition ease-in duration-400"
                                                         x-transition:leave-start="opacity-100"
                                                         x-transition:leave-end="opacity-0"
                                                         class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div x-show="openAddPayrollModal" id="add-payroll-modal_{{ $loop->index }}" 
+                                                        <div x-show="$store.addPayroll.openAddPayrollModal" id="add-payroll-modal_{{ $loop->index }}" 
                                                             x-transition:enter="transition ease-out duration-300"
                                                             x-transition:enter-start="transform opacity-0 scale-90"
                                                             x-transition:enter-end="transform opacity-100 scale-100"
                                                             x-transition:leave="transition ease-in duration-400"
                                                             x-transition:leave-start="transform opacity-100 scale-100"
                                                             x-transition:leave-end="transform opacity-0 scale-90"
-                                                        class="relative w-full max-w-lg  p-4 bg-white rounded-lg shadow-lg">
+                                                        class="relative w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Payslip of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="$store.addPayroll.openAddPayrollModal = false; $wire.resetErrors(); " type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -1045,33 +1069,33 @@
                                                                     });
                                                                 "
                                                                 :class="isScrollable ? 'mb-4' : ''" 
-                                                                class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto">
+                                                                class="p-4 xl:p-5 overflow-y-auto" style="max-height: 30rem;">
                                                                 {{-- <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto"> --}}
                                                                     <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
                                                                         @csrf
 
-                                                                    <div class="grid grid-cols-2 gap-4" >
-                                                                            <div>
-                                                                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                    <div class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-4" >
+                                                                            <div class="grid grid-cols-1 min-[570px]:grid-cols-5 gap-2 col-span-2">
+                                                                                <div class="col-span-1 min-[570px]:col-span-3">
+                                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }} {{ $employee->middle_name }} {{ $employee->last_name }}" disabled>
+                                                                                </div>
+                                                                                <div class=" col-span-1 min-[570px]:col-span-2">
+                                                                                    <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
+                                                                                    <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                                </div>
                                                                             </div>
-                                                                            <div>
-                                                                                
-                                                                                <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                                                                <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
-                                                                            </div>
-                                                                            <div class="col-span-2">
+                                                                            <div class="col-span-1 min-[450px]:col-span-2">
                                                                                 <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
                                                                                 <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
-                                                                            </div>
-                                                                            
+                                                                            </div>  
                                                                     </div>
                                                                     <hr class="border-gray-700">
                                                                     @php
                                                                         $payroll_details = $payrollMap->get($employee->employee_id);
                                                                         // $this->payroll_picture = trim($payrollMap->get($employee->employee_id)->payroll_picture);
                                                                     @endphp
-                                                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                    <div class="grid grid-cols-1 min-[480px]:grid-cols-3  gap-4">
                                                                         <div>
                                                                             <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
                                                                             <select name="status" id="status" disabled class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
@@ -1126,17 +1150,31 @@
                                                                     </script>
                                                                     
     
-                                                                    <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go to Payslip</button>
+                                                                    <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                                                          </svg>
+                                                                        Go to Payslip
+                                                                    </button>
 
                                                                     <div class="grid grid-cols-2 gap-4">
-                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payslip</button>
-                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payslip</button>
+                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                              </svg>                                                                              
+                                                                              Edit Payslip
+                                                                            </button>
+                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 flex items-center justify-center gap-2 shadow-lg  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                            </svg>
+                                                                            Delete Payslip</button>
                                                                     </div>
                                                                         
                                                                     <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                         <div class="relative w-full max-w-md max-h-full p-4">
                                                                             <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                                                                                <button @click="openAddWarningButton = false" type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
+                                                                                <button @click="openAddWarningButton = false; $wire.resetErrors(); " type="button" class="absolute top-3 end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white">
                                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                                     </svg>
@@ -1158,7 +1196,9 @@
                                                                                         <button id="addWarningButton" @click=" openAddWarningButton = false" type="submit" class="text-white bg-customGreen hover:bg-green-700  dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
                                                                                             Yes
                                                                                         </button>
-                                                                                        <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No</button>
+                                                                                        <button @click="openAddWarningButton = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200  hover:text-white hover:bg-customRed focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                                                                                            Cancel
+                                                                                        </button>
                                                                                     </div>
                                                                             </div>
                                                                         </div>
@@ -1168,7 +1208,7 @@
                                                                         <div class="relative w-full max-w-md max-h-full p-4">
                                                                             <div class="relative bg-white rounded-lg shadow">
                                                                                 <!-- Close button -->
-                                                                                <button type="button" @click="openCancelPrompt = false" class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
+                                                                                <button type="button" @click="openCancelPrompt = false; $wire.resetErrors(); " class="absolute top-3 right-3 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 inline-flex justify-center items-center">
                                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                                     </svg>
@@ -1180,7 +1220,7 @@
                                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                     </svg>
                                                                                     <h3 class="mb-5 text-lg font-normal text-gray-500">Confirm Deletion?</h3>
-                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')"  @click="openAddPayrollModal = false; openAddWarningButton = false " class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
+                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')"  @click="$store.addPayroll.openAddPayrollModal = false; openAddWarningButton = false " class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
                                                                                     <button type="button" @click="openCancelPrompt = false" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100">No</button>
                                                                                 </div>
                                                                             </div>
@@ -1225,15 +1265,35 @@
         </div>
     </div>
 
+    <!-- Loading screen -->
+    <div wire:loading wire:target="search" class="fixed inset-x-0 top-1/2 flex justify-center pointer-events-none z-50">
+        <div class="z-50 mt-12">
+            <div id="toast-container" class="flex items-center justify-center w-full h-full">
+                <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 border-6 border-white text-customRed bg-white bg-opacity-90 rounded-lg shadow"
+                    style="top: 90px; left: 50%; transform: translateX(-50%); z-index: 60;"
+                    role="alert">
+                    <div role="status">
+                        <svg aria-hidden="true" class="inline w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-customRed" viewBox="0 0 100 101" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor"/>
+                            <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill"/>
+                        </svg>
+                        <span class="sr-only">Loading...</span>
+                    </div>
+                    <div class="text-sm font-normal ms-3 text-center">Updating Table</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
     @trigger-success-add.window="showToast = true; toastType = 'success'; toastMessage = 'Added Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-success-update.window="showToast = true; toastType = 'success'; toastMessage = 'Updated Payroll Status Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
+    @trigger-success-update.window="showToast = true; toastType = 'success'; toastMessage = 'Updated Payslip Status Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-edit.window="showToast = true; toastType = 'success'; toastMessage = 'Edited Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Payslip Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-add-note.window="showToast = true; toastType = 'success'; toastMessage = 'Added Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-success-delete-note.window="showToast = true; toastType = 'success'; toastMessage = 'Deleted Note Successfully'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
     @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)"
-    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payroll Already Exists for this Employee. Manually Edit It.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
+    @trigger-already-exists.window="showToast = true; toastType = 'error'; toastMessage = 'Payslip Already Exists for this Employee. Manually Edit It or Refresh Page.'; $dispatch('modal-close'); cancelModal = false; setTimeout(() => showToast = false, 3000)">
     <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
     <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-500 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
         x-show="showToast"
@@ -1309,14 +1369,18 @@
                 const alpineData = Alpine.$data(modal);
                 alpineData.openNotes = false; // Open the modal
             }
-                else {
+            else {
                 window.dispatchEvent(new CustomEvent('trigger-success-update'));
                 const modal = document.querySelector(`[x-ref="modals"]`);
                 // Access Alpine data
                 const alpineData = Alpine.$data(modal);
                 // Update the state
                 if(event.type == "Status"){
-                    alpineData.openPayrollEditModal = false; // Open the modal
+                    // alert(Alpine.store('editAccount').openPayrollEditAccountModal);
+                    // Update the state
+                    Alpine.store('editAccount').openPayrollEditAccountModal = false;
+                    // Alpine.store('editAccount').currentEditModal = targetedIndex; 
+                    // alert(Alpine.store('editAccount').openPayrollEditAccountModal);
                 } else if (event.type == "Edit"){
                     alpineData.openAddPayrollModal = false; // Open the modal
                     alpineData.currentAddModal = null; // Open the modal

@@ -65,8 +65,6 @@ return new class extends Migration
                 $table->decimal('sick_credits')->nullable();
                 $table->string('payroll_status', 50)->nullable();
                 $table->boolean('active')->default(1);
-
-
                 $table->string('personal_email', 100)->nullable();
             // $table->string('address');
 

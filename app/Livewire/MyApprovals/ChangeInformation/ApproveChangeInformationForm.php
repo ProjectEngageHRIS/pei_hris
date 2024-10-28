@@ -5,8 +5,10 @@ namespace App\Livewire\MyApprovals\ChangeInformation;
 use Livewire\Component;
 use App\Models\Employee;
 use Livewire\WithFileUploads;
+use App\Mail\ApproveChangeInfo;
 use App\Models\ChangeInformation;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Auth\Access\AuthorizationException;
 
@@ -62,6 +64,8 @@ class ApproveChangeInformationForm extends Component
     public $index;
     public $status;
 
+    public $form_id;
+
     public function mount($index){
         $this->index = $index;
 
@@ -77,6 +81,7 @@ class ApproveChangeInformationForm extends Component
             return redirect()->to(route('ApproveChangeInformationTable'));
         }
 
+        $this->form_id = $changeInfoData->form_id;
         $this->status = $changeInfoData->status;
         $this->first_name = $changeInfoData->first_name;
         $this->middle_name = $changeInfoData->middle_name;
@@ -279,11 +284,23 @@ class ApproveChangeInformationForm extends Component
 
    
     public function changeStatus(){
-        $loggedInUser = auth()->user()->employee_id;
+        $loggedInUser = auth()->user();
         try {
+            if (!in_array($loggedInUser->role_id, [6, 7, 61024])){
+                throw new \Exception('Unauthorized Access');
+            } 
+            $changeInformationStatus = ChangeInformation::where('uuid', $this->index)->first();
+
+            if(!$changeInformationStatus){
+                throw new \Exception('No Change Request Record Found');
+            }
+
+            $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
+
+            if(!$employee){
+                throw new \Exception('No Employee Record Found');
+            }
             if($this->status == "Approved"){
-                $changeInformationStatus = ChangeInformation::where('uuid', $this->index)->first();
-                $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
                 $employee->first_name = $this->first_name;
                 $employee->middle_name = $this->middle_name;
                 $employee->last_name = $this->last_name;
@@ -377,34 +394,33 @@ class ApproveChangeInformationForm extends Component
                     // 'other_documents' => json_encode($employee->other_documents, true),
                     'updated_at' => now(),
                 ];
-    
-                
-                Employee::where('employee_id', $changeInformationStatus->employee_id)
-                                    ->update($updateData);
+
                 
                 // $this->js("alert('Change Information Request Submitted!')"); 
     
                 $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
     
                 $employee->employee_history = $jsonEmployeeHistory;
-    
-                
+
+                Employee::where('employee_id', $changeInformationStatus->employee_id)
+                                    ->update($updateData);
             }
-            
-    
-            $changeInformationStatus = ChangeInformation::where('uuid', $this->index)
-                                                            ->update(['Status' => $this->status,
-                                                                    'updated_at' => now() ]);
-    
+            $changeInformationStatus->update(['status' => $this->status,
+                                              'updated_at' => now() ]);
+
+            if ($employee && $employee->employee_email) {
+                // Ensure you have a mailable class named StatusChangedMail
+                Mail::to($employee->employee_email)->send(new ApproveChangeInfo($changeInformationStatus));
+            }
+                                                        
             $this->dispatch('trigger-success');
 
-    
             // $employee->save();
     
             return redirect()->to(route('ApproveChangeInformationTable'));
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage() . ' | ' . $loggedInUser);
+            Log::channel('changeinforequests')->error('Failed to update Change Request: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
 
             // Dispatch a failure event with an error message
             $this->dispatch('trigger-error');

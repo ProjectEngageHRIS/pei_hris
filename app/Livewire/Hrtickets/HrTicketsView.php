@@ -166,7 +166,7 @@ class HrTicketsView extends Component
                     // dd($this->type_of_hrconcern,  $hrticketdata->type_of_hrconcern);
                 }
                 else if($hrticketdata->sub_type_of_request == "Payroll-related Concerns"){
-                    $this->request_date = $hrticketdata->request_date;
+                    $this->request_date =  Carbon::parse($hrticketdata->request_date)->toDateString();
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;

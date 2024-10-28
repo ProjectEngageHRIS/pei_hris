@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('AssignedTasksTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">My Tasks</a>
+            <a href="{{route('TasksTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">My Tasks</a>
             </div>
         </li>
         <li aria-current="page">
@@ -28,7 +28,7 @@
         </ol>
     </nav> 
     <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">View Task</h2>
-    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <p class="my-4 text-customRed  text-lg">Task Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
 
     <section class="bg-white dark:bg-gray-900 pb-10 px-8 mt-10 rounded-lg">
         <div class=" px-1 mx-auto pt-8">
@@ -98,14 +98,17 @@
                                             class="bg-gray-50 border border-gray-900 text-gray-900 shadow-inner text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                             required="">
                                     </div>
-                                    <div wire:ignore class="">
-                                        <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Target Employees<span class="text-red-600">*</span></label>
-                                        <select disabled multiple style="width:100%; background:gray;" class="js-example-basic-multiple disabled-select mb-8 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 ">
-                                            @foreach($employeeNames as $name)
-                                               <option value="{{$name}}">{{$name}}</option>
-                                            @endforeach
-                                        </select>
+                                    <div>
+                                        <label for="name" class="block mb-2 text-sm font-semibold  text-gray-900 dark:text-white">Target Employees<span class="text-red-600">*</span></label>
+                                        <div class="w-full border border-gray-900 p-2.5 rounded-lg">
+                                            <ul class="list-disc pl-5">
+                                                @foreach($target_employees as $name)
+                                                    <li class="mb-1 text-gray-900">{{ $name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
                                     </div>
+                                    
                                 </div>
                                 {{-- Date Of Filling --}}
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
@@ -169,7 +172,7 @@
             </form>
 
         <!-- Change Status Button -->
-        <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse mt-10">
+        {{-- <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse mt-10">
             <button @click="openCrudModal = true" type="button" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
                 Change Status
             </button>
@@ -200,10 +203,8 @@
                             <div>
                                 <label for="category" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Status</label>
                                 <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                    <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
+                                    <option class="hover:bg-customRed hover:text-white" value="Completed">Completed</option>
                                     <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
-                                    <option class="hover:bg-customRed hover:text-white" value="Report">Report</option>
-                                    <option class="hover:bg-customRed hover:text-white" value="Request to Complete">Request to Complete</option>
                                     <option class="hover:bg-customRed hover:text-white" value="Cancelled">Cancelled</option>
                                 </select>
                             </div>
@@ -281,7 +282,7 @@
                             </div>
                         </div>
             </div>
-        </div>
+        </div> --}}
             
         </div>
 

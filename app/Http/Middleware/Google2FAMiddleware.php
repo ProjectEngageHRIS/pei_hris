@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\Models\Employee;
 use App\Models\UserDevices;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
@@ -53,8 +54,17 @@ class Google2FAMiddleware
             // Optionally, update last used time
             $userDevice->last_used_at = now();
             $userDevice->save();
+        } else {
+            $employee = Employee::where('employee_id', $user->employee_id)->select('employee_id', 'active')->first();
+            if($employee->active != 1){
+                Auth::logout();
+                $request->session()->invalidate();
+                // $request->session()->regenerateToken();
+        
+                return redirect()->route('home');
+            }
         }
-
+        
         return $next($request);
     }
 }

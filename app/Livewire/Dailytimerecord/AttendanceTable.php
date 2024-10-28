@@ -90,6 +90,7 @@ class AttendanceTable extends Component
         $currentMonth = $now->month;
         $currentDay = $now->day;
         $currentMonthName = $now->format('F');
+        $this->dayFilter = "all";
         $this->currentYear = $currentYear;
         $this->currentMonth = $currentMonth;
         $this->currentMonthName = $currentMonthName;
@@ -132,6 +133,7 @@ class AttendanceTable extends Component
 
         $this->setGraph();
         $this->chartFilter = "Weekly";
+
         // $employeeInformation = Employee::where('employee_id', $loggedInUser)
         //                         ->select( 'sick_credits', 'vacation_credits', 'first_name', 'gender')->first();
         // $this->firstName = $employeeInformation->first_name;
@@ -383,17 +385,47 @@ class AttendanceTable extends Component
         $this->yearFilterName = $this->yearFilter ?? $dateToday->year;
 
         if (strlen($this->search) >= 1) {
-            $searchTerms = explode(' ', $this->search);
-            $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhere('attendance_date', 'like', '%' . $term . '%')
-                      ->orWhere('type', 'like', '%' . $term . '%');
-                    // Add other fields if needed
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
+        
+            // Handle different formats for full date matching
+            $parsedFullDate = null;
+            $parsedYMDDate = null;
+        
+            // Try to parse "October 1 2024" or "October 01 2024" format
+            if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                $parsedFullDate = Carbon::createFromFormat('F j Y', $searchTerms);
+            } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                $parsedFullDate = Carbon::createFromFormat('F d Y', $searchTerms);
+            }
+        
+            // Try to parse "2024-10-11" format
+            if (\DateTime::createFromFormat('Y-m-d', $searchTerms) !== false) {
+                $parsedYMDDate = Carbon::createFromFormat('Y-m-d', $searchTerms);
+            }
+        
+            $results = $query->where(function ($q) use ($parsedFullDate, $parsedYMDDate, $searchTerms) {
+                if ($parsedFullDate) {
+                    // If the search is an exact full date (e.g., "October 1 2024" or "October 01 2024")
+                    $q->whereDate('attendance_date', '=', $parsedFullDate->format('Y-m-d'));
+                } elseif ($parsedYMDDate) {
+                    // If the search is in the Y-m-d format (e.g., "2024-10-11")
+                    $q->whereDate('attendance_date', '=', $parsedYMDDate->format('Y-m-d'));
+                } else {
+                    // Fallback to more general searches (e.g., month or day)
+                    $q->orWhereRaw("DATE_FORMAT(attendance_date, '%M') = ?", [$searchTerms]) // Exact match for October
+                      ->orWhereRaw("DATE_FORMAT(attendance_date, '%M %c') = ?", [$searchTerms]) // Match for October 1 (ignoring leading zero)
+                      ->orWhereRaw("DATE_FORMAT(attendance_date, '%M %e') = ?", [$searchTerms]) // Match for October 1 without leading zero
+                      ->orWhere('type', 'like', '%' . $searchTerms . '%'); // For searching by 'type'
                 }
             })->orderBy('attendance_date', 'desc')->paginate(5);
         } else {
             $results = $query->orderBy('attendance_date', 'desc')->paginate(5);
         }
+        
+
+        
+        
 
     
     

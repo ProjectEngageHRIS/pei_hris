@@ -22,13 +22,14 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 dark:text-gray-400">View Leave Request</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 dark:text-gray-400">View</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-2 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">View Leave Request  </h2>
-    <p class="mb-4 text-customRed font-semibold text-lg"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <h2 class="mb-2 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">View Leave Request</h2>
+    <p class="my-4 text-customRed  text-lg">Form Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
     
     <section class="px-8 pb-8 mt-10 bg-white rounded-lg dark:bg-gray-900">
         <div class=" px-1 mx-auto pt-8">
@@ -149,7 +150,7 @@
                                 <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
+                                <input disabled type="date" name="date_earned" id="date_earned" wire:model="date_earned"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('date_earned')
@@ -163,7 +164,7 @@
                                 <label for="earned_description" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned Description <span class="text-red-600">*</span></label>
                                 <div id="earned_description" class="grid grid-cols-1">
                                     <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
-                                        placeholder="Write additional information here. Maximum of 200 only"
+                                        placeholder="Write additional information here. Maximum of 200 letters only"
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
                                     </textarea>
                                     @error('earned_description')
@@ -182,7 +183,7 @@
                                 <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Date Requested
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
+                                <input disabled type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model.live="inclusive_start_date"
                                     class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_start_date')
@@ -195,7 +196,7 @@
                                 <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">Actual Schedule
                                     <span class="text-red-600">*</span>
                                 </label>
-                                <input disabled type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                <input disabled type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                     class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
                                     required="">
                                 @error('inclusive_end_date')
@@ -248,12 +249,12 @@
                                 <h2 class="col-span-1 whitespace-nowrap font-bold text-customRed">Leave Request Time Frame</h2>
                                 <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 ">
                                     <div class="col-span-1">
-                                        <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date/Time
+                                        <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900">Start Date
                                             <span class="text-red-600">*</span>
                                         </label>
-                                        <input  type="datetime-local" name="inclusive_start_date" id="inclusive_start_date" wire:model="inclusive_start_date"
+                                        <input  type="date" name="inclusive_start_date" id="inclusive_start_date" wire:model="inclusive_start_date"
                                             class="bg-gray border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
-                                            required="">
+                                            required="" disabled>
                                         @error('inclusive_start_date')
                                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();" >
                                                 <span class="text-xs text-red-500">{{$message}}</span>
@@ -261,8 +262,8 @@
                                         @enderror
                                     </div>
                                     <div class="col-span-1">
-                                        <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date/Time <span class="text-red-600">*</span></label>
-                                        <input disabled type="datetime-local" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
+                                        <label for="inclusive_end_date" class="block mb-2 text-sm font-medium text-gray-900 ">End Date <span class="text-red-600">*</span></label>
+                                        <input disabled type="date" name="inclusive_end_date" id="inclusive_end_date" wire:model.live="inclusive_end_date"
                                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed 00 block w-full p-2.5 "
                                             required="">
                                         @error('inclusive_end_date')
@@ -276,19 +277,12 @@
                                             <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/Full on Start or End Day
                                                 <span class="text-red-600">*</span>
                                             </label>
-                                            <select disabled id="purpose_type" name="full_half" wire:model.live="full_half"
-                                                class="disabled-select bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                            <select id="purpose_type" name="full_half" wire:model.live="full_half" disabled
+                                                class="bg-gray-50 shadow-inner border border-gray-300 disabled-select text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                 <option value="" selected>Select</option>
-                                                <optgroup label="Full Day Options">
-                                                    <option value="Start Full">Full Day Start | Half Day End</option>
-                                                    <option value="End Full">Full Day End | Half Day Start</option>
-                                                    <option value="Both Full">Full Day Both</option>
-                                                </optgroup>
-                                                <optgroup label="Half Day Options">
-                                                    <option value="Start Half">Half Day Start | Full Day End</option>
-                                                    <option value="End Half">Half Day End | Full Day Start</option>
-                                                    <option value="Both Half">Half Day Both</option>
-                                                </optgroup>
+                                                <option value="Full Day">Full Day</option>
+                                                <option value="Half Day">Half Day</option>
+                                                <option value="Undertime">Undertime</option>
                                             </select>
                                             @error('full_half')
                                                 <div class="text-sm transition transform alert alert-danger"
@@ -302,46 +296,40 @@
                             </div>
                             {{-- Available Credits --}}
                             <div id="leavecredits_container" class="col-span-3 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
-                                <h2 class="col-span-3 min-[902px]:col-span-3 font-bold text-customRed">Leave Credits</h2>
-                                <div class="col-span-1">
-                                    <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-customGray ">Number of Days <span class="text-red-600">*</span></label>
-                                    <input disabled type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
-                                        class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
-                                        disabled>
-                                    @error('num_of_days_work_days_applied')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div class="col-span-1">
-                                    <label for="available_credits" class="block mb-2 text-sm font-medium text-customGray ">Available Credits <span class="text-red-600">*</span></label>
-                                    <input disabled type="number" name="available_credits" id="available_credits" wire:model="available_credits"
-                                        class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
-                                        disabled>
-                                    @error('available_credits')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
-                                </div>
-                                <div id="deduct_to_container" class="col-span-1">
-                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Deduct to?
-                                        <span class="text-red-600">*</span>
-                                    </label>
-                                    <select disabled id="purpose_type" name="deduct_to" wire:model="deduct_to"
-                                        class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                        <option value="">Select </option>
-                                        <option value="Salary">Salary</option>
-                                        <option value="Credits">Credits</option>
-                                    </select>
-                                    @error('deduct_to')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
+                                <h2 class="col-span-3 font-bold text-customRed">Leave Credits</h2>
+                                <div class="grid grid-cols-2 gap-4 col-span-3">
+                                    <!-- Number of Days -->
+                                    <div class="col-span-1">
+                                        <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-customGray">Number of Days <span class="text-red-600">*</span></label>
+                                        <input disabled type="text" name="numOfWorkDay" id="numOfWorkDay" value="{{$num_of_days_work_days_applied}}"
+                                            class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                            disabled>
+                                        @error('num_of_days_work_days_applied')
+                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('leavecredits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('leavecredits_container').focus();">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                            
+                                    <!-- Deduct to -->
+                                    <div id="deduct_to_container" class="col-span-1">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900">Deduct to? <span class="text-red-600">*</span></label>
+                                        <select disabled id="purpose_type" name="deduct_to" wire:model="deduct_to" 
+                                            class="disabled-select bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                            required>
+                                            <option value="">Select</option>
+                                            <option value="Salary">Salary</option>
+                                            <option value="Credits">Credits</option>
+                                        </select>
+                                        @error('deduct_to')
+                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
                                 </div>
                             </div>
+                            
                         </div>
                         <hr class="my-4 border-gray-300">
                     @endif
@@ -364,7 +352,7 @@
                         <div class="flex flex-row-reverse">
                             <button id="cancel_button"  
                                 type="button" 
-                                class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow"
+                                class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 shadow"
                                 @click="openCancelModal = true">
                                 Cancel Request
                             </button>

@@ -7,9 +7,11 @@ use Livewire\Component;
 use App\Models\Employee;
 use App\Models\Ittickets;
 use Livewire\WithPagination;
+use App\Mail\ApproveChangeInfo;
 use App\Models\ChangeInformation;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 
 class ApproveChangeInformationTable extends Component
 {
@@ -39,7 +41,6 @@ class ApproveChangeInformationTable extends Component
     // ];
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -112,28 +113,33 @@ class ApproveChangeInformationTable extends Component
         $query = ChangeInformation::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
 
         switch ($this->date_filter) {
-            case '1':
-                $query->whereDate('application_date',  Carbon::today());
+            case '1': // Today
+                $startOfDay = Carbon::today(); // Start of today (00:00:00)
+                $endOfDay = Carbon::today()->endOfDay(); // End of today (23:59:59)
+                $query->whereBetween('application_date', [$startOfDay, $endOfDay]);
                 $this->dateFilterName = "Today";
                 break;
-            case '2':
-                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
+    
+            case '2': // Last 7 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(7), Carbon::now()]);
                 $this->dateFilterName = "Last 7 Days";
                 break;
-            case '3':
-                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
-                $this->dateFilterName = "Last 30 days";
+    
+            case '3': // Last 30 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::now()]);
+                $this->dateFilterName = "Last 30 Days";
                 break;
-            case '4':
-                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-                // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+    
+            case '4': // Last 6 Months
+                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::now()]);
                 $this->dateFilterName = "Last 6 Months";
                 break;
-            case '5':
-                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
+    
+            case '5': // Last Year
+                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::now()]);
                 $this->dateFilterName = "Last Year";
                 break;
-            default:
+            default: // All
                 $this->dateFilterName = "All";
                 break;
         }
@@ -208,28 +214,48 @@ class ApproveChangeInformationTable extends Component
         // } else {
         //     $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
         // }
+        
         if (strlen($this->search) >= 1) {
-            $searchTerms = explode(' ', $this->search);
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
         
             // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhereHas('employee', function ($query) use ($term) {
-                        $query->where('first_name', 'like', '%' . $term . '%')
-                              ->orWhere('last_name', 'like', '%' . $term . '%')
-                              ->orWhere('department', 'like', '%' . $term . '%')
-                              ->orWhere('current_position', 'like', '%' . $term . '%')
-                              ->orWhere('employee_type', 'like', '%' . $term . '%');
-                    })
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('status', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+        
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F d Y', $searchTerms);
+                }
+        
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhereHas('employee', function ($query) use ($term) {
+                            $query->where('first_name', 'like', '%' . $term . '%')
+                                  ->orWhere('last_name', 'like', '%' . $term . '%')
+                                  ->orWhere('department', 'like', '%' . $term . '%')
+                                  ->orWhere('current_position', 'like', '%' . $term . '%')
+                                  ->orWhere('employee_type', 'like', '%' . $term . '%');
+                        })
+                        ->orWhere('application_date', 'like', '%' . $term . '%')
+                        ->orWhere('status', 'like', '%' . $term . '%');
+                    }
                 }
             })->orderBy('created_at', 'desc');
-
+        
         } else {
             // If no search term, return all records
             $results = $query->orderBy('created_at', 'desc');
         }
+        
 
         if($this->statusFilterName == "Cancelled"){
             $results = $results->paginate(5);
@@ -257,14 +283,22 @@ class ApproveChangeInformationTable extends Component
         try {
             if (!in_array($loggedInUser->role_id, [6, 7, 61024])){
                 throw new \Exception('Unauthorized Access');
-            } 
-            if($this->status == "Approved"){
-                $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)->first();
+            }
+            $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)->first();
 
-                if(!$changeInformationStatus){
-                    throw new \Exception('No Record Found');
-                }
-                $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
+            if(!$changeInformationStatus){
+                throw new \Exception('No Change Request Record Found');
+            }
+
+            $employee = Employee::where('employee_id', $changeInformationStatus->employee_id)->first();
+
+            if(!$employee){
+                throw new \Exception('No Employee Record Found');
+            }
+            
+
+            if($this->status == "Approved"){
+
                 $employee->first_name = $changeInformationStatus->first_name;
                 $employee->middle_name = $changeInformationStatus->middle_name;
                 $employee->last_name = $changeInformationStatus->last_name;
@@ -359,25 +393,25 @@ class ApproveChangeInformationTable extends Component
                     'updated_at' => now(),
                 ];
     
-                
-                Employee::where('employee_id', $changeInformationStatus->employee_id)
-                                    ->update($updateData);
-                
-                // $this->js("alert('Change Information Request Submitted!')"); 
-    
                 $jsonEmployeeHistory = json_encode($jsonEmployeeHistory ?? ' ') ;
     
                 $employee->employee_history = $jsonEmployeeHistory;
-    
-                
+
+                                
+                Employee::where('employee_id', $changeInformationStatus->employee_id)
+                                    ->update($updateData);
             }
 
 
             
-            $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)
-                                                            ->update(['Status' => $this->status,
-                                                                    'updated_at' => now() ]);
+            $changeInformationStatus->update(['Status' => $this->status,
+                                              'updated_at' => now() ]);
     
+            if ($employee && $employee->employee_email) {
+                // Ensure you have a mailable class named StatusChangedMail
+                Mail::to($employee->employee_email)->send(new ApproveChangeInfo($changeInformationStatus));
+            }
+
             $this->dispatch('triggerSuccess');
 
             return redirect()->to(route('ApproveChangeInformationTable'));

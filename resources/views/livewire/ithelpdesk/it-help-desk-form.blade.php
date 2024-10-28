@@ -22,12 +22,12 @@
             <svg class="w-3 h-3 mx-1 text-gray-600 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 dark:text-gray-400">Submit Concern</span>
+            <span class="text-sm font-semibold text-gray-900 ms-1 md:ms-2 dark:text-gray-400">Form</span>
             </div>
         </li>
         </ol>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">Submit Concern</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 md:text-3xl dark:text-white">IT Ticket Form</h2>
     <section class="px-8 pb-8 mt-10 bg-white rounded-lg dark:bg-gray-900">
         <div class="px-1 pt-8 mx-auto ">
             <form wire:submit.prevent="submit" method="POST">
@@ -41,21 +41,21 @@
                                 <div>
                                     <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                         <div class="w-full ">
-                                            <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">First name <span class="text-red-600">*</span></label>
+                                            <label for="firstname" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">First Name <span class="text-red-600">*</span></label>
                                             <input type="text" name="firstname" id="firstname"  value="{{$first_name}}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                         <div class="w-full ">
                                             <label for="middlename"
-                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Middle name <span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Middle Name <span class="text-red-600">*</span></label>
                                             <input type="text" name="middlename" id="middlename" value="{{$middle_name}}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
                                         </div>
                                         <div class="w-full">
                                             <label for="lastname"
-                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap dark:text-white">Last Name <span class="text-red-600">*</span></label>
                                             <input type="text" name="lastname" id="lastname"  value="{{$last_name}}"
                                                 class="bg-gray-50 border border-gray-300 text-gray-500 shadow-inner text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 required="" disabled>
@@ -83,7 +83,7 @@
                         </div>
                         {{-- Concern Information --}}
                         <div class="grid w-full grid-cols-1 col-span-3 ">
-                            <h2 class="font-bold text-customRed">Concern Information <span class="text-customGray1">(Max: 5000 Characters)</span> </h2>
+                            <h2 class="font-bold text-customRed">IT Concern Information <span class="text-customGray1">(Max: 5000 Characters)</span> </h2>
                             <div id="description_container" class="mt-5">
                                 <textarea type="text" rows="10" id="description" name="description" wire:model="description"
                                     class="block p-2.5 w-full text-sm shadow-inner text-gray-500 bg-gray-50 rounded-lg ring-1 border border-gray-200 ring-gray-300 focus:border-customRed focus:ring-customRed" >

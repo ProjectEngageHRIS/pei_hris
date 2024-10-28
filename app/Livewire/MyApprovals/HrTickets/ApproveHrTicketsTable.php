@@ -10,8 +10,10 @@ use App\Models\Employee;
 use App\Models\Hrticket;
 use App\Models\Leaverequest;
 use Livewire\WithPagination;
+use App\Mail\ApproveHrTicket;
 use Livewire\WithoutUrlPagination;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Response;
 
 class ApproveHrTicketsTable extends Component
@@ -37,7 +39,6 @@ class ApproveHrTicketsTable extends Component
     public $currentFormId;
 
     public $employeeTypesFilter = [
-        'INDEPENDENT CONSULTANT' => false,
         'INDEPENDENT CONTRACTOR' => false,
         'INTERNAL EMPLOYEE' => false,
         'INTERN' => false,
@@ -76,6 +77,8 @@ class ApproveHrTicketsTable extends Component
     public $departmentTypeFilter;
     public $companyFilter;
     public $genderFilter;
+
+    public $role_id = False;
     
     
     public function search()
@@ -122,42 +125,47 @@ class ApproveHrTicketsTable extends Component
         } else if($loggedInUser == 10){
             $query->where('type_of_ticket', 'HR Operations');
         } else if(in_array($loggedInUser, [7, 8, 61024])){
-
+            $this->role_id = True;
         } else {
             redirect()->to(route('HumanResourceDashboard'));
         }
 
         switch ($this->date_filter) {
-            case '1':
-                $query->whereDate('application_date',  Carbon::today());
+            case '1': // Today
+                $startOfDay = Carbon::today(); // Start of today (00:00:00)
+                $endOfDay = Carbon::today()->endOfDay(); // End of today (23:59:59)
+                $query->whereBetween('application_date', [$startOfDay, $endOfDay]);
                 $this->dateFilterName = "Today";
                 break;
-            case '2':
-                $query->whereBetween('application_date', [Carbon::today()->startOfWeek(), Carbon::today()]);
+    
+            case '2': // Last 7 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(7), Carbon::now()]);
                 $this->dateFilterName = "Last 7 Days";
                 break;
-            case '3':
-                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::today()]);
-                $this->dateFilterName = "Last 30 days";
+    
+            case '3': // Last 30 Days
+                $query->whereBetween('application_date', [Carbon::today()->subDays(30), Carbon::now()]);
+                $this->dateFilterName = "Last 30 Days";
                 break;
-            case '4':
-                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::today()]);
-                // $query->whereDate('application_date', '>=', Carbon::today()->subMonths(6), '<=', Carbon::today());
+    
+            case '4': // Last 6 Months
+                $query->whereBetween('application_date', [Carbon::today()->subMonths(6), Carbon::now()]);
                 $this->dateFilterName = "Last 6 Months";
                 break;
-            case '5':
-                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::today()]);
+    
+            case '5': // Last Year
+                $query->whereBetween('application_date', [Carbon::today()->subYear(), Carbon::now()]);
                 $this->dateFilterName = "Last Year";
                 break;
-            default:
+            default: // All
                 $this->dateFilterName = "All";
                 break;
         }
 
         switch ($this->status_filter) {
             case '1':
-                $query->where('status',  'Approved');
-                $this->statusFilterName = "Approved";
+                $query->where('status',  'Completed');
+                $this->statusFilterName = "Completed";
                 break;
             case '2':
                 $query->where('status', 'Pending');
@@ -248,32 +256,51 @@ class ApproveHrTicketsTable extends Component
                 $query->whereIn('gender', $genderTypes);
             });
         }
+
         if (strlen($this->search) >= 1) {
-            $searchTerms = explode(' ', $this->search);
-        
+            // Remove commas from the search input
+            $searchTerms = preg_replace('/,/', '', $this->search);
+
             // Add conditions to search through relevant fields
             $results = $query->where(function ($q) use ($searchTerms) {
-                foreach ($searchTerms as $term) {
-                    $q->orWhereHas('employee', function ($query) use ($term) {
-                        $query->where('first_name', 'like', '%' . $term . '%')
-                              ->orWhere('last_name', 'like', '%' . $term . '%')
-                              ->orWhere('department', 'like', '%' . $term . '%')
-                              ->orWhere('current_position', 'like', '%' . $term . '%')
-                              ->orWhere('employee_type', 'like', '%' . $term . '%');
-                    })
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('application_date', 'like', '%' . $term . '%')
-                    ->orWhere('concerned_employee', 'like', '%' . $term . '%')
-                    ->orWhere('type_of_ticket', 'like', '%' . $term . '%')
-                    ->orWhere('type_of_request', 'like', '%' . $term . '%')
-                    ->orWhere('sub_type_of_request', 'like', '%' . $term . '%')
-                    ->orWhere('purpose', 'like', '%' . $term . '%');
+                // Handle different formats for full date matching
+                $parsedFullDate = null;
+
+                // Try to parse "October 1 2024" or "October 01 2024" format
+                if (\DateTime::createFromFormat('F j Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F j Y', $searchTerms);
+                } elseif (\DateTime::createFromFormat('F d Y', $searchTerms) !== false) {
+                    $parsedFullDate = \Carbon\Carbon::createFromFormat('F d Y', $searchTerms);
+                }
+
+                // Check if the term is a full date
+                if ($parsedFullDate) {
+                    $q->orWhereDate('application_date', '=', $parsedFullDate->format('Y-m-d'));
+                } else {
+                    // Split searchTerms into individual words for fallback
+                    $terms = explode(' ', $searchTerms);
+                    foreach ($terms as $term) {
+                        $q->orWhereHas('employee', function ($query) use ($term) {
+                            $query->where('first_name', 'like', '%' . $term . '%')
+                                ->orWhere('last_name', 'like', '%' . $term . '%')
+                                ->orWhere('department', 'like', '%' . $term . '%')
+                                ->orWhere('current_position', 'like', '%' . $term . '%')
+                                ->orWhere('employee_type', 'like', '%' . $term . '%');
+                        })
+                        ->orWhere('application_date', 'like', '%' . $term . '%')
+                        ->orWhere('concerned_employee', 'like', '%' . $term . '%')
+                        ->orWhere('type_of_ticket', 'like', '%' . $term . '%')
+                        ->orWhere('type_of_request', 'like', '%' . $term . '%')
+                        ->orWhere('sub_type_of_request', 'like', '%' . $term . '%')
+                        ->orWhere('purpose', 'like', '%' . $term . '%');
+                    }
                 }
             })->orderBy('created_at', 'desc');
         } else {
             // If no search term, return all records
             $results = $query->orderBy('created_at', 'desc');
         }
+
 
         if($this->statusFilterName == "Cancelled"){
             $results = $results->paginate(5);
@@ -333,6 +360,14 @@ class ApproveHrTicketsTable extends Component
                     } else {
                         $dataToUpdate = ['status' => $this->status];
                     }
+
+                    // Send email to the employee who requested the ticket
+                    $employee = $form->employee; // Assuming Hrticket has a relationship to Employee
+                    if ($employee && $employee->employee_email) {
+                        // Ensure you have a mailable class named StatusChangedMail
+                        Mail::to($employee->employee_email)->send(new ApproveHrTicket($form));
+                    }
+                    
                     $form->update($dataToUpdate);
                     $this->dispatch('triggerSuccess'); 
                 } else {

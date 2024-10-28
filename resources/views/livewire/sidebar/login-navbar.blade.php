@@ -4,7 +4,7 @@
         <div class="flex flex-row items-center">
             <a href="{{route('HumanResourceDashboard')}}">
                 <div class="flex pl-6 item-center">
-                    <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="mr-3 size-10">
+                    <img src="{{ asset('assets/sllogo.png') }}" alt="Logo" class="mr-2 size-10">
                     <div class="flex flex-col">
                         <span class="text-xl font-semibold text-nowrap text-customRed mt-2">SL Group</span>
                     </div>

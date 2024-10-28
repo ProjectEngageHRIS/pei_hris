@@ -28,7 +28,8 @@
         </ol>
     </nav>
     <h2 class="mb-2 text-3xl font-bold leading-none tracking-tight text-customGray md:text-3xl dark:text-white">View HR Ticket </h2>
-    <p class="mb-4 text-lg font-semibold text-customRed"> Ticket  <span class="text-customRed"># {{$form_id}}</span>  </p>
+    <p class="my-4 text-customRed  text-lg">Ticket Reference Number: <span class="text-gray-900 font-medium">{{$form_id}}</span>  </p>
+
     <form method="GET" class="flex flex-col gap-4 p-8 mt-10 bg-white rounded-lg">
         {{-- Information field --}}
         <div class="flex flex-col gap-4">
@@ -420,7 +421,7 @@
                     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
                         <div class="col-span-1">
                             <label for="request_date" class="block mb-2 text-sm font-medium disabled-select">Date of Meeting</label>
-                            <input type="date" name="request_date" id="request_date" wire:model.live="request_date" required disabled
+                            <input type="datetime-local" name="request_date" id="request_date" wire:model.live="request_date" required disabled
                                 class="bg-gray-50 border border-gray-300 disabled-select shadow-inner text-sm rounded-lg block w-full p-2.5">
                             @error('request_date')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('time_period_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('time_period_container').focus();">
@@ -1515,16 +1516,17 @@
                 </div>
             </div>
              <!-- Cancel Button -->
-             @if ($status != "Cancelled")
+             @if (!in_array($status, ['Cancelled', 'Approved']))
                 <div x-cloak x-data="{ openCancelModal: false }">
                     <div class="flex flex-row-reverse">
                         <button id="cancel_button"  
                             type="button" 
-                            class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow"
+                            class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5  shadow"
                             @click="openCancelModal = true">
                             Cancel Request
                         </button>
                     </div>
+                    
                 
                     <!-- Modal -->
                     <div x-show="openCancelModal" 

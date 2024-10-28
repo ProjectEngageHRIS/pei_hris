@@ -22,3 +22,35 @@
 [2024-10-02 08:56:48] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
 [2024-10-02 08:59:16] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
 [2024-10-02 08:59:16] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-13 12:34:17] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-13 12:34:17] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-13 12:34:18] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-13 12:34:18] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-14 12:15:20] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-14 12:15:20] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-15 13:23:09] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-15 13:23:09] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-15 13:24:46] local.INFO: [Illuminate\Auth\Events\Login] User SLE0090 logged in from 127.0.0.1 {"employee_id":"SLE0090","email":"deruza@mailinator.com"} 
+[2024-10-15 13:24:46] local.INFO: Successful login for user SLE0090 from IP 127.0.0.1  
+[2024-10-21 16:01:32] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"finixipi@mailinator.com"} 
+[2024-10-21 16:01:32] local.INFO: Successful login for user SLE0001 from IP 127.0.0.1  
+[2024-10-21 16:13:09] local.INFO: [Illuminate\Auth\Events\Login] User SLE0001 logged in from 127.0.0.1 {"employee_id":"SLE0001","email":"jeqelymyb@mailinator.com"} 
+[2024-10-21 16:13:09] local.INFO: Successful login for user SLE0001 from IP 127.0.0.1  
+[2024-10-21 16:20:51] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0001 logged out from 127.0.0.1 {"employee_id":"SLE0001","email":"jeqelymyb@mailinator.com"} 
+[2024-10-24 13:35:49] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-25 09:29:39] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-26 20:14:56] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0010 logged out from 127.0.0.1 {"employee_id":"SLE0010","email":"nanadej@mailinator.com"} 
+[2024-10-26 20:15:14] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-26 20:15:14] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-26 20:15:58] local.INFO: [Illuminate\Auth\Events\Logout] User SLEA9999 logged out from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-26 20:16:36] local.INFO: [Illuminate\Auth\Events\Login] User SLE0078 logged in from 127.0.0.1 {"employee_id":"SLE0078","email":"wehehyqo@mailinator.com"} 
+[2024-10-26 20:16:36] local.INFO: Successful login for user SLE0078 from IP 127.0.0.1  
+[2024-10-26 20:21:01] local.INFO: [Illuminate\Auth\Events\Logout] User SLE0078 logged out from 127.0.0.1 {"employee_id":"SLE0078","email":"wehehyqo@mailinator.com"} 
+[2024-10-26 20:21:12] local.INFO: [Illuminate\Auth\Events\Failed] User SLEA9999 login failed from 127.0.0.1 {"employee_id":"SLEA9999","0":"email"} 
+[2024-10-26 20:21:12] local.ERROR: Failed login attempt for user SLEA9999 from IP 127.0.0.1  
+[2024-10-26 20:21:23] local.INFO: [Illuminate\Auth\Events\Failed] User SLEA9999 login failed from 127.0.0.1 {"employee_id":"SLEA9999","0":"email"} 
+[2024-10-26 20:21:23] local.ERROR: Failed login attempt for user SLEA9999 from IP 127.0.0.1  
+[2024-10-26 20:21:40] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-26 20:21:40] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-28 10:38:10] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-28 10:38:10] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
