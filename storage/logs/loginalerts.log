@@ -52,3 +52,5 @@
 [2024-10-26 20:21:23] local.ERROR: Failed login attempt for user SLEA9999 from IP 127.0.0.1  
 [2024-10-26 20:21:40] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
 [2024-10-26 20:21:40] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  
+[2024-10-28 10:38:10] local.INFO: [Illuminate\Auth\Events\Login] User SLEA9999 logged in from 127.0.0.1 {"employee_id":"SLEA9999","email":"itproject@gmail.com"} 
+[2024-10-28 10:38:10] local.INFO: Successful login for user SLEA9999 from IP 127.0.0.1  

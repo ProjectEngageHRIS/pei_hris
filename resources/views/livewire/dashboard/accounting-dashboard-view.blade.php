@@ -437,7 +437,7 @@
                 <!-- Modal header -->
                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5">
                     <h3 class="text-xl font-semibold text-gray-900">
-                        Add new Payslip
+                        Add New Payslip
                     </h3>
                     <button type="button" @click="addTargetPayroll = !addTargetPayroll" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 flex justify-center items-center" data-modal-hide="add-targeted-payroll">
                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -618,7 +618,7 @@
                                 <form class="space-y-4" wire:submit.prevent="addNote" method="POST">
                                     <div class="flex items-center justify-between p-4 border-b rounded-t md:p-5">
                                         <h3 class="text-xl font-semibold text-gray-900">
-                                            Add new note
+                                            Add New Note
                                         </h3>
                                         <button @click="openNotes = false" type="button" class="inline-flex items-center justify-center w-8 h-8 text-sm text-gray-400 bg-transparent rounded-lg hover:bg-gray-200 hover:text-gray-900 ms-auto">
                                             <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -641,7 +641,12 @@
 
                                     <!-- Modal footer -->
                                     <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
-                                        <button type="submit" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add note</button>
+                                        <button type="submit" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                              </svg>                                              
+                                            Add Note
+                                        </button>
                                         <button @click="openNotes = false" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-gray-700 focus:z-10 focus:ring-2 focus:ring-gray-100">Cancel</button>
                                     </div>
                                 </form>
@@ -751,18 +756,30 @@
                                         @else 
                                                 <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
-                                        <div x-cloak x-data="{ openPayrollEditModal: false, addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: $wire.entangle('payroll_picture')}" x-ref="modals" >
+                                        <script>
+                                            document.addEventListener('alpine:init', () => {
+                                                Alpine.store('editAccount', {
+                                                    openPayrollEditAccountModal: false,
+                                                    currentEditModal: null
+                                                });
+                                                Alpine.store('addPayroll', {
+                                                    openAddPayrollModal: false,
+                                                    currentAddModal: null
+                                                });
+                                            });
+                                        </script>
+                                        <div x-cloak x-data="{ openPayrollEditAccountModal: false, payrollStatus: $wire.entangle('payroll_status'), addTargetPayroll: false, currentEditModal: null,  openAddPayrollModal: false, currentAddModal: null, openAddWarningButton: false, payrollPicture: $wire.entangle('payroll_picture')}" x-ref="modals" >
                                             <div  class="flex space-x-2">
                                                 <!-- Edit user button -->
-                                                <button @click="openPayrollEditModal = true; currentEditModal = '{{ $loop->index }}'"   wire:click.self="resetEditField" class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
+                                                <button @click="$store.editAccount.openPayrollEditAccountModal = true; $store.editAccount.currentEditModal = '{{ $loop->index }}';"  class="inline-flex mt-1 items-center text-blue-500 hover:text-blue-700">
                                                     <svg class="size-5" fill="currentColor" viewBox="0 0 21 21">
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
                                                 </button>
                                                 <!-- Main modal -->
-                                                <div  x-show="openPayrollEditModal && currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
+                                                <div x-show="$store.editAccount.openPayrollEditAccountModal && $store.editAccount.currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
-                                                    <div x-show="openPayrollEditModal"
+                                                    <div x-show="$store.editAccount.openPayrollEditAccountModal"
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="opacity-0"
                                                         x-transition:enter-end="opacity-100"
@@ -771,7 +788,7 @@
                                                         x-transition:leave-end="opacity-0"
                                                          class="fixed inset-0 bg-black opacity-50"></div>
                                         
-                                                    <div x-show="openPayrollEditModal"                          
+                                                    <div x-show="$store.editAccount.openPayrollEditAccountModal"                          
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="transform opacity-0 scale-90"
                                                         x-transition:enter-end="transform opacity-100 scale-100"
@@ -784,7 +801,7 @@
                                                             <!-- Modal header -->
                                                             <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                 <h3 class="text-xl font-semibold text-gray-900">Edit Account Details</h3>
-                                                                <button @click="openPayrollEditModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                <button @click="$store.editAccount.openPayrollEditAccountModal = false;  payrollStatus = ' '" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                     </svg>
@@ -792,7 +809,7 @@
                                                                 </button>
                                                             </div>
                                                             <!-- Modal body -->
-                                                            <div class="p-4 xl:p-5  overflow-y-auto" style="max-height: 27rem; ">
+                                                            <div class="p-4 xl:p-5  overflow-y-auto" style="max-height: 27rem;">
                                                                 <form class="space-y-4" wire:submit.prevent="submit('{{ $employee->employee_id }}')" method="POST">
                                                                     <div>
                                                                         <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
@@ -826,7 +843,12 @@
                                                                             </div>
                                                                         @enderror
                                                                     </div>
-                                                                    <button type="submit"  class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Account</button>
+                                                                    <button type="submit" class="w-full text-white bg-customRed hover:bg-red-900 flex items-center justify-center gap-2 shadow-lg   font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                          </svg>                                                                          
+                                                                        Edit Account
+                                                                    </button>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -838,16 +860,16 @@
                                                     if($payroll_exists) $employee_payroll = $payrollMap->get($employee->employee_id);
                                                 @endphp
                                                
-                                                <button @click="openAddPayrollModal = true; currentAddModal = '{{ $loop->index }}'; payrollPicture = ''; " class="text-red-500 hover:text-red-700">
+                                                <button @click="$store.addPayroll.openAddPayrollModal = true; $store.addPayroll.currentAddModal = '{{ $loop->index }}'; payrollPicture = ''; " class="text-red-500 hover:text-red-700">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-5">
                                                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'" 
-                                                    class="fixed inset-0 z-50 flex items-center justify-center">
+                                                <div x-show="$store.addPayroll.openAddPayrollModal && $store.addPayroll.currentAddModal === '{{ $loop->index }}'" 
+                                                    class="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-12">
                                                     <!-- Backdrop -->
-                                                    <div x-show="openAddPayrollModal" 
+                                                    <div x-show="$store.addPayroll.openAddPayrollModal" 
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="opacity-0"
                                                         x-transition:enter-end="opacity-100"
@@ -856,7 +878,7 @@
                                                         x-transition:leave-end="opacity-0"
                                                         class="fixed inset-0 bg-black opacity-50">
                                                     </div>
-                                                    <div id="add-payroll-modal_{{ $loop->index }}"  x-show="openAddPayrollModal" 
+                                                    <div id="add-payroll-modal_{{ $loop->index }}"  x-show="$store.addPayroll.openAddPayrollModal" 
                                                         x-transition:enter="transition ease-out duration-300"
                                                         x-transition:enter-start="opacity-0"
                                                         x-transition:enter-end="opacity-100"
@@ -868,7 +890,7 @@
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Add Payslip For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="$store.addPayroll.openAddPayrollModal = false" wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -893,24 +915,24 @@
                                                                     class="p-4 xl:p-5  overflow-y-auto" style="max-height: 28rem;">
                                                                     <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')"  method="POST">
                                                                         @csrf
-                                                                        <div class="grid grid-cols-2 gap-4" >
-                                                                                <div>
+                                                                        <div class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-4" >
+                                                                            <div class="grid grid-cols-1 min-[570px]:grid-cols-5 gap-2 col-span-2">
+                                                                                <div class="col-span-1 min-[570px]:col-span-3">
                                                                                     <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }} {{ $employee->middle_name }} {{ $employee->last_name }}" disabled>
                                                                                 </div>
-                                                                                <div>
-                                                                                    
+                                                                                <div class=" col-span-1 min-[570px]:col-span-2">
                                                                                     <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
                                                                                     <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
                                                                                 </div>
-                                                                                <div class="col-span-2">
-                                                                                    <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
-                                                                                    <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
-                                                                                </div>
-                                                                                
+                                                                            </div>
+                                                                            <div class="col-span-1 min-[450px]:col-span-2">
+                                                                                <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
+                                                                                <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
+                                                                            </div>  
                                                                         </div>
                                                                         <hr class="border-gray-700">
-                                                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                        <div class="grid grid-cols-1 min-[480px]:grid-cols-3  gap-4">
                                                                             <div>
                                                                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
                                                                                 <select name="status" id="phase" wire:model="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
@@ -958,7 +980,12 @@
                                                                             </div>
                                                                         </div>
 
-                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Add Payslip</button>
+                                                                        <button @click="openAddWarningButton = true;" type="button" class="w-full text-white  bg-customRed hover:bg-red-900 flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                                                              </svg>                                                                              
+                                                                            Add Payslip
+                                                                        </button>
                                                                         
                                                                         <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
                                                                             <div class="relative w-full max-w-md max-h-full p-4">
@@ -997,28 +1024,28 @@
                                                         </div>
                                                     </div>
                                                 @else
-                                                    <div x-show="openAddPayrollModal && currentAddModal === '{{ $loop->index }}'"
-                                                         class="fixed  inset-0 z-50 flex items-center justify-center">
+                                                    <div x-show="$store.addPayroll.openAddPayrollModal && $store.addPayroll.currentAddModal === '{{ $loop->index }}'"
+                                                         class="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-12">
                                                         <!-- Backdrop -->
-                                                        <div x-show="openAddPayrollModal"                                                         
+                                                        <div x-show="$store.addPayroll.openAddPayrollModal"                                                         
                                                         x-transition:leave="transition ease-in duration-400"
                                                         x-transition:leave-start="opacity-100"
                                                         x-transition:leave-end="opacity-0"
                                                         class="fixed inset-0 bg-black opacity-50"></div>
-                                                        <div x-show="openAddPayrollModal" id="add-payroll-modal_{{ $loop->index }}" 
+                                                        <div x-show="$store.addPayroll.openAddPayrollModal" id="add-payroll-modal_{{ $loop->index }}" 
                                                             x-transition:enter="transition ease-out duration-300"
                                                             x-transition:enter-start="transform opacity-0 scale-90"
                                                             x-transition:enter-end="transform opacity-100 scale-100"
                                                             x-transition:leave="transition ease-in duration-400"
                                                             x-transition:leave-start="transform opacity-100 scale-100"
                                                             x-transition:leave-end="transform opacity-0 scale-90"
-                                                        class="relative w-full max-w-lg  p-4 bg-white rounded-lg shadow-lg">
+                                                        class="relative w-full max-w-lg p-4 bg-white rounded-lg shadow-lg">
                                                             <!-- Modal content -->
                                                             <div class="relative bg-white rounded-lg shadow">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
                                                                     <h3 class="text-xl font-semibold text-gray-900">Payslip of <span class="text-customRed">{{$employee->employee_id}}</span> For  <span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span> </h3>
-                                                                    <button @click="openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
+                                                                    <button @click="$store.addPayroll.openAddPayrollModal = false" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                                                         </svg>
@@ -1040,33 +1067,33 @@
                                                                     });
                                                                 "
                                                                 :class="isScrollable ? 'mb-4' : ''" 
-                                                                class="p-4 xl:p-5 overflow-y-auto" style="max-height: 28rem;">
+                                                                class="p-4 xl:p-5 overflow-y-auto" style="max-height: 30rem;">
                                                                 {{-- <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto"> --}}
                                                                     <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
                                                                         @csrf
 
-                                                                    <div class="grid grid-cols-2 gap-4" >
-                                                                            <div>
-                                                                                <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                                <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                    <div class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-4" >
+                                                                            <div class="grid grid-cols-1 min-[570px]:grid-cols-5 gap-2 col-span-2">
+                                                                                <div class="col-span-1 min-[570px]:col-span-3">
+                                                                                    <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
+                                                                                    <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }} {{ $employee->middle_name }} {{ $employee->last_name }}" disabled>
+                                                                                </div>
+                                                                                <div class=" col-span-1 min-[570px]:col-span-2">
+                                                                                    <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
+                                                                                    <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
+                                                                                </div>
                                                                             </div>
-                                                                            <div>
-                                                                                
-                                                                                <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
-                                                                                <input type="text" name="enum" id="enum" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_id }}" disabled>
-                                                                            </div>
-                                                                            <div class="col-span-2">
+                                                                            <div class="col-span-1 min-[450px]:col-span-2">
                                                                                 <label for="etype" class="block mb-2 text-sm font-medium text-customGray1">Employee Email</label>
                                                                                 <input type="text" name="etype" id="etype" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->employee_email }}" disabled>
-                                                                            </div>
-                                                                            
+                                                                            </div>  
                                                                     </div>
                                                                     <hr class="border-gray-700">
                                                                     @php
                                                                         $payroll_details = $payrollMap->get($employee->employee_id);
                                                                         // $this->payroll_picture = trim($payrollMap->get($employee->employee_id)->payroll_picture);
                                                                     @endphp
-                                                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-3  gap-4">
+                                                                    <div class="grid grid-cols-1 min-[480px]:grid-cols-3  gap-4">
                                                                         <div>
                                                                             <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
                                                                             <select name="status" id="status" disabled class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
@@ -1121,11 +1148,25 @@
                                                                     </script>
                                                                     
     
-                                                                    <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Go to Payslip</button>
+                                                                    <button onclick="window.open('{{$payrollMap->get($employee->employee_id)->payroll_picture}}', '_blank')" type="button" class="w-full text-white bg-customGreen hover:bg-green-900 flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                            <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25" />
+                                                                          </svg>
+                                                                        Go to Payslip
+                                                                    </button>
 
                                                                     <div class="grid grid-cols-2 gap-4">
-                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Edit Payslip</button>
-                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Delete Payslip</button>
+                                                                        <button @click="openAddWarningButton = true" type="button" class="w-full text-white bg-amber-600 hover:bg-amber-700 flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                                              </svg>                                                                              
+                                                                              Edit Payslip
+                                                                            </button>
+                                                                        <button @click="openCancelPrompt = true" type="button" class="w-full text-white bg-customRed hover:bg-red-900 flex items-center justify-center gap-2 shadow-lg  font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                                                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                                <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                            </svg>
+                                                                            Delete Payslip</button>
                                                                     </div>
                                                                         
                                                                     <div x-show="openAddWarningButton"  tabindex="-1" class="fixed top-0 bottom-0 left-0 right-0 z-50 flex items-center justify-center  w-full h-full overflow-x-hidden overflow-y-auto bg-gray-800 bg-opacity-50">
@@ -1175,7 +1216,7 @@
                                                                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                                                                     </svg>
                                                                                     <h3 class="mb-5 text-lg font-normal text-gray-500">Confirm Deletion?</h3>
-                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')"  @click="openAddPayrollModal = false; openAddWarningButton = false " class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
+                                                                                    <button type="button" wire:click="deletePayroll('{{ $employee->employee_id }}')"  @click="$store.addPayroll.openAddPayrollModal = false; openAddWarningButton = false " class="text-white bg-red-600 hover:bg-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">Yes</button>
                                                                                     <button type="button" @click="openCancelPrompt = false" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100">No</button>
                                                                                 </div>
                                                                             </div>
@@ -1324,14 +1365,18 @@
                 const alpineData = Alpine.$data(modal);
                 alpineData.openNotes = false; // Open the modal
             }
-                else {
+            else {
                 window.dispatchEvent(new CustomEvent('trigger-success-update'));
                 const modal = document.querySelector(`[x-ref="modals"]`);
                 // Access Alpine data
                 const alpineData = Alpine.$data(modal);
                 // Update the state
                 if(event.type == "Status"){
-                    alpineData.openPayrollEditModal = false; // Open the modal
+                    // alert(Alpine.store('editAccount').openPayrollEditAccountModal);
+                    // Update the state
+                    Alpine.store('editAccount').openPayrollEditAccountModal = false;
+                    // Alpine.store('editAccount').currentEditModal = targetedIndex; 
+                    // alert(Alpine.store('editAccount').openPayrollEditAccountModal);
                 } else if (event.type == "Edit"){
                     alpineData.openAddPayrollModal = false; // Open the modal
                     alpineData.currentAddModal = null; // Open the modal

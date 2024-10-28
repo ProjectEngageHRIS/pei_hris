@@ -272,7 +272,7 @@ class AccountingDashboardView extends Component
         }
     }
 
-    public function resetEditField(){
+    public function resetEditField($var){
         $this->payroll_status = null;
     }
 
