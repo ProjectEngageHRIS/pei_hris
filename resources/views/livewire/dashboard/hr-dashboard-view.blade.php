@@ -1,58 +1,164 @@
 <div class="flex flex-col space-y-6">
-    <div wire:ignore class="flex flex-col items-stretch gap-4 md:flex-row justify-stretch md:justify-center">
+    <div wire:ignore class="grid grid-cols-1 md:grid-cols-2 min-[1120px]:grid-cols-4 gap-4">
         <!-- Employee Type -->
-        <div class="p-4  bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
+        <div class="p-4 bg-white rounded-lg shadow md:p-6">
             <div class="flex items-start justify-between w-full">
                 <div class="flex-col items-center">
                     <div class="flex items-center mb-1">
-                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1">Headcount by Employee Type</h5>
+                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1" style="font-family: 'Inter', serif;">Headcount by Employee Type</h5>
                     </div>
                 </div>
             </div>
             <!-- Employee Type Chart -->
-            <div class="py-6 w-full" id="pie-chart-1"></div>
+            <div class="py-6 w-auto justify-self-center" id="pie-chart-1"></div>
+            <!-- Manual Legend -->
+            <div class="flex flex-wrap justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 150px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7B145;"></div>
+                    <span class="text-sm ml-2">Independent Contractor</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E77945;"></div>
+                    <span class="text-sm ml-2">Internal Employee</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45E7A1;"></div>
+                    <span class="text-sm ml-2">Intern</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45A5E7;"></div>
+                    <span class="text-sm ml-2">Probationary</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #A145E7;"></div>
+                    <span class="text-sm ml-2">Project Based</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E745A5;"></div>
+                    <span class="text-sm ml-2">Regular</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7E745;"></div>
+                    <span class="text-sm ml-2">Reliever</span>
+                </div>
+            </div>
         </div>
-        <!-- Deparment -->
-        <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
+    
+        <!-- Department -->
+        <div class="p-4 bg-white rounded-lg shadow md:p-6">
             <div class="flex items-start justify-between w-full">
                 <div class="flex-col items-center">
                     <div class="flex items-center mb-1">
-                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1">Headcount by Department</h5>
+                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1" style="font-family: 'Inter', serif;">Headcount by Department</h5>
                     </div>
                 </div>
             </div>
             <!-- Department Chart -->
-            <div class="py-6" id="pie-chart-2"></div>
+            <div class="py-6 w-auto justify-self-center" id="pie-chart-2" ></div>
+            <!-- Manual Legend -->
+            <div class="flex flex-wrap justify-center md:justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7B145;"></div>
+                    <span class="text-sm ml-2">HR and Admin</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E77945;"></div>
+                    <span class="text-sm ml-2">Recruitment</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #6AE745;"></div>
+                    <span class="text-sm ml-2">CXS</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45E5E7;"></div>
+                    <span class="text-sm ml-2">Overseas Recruitment</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #BD45E7;"></div>
+                    <span class="text-sm ml-2">PEI/SL Temps DO-174</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2 whitespace-break-spaces" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E745A5;"></div>
+                    <span class="text-sm ml-2">Corporate Accounting <br> and Finance</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E74556;"></div>
+                    <span class="text-sm ml-2">Accounting Operations</span>
+                </div>
+            </div>
         </div>
-
+    
         <!-- Company -->
-        <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
-
+        <div class="p-4 bg-white rounded-lg shadow md:p-6">
             <div class="flex items-start justify-between w-full">
                 <div class="flex-col items-center">
                     <div class="flex items-center mb-1">
-                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1">Headcount by Company</h5>
+                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1" style="font-family: 'Inter', serif;">Headcount by Company</h5>
                     </div>
                 </div>
             </div>
             <!-- Company Chart -->
-            <div class="py-6" id="pie-chart-3"></div>
+            <div class="py-6 w-auto justify-self-center" id="pie-chart-3" ></div>
+            <!-- Manual Legend -->
+            <div class="flex flex-row min-[768px]:flex-col justify-center md:justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7B145;"></div>
+                    <span class="text-sm ml-2">PEI</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E77945;"></div>
+                    <span class="text-sm ml-2">SL SEARCH</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #6AE745;"></div>
+                    <span class="text-sm ml-2">SL TEMPS</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45E5E7;"></div>
+                    <span class="text-sm ml-2">DO-174</span>
+                </div>
+            </div>
         </div>
-
-        <!-- Gender -->
-        <div class="p-4 bg-white rounded-lg shadow md:w-full md:max-w-sm md:p-6">
-
+    
+        <!-- Employment Status -->
+        <div class="p-4 bg-white rounded-lg shadow md:p-6">
             <div class="flex items-start justify-between w-full">
                 <div class="flex-col items-center">
                     <div class="flex items-center mb-1">
-                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1">Headcount by Gender</h5>
+                        <h5 class="text-sm font-medium leading-none text-customGray1 me-1" style="font-family: 'Inter', serif;">Headcount by Gender</h5>
                     </div>
                 </div>
             </div>
-            <!-- Company Chart -->
-            <div class="py-6" id="pie-chart-4"></div>
+            <!-- Employment Status Chart -->
+            <div class="py-6 w-auto justify-self-center" id="pie-chart-4" ></div>
+            <!-- Manual Legend -->
+            <div class="flex flex-row min-[768px]:flex-col justify-center md:justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7B145;"></div>
+                    <span class="text-sm ml-2">Male</span>
+                </div>
+                <div class="flex items-center mr-4 mb-2">
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E77945;"></div>
+                    <span class="text-sm ml-2">Female</span>
+                </div>
+            </div>
         </div>
     </div>
+    
+    
+    <style>
+        .chart-container {
+            width: 300px; /* Adjust width to your needs */
+            height: 300px; /* Adjust height to your needs */
+        }
+    
+        .legend {
+            margin: 0; /* Reset margins */
+            padding: 0; /* Reset padding */
+        }
+    </style>
+    
+    
 @if ($loggedInUser == True)
         <!-- Employee Table -->
         <div class="relative shadow-md" x-data="{ showModal: false }">
@@ -1091,274 +1197,66 @@
         });
     });
 
-    const getChartOptions1 = () => {
-      return {
-          series: @json($employee_type),
-          colors: $colors = [
-                "#E7B145", // Example color
-                "#E77945", // Example color
-                "#45E7A1", // Example color
-                "#45A5E7", // Example color
-                "#A145E7", // Example color
-                "#E745A5", // Example color
-                "#E7E745", // Example color
-                "#E7C745", // Example color
-                "#B345E7", // Example color
-            ],
-          chart: {
-          height: 400,
-          width: "100%",
-          type: "pie",
-          },
-          stroke: {
-          colors: ["white"],
-          lineCap: "",
-          },
-          plotOptions: {
-          pie: {
-              labels: {
-              show: true,
-              },
-              size: "50%",
-              dataLabels: {
-              offset: -25
-              }
-          },
-          },
-          labels: [
-                'Independent Contractor',
-                'Internal Employee',
-                'Intern',
-                'Probisionary',
-                'Project Based',
-                'Regular',
-                'Reliver',
-            ],
-          dataLabels: {
-          enabled: true,
-          style: {
-              fontFamily: "Inter, sans-serif",
-          },
-          },
-          legend: {
-            position: "bottom",
-            fontFamily: "Inter, sans-serif",
-          },
-          yaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          },
-          xaxis: {
-          labels: {
-              formatter: function (value) {
-              return value
-              },
-          },
-          axisTicks: {
-              show: false,
-          },
-          axisBorder: {
-              show: false,
-          },
-          animations: {
-            enabled: false,
-            easing: 'easeinout',
-            speed: 800,
-            animateGradually: {
-                enabled: true,
-                delay: 150
-            },
-            dynamicAnimation: {
-                enabled: true,
-                speed: 350
+// Base chart options without legends
+const baseChartOptions = {
+    chart: {
+        height: 400,  // Fixed height for all charts
+        width: "100%", 
+        type: "pie",
+    },
+    stroke: {
+        colors: ["white"],
+    },
+    dataLabels: {
+        enabled: true,
+        style: { fontFamily: "Inter, sans-serif", fontSize: '12px' },
+    },
+    plotOptions: {
+        pie: {
+            size: "70%",  // Adjust size for a consistent look
+            dataLabels: {
+                offset: -10
             }
-        }
-          },
+        },
+    },
+    labels: [],
+    legend: {
+        show: false,  // Explicitly disable the legend
+    },
+};
 
-      }
-      }
+// Chart 1
+const getChartOptions1 = () => ({
+    ...baseChartOptions,
+    series: @json($employee_type),
+    colors: ["#E7B145", "#E77945", "#45E7A1", "#45A5E7", "#A145E7", "#E745A5", "#E7E745", "#E7C745", "#B345E7"],
+    labels: ['Independent Contractor', 'Internal Employee', 'Intern', 'Probationary', 'Project Based', 'Regular', 'Reliever'],
+});
 
-      const getChartOptions2 = () => {
-        return {
-            series: @json($inside_department),
-            colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
-            chart: {
-            height: 420,
-            width: "100%",
-            type: "pie",
-            },
-            stroke: {
-            colors: ["white"],
-            lineCap: "",
-            },
-            plotOptions: {
-            pie: {
-                labels: {
-                show: true,
-                },
-                size: "100%",
-                dataLabels: {
-                offset: -25
-                }
-            },
-            },
-            labels: ["HR and Admin", "Recruitment", "CXS", "Overseas Recruitment", "PEI/SL Temps DO-174", "Corporate Accounting and Finance", "Accounting Operations"],
-            dataLabels: {
-            enabled: true,
-            style: {
-                fontFamily: "Inter, sans-serif",
-            },
-            },
-            legend: {
-            position: "bottom",
-            fontFamily: "Inter, sans-serif",
-            },
-            yaxis: {
-            labels: {
-                formatter: function (value) {
-                return value
-                },
-            },
-            },
-            xaxis: {
-            labels: {
-                formatter: function (value) {
-                return value
-                },
-            },
-            axisTicks: {
-                show: false,
-            },
-            axisBorder: {
-                show: false,
-            },
-            },
-        }
-      }
+// Chart 2
+const getChartOptions2 = () => ({
+    ...baseChartOptions,
+    series: @json($inside_department),
+    colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#BD45E7", "#E745A5", "#E74556"],
+    labels: ["HR and Admin", "Recruitment", "CXS", "Overseas Recruitment", "PEI/SL Temps DO-174", "Corporate Accounting and Finance", "Accounting Operations"],
+});
 
-      const getChartOptions3 = () => {
-        return {
-            series: @json($department),
-            colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
-            chart: {
-                height: "75%", // Same height as Chart 1 and 2
-                width: "100%", // Responsive width
-                type: "pie",
-            },
-            stroke: {
-                colors: ["white"],
-                lineCap: "",
-            },
-            plotOptions: {
-                pie: {
-                    labels: {
-                        show: true,
-                    },
-                    size: "70%", // Ensure this matches the other charts
-                    dataLabels: {
-                        offset: -25
-                    }
-                },
-            },
-            labels: ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"],
-            dataLabels: {
-                enabled: true,
-                style: {
-                    fontFamily: "Inter, sans-serif",
-                },
-            },
-            legend: {
-                position: "bottom",
-                fontFamily: "Inter, sans-serif",
-                margin: 20, // Adjust this value for top/bottom padding
-                markers: {
-                    width: 12, // Width of legend markers
-                    height: 12, // Height of legend markers
-                },
-            },
-            yaxis: {
-                labels: {
-                    formatter: function (value) {
-                        return value
-                    },
-                },
-            },
-            xaxis: {
-                labels: {
-                    formatter: function (value) {
-                        return value
-                    },
-                },
-                axisTicks: {
-                    show: false,
-                },
-                axisBorder: {
-                    show: false,
-                },
-            },
-        }
-        }
+// Chart 3
+const getChartOptions3 = () => ({
+    ...baseChartOptions,
+    series: @json($department),
+    colors: ["#E7B145", "#E77945", "#6AE745", "#45E5E7", "#E745A5"],
+    labels: ["PEI", "SL SEARCH", "SL TEMPS", "WESEARCH", "PEI-UPSKILLS"],
+});
 
-    const getChartOptions4 = () => {
-        return {
-            series: @json($gender),
-            colors: ["#45E5E7", "#E745A5"],
-            chart: {
-            height: "70%",
-            width: "100%",
-            type: "pie",
-            },
-            stroke: {
-            colors: ["white"],
-            lineCap: "",
-            },
-            plotOptions: {
-            pie: {
-                labels: {
-                show: true,
-                },
-                size: "100%",
-                dataLabels: {
-                offset: -25
-                }
-            },
-            },
-            labels: ["Male", "Female"],
-            dataLabels: {
-            enabled: true,
-            style: {
-                fontFamily: "Inter, sans-serif",
-            },
-            },
-            legend: {
-            position: "bottom",
-            fontFamily: "Inter, sans-serif",
-            },
-            yaxis: {
-            labels: {
-                formatter: function (value) {
-                return value
-                },
-            },
-            },
-            xaxis: {
-            labels: {
-                formatter: function (value) {
-                return value
-                },
-            },
-            axisTicks: {
-                show: false,
-            },
-            axisBorder: {
-                show: false,
-            },
-            },
-        }
-      }
+// Chart 4
+const getChartOptions4 = () => ({
+    ...baseChartOptions,
+    series: @json($gender),
+    colors: ["#45E5E7", "#E745A5"],
+    labels: ["Male", "Female"],
+});
+
 
       if (document.getElementById("pie-chart-1") && typeof ApexCharts !== 'undefined') {
         const chart = new ApexCharts(document.getElementById("pie-chart-1"), getChartOptions1());
