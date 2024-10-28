@@ -480,6 +480,7 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="remittance_request_others_container" class="mt-4">
+                                    <label for="remittance_request_others" class="block mb-2 text-sm font-medium text-gray-900">Others</label>
                                     <textarea type="text" rows="1" id="remittance_request_others" name="remittance_request_others" wire:model="remittance_request_others" disabled
                                         class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-300">
                                     </textarea>
@@ -510,6 +511,7 @@
                             </div>
                             @if ($request_assigned == "Others")
                                 <div id="request_others_container" class="mt-4">
+                                    <label for="request_extra" class="block mb-2 text-sm font-medium text-gray-900">Others</label>
                                     <textarea type="text" rows="1" id="request_extra" name="request_extra" wire:model="request_assigned_request_others" disabled
                                         class="block p-2.5 w-full text-sm text-gray-900 shadow-inner bg-gray-50 rounded-lg border border-gray-300">
                                     </textarea>
@@ -601,6 +603,8 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="messengerial_other_type_container" class="mt-4">
+                                    <label for="messengerial_other_type" class="block mb-2 text-sm font-medium text-gray-900">Others</label>
+
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" disabled
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300">
                                     </textarea>
@@ -689,6 +693,8 @@
                             </div>
                             @if ($type_of_hrconcern == "Others")
                                 <div id="messengerial_other_type_container"  class="mt-4">
+                                    <label for="messengerial_other_type" class="block mb-2 text-sm font-medium text-gray-900">Others</label>
+
                                     <textarea type="text" rows="1" id="messengerial_other_type" name="messengerial_other_type" wire:model.live="messengerial_other_type" disabled
                                         class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300">
                                     </textarea>
@@ -1298,6 +1304,7 @@
                             @enderror
                             @if ($type_of_hrconcern == "Others")
                                 <div id="purpose_container" class="mt-4">
+                                    <label for="purpose" class="block mb-2 text-sm font-medium text-gray-900">Others</label>
                                     <div id="purpose">
                                         <textarea type="text" rows="2" id="purpose" name="purpose" wire:model="purpose" disabled
                                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300">

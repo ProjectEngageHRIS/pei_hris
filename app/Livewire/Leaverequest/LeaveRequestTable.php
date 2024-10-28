@@ -228,9 +228,9 @@ class LeaveRequestTable extends Component
                         //   ->orWhere('start_of_employment', 'like', '%' . $term . '%');
                     }
                 }
-            })->orderBy('application_date', 'desc')->paginate(5);
+            })->orderBy('created_at', 'desc')->paginate(5);
         } else {
-            $results = $query->orderBy('application_date', 'desc')->paginate(5);
+            $results = $query->orderBy('created_at', 'desc')->paginate(5);
         }
         
 

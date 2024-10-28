@@ -120,7 +120,7 @@ class ApproveLeaverequestForm extends Component
         $this->mode_of_application = $leaverequest->mode_of_application;
         // dd($leaverequest->mode_of_application == "Credit Leave");
         if($this->mode_of_application == "Credit Leave"){
-            $this->inclusive_start_date = $leaverequest->date_earned;
+            $this->date_earned = $leaverequest->inclusive_end_date;
             $this->inclusive_end_date = $leaverequest->credit_application;
             $this->earned_description = $leaverequest->earned_description;
             $this->full_half = $leaverequest->full_or_half;
@@ -130,22 +130,18 @@ class ApproveLeaverequestForm extends Component
             $this->inclusive_start_date = $leaverequest->inclusive_start_date;
             $this->inclusive_end_date = $leaverequest->inclusive_end_date;
             $this->purpose_type = $leaverequest->purpose_type;
-            $this->logout_time = Carbon::parse($leaverequest->full_or_half)->format('Y-m-d\TH:i');;
+            $this->full_half = $leaverequest->logout_time;
         } 
         else{
             $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
             $this->num_of_days_work_days_applied = $formattedValue ;
-            $this->inclusive_start_date = $leaverequest->inclusive_start_date;
-            $this->inclusive_end_date = $leaverequest->inclusive_end_date;
+            $this->inclusive_start_date = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');
+            $this->inclusive_end_date = Carbon::parse($leaverequest->inclusive_end_date)->format('Y-m-d');
             $this->deduct_to = $leaverequest->deduct_to;
             $this->full_half = $leaverequest->full_or_half;
         }
 
         $this->reason = $leaverequest->reason;
-
-        if($leaverequest->commutation_signature_of_appli){
-            $this->commutation_signature_of_appli = " ";
-        }
     }
 
     public function editLeaveRequest($index){

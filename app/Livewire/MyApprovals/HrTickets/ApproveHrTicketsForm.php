@@ -153,13 +153,14 @@ class ApproveHrTicketsForm extends Component
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;
+                    // dd($this->type_of_hrconcern,  $hrticketdata->type_of_hrconcern);
                 }
                 else if($hrticketdata->sub_type_of_request == "Payroll-related Concerns"){
-                    $this->request_date = $hrticketdata->request_date;
+                    $this->request_date =  Carbon::parse($hrticketdata->request_date)->toDateString();
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_link = $hrticketdata->request_link;
-                }
+                }   
                 else if($this->sub_type_of_request == "Request for a Meeting"){
                     $this->request_date = $hrticketdata->request_date;
                     $this->purpose = $hrticketdata->purpose ;
@@ -188,7 +189,7 @@ class ApproveHrTicketsForm extends Component
                     $this->purpose = $hrticketdata->purpose;
                     $this->request_date = $hrticketdata->request_date;
                 }
-                else if($hrticketdata->sub_type_of_request == "Government-mandated benefits concern"){
+                else if($hrticketdata->sub_type_of_request == "Government-Mandated Benefits Concern"){
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->request_link = $hrticketdata->request_link;
                 }
@@ -217,7 +218,7 @@ class ApproveHrTicketsForm extends Component
                 else if($this->sub_type_of_request == "Book a Meeting Room"){
                     $this->request_date = $hrticketdata->request_date ;
                     $this->request_requested = $hrticketdata->request_requested;
-                    $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
+                    $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern; 
                     $this->purpose = $hrticketdata->purpose;
                 }
                 else if($this->sub_type_of_request == "Office Supplies"){
@@ -234,6 +235,7 @@ class ApproveHrTicketsForm extends Component
                     $this->type_of_hrconcern = $hrticketdata->type_of_hrconcern;
                     $this->request_link = $hrticketdata->request_link;
                     $this->purpose = $hrticketdata->purpose;
+
                 }
             }
 

@@ -50,9 +50,14 @@
                         @this.set('employeeTypesFilter', this.employeeTypesFilter);
                     }
                     }" class="flex flex-wrap items-center justify-between  space-y-4 flex-column sm:flex-row min-[520px]:space-y-0">
-                    <div class="flex space-x-2">
                         {{-- Date Filter --}}
-                        <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
+                        @if ($role_id == True)
+                        <div class="flex space-x-2">
+                            <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
+                        @else    
+                            <div class="flex space-x-4">
+                            <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center justify-center h-10 p-2 max-[620px]:min-w-[127px] hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5 px-5" type="button">
+                        @endif
                             <svg class="w-3 h-3 me-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                 <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm3.982 13.982a1 1 0 0 1-1.414 0l-3.274-3.274A1.012 1.012 0 0 1 9 10V6a1 1 0 0 1 2 0v3.586l2.982 2.982a1 1 0 0 1 0 1.414Z"/>
                             </svg>
@@ -100,7 +105,12 @@
                         </div>
 
                         {{-- Status Filter --}}
-                        <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
+                        @if ($role_id == True)
+                            <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
+                        @else
+                            <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class="shadow hover:text-white z-20 inline-flex items-center justify-center h-10 p-2 max-[620px]:min-w-[127px] hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5 px-5" type="button">
+
+                        @endif
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3"s>
                                 <path fill-rule="evenodd" d="M5.25 2.25a3 3 0 0 0-3 3v4.318a3 3 0 0 0 .879 2.121l9.58 9.581c.92.92 2.39 1.186 3.548.428a18.849 18.849 0 0 0 5.441-5.44c.758-1.16.492-2.629-.428-3.548l-9.58-9.581a3 3 0 0 0-2.122-.879H5.25ZM6.375 7.5a1.125 1.125 0 1 0 0-2.25 1.125 1.125 0 0 0 0 2.25Z" clip-rule="evenodd" />
                             </svg>
@@ -141,66 +151,67 @@
                                 </li>
                             </ul>
                         </div>
+                        @if($role_id == True)
+                            {{-- Type Filter --}}
+                            <button id="dropdownRadioButton" data-dropdown-toggle="typeDropdown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3">
+                                    <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
+                                </svg>
+                                
+                                {{$typeFilterName}}
+                                <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                                </svg>
+                            </button>
 
-                        {{-- Type Filter --}}
-                        <button id="dropdownRadioButton" data-dropdown-toggle="typeDropdown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3">
-                                <path fill-rule="evenodd" d="M1.5 6.375c0-1.036.84-1.875 1.875-1.875h17.25c1.035 0 1.875.84 1.875 1.875v3.026a.75.75 0 0 1-.375.65 2.249 2.249 0 0 0 0 3.898.75.75 0 0 1 .375.65v3.026c0 1.035-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 0 1 1.5 17.625v-3.026a.75.75 0 0 1 .374-.65 2.249 2.249 0 0 0 0-3.898.75.75 0 0 1-.374-.65V6.375Zm15-1.125a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0V6a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0v.75a.75.75 0 0 0 1.5 0v-.75Zm-.75 3a.75.75 0 0 1 .75.75v.75a.75.75 0 0 1-1.5 0v-.75a.75.75 0 0 1 .75-.75Zm.75 4.5a.75.75 0 0 0-1.5 0V18a.75.75 0 0 0 1.5 0v-.75ZM6 12a.75.75 0 0 1 .75-.75H12a.75.75 0 0 1 0 1.5H6.75A.75.75 0 0 1 6 12Zm.75 2.25a.75.75 0 0 0 0 1.5h3a.75.75 0 0 0 0-1.5h-3Z" clip-rule="evenodd" />
-                            </svg>
-                            
-                            {{$typeFilterName}}
-                            <svg class="ml-2 w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                            </svg>
-                        </button>
-
-                        <!-- Dropdown menu -->
-                        <div id="typeDropdown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
-                            <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
-                                <li>
-                                    <label for="type_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-300 hover:text-black">
-                                        <input id="type_filter-radio-0" type="radio" wire:model.live="type_filter" value="0" name="type_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
-                                        <label for="type_filter-radio-0" class="cursor-pointer ml-2">All</label>
-                                    </label>
-                                </li>   
-                                <li>
-                                    <label for="type_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-green-600 hover:text-white">
-                                        <input id="type_filter-radio-1" type="radio" wire:model.live="type_filter" value="1" name="type_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2"> 
-                                        <label for="type_filter-radio-1" class="cursor-pointer">&nbsp; HR Internal</label>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="type_filter-radio-2" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-600 hover:text-white">
-                                        <input checked="" id="type_filter-radio-2" type="radio" wire:model.live="type_filter" value="2" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2"> 
-                                        <label for="type_filter-radio-2" class="cursor-pointer"> &nbsp; Internal Control</label>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="type_filter-radio-3" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-700 hover:text-white">
-                                        <input id="type_filter-radio-3" type="radio" wire:model.live="type_filter" value="3" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-700 ring-2 ring-white focus:ring-red-700 focus:ring-2"> 
-                                        <label for="type_filter-radio-3" class="cursor-pointer">&nbsp; HR Operations</label>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="type_filter-radio-4" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-blue-600 hover:text-white">
-                                        <input id="type_filter-radio-4" type="radio" wire:model.live="type_filter" value="4" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-blue-600 ring-2 ring-white focus:ring-blue-600 focus:ring-2"> 
-                                        <label for="type_filter-radio-4" class="cursor-pointer">&nbsp; HR</label>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="type_filter-radio-5" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-purple-600 hover:text-white">
-                                        <input id="type_filter-radio-5" type="radio" wire:model.live="type_filter" value="5" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-purple-600 ring-2 ring-white focus:ring-purple-600 focus:ring-2"> 
-                                        <label for="type_filter-radio-5" class="cursor-pointer">&nbsp; Office Admin</label>
-                                    </label>
-                                </li>
-                                <li>
-                                    <label for="type_filter-radio-6" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-teal-600 hover:text-white">
-                                        <input id="type_filter-radio-6" type="radio" wire:model.live="type_filter" value="6" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-teal-600 ring-2 ring-white focus:ring-teal-600 focus:ring-2"> 
-                                        <label for="type_filter-radio-6" class="cursor-pointer">&nbsp; Procurement</label>
-                                    </label>
-                                </li>
-                            </ul>
-                        </div>
+                            <!-- Dropdown menu -->
+                            <div id="typeDropdown" class="z-50 hidden w-48 mt-2 bg-white divide-y divide-gray-100 rounded-lg shadow " data-popper-reference-hidden="" data-popper-escaped="" data-popper-placement="top" style="position: absolute; inset: auto auto 0px 0px; margin: 0px; transform: translate3d(522.5px, 3847.5px, 0px);">
+                                <ul class="p-3 space-y-1 text-sm text-gray-700 " aria-labelledby="dropdownRadioButton">
+                                    <li>
+                                        <label for="type_filter-radio-0" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-gray-300 hover:text-black">
+                                            <input id="type_filter-radio-0" type="radio" wire:model.live="type_filter" value="0" name="type_filter-radio" class="w-4 h-4 text-gray-600 bg-gray-100 border-gray-300 cursor-pointer focus:ring-gray-600 focus:ring-2">
+                                            <label for="type_filter-radio-0" class="cursor-pointer ml-2">All</label>
+                                        </label>
+                                    </li>   
+                                    <li>
+                                        <label for="type_filter-radio-1" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-green-600 hover:text-white">
+                                            <input id="type_filter-radio-1" type="radio" wire:model.live="type_filter" value="1" name="type_filter-radio" class="w-4 h-4 text-green-800 bg-gray-100 border-gray-300 cursor-pointer ring-2 ring-white focus:ring-green-800 focus:bg-green-800 focus:ring-2"> 
+                                            <label for="type_filter-radio-1" class="cursor-pointer">&nbsp; HR Internal</label>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="type_filter-radio-2" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-yellow-600 hover:text-white">
+                                            <input checked="" id="type_filter-radio-2" type="radio" wire:model.live="type_filter" value="2" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-amber-800 ring-2 ring-white focus:ring-amber-800 focus:ring-2"> 
+                                            <label for="type_filter-radio-2" class="cursor-pointer"> &nbsp; Internal Control</label>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="type_filter-radio-3" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-red-700 hover:text-white">
+                                            <input id="type_filter-radio-3" type="radio" wire:model.live="type_filter" value="3" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-red-700 ring-2 ring-white focus:ring-red-700 focus:ring-2"> 
+                                            <label for="type_filter-radio-3" class="cursor-pointer">&nbsp; HR Operations</label>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="type_filter-radio-4" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-blue-600 hover:text-white">
+                                            <input id="type_filter-radio-4" type="radio" wire:model.live="type_filter" value="4" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-blue-600 ring-2 ring-white focus:ring-blue-600 focus:ring-2"> 
+                                            <label for="type_filter-radio-4" class="cursor-pointer">&nbsp; HR</label>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="type_filter-radio-5" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-purple-600 hover:text-white">
+                                            <input id="type_filter-radio-5" type="radio" wire:model.live="type_filter" value="5" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-purple-600 ring-2 ring-white focus:ring-purple-600 focus:ring-2"> 
+                                            <label for="type_filter-radio-5" class="cursor-pointer">&nbsp; Office Admin</label>
+                                        </label>
+                                    </li>
+                                    <li>
+                                        <label for="type_filter-radio-6" class="flex items-center p-2 text-gray-900 rounded cursor-pointer hover:bg-teal-600 hover:text-white">
+                                            <input id="type_filter-radio-6" type="radio" wire:model.live="type_filter" value="6" name="type_filter-radio" class="w-4 h-4 bg-gray-100 border-gray-300 cursor-pointer text-teal-600 ring-2 ring-white focus:ring-teal-600 focus:ring-2"> 
+                                            <label for="type_filter-radio-6" class="cursor-pointer">&nbsp; Procurement</label>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        @endif
                     </div>
                     <div class="relative flex flex-row justify-self-end">
                         <div class="absolute inset-y-0 flex items-center pointer-events-none start-0 ps-3">
@@ -583,7 +594,7 @@
                                         <td class="px-6 py-4 text-center whitespace-nowrap">
                                             {{$hrticket->type_of_request}}
                                         </td>
-                                        <td class="px-6 py-4 text-center">
+                                        <td  class="px-6 py-4 text-center ">
                                             @if($hrticket->type_of_request == "Reimbursements")
                                                 <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
@@ -592,7 +603,7 @@
                                                 <span class="font-semibold text-gray-700">Equipment Type: </span>{{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Condition/Availability: </span>{{$hrticket->condition_availability}} <br> 
                                             @elseif($hrticket->type_of_request == "Cash Advance")
-                                                <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{$hrticket->request_date}} <br>
+                                                <span class="font-semibold text-gray-700">Date of Cash Advance Request: </span>{{Carbon\Carbon::parse($hrticket->request_date)->format('F j, Y')}}<br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} <br>
                                             @elseif($hrticket->type_of_request == "Liquidation")
                                                 <span class="font-semibold text-gray-700">Liquidation Coverage: </span>{{$hrticket->purpose}} <br>
@@ -605,7 +616,7 @@
                                                 <span class="font-semibold text-gray-700">Incident Report:</span> {{$hrticket->purpose}} <br>
                                             @elseif($hrticket->type_of_request == "Request for Issuance of Notice/Letter")
                                                 <span class="font-semibold text-gray-700">Type of Notice:</span> {{$hrticket->type_of_hrconcern}} <br>
-                                            @elseif($hrticket->type_of_request == "Request for Quotation")
+                                            @elseif($hrticket->sub_type_of_request == "Request for Quotation")
                                                 <span class="font-semibold text-gray-700">Specifications:</span> {{$hrticket->type_of_hrconcern}} <br> 
                                                 <span class="font-semibold text-gray-700">Purpose:</span> {{$hrticket->purpose}} <br>
                                                 <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
@@ -614,25 +625,30 @@
                                                 <span class="font-semibold text-gray-700">Link Related:</span> {{$hrticket->request_link}} <br>
                                             @elseif($hrticket->type_of_request == "Request for Employee Files")
                                                 <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br> 
-                                                <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->document_requested}} <br>
+                                                <span class="font-semibold text-gray-700">Document/s Needed:</span> {{$hrticket->request_requested}} <br>
+
                                             @elseif($hrticket->sub_type_of_request == "Certificate of Employment" || $hrticket->sub_type_of_request == "Request for Consultation" )
                                                 <span class="font-semibold text-gray-700">Purpose of Request:</span> {{$hrticket->purpose}} <br>
                                                 <span class="font-semibold text-gray-700">Type of COE </span> {{$hrticket->type_of_hrconcern}} 
-                                            @elseif($hrticket->sub_type_of_request == "HMO-related concerns" || $hrticket->sub_type_of_request == "Leave concerns")
+                                            @elseif($hrticket->sub_type_of_request == "HMO-related Concerns" || $hrticket->sub_type_of_request == "Leave Concerns")
                                                 <span class="font-semibold text-gray-700">Type of Concern: </span>{{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}} 
-                                            @elseif($hrticket->sub_type_of_request == "Payroll-related concerns")
-                                                <span class="font-semibold text-gray-700">Payroll Date: </span>{{$hrticket->request_date}} <br>
+                                            @elseif($hrticket->sub_type_of_request == "Payroll-related Concerns")
+                                                <span class="font-semibold text-gray-700">Payroll Date: </span>  {{\Carbon\Carbon::parse($hrticket->request_date)->format('F j, Y')}}  <br>
                                                 <span class="font-semibold text-gray-700">Type of Concern: </span>    {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>    {{$hrticket->purpose }} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>    {{$hrticket->request_link }} 
+                                            @elseif($hrticket->sub_type_of_request == "Request for a Meeting")
+                                                <span class="font-semibold text-gray-700">Meeting Date: </span>{{$hrticket->request_date}} <br>
+                                                <span class="font-semibold text-gray-700">Target Person: </span>    {{$hrticket->request_requested}} <br>
+                                                <span class="font-semibold text-gray-700">Purpose: </span>    {{$hrticket->purpose }} <br>
                                             @elseif($hrticket->sub_type_of_request == "Certificate of Remittances")
                                                 <span class="font-semibold text-gray-700">Type of Remittance Certificate: </span>  {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Account Assigned: </span> {{$hrticket->request_assigned}} <br>
                                                 <span class="font-semibold text-gray-700">Purpose: </span>    {{$hrticket->purpose}} <br>
                                                 <span class="font-semibold text-gray-700">Date Start: </span>    {{$hrticket->request_date}} <br>
-                                            @elseif($hrticket->sub_type_of_request == "Government-mandated benefits concern")
+                                            @elseif($hrticket->sub_type_of_request == "Government-Mandated Benefits Concern")
                                                 <span class="font-semibold text-gray-700">Type of Concern: </span> {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>    {{$hrticket->request_link}}
                                             @elseif($hrticket->sub_type_of_request == "Messengerial")
@@ -657,270 +673,298 @@
                                                 <span class="font-semibold text-gray-700">Purpose: </span>    {{$hrticket->purpose}} <br>
                                             @elseif($hrticket->sub_type_of_request == "Office Supplies")
                                                 <span class="font-semibold text-gray-700">Requests: </span> <br> <br>
-                                            @endif
                                             @if ($hrticket->request_others)
-                                                @php
-                                                    $ctr_request = 0;
-                                                    $supplies_request = json_decode($hrticket->request_others, true);
-                                                @endphp
-                                                <div class="">
-                                                    @php $ctr_request = 0; @endphp
-                                                    <div class="grid grid-cols-3 gap-2 font-semibold">
-                                                        <div class="col-span-1">#</div>
-                                                        <div class="col-span-1">Name</div>
-                                                        <div class="col-span-1">Quantity</div>
-                                                    </div>
-                                                    <div class="flex flex-col mt-2 space-y-2">
-                                                        @if($supplies_request['ballpen_black'] > 0)
-                                                            @php $ctr_request += 1; @endphp
-                                                            <div class="grid grid-cols-3 gap-2">
-                                                                <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                <div class="col-span-1">Ballpen (Black)</div>
-                                                                <div class="col-span-1">{{ $supplies_request['ballpen_black'] }}</div>
-                                                            </div>
-                                                        @endif
-                                                        @if($supplies_request['ballpen_blue'] > 0)
-                                                            @php $ctr_request += 1; @endphp
-                                                            <div class="grid grid-cols-3 gap-2">
-                                                                <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                <div class="col-span-1">Ballpen (Blue)</div>
-                                                                <div class="col-span-1">{{ $supplies_request['ballpen_blue'] }}</div>
-                                                            </div>
-                                                        @endif
-                                                        @if($supplies_request['ballpen_red'] > 0)
-                                                            @php $ctr_request += 1; @endphp
-                                                            <div class="grid grid-cols-3 gap-2">
-                                                                <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                <div class="col-span-1">Ballpen (Red)</div>
-                                                                <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
-                                                            </div>
-                                                        @endif
-                                                        @if($supplies_request['ballpen_red'] > 0)
-                                                            @php $ctr_request += 1; @endphp
-                                                            <div class="grid grid-cols-3 gap-2">
-                                                                <div class="col-span-1">{{ $ctr_request }}</div>
-                                                                <div class="col-span-1">Ballpen (Red)</div>
-                                                                <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
-                                                            </div>
-                                                        @endif
+                                                    @php
+                                                        $ctr_request = 0;
+                                                        $supplies_request = json_decode($hrticket->request_others, true);
+                                                        // dd($supplies_request, $hrticket->request_others);
+                                                        // dd();
+                                                    @endphp
+                                                    {{-- @foreach ($supplies_request as $name =>  $request) --}}
+                                                    
+                                                    <div class="">
+                                                        @php $ctr_request = 0; @endphp
+                                                        <div class="grid grid-cols-1 lg:grid-cols-2  font-semibold">
+                                                            <div class="col-span-1"># - Name</div>
+                                                            <div class="col-span-1">Quantity</div>
+                                                        </div>
+                                                    
+                                                        <div class="flex flex-col space-y-2 mt-2">
+                                                            @if($supplies_request['ballpen_black'] > 0)
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Ballpen (Black):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['ballpen_black'] }}</div>
+                                                                </div>
+                                                            @endif
+                                                    
+                                                            @if($supplies_request['ballpen_blue'] > 0)
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Ballpen (Blue): </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['ballpen_blue'] }}</div>
+                                                                </div>
+                                                            @endif
+                                                    
+                                                            @if($supplies_request['ballpen_red'] > 0)
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Ballpen (Red): </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
+                                                                </div>
+                                                            @endif
+                                                    
+                                                            @if($supplies_request['ballpen_red'] > 0)
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Ballpen (Red): </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['ballpen_red'] }}</div>
+                                                                </div>
+                                                            @endif
+                                                        </div>
                                                     </div>
 
                                                     @if($supplies_request['pencil'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Pencil</div>
-                                                            <div class="col-span-1">{{ $supplies_request['pencil'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Pencil: </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['pencil'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['highlighter'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Highlighter</div>
-                                                            <div class="col-span-1">{{ $supplies_request['highlighter'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Highlighter: </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['highlighter'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
-                                                    
+                                                    </div>
+
                                                     @if($supplies_request['permanent_marker'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Permanent Marker</div>
-                                                            <div class="col-span-1">{{ $supplies_request['permanent_marker'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Permanent Marker: </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['permanent_marker'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
                                                     
                                                     @if($supplies_request['correction_tape'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Correction Tape</div>
-                                                            <div class="col-span-1">{{ $supplies_request['correction_tape'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Correction Tape: </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['correction_tape'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['l_green_exp_folder'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Green Expandable Folder (L) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['l_green_exp_folder'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Green Expandable Folder (L):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['l_green_exp_folder'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['s_green_exp_folder'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Green Expandable Folder (S) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['s_green_exp_folder'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Green Expandable Folder (S):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['s_green_exp_folder'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['l_brown_exp_folder'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Brown Expandable Folder (L) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['l_brown_exp_folder'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Brown Expandable Folder (L):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['l_brown_exp_folder'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
                                                     
                                                     @if($supplies_request['s_brown_exp_folder'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Brown Expandable Folder (S) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['s_brown_exp_folder'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Brown Expandable Folder (S):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['s_brown_exp_folder'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['scissors'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Scissors </div>
-                                                            <div class="col-span-1">{{ $supplies_request['scissors'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Scissors:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['scissors'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['white_envelope'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">White Envelope </div>
-                                                            <div class="col-span-1">{{ $supplies_request['white_envelope'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. White Envelope:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['white_envelope'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['calculator'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Calculator </div>
-                                                            <div class="col-span-1">{{ $supplies_request['calculator'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Calculator:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['calculator'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['binder_two'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Binder Clips (2") </div>
-                                                            <div class="col-span-1">{{ $supplies_request['binder_two'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Binder Clips (2"):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['binder_two'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['binder_one_fourth'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Binder Clips (1 1/4") </div>
-                                                            <div class="col-span-1">{{ $supplies_request['binder_one_fourth'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1"> {{ $ctr_request }}. Binder Clips (1 1/4"):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['binder_one_fourth'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['binder_three_fourth'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Binder Clips (3/4") </div>
-                                                            <div class="col-span-1">{{ $supplies_request['binder_three_fourth'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Binder Clips (3/4"):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['binder_three_fourth'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['l_metal_clips'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Metal Paper Clips (L) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['l_metal_clips'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Metal Paper Clips (L):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['l_metal_clips'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['binder_one_fourth'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Binder Clips (1 1/4") </div>
-                                                            <div class="col-span-1">{{ $supplies_request['binder_one_fourth'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Binder Clips (1 1/4"): </div>
+                                                                    <div class="col-span-1">{{ $supplies_request['binder_one_fourth'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['s_metal_clips'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Metal Paper Clips (S) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['s_metal_clips'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Metal Paper Clips (S):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['s_metal_clips'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['stapler'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Stapler </div>
-                                                            <div class="col-span-1">{{ $supplies_request['stapler'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Stapler:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['stapler'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['stapler_wire'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Stapler Wire</div>
-                                                            <div class="col-span-1">{{ $supplies_request['stapler_wire'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Stapler Wire:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['stapler_wire'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['scotch_tape'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Scotch Tape </div>
-                                                            <div class="col-span-1">{{ $supplies_request['scotch_tape'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Scotch Tape:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['scotch_tape'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['l_brown_envelope'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Brown Envelope (L) </div>
-                                                            <div class="col-span-1">{{ $supplies_request['l_brown_envelope'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Brown Envelope (L):</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['l_brown_envelope'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['post_it'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">Post It </div>
-                                                            <div class="col-span-1">{{ $supplies_request['post_it'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. Post It:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['post_it'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['white_envelope'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">White Envelope </div>
-                                                            <div class="col-span-1">{{ $supplies_request['white_envelope'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. White Envelope:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['white_envelope'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
-                                                    @endif
+                                                    </div>
 
                                                     @if($supplies_request['white_folder'] > 0)
-                                                        @php $ctr_request += 1; @endphp
-                                                        <div class="grid grid-cols-3 gap-2">
-                                                            <div class="col-span-1">{{ $ctr_request }}</div>
-                                                            <div class="col-span-1">White Folder </div>
-                                                            <div class="col-span-1">{{ $supplies_request['white_folder'] }}</div>
+                                                                @php $ctr_request += 1; @endphp
+                                                                <div class="grid grid-cols-1 lg:grid-cols-2 items-center border-b border-gray-300">
+                                                                    <div class="col-span-1">{{ $ctr_request }}. White Folder:</div>
+                                                                    <div class="col-span-1">{{ $supplies_request['white_folder'] }}</div>
+                                                                </div>
+                                                            @endif
                                                         </div>
+                                                    </div>
+                                                    {{-- @endforeach --}}
                                                     @endif
-                                                </div>
                                             @endif
                                         </td>
                                         <td class="items-center py-4 text-center">

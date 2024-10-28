@@ -315,7 +315,7 @@
                                     <div id="deduct_to_container" class="col-span-1">
                                         <label class="block mb-2 text-sm font-medium text-gray-900">Deduct to? <span class="text-red-600">*</span></label>
                                         <select disabled id="purpose_type" name="deduct_to" wire:model="deduct_to" 
-                                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
+                                            class="disabled-select bg-gray-50 border border-gray-300  text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5"
                                             required>
                                             <option value="">Select</option>
                                             <option value="Salary">Salary</option>

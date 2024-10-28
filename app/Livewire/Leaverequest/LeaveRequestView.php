@@ -145,12 +145,6 @@ class LeaveRequestView extends Component
         $this->purpose_type = $leaverequest->purpose_type;
         $this->reason = $leaverequest->reason;
         $this->deduct_to = $leaverequest->deduct_to;
-
-
-
-        if($leaverequest->commutation_signature_of_appli){
-            $this->commutation_signature_of_appli = " ";
-        }
     }
     
     public function editLeaveRequest($index){

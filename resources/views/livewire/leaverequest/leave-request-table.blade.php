@@ -380,7 +380,9 @@
                                                 <span class="font-medium text-gray-700">Reason: <br></span> {{$leaverequest->reason}} <br>
                                             @else
                                                 <span class="font-medium text-gray-700">Start Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y')}} <br>
-                                                <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y')}}
+                                                <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y')}} <br>
+                                                <span class="font-medium text-gray-700">End Day:</span> {{$leaverequest->full_or_half}} <br>
+                                                <span class="font-medium text-gray-700">Deducted to:</span> {{$leaverequest->deduct_to}}
                                             @endif
                                         </td>
                                         <td class="items-center py-4 text-center">

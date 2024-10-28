@@ -77,6 +77,8 @@ class ApproveHrTicketsTable extends Component
     public $departmentTypeFilter;
     public $companyFilter;
     public $genderFilter;
+
+    public $role_id = False;
     
     
     public function search()
@@ -123,7 +125,7 @@ class ApproveHrTicketsTable extends Component
         } else if($loggedInUser == 10){
             $query->where('type_of_ticket', 'HR Operations');
         } else if(in_array($loggedInUser, [7, 8, 61024])){
-
+            $this->role_id = True;
         } else {
             redirect()->to(route('HumanResourceDashboard'));
         }
