@@ -162,7 +162,7 @@ class AccountingDashboardView extends Component
             $parts = explode(' | ', $this->selectedEmployee);
             $this->selectedEmployeeEmail = $this->employeeEmails[$parts[1]];
         }
-        if(in_array($keys, ['payroll_phase', 'payroll_month', 'payroll_year', 'yearFilter', 'monthFilter', 'halfOfMonthFilter'])){
+        if(in_array($keys, ['yearFilter', 'monthFilter', 'halfOfMonthFilter'])){
             $this->payroll_phase = $this->halfOfMonthFilter;
             $this->payroll_month = $this->monthFilter;
             $this->payroll_year = $this->yearFilter;

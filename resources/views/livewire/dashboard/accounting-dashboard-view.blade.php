@@ -448,7 +448,7 @@
                 </div>
                 
                 <!-- Modal body -->
-                <div class="p-4 xl:p-5 overflow-y-auto max-h-96 " x-data="{ openAddWarningButton: false }">
+                <div class="p-4 xl:p-5 overflow-y-auto max-h-[480px]" x-data="{ openAddWarningButton: false }">
                     <form class="space-y-4 " wire:submit.prevent="addTargetPayroll" method="POST">
                         <div>
                             <label for="selectedEmployee" class="block mb-2 text-sm font-medium text-customGray1">Target Employee</label>
@@ -470,7 +470,7 @@
                             <!-- Phase -->
                             <div id="payroll_phase_container">
                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
-                                <select name="status" id="status" wire:model.change="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                <select disabled name="status" id="status" wire:model.change="payroll_phase" @change="payrollPicture = ' ' " class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                     <option value="" selected>Select Phase</option>
                                     <option value="1st Half">1st Half</option>
                                     <option value="2nd Half">2nd Half</option>
@@ -485,7 +485,7 @@
                             <!-- Month -->
                             <div id="payroll_month_container">
                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
-                                <select name="status" id="status" wire:model.change="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                <select disabled name="status" id="status" wire:model.change="payroll_month" @change="payrollPicture = ' ' " class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                     <option value="" selected>Select Month</option>
                                     @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
                                         <option value="{{ $month }}">{{ $month }}</option>
@@ -501,7 +501,7 @@
                             <!-- Year -->
                             <div id="payroll_year_container">
                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
-                                <select name="status" id="status" wire:model.change="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                <select disabled name="status" id="status" wire:model.change="payroll_year" @change="payrollPicture = ' ' " class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                     <option value="" selected>Select Year</option>
                                     @foreach(range(2000, date('Y')) as $year)
                                         <option value="{{ $year }}">{{ $year }}</option>
@@ -866,7 +866,7 @@
                                                     </svg>
                                                 </button>
                                                 @if($payroll_exists == False)
-                                                <div x-show="$store.addPayroll.openAddPayrollModal && $store.addPayroll.currentAddModal === '{{ $loop->index }}'" 
+                                                    <div x-show="$store.addPayroll.openAddPayrollModal && $store.addPayroll.currentAddModal === '{{ $loop->index }}'" 
                                                     class="fixed inset-0 z-50 flex items-center justify-center p-6 sm:p-12">
                                                     <!-- Backdrop -->
                                                     <div x-show="$store.addPayroll.openAddPayrollModal" 
@@ -889,7 +889,7 @@
                                                         <div class="relative bg-white rounded-lg shadow ">
                                                                 <!-- Modal header -->
                                                                 <div class="flex items-center justify-between p-4 border-b rounded-t xl:p-5 sticky top-0 bg-white z-10">
-                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payslip For <span class="text-customRed">{{$employee->employee_id}}</span> </h3>
+                                                                    <h3 class="text-xl font-semibold text-gray-900">Add Payslip For <span class="text-customRed">{{$employee->employee_id}}</span> (<span class="text-customRed font-semibold">{{$monthFilter}} {{$yearFilter}}</span>) </h3>
                                                                     <button @click="$store.addPayroll.openAddPayrollModal = false; $wire.resetErrors(); " wire:click="resetPayrollField"  type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center">
                                                                         <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
@@ -912,7 +912,7 @@
                                                                         });
                                                                     "
                                                                     :class="isScrollable ? 'mb-4' : ''" 
-                                                                    class="p-4 xl:p-5  overflow-y-auto" style="max-height: 28rem;">
+                                                                    class="px-4 pb-4 pt-2  overflow-y-auto" style="max-height: 30rem;">
                                                                     <form class="space-y-4" wire:submit.prevent="addPayroll('{{ $employee->employee_id }}')"  method="POST">
                                                                         @csrf
                                                                         <div class="grid grid-cols-1 min-[450px]:grid-cols-2 gap-4" >
@@ -935,7 +935,7 @@
                                                                         <div class="grid grid-cols-1 min-[480px]:grid-cols-3  gap-4">
                                                                             <div>
                                                                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Phase</label>
-                                                                                <select name="status" id="phase" wire:model="payroll_phase" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <select disabled name="status" id="phase" wire:model.change="payroll_phase" @change="payrollPicture = ' ' " class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                                     <option value="">Select Phase</option>
                                                                                     <option value="1st Half" {{ (now()->format('j') <= 15) ? 'selected' : '' }}>1st Half</option>
                                                                                     <option value="2nd Half" {{ (now()->format('j') > 15) ? 'selected' : '' }}>2nd Half</option>
@@ -943,18 +943,21 @@
                                                                             </div>
                                                                             
                                                                             <div>
+                                                                                @php
+                                                                                    $selectedMonth = $filterMonth ?? now()->format('F'); // Use the filtered month or current month if none is set
+                                                                                @endphp
                                                                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Month</label>
-                                                                                <select name="status" id="month" wire:model="payroll_month" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <select disabled name="status" id="month" wire:model.change="payroll_month" @change="payrollPicture = ' ' " class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                                     <option value="" selected>Select Month</option>
                                                                                     @foreach(['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'] as $month)
-                                                                                        <option value="{{ $month }}" {{ ($month === now()->format('F')) ? 'selected' : 'selected' }}>{{ $month }}</option>
+                                                                                        <option value="{{ $month }}" {{ ($month === $selectedMonth) ? 'selected' : '' }}>{{ $month }}</option>
                                                                                     @endforeach
                                                                                 </select>
                                                                             </div>
                                                                             
                                                                             <div>
                                                                                 <label for="status" class="block mb-2 text-sm font-medium text-customGray1">Year</label>
-                                                                                <select name="status" id="year" wire:model="payroll_year" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                                <select disabled name="status" id="year" wire:model.change="payroll_year" @change="payrollPicture = ' ' " class="disabled-select bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                                     <option value="" selected>Select Year</option>
                                                                                     @foreach(range(date('Y'), 2000) as $year)
                                                                                         <option value="{{ $year }}" {{ ($year == date('Y')) ? 'selected' : '' }}>{{ $year }}</option>
@@ -1069,7 +1072,7 @@
                                                                     });
                                                                 "
                                                                 :class="isScrollable ? 'mb-4' : ''" 
-                                                                class="p-4 xl:p-5 overflow-y-auto" style="max-height: 30rem;">
+                                                                class="px-4 pb-4 pt-2  overflow-y-auto" style="max-height: 29rem;">
                                                                 {{-- <div class="p-4 xl:p-5 max-h-[90vh] overflow-y-auto"> --}}
                                                                     <form class="space-y-4" wire:submit.prevent="editPayroll('{{$employee->employee_id}}')" method="POST">
                                                                         @csrf
@@ -1250,8 +1253,8 @@
         </div>
         
     </div>
-    <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="load-over z-50">
-        <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="loading-overlay z-50">
+    <div wire:loading wire:target="submit, addTargetPayroll,  halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1, deletePayroll,  editPayroll, addPayroll, " class="load-over z-50">
+        <div wire:loading wire:target="submit, addTargetPayroll, halfOfMonthFilter, yearFilter, monthFilter, delete-note, deleteNote, addNote, addWarningButton1" class="loading-overlay z-50">
             <div class="flex flex-col justify-center items-center">
                 <div class="spinner"></div>
                 <p>Updating...</p>
@@ -1266,7 +1269,7 @@
     </div>
 
     <!-- Loading screen -->
-    <div wire:loading wire:target="search" class="fixed inset-x-0 top-1/2 flex justify-center pointer-events-none z-50">
+    <div wire:loading wire:target="search, genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter" class="fixed inset-x-0 top-1/2 flex justify-center pointer-events-none z-50">
         <div class="z-50 mt-12">
             <div id="toast-container" class="flex items-center justify-center w-full h-full">
                 <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 border-6 border-white text-customRed bg-white bg-opacity-90 rounded-lg shadow"
