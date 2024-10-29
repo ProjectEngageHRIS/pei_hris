@@ -141,10 +141,9 @@ class ApproveChangeInformationForm extends Component
         try {
             $changeInfoData =  ChangeInformation::where('uuid', $this->index)->first();
             
-            try {
-                if (empty(array_intersect($role_ids, [7, 8,61024]))) {
-                    throw new \Exception('Unauthorized Access');
-                }
+            if (empty(array_intersect($role_ids, [7, 8,61024]))) {
+                throw new \Exception('Unauthorized Access');
+            }
 
             if(!$changeInfoData){
                 return False;
