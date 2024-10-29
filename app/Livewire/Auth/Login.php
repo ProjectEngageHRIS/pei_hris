@@ -2,8 +2,10 @@
 
 namespace App\Livewire\Auth;
 
+use Request;
 use App\Models\User;
 use Livewire\Component;
+use App\Models\Employee;
 use App\Models\UserDevices;
 use App\Events\bannedAccount;
 use Illuminate\Support\Facades\Log;
@@ -37,7 +39,7 @@ class Login extends Component
         $throttleKey = strtolower($this->email);
         $maxAttempts = 5; // Maximum number of attempts allowed
         $decayMinutes = 1; // Time period in minutes to limit the attempts
-        $ip = \Request::getClientIp(true);
+        $ip = Request::getClientIp(true);
         
         // Check if too many attempts have been made
         if (RateLimiter::tooManyAttempts($throttleKey, $maxAttempts)) {
@@ -64,8 +66,10 @@ class Login extends Component
             $user = auth()->user();
             
             if($user->banned_flag == 1) {
-                $this->addError('email', 'Account Banned/Deactivated. Contact IT Support');
-                Log::channel('loginlog')->info('User with banned/deactivated account tried to login ' . $this->email . ' from IP ' . $ip);
+                $this->addError('email', trans('auth.failed'));
+                Log::channel('loginlog')->info('User with banned account tried to login ' . $this->email . ' from IP ' . $ip);
+                Auth::logout();
+                session()->invalidate();
                 return;
             } 
             else if($user->role_id == 61024) {
@@ -82,6 +86,15 @@ class Login extends Component
                     session(['auth_user_id' => $this->email]);
                     $url = URL::temporarySignedRoute('MFAVerify', now()->addMinutes(10));
                     return redirect()->to($url);
+                }
+            } else {
+                $employee = Employee::where('employee_id', $user->employee_id)->select('employee_id', 'active')->first();
+                if($employee->active != 1){
+                    Auth::logout();
+                    session()->invalidate();
+                    $this->addError('email', trans('auth.failed'));
+                    Log::channel('loginlog')->info('User with deactivated account tried to login ' . $this->email . ' from IP ' . $ip);
+                    return;
                 }
             }
         

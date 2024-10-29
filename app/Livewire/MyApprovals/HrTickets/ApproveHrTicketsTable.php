@@ -131,7 +131,7 @@ class ApproveHrTicketsTable extends Component
             $query->where('type_of_ticket', 'Internal Control');
         } else if($loggedInUser == 10){
             $query->where('type_of_ticket', 'HR Operations');
-        } else if(in_array($loggedInUser, [7, 8, 61024])){
+        } else if(in_array($loggedInUser, [7, 8, 14, 15, 61024])){
             $this->role_id = True;
         } else {
             redirect()->to(route('HumanResourceDashboard'));
