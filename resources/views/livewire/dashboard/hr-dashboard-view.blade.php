@@ -38,7 +38,7 @@
                     <span class="text-sm ml-2">Regular</span>
                 </div>
                 <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
-                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7E745;"></div>
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #B345E7;"></div>
                     <span class="text-sm ml-2">Reliever</span>
                 </div>
             </div>
@@ -100,7 +100,7 @@
             <!-- Company Chart -->
             <div class="py-6 w-auto justify-self-center" id="pie-chart-3" ></div>
             <!-- Manual Legend -->
-            <div class="flex flex-row min-[768px]:flex-col justify-center md:justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
+            <div class="flex flex-wrap min-[768px]:flex-col justify-center md:justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
                 <div class="flex items-center mr-4 mb-2">
                     <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7B145;"></div>
                     <span class="text-sm ml-2">PEI</span>
@@ -114,7 +114,7 @@
                     <span class="text-sm ml-2">SL TEMPS</span>
                 </div>
                 <div class="flex items-center mr-4 mb-2">
-                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45E5E7;"></div>
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E745A5;"></div>
                     <span class="text-sm ml-2">DO-174</span>
                 </div>
             </div>
@@ -134,11 +134,11 @@
             <!-- Manual Legend -->
             <div class="flex flex-row min-[768px]:flex-col justify-center md:justify-start px-8 mt-4" style="font-family: 'Inter', serif;">
                 <div class="flex items-center mr-4 mb-2">
-                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E7B145;"></div>
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45E5E7;"></div>
                     <span class="text-sm ml-2">Male</span>
                 </div>
                 <div class="flex items-center mr-4 mb-2">
-                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E77945;"></div>
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E745A5;"></div>
                     <span class="text-sm ml-2">Female</span>
                 </div>
             </div>
