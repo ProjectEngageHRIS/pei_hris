@@ -647,7 +647,7 @@
                                                 <span class="font-semibold text-gray-700">Type of Remittance Certificate: </span>  {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Account Assigned: </span> {{$hrticket->request_assigned}} <br>
                                                 <span class="font-semibold text-gray-700">Purpose: </span>    {{$hrticket->purpose}} <br>
-                                                <span class="font-semibold text-gray-700">Date Start: </span>    {{$hrticket->request_date}} <br>
+                                                <span class="font-semibold text-gray-700">Date Start: </span>    {{\Carbon\Carbon::parse($hrticket->request_date)->format('F j, Y')}}<br>
                                             @elseif($hrticket->sub_type_of_request == "Government-Mandated Benefits Concern")
                                                 <span class="font-semibold text-gray-700">Type of Concern: </span> {{$hrticket->type_of_hrconcern}} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>    {{$hrticket->request_link}}

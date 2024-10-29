@@ -120,6 +120,13 @@ class ApproveHrTicketsTable extends Component
 
         if(in_array($loggedInUser, [11, 12, 13])){
             $query->where('type_of_ticket', 'HR Internal');
+            if($loggedInUser == 11){
+                $query->where('type_of_request', 'HR');
+            } else if ($loggedInUser == 12){
+                $query->where('type_of_request', 'Office Admin');
+            } else if ($loggedInUser == 13){
+                $query->where('type_of_ticket', 'Procurement');
+            }
         } else if($loggedInUser == 9){
             $query->where('type_of_ticket', 'Internal Control');
         } else if($loggedInUser == 10){
