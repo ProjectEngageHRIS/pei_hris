@@ -18,7 +18,7 @@
                                     <path fill-rule="evenodd" d="M8.543 2.232a.75.75 0 0 0-1.085 0l-5.25 5.5A.75.75 0 0 0 2.75 9H4v4a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1V9h1.25a.75.75 0 0 0 .543-1.268l-5.25-5.5Z" clip-rule="evenodd" />
                                 </svg> Home
                             </a>
-                            @if (in_array($role_id, [7, 8, 61024, 14, 15]) )
+                            @if (!empty(array_intersect((array) $role_ids, [7, 8, 61024, 14, 15])))
                                 <a href="{{ route('HrDailyTimeRecord') }}" class="block px-4 py-2 text-sm {{ request()->routeIs('HrDailyTimeRecord') ? 'text-customRed' : 'text-gray-600' }} hover:bg-customRed hover:text-white">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                         <path fill-rule="evenodd" d="M4 1.75a.75.75 0 0 1 1.5 0V3h5V1.75a.75.75 0 0 1 1.5 0V3a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2V1.75ZM4.5 6a1 1 0 0 0-1 1v4.5a1 1 0 0 0 1 1h7a1 1 0 0 0 1-1V7a1 1 0 0 0-1-1h-7Z" clip-rule="evenodd" />
@@ -30,7 +30,7 @@
                                     </svg> Announcements
                                 </a>
                             @endif
-                            @if (in_array($role_id, [7, 8, 61024, 11, 12, 13, 14, 15]))
+                            @if (!empty(array_intersect($role_ids, [7, 8, 9, 10, 61024, 11, 12, 13, 14, 15]))) 
                                 <div class="relative group">
                                     <div id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -43,11 +43,11 @@
                                     <!-- Nested Dropdown Menu -->
                                     <ul id="approveBDropdownMenu" class="absolute top-0 z-10 hidden w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                         <div class="py-1">
-                                            @if (in_array($role_id, [7, 8, 61024, 14, 15]) )
+                                            @if (!empty(array_intersect($role_ids, [7, 8, 14, 15, 61024]))) 
                                                 <a href="{{ route('ListLeaveRequestTable', ['type' => 'list'])  }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                                 <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                                 <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Changes</a>
-                                            @elseif (in_array($role_id, [11, 12, 13]))
+                                            @elseif (!empty(array_intersect($role_ids, [9, 10, 11, 12, 13]))) 
                                                 <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                             @endif
                                         </div>
@@ -78,7 +78,7 @@
                         </svg> Home
                     </button>
                 </a>
-                @if (in_array($role_id, [7, 8, 61024, 14, 15]) )
+                @if (!empty(array_intersect((array) $role_ids, [7, 8, 61024, 14, 15])))
                     <!-- Attendance Button -->
                     <a href="{{ route('HrDailyTimeRecord') }}" class="w-32">
                         <button class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('HrDailyTimeRecord') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -96,27 +96,29 @@
                         </button>
                     </a>
                 @endif
-                <!-- Approval Button -->
-                <div class="relative inline-block text-left">
-                    <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
-                            <path fill-rule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h1.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75V4h3Z" clip-rule="evenodd" />
-                            <path fill-rule="evenodd" d="M2 7a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7Zm6.585 1.08a.75.75 0 0 1 .336 1.005l-1.75 3.5a.75.75 0 0 1-1.16.234l-1.75-1.5a.75.75 0 0 1 .977-1.139l1.02.875 1.321-2.64a.75.75 0 0 1 1.006-.336Z" clip-rule="evenodd" />
-                        </svg> Approvals
-                    </button>
-                    <!-- Approval Dropdown -->
-                    <div id="approveDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
-                        <div class="py-1">
-                            @if (in_array($role_id, [7, 8, 61024, 14, 15]) )
-                                <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
-                                <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
-                                <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Changes</a>
-                            @elseif (in_array($role_id, [11, 12, 13]))
-                                <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
-                            @endif
+                @if (!empty(array_intersect($role_ids, [7, 8, 9, 10, 61024, 11, 12, 13, 14, 15]))) 
+                    <!-- Approval Button -->
+                    <div class="relative inline-block text-left">
+                        <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
+                                <path fill-rule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h1.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75V4h3Z" clip-rule="evenodd" />
+                                <path fill-rule="evenodd" d="M2 7a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7Zm6.585 1.08a.75.75 0 0 1 .336 1.005l-1.75 3.5a.75.75 0 0 1-1.16.234l-1.75-1.5a.75.75 0 0 1 .977-1.139l1.02.875 1.321-2.64a.75.75 0 0 1 1.006-.336Z" clip-rule="evenodd" />
+                            </svg> Approvals
+                        </button>
+                        <!-- Approval Dropdown -->
+                        <div id="approveDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            <div class="py-1">
+                                @if (!empty(array_intersect($role_ids, [7, 8, 14, 15, 61024]))) 
+                                    <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
+                                    <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                    <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Changes</a>
+                                @elseif (!empty(array_intersect($role_ids, [9, 10, 11, 12, 13]))) 
+                                    <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @endif
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </ul>
         </div>
 
@@ -149,7 +151,7 @@
                         <li>
                             <a href="{{route('EmployeeDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Employee Portal</a>
                         </li>
-                        @if($role_id == 61024)
+                        @if(in_array(61024, $role_ids))
                             <li>
                                 <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Choose Portal</a>
                             </li>

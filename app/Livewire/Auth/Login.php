@@ -64,7 +64,8 @@ class Login extends Component
             $cookieName = 'device_guid_' . $this->email;
             $deviceGuid = Cookie::get($cookieName);
             $user = auth()->user();
-            
+            $role_ids = json_decode($user->role_id, true);
+
             if($user->banned_flag == 1) {
                 $this->addError('email', trans('auth.failed'));
                 Log::channel('loginlog')->info('User with banned account tried to login ' . $this->email . ' from IP ' . $ip);
@@ -72,7 +73,7 @@ class Login extends Component
                 session()->invalidate();
                 return;
             } 
-            else if($user->role_id == 61024) {
+            else if(in_array(61024, $role_ids)) {
                 if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null) {
                     RateLimiter::clear($throttleKey);
                     if ($this->isValidDevice($this->email, $deviceGuid)) {
@@ -98,7 +99,7 @@ class Login extends Component
                 }
             }
         
-            if ($user->role_id == 1) {
+            if(in_array(1, $role_ids)) {
                 return redirect()->route('EmployeeDashboard');
             }
             return redirect()->route('LoginDashboard');

@@ -39,7 +39,8 @@ class ItNavbarView extends Component
 
     public function mount(){
         $loggedInUser = auth()->user();
-        $this->role_id = $loggedInUser->role_id;
+        $role_ids = json_decode($loggedInUser->role_id, true);
+        $this->role_id = $role_ids;
         $this->is_admin = $loggedInUser->is_admin;
         // $this->role = (int) Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_role');
         $employee = Employee::where('employee_id', $loggedInUser->employee_id)->first(); 
@@ -65,7 +66,9 @@ class ItNavbarView extends Component
         //     }
         // }
 
-        $this->role = $loggedInUser->role_id;
+        $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
+        $this->role_id = $role_ids;
         $this->employee_id = $loggedInUser->employee_id;
         // dd($this->departmentHeadId, $this->collegeDeanId, $this->role);
 

@@ -191,12 +191,17 @@ class HrDashboardView extends Component
 
         $loggedInUser = auth()->user()->role_id;
         $this->employee_role_id = $loggedInUser;
+        $role_ids = json_decode($loggedInUser, true);
+
+
         try {
-            if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
+            if (empty(array_intersect($role_ids, [2, 7, 8, 9, 10, 11, 12, 13, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             } 
-            if(in_array($loggedInUser, [7, 8, 61024, 14])){
-                $this->loggedInUser = True;
+            
+            // Check if the user is logged in based on their role using array_intersect
+            if (!empty(array_intersect($role_ids, [7, 8, 61024, 14, 15]))) {
+                $this->loggedInUser = true;
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
@@ -314,8 +319,10 @@ class HrDashboardView extends Component
 
     public function deactivateEmployee(){
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
+
         try {
-            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+            if (empty(array_intersect($role_ids, [6, 7, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -344,8 +351,10 @@ class HrDashboardView extends Component
 
     public function activateEmployee(){
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
+
         try {
-            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+            if (empty(array_intersect($role_ids, [6, 7, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -628,14 +637,17 @@ if (isset($add_employee->employee_email)) {
 
     public function render()
     {
-
         $loggedInUser = auth()->user()->role_id;
+        $role_ids = json_decode($loggedInUser, true);
+
         try {
-            if(!in_array($loggedInUser, [2, 7, 8, 9, 10, 11, 12, 13, 61024])){
+            if (empty(array_intersect($role_ids, [2, 7, 8, 9, 10, 11, 12, 13, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             } 
-            if(in_array($loggedInUser, [7, 8, 61024, 14,])){
-                $this->loggedInUser = True;
+
+            // Check if the user is logged in based on their role using array_intersect
+            if (!empty(array_intersect($role_ids, [7, 8, 61024, 14, 15]))) {
+                $this->loggedInUser = true;
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation

@@ -54,7 +54,7 @@
                                     </div>
                                 </ul>
                             </div>
-                            @if(in_array($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024]))
+                            @if(!empty(array_intersect($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
                                 <div x-data="{ approvalMobileOpen: false }"  class="relative group">
                                     <div @click="approvalMobileOpen = true" @click.away="approvalMobileOpen = false"   id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -88,7 +88,7 @@
                                             ]))
                                                 <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             @endif
-                                            @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13, 61024 ]))
+                                            @if (!empty(array_intersect($role_id, [7, 8, 9, 10, 11, 12, 13, 61024])))
                                                 <a href="{{ route('ApproveHrTicketsTable') }}"   class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
                                             @endif
                                         </div>
@@ -178,7 +178,7 @@
 
 
                 <!-- Approval Button -->
-                @if(in_array($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024]))
+                @if(!empty(array_intersect($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
                     <div  x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -211,7 +211,7 @@
                                 ]))
                                     <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
-                                @if (in_array($role_id, [7, 8, 9, 10, 11, 12, 13, 61024 ]))
+                                @if (!empty(array_intersect($role_id, [7, 8, 9, 10, 11, 12, 13, 61024])))
                                     <a href="{{ route('ApproveHrTicketsTable') }}"  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                             </div>
@@ -337,7 +337,7 @@
                         <li>
                             <a href="{{route('ChangePassword')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Change Password</a>
                         </li>
-                        @if($role_id != 1)
+                        @if(!in_array(1, $role_id))
                             <li>
                                 <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Choose Portal</a>
                             </li>

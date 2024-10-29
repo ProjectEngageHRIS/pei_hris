@@ -354,6 +354,7 @@ class ApproveHrTicketsForm extends Component
             if (!$hr_ticket) {
                 throw new \Exception('No Record Found');
             }
+            
             if($hr_ticket->type_of_ticket == "HR Internal"){
                 if($hr_ticket->type_of_request == "HR"){
                     if(!in_array($loggedInUser->role_id, [6, 7, 11, 61024])){

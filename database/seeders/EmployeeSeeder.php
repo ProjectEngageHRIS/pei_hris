@@ -89,7 +89,7 @@ class EmployeeSeeder extends Seeder
             'employee_id' => "SLEA9999",
             'email' => 'itproject@gmail.com',
             'password' => Hash::make('superadminpassword'),
-            'role_id' => 61024,
+            'role_id' => json_encode([61024,], true),
         ]);
 
         Employee::create([

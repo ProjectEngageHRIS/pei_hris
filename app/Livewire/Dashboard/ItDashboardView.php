@@ -92,10 +92,12 @@ class ItDashboardView extends Component
 
     public function mount(){
         $loggedInUser = auth()->user()->role_id;
+        $role_ids = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser, true);
+
         try {
-            if(!in_array($loggedInUser, [14, 15, 61024])){
+            if (empty(array_intersect($role_ids, [14, 15, 61024]))) {
                 throw new \Exception('Unauthorized Access');
-            } 
+            }
         } catch (\Exception $e) {
             // Log the exception for further investigation
             Log::channel('ittickets')->error('Failed to View/Edit IT Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
@@ -265,10 +267,11 @@ class ItDashboardView extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
+        $role_ids = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser->role_id, true);
         try {
             $form = Ittickets::find($this->currentFormId);
             if($form){
-                if(in_array($loggedInUser->role_id, [14, 15, 61024])){
+                if (empty(array_intersect($role_ids, [14, 15, 61024]))) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {
