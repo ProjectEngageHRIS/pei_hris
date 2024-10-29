@@ -18,10 +18,10 @@ return new class extends Migration
             $table->date('expires_at')->nullable();
             $table->timestamp('last_used_at')->nullable();
             // Define foreign key constraint
-            $table->foreign('user_id')
-                    ->references('employee_id')
-                    ->on('users')
-                    ->onDelete('cascade');
+            // $table->foreign('user_id')
+            //         ->references('employee_id')
+            //         ->on('users')
+            //         ->onDelete('cascade');
             $table->timestamps();
         });
     }

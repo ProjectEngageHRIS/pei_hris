@@ -757,14 +757,14 @@
                                                 @enderror
 
                                             </div>
-                                            <div class="gap-2 flex flex-col">
-                                                <label for="role_id" class="block text-sm font-medium text-customGray1">Roles <span class="text-red-600">*</span></label>
-                                                <select name="role_id" id="role_id" wire:model="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
-                                                    <option selected>Select a Role</option>
+                                            <div wire:ignore class="w-full">
+                                                <label for="role_id" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Roles <span class="text-red-600">*</span></label>
+                                                <select name="role_id[]" id="role_id" wire:model="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
+                                                    <option disabled>Select Roles</option>
                                                     <option value="1">Employee</option>
-                                                    <option value="2"> HR Employee</option>
+                                                    <option value="2">HR Employee</option>
                                                     <option value="3">Accounting</option>
-                                                    <option value="4">Supervisor</optaion>
+                                                    <option value="4">Supervisor</option>
                                                     <option value="5">Department Head</option>
                                                     <option value="6">President</option>
                                                     <option value="7">HR Head</option>
@@ -778,11 +778,35 @@
                                                     <option value="15">IT Support</option>
                                                 </select>
                                                 @error('role_id')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                        </div>
-                                    @enderror
-                                    </div>
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();">
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            
+                                            <script>
+                                                $(document).ready(function() {
+                                                    $('.step-7-inputs').select2({
+                                                        placeholder: 'Select roles',
+                                                        closeOnSelect: false,  // Allows multiple selection without closing dropdown
+                                                    }).on('select2:open', function() {
+                                                        // Apply Tailwind CSS classes to the Select2 dropdown
+                                                        $('.select2-dropdown').addClass('bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4');
+                                                        $('.select2-results__options');
+                                                    }).on('change', function() {
+                                                        let data = $(this).val();
+                                                        console.log(data);
+                                                        @this.role_id = data;  // Bind selected roles to Livewire model
+                                                    });
+                                                    
+                                                    $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-300 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 p-2.5');
+                                            
+                                                    // Toggle modal visibility when form submission is completed
+                                                    Livewire.on('formSubmitted', () => {
+                                                        $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
+                                                    });
+                                                });
+                                            </script>
                                         </div>
                                          <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                              <div class="w-full" id="department">

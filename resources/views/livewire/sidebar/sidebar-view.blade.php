@@ -337,7 +337,7 @@
                         <li>
                             <a href="{{route('ChangePassword')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Change Password</a>
                         </li>
-                        @if(!in_array(1, $role_id))
+                        @if(count($role_id) > 1 || !in_array(1, $role_id))
                             <li>
                                 <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Choose Portal</a>
                             </li>

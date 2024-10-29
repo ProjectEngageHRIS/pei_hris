@@ -759,33 +759,46 @@
                                                 @enderror
 
                                             </div>
-                                            <div class="gap-2 flex flex-col">
-                                                <label for="role_id" class="block text-sm font-medium text-customGray1">Roles <span class="text-red-600">*</span></label>
-                                                <select name="role_id" id="role_id" wire:model.live="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray1 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required disabled>
-                                                    <option selected>Select a Role</option>
-                                                    <option value="1">Employee</option>
-                                                    <option value="2"> HR Employee</option>
-                                                    <option value="3">Accounting</option>
-                                                    <option value="4">Supervisor</optaion>
-                                                    <option value="5">Department Head</option>
-                                                    <option value="6">President</option>
-                                                    <option value="7">HR Head</option>
-                                                    <option value="8">HR Assistant</option>
-                                                    <option value="9">HR Internal Control</option>
-                                                    <option value="10">HR Operations</option>
-                                                    <option value="11">HR (HR Internal Tickets)</option>
-                                                    <option value="12">Office Admin (HR Internal Tickets)</option>
-                                                    <option value="13">Procurement (HR Internal Tickets)</option>
-                                                    <option value="14">IT Lead</option>
-                                                    <option value="15">IT Support</option>
-
-                                                </select>
-                                                @error('role_id')
-                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();" >
-                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                            @php
+                                            $roleMap = [
+                                                1 => 'Employee',
+                                                2 => 'HR Employee',
+                                                3 => 'Accounting',
+                                                4 => 'Supervisor',
+                                                5 => 'Department Head',
+                                                6 => 'President',
+                                                7 => 'HR Head',
+                                                8 => 'HR Assistant',
+                                                9 => 'HR Internal Control',
+                                                10 => 'HR Operations',
+                                                11 => 'HR (HR Internal Tickets)',
+                                                12 => 'Office Admin (HR Internal Tickets)',
+                                                13 => 'Procurement (HR Internal Tickets)',
+                                                14 => 'IT Lead',
+                                                15 => 'IT Support',
+                                            ];
+                                        
+                                            $roles = is_array($role_id) ? $role_id : json_decode($role_id, true);
+                                        @endphp
+                                        
+                                        <div class="gap-2 flex flex-col">
+                                            <label for="role_id" class="block text-sm font-medium text-customGray1 ">
+                                                Roles <span class="text-red-600">*</span>
+                                            </label>
+                                        
+                                            <!-- Box-styled list of roles -->
+                                            <div class="bg-gray-50 border border-gray-300 rounded-lg p-4 shadow-sm">
+                                                <ul class="list-none space-y-2">
+                                                    @foreach($roles as $id)
+                                                        <li class="flex items-center text-gray-900 text-sm">
+                                                            <span class="inline-block w-3 h-3 mr-3 rounded-full bg-customRed"></span>
+                                                            <span class="font-medium">{{ $roleMap[$id] ?? 'Unknown Role' }}</span>
+                                                        </li>
+                                                    @endforeach
+                                                </ul>
+                                            </div>
                                         </div>
-                                    @enderror
-                                    </div>
+                                        
                                         </div>
                                          <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                              <div class="w-full" id="department">

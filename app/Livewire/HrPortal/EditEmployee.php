@@ -102,6 +102,7 @@ class EditEmployee extends Component
     public $isEditable = true;
     public $showSubmitButton = true;
     public $existing_user;
+    public $original_employee_id;
 
     public function mount($index)
     {
@@ -112,6 +113,11 @@ class EditEmployee extends Component
 
         if ($employeeRecord) {
             $loggedInUser = auth()->user();
+            $role_ids = json_decode($loggedInUser->role_id, true); // Decode if it's stored as a JSON string
+
+            if (empty(array_intersect($role_ids, [6, 7, 61024]))) {
+                throw new \Exception('Unauthorized Access');
+            }
             // Assign each property from the employeeRecord
             try {
                 $this->tin_num = Crypt::decryptString($employeeRecord->tin_num);
@@ -124,9 +130,10 @@ class EditEmployee extends Component
             }
 
             $this->emergency_contact = $employeeRecord->emergency_contact;
-            $this->role_id = $employeeRecord->role_id;
+            // $this->role_id = $employeeRecord->role_id;
 
             $this->employee_id = $employeeRecord->employee_id;
+            $this->original_employee_id = $employeeRecord->employee_id;
             $this->first_name = $employeeRecord->first_name;
             $this->middle_name = $employeeRecord->middle_name;
             $this->last_name = $employeeRecord->last_name;
@@ -189,7 +196,7 @@ class EditEmployee extends Component
 
         if ($existing_user) {
             // Set the role_id and other properties to the existing user values
-            $this->role_id = $existing_user->role_id;
+            $this->role_id = json_decode($existing_user->role_id, true);
             $this->employee_email = $existing_user->email;
         }
     }
@@ -290,7 +297,7 @@ class EditEmployee extends Component
 
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
-        'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
+        'role_id' => ['required'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
@@ -373,7 +380,9 @@ class EditEmployee extends Component
         }
 
         $loggedInUser = auth()->user();
-        if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode if it's stored as a JSON string
+        
+        if (empty(array_intersect($role_ids, [6, 7, 61024]))) {
             throw new \Exception('Unauthorized Access');
         }
 
@@ -500,13 +509,20 @@ class EditEmployee extends Component
             ];
         }
 
-        $existing_user = User::where('email', $this->employee_email)->first();
+
+        $existing_user = User::where('employee_id', $this->old_employee_id)->first();
         if ($existing_user) {
-            // Update the existing user if needed
-            $existing_user->email = $this->employee_email;
-            $existing_user->employee_id = $this->employee_id;
-            $existing_user->role_id = $this->role_id;
-            $existing_user->save();
+            $existing_user->email = $this->employee_email; // Update email
+            $existing_user->employee_id = $this->employee_id; // Update employee_id
+            $roles = json_encode($this->role_id, true); // Convert roles to JSON
+            $existing_user->role_id = $roles; // Update roles
+        
+            // Use the update method to save changes
+            $existing_user->save([
+                'email' => $this->employee_email,
+                'employee_id' => $this->employee_id,
+                'role_id' => $roles,
+            ]);
         }
 
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);

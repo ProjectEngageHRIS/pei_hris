@@ -121,8 +121,6 @@ class ViewEmployee extends Component
                 $this->dispatch('trigger-error');
             }
             $this->emergency_contact = $employeeRecord->emergency_contact;
-            $this->role_id = $employeeRecord->role_id;
-
             $this->employee_id = $employeeRecord->employee_id;
             $this->first_name = $employeeRecord->first_name;
             $this->middle_name = $employeeRecord->middle_name;
@@ -187,7 +185,7 @@ class ViewEmployee extends Component
 
         if ($existing_user) {
             // Set the role_id and other properties to the existing user values
-            $this->role_id = $existing_user->role_id;
+            $this->role_id = json_decode($existing_user->role_id, true);
             $this->employee_email = $existing_user->email;
         }
     }

@@ -184,7 +184,7 @@ class CreateEmployee extends Component
         'college_date_graduated' => 'required|date',
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
-        'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
+        'role_id' => ['required'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
@@ -421,7 +421,8 @@ class CreateEmployee extends Component
                     $new_user->employee_id = $this->employee_id; // Save employee_id
                     // Set additional fields as needed, such as name, password, role, etc.
                     $new_user->password = Hash::make($this->password); // Set a default password or prompt to change it later
-                    $new_user->role_id = $this->role_id;
+                    $roles = json_encode($this->role_id, true);
+                    $new_user->role_id = $roles;
                     $new_user->save();
     
                 }
