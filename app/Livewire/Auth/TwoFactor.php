@@ -121,7 +121,7 @@ class TwoFactor extends Component
             Cookie::queue(Cookie::make($cookieName, $userDevice->device_guid, 43200));
             RateLimiter::clear($throttleKey);
             // Cookie::queue(Cookie::make('device_guid', $userDevice->device_guid, 43200, null, null, true, true));
-            if(in_array($role_ids, 1)){
+            if(in_array(1, $role_ids)){
                 return redirect()->to(route('EmployeeDashboard'));
             }
             return redirect()->to(route('LoginDashboard'));
