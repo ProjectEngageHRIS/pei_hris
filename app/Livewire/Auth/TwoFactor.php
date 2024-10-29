@@ -106,7 +106,6 @@ class TwoFactor extends Component
     
     
         if ($google2fa->verifyKey($this->secret, $this->otp)) {
-            dump('test');
             $encryptedSecretKey = Crypt::encryptString($this->secret);
             $user->twofactor_secret = $encryptedSecretKey;
             $user->twofactor_approved = True;
@@ -116,8 +115,6 @@ class TwoFactor extends Component
             $userDevice->expires_at = now()->addMonths(2);
             $userDevice->last_used_at = now();
             $userDevice->save();
-
-            dd('test1');
 
             // Cookie::queue('device_guid', $userDevice->device_guid, 43200);
             $cookieName = 'device_guid_' . $user->employee_id;
