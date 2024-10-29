@@ -115,27 +115,31 @@ class ApproveHrTicketsTable extends Component
 
     public function render()
     {
-        $loggedInUser = auth()->user()->role_id;
+        $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        
         $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
-
-        if(in_array($loggedInUser, [11, 12, 13])){
+        
+        // Check for specific roles using array_intersect
+        if (!empty(array_intersect($role_ids, [11, 12, 13]))) {
             $query->where('type_of_ticket', 'HR Internal');
-            if($loggedInUser == 11){
+            
+            if (in_array(11, $role_ids)) {
                 $query->where('type_of_request', 'HR');
-            } else if ($loggedInUser == 12){
+            } elseif (in_array(12, $role_ids)) {
                 $query->where('type_of_request', 'Office Admin');
-            } else if ($loggedInUser == 13){
+            } elseif (in_array(13, $role_ids)) {
                 $query->where('type_of_ticket', 'Procurement');
             }
-        } else if($loggedInUser == 9){
+        } elseif (in_array(9, $role_ids)) {
             $query->where('type_of_ticket', 'Internal Control');
-        } else if($loggedInUser == 10){
+        } elseif (in_array(10, $role_ids)) {
             $query->where('type_of_ticket', 'HR Operations');
-        } else if(in_array($loggedInUser, [7, 8, 14, 15, 61024])){
-            $this->role_id = True;
+        } elseif (!empty(array_intersect($role_ids, [7, 8, 14, 15, 61024]))) {
+            $this->role_id = true; // Assuming this is intended logic
         } else {
-            redirect()->to(route('HumanResourceDashboard'));
-        }
+            return redirect()->to(route('HumanResourceDashboard'));
+        }        
 
         switch ($this->date_filter) {
             case '1': // Today
@@ -357,10 +361,11 @@ class ApproveHrTicketsTable extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if(in_array($loggedInUser->role_id, [6, 7, 9, 10, 11, 12, 13, 61024])){
+                if (in_array(61024, $role_ids) || in_array($loggedInUser->role_id, [6, 7, 9, 10, 11, 12, 13])) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];

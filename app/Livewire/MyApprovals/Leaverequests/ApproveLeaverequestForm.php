@@ -146,8 +146,10 @@ class ApproveLeaverequestForm extends Component
 
     public function editLeaveRequest($index){
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        
         try {
-            if(!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])){
+            if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
@@ -180,12 +182,12 @@ class ApproveLeaverequestForm extends Component
     public function changeStatus()
     {
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
         try {
-            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
+            if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
-            $role = $loggedInUser->role_id;
-            DB::transaction(function () use ($role) {
+            DB::transaction(function () use ($role_ids) {
                 // Fetch the leave request data
                 $leaverequestdata = Leaverequest::where('uuid', $this->index)->first();
                 if (!$leaverequestdata) {
@@ -194,7 +196,7 @@ class ApproveLeaverequestForm extends Component
 
                 if($this->status == "Completed" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
-                        if (in_array($role , [4, 6, 7, 8, 61024])) {
+                        if (!empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))){
                             if ($this->person == "President"){
                                 if($this->status == "Approved"){
                                     $leaverequestdata->approved_by_president = 1;
@@ -240,25 +242,25 @@ class ApproveLeaverequestForm extends Component
                             throw new \Exception('Unauthorized Access');
                         }
                     } else {
-                        if (in_array($role , [4, 61024])) {
+                        if (empty(array_intersect($role_ids, [4, 61024]))) {
                             $leaverequestdata->approved_by_supervisor = 1;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = "Approved";
                             }
                         } 
                         else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
-                            if($role == 6){ // President Role
+                            if(in_array(6, $role_ids)){ // President Role
                                 $leaverequestdata->approved_by_supervisor = 1;
                                 $leaverequestdata->approved_by_president = 1;
                                 $leaverequestdata->status = "Approved";
                             }
-                        } else if ($role == 6) {
+                        } else if (in_array(6, $role_ids)) {
                             $leaverequestdata->approved_by_president = 1;
                             if ($leaverequestdata->approved_by_supervisor == 1) {
                                 $leaverequestdata->status = "Approved";
                             }
                         } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
-                            if($role == 7){ // Hr Head Role
+                            if(in_array(7, $role_ids)){ // Hr Head Role
                                 $leaverequestdata->approved_by_supervisor = 1;
                                 if ($leaverequestdata->approved_by_president == 1) {
                                     $leaverequestdata->status = "Approved";
@@ -360,7 +362,8 @@ class ApproveLeaverequestForm extends Component
     public function render()
     {
         $loggedInUser = auth()->user()->role_id;
-        if(in_array($loggedInUser, [4, 6])){
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-form');
         } else {
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-form')->layout('components.layouts.hr-navbar');

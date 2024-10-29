@@ -140,13 +140,17 @@ class ItHelpDeskTable extends Component
         }
         
 
-        $loggedInUser = auth()->user()->role_id;
+        $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
         
-        if($loggedInUser == 61024){
+        if (in_array(61024, $role_ids)) {
             $results = $query->orderBy('created_at', 'desc')->paginate(5);
-        } else{
-            $results = $query->orderBy('created_at', 'desc')->where('employee_id', '!=', 'SLEA9999')->paginate(6);
+        } else {
+            $results = $query->orderBy('created_at', 'desc')
+                             ->where('employee_id', '!=', 'SLEA9999')
+                             ->paginate(6);
         }
+        
 
         return view('livewire.ithelpdesk.it-help-desk-table', [
             'ItTicketData' => $results,

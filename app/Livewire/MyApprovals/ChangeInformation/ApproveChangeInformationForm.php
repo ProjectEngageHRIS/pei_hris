@@ -137,12 +137,14 @@ class ApproveChangeInformationForm extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
         try {
             $changeInfoData =  ChangeInformation::where('uuid', $this->index)->first();
             
-            if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
-                throw new \Exception('Unauthorized Access');
-            }
+            try {
+                if (empty(array_intersect($role_ids, [7, 8,61024]))) {
+                    throw new \Exception('Unauthorized Access');
+                }
 
             if(!$changeInfoData){
                 return False;
@@ -285,10 +287,12 @@ class ApproveChangeInformationForm extends Component
    
     public function changeStatus(){
         $loggedInUser = auth()->user();
+        $role_ids = json_decode($loggedInUser->role_id, true);
+        
         try {
-            if (!in_array($loggedInUser->role_id, [6, 7, 61024])){
+            if (empty(array_intersect($role_ids, [7, 8,61024]))) {
                 throw new \Exception('Unauthorized Access');
-            } 
+            }
             $changeInformationStatus = ChangeInformation::where('uuid', $this->index)->first();
 
             if(!$changeInformationStatus){

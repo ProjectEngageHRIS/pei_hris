@@ -98,8 +98,9 @@ class ApproveLeaverequestTable extends Component
     public function mount($type = null){
         $this->key = $type;
         $loggedInUser = auth()->user()->role_id;
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
         try {
-            if(!in_array($loggedInUser, [4, 6, 7, 8, 14, 61024])){
+            if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -357,16 +358,11 @@ class ApproveLeaverequestTable extends Component
         }
 
         $loggedInUser = auth()->user();
-
+        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
         try {
-            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
+            if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
-            if (!in_array($loggedInUser->role_id, [4, 6, 7, 8, 14, 61024])) {
-                throw new \Exception('Unauthorized Access');
-            }
-            $role = $loggedInUser->role_id;
-           
                 // Fetch the leave request data
                 $leaverequestdata = Leaverequest::where('form_id', $this->currentFormId)->first();
                 if (!$leaverequestdata) {
@@ -375,7 +371,7 @@ class ApproveLeaverequestTable extends Component
 
                 if($this->status == "Pending" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
-                        if (in_array($role , [4, 6, 7, 8, 61024])) {
+                        if (!empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))){
                             if ($this->person == "President"){
                                 if($this->status == "Approved"){
                                     $leaverequestdata->approved_by_president = 1;
@@ -434,25 +430,25 @@ class ApproveLeaverequestTable extends Component
                             $verdict = 0;
                             $status = "Declined";
                         }
-                        if (in_array($role , [4, 61024])) {
+                        if (empty(array_intersect($role_ids, [4, 61024]))) {
                             $leaverequestdata->approved_by_supervisor = $verdict;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = $status ;
                             }
                         } 
                         else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
-                            if($role == 6){ // President Role
+                            if(in_array(6, $role_ids)){ // President Role
                                 $leaverequestdata->approved_by_supervisor = $verdict;
                                 $leaverequestdata->approved_by_president = $verdict;
                                 $leaverequestdata->status = $status ;
                             }
-                        } else if ($role == 6) {
+                        } else if (in_array(6, $role_ids)) {
                             $leaverequestdata->approved_by_president = $verdict;
                             if ($leaverequestdata->approved_by_supervisor == 1) {
                                 $leaverequestdata->status = $status ;
                             }
                         } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
-                            if($role == 7){ // Hr Head Role
+                            if(in_array(7, $role_ids)){ // Hr Head Role
                                 $leaverequestdata->approved_by_supervisor = $verdict;
                                 if ($leaverequestdata->approved_by_president == 1) {
                                     $leaverequestdata->status = $status ;

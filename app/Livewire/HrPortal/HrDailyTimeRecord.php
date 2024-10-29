@@ -153,8 +153,10 @@ class HrDailyTimeRecord extends Component
 
     public function mount(){
         $loggedInUser = auth()->user()->role_id;
+        $role_ids = json_decode($loggedInUser->role_id, true); // Ensure $role_ids is an array
+        
         try {
-            if(!in_array($loggedInUser, [7, 8, 61024])){
+            if (empty(array_intersect($role_ids, [7, 8, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
