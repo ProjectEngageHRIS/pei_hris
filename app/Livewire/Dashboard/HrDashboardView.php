@@ -193,9 +193,8 @@ class HrDashboardView extends Component
         $this->employee_role_id = $loggedInUser;
         $role_ids = json_decode($loggedInUser, true);
 
-
         try {
-            if (empty(array_intersect($role_ids, [2, 7, 8, 9, 10, 11, 12, 13, 61024]))) {
+            if (empty(array_intersect($role_ids, [3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             } 
             

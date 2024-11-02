@@ -762,22 +762,22 @@
                                             @php
                                             $roleMap = [
                                                 1 => 'Employee',
-                                                2 => 'HR Employee',
-                                                3 => 'Accounting',
-                                                4 => 'Supervisor',
-                                                5 => 'Department Head',
-                                                6 => 'President',
-                                                7 => 'HR Head',
-                                                8 => 'HR Assistant',
+                                                2 => 'Supervisor',
+                                                3 => 'Hr Daily Time Record',
+                                                4 => 'Announcements',
+                                                5 => 'HR Approve Leave Requests',
+                                                6 => 'HR Approve Hr Tickets',
+                                                7 => 'HR Approve Update Information',
+                                                8 => 'Accounting Employee',
                                                 9 => 'HR Internal Control',
                                                 10 => 'HR Operations',
                                                 11 => 'HR (HR Internal Tickets)',
                                                 12 => 'Office Admin (HR Internal Tickets)',
                                                 13 => 'Procurement (HR Internal Tickets)',
-                                                14 => 'IT Lead',
-                                                15 => 'IT Support',
+                                                14 => 'President',
+                                                15 => 'IT Lead',
+                                                16 => 'IT Support',
                                             ];
-                                        
                                             $roles = is_array($role_id) ? $role_id : json_decode($role_id, true);
                                         @endphp
                                         

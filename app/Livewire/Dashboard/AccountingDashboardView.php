@@ -95,7 +95,6 @@ class AccountingDashboardView extends Component
 
     public $payrollStatusesMap;
 
-
     // public $showWarning = False;
 
     // public function search()
@@ -112,9 +111,10 @@ class AccountingDashboardView extends Component
 
         $loggedInUser = auth()->user();
         $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [3, 61024]))) {
+            if (empty(array_intersect($role_ids, [14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -242,7 +242,7 @@ class AccountingDashboardView extends Component
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [3, 61024]))) {
+            if (empty(array_intersect($role_ids, [14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -322,7 +322,7 @@ class AccountingDashboardView extends Component
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [3, 61024]))) {
+            if (empty(array_intersect($role_ids, [14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
                 $parts = explode(' | ', $this->selectedEmployee);
@@ -392,7 +392,7 @@ class AccountingDashboardView extends Component
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [3, 61024]))) {
+            if (empty(array_intersect($role_ids, [14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             $payroll = Payroll::where('target_employee', $employee_id)
@@ -471,7 +471,7 @@ class AccountingDashboardView extends Component
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [3, 61024]))) {
+            if (empty(array_intersect($role_ids, [14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -524,7 +524,7 @@ class AccountingDashboardView extends Component
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [3, 61024]))) {
+            if (empty(array_intersect($role_ids, [14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 

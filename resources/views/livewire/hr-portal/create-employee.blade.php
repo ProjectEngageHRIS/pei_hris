@@ -762,20 +762,22 @@
                                                 <select name="role_id[]" id="role_id" wire:model="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
                                                     <option disabled>Select Roles</option>
                                                     <option value="1">Employee</option>
-                                                    <option value="2">HR Employee</option>
-                                                    <option value="3">Accounting</option>
-                                                    <option value="4">Supervisor</option>
-                                                    <option value="5">Department Head</option>
-                                                    <option value="6">President</option>
-                                                    <option value="7">HR Head</option>
-                                                    <option value="8">HR Assistant</option>
-                                                    <option value="9">HR Internal Control</option>
-                                                    <option value="10">HR Operations</option>
-                                                    <option value="11">HR (HR Internal Tickets)</option>
-                                                    <option value="12">Office Admin (HR Internal Tickets)</option>
-                                                    <option value="13">Procurement (HR Internal Tickets)</option>
-                                                    <option value="14">IT Lead</option>
-                                                    <option value="15">IT Support</option>
+                                                    <option value="2">Supervisor</option>
+                                                    <option value="3">Employees Table (HR)</option>
+                                                    <option value="4">Daily Time Record (HR)</option>
+                                                    <option value="5">Announcements (HR)</option>
+                                                    <option value="6">Approve Leave Requests (HR)</option>
+                                                    <option value="7">Approve Hr Tickets (HR)</option>
+                                                    <option value="8">Approve Update Information (HR)</option>
+                                                    <option value="9">Internal Control (HR)</option>
+                                                    <option value="10">Operations (HR)</option>
+                                                    <option value="11">Internal Tickets-HR (HR)</option>
+                                                    <option value="12">Internal Tickets-Office Admin (HR)</option>
+                                                    <option value="13">Internal Tickets-Procurement (HR)</option>
+                                                    <option value="14">Accounting</option>
+                                                    <option value="15">President</option>
+                                                    <option value="16">IT Lead</option>
+                                                    <option value="17">IT Support</option>
                                                 </select>
                                                 @error('role_id')
                                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();">
