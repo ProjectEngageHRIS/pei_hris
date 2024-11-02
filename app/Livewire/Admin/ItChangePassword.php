@@ -90,13 +90,18 @@ class ItChangePassword extends Component
 
     protected function logoutAllDevicesForUser($target_employee)
     {
-        // Invalidate all sessions for the specified user
+        // Get the current session ID
+        $currentSessionId = session()->getId();
+    
+        // Invalidate all sessions for the specified user, excluding the current session
         if (\Schema::hasTable('sessions')) {
-            $sessions = \DB::table('sessions')
-                ->where('user_id', $target_employee->employee_id);
-            $sessions->delete();
-        } 
+            \DB::table('sessions')
+                ->where('user_id', $target_employee->employee_id)
+                ->where('id', '!=', $currentSessionId) // Exclude the current session
+                ->delete();
+        }
     }
+    
 
     
     
