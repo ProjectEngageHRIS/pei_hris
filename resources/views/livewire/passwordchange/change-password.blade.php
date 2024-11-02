@@ -108,20 +108,13 @@
                  @enderror
             
                 <style>
-                    #password {
-                        user-select: none; /* Prevents text selection */
-                        -webkit-user-select: none; /* Chrome, Safari, and Opera */
-                        -moz-user-select: none; /* Firefox */
-                        -ms-user-select: none; /* Internet Explorer/Edge */
-                    }
-
                     input::-ms-reveal,
                     input::-ms-clear {
                         display: none;
                     }
                 </style>
             
-                <script>
+                {{-- <script>
                     document.addEventListener('DOMContentLoaded', (event) => {
                         const inputField = document.getElementById('password');
             
@@ -145,7 +138,7 @@
                             e.preventDefault();
                         });
                     });
-                </script>
+                </script> --}}
             
                 <ul class="mt-4 ml-3 list-disc text-xs text-gray-600">
                     <li :class="{'text-green-500': length}">

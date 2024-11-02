@@ -92,7 +92,7 @@ class ItDashboardView extends Component
 
     public function mount(){
         $loggedInUser = auth()->user()->role_id;
-        $role_ids = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser, true);
+        $role_ids = json_decode($loggedInUser, true);
 
         try {
             if (empty(array_intersect($role_ids, [14, 15, 61024]))) {

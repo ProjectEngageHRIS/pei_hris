@@ -56,15 +56,19 @@ class ItChangePassword extends Component
             ],
         ]);
         $user = auth()->user();
+        $role_ids = json_decode($user->role_id, true);
         // dd($user->role_id == 061024 && $user->employee_id == 200000000);
         try {
-            if(Auth::check() && $user->role_id == 61024 && $user->employee_id == "SLEA9999"){
+            
+            if(Auth::check() && in_array(61024, $role_ids) && $user->employee_id == "SLEA9999"){
                 $parts = explode(' | ', $this->selectedEmployee);
                 $employee_id = trim($parts[1]);
                 // $this->validate(['employeeId' => 'required|regex:/^SLE[A-Z]?\d{4}$/']);
                 $target_employee = User::where('employee_id', $employee_id)->first();
                 $target_employee->password = Hash::make($this->password);
                 $target_employee->save();
+                
+                $this->logoutAllDevicesForUser($target_employee);
     
                 $this->dispatch('trigger-success');
     
@@ -83,6 +87,18 @@ class ItChangePassword extends Component
             $this->dispatch('trigger-error');
         }
     }
+
+    protected function logoutAllDevicesForUser($target_employee)
+    {
+        // Invalidate all sessions for the specified user
+        if (\Schema::hasTable('sessions')) {
+            $sessions = \DB::table('sessions')
+                ->where('user_id', $target_employee->employee_id);
+            $sessions->delete();
+        } 
+    }
+
+    
     
     public function render()
     {

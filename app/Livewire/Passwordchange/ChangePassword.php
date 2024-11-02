@@ -47,6 +47,8 @@ class ChangePassword extends Component
             if (Hash::check($this->old_password, $user->password)) {
                 $user->password = Hash::make($this->password);
                 $user->save();
+
+                Auth::logoutOtherDevices($this->password);
     
                 // Send email notification
                 Mail::to($user->email)->send(new PasswordChanged($user));
