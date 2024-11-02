@@ -91,11 +91,11 @@ class ItDashboardView extends Component
     }
 
     public function mount(){
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser, true);
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true);
 
         try {
-            if (empty(array_intersect($role_ids, [14, 15, 61024]))) {
+            if (empty(array_intersect($permissions, [17, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -267,11 +267,11 @@ class ItDashboardView extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
-        $role_ids = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser->role_id, true);
+        $permissions = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser->permissions, true);
         try {
             $form = Ittickets::find($this->currentFormId);
             if($form){
-                if (empty(array_intersect($role_ids, [14, 15, 61024]))) {
+                if (empty(array_intersect($permissions, [17, 61024]))) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {

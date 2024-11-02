@@ -74,7 +74,7 @@
                         <li>
                             <a href="{{route('EmployeeDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Employee Portal</a>
                         </li>
-                        @if(in_array(61024, $role_ids))
+                        @if(in_array(61024, $permissions))
                             <li>
                                 <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Choose Portal</a>
                             </li>

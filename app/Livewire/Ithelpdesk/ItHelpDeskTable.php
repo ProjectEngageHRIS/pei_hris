@@ -141,9 +141,9 @@ class ItHelpDeskTable extends Component
         
 
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true);
+        $permissions = json_decode($loggedInUser->permissions, true);
         
-        if (in_array(61024, $role_ids)) {
+        if (in_array(61024, $permissions)) {
             $results = $query->orderBy('created_at', 'desc')->paginate(5);
         } else {
             $results = $query->orderBy('created_at', 'desc')

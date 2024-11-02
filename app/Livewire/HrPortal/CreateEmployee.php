@@ -104,6 +104,21 @@ class CreateEmployee extends Component
     public $showConfirmation = false;
     public $step = 1;
 
+    public function mount(){
+        try {
+            $loggedInUser = auth()->user();
+            $permissions = json_decode($loggedInUser->permissions, true);
+
+            if (empty(array_intersect($permissions, [4, 61024]))) {
+                throw new \Exception('Unauthorized Access');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('employee_info')->error('Failed to Access Create Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+            $this->dispatch('trigger-error');
+        }
+    }
+
     public function addEmployee()
     {
         return redirect()->to(route('EmployeesTable'));
@@ -527,6 +542,20 @@ class CreateEmployee extends Component
 
     public function render()
     {
+        try {
+            $loggedInUser = auth()->user();
+            $permissions = json_decode($loggedInUser->permissions, true);
+
+            if (empty(array_intersect($permissions, [4, 61024]))) {
+                throw new \Exception('Unauthorized Access');
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('employee_info')->error('Failed to Access Create Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+            $this->dispatch('trigger-error');
+        }
+        
+
         return view('livewire.hr-portal.create-employee')->layout('components.layouts.hr-navbar');
     }
 }

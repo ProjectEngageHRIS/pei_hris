@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->string('employee_id')->primary()->unique();
-            $table->json('role_id');
+            $table->json('permissions');
             // $table->string('name');
             $table->string('email')->unique();
             // $table->timestamp('email_verified_at')->nullable();

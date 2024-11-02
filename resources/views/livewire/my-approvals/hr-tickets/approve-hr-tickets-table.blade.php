@@ -51,7 +51,7 @@
                     }
                     }" class="flex flex-wrap items-center justify-between  space-y-4 flex-column sm:flex-row min-[520px]:space-y-0">
                         {{-- Date Filter --}}
-                        @if ($role_id == True)
+                        @if ($permissions == True)
                         <div class="flex space-x-2">
                             <button id="dropdownRadioButton" data-dropdown-toggle="dateDropDown" class="shadow hover:text-white z-20 inline-flex items-center h-10 p-2 hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
                         @else    
@@ -105,7 +105,7 @@
                         </div>
 
                         {{-- Status Filter --}}
-                        @if ($role_id == True)
+                        @if ($permissions == True)
                             <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
                         @else
                             <button id="dropdownRadioButton" data-dropdown-toggle="statusDropDown" class="shadow hover:text-white z-20 inline-flex items-center justify-center h-10 p-2 max-[620px]:min-w-[127px] hover:bg-customRed focus:bg-customRed focus:text-white focus:ring-1 focus:ring-customRed font-medium rounded-lg text-sm py-1.5 px-5" type="button">
@@ -151,7 +151,7 @@
                                 </li>
                             </ul>
                         </div>
-                        @if($role_id == True)
+                        @if($permissions == True)
                             {{-- Type Filter --}}
                             <button id="dropdownRadioButton" data-dropdown-toggle="typeDropdown" class=" z-20 inline-flex items-center hover:text-white text-gray-900 bg-navButton  h-10 focus:outline-none hover:bg-customRed focus:ring-1 shadow focus:ring-customRed focus:bg-customRed focus:text-white font-medium rounded-lg text-sm py-1.5" style="padding-left: 0.70rem; padding-right: 0.70rem"  type="button">
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4 me-3">

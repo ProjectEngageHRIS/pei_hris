@@ -28,7 +28,7 @@ class HrSidebarView extends Component
 
     public $employee_name;
 
-    public $role_ids;
+    public $permissions;
 
     public $employeeImage;
 
@@ -39,8 +39,8 @@ class HrSidebarView extends Component
 
     public function mount(){
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true);
-        $this->role_ids = $role_ids;
+        $permissions = json_decode($loggedInUser->permissions, true);
+        $this->permissions = $permissions;
         $this->is_admin = $loggedInUser->is_admin;
         // $this->role = (int) Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_role');
         $employee = Employee::where('employee_id', $loggedInUser->employee_id)->first(); 
@@ -66,9 +66,6 @@ class HrSidebarView extends Component
         //     }
         // }
 
-        $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true);
-        $this->role_ids = $role_ids;
         $this->employee_id = $loggedInUser->employee_id;
         // dd($this->departmentHeadId, $this->collegeDeanId, $this->role);
 

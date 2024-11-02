@@ -6,7 +6,7 @@ use Livewire\Component;
 
 class LoginDashboard extends Component
 {
-    public $role_id;
+    public $permissions;
     // public $role_useA = "Employee";
     public $is_hr = False;
     public $is_accounting = False;
@@ -18,39 +18,39 @@ class LoginDashboard extends Component
 
 
     public function mount() {
-        $user = auth()->user()->role_id;
-        $role_ids = json_decode($user, true);
+        $user = auth()->user()->permissions;
+        $permissions = json_decode($user, true);
     
         // Check for HR roles
-        if (!empty(array_intersect($role_ids, [2, 7, 8, 9, 10, 11, 12, 13]))) {
+        if (!empty(array_intersect($permissions, [4, 5, 6, 7, 9, 10, 11, 12, 13, 14,]))) {
             $this->is_hr = true;
             // return redirect()->to(route('HumanResourceDashboard'));
         }
     
         // Check for Supervisor roles
-        if (!empty(array_intersect($role_ids, [4, 5]))) {
+        if (!empty(array_intersect($permissions, [2]))) {
             $this->is_supervisor = true;
         }
     
         // Check for Accounting roles
-        if (!empty(array_intersect($role_ids, [3]))) {
+        if (!empty(array_intersect($permissions, [16]))) {
             $this->is_accounting = true;
             // return redirect()->to(route('AccountingDashboard'));
         }
     
         // Check for IT roles
-        if (!empty(array_intersect($role_ids, [14, 15]))) {
+        if (!empty(array_intersect($permissions, [17]))) {
             $this->is_it = true;
         }
     
         // Check for President roles
-        if (!empty(array_intersect($role_ids, [6]))) {
+        if (!empty(array_intersect($permissions, [3]))) {
             $this->is_president = true;
             // return redirect()->to(route('EmployeeDashboard'));
         }
     
         // Check for Superadmin roles
-        if (!empty(array_intersect($role_ids, [61024]))) {
+        if (!empty(array_intersect($permissions, [61024]))) {
             $this->is_superadmin = true;
         }
     
@@ -59,10 +59,10 @@ class LoginDashboard extends Component
     
 
     public function employeePortal(){
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser, true);
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true);
         if(!$loggedInUser){
-            if(in_array(1, $role_ids)){
+            if(in_array(1, $permissions)){
                 return redirect()->to(route('LoginDashboard'));
             }
         }
@@ -71,10 +71,10 @@ class LoginDashboard extends Component
     }
 
     public function humanResourcePortal(){
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser, true);
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true);
         if(!$loggedInUser){
-            if(in_array(1, $role_ids)){
+            if(in_array(1, $permissions)){
                 return redirect()->to(route('LoginDashboard'));
             }
         }
@@ -83,10 +83,10 @@ class LoginDashboard extends Component
     }
 
     public function accountingPortal(){
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser, true);
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true);
         if(!$loggedInUser){
-            if(in_array(1, $role_ids)){
+            if(in_array(1, $permissions)){
                 return redirect()->to(route('LoginDashboard'));
             }
         }

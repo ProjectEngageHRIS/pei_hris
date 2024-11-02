@@ -78,7 +78,7 @@ class ApproveHrTicketsTable extends Component
     public $companyFilter;
     public $genderFilter;
 
-    public $role_id = False;
+    public $permissions = False;
     
     
     public function search()
@@ -95,7 +95,7 @@ class ApproveHrTicketsTable extends Component
 
         // $loggedInUser = auth()->user();
 
-        // if($loggedInUser->role_id != 9){
+        // if($loggedInUser->permissions != 9){
         //     return redirect()->to(route('home'));
         //     abort(404);
         // }
@@ -116,27 +116,27 @@ class ApproveHrTicketsTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
         
         $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
         // Check for specific roles using array_intersect
-        if (!empty(array_intersect($role_ids, [11, 12, 13]))) {
+        if (!empty(array_intersect($permissions, [11, 12, 13]))) {
             $query->where('type_of_ticket', 'HR Internal');
             
-            if (in_array(11, $role_ids)) {
+            if (in_array(11, $permissions)) {
                 $query->where('type_of_request', 'HR');
-            } elseif (in_array(12, $role_ids)) {
+            } elseif (in_array(12, $permissions)) {
                 $query->where('type_of_request', 'Office Admin');
-            } elseif (in_array(13, $role_ids)) {
+            } elseif (in_array(13, $permissions)) {
                 $query->where('type_of_ticket', 'Procurement');
             }
-        } elseif (in_array(9, $role_ids)) {
+        } elseif (in_array(9, $permissions)) {
             $query->where('type_of_ticket', 'Internal Control');
-        } elseif (in_array(10, $role_ids)) {
+        } elseif (in_array(10, $permissions)) {
             $query->where('type_of_ticket', 'HR Operations');
-        } elseif (!empty(array_intersect($role_ids, [7, 8, 14, 15, 61024]))) {
-            $this->role_id = true; // Assuming this is intended logic
+        } elseif (!empty(array_intersect($permissions, [61024]))) {
+            $this->permissions = true; 
         } else {
             return redirect()->to(route('HumanResourceDashboard'));
         }        
@@ -361,11 +361,11 @@ class ApproveHrTicketsTable extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true);
+        $permissions = json_decode($loggedInUser->permissions, true);
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if (in_array(61024, $role_ids) || in_array($loggedInUser->role_id, [6, 7, 9, 10, 11, 12, 13])) {
+                if (in_array(61024, $permissions) || in_array($loggedInUser->permissions, [9, 10, 11, 12, 13, 61024])) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];

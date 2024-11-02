@@ -50,11 +50,11 @@
                                         <a href="{{ route('LeaveRequestTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Requests</a>
                                         <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                                         <a href="{{ route('ItHelpDeskTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
-                                        <a href="{{ route('ChangeInformationTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Request Information Update</a>
+                                        <a href="{{ route('ChangeInformationTable') }}"  wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Information Update</a>
                                     </div>
                                 </ul>
                             </div>
-                            @if(!empty(array_intersect($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
+                            @if(!empty(array_intersect($permissions, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
                                 <div x-data="{ approvalMobileOpen: false }"  class="relative group">
                                     <div @click="approvalMobileOpen = true" @click.away="approvalMobileOpen = false"   id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -88,7 +88,7 @@
                                             ]))
                                                 <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             @endif
-                                            @if (!empty(array_intersect($role_id, [7, 8, 9, 10, 11, 12, 13, 61024])))
+                                            @if (!empty(array_intersect($permissions, [7, 8, 9, 10, 11, 12, 13, 61024])))
                                                 <a href="{{ route('ApproveHrTicketsTable') }}"   class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
                                             @endif
                                         </div>
@@ -169,7 +169,7 @@
                             <a href="{{ route('LeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Leave Requests</a>
                             <a href="{{ route('HrTicketsTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">HR Tickets</a>
                             <a href="{{ route('ItHelpDeskTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">IT Helpdesk</a>
-                            <a href="{{ route('ChangeInformationTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Request Information Update</a>
+                            <a href="{{ route('ChangeInformationTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Information Update</a>
                         </div>
                     </div>
                 </div>
@@ -178,7 +178,7 @@
 
 
                 <!-- Approval Button -->
-                @if(!empty(array_intersect($role_id, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
+                @if(!empty(array_intersect($permissions, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
                     <div  x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -211,7 +211,7 @@
                                 ]))
                                     <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
-                                @if (!empty(array_intersect($role_id, [7, 8, 9, 10, 11, 12, 13, 61024])))
+                                @if (!empty(array_intersect($permissions, [7, 8, 9, 10, 11, 12, 13, 61024])))
                                     <a href="{{ route('ApproveHrTicketsTable') }}"  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                             </div>
@@ -337,7 +337,7 @@
                         <li>
                             <a href="{{route('ChangePassword')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Change Password</a>
                         </li>
-                        @if(count($role_id) > 1 || !in_array(1, $role_id))
+                        @if(count($permissions) > 1 || !in_array(1, $permissions))
                             <li>
                                 <a href="{{route('LoginDashboard')}}" class="block px-4 py-2 hover:bg-customRed hover:text-white dark:hover:bg-customRed dark:hover:text-white">Choose Portal</a>
                             </li>

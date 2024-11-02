@@ -59,12 +59,12 @@ class ApproveItTicketsForm extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
 
         try {
             $it_ticket =  Ittickets::where('uuid', $this->index)->first();
             
-            if (empty(array_intersect($role_ids, [14, 15, 61024]))) {
+            if (empty(array_intersect($permissions, [14, 15, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             if(!$it_ticket){
@@ -82,11 +82,11 @@ class ApproveItTicketsForm extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
         try {
             $form = Ittickets::where('form_id', $this->form_id)->first();
             if($form){
-                if (!empty(array_intersect($role_ids, [14, 15, 61024]))) {
+                if (!empty(array_intersect($permissions, [14, 15, 61024]))) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {

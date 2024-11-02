@@ -110,11 +110,11 @@ class AccountingDashboardView extends Component
     public function mount(){
 
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode role IDs if they're in JSON format
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [14, 61024]))) {
+            if (empty(array_intersect($permissions, [16, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -238,11 +238,11 @@ class AccountingDashboardView extends Component
             // 'year' => 'required|digits:4|integer',  // Added validation rule for year
             'payroll_status' => 'required|in:Awaiting Approval,Approved,Overdue,Draft',  // Added validation rule for payroll_status
         ]);
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode role IDs if they're in JSON format
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [14, 61024]))) {
+            if (empty(array_intersect($permissions, [16, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -318,11 +318,11 @@ class AccountingDashboardView extends Component
             'payroll_picture' => 'required|url:https',
         ]);
 
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode role IDs if they're in JSON format
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [14, 61024]))) {
+            if (empty(array_intersect($permissions, [16, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
                 $parts = explode(' | ', $this->selectedEmployee);
@@ -388,11 +388,11 @@ class AccountingDashboardView extends Component
         ]);
 
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode role IDs if they're in JSON format
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [14, 61024]))) {
+            if (empty(array_intersect($permissions, [16, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             $payroll = Payroll::where('target_employee', $employee_id)
@@ -467,11 +467,11 @@ class AccountingDashboardView extends Component
 
         $loggedInUser = auth()->user();
 
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode role IDs if they're in JSON format
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [14, 61024]))) {
+            if (empty(array_intersect($permissions, [16, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -520,11 +520,11 @@ class AccountingDashboardView extends Component
 
     public function deletePayroll($employee_id){
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode role IDs if they're in JSON format
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode role IDs if they're in JSON format
         
         try {
             // Check for authorized roles using array_intersect
-            if (empty(array_intersect($role_ids, [14, 61024]))) {
+            if (empty(array_intersect($permissions, [16, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -663,12 +663,12 @@ class AccountingDashboardView extends Component
             });
         } 
 
-        $loggedInUser = auth()->user()->role_id; // Assuming this returns a single role ID or a JSON-encoded string
+        $loggedInUser = auth()->user()->permissions; // Assuming this returns a single role ID or a JSON-encoded string
 
         // Decode the role IDs if they are in JSON format
-        $role_ids = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser, true);
+        $permissions = is_array($loggedInUser) ? $loggedInUser : json_decode($loggedInUser, true);
         
-        if (in_array(61024, $role_ids)) {
+        if (in_array(61024, $permissions)) {
             // If the user has the superadmin role (61024)
             $results = $query->orderBy('created_at', 'desc')->paginate(5);
         } else {

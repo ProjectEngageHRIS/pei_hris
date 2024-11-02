@@ -97,10 +97,10 @@ class ApproveLeaverequestTable extends Component
 
     public function mount($type = null){
         $this->key = $type;
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true); // Decode JSON into an array
         try {
-            if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
+            if (empty(array_intersect($permissions, [2, 3, 7, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -358,9 +358,9 @@ class ApproveLeaverequestTable extends Component
         }
 
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode JSON into an array
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
         try {
-            if (empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))) {
+            if (empty(array_intersect($permissions, [2, 3, 7, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
                 // Fetch the leave request data
@@ -371,7 +371,7 @@ class ApproveLeaverequestTable extends Component
 
                 if($this->status == "Pending" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
-                        if (!empty(array_intersect($role_ids, [4, 6, 7, 8, 14, 61024]))){
+                        if (!empty(array_intersect($permissions, [2, 3, 7, 61024]))){
                             if ($this->person == "President"){
                                 if($this->status == "Approved"){
                                     $leaverequestdata->approved_by_president = 1;
@@ -430,25 +430,25 @@ class ApproveLeaverequestTable extends Component
                             $verdict = 0;
                             $status = "Declined";
                         }
-                        if (empty(array_intersect($role_ids, [4, 61024]))) {
+                        if (empty(array_intersect($permissions, [2, 61024]))) {
                             $leaverequestdata->approved_by_supervisor = $verdict;
                             if ($leaverequestdata->approved_by_president == 1) {
                                 $leaverequestdata->status = $status ;
                             }
                         } 
                         else if($leaverequestdata->supervisor_email == "spm_2009@wesearch.com.ph"){
-                            if(in_array(6, $role_ids)){ // President Role
+                            if(empty(array_intersect($permissions, [3, 61024]))){ // President Role
                                 $leaverequestdata->approved_by_supervisor = $verdict;
                                 $leaverequestdata->approved_by_president = $verdict;
                                 $leaverequestdata->status = $status ;
                             }
-                        } else if (in_array(6, $role_ids)) {
+                        } else if (in_array(3, $permissions)) {
                             $leaverequestdata->approved_by_president = $verdict;
                             if ($leaverequestdata->approved_by_supervisor == 1) {
-                                $leaverequestdata->status = $status ;
+                                $leaverequestdata->status = $status;
                             }
                         } else if($leaverequestdata->supervisor_email == "kcastro@projectengage.com.ph"){
-                            if(in_array(7, $role_ids)){ // Hr Head Role
+                            if(in_array(7, $permissions)){
                                 $leaverequestdata->approved_by_supervisor = $verdict;
                                 if ($leaverequestdata->approved_by_president == 1) {
                                     $leaverequestdata->status = $status ;

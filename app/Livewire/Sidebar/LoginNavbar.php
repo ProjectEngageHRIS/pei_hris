@@ -26,7 +26,7 @@ class LoginNavbar extends Component
 
     public $employee_id;
 
-    public $role_id;
+    public $permissions;
 
     public $employee_name;
 
@@ -36,7 +36,7 @@ class LoginNavbar extends Component
 
     public function mount(){
         $loggedInUser = auth()->user();
-        $this->role_id = $loggedInUser->role_id;
+        $this->permissions = $loggedInUser->permissions;
         $this->is_admin = $loggedInUser->is_admin;
         // $this->role = (int) Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_role');
 
@@ -51,7 +51,7 @@ class LoginNavbar extends Component
         $this->employeeEmail = $loggedInUser->email;
 
 
-        $this->role = $loggedInUser->role_id;
+        $this->role = $loggedInUser->permissions;
         $this->employee_id = $loggedInUser->employee_id;
 
     }

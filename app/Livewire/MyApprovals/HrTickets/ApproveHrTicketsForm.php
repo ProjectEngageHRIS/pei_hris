@@ -345,8 +345,10 @@ class ApproveHrTicketsForm extends Component
 
     public function editForm($index){
         $loggedInUser = auth()->user();
+        $permissions = json_decode($loggedInUser->permissions, true);
+
         try {
-            if(!in_array($loggedInUser->role_id, [6, 7, 10, 11, 12, 13, 61024])){
+            if (empty(array_intersect($permissions, [10, 11, 12, 13, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
 
@@ -357,24 +359,24 @@ class ApproveHrTicketsForm extends Component
             
             if($hr_ticket->type_of_ticket == "HR Internal"){
                 if($hr_ticket->type_of_request == "HR"){
-                    if(!in_array($loggedInUser->role_id, [6, 7, 11, 61024])){
+                    if (empty(array_intersect($permissions, [12, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Office Admin"){
-                    if(!in_array($loggedInUser->role_id, [6, 7, 12, 61024])){
+                    if (empty(array_intersect($permissions, [13, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Procurement"){
-                    if(!in_array($loggedInUser->role_id, [6, 7, 13, 61024])){
+                    if (empty(array_intersect($permissions, [14, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 }
             } else if($hr_ticket->type_of_ticket == "Internal Control"){
-                if(!in_array($loggedInUser->role_id, [6, 7, 9, 61024])){
+                if (empty(array_intersect($permissions, [10, 61024]))) {
                     throw new \Exception('Unauthorized Access');
                 }
             } else if($hr_ticket->type_of_ticket == "HR Operations"){
-                if(!in_array($loggedInUser->role_id, [6, 7, 10, 61024])){
+                if (empty(array_intersect($permissions, [11, 61024]))) {
                     throw new \Exception('Unauthorized Access');
                 }
             } else {

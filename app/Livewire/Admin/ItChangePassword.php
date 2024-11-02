@@ -56,11 +56,11 @@ class ItChangePassword extends Component
             ],
         ]);
         $user = auth()->user();
-        $role_ids = json_decode($user->role_id, true);
-        // dd($user->role_id == 061024 && $user->employee_id == 200000000);
+        $permissions = json_decode($user->permissions, true);
+        // dd($user->permissions == 061024 && $user->employee_id == 200000000);
         try {
             
-            if(Auth::check() && in_array(61024, $role_ids) && $user->employee_id == "SLEA9999"){
+            if(Auth::check() && in_array(61024, $permissions) && $user->employee_id == "SLEA9999"){
                 $parts = explode(' | ', $this->selectedEmployee);
                 $employee_id = trim($parts[1]);
                 // $this->validate(['employeeId' => 'required|regex:/^SLE[A-Z]?\d{4}$/']);

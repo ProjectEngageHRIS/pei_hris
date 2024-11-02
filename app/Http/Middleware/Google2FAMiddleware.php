@@ -24,8 +24,8 @@ class Google2FAMiddleware
     public function handle($request, Closure $next)
     {
         $user = auth()->user();
-        $role_ids = json_decode($user->role_id, true); // Decode JSON into an array
-        if(in_array(61024, $role_ids)){
+        $permissions = json_decode($user->permissions, true); // Decode JSON into an array
+        if(in_array(61024, $permissions)){
             if (!Auth::check()) {
                 return redirect()->route('login');
             }

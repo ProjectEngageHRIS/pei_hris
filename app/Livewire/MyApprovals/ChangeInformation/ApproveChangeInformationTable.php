@@ -92,9 +92,11 @@ class ApproveChangeInformationTable extends Component
     }
 
     public function mount(){
-        $loggedInUser = auth()->user()->role_id;
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true);
+
         try {
-            if(!in_array($loggedInUser, [7, 8, 61024])){
+            if (empty(array_intersect($permissions, [15, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -279,9 +281,9 @@ class ApproveChangeInformationTable extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
-
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
         try {
-            if (!in_array($loggedInUser->role_id, [6, 7, 61024])){
+            if (empty(array_intersect($permissions, [15, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             $changeInformationStatus = ChangeInformation::where('form_id', $this->currentFormId)->first();

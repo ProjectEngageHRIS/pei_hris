@@ -42,13 +42,12 @@ class ActivitiesGallery extends Component
     public $currentFormId;
 
     public function mount(){
-        $start = microtime(true);
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser, true);
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true);
 
         try {
-            if(!in_array(4, $role_ids) && !in_array(61024, $role_ids)){
-            // if (empty(array_intersect($role_ids, [4, 61024]))) {
+            if(!in_array(4, $permissions) && !in_array(61024, $permissions)){
+            // if (empty(array_intersect($permissions, [4, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -56,8 +55,6 @@ class ActivitiesGallery extends Component
             Log::channel('activities')->error('Failed to view Approve Leave Request Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
             return redirect()->to(route('EmployeeDashboard'));
         }
-        $time2 = microtime(true) - $start;
-        dd($time2);
     }
 
 
@@ -242,7 +239,7 @@ class ActivitiesGallery extends Component
         // $loggedInUser = auth()->user();
         // $collegeName = Employee::where('employee_id', $loggedInUser->employee_id)
         //                         ->value('college_id');
-        // if($loggedInUser->role_id == 0){
+        // if($loggedInUser->permissions == 0){
             // $activities =  Activities::paginate(1);
         // }
         $activities =  Activities::whereNull('deleted_at');

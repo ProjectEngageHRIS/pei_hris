@@ -152,11 +152,11 @@ class HrDailyTimeRecord extends Component
     }
 
     public function mount(){
-        $loggedInUser = auth()->user()->role_id;
-        $role_ids = json_decode($loggedInUser->role_id, true); // Ensure $role_ids is an array
+        $loggedInUser = auth()->user()->permissions;
+        $permissions = json_decode($loggedInUser, true); // Ensure $permissions is an array
         
         try {
-            if (empty(array_intersect($role_ids, [7, 8, 61024]))) {
+            if (empty(array_intersect($permissions, [5, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
         } catch (\Exception $e) {
@@ -268,7 +268,7 @@ class HrDailyTimeRecord extends Component
         }
 
         return [$monthlyCountsArray, $weeklyCountsArray];
-}
+    }
 
     public function clearAllFilters()
     {

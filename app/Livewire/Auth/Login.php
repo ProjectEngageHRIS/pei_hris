@@ -64,7 +64,7 @@ class Login extends Component
             $cookieName = 'device_guid_' . $this->email;
             $deviceGuid = Cookie::get($cookieName);
             $user = auth()->user();
-            $role_ids = json_decode($user->role_id, true);
+            $permissions = json_decode($user->permissions, true);
 
             if($user->banned_flag == 1) {
                 $this->addError('email', trans('auth.failed'));
@@ -73,7 +73,7 @@ class Login extends Component
                 session()->invalidate();
                 return;
             } 
-            else if(in_array(61024, $role_ids)) {
+            else if(in_array(61024, $permissions)) {
                 if ($deviceGuid != null && $user->twofactor_secret != null && $user->twofactor_approved != null) {
                     RateLimiter::clear($throttleKey);
                     if ($this->isValidDevice($this->email, $deviceGuid)) {
@@ -99,7 +99,7 @@ class Login extends Component
                 }
             }
         
-            if(in_array(1, $role_ids)) {
+            if(in_array(1, $permissions)) {
                 return redirect()->route('EmployeeDashboard');
             }
             return redirect()->route('LoginDashboard');
@@ -128,7 +128,7 @@ class Login extends Component
         //             }
     
         //             // Redirect based on user role
-        //             return $loggedInUser->role_id == 1 
+        //             return $loggedInUser->permissions == 1 
         //                 ? redirect()->route('EmployeeDashboard') 
         //                 : redirect()->route('LoginDashboard');
         //         } else {

@@ -763,21 +763,21 @@
                                                     <option disabled>Select Roles</option>
                                                     <option value="1">Employee</option>
                                                     <option value="2">Supervisor</option>
-                                                    <option value="3">Employees Table (HR)</option>
-                                                    <option value="4">Daily Time Record (HR)</option>
-                                                    <option value="5">Announcements (HR)</option>
-                                                    <option value="6">Approve Leave Requests (HR)</option>
-                                                    <option value="7">Approve Hr Tickets (HR)</option>
-                                                    <option value="8">Approve Update Information (HR)</option>
-                                                    <option value="9">Internal Control (HR)</option>
-                                                    <option value="10">Operations (HR)</option>
-                                                    <option value="11">Internal Tickets-HR (HR)</option>
-                                                    <option value="12">Internal Tickets-Office Admin (HR)</option>
-                                                    <option value="13">Internal Tickets-Procurement (HR)</option>
-                                                    <option value="14">Accounting</option>
-                                                    <option value="15">President</option>
-                                                    <option value="16">IT Lead</option>
-                                                    <option value="17">IT Support</option>
+                                                    <option value="3">President</option>
+                                                    <option value="4">Employees Information Table (HR)</option>
+                                                    <option value="5">Daily Time Record (HR)</option>
+                                                    <option value="6">Announcements (HR)</option>
+                                                    <option value="7">Approve Leave Requests (HR)</option>
+                                                    <option value="8">Approve HR Tickets (Employee)</option>
+                                                    <option value="9">Approve HR Tickets (HR)</option>     
+                                                    <option value="10">Internal Control (HR)</option>
+                                                    <option value="11">Operations (HR)</option>
+                                                    <option value="12">Internal Tickets-HR (HR)</option>
+                                                    <option value="13">Internal Tickets-Office Admin (HR)</option>
+                                                    <option value="14">Internal Tickets-Procurement (HR)</option>
+                                                    <option value="15">Approve Update Information (HR)</option>
+                                                    <option value="16">Accounting</option>
+                                                    <option value="17">IT Tickets</option>
                                                 </select>
                                                 @error('role_id')
                                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();">
