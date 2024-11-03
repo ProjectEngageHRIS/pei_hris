@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rules\Password;
 
 class CreateEmployee extends Component
 {
@@ -217,19 +218,6 @@ class CreateEmployee extends Component
         'phic_num' => ['required', 'numeric', ],
         'hdmf_num' => ['required', 'numeric', ],
         'employee_id' => ['required',  'unique:employees,employee_id'],
-
-
-        'password' => [
-                'required',
-                'string',                   // The password must be a string.
-                'min:8',                    // The password must be at least 8 characters long.
-                'max:20',                   // The password must not exceed 20 characters.
-                'regex:/[a-z]/',            // The password must contain at least one lowercase letter.
-                'regex:/[A-Z]/',            // The password must contain at least one uppercase letter.
-                'regex:/[0-9]/',            // The password must contain at least one number.
-                'regex:/[@$!%*?&]/',        // The password must contain at least one special character.
-                ],
-
     ];
 
     protected function messages()
@@ -333,12 +321,22 @@ class CreateEmployee extends Component
 
     public function submit()
     {
-
-
         foreach($this->rules as $rule => $validationRule){
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
         }
+
+        $this->validate([
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+            ],
+        ]);
 
         $loggedInUser = auth()->user();
 

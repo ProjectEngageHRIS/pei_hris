@@ -2,11 +2,12 @@
 
 namespace App\Livewire\Passwordchange;
 
+use Carbon\Carbon;
+use App\Mail\OtpMail;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\OtpMail;
-use Carbon\Carbon;
+use Illuminate\Validation\Rules\Password;
 
 class PasswordChange extends Component
 {
@@ -21,12 +22,24 @@ class PasswordChange extends Component
 
     protected $rules = [
         'current_password' => 'required',
-        'new_password' => 'required|min:6|confirmed',
     ];
 
     public function submit()
     {
         $this->validate();
+
+        $this->validate([
+            'password' => [
+                'required',
+                'string',
+                Password::min(8)
+                    ->mixedCase()
+                    ->numbers()
+                    ->symbols()
+                    ->uncompromised(),
+                'confirmed'
+            ],
+        ]);
 
         if (!Auth::check()) {
             session()->flash('error', 'You need to be logged in to change your password.');
