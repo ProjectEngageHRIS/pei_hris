@@ -310,32 +310,55 @@
                                             </div>
                                         </div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
-                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
-                                        <div>
-                                        <div class="w-full">
-                                    <label for="names_of_children"
-                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">
-                                        Children's Name <span class="text-red-600">*</span>
-                                    </label>
-
-                                    @foreach ($names_of_children as $index => $name)
-    <div class="mb-2">
-        <input type="text" id="names_of_children[{{ $index }}]" name="names_of_children[{{ $index }}]" wire:model="names_of_children.{{ $index }}"
-            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-            ntd disabled>
-        @error('names_of_children.' . $index)
-            <span class="text-red-600 text-sm">{{ $message }}</span>
-        @enderror
-
-
-    </div>
-@endforeach
-
-                                </div>
-
-
-</div>
-</div>
+                                            <div class="grid grid-cols-1 gap-4 col-span-3 pb-4">
+                                                <div class="w-full">
+                                                    <label for="names_of_children" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">
+                                                        Children's Name <span class="text-red-600">*</span>
+                                                    </label>
+                                            
+                                                    @if ($names_of_children && count($names_of_children) > 0)
+                                                        @foreach ($names_of_children as $index => $name)
+                                                            <div class="flex items-center mb-2">
+                                                                <!-- Number label for each child -->
+                                                                <span class="mr-2 text-sm font-medium text-gray-600">{{ $index + 1 }}.</span>
+                                                    
+                                                                <!-- Child's name input field -->
+                                                                <input type="text" id="names_of_children[{{ $index }}]" name="names_of_children[{{ $index }}]" 
+                                                                    wire:model="names_of_children.{{ $index }}"
+                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                                    placeholder="Child's Name">
+                                                                
+                                                                <!-- Remove button as trash bin icon on the right -->
+                                                                <button type="button" wire:click="removeChild({{ $index }})" class="ml-2 text-red-600 hover:text-red-800 focus:outline-none">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                        <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                    </svg>
+                                                                </button>
+                                                            </div>
+                                                    
+                                                            <!-- Display error message below input if there's a validation error -->
+                                                            @error('names_of_children.' . $index)
+                                                                <span class="text-red-600 text-sm">{{ $message }}</span>
+                                                            @enderror
+                                                        @endforeach
+                                                    @else
+                                                        <div class="text-gray-500 text-sm text-center mt-4">
+                                                            No children have been added yet.
+                                                        </div>
+                                                    @endif
+                                                
+                                            
+                                                    {{-- <!-- Centered "Add Child" button below the input list -->
+                                                    <div class="flex justify-center mt-4">
+                                                        <button type="button" name="add" wire:click.prevent="addChild" class="flex items-center text-customRed hover:bg-customRed shadow border hover:text-white bg-navButton font-medium rounded-8px text-sm px-5 py-2.5 me-2 mb-2">
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                                                                <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
+                                                            </svg>
+                                                            Add  Child
+                                                        </button>
+                                                    </div> --}}
+                                                </div>
+                                            </div>
 </div>
 </div>
 </div>
@@ -411,56 +434,60 @@
                             $ctr = 0
                         @endphp
                         @if ($employeeHistory)
-                        @foreach ($employeeHistory as $index => $history)
-                        <div class="bg-white rounded-lg ">
-                            <div class="col-span-5">
-                                <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                    <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
-                                        <span>No. {{$ctr + 1 }}</span>
-                                    </li>
-                                    <li class="">
-                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                        type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
-                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100" disabled>
-                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                            </svg>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
+                            @foreach ($employeeHistory as $index => $history)
+                            <div class="bg-white rounded-lg ">
+                                <div class="col-span-5">
+                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                        <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
+                                            <span>No. {{$ctr + 1 }}</span>
+                                        </li>
+                                        <li class="">
+                                            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
+                                            type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                            class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100" disabled>
+                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                </svg>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
 
-                             </div>
-                             <div class="grid grid-cols-2 gap-4">
-                                    <div class="mt-5">
-                                        <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            Start Date <span class="text-red-600">*</span></label>
-                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required disabled></input>
-                                        @error('employeeHistory.' . $index . '.start_date')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
-                                        <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            End Date <span class="text-red-600">*</span></label>
-                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required disabled></input>
-                                        @error('employeeHistory.' . $index . '.end_date')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
+                                </div>
+                                <div class="grid grid-cols-2 gap-4">
+                                        <div class="mt-5">
+                                            <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                Start Date <span class="text-red-600">*</span></label>
+                                            <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required disabled></input>
+                                            @error('employeeHistory.' . $index . '.start_date')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
+                                            <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                End Date <span class="text-red-600">*</span></label>
+                                            <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required disabled></input>
+                                            @error('employeeHistory.' . $index . '.end_date')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @php
-                            $ctr += 1;
-                        @endphp
-                        @endforeach
+                            @php
+                                $ctr += 1;
+                            @endphp
+                            @endforeach
+                        @else
+                            <div class="text-gray-500 text-sm text-center mt-4">
+                                No Employe History have been added yet.
+                            </div>
                         @endif
                         <script>
                             document.addEventListener('livewire:init', () => {
@@ -778,12 +805,12 @@
                                                 15 => 'IT Lead',
                                                 16 => 'IT Support',
                                             ];
-                                            $roles = is_array($role_id) ? $role_id : json_decode($role_id, true);
+                                            $roles = is_array($permissions) ? $permissions : json_decode($permissions, true);
                                         @endphp
                                         
                                         <div class="gap-2 flex flex-col">
-                                            <label for="role_id" class="block text-sm font-medium text-customGray1 ">
-                                                Roles <span class="text-red-600">*</span>
+                                            <label for="permissions" class="block text-sm font-medium text-customGray1 ">
+                                                Permissions <span class="text-red-600">*</span>
                                             </label>
                                         
                                             <!-- Box-styled list of roles -->

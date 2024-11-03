@@ -85,7 +85,7 @@ class ViewEmployee extends Component
     public $religion;
     public $birth_place;
     public $address;
-    public $role_id;
+    public $permissions;
     public $birth_date;
     public $employee_id;
     public $civil_status;
@@ -184,8 +184,8 @@ class ViewEmployee extends Component
         $existing_user = User::where('employee_id', $this->old_employee_id)->first();
 
         if ($existing_user) {
-            // Set the role_id and other properties to the existing user values
-            $this->role_id = json_decode($existing_user->role_id, true);
+            // Set the permissions and other properties to the existing user values
+            $this->permissions = json_decode($existing_user->permissions, true);
             $this->employee_email = $existing_user->email;
         }
     }
@@ -286,7 +286,7 @@ class ViewEmployee extends Component
 
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
-        'role_id' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
+        'permissions' => ['required', 'in:1,2,3,4,5,6,7,8,9,10,11,12,13,14,15'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,OJT',
@@ -313,7 +313,7 @@ class ViewEmployee extends Component
         'employeeHistory.*.start_date' => 'Start Date',
         'emp_image' => 'Employee Image',
         'age' => 'Age',
-        'role_id' => 'Roles',
+        'permissions' => 'Roles',
         'department' => 'Company Name',
         'inside_department' => 'Department Name',
         'employee_type' => 'Employee Type',
@@ -369,7 +369,7 @@ class ViewEmployee extends Component
         }
 
         $loggedInUser = auth()->user();
-        if(!in_array($loggedInUser->role_id, [6, 7, 61024])){
+        if(!in_array($loggedInUser->permissions, [6, 7, 61024])){
             throw new \Exception('Unauthorized Access');
         }
 
@@ -488,7 +488,7 @@ class ViewEmployee extends Component
             // Update the existing user if needed
             $existing_user->email = $this->employee_email;
             $existing_user->employee_id = $this->employee_id;
-            $existing_user->role_id = $this->role_id;
+            $existing_user->permissions = $this->permissions;
             $existing_user->save();
         }
 

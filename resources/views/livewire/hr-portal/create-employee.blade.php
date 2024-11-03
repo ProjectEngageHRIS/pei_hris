@@ -46,7 +46,7 @@
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="first_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="first_name" id="first_name" wire:model="first_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     @error('first_name')
@@ -57,7 +57,7 @@
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middle_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle name </label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle Name </label>
                                                 <input type="text" name="middle_name" id="middle_name" wire:model="middle_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     >
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="w-full">
                                                 <label for="last_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="last_name" id="last_name"  wire:model="last_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     >
@@ -309,36 +309,56 @@
                         @enderror
                                             </div>
                                         </div>
-                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
-                                        <div>
-                                <div class="w-full">
-                                    <label for="names_of_children"
-                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">
-                                        Children's Name <span class="text-red-600">*</span>
-                                    </label>
-
-                                    @foreach ($names_of_children as $index => $name)
-                                        <div class="mb-2">
-                                            <input type="text" id="names_of_children[{{ $index }}]" name="names_of_children[{{ $index }}]" wire:model="names_of_children.{{ $index }}"
-                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                ntd>
-                                                @error('names_of_children.' . $index)
-                <span class="text-red-600 text-sm">{{ $message }}</span>
-            @enderror
-
-                                            <button type="button" wire:click="removeChild({{ $index }})"
-                                                class="text-red-600 text-sm">
-                                                Remove
-                                            </button>
+                                        <div class="grid grid-cols-1 gap-4 col-span-3 pb-4">
+                                            <div class="w-full">
+                                                <label for="names_of_children" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">
+                                                    Children's Name <span class="text-red-600">*</span>
+                                                </label>
+                                        
+                                                @if ($names_of_children && count($names_of_children) > 0)
+                                                    @foreach ($names_of_children as $index => $name)
+                                                        <div class="flex items-center mb-2">
+                                                            <!-- Number label for each child -->
+                                                            <span class="mr-2 text-sm font-medium text-gray-600">{{ $index + 1 }}.</span>
+                                                
+                                                            <!-- Child's name input field -->
+                                                            <input type="text" id="names_of_children[{{ $index }}]" name="names_of_children[{{ $index }}]" 
+                                                                wire:model="names_of_children.{{ $index }}"
+                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                                placeholder="Child's Name">
+                                                            
+                                                            <!-- Remove button as trash bin icon on the right -->
+                                                            <button type="button" wire:click="removeChild({{ $index }})" class="ml-2 text-red-600 hover:text-red-800 focus:outline-none">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
+                                                                    <path stroke-linecap="round" stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                
+                                                        <!-- Display error message below input if there's a validation error -->
+                                                        @error('names_of_children.' . $index)
+                                                            <span class="text-red-600 text-sm">{{ $message }}</span>
+                                                        @enderror
+                                                    @endforeach
+                                                @else
+                                                    <div class="text-gray-500 text-sm text-center mt-4">
+                                                        No children have been added yet.
+                                                    </div>
+                                                @endif
+                                            
+                                        
+                                                <!-- Centered "Add Child" button below the input list -->
+                                                <div class="flex justify-center mt-4">
+                                                    <button type="button" name="add" wire:click.prevent="addChild" class="flex items-center text-customRed hover:bg-customRed shadow border hover:text-white bg-navButton font-medium rounded-8px text-sm px-5 py-2.5 me-2 mb-2">
+                                                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
+                                                            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
+                                                        </svg>
+                                                        Add  Child
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
-                                    @endforeach
-                                </div>
-
-    <button type="button" wire:click="addChild"
-    class="mt-2 px-4 py-2 bg-customRed text-white rounded-lg">        Add Child
-    </button>
-</div>
-</div>
+                                        
 </div>
 </div>
 </div>
@@ -413,78 +433,82 @@
                             $ctr = 0
                         @endphp
                         @if ($employeeHistory)
-                        @foreach ($employeeHistory as $index => $history)
-                        <div class="bg-white rounded-lg ">
-                            <div class="col-span-5">
-                                <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                    <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
-                                        <span>No. {{$ctr + 1 }}</span>
-                                    </li>
-                                    <li class="">
-                                        <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
-                                        type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
-                                        class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100">
-                                            <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                            </svg>
-                                        </button>
-                                    </li>
-                                </ul>
-                            </div>
-                            <div class="border border-gray=200 border-solid p-6 ">
-                                    <div  id="employeeHistory_{{$index}}_name_of_company_container">
-                                        <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Company Name
-                                            <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.name_of_company')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-5 ">
-                                        <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            Position <span class="text-red-600">*</span></label>
-                                        <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.prev_position')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
+                            @foreach ($employeeHistory as $index => $history)
+                            <div class="bg-white rounded-lg ">
+                                <div class="col-span-5">
+                                    <ul class="text-sm font-medium text-right text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                        <li class="float-left mt-4 ml-5 font-bold text-gray-900 float-bold">
+                                            <span>No. {{$ctr + 1 }}</span>
+                                        </li>
+                                        <li class="">
+                                            <button id="about-tab" data-tabs-target="#about" type="button" role="tab" aria-controls="about" aria-selected="true"
+                                            type="button" name="add" wire:click.prevent="removeHistory({{$index}})" wire:confirm="Are you sure you want to delete this?"
+                                            class="inline-block p-4 text-red-600 rounded-ss-lg hover:bg-gray-100">
+                                                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                                    <path stroke-linecap="round"  stroke-linejoin="round" d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                </svg>
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="border border-gray=200 border-solid p-6 ">
+                                        <div  id="employeeHistory_{{$index}}_name_of_company_container">
+                                            <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">Company Name
+                                                <span class="text-red-600">*</span></label>
+                                            <input type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                            @error('employeeHistory.' . $index . '.name_of_company')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mt-5 ">
+                                            <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                Position <span class="text-red-600">*</span></label>
+                                            <input type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                            @error('employeeHistory.' . $index . '.prev_position')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
 
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="mt-5">
-                                        <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            Start Date <span class="text-red-600">*</span></label>
-                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.start_date')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
-                                        <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
-                                            End Date <span class="text-red-600">*</span></label>
-                                        <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.end_date')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div class="mt-5">
+                                            <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                Start Date <span class="text-red-600">*</span></label>
+                                            <input type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                            @error('employeeHistory.' . $index . '.start_date')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
+                                            <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap ">
+                                                End Date <span class="text-red-600">*</span></label>
+                                            <input type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                            @error('employeeHistory.' . $index . '.end_date')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
+                                                    <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        @php
-                            $ctr += 1;
-                        @endphp
-                        @endforeach
+                            @php
+                                $ctr += 1;
+                            @endphp
+                            @endforeach
+                        @else
+                            <div class="text-gray-500 text-sm text-center mt-4">
+                                No Employe History have been added yet.
+                            </div>
                         @endif
                         <script>
                             document.addEventListener('livewire:init', () => {
@@ -508,7 +532,7 @@
                                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">
                                     <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14Zm.75-10.25v2.5h2.5a.75.75 0 0 1 0 1.5h-2.5v2.5a.75.75 0 0 1-1.5 0v-2.5h-2.5a.75.75 0 0 1 0-1.5h2.5v-2.5a.75.75 0 0 1 1.5 0Z" clip-rule="evenodd" />
                                 </svg>
-                                Add  History
+                                Add History
                             </button>
                         </div>
                         @php
@@ -757,10 +781,10 @@
                                                 @enderror
 
                                             </div>
-                                            <div wire:ignore class="w-full">
-                                                <label for="permission" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Roles <span class="text-red-600">*</span></label>
+                                            <div wire:ignore class="w-full relative">
+                                                <label for="permission" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Permissions <span class="text-red-600">*</span></label>
                                                 <select name="permission[]" id="permission" wire:model="permission" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
-                                                    <option disabled>Select Roles</option>
+                                                    <option disabled>Select Permissions</option>
                                                     <option value="1">Employee</option>
                                                     <option value="2">Supervisor</option>
                                                     <option value="3">President</option>
@@ -789,23 +813,27 @@
                                             <script>
                                                 $(document).ready(function() {
                                                     $('.step-7-inputs').select2({
-                                                        placeholder: 'Select roles',
-                                                        closeOnSelect: false,  // Allows multiple selection without closing dropdown
+                                                        placeholder: 'Select Permissions',
+                                                        closeOnSelect: false,
+                                                        dropdownAutoWidth: true, // Ensures dropdown uses available width
+                                                        width: '100%'            // Match Select2 to container width
                                                     }).on('select2:open', function() {
-                                                        // Apply Tailwind CSS classes to the Select2 dropdown
-                                                        $('.select2-dropdown').addClass('bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-4');
-                                                        $('.select2-results__options');
+                                                        // Adjust dropdown styling when open
+                                                        $('.select2-dropdown').addClass('bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5');
                                                     }).on('change', function() {
                                                         let data = $(this).val();
-                                                        console.log(data);
-                                                        @this.permission = data;  // Bind selected roles to Livewire model
+                                                        @this.set('permission', data);  // Bind selected roles to Livewire model
                                                     });
-                                                    
-                                                    $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-300 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 p-2.5');
                                             
-                                                    // Toggle modal visibility when form submission is completed
-                                                    Livewire.on('formSubmitted', () => {
-                                                        $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
+                                                    // Additional styling for the Select2 container
+                                                    $('.select2-container--default .select2-selection--multiple').css({
+                                                        "background-color": "#F9FAFB",   // Tailwind's bg-gray-50
+                                                        "border": "1px solid #D1D5DB",   // Tailwind's border-gray-300
+                                                        "border-radius": "0.5rem",       // Tailwind's rounded-lg
+                                                        "padding": "0.625rem",           // Matches padding of p-2.5
+                                                        "min-height": "42px",            // Ensures consistent min-height
+                                                        "max-height": "150px",           // Optional max-height to prevent large dropdowns
+                                                        "overflow-y": auto,
                                                     });
                                                 });
                                             </script>
