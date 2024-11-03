@@ -36,7 +36,6 @@ class Google2FAMiddleware
             //     return redirect()->to($url);
             // }
         
-            $user = Auth::user();
             $deviceGuid = Cookie::get('device_guid_' . $user->employee_id);
         
             // Check if device GUID exists and is valid
@@ -61,8 +60,6 @@ class Google2FAMiddleware
             if($employee->active != 1){
                 Auth::logout();
                 $request->session()->invalidate();
-                // $request->session()->regenerateToken();
-        
                 return redirect()->route('home');
             }
         }
