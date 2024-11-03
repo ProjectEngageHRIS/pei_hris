@@ -763,20 +763,21 @@
                                                     <option disabled>Select Roles</option>
                                                     <option value="1">Employee</option>
                                                     <option value="2">Supervisor</option>
-                                                    <option value="3">Hr Daily Time Record</option>
-                                                    <option value="4">Announcements</option>
-                                                    <option value="5">HR Approve Leave Requests</option>
-                                                    <option value="6">HR Approve Hr Tickets</option>
-                                                    <option value="7">HR Approve Update Information</option>
-                                                    <option value="8">Accounting Employee</option>
-                                                    <option value="9">HR Internal Control</option>
-                                                    <option value="10">HR Operations</option>
-                                                    <option value="11">HR (HR Internal Tickets)</option>
-                                                    <option value="12">Office Admin (HR Internal Tickets)</option>
-                                                    <option value="13">Procurement (HR Internal Tickets)</option>
-                                                    <option value="14">President</option>
-                                                    <option value="15">IT Lead</option>
-                                                    <option value="16">IT Support</option>
+                                                    <option value="3">President</option>
+                                                    <option value="4">Employees Information Table (HR)</option>
+                                                    <option value="5">Daily Time Record (HR)</option>
+                                                    <option value="6">Announcements (HR)</option>
+                                                    <option value="7">Approve Leave Requests (HR)</option>
+                                                    <option value="8">Approve HR Tickets (Employee)</option>
+                                                    <option value="9">Approve HR Tickets (HR)</option>     
+                                                    <option value="10">Internal Control (HR)</option>
+                                                    <option value="11">Operations (HR)</option>
+                                                    <option value="12">Internal Tickets-HR (HR)</option>
+                                                    <option value="13">Internal Tickets-Office Admin (HR)</option>
+                                                    <option value="14">Internal Tickets-Procurement (HR)</option>
+                                                    <option value="15">Approve Update Information (HR)</option>
+                                                    <option value="16">Accounting</option>
+                                                    <option value="17">IT Tickets</option>
                                                 </select>
                                                 @error('permission')
                                                     <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('permission').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('permission').focus();">
@@ -1055,7 +1056,7 @@
                     <div wire:loading wire:target="submit" class="loading-overlay">
                         <div class="flex flex-col justify-center items-center">
                             <div class="spinner"></div>
-                            <p>Creating Employee...</p>
+                            <p>Updating...</p>
                         </div>
 
                     </div>

@@ -48,9 +48,9 @@
     <div class="relative shadow-md">
         <div class="grid grid-cols-2 gap-4 p-4 overflow-x-hidden bg-white rounded-t-lg">
             <!-- Add user button -->
-            <div x-data="{showModal: false}">
+            <div x-data="{showModal: false}" x-ref="newTicket">
                 <button @click="showModal = true;" data-modal-target="add-modal" data-modal-toggle="add-modal" class="text-nowrap inline-flex items-center text-customRed bg-navButton shadow hover:bg-customRed hover:text-white font-medium rounded-lg text-sm px-3 py-1.5 h-9">
-                    Add new ticket
+                    Add New Ticket
                 </button>
                 <!-- Main modal -->
                 <div x-cloak x-show="showModal" class="fixed inset-0 z-40 bg-black bg-opacity-50" @click="showModal = false"></div>
@@ -62,7 +62,7 @@
                             <!-- Modal header -->
                             <div class="flex items-center justify-between p-5 border-b rounded-t">
                                 <h3 class="text-xl font-semibold text-gray-900">
-                                    Add new ticket
+                                    Add New Ticket
                                 </h3>
                                 <button type="button" @click="showModal  = false" class="end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" >
                                     <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -732,6 +732,15 @@
             </div>
         </div>
 
+        <div wire:loading wire:target="addTicket" class="z-50 load-over">
+            <div wire:loading wire:target="addTicket" class="z-50 loading-overlay">
+                <div class="flex flex-col items-center justify-center">
+                    <div class="spinner"></div>
+                    <p>Submitting...</p>
+                </div>
+            </div>
+        </div>
+
             <!-- Loading screen -->
         <div wire:loading wire:target="genderTypesFilter, employeeTypesFilter, insideDepartmentTypesFilter, departmentTypesFilter, search, date_filter, status_filter" class="fixed inset-x-0 top-1/4 flex justify-center pointer-events-none z-50">
             <div class="z-50 mt-12">
@@ -772,6 +781,11 @@
         Livewire.on('triggerSuccess', (event) => {
             if(event.type == "add"){
                 window.dispatchEvent(new CustomEvent('trigger-success-add'));
+                const addModal = document.querySelector(`[x-ref="newTicket"]`);
+                const add = Alpine.$data(addModal);
+                if (add) {
+                    add.showModal = false; 
+                }
             } else if(event.type == "edit") {
                 window.dispatchEvent(new CustomEvent('trigger-success-edit'));
             }

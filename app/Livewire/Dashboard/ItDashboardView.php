@@ -209,11 +209,7 @@ class ItDashboardView extends Component
         }
         
 
-        if($this->statusFilterName == "Cancelled"){
-            $results = $results->paginate(5);
-        } else {
-            $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
-        }
+        $results = $results->paginate(5);
 
         $counts = Ittickets::select(DB::raw('
             SUM(CASE WHEN status = "Completed" THEN 1 ELSE 0 END) AS `Completed`,
@@ -233,7 +229,7 @@ class ItDashboardView extends Component
 
     
     protected $rules = [
-        'description' => 'required|string|min:10|max:5120',
+        'description' => 'required|string|min:1|max:1024',
         'selectedEmployee' => 'required',
     ];
   
@@ -271,7 +267,7 @@ class ItDashboardView extends Component
         try {
             $form = Ittickets::find($this->currentFormId);
             if($form){
-                if (empty(array_intersect($permissions, [17, 61024]))) {
+                if (!empty(array_intersect($permissions, [17, 61024]))) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled', 'cancelled_at' => now()];
                     } else if($this->status == "Report") {

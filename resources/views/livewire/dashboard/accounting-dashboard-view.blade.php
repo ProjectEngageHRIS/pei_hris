@@ -640,7 +640,7 @@
                                     </div>
 
                                     <!-- Modal footer -->
-                                    <div class="flex items-center p-4 border-t border-gray-200 rounded-b md:p-5">
+                                    <div class="flex items-center justify-end p-4 border-t border-gray-200 rounded-b md:p-5">
                                         <button type="submit" class="text-white bg-customRed hover:bg-red-500 focus:ring-2 focus:outline-none focus:ring-customRed flex items-center justify-center gap-2 shadow-lg font-medium rounded-lg text-sm px-5 py-2.5 text-center">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-5 h-5">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v6m3-3H9m12 0a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
@@ -754,13 +754,13 @@
                                                 <span class="text-xs font-semibold text-gray-900">Status: Hasn't Progressed</span>
                                             @endif
                                         @else 
-                                                <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
+                                            <span class="text-xs font-semibold text-gray-900">Status: Not Processed Yet</span>
                                         @endif
                                         <script>
                                             document.addEventListener('alpine:init', () => {
                                                 Alpine.store('editAccount', {
                                                     openPayrollEditAccountModal: false,
-                                                    currentEditModal: null
+                                                    currentEditModal: null,
                                                 });
                                                 Alpine.store('addPayroll', {
                                                     openAddPayrollModal: false,
@@ -776,6 +776,9 @@
                                                         <path d="M11.013 2.513a1.75 1.75 0 0 1 2.475 2.474L6.226 12.25a2.751 2.751 0 0 1-.892.596l-2.047.848a.75.75 0 0 1-.98-.98l.848-2.047a2.75 2.75 0 0 1 .596-.892l7.262-7.261Z"></path>
                                                     </svg>
                                                 </button>
+                                                <div x-data>
+                                                    <p>Employee ID: <span x-text="$store.editAccount.currentEditModal.employeeID"></span></p>
+                                                </div>
                                                 <!-- Main modal -->
                                                 <div x-show="$store.editAccount.openPayrollEditAccountModal && $store.editAccount.currentEditModal === '{{ $loop->index }}'" class="fixed inset-0 z-50 flex items-center justify-center">
                                                     <!-- Backdrop -->
@@ -813,7 +816,7 @@
                                                                 <form class="space-y-4" wire:submit.prevent="submit('{{ $employee->employee_id }}')" method="POST">
                                                                     <div>
                                                                         <label for="fullname" class="block mb-2 text-sm font-medium text-customGray1">Full Name</label>
-                                                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }}" disabled>
+                                                                        <input type="text" name="fullname" id="fullname" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5" value="{{ $employee->first_name }} {{ $employee->middle_name }} {{ $employee->last_name }}" disabled>
                                                                     </div>
                                                                     <div>
                                                                         <label for="enum" class="block mb-2 text-sm font-medium text-customGray1">Employee Number</label>
@@ -829,12 +832,12 @@
                                                                     </div>
                                                                     <div id="payroll_status_container">
                                                                         <label for="payroll_status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
-                                                                        <select name="payroll_status" id="status" wire:model.change="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
-                                                                            <option value="" selected>Select Status</option>
-                                                                            <option value="Awaiting Approval">Awaiting Approval</option>
-                                                                            <option value="Approved">Approved</option>
-                                                                            <option value="Overdue">Overdue</option>
-                                                                            <option value="Draft">Draft</option>
+                                                                        <select name="payroll_status" id="status_{{ $employee->employee_id }}" wire:model.defer="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
+                                                                            <option value="" >Select Status</option>
+                                                                            <option value="Awaiting Approval"@if($status === "Awaiting Approval") selected @endif>Awaiting Approval</option>
+                                                                            <option value="Approved" >Approved</option>
+                                                                            <option value="Overdue" >Overdue</option>
+                                                                            <option value="Draft" >Draft</option>
                                                                         </select>
                                                                         @error('payroll_status')
                                                                             <div class="text-sm transition transform alert alert-danger"
