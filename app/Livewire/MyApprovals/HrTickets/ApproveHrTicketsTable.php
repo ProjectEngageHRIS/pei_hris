@@ -141,7 +141,9 @@ class ApproveHrTicketsTable extends Component
             $query->where('type_of_ticket', 'HR Operations');
         } elseif (!empty(array_intersect($permissions, [61024]))) {
             $this->permissions = true; 
-        }    
+        } else {
+            return redirect()->to(route('HumanResourceDashboard'));
+        }        
 
         switch ($this->date_filter) {
             case '1': // Today

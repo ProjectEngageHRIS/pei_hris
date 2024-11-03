@@ -134,6 +134,7 @@ document.addEventListener('livewire:navigated', () => {
 
 })
 
+
 // document.addEventListener("livewire:navigated", () => {
 //   console.log("Navigated");
 // });

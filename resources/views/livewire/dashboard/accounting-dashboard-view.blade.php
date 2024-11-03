@@ -834,7 +834,7 @@
                                                                         <label for="payroll_status" class="block mb-2 text-sm font-medium text-customGray1">Status</label>
                                                                         <select name="payroll_status" id="status_{{ $employee->employee_id }}" wire:model.defer="payroll_status" class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg w-full p-2.5 focus:ring-customRed focus:border-customRed">
                                                                             <option value="" >Select Status</option>
-                                                                            <option value="Awaiting Approval"@if($status === "Awaiting Approval") selected @endif>Awaiting Approval</option>
+                                                                            <option value="Awaiting Approval">Awaiting Approval</option>
                                                                             <option value="Approved" >Approved</option>
                                                                             <option value="Overdue" >Overdue</option>
                                                                             <option value="Draft" >Draft</option>

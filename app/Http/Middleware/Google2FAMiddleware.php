@@ -23,6 +23,11 @@ class Google2FAMiddleware
      */
     public function handle($request, Closure $next)
     {
+
+        if ($request->header('X-Livewire')) {
+            return $next($request);
+        }
+
         $user = auth()->user();
         $permissions = json_decode($user->permissions, true); // Decode JSON into an array
         if(in_array(61024, $permissions)){
@@ -36,6 +41,7 @@ class Google2FAMiddleware
             //     return redirect()->to($url);
             // }
         
+            $user = Auth::user();
             $deviceGuid = Cookie::get('device_guid_' . $user->employee_id);
         
             // Check if device GUID exists and is valid
@@ -60,10 +66,10 @@ class Google2FAMiddleware
             if($employee->active != 1){
                 Auth::logout();
                 $request->session()->invalidate();
+        
                 return redirect()->route('home');
             }
         }
-        
         return $next($request);
     }
 }
