@@ -674,37 +674,61 @@
                                 </ul>
                             </div>
                             <div class="border border-gray-200 border-solid p-6">
-    <div class="flex space-x-4">
-        <!-- File Name Input -->
-        <div id="files_{{$index}}_name_of_file_container" class="flex-1">
-            <label for="files_{{$index}}_name_of_file" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
-                File Name <span class="text-red-600">*</span>
-            </label>
-            <input type="text" id="files_{{$index}}_name_of_file" name="files_{{$index}}_name_of_file" wire:model.blur="files.{{$index}}.name_of_file" placeholder="Enter File Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
-            @error('files.' . $index . '.name_of_file')
-                <div class="text-sm transition transform alert alert-danger"
-                    x-data x-init="document.getElementById('files_{{$index}}_name_of_file_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_name_of_file_container').focus();">
-                    <span class="text-xs text-red-500"> {{$message}}</span>
-                </div>
-            @enderror
-        </div>
-
-        <!-- Toggle Switch for Completed -->
-        <div class="flex items-center pt-7"> <!-- Add pt-1 here to push everything down -->
-    <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" wire:model="files.{{$index}}.completed" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed?</span>
-    </label>
-    @error('files.' . $index . '.completed')
-        <div class="text-sm transition transform alert alert-danger"
-            x-data x-init="document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_completed').focus();">
-            <span class="text-xs text-red-500"> {{$message}}</span>
-        </div>
-    @enderror
-</div>
-
-    </div>
+                                <div class="border border-gray-200 border-solid p-6">
+                                    <div class="grid grid-cols-1 min-[902px]:grid-cols-9 min-[902px]:space-x-4">
+                                        <!-- File Name Input -->
+                                        <div id="files_{{$index}}_name_of_file_container" class="flex-1 col-span-8">
+                                            <label for="files_{{$index}}_name_of_file" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                File Name <span class="text-red-600">*</span>
+                                            </label>
+                                            <input type="text" id="files_{{$index}}_name_of_file" name="files_{{$index}}_name_of_file" wire:model.blur="files.{{$index}}.name_of_file" 
+                                                placeholder="Enter File Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                            
+                                            @error('files.' . $index . '.name_of_file')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                    x-data 
+                                                    x-init="
+                                                        document.getElementById('files_{{$index}}_name_of_file_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                        document.getElementById('files_{{$index}}_name_of_file').focus();
+                                                    ">
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    
+                                        <div class="flex flex-col items-center col-span-1 space-y-3">
+                                            <label class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                                Completed? <span class="text-red-600">*</span>
+                                            </label>
+                                        
+                                            {{-- <!-- Toggle Button with Livewire Binding -->
+                                            <label for="files_{{$index}}_completed" class="relative inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" id="files_{{$index}}_completed" wire:model="files.{{$index}}.completed" class="sr-only">
+                                                <div class="w-9 h-5 bg-gray-200 rounded-full transition-all duration-200 peer-focus:ring-2 peer-focus:ring-customRed peer-checked:bg-customRed">
+                                                    <span class="absolute w-4 h-4 bg-white rounded-full transition-transform duration-200 transform peer-checked:translate-x-5 translate-x-0.5"></span>
+                                                </div>
+                                            </label> --}}
+                                            <div class="items-center">
+                                                <label for="files_{{$index}}_completed" class="inline-flex items-center cursor-pointer">
+                                                    <input type="checkbox" id="files_{{$index}}_completed" wire:model="files.{{$index}}.completed" class="sr-only peer" checked>
+                                                    <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                                </label>
+                                            </div>
+    
+                                            @error('files.' . $index . '.completed')
+                                                <div class="text-sm transition transform alert alert-danger"
+                                                     x-data 
+                                                     x-init="
+                                                         document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                         document.getElementById('files_{{$index}}_completed').focus();
+                                                     ">
+                                                    <span class="text-xs text-red-500">{{ $message }}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                        
+                                    </div>
+                                </div>
 </div>
 
                         </div>

@@ -696,31 +696,37 @@
                                         @enderror
                                     </div>
                                 
-                                    <!-- Toggle Switch for Completed -->
                                     <div class="flex flex-col items-center col-span-1 space-y-3">
-                                        <label for="files_{{$index}}_completed" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                        <label class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
                                             Completed? <span class="text-red-600">*</span>
                                         </label>
-                            
-                                        <!-- Custom Toggle Button -->
+                                    
+                                        {{-- <!-- Toggle Button with Livewire Binding -->
                                         <label for="files_{{$index}}_completed" class="relative inline-flex items-center cursor-pointer">
                                             <input type="checkbox" id="files_{{$index}}_completed" wire:model="files.{{$index}}.completed" class="sr-only">
-                                            <div class="w-9 h-5 bg-gray-200 rounded-full peer-focus:ring-2 peer-focus:ring-customRed peer-checked:bg-customRed transition-all">
-                                                <span class="absolute w-4 h-4 bg-white rounded-full transition-transform transform peer-checked:translate-x-5 translate-x-0.5"></span>
+                                            <div class="w-9 h-5 bg-gray-200 rounded-full transition-all duration-200 peer-focus:ring-2 peer-focus:ring-customRed peer-checked:bg-customRed">
+                                                <span class="absolute w-4 h-4 bg-white rounded-full transition-transform duration-200 transform peer-checked:translate-x-5 translate-x-0.5"></span>
                                             </div>
-                                        </label>
-                                
+                                        </label> --}}
+                                        <div class="items-center">
+                                            <label for="files_{{$index}}_completed" class="inline-flex items-center cursor-pointer">
+                                                <input type="checkbox" id="files_{{$index}}_completed" wire:model="files.{{$index}}.completed" class="sr-only peer" checked>
+                                                <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                            </label>
+                                        </div>
+
                                         @error('files.' . $index . '.completed')
                                             <div class="text-sm transition transform alert alert-danger"
-                                                x-data 
-                                                x-init="
-                                                    document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' });
-                                                    document.getElementById('files_{{$index}}_completed').focus();
-                                                ">
-                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                                 x-data 
+                                                 x-init="
+                                                     document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                     document.getElementById('files_{{$index}}_completed').focus();
+                                                 ">
+                                                <span class="text-xs text-red-500">{{ $message }}</span>
                                             </div>
                                         @enderror
                                     </div>
+                                    
                                 </div>
                             </div>
                             
@@ -1093,12 +1099,12 @@
 
                                      </div>
                                      <div class="items-center">
-    <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" wire:model="active" class="sr-only peer" checked>
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active?</span>
-    </label>
-</div>
+                                        <label class="inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" wire:model="active" class="sr-only peer" checked>
+                                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active?</span>
+                                        </label>
+                                    </div>
 
 </div>
 </div>
