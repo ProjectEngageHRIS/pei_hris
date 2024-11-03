@@ -104,8 +104,13 @@ class CreateEmployee extends Component
     public $showConfirmation = false;
     public $step = 1;
 
+    public $dateNow;
+
+    public $message;
+
     public function mount(){
         try {
+            $this->dateNow = now()->format('Y-m-d');
             $loggedInUser = auth()->user();
             $permissions = json_decode($loggedInUser->permissions, true);
 
@@ -170,14 +175,14 @@ class CreateEmployee extends Component
         'home_address' => 'required|min:5|max:500',
         'provincial_address' => 'required|min:10|max:500',
         'age' => 'required|numeric|min:18|max:100',
-        'birth_date' => 'required|date',
+        'birth_date' => ['required','date','date_format:Y-m-d','before:today'],
         'religion' => 'required|min:3|max:500',
         'civil_status' => 'required|in:Single,Married,Widowed,Divorced,Separated',
         'phone_number' => ['required','numeric','regex:/^09[0-9]{9}$/' ],
-        'birth_place' => 'max:500',
-        'profile_summary' => 'required|min:5|max:500',
-        'name_of_father' => 'required|min:5|max:500',
-        'name_of_mother' => 'required|min:5|max:500',
+        'birth_place' => 'required|min:1|max:2024',
+        'profile_summary' => 'required|min:1|max:500',
+        'name_of_father' => 'required|min:1|max:500',
+        'name_of_mother' => 'required|min:1|max:500',
         'spouse' => 'nullable|max:500',
         'names_of_children' => 'nullable|array', // Ensure it's an array with at least one entry
         'names_of_children.*' => 'required|string|max:255',
@@ -186,7 +191,7 @@ class CreateEmployee extends Component
         'emergency_contact.address' => 'required|min:5|max:500',
         'emergency_contact.cellphone_number' => ['required','numeric','regex:/^09[0-9]{9}$/' ],
 
-       'employeeHistory' => 'nullable|array|max:5',
+        'employeeHistory' => 'nullable|array|max:5',
         'employeeHistory.*.name_of_company' => 'required|string|min:2|max:75',
         'employeeHistory.*.prev_position' => 'required|string|min:2|max:75',
         'employeeHistory.*.start_date' => 'required|date|before_or_equal:employeeHistory.*.end_date',
@@ -197,6 +202,10 @@ class CreateEmployee extends Component
         'college_school' => 'required|min:1|max:500',
         'college_course' => 'required|min:2|max:500',
         'college_date_graduated' => 'required|date',
+        'files_link' => 'required|url',
+        'files' => 'nullable|array|max:5',
+        'files.*.name_of_file' => 'required|string|min:2|max:75',
+        'files.*.completed' => 'nullable|boolean',
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
         'permission' => ['required'],
@@ -207,24 +216,66 @@ class CreateEmployee extends Component
         'tin_num' => ['required', 'numeric',],
         'phic_num' => ['required', 'numeric', ],
         'hdmf_num' => ['required', 'numeric', ],
-        'employee_id' => ['nullable',  'unique:employees,employee_id'],
-        'files_link' => 'required|url',
-        'files' => 'nullable|array|max:5',
-        'files.*.name_of_file' => 'required|string|min:2|max:75',
-        'files.*.completed' => 'nullable|boolean',
+        'employee_id' => ['required',  'unique:employees,employee_id'],
+
 
         'password' => [
-    'required',
-    'string',                   // The password must be a string.
-    'min:8',                    // The password must be at least 8 characters long.
-    'max:20',                   // The password must not exceed 20 characters.
-    'regex:/[a-z]/',            // The password must contain at least one lowercase letter.
-    'regex:/[A-Z]/',            // The password must contain at least one uppercase letter.
-    'regex:/[0-9]/',            // The password must contain at least one number.
-    'regex:/[@$!%*?&]/',        // The password must contain at least one special character.
-    ],
+                'required',
+                'string',                   // The password must be a string.
+                'min:8',                    // The password must be at least 8 characters long.
+                'max:20',                   // The password must not exceed 20 characters.
+                'regex:/[a-z]/',            // The password must contain at least one lowercase letter.
+                'regex:/[A-Z]/',            // The password must contain at least one uppercase letter.
+                'regex:/[0-9]/',            // The password must contain at least one number.
+                'regex:/[@$!%*?&]/',        // The password must contain at least one special character.
+                ],
 
     ];
+
+    protected function messages()
+    {
+        return [
+            // Names of Children
+            'names_of_children.*.required' => 'Each child’s name is required and cannot be empty.',
+            'names_of_children.*.string' => 'Each child’s name must be a valid string.',
+            'names_of_children.*.max' => 'Each child’s name may not exceed :max characters.',
+            
+            // Emergency Contact
+            'emergency_contact.contact_person.required' => 'The emergency contact person is required.',
+            'emergency_contact.contact_person.string' => 'The emergency contact person must be a string.',
+            'emergency_contact.contact_person.min' => 'The emergency contact person must be at least :min characters.',
+            'emergency_contact.contact_person.max' => 'The emergency contact person may not be greater than :max characters.',
+            'emergency_contact.relationship.required' => 'The emergency contact relationship is required.',
+            'emergency_contact.relationship.string' => 'The emergency contact relationship must be a string.',
+            'emergency_contact.relationship.min' => 'The emergency contact relationship must be at least :min characters.',
+            'emergency_contact.relationship.max' => 'The emergency contact relationship may not be greater than :max characters.',
+            'emergency_contact.address.required' => 'The emergency contact address is required.',
+            'emergency_contact.address.min' => 'The emergency contact address must be at least :min characters.',
+            'emergency_contact.address.max' => 'The emergency contact address may not exceed :max characters.',
+            'emergency_contact.cellphone_number.required' => 'The emergency contact cellphone number is required.',
+            'emergency_contact.cellphone_number.numeric' => 'The emergency contact cellphone number must be numeric.',
+            'emergency_contact.cellphone_number.regex' => 'The emergency contact cellphone number format is invalid. It should start with 09 and have 11 digits.',
+    
+            // Employee History
+            'employeeHistory.*.name_of_company.required' => 'The company name for entry #:position is required.',
+            'employeeHistory.*.name_of_company.string' => 'The company name for entry #:position must be a valid string.',
+            'employeeHistory.*.name_of_company.min' => 'The company name for entry #:position must be at least :min characters.',
+            'employeeHistory.*.name_of_company.max' => 'The company name for entry #:position may not exceed :max characters.',
+            
+            'employeeHistory.*.prev_position.required' => 'The previous position for entry #:position is required.',
+            'employeeHistory.*.prev_position.string' => 'The previous position for entry #:position must be a valid string.',
+            'employeeHistory.*.prev_position.min' => 'The previous position for entry #:position must be at least :min characters.',
+            'employeeHistory.*.prev_position.max' => 'The previous position for entry #:position may not exceed :max characters.',
+            
+            'employeeHistory.*.start_date.required' => 'The start date for entry #:position is required.',
+            'employeeHistory.*.start_date.date' => 'The start date for entry #:position must be a valid date.',
+            'employeeHistory.*.start_date.before_or_equal' => 'The start date for entry #:position must be before or equal to the end date.',
+    
+            'employeeHistory.*.end_date.required' => 'The end date for entry #:position is required.',
+            'employeeHistory.*.end_date.date' => 'The end date for entry #:position must be a valid date.',
+            'employeeHistory.*.end_date.after_or_equal' => 'The end date for entry #:position must be after or equal to the start date.',
+        ];
+    }
 
     protected $validationAttributes = [
         'employeeHistory' => 'Employee History',
@@ -262,6 +313,8 @@ class CreateEmployee extends Component
         'names_of_children.*' => 'Child\'s Name',
     ];
 
+
+
     public function addFile()
     {
         $this->files[] = ['name_of_file' => '', 'completed' =>''];
@@ -273,6 +326,11 @@ class CreateEmployee extends Component
         $this->dispatch('update-files', [json_encode($this->files, true)]);
     }
 
+    // public function updated($keys){
+    //     dd($keys);
+    // }
+
+
     public function submit()
     {
 
@@ -281,8 +339,6 @@ class CreateEmployee extends Component
             $this->validate([$rule => $validationRule]);
             $this->resetValidation();
         }
-
-
 
         $loggedInUser = auth()->user();
 
@@ -295,13 +351,10 @@ class CreateEmployee extends Component
     
                 // Check if the Employee ID already exists
                 if (Employee::where('employee_id', $this->employee_id)->exists()) {
-                    // If ID already exists, show a JavaScript alert and redirect
-                    $this->dispatch('show-alert', [
-                        'message' => 'Employee Created!',
-                        'redirect' => route('HumanResourceDashboard')
-                    ]);
-                    return;
+                    $this->message = "Employee ID Already Created. Please Choose Another.";
+                    $this->dispatch('trigger-employeeid-error'); 
                 }
+                
                 $sanitized_department = str_replace('"', '', json_encode($this->department));
                 $sanitized_inside_department = str_replace('"', '', json_encode($this->inside_department));
                 $sanitized_employee_type = str_replace('"', '', json_encode($this->employee_type));
@@ -409,7 +462,57 @@ class CreateEmployee extends Component
                 $formattedNamesString = rtrim($formattedNamesString, PHP_EOL);
     
                 $add_employee->names_of_children = $formattedNamesString;
+
+                $this->trainingsSeminars = $this->trainingsSeminars ?? [];
     
+                // Prepare JSON array
+                $jsongovttrainingsSeminars = [];
+        
+                foreach($this->trainingsSeminars as $TS) {
+                    $jsongovttrainingsSeminars[] = [
+                        'exam_name' => $TS['training_name'] ?? '', // Default to empty string if not set
+                      // Default to empty string if not set
+        
+                    ];
+                }
+        
+        
+                $this->govtProfessionalExamTaken = $this->govtProfessionalExamTaken ?? [];
+        
+                // Prepare JSON array
+                $jsongovtProfessionalExamTaken = [];
+        
+                foreach($this->govtProfessionalExamTaken as $GPE) {
+                    $jsongovtProfessionalExamTaken[] = [
+                        'exam_name' => $GPE['exam_name'] ?? '', // Default to empty string if not set
+                        'exam_rating' => $GPE['exam_rating'] ?? '', // Default to empty string if not set
+                      // Default to empty string if not set
+        
+                    ];
+                }
+        
+                $this->emergencyContact = $this->emergencyContact ?? [];
+        
+                // Prepare JSON array
+                $jsonEmergencyContact = [];
+        
+                foreach($this->emergencyContact ?? [] as $emergenC) {
+                    $jsonEmergencyContact[] = [
+                        'contact_person' => $emergenC['contact_person'], // Default to empty string if not set
+                        'relationship' => $emergenC['relationship'], // Default to empty string if not set
+                        'address' => $emergenC['address'], // Default to empty string if not set
+                        'relationship' => $emergenC['cellphone_number'], // Default to empty string if not set
+        
+                    ];
+                }
+        
+        
+                // Encode the array to JSON
+        
+                $jsongovttrainingsSeminars = json_encode($jsongovttrainingsSeminars ?? ' ');
+                $jsongovtProfessionalExamTaken = json_encode($jsongovtProfessionalExamTaken ?? ' ');
+                $jsonEmergencyContact = json_encode($jsonEmergencyContact);
+                // $this->dispatch('trigger-success'); 
     
                 $loggedInUser = auth()->user();
     
@@ -449,60 +552,12 @@ class CreateEmployee extends Component
                 Mail::to($add_employee->employee_email)->send(new CreateMailEmployee($new_user, $this->password));
                 }
                 // Assuming $add_employee is an instance of your employee model
+                $this->message = "Employee Created | Employee ID: " . $add_employee->employee_id;
+                $this->dispatch('trigger-success'); 
     
             });
     
-            $this->trainingsSeminars = $this->trainingsSeminars ?? [];
-    
-            // Prepare JSON array
-            $jsongovttrainingsSeminars = [];
-    
-            foreach($this->trainingsSeminars as $TS) {
-                $jsongovttrainingsSeminars[] = [
-                    'exam_name' => $TS['training_name'] ?? '', // Default to empty string if not set
-                  // Default to empty string if not set
-    
-                ];
-            }
-    
-    
-            $this->govtProfessionalExamTaken = $this->govtProfessionalExamTaken ?? [];
-    
-            // Prepare JSON array
-            $jsongovtProfessionalExamTaken = [];
-    
-            foreach($this->govtProfessionalExamTaken as $GPE) {
-                $jsongovtProfessionalExamTaken[] = [
-                    'exam_name' => $GPE['exam_name'] ?? '', // Default to empty string if not set
-                    'exam_rating' => $GPE['exam_rating'] ?? '', // Default to empty string if not set
-                  // Default to empty string if not set
-    
-                ];
-            }
-    
-            $this->emergencyContact = $this->emergencyContact ?? [];
-    
-            // Prepare JSON array
-            $jsonEmergencyContact = [];
-    
-            foreach($this->emergencyContact ?? [] as $emergenC) {
-                $jsonEmergencyContact[] = [
-                    'contact_person' => $emergenC['contact_person'], // Default to empty string if not set
-                    'relationship' => $emergenC['relationship'], // Default to empty string if not set
-                    'address' => $emergenC['address'], // Default to empty string if not set
-                    'relationship' => $emergenC['cellphone_number'], // Default to empty string if not set
-    
-                ];
-            }
-    
-    
-            // Encode the array to JSON
-    
-            $jsongovttrainingsSeminars = json_encode($jsongovttrainingsSeminars ?? ' ');
-            $jsongovtProfessionalExamTaken = json_encode($jsongovtProfessionalExamTaken ?? ' ');
-            $jsonEmergencyContact = json_encode($jsonEmergencyContact);
-            $this->dispatch('trigger-success'); 
-            return redirect()->to(route('HumanResourceDashboard'));
+            return $this->dispatch('trigger-reroute');
 
 
         } catch (\Exception $e) {
@@ -514,31 +569,31 @@ class CreateEmployee extends Component
     }
 
 
-    private function generateNewEmployeeId()
-    {
-        // Get the latest employee_id from the database
-        $latestEmployee = Employee::orderByRaw('LENGTH(employee_id) DESC, employee_id DESC')->first();
+    // private function generateNewEmployeeId()
+    // {
+    //     // Get the latest employee_id from the database
+    //     $latestEmployee = Employee::orderByRaw('LENGTH(employee_id) DESC, employee_id DESC')->first();
 
-        // Start with the initial ID if no employees exist
-        $initialId = 'SLE00050';
+    //     // Start with the initial ID if no employees exist
+    //     $initialId = 'SL-E-0001';
 
-        if ($latestEmployee) {
-            // Extract the numeric part of the latest employee ID
-            $latestId = $latestEmployee->employee_id;
-            $latestIdNumber = intval(substr($latestId, 3));
+    //     if ($latestEmployee) {
+    //         // Extract the numeric part of the latest employee ID
+    //         $latestId = $latestEmployee->employee_id;
+    //         $latestIdNumber = intval(substr($latestId, 3));
 
-            // Increment the numeric part by 1
-            $newIdNumber = $latestIdNumber + 1;
+    //         // Increment the numeric part by 1
+    //         $newIdNumber = $latestIdNumber + 1;
 
-            // Format the new ID with leading zeros
-            $newId = 'SLE' . str_pad($newIdNumber, 4, '0', STR_PAD_LEFT);
-        } else {
-            // If no employees exist, start with the initial ID
-            $newId = $initialId;
-        }
+    //         // Format the new ID with leading zeros
+    //         $newId = 'SLE' . str_pad($newIdNumber, 4, '0', STR_PAD_LEFT);
+    //     } else {
+    //         // If no employees exist, start with the initial ID
+    //         $newId = $initialId;
+    //     }
 
-        return $newId;
-    }
+    //     return $newId;
+    // }
 
     public function render()
     {

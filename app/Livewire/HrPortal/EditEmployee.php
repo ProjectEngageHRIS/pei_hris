@@ -309,11 +309,52 @@ class EditEmployee extends Component
         'files' => 'nullable|array|max:5',
         'files.*.name_of_file' => 'required|string|min:2|max:75',
         'files.*.completed' => 'nullable|boolean',
-
-
-
-
     ];
+
+    protected function messages()
+    {
+        return [
+            // Names of Children
+            'names_of_children.*.required' => 'Each child’s name is required and cannot be empty.',
+            'names_of_children.*.string' => 'Each child’s name must be a valid string.',
+            'names_of_children.*.max' => 'Each child’s name may not exceed :max characters.',
+            
+            // Emergency Contact
+            'emergency_contact.contact_person.required' => 'The emergency contact person is required.',
+            'emergency_contact.contact_person.string' => 'The emergency contact person must be a string.',
+            'emergency_contact.contact_person.min' => 'The emergency contact person must be at least :min characters.',
+            'emergency_contact.contact_person.max' => 'The emergency contact person may not be greater than :max characters.',
+            'emergency_contact.relationship.required' => 'The emergency contact relationship is required.',
+            'emergency_contact.relationship.string' => 'The emergency contact relationship must be a string.',
+            'emergency_contact.relationship.min' => 'The emergency contact relationship must be at least :min characters.',
+            'emergency_contact.relationship.max' => 'The emergency contact relationship may not be greater than :max characters.',
+            'emergency_contact.address.required' => 'The emergency contact address is required.',
+            'emergency_contact.address.min' => 'The emergency contact address must be at least :min characters.',
+            'emergency_contact.address.max' => 'The emergency contact address may not exceed :max characters.',
+            'emergency_contact.cellphone_number.required' => 'The emergency contact cellphone number is required.',
+            'emergency_contact.cellphone_number.numeric' => 'The emergency contact cellphone number must be numeric.',
+            'emergency_contact.cellphone_number.regex' => 'The emergency contact cellphone number format is invalid. It should start with 09 and have 11 digits.',
+    
+            // Employee History
+            'employeeHistory.*.name_of_company.required' => 'The company name for entry #:position is required.',
+            'employeeHistory.*.name_of_company.string' => 'The company name for entry #:position must be a valid string.',
+            'employeeHistory.*.name_of_company.min' => 'The company name for entry #:position must be at least :min characters.',
+            'employeeHistory.*.name_of_company.max' => 'The company name for entry #:position may not exceed :max characters.',
+            
+            'employeeHistory.*.prev_position.required' => 'The previous position for entry #:position is required.',
+            'employeeHistory.*.prev_position.string' => 'The previous position for entry #:position must be a valid string.',
+            'employeeHistory.*.prev_position.min' => 'The previous position for entry #:position must be at least :min characters.',
+            'employeeHistory.*.prev_position.max' => 'The previous position for entry #:position may not exceed :max characters.',
+            
+            'employeeHistory.*.start_date.required' => 'The start date for entry #:position is required.',
+            'employeeHistory.*.start_date.date' => 'The start date for entry #:position must be a valid date.',
+            'employeeHistory.*.start_date.before_or_equal' => 'The start date for entry #:position must be before or equal to the end date.',
+    
+            'employeeHistory.*.end_date.required' => 'The end date for entry #:position is required.',
+            'employeeHistory.*.end_date.date' => 'The end date for entry #:position must be a valid date.',
+            'employeeHistory.*.end_date.after_or_equal' => 'The end date for entry #:position must be after or equal to the start date.',
+        ];
+    }
 
     protected $validationAttributes = [
         'employeeHistory' => 'Employee History',
@@ -521,7 +562,7 @@ class EditEmployee extends Component
             $existing_user->save([
                 'email' => $this->employee_email,
                 'employee_id' => $this->employee_id,
-                'permissions' => $roles,
+                'permission' => $roles,
             ]);
         }
 
@@ -531,7 +572,8 @@ class EditEmployee extends Component
 
         $this->dispatch('trigger-success');
 
-        return redirect()->to(route('HumanResourceDashboard'));
+        return $this->dispatch('trigger-reroute');
+
 
     }
     public function render()

@@ -17,7 +17,7 @@ return new class extends Migration
                 $table->string('middle_name', 100);
                 $table->string('last_name', 100);
                 $table->string('nickname', 50)->nullable();
-                $table->string('department', 100)->nullable();
+                $table->string('department', 200)->nullable();
                 $table->string('inside_department', 100)->nullable();
                 $table->string('employee_type',  100);
                 $table->text('home_address');
@@ -31,12 +31,12 @@ return new class extends Migration
                 $table->string('high_school_school', 100)->nullable();
                 // $table->string('high_school_course', 100);
                 $table->string('high_school_date_graduated', 100)->nullable();
-                $table->string('college_school', 100)->nullable();
-                $table->string('college_course', 100)->nullable();
-                $table->string('college_date_graduated', 100)->nullable();
-                $table->string('vocational_school', 100)->nullable();
-                $table->string('vocational_course', 100)->nullable();
-                $table->string('vocational_date_graduated', 100)->nullable();
+                $table->string('college_school', 200)->nullable();
+                $table->string('college_course', 300)->nullable();
+                $table->string('college_date_graduated', 300)->nullable();
+                $table->string('vocational_school', 300)->nullable();
+                $table->string('vocational_course', 300)->nullable();
+                $table->string('vocational_date_graduated', 300)->nullable();
                 $table->json('performance')->nullable();
                 $table->string('govt_professional_exam_taken')->nullable();
                 $table->decimal('govt_professional_exam_taken_rating', 3, 2)->nullable();
@@ -44,7 +44,7 @@ return new class extends Migration
                 $table->decimal('age');
                 $table->date('birth_date');
                 $table->string('religion', 100);
-                $table->string('birth_place', 100);
+                $table->string('birth_place', 2024);
                 $table->string('civil_status', 100);
                 $table->string('name_of_mother', 255);
                 $table->string('name_of_father', 255);

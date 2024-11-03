@@ -2,7 +2,7 @@
     <nav class="flex mb-4" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
         <li class="inline-flex items-center">
-            <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
+            <a href="{{route('HumanResourceDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
             </svg>
@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('LeaveRequestTable')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee</a>
+            <span class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee Information</span>
             </div>
         </li>
         <li aria-current="page">
@@ -47,13 +47,13 @@
                                             <div class="w-full ">
                                                 <label for="first_name"
                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First Name <span class="text-red-600">*</span></label>
-                                                <input type="text" name="first_name" id="first_name" wire:model="first_name"
+                                                <input type="text" name="first_name" id="first_name" wire:model.live.debounce.100ms="first_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     @error('first_name')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('first_name').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('first_name').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('first_name').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('first_name').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middle_name"
@@ -74,10 +74,10 @@
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     >
                                                     @error('last_name')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('last_name').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('last_name').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('last_name').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('last_name').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
                                             </div>
                                         </div>
 
@@ -675,38 +675,55 @@
                                 </ul>
                             </div>
                             <div class="border border-gray-200 border-solid p-6">
-    <div class="flex space-x-4">
-        <!-- File Name Input -->
-        <div id="files_{{$index}}_name_of_file_container" class="flex-1">
-            <label for="files_{{$index}}_name_of_file" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
-                File Name <span class="text-red-600">*</span>
-            </label>
-            <input type="text" id="files_{{$index}}_name_of_file" name="files_{{$index}}_name_of_file" wire:model.blur="files.{{$index}}.name_of_file" placeholder="Enter File Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
-            @error('files.' . $index . '.name_of_file')
-                <div class="text-sm transition transform alert alert-danger"
-                    x-data x-init="document.getElementById('files_{{$index}}_name_of_file_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_name_of_file_container').focus();">
-                    <span class="text-xs text-red-500"> {{$message}}</span>
-                </div>
-            @enderror
-        </div>
-
-        <!-- Toggle Switch for Completed -->
-        <div class="flex items-center pt-7"> <!-- Add pt-1 here to push everything down -->
-    <label class="inline-flex items-center cursor-pointer">
-        <input type="checkbox" wire:model="files.{{$index}}.completed" class="sr-only peer">
-        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Completed?</span>
-    </label>
-    @error('files.' . $index . '.completed')
-        <div class="text-sm transition transform alert alert-danger"
-            x-data x-init="document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('files_{{$index}}_completed').focus();">
-            <span class="text-xs text-red-500"> {{$message}}</span>
-        </div>
-    @enderror
-</div>
-
-    </div>
-</div>
+                                <div class="grid grid-cols-1 min-[902px]:grid-cols-9 min-[902px]:space-x-4">
+                                    <!-- File Name Input -->
+                                    <div id="files_{{$index}}_name_of_file_container" class="flex-1 col-span-8">
+                                        <label for="files_{{$index}}_name_of_file" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            File Name <span class="text-red-600">*</span>
+                                        </label>
+                                        <input type="text" id="files_{{$index}}_name_of_file" name="files_{{$index}}_name_of_file" wire:model.blur="files.{{$index}}.name_of_file" 
+                                            placeholder="Enter File Name" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                        
+                                        @error('files.' . $index . '.name_of_file')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                x-data 
+                                                x-init="
+                                                    document.getElementById('files_{{$index}}_name_of_file_container').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                    document.getElementById('files_{{$index}}_name_of_file').focus();
+                                                ">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                
+                                    <!-- Toggle Switch for Completed -->
+                                    <div class="flex flex-col items-center col-span-1 space-y-3">
+                                        <label for="files_{{$index}}_completed" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
+                                            Completed? <span class="text-red-600">*</span>
+                                        </label>
+                            
+                                        <!-- Custom Toggle Button -->
+                                        <label for="files_{{$index}}_completed" class="relative inline-flex items-center cursor-pointer">
+                                            <input type="checkbox" id="files_{{$index}}_completed" wire:model="files.{{$index}}.completed" class="sr-only">
+                                            <div class="w-9 h-5 bg-gray-200 rounded-full peer-focus:ring-2 peer-focus:ring-customRed peer-checked:bg-customRed transition-all">
+                                                <span class="absolute w-4 h-4 bg-white rounded-full transition-transform transform peer-checked:translate-x-5 translate-x-0.5"></span>
+                                            </div>
+                                        </label>
+                                
+                                        @error('files.' . $index . '.completed')
+                                            <div class="text-sm transition transform alert alert-danger"
+                                                x-data 
+                                                x-init="
+                                                    document.getElementById('files_{{$index}}_completed').scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                                    document.getElementById('files_{{$index}}_completed').focus();
+                                                ">
+                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                            </div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+                            
 
                         </div>
                         @php
@@ -1090,9 +1107,12 @@
                 <button wire:click="submit()" type="submit" class="inline-flex items-center float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-customRed shadow hover:bg-customRed hover:text-white bg-navButton rounded-8px">Create Account</button>
 
 
-                <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }" 
-                @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Created'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
-                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
+            <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: $wire.entangle('message') }" 
+                @trigger-success.window="showToast = true; toastType = 'success'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 5000)"
+                @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 5000)"
+                @trigger-employeeid-error.window="showToast = true; toastType = 'error'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 5000)"
+                
+                >
                 <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
                 <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
                     x-show="showToast"
@@ -1121,6 +1141,8 @@
                         </div>
                     </div>
             </div>
+
+            
 
                 <!-- Loading screen -->
                 <div wire:loading wire:target="submit" class="load-over">
@@ -1198,6 +1220,16 @@
                 }, 5000); // Adjust the delay (in milliseconds) as needed
             }
         });
+    });
+
+    document.addEventListener('livewire:init', function () {
+        Livewire.on('trigger-reroute', () => {
+            // Optional: Show a success message or animation here
+            setTimeout(() => {
+                window.location.href = "{{ route('HumanResourceDashboard') }}";
+            }, 3000); // Delay for 2000ms (2 seconds)
+        });
+
     });
 
     </script>

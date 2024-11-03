@@ -2,7 +2,7 @@
     <nav class="flex mb-4" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
         <li class="inline-flex items-center">
-            <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
+            <a href="{{route('HumanResourceDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
             </svg>
@@ -46,7 +46,7 @@
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="first_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="first_name" id="first_name" wire:model="first_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required="" disabled>
                                                     @error('first_name')
@@ -57,7 +57,7 @@
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middle_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle name </label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle Name </label>
                                                 <input type="text" name="middle_name" id="middle_name" wire:model="middle_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     disabled>
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="w-full">
                                                 <label for="last_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="last_name" id="last_name"  wire:model="last_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     disabled>
@@ -601,47 +601,52 @@
                                         </div>
                                         <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                             <p class="font-bold text-base text-customRed pb-4"> Vocational School</p>
-                                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
-                                                <div class="w-full ">
-                                                    <label for="vocational_school"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
-                                                    <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd="" disabled>
-                                                        @error('vocational_school')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_school').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                                </div>
-                                                <div class="w-full ">
-                                                    <label for="vocational_course"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course </label>
-                                                    <input type="text" name="vocational_course" id="vocational_course" wire:model="vocational_course"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd=""disabled >
-                                                        @error('vocational_course')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_course').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                                </div>
-                                                <div class="w-full ">
-                                                    <label for="vocational_date_graduated"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
-                                                    <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd="" disabled>
-                                                        @error('vocational_date_graduated')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_date_graduated').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                                </div>
+                                        @if ($vocational_school && $vocational_course && $vocational_date_graduated)
 
+                                                <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
+                                                    <div class="w-full ">
+                                                        <label for="vocational_school"
+                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
+                                                        <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
+                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            ntd="" disabled>
+                                                            @error('vocational_school')
+                                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_school').focus();" >
+                                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                                </div>
+                                                            @enderror
+                                                    </div>
+                                                    <div class="w-full ">
+                                                        <label for="vocational_course"
+                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course </label>
+                                                        <input type="text" name="vocational_course" id="vocational_course" wire:model="vocational_course"
+                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            ntd=""disabled >
+                                                            @error('vocational_course')
+                                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_course').focus();" >
+                                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                                </div>
+                                                            @enderror
+                                                    </div>
+                                                    <div class="w-full ">
+                                                        <label for="vocational_date_graduated"
+                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
+                                                        <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
+                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                            ntd="" disabled>
+                                                            @error('vocational_date_graduated')
+                                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_date_graduated').focus();" >
+                                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                                </div>
+                                                            @enderror
+                                                    </div>
+                                                </div>
+                                        @else
+                                            <div class="text-gray-500 text-sm text-center mt-4">
+                                                No Vocational School Details have been added yet.
                                             </div>
-
-                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">

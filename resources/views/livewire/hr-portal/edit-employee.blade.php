@@ -2,7 +2,7 @@
     <nav class="flex mb-4" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3 rtl:space-x-reverse">
         <li class="inline-flex items-center">
-            <a href="{{route('EmployeeDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
+            <a href="{{route('HumanResourceDashboard')}}" class="inline-flex items-center text-sm font-medium text-gray-700 hover:text-customRed dark:text-gray-400 dark:hover:text-white">
             <svg class="w-3 h-3 me-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
             </svg>
@@ -14,7 +14,7 @@
             <svg class="w-3 h-3 text-gray-400 mx-1 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('HumanResourceDashboard')}}" class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Dashboard</a>
+            <span class="ms-1 text-sm font-medium text-gray-700 hover:text-customRed md:ms-2 dark:text-gray-400 dark:hover:text-white">Employee Information</span>
             </div>
         </li>
         <li aria-current="page">
@@ -46,7 +46,7 @@
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="first_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">First Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="first_name" id="first_name" wire:model="first_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                                     @error('first_name')
@@ -57,7 +57,7 @@
                                             </div>
                                             <div class="w-full ">
                                                 <label for="middle_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle name </label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Middle Name </label>
                                                 <input type="text" name="middle_name" id="middle_name" wire:model="middle_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     >
@@ -69,7 +69,7 @@
                                             </div>
                                             <div class="w-full">
                                                 <label for="last_name"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last name <span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Last Name <span class="text-red-600">*</span></label>
                                                 <input type="text" name="last_name" id="last_name"  wire:model="last_name"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     >
@@ -1046,9 +1046,10 @@
             </div>
         </div>
     </div>
+    
     <div x-cloak x-data="{ showToast: false, toastType: 'success', toastMessage: '' }"
-        @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)"
-        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 3000)">
+        @trigger-success.window="showToast = true; toastType = 'success'; toastMessage = 'Employee Information Updated'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 5000)"
+        @trigger-error.window="showToast = true; toastType = 'error'; toastMessage = 'Something went wrong. Please contact IT support.'; openConfirmation = false; openCrudModal = false; setTimeout(() => showToast = false, 5000)">
         <div id="toast-container" tabindex="-1" class="fixed inset-0 z-50 flex items-center justify-center w-full h-full bg-gray-800 bg-opacity-50" x-show="showToast">
         <div id="toast-message" class="fixed flex items-center justify-center w-full max-w-xs p-4 text-gray-900 transform -translate-x-1/2 bg-white rounded-lg shadow top-4 left-1/2 z-60" role="alert"
             x-show="showToast"
@@ -1154,6 +1155,16 @@
                 }, 5000); // Adjust the delay (in milliseconds) as needed
             }
         });
+    });
+
+    document.addEventListener('livewire:init', function () {
+        Livewire.on('trigger-reroute', () => {
+            // Optional: Show a success message or animation here
+            setTimeout(() => {
+                window.location.href = "{{ route('HumanResourceDashboard') }}";
+            }, 3000); // Delay for 2000ms (2 seconds)
+        });
+
     });
 
     </script>
