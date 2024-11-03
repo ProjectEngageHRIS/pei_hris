@@ -79,6 +79,8 @@ class ApproveHrTicketsTable extends Component
     public $genderFilter;
 
     public $permissions = False;
+
+    public $key;
     
     
     public function search()
@@ -91,7 +93,9 @@ class ApproveHrTicketsTable extends Component
         $this->resetPage();
     }
 
-    public function mount(){
+    public function mount($type = null){
+        $this->key = $type;
+
 
         // $loggedInUser = auth()->user();
 
@@ -319,10 +323,16 @@ class ApproveHrTicketsTable extends Component
             $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
         }
 
-
-        return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
-            'HrTicketData' => $results,
-        ])->layout('components.layouts.hr-navbar');
+        if($this->key != "list"){
+            return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
+                'HrTicketData' => $results,
+            ]);
+    
+        } else {
+            return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
+                'HrTicketData' => $results,
+            ])->layout('components.layouts.hr-navbar');    
+        }
 
     }
 

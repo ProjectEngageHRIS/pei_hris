@@ -30,9 +30,9 @@
                                     </svg> Announcements
                                 </a>
                             @endif
-                            @if (!empty(array_intersect($permissions, [7, 8, 9, 10, 61024, 11, 12, 13, 14, 15]))) 
+                            @if (!empty(array_intersect($permissions, [7, 9, 10, 11, 12, 13, 14, 15, 61024]))) 
                                 <div class="relative group">
-                                    <div id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
+                                    <div id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ListLeaveRequestTable') || request()->routeIs('ListHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                             <path fillRule="evenodd" d="M4 2a1.5 1.5 0 0 0-1.5 1.5v9A1.5 1.5 0 0 0 4 14h8a1.5 1.5 0 0 0 1.5-1.5V6.621a1.5 1.5 0 0 0-.44-1.06L9.94 2.439A1.5 1.5 0 0 0 8.878 2H4Zm6.713 4.16a.75.75 0 0 1 .127 1.053l-2.75 3.5a.75.75 0 0 1-1.078.106l-1.75-1.5a.75.75 0 1 1 .976-1.138l1.156.99L9.66 6.287a.75.75 0 0 1 1.053-.127Z" clipRule="evenodd" />
                                         </svg> Approvals
@@ -43,12 +43,14 @@
                                     <!-- Nested Dropdown Menu -->
                                     <ul id="approveBDropdownMenu" class="absolute top-0 z-10 hidden w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                         <div class="py-1">
-                                            @if (!empty(array_intersect($permissions, [7, 8, 14, 15, 61024]))) 
+                                            @if (!empty(array_intersect($permissions, [7, 61024]))) 
                                                 <a href="{{ route('ListLeaveRequestTable', ['type' => 'list'])  }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
-                                                <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
-                                                <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Changes</a>
-                                            @elseif (!empty(array_intersect($permissions, [9, 10, 11, 12, 13]))) 
-                                                <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                            @endif
+                                            @if (!empty(array_intersect($permissions, [9, 10, 11, 12, 13, 14, 61024]))) 
+                                                <a href="{{ route('ListHrTicketsTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                            @endif
+                                            @if (!empty(array_intersect($permissions, [15, 61024]))) 
+                                                <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Information Update</a>
                                             @endif
                                         </div>
                                     </ul>
@@ -96,10 +98,10 @@
                         </button>
                     </a>
                 @endif
-                @if (!empty(array_intersect($permissions, [7, 8, 9, 10, 61024, 11, 12, 13, 14, 15]))) 
+                @if (!empty(array_intersect($permissions, [7, 9, 10, 11, 12, 13, 14, 15, 61024]))) 
                     <!-- Approval Button -->
                     <div class="relative inline-block text-left">
-                        <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
+                        <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('ListLeaveRequestTable') || request()->routeIs('ListHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
                                 <path fill-rule="evenodd" d="M11.986 3H12a2 2 0 0 1 2 2v6a2 2 0 0 1-1.5 1.937V7A2.5 2.5 0 0 0 10 4.5H4.063A2 2 0 0 1 6 3h.014A2.25 2.25 0 0 1 8.25 1h1.5a2.25 2.25 0 0 1 2.236 2ZM10.5 4v-.75a.75.75 0 0 0-.75-.75h-1.5a.75.75 0 0 0-.75.75V4h3Z" clip-rule="evenodd" />
                                 <path fill-rule="evenodd" d="M2 7a1 1 0 0 1 1-1h7a1 1 0 0 1 1 1v7a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7Zm6.585 1.08a.75.75 0 0 1 .336 1.005l-1.75 3.5a.75.75 0 0 1-1.16.234l-1.75-1.5a.75.75 0 0 1 .977-1.139l1.02.875 1.321-2.64a.75.75 0 0 1 1.006-.336Z" clip-rule="evenodd" />
@@ -108,12 +110,14 @@
                         <!-- Approval Dropdown -->
                         <div id="approveDropdownMenu" class="absolute z-10 hidden w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="py-1">
-                                @if (!empty(array_intersect($permissions, [7, 8, 14, 15, 61024]))) 
+                                @if (!empty(array_intersect($permissions, [7, 61024]))) 
                                     <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
-                                    <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
-                                    <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Changes</a>
-                                @elseif (!empty(array_intersect($permissions, [9, 10, 11, 12, 13]))) 
-                                    <a href="{{ route('ApproveHrTicketsTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @endif
+                                @if (!empty(array_intersect($permissions, [9, 10, 11, 12, 13, 14, 61024]))) 
+                                    <a href="{{ route('ListHrTicketsTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
+                                @endif
+                                @if (!empty(array_intersect($permissions, [15, 61024]))) 
+                                    <a href="{{ route('ApproveChangeInformationTable') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Information Update</a>
                                 @endif
                             </div>
                         </div>

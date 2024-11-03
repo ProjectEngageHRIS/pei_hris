@@ -7,14 +7,25 @@
                 </svg> Home
             </a>
         </li>
+    @if($key == "list")
         <li class="flex items-center">
             <svg class="mx-1 text-gray-600 size-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="text-sm font-semibold text-gray-900 ms-1 hover:text-customRed md:ms-2 text-nowrap">Approve Leave Request</a>
+            <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="text-sm font-semibold text-gray-900 ms-1 hover:text-customRed md:ms-2 text-nowrap">Approve Leave Request (HR)</a>
         </li>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Leave Request</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Leave Request (HR) </h2>
+    @else
+        <li class="flex items-center">
+            <svg class="mx-1 text-gray-600 size-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+            <a href="{{ route('ApproveLeaveRequestTable') }}" class="text-sm font-semibold text-gray-900 ms-1 hover:text-customRed md:ms-2 text-nowrap">Approve Leave Request</a>
+        </li>
+    </nav>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Leave Request  </h2>
+    @endif 
     <div class="w-full bg-white rounded-t-lg shadow-md" >
         <div class="p-4 overflow-x-auto">
             <div class="inline-block min-w-full box-border">

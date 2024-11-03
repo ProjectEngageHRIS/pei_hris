@@ -11,10 +11,10 @@
             <svg class="mx-1 text-gray-600 size-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
             </svg>
-            <a href="{{route('ApproveChangeInformationTable')}}" class="text-sm font-semibold text-gray-900 text-wrap ms-1 hover:text-customRed md:ms-2">Approve Change Information Requests</a>
+            <a href="{{route('ApproveChangeInformationTable')}}" class="text-sm font-semibold text-gray-900 text-wrap ms-1 hover:text-customRed md:ms-2">Approve Information Update Requests</a>
         </li>
     </nav>
-    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Change Information Requests</h2>
+    <h2 class="mb-4 text-3xl font-bold leading-none tracking-tight text-gray-900 text-wrap">Approve Information Update Requests</h2>
     <div class="w-full pb-4 mt-4  bg-white rounded-t-lg shadow-md" >
         <div class="p-4 overflow-x-auto">
             <div class="inline-block min-w-full box-border">

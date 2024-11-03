@@ -54,7 +54,7 @@
                                     </div>
                                 </ul>
                             </div>
-                            @if(!empty(array_intersect($permissions, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
+                            @if(!empty(array_intersect($permissions, [2, 3, 8, 10, 11, 12, 13, 14, 61024])))
                                 <div x-data="{ approvalMobileOpen: false }"  class="relative group">
                                     <div @click="approvalMobileOpen = true" @click.away="approvalMobileOpen = false"   id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -67,28 +67,10 @@
                                     <!-- Nested Dropdown Menu -->
                                     <ul x-show="approvalMobileOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-x-2 opacity-0" x-transition:enter-end="transform translate-x-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-x-0 opacity-100" x-transition:leave-end="transform -translate-x-2 opacity-0" id="approveBDropdownMenu" class="absolute top-0 z-10 w-40 ml-1 bg-white shadow-lg rounded-8px left-full ring-1 ring-black ring-opacity-5 group-hover:block">
                                         <div class="py-1">
-                                            @if (in_array($employeeEmail, [
-                                                // 'seal.projectengage@gmail.com',
-                                                'itproject@gmail.com',
-                                                "jsodsod@projectengage.com.ph",
-                                                "sherwinmalabanan@sltemps.com",
-                                                "esalvador@projectengage.com.ph",
-                                                "kcastro@projectengage.com.ph",
-                                                "jazz@wesearch.com.ph",
-                                                "rmaubay@projectengage.com.ph",
-                                                "jmb@sltemps.com",
-                                                "spm_2009@wesearch.com.ph",
-                                                "rb@sltemps.com",
-                                                "mbaniqued@projectengage.com.ph",
-                                                "rosanne.espedido@sltemps.com",
-                                                "trishesporlas@wesearch.com.ph",
-                                                "ecapistrano@projectengage.com.ph",
-                                                "khriziemisenas@sltemps.com",
-                                                "chisilva@sltemps.com"
-                                            ]))
+                                            @if (!empty(array_intersect($permissions, [2, 3, 61024])))
                                                 <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             @endif
-                                            @if (!empty(array_intersect($permissions, [7, 8, 9, 10, 11, 12, 13, 61024])))
+                                            @if (!empty(array_intersect($permissions, [8, 10, 11, 12, 13, 14, 61024])))
                                                 <a href="{{ route('ApproveHrTicketsTable') }}"   class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
                                             @endif
                                         </div>
@@ -178,7 +160,7 @@
 
 
                 <!-- Approval Button -->
-                @if(!empty(array_intersect($permissions, [4, 6, 7, 9, 10, 11, 12, 13, 14, 15, 61024])))
+                @if(!empty(array_intersect($permissions, [2, 3, 8, 10, 11, 12, 13, 14, 61024])))
                     <div  x-data="{ approvalPcOpen: false }" @mouseover="approvalPcOpen = true" @mouseleave="approvalPcOpen = false" class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px h-114
                             {{ request()->routeIs('ApproveLeaveRequestTable') || request()->routeIs('ApproveHrTicketsTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -190,28 +172,10 @@
                         <!-- Approval Dropdown -->
                         <div x-cloak  x-show="approvalPcOpen" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="transform -translate-y-2 opacity-0" x-transition:enter-end="transform translate-y-0 opacity-100" x-transition:leave="transition ease-in duration-300" x-transition:leave-start="transform translate-y-0 opacity-100" x-transition:leave-end="transform -translate-y-2 opacity-0" id="approveDropdownMenu" class="absolute z-10 w-40 mt-2 origin-top-right bg-white rounded-md shadow-lg center-0 ring-1 ring-black ring-opacity-5 focus:outline-none">
                             <div class="py-1">
-                                @if (in_array($employeeEmail, [
-                                    // 'seal.projectengage@gmail.com',
-                                    'itproject@gmail.com',
-                                    "jsodsod@projectengage.com.ph",
-                                    "sherwinmalabanan@sltemps.com",
-                                    "esalvador@projectengage.com.ph",
-                                    "kcastro@projectengage.com.ph",
-                                    "jazz@wesearch.com.ph",
-                                    "rmaubay@projectengage.com.ph",
-                                    "jmb@sltemps.com",
-                                    "spm_2009@wesearch.com.ph",
-                                    "rb@sltemps.com",
-                                    "mbaniqued@projectengage.com.ph",
-                                    "rosanne.espedido@sltemps.com",
-                                    "trishesporlas@wesearch.com.ph",
-                                    "ecapistrano@projectengage.com.ph",
-                                    "khriziemisenas@sltemps.com",
-                                    "chisilva@sltemps.com"
-                                ]))
+                                @if (!empty(array_intersect($permissions, [2, 3, 61024])))
                                     <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
-                                @if (!empty(array_intersect($permissions, [7, 8, 9, 10, 11, 12, 13, 61024])))
+                                @if (!empty(array_intersect($permissions, [ 8, 10, 11, 12, 13, 14, 61024])))
                                     <a href="{{ route('ApproveHrTicketsTable') }}"  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                             </div>

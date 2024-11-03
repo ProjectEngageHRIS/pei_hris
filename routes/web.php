@@ -220,11 +220,6 @@ Route::get('/verify', TwoFactor::class)->name('MFAVerify')->middleware(['custom.
 
 
 
-
-
-
-
-
 Route::middleware(['auth' , '2fa'])->group(function () {
 
     Route::get("/leaverequest/requests/{type?}", LeaveRequestTable::class)->name('LeaveRequestTable');
@@ -278,6 +273,8 @@ Route::middleware(['auth' , '2fa'])->group(function (){
     Route::get("/hrtickets/view/{index}", HrTicketsView::class)->name('HrTicketsView');
 
     Route::get("/hrtickets/approverequests", ApproveHrTicketsTable::class)->name('ApproveHrTicketsTable');
+    
+    Route::get("/hrtickets/approverequests/{type?}", ApproveHrTicketsTable::class)->name('ListHrTicketsTable');
 
     Route::get("/hrtickets/approverequests/approve/{index}", ApproveHrTicketsForm::class)->name('ApproveHrTicketsForm');
 
