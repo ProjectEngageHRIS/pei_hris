@@ -87,7 +87,7 @@ class EditEmployee extends Component
     public $religion;
     public $birth_place;
     public $address;
-    public $role_id;
+    public $permission;
     public $birth_date;
     public $employee_id;
     public $civil_status;
@@ -113,9 +113,9 @@ class EditEmployee extends Component
 
         if ($employeeRecord) {
             $loggedInUser = auth()->user();
-            $role_ids = json_decode($loggedInUser->role_id, true); // Decode if it's stored as a JSON string
+            $permissions = json_decode($loggedInUser->permissions, true); // Decode if it's stored as a JSON string
 
-            if (empty(array_intersect($role_ids, [6, 7, 61024]))) {
+            if (empty(array_intersect($permissions, [6, 7, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             // Assign each property from the employeeRecord
@@ -130,7 +130,7 @@ class EditEmployee extends Component
             }
 
             $this->emergency_contact = $employeeRecord->emergency_contact;
-            // $this->role_id = $employeeRecord->role_id;
+            // $this->permission = $employeeRecord->permission;
 
             $this->employee_id = $employeeRecord->employee_id;
             $this->original_employee_id = $employeeRecord->employee_id;
@@ -195,8 +195,8 @@ class EditEmployee extends Component
         $existing_user = User::where('employee_id', $this->old_employee_id)->first();
 
         if ($existing_user) {
-            // Set the role_id and other properties to the existing user values
-            $this->role_id = json_decode($existing_user->role_id, true);
+            // Set the permission and other properties to the existing user values
+            $this->permission = json_decode($existing_user->permissions, true);
             $this->employee_email = $existing_user->email;
         }
     }
@@ -297,7 +297,7 @@ class EditEmployee extends Component
 
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
-        'role_id' => ['required'],
+        'permission' => ['required'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
@@ -324,7 +324,7 @@ class EditEmployee extends Component
         'employeeHistory.*.start_date' => 'Start Date',
         'emp_image' => 'Employee Image',
         'age' => 'Age',
-        'role_id' => 'Roles',
+        'permission' => 'Roles',
         'department' => 'Company Name',
         'inside_department' => 'Department Name',
         'employee_type' => 'Employee Type',
@@ -380,9 +380,9 @@ class EditEmployee extends Component
         }
 
         $loggedInUser = auth()->user();
-        $role_ids = json_decode($loggedInUser->role_id, true); // Decode if it's stored as a JSON string
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode if it's stored as a JSON string
         
-        if (empty(array_intersect($role_ids, [6, 7, 61024]))) {
+        if (empty(array_intersect($permissions, [6, 7, 61024]))) {
             throw new \Exception('Unauthorized Access');
         }
 
@@ -514,14 +514,14 @@ class EditEmployee extends Component
         if ($existing_user) {
             $existing_user->email = $this->employee_email; // Update email
             $existing_user->employee_id = $this->employee_id; // Update employee_id
-            $roles = json_encode($this->role_id, true); // Convert roles to JSON
-            $existing_user->role_id = $roles; // Update roles
+            $roles = json_encode($this->permission, true); // Convert roles to JSON
+            $existing_user->permissions = $roles; // Update roles
         
             // Use the update method to save changes
             $existing_user->save([
                 'email' => $this->employee_email,
                 'employee_id' => $this->employee_id,
-                'role_id' => $roles,
+                'permissions' => $roles,
             ]);
         }
 

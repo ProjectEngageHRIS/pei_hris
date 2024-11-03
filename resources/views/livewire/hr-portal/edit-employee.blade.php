@@ -758,8 +758,8 @@
 
                                             </div>
                                             <div wire:ignore class="w-full">
-                                                <label for="role_id" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Roles <span class="text-red-600">*</span></label>
-                                                <select name="role_id[]" id="role_id" wire:model="role_id" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
+                                                <label for="permission" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Roles <span class="text-red-600">*</span></label>
+                                                <select name="permission[]" id="permission" wire:model="permission" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
                                                     <option disabled>Select Roles</option>
                                                     <option value="1">Employee</option>
                                                     <option value="2">Supervisor</option>
@@ -778,8 +778,8 @@
                                                     <option value="15">IT Lead</option>
                                                     <option value="16">IT Support</option>
                                                 </select>
-                                                @error('role_id')
-                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('role_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('role_id').focus();">
+                                                @error('permission')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('permission').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('permission').focus();">
                                                         <span class="text-xs text-red-500">{{$message}}</span>
                                                     </div>
                                                 @enderror
@@ -797,7 +797,7 @@
                                                     }).on('change', function() {
                                                         let data = $(this).val();
                                                         console.log(data);
-                                                        @this.role_id = data;  // Bind selected roles to Livewire model
+                                                        @this.permission = data;  // Bind selected roles to Livewire model
                                                     });
                                                     
                                                     $('.select2-container--default .select2-selection--multiple').addClass('bg-gray-300 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-red-500 focus:border-red-500 p-2.5');

@@ -90,7 +90,7 @@ class CreateEmployee extends Component
     public $religion;
     public $birth_place;
     public $address;
-    public $role_id;
+    public $permission;
     public $height;
     public $birth_date;
     public $employee_id;
@@ -199,7 +199,7 @@ class CreateEmployee extends Component
         'college_date_graduated' => 'required|date',
         'start_of_employment' => 'required|date',
         'current_position' => 'required|min:3|max:500',
-        'role_id' => ['required'],
+        'permission' => ['required'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBISIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
@@ -235,7 +235,7 @@ class CreateEmployee extends Component
         'employeeHistory.*.start_date' => 'Start Date',
         'emp_image' => 'Employee Image',
         'age' => 'Age',
-        'role_id' => 'Roles',
+        'permission' => 'Roles',
         'department' => 'Company Name',
         'inside_department' => 'Department Name',
         'employee_type' => 'Employee Type',
@@ -436,8 +436,8 @@ class CreateEmployee extends Component
                     $new_user->employee_id = $this->employee_id; // Save employee_id
                     // Set additional fields as needed, such as name, password, role, etc.
                     $new_user->password = Hash::make($this->password); // Set a default password or prompt to change it later
-                    $roles = json_encode($this->role_id, true);
-                    $new_user->role_id = $roles;
+                    $roles = json_encode($this->permission, true);
+                    $new_user->permissions = $roles;
                     $new_user->save();
     
                 }
