@@ -117,6 +117,7 @@ class ApproveLeaverequestTable extends Component
     public function render()
     {
         $loggedInUser = auth()->user();
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
 
         $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
 
@@ -124,7 +125,9 @@ class ApproveLeaverequestTable extends Component
         $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
         if($this->key == "list"){
-            // 
+            if (!in_array(7, $permissions)) {
+                return redirect()->to(route('HumanResourceDashboard'));
+            }
         } else{
             // Apply conditions based on the logged-in email
             if ($loggedInEmail === "spm_2009@wesearch.com.ph") {

@@ -125,25 +125,30 @@ class ApproveHrTicketsTable extends Component
         $query = Hrticket::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
         // Check for specific roles using array_intersect
-        if (!empty(array_intersect($permissions, [11, 12, 13]))) {
-            $query->where('type_of_ticket', 'HR Internal');
-            
-            if (in_array(11, $permissions)) {
-                $query->where('type_of_request', 'HR');
-            } elseif (in_array(12, $permissions)) {
-                $query->where('type_of_request', 'Office Admin');
-            } elseif (in_array(13, $permissions)) {
-                $query->where('type_of_ticket', 'Procurement');
+        if($this->key == "list"){
+            if (!in_array(9, $permissions)) {
+                return redirect()->to(route('HumanResourceDashboard'));
             }
-        } elseif (in_array(9, $permissions)) {
-            $query->where('type_of_ticket', 'Internal Control');
-        } elseif (in_array(10, $permissions)) {
-            $query->where('type_of_ticket', 'HR Operations');
-        } elseif (!empty(array_intersect($permissions, [61024]))) {
-            $this->permissions = true; 
         } else {
-            return redirect()->to(route('HumanResourceDashboard'));
-        }        
+            if (!empty(array_intersect($permissions, [11, 12, 13]))) {
+                $query->where('type_of_ticket', 'HR Internal');
+                if (in_array(11, $permissions)) {
+                    $query->where('type_of_request', 'HR');
+                } elseif (in_array(12, $permissions)) {
+                    $query->where('type_of_request', 'Office Admin');
+                } elseif (in_array(13, $permissions)) {
+                    $query->where('type_of_ticket', 'Procurement');
+                }
+            } elseif (in_array(9, $permissions)) {
+                $query->where('type_of_ticket', 'Internal Control');
+            } elseif (in_array(10, $permissions)) {
+                $query->where('type_of_ticket', 'HR Operations');
+            } elseif (!empty(array_intersect($permissions, [61024]))) {
+                $this->permissions = true; 
+            } else {
+                return redirect()->to(route('HumanResourceDashboard'));
+            }   
+        }
 
         switch ($this->date_filter) {
             case '1': // Today
