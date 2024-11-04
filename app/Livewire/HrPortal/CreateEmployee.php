@@ -340,7 +340,7 @@ class CreateEmployee extends Component
 
         $loggedInUser = auth()->user();
 
-        try {
+        // try {
             DB::transaction(function () {
                 // Generate a new Employee ID only if it is not set
                 if (is_null($this->employee_id) || empty($this->employee_id)) {
@@ -557,12 +557,11 @@ class CreateEmployee extends Component
     
             return $this->dispatch('trigger-reroute');
 
-
-        } catch (\Exception $e) {
-            // Log the exception for further investigation
-            Log::channel('employee_info')->error('Failed to Create Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
-            $this->dispatch('trigger-error');
-        }
+        // } catch (\Exception $e) {
+        //     // Log the exception for further investigation
+        //     Log::channel('employee_info')->error('Failed to Create Employee: ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
+        //     $this->dispatch('trigger-error');
+        // }
 
     }
 
