@@ -286,29 +286,31 @@ class ApproveHrTicketsForm extends Component
 
     public function changeStatus(){
         $loggedInUser = auth()->user();
+        $permissions = json_decode($loggedInUser->permissions, true);
+
         try {
             $form = Hrticket::where('form_id', $this->form_id)->first();
             if($form){
                 if($form->type_of_ticket == "HR Internal"){
                     if($form->type_of_request == "HR"){
-                        if(!in_array($loggedInUser->role_id, [6, 7, 11, 61024])){
+                        if(!in_array($loggedInUser->role_id, [12, 9, 61024])){
                             throw new \Exception('Unauthorized Access');
                         }
                     } else if($form->type_of_request == "Office Admin"){
-                        if(!in_array($loggedInUser->role_id, [6, 7, 12, 61024])){
+                        if(!in_array($loggedInUser->role_id, [13, 9, 61024])){
                             throw new \Exception('Unauthorized Access');
                         }
                     } else if($form->type_of_request == "Procurement"){
-                        if(!in_array($loggedInUser->role_id, [6, 7, 13, 61024])){
+                        if(!in_array($loggedInUser->role_id, [14, 9, 61024])){
                             throw new \Exception('Unauthorized Access');
                         }
                     }
                 } else if($form->type_of_ticket == "Internal Control"){
-                    if(!in_array($loggedInUser->role_id, [6, 7, 9, 61024])){
+                    if(!in_array($loggedInUser->role_id, [10, 9, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($form->type_of_ticket == "HR Operations"){
-                    if(!in_array($loggedInUser->role_id, [6, 7, 10, 61024])){
+                    if(!in_array($loggedInUser->role_id, [11, 9, 61024])){
                         throw new \Exception('Unauthorized Access');
                     }
                 } else {
@@ -348,7 +350,7 @@ class ApproveHrTicketsForm extends Component
         $permissions = json_decode($loggedInUser->permissions, true);
 
         try {
-            if (empty(array_intersect($permissions, [10, 11, 12, 13, 14, 61024]))) {
+            if (empty(array_intersect($permissions, [9, 10, 11, 12, 13, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             
@@ -363,7 +365,7 @@ class ApproveHrTicketsForm extends Component
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Office Admin"){
-                    if (empty(array_intersect($permissions, [13, 9, 61024]))) {
+                    if (empty(array_intersect($permissions, [12, 9, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Procurement"){

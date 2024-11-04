@@ -22,7 +22,7 @@ class LoginDashboard extends Component
         $permissions = json_decode($user, true);
     
         // Check for HR roles
-        if (!empty(array_intersect($permissions, [4, 5, 6, 7, 9, 10, 11, 12, 13, 14,]))) {
+        if (!empty(array_intersect($permissions, [4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15]))) {
             $this->is_hr = true;
             // return redirect()->to(route('HumanResourceDashboard'));
         }

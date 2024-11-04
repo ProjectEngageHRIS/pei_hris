@@ -378,15 +378,13 @@ class ApproveHrTicketsTable extends Component
         return $name->first_name . ' ' . $name->middle_name . ' ' . $name->last_name;
     }
 
-    
-
     public function changeStatus(){
         $loggedInUser = auth()->user();
         $permissions = json_decode($loggedInUser->permissions, true);
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if (in_array(61024, $permissions) || in_array($loggedInUser->permissions, [9, 10, 11, 12, 13, 61024])) {
+                if (in_array(61024, $permissions) || in_array($loggedInUser->permissions, [9, 10, 11, 12, 13, 14, 61024])) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];

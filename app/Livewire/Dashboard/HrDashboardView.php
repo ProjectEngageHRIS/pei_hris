@@ -194,7 +194,7 @@ class HrDashboardView extends Component
         $permissions = json_decode($loggedInUser, true);
 
         try {
-            if (empty(array_intersect($permissions, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 61024]))) {
+            if (empty(array_intersect($permissions, [4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             } 
 
@@ -638,21 +638,6 @@ if (isset($add_employee->employee_email)) {
     {
         $loggedInUser = auth()->user()->permissions;
         $permissions = json_decode($loggedInUser, true);
-
-        try {
-            if (empty(array_intersect($permissions, [4, 5, 6, 7, 9, 10, 11, 12, 13, 14, 61024]))) {
-                throw new \Exception('Unauthorized Access');
-            } 
-
-            // Check if the user is logged in based on their role using array_intersect
-            if (!empty(array_intersect($permissions, [4, 61024]))) {
-                $this->loggedInUser = true;
-            }
-        } catch (\Exception $e) {
-            // Log the exception for further investigation
-            Log::channel('hrdashboard')->error('Failed to View HR Dashboard Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
-            return redirect()->to(route('EmployeeDashboard'));
-        }
 
         $query = Employee::query();
 
