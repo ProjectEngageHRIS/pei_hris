@@ -351,7 +351,7 @@ class ApproveHrTicketsForm extends Component
             if (empty(array_intersect($permissions, [10, 11, 12, 13, 14, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
-
+            
             $hr_ticket = Hrticket::where('uuid', $index)->first();
             if (!$hr_ticket) {
                 throw new \Exception('No Record Found');
@@ -359,24 +359,24 @@ class ApproveHrTicketsForm extends Component
             
             if($hr_ticket->type_of_ticket == "HR Internal"){
                 if($hr_ticket->type_of_request == "HR"){
-                    if (empty(array_intersect($permissions, [12, 61024]))) {
+                    if (empty(array_intersect($permissions, [12, 9, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Office Admin"){
-                    if (empty(array_intersect($permissions, [13, 61024]))) {
+                    if (empty(array_intersect($permissions, [13, 9, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 } else if($hr_ticket->type_of_request == "Procurement"){
-                    if (empty(array_intersect($permissions, [14, 61024]))) {
+                    if (empty(array_intersect($permissions, [14, 9, 61024]))) {
                         throw new \Exception('Unauthorized Access');
                     }
                 }
             } else if($hr_ticket->type_of_ticket == "Internal Control"){
-                if (empty(array_intersect($permissions, [10, 61024]))) {
+                if (empty(array_intersect($permissions, [10, 9, 61024]))) {
                     throw new \Exception('Unauthorized Access');
                 }
             } else if($hr_ticket->type_of_ticket == "HR Operations"){
-                if (empty(array_intersect($permissions, [11, 61024]))) {
+                if (empty(array_intersect($permissions, [11, 9, 61024]))) {
                     throw new \Exception('Unauthorized Access');
                 }
             } else {

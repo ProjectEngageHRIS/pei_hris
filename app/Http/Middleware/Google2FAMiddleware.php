@@ -23,11 +23,6 @@ class Google2FAMiddleware
      */
     public function handle($request, Closure $next)
     {
-
-        if ($request->header('X-Livewire')) {
-            return $next($request);
-        }
-
         $user = auth()->user();
         $permissions = json_decode($user->permissions, true); // Decode JSON into an array
         if(in_array(61024, $permissions)){
@@ -70,6 +65,7 @@ class Google2FAMiddleware
                 return redirect()->route('home');
             }
         }
+        
         return $next($request);
     }
 }

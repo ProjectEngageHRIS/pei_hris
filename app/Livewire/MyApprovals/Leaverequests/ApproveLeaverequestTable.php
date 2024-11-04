@@ -100,12 +100,18 @@ class ApproveLeaverequestTable extends Component
         $loggedInUser = auth()->user()->permissions;
         $permissions = json_decode($loggedInUser, true); // Decode JSON into an array
         try {
-            if (empty(array_intersect($permissions, [2, 3, 7, 61024]))) {
-                throw new \Exception('Unauthorized Access');
+            if($this->key == "list"){
+                if (!in_array(7, $permissions)) {
+                    throw new \Exception('Unauthorized Access');
+                }
+            } else{
+                if (empty(array_intersect($permissions, [2, 3, 7, 61024]))) {
+                    throw new \Exception('Unauthorized Access');
+                }
             }
         } catch (\Exception $e) {
             // Log the exception for further investigation
-            Log::channel('hrticket')->error('Failed to view Approve Leave Request Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
+            Log::channel('leaverequests')->error('Failed to view Approve Leave Request Table: ' . $e->getMessage() . ' | ' . $loggedInUser );
             return redirect()->to(route('EmployeeDashboard'));
         }
     }
@@ -125,9 +131,7 @@ class ApproveLeaverequestTable extends Component
         $query = Leaverequest::with('employee:employee_id,first_name,middle_name,last_name,employee_type,inside_department,department,gender');
         
         if($this->key == "list"){
-            if (!in_array(7, $permissions)) {
-                return redirect()->to(route('HumanResourceDashboard'));
-            }
+            // 
         } else{
             // Apply conditions based on the logged-in email
             if ($loggedInEmail === "spm_2009@wesearch.com.ph") {

@@ -96,20 +96,27 @@ class ApproveHrTicketsTable extends Component
     public function mount($type = null){
         $this->key = $type;
 
+        $loggedInUser = auth()->user();
+        $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
 
-        // $loggedInUser = auth()->user();
+        try {
+            if($this->key == "list"){
+                if (empty(array_intersect($permissions, [9, 61024]))) {
+                    return redirect()->to(route('HumanResourceDashboard'));
+                }
+            } else {
+                if (empty(array_intersect($permissions, [8, 10, 11, 12, 13, 61024]))) {
+                    return redirect()->to(route('HumanResourceDashboard'));
+                }
+            }
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrticket')->error('Failed to View HR Tickets Table (HR Dashboard): ' . $e->getMessage() . ' | ' . $loggedInUser->employee_id);
 
-        // if($loggedInUser->permissions != 9){
-        //     return redirect()->to(route('home'));
-        //     abort(404);
-        // }
-
-
-        // $employeeInformation = Employee::where('status', $loggedInUser)
-        //                         ->select('department_id', 'sick_credits', 'vacation_credits')->first();
-
-        // $this->vacationCredits = $employeeInformation->vacation_credits;
-        // $this->sickCredits = $employeeInformation->sick_credits;
+            // Log::channel('hrticket')->error('Failed to update Hrticket: ' . $e->getMessage());
+            // Dispatch a failure event with an error message
+            $this->dispatch('triggerError');
+        }
     }
 
     public function clearAllFilters(){
@@ -126,9 +133,7 @@ class ApproveHrTicketsTable extends Component
         
         // Check for specific roles using array_intersect
         if($this->key == "list"){
-            if (!in_array(9, $permissions)) {
-                return redirect()->to(route('HumanResourceDashboard'));
-            }
+            //    
         } else {
             if (!empty(array_intersect($permissions, [11, 12, 13]))) {
                 $query->where('type_of_ticket', 'HR Internal');
@@ -145,9 +150,7 @@ class ApproveHrTicketsTable extends Component
                 $query->where('type_of_ticket', 'HR Operations');
             } elseif (!empty(array_intersect($permissions, [61024]))) {
                 $this->permissions = true; 
-            } else {
-                return redirect()->to(route('HumanResourceDashboard'));
-            }   
+            } 
         }
 
         switch ($this->date_filter) {
@@ -321,12 +324,15 @@ class ApproveHrTicketsTable extends Component
             $results = $query->orderBy('created_at', 'desc');
         }
 
+        
+        $results = $results->paginate(5);
 
-        if($this->statusFilterName == "Cancelled"){
-            $results = $results->paginate(5);
-        } else {
-            $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
-        }
+
+        // if($this->statusFilterName == "Cancelled"){
+        //      $results = $results->paginate(5);
+        // } else {
+        //     $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
+        // }
 
         if($this->key != "list"){
             return view('livewire.my-approvals.hr-tickets.approve-hr-tickets-table', [
