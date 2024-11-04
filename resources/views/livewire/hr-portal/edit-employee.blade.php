@@ -633,7 +633,7 @@
                                                             class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
                                                         <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            ntd="" disabled>
+                                                            ntd="">
                                                             @error('vocational_school')
                                                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_school').focus();" >
                                                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -645,7 +645,7 @@
                                                             class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course </label>
                                                         <input type="text" name="vocational_course" id="vocational_course" wire:model="vocational_course"
                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            ntd=""disabled >
+                                                            ntd="">
                                                             @error('vocational_course')
                                                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_course').focus();" >
                                                                     <span class="text-xs text-red-500">{{$message}}</span>
@@ -657,7 +657,7 @@
                                                             class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
                                                         <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            ntd="" disabled>
+                                                            ntd="">
                                                             @error('vocational_date_graduated')
                                                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_date_graduated').focus();" >
                                                                     <span class="text-xs text-red-500">{{$message}}</span>

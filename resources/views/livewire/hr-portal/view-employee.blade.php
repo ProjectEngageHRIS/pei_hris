@@ -601,8 +601,7 @@
                                         </div>
                                         <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                             <p class="font-bold text-base text-customRed pb-4"> Vocational School</p>
-                                        @if ($vocational_school && $vocational_course && $vocational_date_graduated)
-
+                                            @if ($vocational_school && $vocational_course && $vocational_date_graduated)
                                                 <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                                     <div class="w-full ">
                                                         <label for="vocational_school"
@@ -641,12 +640,12 @@
                                                             @enderror
                                                     </div>
                                                 </div>
-                                        @else
-                                            <div class="text-gray-500 text-sm text-center mt-4">
-                                                No Vocational School Details have been added yet.
-                                            </div>
-                                        @endif
-                                    </div>
+                                            @else
+                                                <div class="text-gray-500 text-sm text-center mt-4">
+                                                    No Vocational School Details have been added yet.
+                                                </div>
+                                            @endif
+                                        </div>
                                 </div>
                             </div>
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
