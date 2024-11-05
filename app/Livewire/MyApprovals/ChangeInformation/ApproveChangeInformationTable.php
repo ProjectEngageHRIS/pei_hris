@@ -404,9 +404,7 @@ class ApproveChangeInformationTable extends Component
                                     ->update($updateData);
             }
 
-
-            
-            $changeInformationStatus->update(['Status' => $this->status,
+            $changeInformationStatus->update(['status' => $this->status,
                                               'updated_at' => now() ]);
     
             if ($employee && $employee->employee_email) {

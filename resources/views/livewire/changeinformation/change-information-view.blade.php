@@ -225,67 +225,71 @@
                             $ctr = 0
                         @endphp
                         @if ($employeeHistory)
-                        @foreach ($employeeHistory as $index => $history)
-                        <div class="bg-white rounded-lg ">
-                            <ul class="text-sm font-medium text-left text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
-                                <li class="p-4 font-bold text-gray-500 float-bold">
-                                    <span>No. {{$index + 1 }} </span>
-                                </li>
-                            </ul>
-                            <div class="border border-gray=200 border-solid p-6 ">
-                                    <div  id="employeeHistory_{{$index}}_name_of_company_container">
-                                        <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Company Name
-                                            </label>
-                                        <input disabled type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.name_of_company')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                    <div class="mt-5 ">
-                                        <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">
-                                            Position </label>
-                                        <input disabled type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.prev_position')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
+                            @foreach ($employeeHistory as $index => $history)
+                                    <div class="bg-white rounded-lg ">
+                                        <ul class="text-sm font-medium text-left text-gray-500 border border-gray-300 rounded-t-lg bg-gray-50 " id="defaultTab" data-tabs-toggle="#defaultTabContent" role="tablist">
+                                            <li class="p-4 font-bold text-gray-500 float-bold">
+                                                <span>No. {{$index + 1 }} </span>
+                                            </li>
+                                        </ul>
+                                        <div class="border border-gray=200 border-solid p-6 ">
+                                                <div  id="employeeHistory_{{$index}}_name_of_company_container">
+                                                    <label for="employeeHistory_{{$index}}_name_of_company" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">Company Name
+                                                        </label>
+                                                    <input disabled type="text" rows="4" id="employeeHistory_{{$index}}_name_of_company" name="employeeHistory_{{$index}}_name_of_company" wire:model.blur="employeeHistory.{{$index}}.name_of_company" placeholder="Enter Company Name" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                                    @error('employeeHistory.' . $index . '.name_of_company')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                                x-data x-init="document.getElementById('employeeHistory_{{$index}}_name_of_company').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_name_of_company').focus();">
+                                                            <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="mt-5 ">
+                                                    <label for="employeeHistory_{{$index}}_position" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">
+                                                        Position </label>
+                                                    <input disabled type="text" rows="4" id="employeeHistory_{{$index}}_prev_position" name="employeeHistory_{{$index}}_position" wire:model.blur="employeeHistory.{{$index}}.prev_position" placeholder="Enter Position" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                                    @error('employeeHistory.' . $index . '.prev_position')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                                x-data x-init="document.getElementById('employeeHistory_{{$index}}_prev_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_prev_position').focus();">
+                                                            <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
 
-                                <div class="grid grid-cols-2 gap-4">
-                                    <div class="mt-5">
-                                        <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">
-                                            Start Date </label>
-                                        <input disabled type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.start_date')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
+                                            <div class="grid grid-cols-2 gap-4">
+                                                <div class="mt-5">
+                                                    <label for="employeeHistory_{{$index}}_start_date" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">
+                                                        Start Date </label>
+                                                    <input disabled type="date" rows="4" id="employeeHistory_{{$index}}_start_date" name="employeeHistory_{{$index}}_start_date" wire:model.blur="employeeHistory.{{$index}}.start_date" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                                    @error('employeeHistory.' . $index . '.start_date')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                                x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_start_date').focus();">
+                                                            <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
+                                                    <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">
+                                                        End Date </label>
+                                                    <input disabled type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
+                                                    @error('employeeHistory.' . $index . '.end_date')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                                x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
+                                                            <span class="text-xs text-red-500 "> {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
                                             </div>
-                                        @enderror
+                                        </div>
                                     </div>
-                                    <div class="mt-5" id="employeeHistory_{{$index}}_end_date_container">
-                                        <label for="employeeHistory_{{$index}}_end_date" class="block mb-2 text-sm font-medium text-gray-500 whitespace-nowrap ">
-                                            End Date </label>
-                                        <input disabled type="date" rows="4" id="employeeHistory_{{$index}}_end_date" name="employeeHistory_{{$index}}_end_date" wire:model.blur="employeeHistory.{{$index}}.end_date" class="block p-2.5 w-full text-sm text-gray-500 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required></input>
-                                        @error('employeeHistory.' . $index . '.end_date')
-                                            <div class="text-sm transition transform alert alert-danger"
-                                                    x-data x-init="document.getElementById('employeeHistory_{{$index}}_end_date').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employeeHistory_{{$index}}_end_date').focus();">
-                                                <span class="text-xs text-red-500 "> {{$message}}</span>
-                                            </div>
-                                        @enderror
-                                    </div>
-                                </div>
+                                @php
+                                    $ctr += 1;
+                                @endphp
+                            @endforeach
+                        @else
+                            <div class="text-gray-500 text-sm text-center mt-4">
+                                No Employe History have been added.
                             </div>
-                        </div>
-                    @php
-                        $ctr += 1;
-                    @endphp
-                    @endforeach
                         @endif
                         <script>
                             document.addEventListener('livewire:init', () => {
@@ -337,7 +341,7 @@
 
         </div>
         <br>
-        @if (!in_array($status, ['Cancelled', 'Approved']))
+        @if (!in_array($status, ['Cancelled', 'Approved', 'Declined']))
         <div class="mt-4" x-cloak x-data="{ openCancelModal: false }">
             <div class="flex flex-row-reverse">
                 <button id="cancel_button"  

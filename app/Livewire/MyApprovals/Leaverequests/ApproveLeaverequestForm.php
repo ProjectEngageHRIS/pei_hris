@@ -81,13 +81,14 @@ class ApproveLeaverequestForm extends Component
 
     public $logout_time;
 
-    public function mount($type, $index){
+    public function mount($index, $type = null){
         $this->key = $type;
+
         $loggedInUser = auth()->user();
         try {
             $leaverequest = $this->editLeaveRequest($index);
             if (is_null($leaverequest)) {
-                return redirect()->to(route('ApproveLeaveRequestTable'));
+                return redirect()->to(route('EmployeeDashboard'));
             }
         } catch (AuthorizationException $e) {
             abort(404);
@@ -149,23 +150,26 @@ class ApproveLeaverequestForm extends Component
         $permissions = json_decode($loggedInUser->permissions, true); // Decode JSON into an array
         
         try {
-            if (empty(array_intersect($permissions, [4, 6, 7, 8, 14, 61024]))) {
+            if (empty(array_intersect($permissions, [2, 3, 7, 61024]))) {
                 throw new \Exception('Unauthorized Access');
             }
             $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
-            if($this->key != 'list'){
-                $leaverequest = Leaverequest::where('uuid', $index)->where('supervisor_email', $loggedInEmail)->first();
-            } else {
+
+            if($this->key == "edit"){
                 $leaverequest = Leaverequest::where('uuid', $index)->first();
+            } else {
+                $leaverequest = Leaverequest::where('uuid', $index)->where('supervisor_email', $loggedInEmail)->first();
             }
+
             if (!$leaverequest) {
                 throw new \Exception('No Record Found');
             }
-            if($this->key != "list"){
+            if($this->key != "edit"){
                 if ($leaverequest->supervisor_email != $loggedInEmail) {
                     throw new \Exception('Unauthorized Access');
                 }
             }
+
             return $leaverequest;
         } catch (\Exception $e) {
             // Log the exception for further investigation
@@ -196,7 +200,7 @@ class ApproveLeaverequestForm extends Component
 
                 if($this->status == "Completed" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
-                        if (!empty(array_intersect($permissions, [2, 3, 7, 61024]))){
+                        if (!empty(array_intersect($permissions, [7, 61024]))){
                             if ($this->person == "President"){
                                 if($this->status == "Approved"){
                                     $leaverequestdata->approved_by_president = 1;
@@ -286,7 +290,7 @@ class ApproveLeaverequestForm extends Component
                             }
                         }
                 
-                        if (!in_array($leaverequestdata->mode_of_application, ['Advice Slip', 'Credit Leave'])) {
+                        if (!in_array($leaverequestdata->mode_of_application, ['Advise Slip', 'Credit Leave'])) {
                             $startDate = Carbon::parse($leaverequestdata->inclusive_start_date);
                             $endDate = Carbon::parse($leaverequestdata->inclusive_end_date);
                             $leaveDayOption = $leaverequestdata->full_or_half;
@@ -362,7 +366,8 @@ class ApproveLeaverequestForm extends Component
     public function render()
     {
         $loggedInUser = auth()->user()->permissions;
-        $permissions = json_decode($loggedInUser, true); // Decode JSON into an array
+        $permissions = json_decode($loggedInUser, true); 
+
         if (empty(array_intersect($permissions, [2, 3, 7, 61024]))) {
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-form');
         } else {

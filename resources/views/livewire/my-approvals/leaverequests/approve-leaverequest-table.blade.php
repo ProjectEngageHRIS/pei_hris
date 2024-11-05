@@ -708,11 +708,22 @@
                                             @endif
                                         </td>
                                         <td class="items-center py-4 text-center">
-                                            <div class="flex items-center justify-center space-x-2">
+                                            <div  class="flex items-center justify-center space-x-2">
                                                 <!-- View Button -->
-                                                <a onclick="location.href='{{ route('ApproveListLeaveRequestForm', ['type' => 'edit', 'index' => $leaverequest->uuid]) }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600">
+                                                @if ($this->key == "list")
+                                                @php
+                                                        $url = route('ApproveListLeaveRequestForm', ['index' => $leaverequest->uuid, 'type' => 'edit']);
+                                                    @endphp
+                                                @else
+                                                    @php
+                                                        $url = route('ApproveLeaveRequestForm', ['index' => $leaverequest->uuid]);
+                                                    @endphp
+                                                @endif
+                                                
+                                                <a onclick="location.href='{{ $url }}'" class="inline-flex items-center px-4 py-2 text-sm font-medium text-yellow-400 cursor-pointer hover:text-yellow-600">
                                                     Edit
                                                 </a>
+                                            
                                                 <!-- Change Status Button -->
                                                 @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Completed")
                                                 <button @click="openButtonCrudModal('{{$leaverequest->form_id}}', '{{$leaverequest->status}}')"

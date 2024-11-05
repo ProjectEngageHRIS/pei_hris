@@ -101,7 +101,7 @@ class ApproveLeaverequestTable extends Component
         $permissions = json_decode($loggedInUser, true); // Decode JSON into an array
         try {
             if($this->key == "list"){
-                if (!in_array(7, $permissions)) {
+                if (empty(array_intersect($permissions, [7, 61024]))) {
                     throw new \Exception('Unauthorized Access');
                 }
             } else{
@@ -280,11 +280,6 @@ class ApproveLeaverequestTable extends Component
             });
         }
 
-        // if(strlen($this->search) >= 1){
-        //     $results = $query->where('application_date', 'like', '%' . $this->search . '%')->orderBy('application_date', 'desc')->where('status', '!=', 'Deleted')->paginate(5);
-        // } else {
-        //     $results = $query->where('status', '!=', 'Deleted')->orderBy('application_date', 'desc')->paginate(5);
-        // }
 
         if (strlen($this->search) >= 1) {
             // Remove commas from the search input
@@ -328,13 +323,7 @@ class ApproveLeaverequestTable extends Component
             // If no search term, return all records
             $results = $query->orderBy('created_at', 'desc');
         }
-        
-
-        if($this->statusFilterName == "Cancelled"){
-            $results = $results->paginate(5);
-        } else {
-            $results = $results->where('status', '!=', 'Cancelled')->paginate(5);
-        }
+        $results = $results->paginate(5);
         
         if($this->key != "list"){
             return view('livewire.my-approvals.leaverequests.approve-leaverequest-table', [
@@ -378,7 +367,7 @@ class ApproveLeaverequestTable extends Component
 
                 if($this->status == "Pending" || $this->status == "Approved" || $this->status == "Declined"){
                     if($this->key == "list"){
-                        if (!empty(array_intersect($permissions, [2, 3, 7, 61024]))){
+                        if (!empty(array_intersect($permissions, [7, 61024]))){
                             if ($this->person == "President"){
                                 if($this->status == "Approved"){
                                     $leaverequestdata->approved_by_president = 1;

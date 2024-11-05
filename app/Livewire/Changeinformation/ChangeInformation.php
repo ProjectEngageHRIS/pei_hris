@@ -311,7 +311,7 @@ class ChangeInformation extends Component
 
 
             if(is_string($this->emp_image) != True){
-                $this->validate(['emp_image' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:5120']);
+                $this->validate(['emp_image' => 'required|mimes:jpg,png,pdf|extensions:jpg,png,pdf|max:2096']);
                 $employee->emp_image = $this->emp_image->store('photos/changeinformation/emp_image');
                 // $imageData = file_get_contents($this->emp_image->getRealPath());
                 // $employee->emp_image = base64_encode($imageData);

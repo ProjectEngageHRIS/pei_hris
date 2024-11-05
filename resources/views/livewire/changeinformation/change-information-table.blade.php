@@ -151,7 +151,7 @@
                                 </div>
                             </th> --}}
                             <th scope="col" class="px-6 py-3 text-center">
-                                Form No.
+                                Ref Form No.
                             </th>
                             <th scope="col" class="px-6 py-3 text-center">
                                 Status
@@ -238,7 +238,7 @@
                                                         View
                                                     </a>
                                                     <!-- Cancel Button -->
-                                                    @if ($changeinfo->status != "Cancelled" && $changeinfo->status != "Completed" )
+                                                    @if ($changeinfo->status != "Cancelled" && $changeinfo->status != "Approved" && $changeinfo->status != "Declined" )
                                                         <button @click="openCancelModal('{{$changeinfo->uuid}}')"
                                                             type="button" 
                                                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">

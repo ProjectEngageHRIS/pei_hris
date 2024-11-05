@@ -589,7 +589,7 @@
                                     <div class="grid grid-cols-1 gap-4 mb-4 ">
                                         <div>
                                             <label for="category" class="block mb-2 text-sm font-semibold text-gray-900">Status</label>
-                                            <select id="category" wire:model="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
+                                            <select id="category" wire:model.live="status" class="disabled-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5">
                                                 <option class="hover:bg-customRed hover:text-white" value="Approved">Approved</option>
                                                 <option class="hover:bg-customRed hover:text-white" value="Pending">Pending</option>
                                                 <option class="hover:bg-customRed hover:text-white" value="Declined">Declined</option>

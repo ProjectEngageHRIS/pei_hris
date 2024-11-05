@@ -110,7 +110,7 @@ class DashboardView extends Component
 
         $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
         if($leaveIndicator){
-            if(!in_array($leaveIndicator->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day'])){
+            if(!in_array($leaveIndicator->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day', 'No Time in'])){
                 $this->leaveIndicator = $leaveIndicator->type;
             }
         }
