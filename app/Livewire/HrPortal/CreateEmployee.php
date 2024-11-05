@@ -181,7 +181,7 @@ class CreateEmployee extends Component
         'civil_status' => 'required|in:Single,Married,Widowed,Divorced,Separated',
         'phone_number' => ['required','numeric','regex:/^09[0-9]{9}$/' ],
         'birth_place' => 'required|min:1|max:2024',
-        'profile_summary' => 'required|min:1|max:500',
+        'profile_summary' => 'required|max:500',
         'name_of_father' => 'required|min:1|max:500',
         'name_of_mother' => 'required|min:1|max:500',
         'spouse' => 'nullable|max:500',

@@ -269,10 +269,10 @@ class EditEmployee extends Component
         'civil_status' => 'required|in:Single,Married,Widowed,Divorced,Separated',
         'phone_number' => ['required','numeric','regex:/^09[0-9]{9}$/' ],
         'birth_place' => 'required|max:500',
-        'profile_summary' => 'required|min:5|max:500',
+        'profile_summary' => 'required|max:500',
         'name_of_father' => 'required|min:5|max:500',
         'name_of_mother' => 'required|min:5|max:500',
-        'spouse' => 'required|min:5|max:500',
+        'spouse' => 'required|max:500',
         'names_of_children' => 'nullable|array', // Ensure it's an array with at least one entry
         'names_of_children.*' => 'required|string|max:255',
         'emergency_contact.contact_person' => 'required|string|min:2|max:100',
