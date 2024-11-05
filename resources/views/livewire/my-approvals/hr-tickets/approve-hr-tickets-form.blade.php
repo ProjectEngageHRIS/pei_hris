@@ -1509,7 +1509,7 @@
             </div>
         @endif
         <!-- Change Status Button -->
-        {{-- @if ($status != "Cancelled" && $status != "Completed" && $status != "Declined") --}}
+        @if ($status != "Cancelled" && $status != "Completed" && $status != "Declined")
             <div x-cloak x-data="{ openCrudModal: false, openConfirmation: false }" class="flex flex-row-reverse">
 
                 <button @click="openCrudModal = true" type="button" class="inline-flex items-center font-medium text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px text-sm px-5 py-2.5 me-2 shadow">
@@ -1625,7 +1625,7 @@
                             </div>
                 </div>
             </div>
-        {{-- @endif --}}
+        @endif
     </form>
     <div wire:loading wire:target="changeStatus" class="load-over z-50">
         <div wire:loading wire:target="changeStatus" class="loading-overlay z-50">
