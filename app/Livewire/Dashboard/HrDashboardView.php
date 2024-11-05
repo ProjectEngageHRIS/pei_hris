@@ -212,12 +212,11 @@ class HrDashboardView extends Component
 
         $combinedCounts = Employee::select(
             DB::raw('COUNT(CASE WHEN employee_type = "INDEPENDENT CONTRACTOR" THEN 1 END) as IndenpendentContractor'),
-            DB::raw('COUNT(CASE WHEN employee_type = "INTERNAL EMPLOYEE" THEN 1 END) as InternalEmployee'),
             DB::raw('COUNT(CASE WHEN employee_type = "INTERN" THEN 1 END) as Intern'),
-            DB::raw('COUNT(CASE WHEN employee_type = "PROBISIONARY" THEN 1 END) as Probisionary'),
+            DB::raw('COUNT(CASE WHEN employee_type = "PROBATIONARY" THEN 1 END) as Probationary'),
             DB::raw('COUNT(CASE WHEN employee_type = "PROJECT BASED" THEN 1 END) as ProjectBased'),
             DB::raw('COUNT(CASE WHEN employee_type = "REGULAR" THEN 1 END) as Regular'),
-            DB::raw('COUNT(CASE WHEN employee_type = "RELIVER" THEN 1 END) as Reliver'),
+            DB::raw('COUNT(CASE WHEN employee_type = "RELIEVER" THEN 1 END) as Reliever'),
             DB::raw('COUNT(CASE WHEN inside_department = "HR and Admin" THEN 1 END) as HRandAdmin'),
             DB::raw('COUNT(CASE WHEN inside_department = "Recruitment" THEN 1 END) as Recruitment'),
             DB::raw('COUNT(CASE WHEN inside_department = "CXS" THEN 1 END) as CXS'),
@@ -236,12 +235,12 @@ class HrDashboardView extends Component
 
         $this->employee_type = [
             $combinedCounts->IndenpendentContractor ?? 0,
-            $combinedCounts->InternalEmployee ?? 0,
             $combinedCounts->Intern ?? 0,
-            $combinedCounts->Probisionary ?? 0,
+            $combinedCounts->Probationary ?? 0,
             $combinedCounts->ProjectBased ?? 0,
-            $combinedCounts->InternalEmployee ?? 0,
             $combinedCounts->Regular ?? 0,
+            $combinedCounts->Reliever ?? 0,
+
         ];
 
         $this->inside_department = [

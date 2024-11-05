@@ -300,7 +300,7 @@ class EditEmployee extends Component
         'permission' => ['required'],
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
-        'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBATIONARY,PROJECT BASED,RELIVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
+        'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBATIONARY,PROJECT BASED,RELIEVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
         'sss_num' => ['required', 'string',],
         'tin_num' => ['required', 'string',],
         'phic_num' => ['required', 'string', ],

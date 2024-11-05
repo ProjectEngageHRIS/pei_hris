@@ -883,7 +883,7 @@
                                                      <option value="PROBATIONARY">Probationary</option>
                                                      <option value="PROJECT BASED">Project Based</option>
                                                      <option value="REGULAR">Regular</option>
-                                                     <option value="RELIVER">Reliver</option>
+                                                     <option value="RELIEVER">Reliever</option>
                                                  </select>
                                                  @error('employee_type')
                                                      <div class="text-sm transition transform alert alert-danger"

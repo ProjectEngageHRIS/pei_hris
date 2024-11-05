@@ -18,10 +18,6 @@
                     <span class="text-sm ml-2">Independent Contractor</span>
                 </div>
                 <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
-                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E77945;"></div>
-                    <span class="text-sm ml-2">Internal Employee</span>
-                </div>
-                <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
                     <div class="w-4 h-4 rounded-full mr-1" style="background-color: #45E7A1;"></div>
                     <span class="text-sm ml-2">Intern</span>
                 </div>
@@ -262,11 +258,6 @@
                                                 <label class="ml-2 text-xs font-medium text-customGray1">Independent Contractor</label>
                                             </div>
     
-                                            <!-- Internal Employee -->
-                                            <div class="flex items-center px-4 py-2">
-                                                <input type="checkbox" x-model="employeeTypesFilter['INTERNAL EMPLOYEE']" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                <label class="ml-2 text-xs font-medium text-customGray1">Internal Employee</label>
-                                            </div>
     
                                             <!-- Intern -->
                                             <div class="flex items-center px-4 py-2">
@@ -278,7 +269,7 @@
                                             <!-- Probi -->
                                             <div class="flex items-center px-4 py-2">
                                                 <input type="checkbox" x-model="employeeTypesFilter.PROBISIONARY" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-customRed focus:ring-customRed filter-checkbox" @change="updateEmployeeTypeCount">
-                                                <label class="ml-2 text-xs font-medium text-customGray1">Probisionary</label>
+                                                <label class="ml-2 text-xs font-medium text-customGray1">Probationary</label>
                                             </div>
     
                                             <!-- Project Based -->
@@ -1230,7 +1221,7 @@ const getChartOptions1 = () => ({
     ...baseChartOptions,
     series: @json($employee_type),
     colors: ["#E7B145", "#E77945", "#45E7A1", "#45A5E7", "#A145E7", "#E745A5", "#E7E745", "#E7C745", "#B345E7"],
-    labels: ['Independent Contractor', 'Internal Employee', 'Intern', 'Probationary', 'Project Based', 'Regular', 'Reliever'],
+    labels: ['Independent Contractor', 'Intern', 'Probationary', 'Project Based', 'Regular', 'Reliever'],
 });
 
 // Chart 2
