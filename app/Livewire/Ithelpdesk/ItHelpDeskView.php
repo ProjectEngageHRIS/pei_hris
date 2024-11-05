@@ -23,6 +23,8 @@ class ItHelpDeskView extends Component
     public $status; 
     public $form_id;
 
+    public $it_ticket;
+
 
     public function mount($index){
         $loggedInUser = auth()->user();
@@ -49,6 +51,8 @@ class ItHelpDeskView extends Component
         $this->email = $employeeRecord->employee_email;
 
         $this->form_id = $it_ticket->form_id;
+        $this->status = $it_ticket->status;
+        $this->it_ticket = $it_ticket;
 
         $this->description = $it_ticket->description;
 
@@ -71,6 +75,34 @@ class ItHelpDeskView extends Component
             // Log the exception for further investigation
             Log::channel('ittickets')->error('Failed to view IT Ticket: ' . $e->getMessage() . ' | ' . $loggedInUser );
             return null;
+        }
+    }
+
+    public function cancelRequest(){
+        try {
+            $employee_id = auth()->user()->employee_id;
+            $data = $this->it_ticket;
+            if($data){
+                if($data->employee_id == $employee_id){
+                    $data->status = "Cancelled";
+                    $data->cancelled_at = now();
+                    $data->save();
+                    $this->dispatch('triggerSuccess'); 
+                }
+            }
+
+            $this->dispatch('trigger-success');
+            return redirect()->to(route('ItHelpDeskTable'));
+
+        } catch (\Exception $e) {
+            // Log the exception for further investigation
+            Log::channel('hrticket')->error('Failed to cancel Leave Request: ' . $e->getMessage());
+
+            // Dispatch a failure event with an error message
+            $this->dispatch('trigger-error');
+
+            // Optionally, you could redirect the user to an error page or show an error message
+            // return redirect()->back()->withErrors('Something went wrong. Please contact IT support.');
         }
     }
 

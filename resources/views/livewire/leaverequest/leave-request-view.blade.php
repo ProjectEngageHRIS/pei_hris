@@ -347,7 +347,7 @@
                             </div>
                         @enderror
                     </div>
-                @if (!in_array($status, ['Cancelled', 'Approved']))
+                @if ($status  == "Pending")
                     <div class="mt-4" x-cloak x-data="{ openCancelModal: false }">
                         <div class="flex flex-row-reverse">
                             <button id="cancel_button"  

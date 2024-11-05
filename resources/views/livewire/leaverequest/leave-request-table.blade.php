@@ -392,7 +392,7 @@
                                                     View
                                                 </a>
                                                 <!-- Cancel Button -->
-                                                @if ($leaverequest->status != "Cancelled" && $leaverequest->status != "Completed" )
+                                                @if ($leaverequest->status == "Pending")
                                                     <button @click="openCancelModal('{{$leaverequest->uuid}}')"
                                                         type="button" 
                                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">

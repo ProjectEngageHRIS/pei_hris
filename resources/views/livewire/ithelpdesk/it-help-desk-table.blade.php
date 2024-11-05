@@ -256,7 +256,7 @@
                                                         View
                                                     </a>
                                                     <!-- Cancel Button -->
-                                                    @if ($it_ticket->status != "Cancelled" && $it_ticket->status != "Completed" )
+                                                    @if ($it_ticket->status == "Unassigned" )
                                                         <button @click="openCancelModal('{{$it_ticket->uuid}}')"
                                                             type="button" 
                                                             class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">

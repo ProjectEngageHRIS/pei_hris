@@ -987,7 +987,7 @@
                                                     Edit
                                                 </a>
                                                 <!-- Change Status Button -->
-                                                @if ($hrticket->status != "Cancelled" && $hrticket->status != "Completed" && $hrticket->status != "Declined")
+                                                @if ($hrticket->status == "Pending")
                                                     <button @click="openButtonCrudModal('{{$hrticket->form_id}}', '{{$hrticket->status}}')"
                                                         type="button" 
                                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">

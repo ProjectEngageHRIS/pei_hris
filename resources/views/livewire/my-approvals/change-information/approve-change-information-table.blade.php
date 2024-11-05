@@ -515,12 +515,12 @@
                                                     Edit
                                                 </a>
                                                 <!-- Change Status Button -->
-                                                @if ($change_info->status != "Cancelled" && $change_info->status != "Completed" &&  $change_info->status != "Declined")
-                                                <button @click="openButtonCrudModal('{{$change_info->form_id}}', '{{$change_info->status}}')"
-                                                    type="button" 
-                                                    class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
-                                                    Change Status
-                                                </button>
+                                                @if ($change_info->status == "Pending")
+                                                    <button @click="openButtonCrudModal('{{$change_info->form_id}}', '{{$change_info->status}}')"
+                                                        type="button" 
+                                                        class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
+                                                        Change Status
+                                                    </button>
                                                 @endif
                                             </div>
                                         </td>

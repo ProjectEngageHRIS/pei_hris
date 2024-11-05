@@ -1516,7 +1516,7 @@
                 </div>
             </div>
              <!-- Cancel Button -->
-             @if (!in_array($status, ['Cancelled', 'Approved']))
+             @if ($status  == "Pending")
                 <div x-cloak x-data="{ openCancelModal: false }">
                     <div class="flex flex-row-reverse">
                         <button id="cancel_button"  

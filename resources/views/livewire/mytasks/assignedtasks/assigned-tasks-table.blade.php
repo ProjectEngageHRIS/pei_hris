@@ -255,7 +255,7 @@
                                                     View
                                                 </a>
                                                 <!-- Cancel Button -->
-                                                @if ($my_task->status == "Pending" )
+                                                @if ($my_task->status == "Pending")
                                                     <button @click="openButtonCrudModal('{{$my_task->form_id}}', '{{$my_task->status}}')"
                                                         type="button" 
                                                         class="inline-flex items-center px-4 py-2 text-sm font-medium text-red-500 cursor-pointer hover:text-red-600">
