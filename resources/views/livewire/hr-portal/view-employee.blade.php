@@ -879,9 +879,8 @@
                                                      class="-select bg-gray-50 border disabled-select border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled>
                                                      <option selected>Select</option>
                                                      <option value="INDEPENDENT CONTRACTOR">Independent Contractor</option>
-                                                     <option value="INTERNAL EMPLOYEE">Internal Employee</option>
                                                      <option value="INTERN">Intern</option>
-                                                     <option value="PROBISIONARY">Probisionary</option>
+                                                     <option value="PROBATIONARY">Probationary</option>
                                                      <option value="PROJECT BASED">Project Based</option>
                                                      <option value="REGULAR">Regular</option>
                                                      <option value="RELIVER">Reliver</option>
