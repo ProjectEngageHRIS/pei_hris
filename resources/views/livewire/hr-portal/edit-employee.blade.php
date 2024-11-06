@@ -630,7 +630,7 @@
                                                 <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                                     <div class="w-full ">
                                                         <label for="vocational_school"
-                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
+                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School </label>
                                                         <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             ntd="">
@@ -654,7 +654,7 @@
                                                     </div>
                                                     <div class="w-full ">
                                                         <label for="vocational_date_graduated"
-                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
+                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated </label>
                                                         <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
                                                             class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                             ntd="">
@@ -916,11 +916,10 @@
                                                     <option value="PEI-Upskills">PEI-UPSKILLS</option>
                                                  </select>
                                                  @error('department')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('department').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('department').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
                                              </div>
                                              <div class="w-full">
                                                  <label for="department_name"
@@ -937,10 +936,10 @@
                                                      <option value="Accounting Operations">Accounting Operations</option>
                                                  </select>
                                                  @error('inside_department')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('inside_department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('inside_department').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('inside_department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('inside_department').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
                                              </div>
 
                                              <div class="w-full">
@@ -964,6 +963,34 @@
                                                  @enderror
                                              </div>
                                          </div>
+                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
+                                            <div class="w-full ">
+                                                <label for="firstname"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
+                                                <input type="text" name="sss_num" id="sss_num"  wire:model="sss_num"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                    @error('sss_num')
+                                                     <div class="text-sm transition transform alert alert-danger"
+                                                     x-data x-init="document.getElementById('sss_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sss_num').focus();" >
+                                                         <span class="text-xs text-red-500" > {{$message}}</span>
+                                                     </div>
+                                                 @enderror
+                                            </div>
+                                            <div class="w-full ">
+                                                <label for="tin_num"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
+                                                <input type="text" name="tin_num" id="tin_num" wire:model="tin_num"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                    @error('tin_num')
+                                                     <div class="text-sm transition transform alert alert-danger"
+                                                     x-data x-init="document.getElementById('tin_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('tin_num').focus();" >
+                                                         <span class="text-xs text-red-500" > {{$message}}</span>
+                                                     </div>
+                                                 @enderror
+                                            </div>
+                                        </div>
                                          <div class="grid grid-cols-1 min-[902px]:grid-cols-4 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
                                                 <label for="firstname"
