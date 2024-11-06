@@ -44,7 +44,7 @@ class CheckNoTimeIn extends Command
             // Check if the employee has a time-in record after 10 am
             $timeInRecord = Dailytimerecord::where('employee_id', $employee->id)
                                 ->whereDate('attendance_date', $today)
-                                ->whereTime('time_in', '>', '10:00:00')
+                                ->whereTime('time_in', '>', '6:00:00')
                                 ->first();
 
             // If no time-in record is found, create a new record in dtr
