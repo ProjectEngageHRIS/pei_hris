@@ -559,7 +559,7 @@ class DashboardView extends Component
         $loggedInUser = auth()->user()->employee_id;
 
         $time = Dailytimerecord::where('employee_id', $loggedInUser)->where('attendance_date', now()->toDateString())->select('type','employee_id','time_in', 'time_out')->first();
-        if ($time && (in_array($time->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day', 'No Time in']) && $time->time_in != Null)) {
+        if ($time && (in_array($time->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day', 'No Time in', Null]) && $time->time_in != Null)) {
             // Calculate the difference based on whether time_out is null or not
             if (is_null($time->time_out)) {
                 $this->timeIn = Carbon::parse($time->time_in);
