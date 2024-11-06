@@ -3,6 +3,7 @@
 namespace App\Livewire\HrPortal;
 
 use App\Models\User;
+use App\Models\Mytasks;
 use Livewire\Component;
 use App\Models\Employee;
 use Illuminate\Support\Facades\DB;
@@ -429,7 +430,7 @@ class EditEmployee extends Component
 
         // Find the employee record by ID (assuming employee_id is unique)
         $old_employee_id = $this->old_employee_id;  // this is the existing employee_id in the database
-        $new_employee_id = $this->new_employee_id;  // this is the new employee_id that user wants to update
+        $new_employee_id = $this->employee_id;  // this is the new employee_id that user wants to update
 
         // Find the employee using the old employee_id
         $employee_data = Employee::where('employee_id', $old_employee_id)->first();
@@ -481,7 +482,7 @@ class EditEmployee extends Component
         $employee_data->first_name = $this->first_name;
         $employee_data->middle_name = $this->middle_name;
         $employee_data->last_name = $this->last_name;
-        $employee_data->employee_id = $new_employee_id; // Update to new employee_id
+        $employee_data->employee_id = $new_employee_id;
         $employee_data->phone_number = $this->phone_number;
         $employee_data->landline_number = $this->landline_number;
         $employee_data->employee_email = $this->employee_email;
@@ -512,7 +513,6 @@ class EditEmployee extends Component
         $employee_data->emergency_contact = json_encode($this->emergency_contact);
         $employee_data->name_of_mother = $this->name_of_mother;
         $employee_data->spouse = $this->spouse; // Assuming $this->name_of_spouse represents spouse details
-        $employee_data->employee_id = $this->employee_id;
 
         // School Information
         $employee_data->high_school_school = $this->high_school_school;
@@ -554,19 +554,30 @@ class EditEmployee extends Component
         $existing_user = User::where('employee_id', $this->old_employee_id)->first();
         if ($existing_user) {
             $existing_user->email = $this->employee_email; // Update email
-            $existing_user->employee_id = $this->employee_id; // Update employee_id
+            $existing_user->employee_id = $new_employee_id; // Update employee_id
             $roles = json_encode($this->permission, true); // Convert roles to JSON
             $existing_user->permissions = $roles; // Update roles
         
             // Use the update method to save changes
-            $existing_user->save([
-                'email' => $this->employee_email,
-                'employee_id' => $this->employee_id,
-                'permission' => $roles,
-            ]);
+            $existing_user->save();
         }
 
         $jsonEmergencyContact = json_encode($jsonEmergencyContact);
+
+        if($old_employee_id != $new_employee_id){
+            $tasks = Mytasks::whereJsonContains('target_employees', $old_employee_id)->get();
+        
+            foreach ($tasks as $task) {
+                $targetEmployees = json_decode($task->target_employees); // Decode the JSON column
+                
+                // If the old employee ID exists in the array, replace it with the new one
+                if (($key = array_search($old_employee_id, $targetEmployees)) !== false) {
+                    $targetEmployees[$key] = $new_employee_id; // Replace the old ID with the new one
+                }
+                // Save the updated task
+                Mytasks::where('form_id', $task->form_id)->update(['target_employees' => json_encode($targetEmployees)]);
+            }
+        }
         
         $employee_data->save();
 

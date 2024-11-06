@@ -23,6 +23,11 @@ return new class extends Migration
             $table->dateTime('start_time');
             $table->dateTime('end_time');
             $table->dateTime('cancelled_at')->nullable();
+            // Add foreign key for employee_id
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

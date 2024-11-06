@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('leaverequests', function (Blueprint $table) {
-            $table->bigIncrements('form_id');
-            $table->uuid('uuid')->unique();
-            $table->string('employee_id');
+            $table->bigIncrements('form_id'); // Primary key
+            $table->uuid('uuid')->unique(); // Unique UUID
+            $table->string('employee_id'); // Foreign key referencing employees table
             $table->string('status')->default('reviewing');
             $table->string('supervisor_email', 100)->nullable();
             $table->date('application_date')->default(now());
@@ -31,41 +31,12 @@ return new class extends Migration
             $table->boolean('approved_by_supervisor')->nullable();
             $table->boolean('approved_by_president')->nullable();
             $table->dateTime('cancelled_at')->nullable();
-
-            // Not Needed 
-            // Details of application
-            // $table->string('type_of_leave');
-            // $table->string('type_of_leave_others')->default('Not Applicable')->nullable();
-            // $table->string('type_of_leave_sub_category');
-            // $table->string('type_of_leave_description')->default('Not Applicable')->nullable();
-
-            // $table->string('commutation');
-            // $table->longText('commutation_signature_of_appli')->charset('binary');
-
-            // // Approve Requests
-            // $table->string('office_department');
-            // $table->decimal('total_earned_vaca', 10, 2)->nullable();
-            // $table->decimal('less_this_appli_vaca', 10, 2)->nullable();
-            // $table->decimal('balance_vaca', 10, 2)->nullable();
-            // $table->decimal('total_earned_sick', 10, 2)->nullable();
-            // $table->decimal('less_this_appli_sick', 10, 2)->nullable();
-            // $table->decimal('balance_sick', 10, 2)->nullable();
-            // $table->date('as_of_filling')->nullable();
-            // $table->string('status_description')->nullable();
-            // $table->string('days_with_pay')->nullable();
-            // $table->string('days_without_pay')->nullable();
-            // $table->string('others')->nullable();
-            // $table->binary('auth_off_sig_b')->nullable();
-            // $table->boolean('department_head_verdict')->nullable();
-            // $table->string('head_disapprove_reason')->nullable();
-            // $table->boolean('human_resource_verdict_a')->nullable();
-            // $table->binary('auth_off_sig_a')->nullable();
-            // $table->string('hr_a_disapprove_reason')->nullable();
-            // $table->boolean('human_resource_verdict_cd')->nullable();
-            // $table->string('hr_cd_disapprove_reason')->nullable();
-            // $table->binary('auth_off_sig_c_and_d')->nullable();
-            // $table->longText('leave_form')->charset('binary')->nullable();
-            // $table->string('remarks')->nullable();
+            
+            // Make sure employee_id is the same type as it is in the employees table
+            $table->foreign('employee_id')
+                  ->references('employee_id') // Reference to employees table's employee_id
+                  ->on('employees')
+                  ->onUpdate('cascade');
             $table->timestamps();
         });
     }

@@ -26,7 +26,7 @@
             <div class ="w-full " x-data="{checkOut: false}">
                 <div x-data="{ showVideo: false }" class="relative flex flex-col items-center overflow-hidden lg:w-full lg:max-w-lg lg:h-120">
                     <!-- Container for SVG and Video Popup -->
-                    <div>
+                    {{-- <div>
                         <!-- SVG icon positioned at the top-right corner -->
                         <div 
                             class="absolute top-0 right-0 m-4 cursor-pointer" 
@@ -43,12 +43,12 @@
                             @mouseenter="showVideo = true" 
                             @mouseleave="showVideo = false" 
                             class="fixed top-1/2 right-1/2 transform translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-80 p-2 rounded-lg shadow-lg w-96 h-72 flex items-center justify-center z-50">
-                            {{-- <video class="w-full h-full object-contain" controls>
+                            <video class="w-full h-full object-contain" controls>
                                 <source src="{{ asset('storage/photos/activities/tutorials/timeinandout.mp4') }}" type="video/mp4">
                                 Your browser does not support the video tag.
-                            </video> --}}
+                            </video>
                         </div>
-                    </div>
+                    </div> --}}
                     
                 
                     <!-- Content below the SVG -->

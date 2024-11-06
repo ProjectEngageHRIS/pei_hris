@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('employee_id');
             $table->text('note');
             $table->dateTime('deleted_at')->nullable();
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

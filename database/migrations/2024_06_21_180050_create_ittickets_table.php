@@ -20,6 +20,10 @@ return new class extends Migration
             $table->string('description', 5000);
             $table->string('report', 5000)->nullable();
             $table->dateTime('cancelled_at')->nullable();
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade');
             $table->timestamps();
         });
     }

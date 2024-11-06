@@ -1019,7 +1019,7 @@
                                             </div>
                                             <div class="w-full">
                                                 <label for="employee_id"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee_ID<span class="text-red-600">*</span></label>
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee ID<span class="text-red-600">*</span></label>
                                                 <input type="text" name="employee_id" id="employee_id"  wire:model="employee_id"
                                                     class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                     ntd="" >

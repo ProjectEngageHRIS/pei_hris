@@ -21,6 +21,15 @@ return new class extends Migration
             $table->string('month', 20)->default(now()->format('M'));
             $table->string('year', 8)->default(now()->format('Y'));
             $table->dateTime('deleted_at')->nullable();
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade');  // Ensures employee_id is updated in payroll_statuses if the employee_id changes in employees
+        
+            $table->foreign('target_employee')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade');  
             $table->timestamps();
         });
     }

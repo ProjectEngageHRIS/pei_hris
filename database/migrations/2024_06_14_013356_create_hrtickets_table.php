@@ -33,6 +33,12 @@ return new class extends Migration
             $table->dateTime('request_date')->nullable();
             $table->json('request_others')->nullable();
             $table->dateTime('cancelled_at')->nullable();
+            // Set up the foreign key constraint
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }

@@ -161,10 +161,10 @@ class ActivitiesGallery extends Component
 
     public function addAnnouncement(){
 
-        // foreach($this->rules as $rule => $validationRule){
-        //     $this->validate([$rule => $validationRule]);
-        //     $this->resetValidation();
-        // }   
+        foreach($this->rules as $rule => $validationRule){
+            $this->validate([$rule => $validationRule]);
+            $this->resetValidation();
+        }   
 
         $dateToday = Carbon::now()->toDateString();;
 

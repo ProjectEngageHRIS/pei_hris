@@ -112,7 +112,7 @@
                         <select id="supervisor_email" name="supervisor_email" wire:model.live="supervisor_email"
                             class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                             <option value="" selected>Select</option>
-                            {{-- <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option> --}}
+                            <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
                             <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
                             <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
                             <option value="esalvador@projectengage.com.ph">esalvador@projectengage.com.ph</option>

@@ -23,19 +23,10 @@ return new class extends Migration
             $table->decimal('undertime', 8, 2)->nullable();
             $table->string('time_in_location')->nullable();
             $table->string('time_out_location')->nullable();
-
-            // $table->boolean('status')->nullable();
-            // $table->smallInteger('is_legal_special')
-            // $table->string('attendance_id')->primary();
-            // $table->bigInteger('job_id');
-            // $table->integer('absent');
-
-            // $table->decimal('cto', 8, 2);
-
-            // $table->integer('lwop');
-            // $table->string('remarks');
-            // $table->decimal('sl_used', 8, 2);
-            // $table->decimal('vl_used', 8, 2);
+            $table->foreign('employee_id')
+                ->references('employee_id')
+                ->on('employees')
+                ->onUpdate('cascade'); // This allows updates to cascade
             $table->timestamps();
         });
     }

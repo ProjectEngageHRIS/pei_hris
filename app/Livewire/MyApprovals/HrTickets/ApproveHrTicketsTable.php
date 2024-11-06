@@ -324,8 +324,8 @@ class ApproveHrTicketsTable extends Component
             $results = $query->orderBy('created_at', 'desc');
         }
 
-        
         $results = $results->paginate(5);
+
 
 
         // if($this->statusFilterName == "Cancelled"){
