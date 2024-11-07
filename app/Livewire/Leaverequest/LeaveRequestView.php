@@ -112,7 +112,7 @@ class LeaveRequestView extends Component
         $this->mode_of_application = $leaverequest->mode_of_application;
         // dd($leaverequest->mode_of_application == "Credit Leave");
         if($this->mode_of_application == "Credit Leave"){
-            $this->date_earned = $leaverequest->inclusive_end_date;
+            $this->date_earned = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');
             $this->inclusive_end_date = $leaverequest->credit_application;
             $this->earned_description = $leaverequest->earned_description;
             $this->full_half = $leaverequest->full_or_half;
@@ -124,6 +124,17 @@ class LeaveRequestView extends Component
             $this->purpose_type = $leaverequest->purpose_type;
             $this->full_half = $leaverequest->logout_time;
         } 
+        else if($this->mode_of_application == "Vacation Leave"){
+            $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
+            $this->num_of_days_work_days_applied = $formattedValue ;
+            $this->inclusive_start_date = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');
+            $this->inclusive_end_date = Carbon::parse($leaverequest->inclusive_end_date)->format('Y-m-d');
+            $this->deduct_to = $leaverequest->deduct_to;
+            $this->full_half = $leaverequest->full_or_half;
+        } else if($this->mode_of_application == "Overtime Form"){
+            $this->date_earned = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');;
+            $this->earned_description = $leaverequest->earned_description;
+        }
         else{
             $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
             $this->num_of_days_work_days_applied = $formattedValue ;

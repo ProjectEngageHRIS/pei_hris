@@ -161,23 +161,18 @@ class LeaveRequestForm extends Component
 
 
      protected $rules = [
-        'mode_of_application' => 'required|in:Advise Slip,Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Magna Carta Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave,Credit Leave',
-        'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-        'full_half' => 'required',
-        'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
-        'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
+        'mode_of_application' => 'required|in:Vacation Leave,Sick Leave,Maternity Leave,Paternity Leave,Single Parent Leave,Credit Leave,Advise Slip,Overtime Form,Others',
         // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'supervisor_email' => 'required|email',
-        'deduct_to'=> 'required|string|max:255|in:Bearevement Leave,Salary,Credits,Others',
-        'reason' => 'required|string|min:10|max:500',
+        'reason' => 'required|string|max:500',
     ];
 
     protected $validationAttributes = [
         'mode_of_application' => 'Mode of Application',
         'type_of_leave_others' => 'Others',
         'deduct_to'=> 'Deduct to', 
-        'inclusive_start_date' => 'Inclusive Start Date',
-        'inclusive_end_date' => 'Inclusive End Date',
+        'inclusive_start_date' => 'Start Date',
+        'inclusive_end_date' => 'End Date',
         'num_of_days_work_days_applied' => 'Number of Days Applied',
         'supervisor_email' => 'Supervisor Email',
         'reason' => 'Reason for Leave',
@@ -185,6 +180,44 @@ class LeaveRequestForm extends Component
 
     public function submit(){
         $this->validate();
+        if($this->mode_of_application == "Credit Leave"){
+            $this->validate([
+                'date_earned' => 'required|date',
+                'credit_application' => 'required|date',
+                'earned_description' => 'required|string|max:500',
+            ]);
+            // dd($leaverequestdata->earned_description , $this->earned_description);
+        } else if($this->mode_of_application == "Advise Slip"){
+            $this->validate([
+                'inclusive_start_date' => 'required|date',
+                'inclusive_end_date' => 'required|date',
+                'purpose_type' => 'required|in:Interview Candidate,Meeting with a Valued Client,Meeting with Prospect,Job/School/PESO Fair,Travel/Assignment/Airline,Collection,Others',
+                'logout_time' => 'required|date|'
+            ]);
+        } 
+        else if($this->mode_of_application == "Vacation Leave"){
+            $this->validate([
+                'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
+                'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
+                'deduct_to'=> 'required|string|max:255|in:Bearevement Leave,Salary,Credits,Others',
+                'full_half' => 'required|string|in:Full Day,Half Day,Undertime',
+            ]);
+        }
+        else if($this->mode_of_application == "Overtime Form"){
+            $this->validate([
+                'date_earned' => 'required|date',
+                'earned_description' => 'required|min:1',
+            ]);
+        }
+        else {
+            $this->validate([
+                'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
+                'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
+                'deduct_to'=> 'required|string|max:255|in:Bearevement Leave,Salary,Credits,Others',
+                'full_half' => 'required|string|in:Full Day,Half Day,Undertime',
+                'purpose_type' => 'required|string|min:1'
+            ]);
+        }
         try {
             $loggedInUser = auth()->user();
 
@@ -210,12 +243,25 @@ class LeaveRequestForm extends Component
                 $leaverequestdata->purpose_type = $this->purpose_type;
                 $leaverequestdata->full_or_half = $this->logout_time;
             } 
-            else{
+            else if ($this->mode_of_application == "Vacation Leave"){
                 $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);
                 $leaverequestdata->num_of_days_work_days_applied = $formattedValue ;
                 $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
                 $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
                 $leaverequestdata->deduct_to = $this->deduct_to;
+                $leaverequestdata->full_or_half = $this->full_half;
+            }   
+            else if($this->mode_of_application == "Overtime Form"){
+                $leaverequestdata->inclusive_start_date = $this->date_earned;
+                $leaverequestdata->earned_description = $this->earned_description;
+            } 
+            else {
+                $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);
+                $leaverequestdata->num_of_days_work_days_applied = $formattedValue ;
+                $leaverequestdata->inclusive_start_date = $this->inclusive_start_date;
+                $leaverequestdata->inclusive_end_date = $this->inclusive_end_date;
+                $leaverequestdata->deduct_to = $this->deduct_to;
+                $leaverequestdata->purpose_type = $this->purpose_type;
                 $leaverequestdata->full_or_half = $this->full_half;
             }
             // dd($leaverequestdata->earned_description , $this->earned_description);

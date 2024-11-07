@@ -94,9 +94,10 @@
                             <option value="Sick Leave">Sick Leave</option>
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
-                            <option value="Magna Carta Leave">Magna Carta Leave</option>
+                            <option value="Single Parent Leave">Single Parent Leave</option>
                             <option value="Credit Leave">Credit Leave</option>
                             <option value="Advise Slip">Advise Slip</option>
+                            <option value="Overtime Form">Overtime Form</option>
                             <option value="Others">Others</option>
                         </select>
                         @error('mode_of_application')
@@ -153,11 +154,11 @@
                     </div>
                 </template> --}}
                 
-                <template x-if="['Credit Leave', 'Advise Slip', 'Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Magna Carta Leave', 'Maternity Leave', 'Others'].includes(typeOfLeave)">
+                <template x-if="['Credit Leave', 'Advise Slip', 'Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Single Parent Leave', 'Overtime Form', 'Others'].includes(typeOfLeave)">
                     <div>
                         <hr class="my-4 border-gray-300">
                         <template x-if="typeOfLeave === 'Credit Leave'">
-                        {{-- @if ($mode_of_application == "Credit Leave") --}}
+                            {{-- @if ($mode_of_application == "Credit Leave") --}}
                             <div>
                                 {{-- Time Frame --}}
                                 <h2 class="font-bold text-customRed">Credit Leave Description</h2>
@@ -165,7 +166,7 @@
                                     <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-2 ">
                                     {{-- Date Earned --}}
                                         <div id="date_earned_container" class="col-span-1">
-                                            <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned
+                                            <label for="date_earned" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned
                                                 <span class="text-red-600">*</span>
                                             </label>
                                             <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
@@ -179,7 +180,7 @@
                                         </div>
                                     {{-- Application Date --}}
                                         <div id="credit_application_container" class="col-span-1">
-                                            <label for="inclusive_start_date" class="block mb-2 text-sm font-medium text-gray-900 ">Application Date
+                                            <label for="credit_application" class="block mb-2 text-sm font-medium text-gray-900 ">Application Date
                                                 <span class="text-red-600">*</span>
                                             </label>
                                             <input type="date" name="credit_application" id="credit_application" wire:model.live="credit_application"
@@ -197,7 +198,7 @@
                                         <label for="earned_description" class="block mb-2 text-sm font-medium text-gray-900 ">Date Earned Description <span class="text-red-600">*</span></label>
                                         <div id="earned_description" class="grid grid-cols-1">
                                             <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
-                                                placeholder="Write additional information here. Maximum of 200 only"
+                                                placeholder="Write additional information here. Maximum of 500 Letters only"
                                                 class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
                                             </textarea>
                                             @error('earned_description')
@@ -213,7 +214,7 @@
                         </template>
                         <template x-if="typeOfLeave === 'Advise Slip'">
                             <div>
-                        {{-- @if ($mode_of_application == "Advise Slip") --}}
+                            {{-- @if ($mode_of_application == "Advise Slip") --}}
                                 <p class="mb-4 font-bold text-customRed">Advise Slip Information</p>
                                 <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-4 gap-4">
                                     <div id="time_period_container" class="col-span-1">
@@ -256,7 +257,7 @@
                                             <option value="Job/School/PESO Fair">Job/School/PESO Fair</option>
                                             <option value="Travel/Assignment/Airline">Travel/Assignment/Airline</option>
                                             <option value="Collection">Collection</option>
-                                            <option value="Others">Others (Please specify the reason in the Reason of Filling) </option>
+                                            <option value="Others">Others (Please specify the reason in the Reason of Filing) </option>
                                         </select>
                                         @error('purpose_type')
                                             <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('purpose_type_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('purpose_type_container').focus();" >
@@ -281,7 +282,7 @@
                                 <hr class="my-4 border-gray-300">
                             </div>
                         </template>
-                        <template x-if="['Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Magna Carta Leave', 'Maternity Leave', 'Others'].includes(typeOfLeave)">
+                        <template x-if="['Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Single Parent Leave', 'Others'].includes(typeOfLeave)">
                             <div>
                                 <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-7 gap-4">
                                     <div class="col-span-4 grid grid-cols-1  gap-4">
@@ -313,7 +314,7 @@
                                             </div>
                                             <div class="col-span-1">
                                                 <div id="full_half_container" class="col-span-1">
-                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">Half/ Full/ Undertime on End Day
+                                                    <label class="block mb-2 text-sm font-medium text-gray-900 ">End Day
                                                         <span class="text-red-600">*</span>
                                                     </label>
                                                     <select id="purpose_type" name="full_half" wire:model.live="full_half"
@@ -345,7 +346,7 @@
                                         </div>
                                     </div>
                                     {{-- Available Credits --}}
-                                    <div id="leavecredits_container" class="col-span-3 grid grid-cols-1 min-[902px]:grid-cols-3 gap-4">
+                                    <div id="leavecredits_container" class="col-span-3 grid grid-cols-1 min-[902px]:grid-cols-2 gap-4">
                                         <h2 class="col-span-1 min-[902px]:col-span-3 font-bold text-customRed">Leave Credits</h2>
                                         <div class="col-span-1">
                                             <label for="numOfWorkDays" class="block mb-2 text-sm font-medium text-customGray ">Number of Days <span class="text-red-600">*</span></label>
@@ -358,7 +359,7 @@
                                                 </div>
                                             @enderror
                                         </div>
-                                        <div class="col-span-1" >
+                                        {{-- <div class="col-span-1" >
                                             <label for="available_credits" class="block mb-2 text-sm font-medium text-customGray ">Available Credits <span class="text-red-600">*</span></label>
                                             <input type="number" name="available_credits" id="available_credits" wire:model="available_credits"
                                                 class="bg-gray-50 border font-bold border-gray-300 text-customGray text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
@@ -368,7 +369,7 @@
                                                     <span class="text-xs text-red-500">{{$message}}</span>
                                                 </div>
                                             @enderror
-                                        </div>
+                                        </div> --}}
                                         <div id="deduct_to_container" class="col-span-1" x-data="{availableCredits: $wire.entangle('available_credits'), creditsDeducted: $wire.entangle('num_of_days_work_days_applied')}">
                                             <label class="block mb-2 text-sm font-medium text-gray-900 ">Deduct to?
                                                 <span class="text-red-600">*</span>
@@ -377,9 +378,9 @@
                                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                                 <option value="">Select </option>
                                                 <option value="Salary">Salary</option>
-                                                <template x-if="availableCredits >= creditsDeducted">
+                                                {{-- <template x-if="availableCredits >= creditsDeducted"> --}}
                                                     <option value="Credits">Credits</option>
-                                                </template>
+                                                {{-- </template> --}}
                                                 <option value="Bearevement Leave">Bearevement Leave</option>
                                                 <option value="Others">Others</option>
 
@@ -396,13 +397,81 @@
                                 <hr class="my-4 border-gray-300">
                             </div>
                         </template>
+                        <template x-if="typeOfLeave === 'Overtime Form'">
+                            <div>
+                                {{-- Time Frame --}}
+                                <h2 class="font-bold text-customRed">Overtime Information</h2>
+                                <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-5 gap-4">
+                                    <div class="grid grid-cols-1 col-span-2 ">
+                                    {{-- Date Earned --}}
+                                        <div id="date_earned_container" class="col-span-1">
+                                            <label for="date_earned" class="block mb-2 text-sm font-medium text-gray-900 ">Period
+                                                <span class="text-red-600">*</span>
+                                            </label>
+                                            <input type="date" name="date_earned" id="date_earned" wire:model.live="date_earned"
+                                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                                required="">
+                                            @error('date_earned')
+                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('date_earned_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_earned_container').focus();" >
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div id="date_description_container" class="col-span-3">
+                                        <label for="earned_description" class="block mb-2 text-sm font-medium text-gray-900">
+                                            Overtime Form <span class="text-red-600">*</span>
+                                            <span class="block mt-2">
+                                                Click the link to download the OT template:
+                                                <a href="https://docs.google.com/spreadsheets/d/1fzR_r9ENBKWZFHP3alkCXK-gzbvipSJg/edit?gid=987895688#gid=987895688" 
+                                                   target="_blank" 
+                                                   class="text-customRed hover:text-red-900 underline">
+                                                    Download OT Template
+                                                </a>
+                                            </span>
+                                        </label>
+                                        <div id="earned_description" class="grid grid-cols-1">
+                                            <textarea type="text" rows="2" id="earned_description" name="earned_description" wire:model="earned_description"
+                                                      placeholder="Kindly input the link of the filled downloaded OT Form here"
+                                                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                            </textarea>
+                                            @error('earned_description')
+                                                <div class="text-sm transition transform alert alert-danger" x-data 
+                                                     x-init="document.getElementById('date_description_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('date_description_container').focus();">
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr class="my-4 border-gray-300">
+                            </div>
+                        </template>
+                        <template x-if="['Single Parent Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Others'].includes(typeOfLeave)">
+                            <div id="sick_leave_link_container">
+                                <label for="reason" class="block font-bold whitespace-nowrap text-customRed">Leave Attachments
+                                    <span class="text-gray-900"><span class="text-red-600">*</span>
+                                </label>
+                                <textarea type="text" rows="2" id="sick_leave_link_container" name="sick_leave_link_container" wire:model="purpose_type"
+                                    placeholder="Kindly input the Link for Leave Attachments (Ex: Medical Certificate)"
+                                    class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                </textarea>
+                                @error('purpose_type')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('sick_leave_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sick_leave_link_container').focus();" >
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            <hr class="my-4 border-gray-300">
+                            </div>
+
+                        </template>
+                        
                         <div id="reason_container">
                             <label for="reason" class="block font-bold whitespace-nowrap text-customRed">Reason of Filing
-                                <span class="text-gray-900"><span class="text-red-600">*</span>
                             </label>
                             <textarea type="text" rows="10" id="reason" name="reason" wire:model="reason"
                                 placeholder="Kindly state the reason for filing and other details (If Chosen Others at the Deduct to Fiel) this leave request within 500 characters."
-                                class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed">
                             </textarea>
                             @error('reason')
                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('reason_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('reason_container').focus();" >
@@ -410,8 +479,10 @@
                                 </div>
                             @enderror
                         </div>
+                        
                     </div>
                 </template>
+                
                 {{-- @endif --}}
                 <button type="submit" class="inline-flex items-center shadow float-right px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white hover:bg-red-600 hover:text-white bg-customRed rounded-8px">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="mr-2 size-4">

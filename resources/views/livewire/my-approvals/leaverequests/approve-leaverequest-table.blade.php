@@ -700,11 +700,20 @@
                                                 <span class="font-medium text-gray-700">Purpose Type:</span> {{$leaverequest->purpose_type}} <br>
                                                 <span class="font-medium text-gray-700">Log Out Time:</span>  {{ \Carbon\Carbon::parse($leaverequest->full_or_half)->format('F j, Y g:i A') }} <br>
                                                 <span class="font-medium text-gray-700">Reason: <br></span> {{$leaverequest->reason}} <br>
-                                            @else
+                                            @elseif($leaverequest->mode_of_application == "Vacation Leave")
                                                 <span class="font-medium text-gray-700">Start Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y')}} <br>
                                                 <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y')}} <br>
                                                 <span class="font-medium text-gray-700">End Day:</span> {{$leaverequest->full_or_half}} <br>
                                                 <span class="font-medium text-gray-700">Deducted to:</span> {{$leaverequest->deduct_to}}
+                                            @elseif($leaverequest->mode_of_application == "Overtime Form")
+                                                <span class="font-medium text-gray-700">Period:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y')}} <br>
+                                                <span class="font-medium text-gray-700">OT Form Link: <br> </span> {{$leaverequest->earned_description}} 
+                                            @else
+                                                <span class="font-medium text-gray-700">Start Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_start_date)->format('F j, Y')}} <br>
+                                                <span class="font-medium text-gray-700">End Date:</span> {{\Carbon\Carbon::parse($leaverequest->inclusive_end_date)->format('F j, Y')}} <br>
+                                                <span class="font-medium text-gray-700">End Day:</span> {{$leaverequest->full_or_half}} <br>
+                                                <span class="font-medium text-gray-700">Deducted to:</span> {{$leaverequest->deduct_to}} <br>
+                                                <span class="font-medium text-gray-700">Leave Attachments Links: <br> </span> {{$leaverequest->purpose_type}} 
                                             @endif
                                         </td>
                                         <td class="items-center py-4 text-center">
