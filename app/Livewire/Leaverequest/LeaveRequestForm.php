@@ -162,14 +162,14 @@ class LeaveRequestForm extends Component
 
      protected $rules = [
         'mode_of_application' => 'required|in:Advise Slip,Others,Vacation Leave,Mandatory/Forced Leave,Sick Leave,Maternity Leave,Paternity Leave,Magna Carta Leave,Special Privilege Leave,Solo Parent Leave,Study Leave,10-Day VAWC Leave,Rehabilitation Privilege,Special Leave Benefits for Women,Special Emergency Leave,Adoption Leave,Credit Leave',
-        // 'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
-        // 'full_half' => 'required',
-        // // 'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
-        // 'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
-        // // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
-        // 'supervisor_email' => 'required|email',
-        // 'deduct_to'=> 'required|string|max:255',
-        // 'reason' => 'required|string|min:10|max:500',
+        'type_of_leave_others' => 'required_if:mode_of_application,Others|max:100',
+        'full_half' => 'required',
+        'inclusive_start_date' => 'required|after_or_equal:application_date|before_or_equal:inclusive_end_date',
+        'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
+        // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
+        'supervisor_email' => 'required|email',
+        'deduct_to'=> 'required|string|max:255|in:Bearevement Leave,Salary,Credits,Others',
+        'reason' => 'required|string|min:10|max:500',
     ];
 
     protected $validationAttributes = [

@@ -380,6 +380,10 @@
                                                 <template x-if="availableCredits >= creditsDeducted">
                                                     <option value="Credits">Credits</option>
                                                 </template>
+                                                <option value="Bearevement Leave">Bearevement Leave</option>
+                                                <option value="Others">Others</option>
+
+
                                             </select>
                                             @error('deduct_to')
                                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();" >
@@ -397,7 +401,7 @@
                                 <span class="text-gray-900"><span class="text-red-600">*</span>
                             </label>
                             <textarea type="text" rows="10" id="reason" name="reason" wire:model="reason"
-                                placeholder="Kindly state the reason for filing this leave request within 500 characters."
+                                placeholder="Kindly state the reason for filing and other details (If Chosen Others at the Deduct to Fiel) this leave request within 500 characters."
                                 class="mt-2 block p-2.5 w-full text-sm text-gray-900 bg-gray-50 shadow-inner rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
                             </textarea>
                             @error('reason')

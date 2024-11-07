@@ -518,9 +518,10 @@ class ApproveLeaverequestTable extends Component
                     $leaverequestdata->status = $this->status;
                 }
 
-                if($this->status == "Approved" && $leaverequestdata->deduct_to == "Credits"){
-                    Employee::where('employee_id', $leaverequestdata->employee_id)->first();
-                }
+                // if($this->status == "Approved" && $leaverequestdata->deduct_to == "Credits"){
+                //     $employee = Employee::where('employee_id', $leaverequestdata->employee_id)->first();
+                //     if($vacation_credits >)
+                // }
                 
                 $leaverequestdata->update();
 
