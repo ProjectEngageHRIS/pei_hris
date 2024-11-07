@@ -40,6 +40,8 @@
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                     <h2  class="font-bold text-customRed">Employee Personal Information</h2>
+                                    <hr class="border-t-2 border-gray-400">
+
 
                                     {{-- <div class="divide-y  divide-gray-400"> --}}
                                         <div>
@@ -269,6 +271,8 @@
                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <h2 class="font-bold text-customRed">Family Information</h2>
+                                     <hr class="border-t-2 border-gray-400">
+
                                      <div>
                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                             <div class="w-full ">
@@ -364,6 +368,8 @@
 <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
     <div class="grid grid-cols-1 col-span-3 gap-4">
         <h2 class="font-bold text-customRed">Emergency Contact</h2>
+        <hr class="border-t-2 border-gray-400">
+
 
         <div class="gap-2 flex flex-col">
             <label for="emergency_contact.contact_person" class="block text-sm font-medium text-customGray1">
@@ -426,8 +432,9 @@
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <div>
                                      <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2">
-                    <h2 class="text-customRed"><b>Employee History</b></h2>
+                    <h2 class="text-customRed text-md"><b>Employee History</b></h2>
                     <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="employeehistory_container">
+                        <hr class="border-t-2 border-gray-400">
                         @php
                             $ctr = 0
                         @endphp
@@ -554,7 +561,7 @@
                              </div>
                              <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="col-span-3 space-y-4 ">
-                                    <h2 class="font-bold text-lg text-customRed"> School Information</h2>
+                                    <h2 class="font-bold text-md text-customRed"> School Information</h2>
                                         <hr class="border-t-2 border-gray-400">
                                         <p class="font-bold text-base ml-2 text-customRed"> High School</p>
                                         <div class="grid grid-cols-1 ml-2 min-[902px]:grid-cols-2 gap-4 col-span-3 ">
@@ -674,8 +681,10 @@
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                      <div>
                                      <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-2">
-                    <h2 class="block mb-2 text-sm font-medium text-customGray"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
+                    <h2 class="block mb-2  font-medium text-md text-customGray col-span-1 min-[902px]:col-span-2"> Microsoft Folder Link for  <span class="text-customRed"><b>201 Files and Other Necessary Files</b></span> <span class="text-red-600">*</span></h2>
                     <div class="grid grid-cols-1 col-span-3 gap-4 pb-4" id="files_container">
+                        <hr class="border-t-2 border-gray-400">
+
                         <div class="w-full ">
                             <label for="files"
                                 class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Link <span class="text-red-600">*</span></label>
@@ -814,7 +823,7 @@
                              </div>
                              <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
-                                    <h2  class="font-bold text-lg text-customRed">Onboarding</h2>
+                                    <h2  class="font-bold text-md text-customRed">Onboarding</h2>
                                     <hr class="border-t-2 border-gray-400">
                                     <div class="space-y-4">
                                             <h2  class="font-bold ml-2 text-customRed">Employment Information</h2>

@@ -516,12 +516,10 @@ class ApproveLeaverequestTable extends Component
                     }
                 } else {
                     $leaverequestdata->status = $this->status;
-                    // if($this->key == "list"){
-                    //     if($this->status == "Pending" || $this->status == "Declined"){
-                    //         $leaverequestdata->approved_by_supervisor = 0;
-                    //         $leaverequestdata->approved_by_president = 0;
-                    //     }
-                    // }
+                }
+
+                if($this->status == "Approved" && $leaverequestdata->deduct_to == "Credits"){
+                    Employee::where('employee_id', $leaverequestdata->employee_id)->first();
                 }
                 
                 $leaverequestdata->update();
