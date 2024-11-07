@@ -559,7 +559,7 @@
                                      </div>
                                 </div>
                              </div>
-                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="col-span-3 space-y-4 ">
                                     <h2 class="font-bold text-md text-customRed"> School Information</h2>
                                         <hr class="border-t-2 border-gray-400">
@@ -821,7 +821,7 @@
                                      </div>
                                 </div>
                              </div>
-                             <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
+                            <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
                                     <h2  class="font-bold text-md text-customRed">Onboarding</h2>
                                     <hr class="border-t-2 border-gray-400">
@@ -1083,7 +1083,7 @@
                                 </div>
 
 
-                    </div>
+                            </div>
 </div>
 
                 </div>
