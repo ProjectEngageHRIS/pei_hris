@@ -262,7 +262,6 @@
         });
     });
 
-    <script>
     document.addEventListener('livewire:init', function () {
         Livewire.on('trigger-reroute', () => {
             // Optional: Show a success message or animation here
@@ -279,6 +278,5 @@
             }, animationDuration); // This will ensure the redirect happens after the animation ends
         });
     });
-</script>
 
 </script>
