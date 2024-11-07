@@ -95,6 +95,7 @@
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
                             <option value="Single Parent Leave">Single Parent Leave</option>
+                            <option value="Bearevement Leave">Bearevement Leave</option>
                             <option value="Credit Leave">Credit Leave</option>
                             <option value="Advise Slip">Advise Slip</option>
                             <option value="Others">Others</option>
@@ -153,7 +154,7 @@
                     </div>
                 </template> --}}
                 
-                <template x-if="['Credit Leave', 'Advise Slip', 'Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Single Parent Leave', 'Others'].includes(typeOfLeave)">
+                <template x-if="['Credit Leave', 'Advise Slip', 'Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Single Parent Leave', 'Bearevement Leave', 'Others'].includes(typeOfLeave)">
                     <div>
                         <hr class="my-4 border-gray-300">
                         <template x-if="typeOfLeave === 'Credit Leave'">
@@ -281,7 +282,7 @@
                                 <hr class="my-4 border-gray-300">
                             </div>
                         </template>
-                        <template x-if="['Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Single Parent Leave', 'Others'].includes(typeOfLeave)">
+                        <template x-if="['Vacation Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Single Parent Leave', 'Bearevement Leave', 'Others'].includes(typeOfLeave)">
                             <div>
                                 <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-7 gap-4">
                                     <div class="col-span-4 grid grid-cols-1  gap-4">
@@ -380,10 +381,7 @@
                                                 {{-- <template x-if="availableCredits >= creditsDeducted"> --}}
                                                     <option value="Credits">Credits</option>
                                                 {{-- </template> --}}
-                                                <option value="Bearevement Leave">Bearevement Leave</option>
                                                 <option value="Others">Others</option>
-
-
                                             </select>
                                             @error('deduct_to')
                                                 <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('deduct_to_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('deduct_to_container').focus();" >
@@ -396,7 +394,7 @@
                                 <hr class="my-4 border-gray-300">
                             </div>
                         </template>
-                        <template x-if="['Single Parent Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Others'].includes(typeOfLeave)">
+                        <template x-if="['Single Parent Leave', 'Sick Leave', 'Paternity Leave', 'Maternity Leave', 'Bearevement Leave', 'Others'].includes(typeOfLeave)">
                             <div id="sick_leave_link_container">
                                 <label for="reason" class="block font-bold whitespace-nowrap text-customRed">Leave Attachments
                                     <span class="text-gray-900"><span class="text-red-600">*</span>

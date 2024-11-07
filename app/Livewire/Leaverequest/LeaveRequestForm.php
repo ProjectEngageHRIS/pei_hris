@@ -161,7 +161,7 @@ class LeaveRequestForm extends Component
 
 
      protected $rules = [
-        'mode_of_application' => 'required|in:Vacation Leave,Sick Leave,Maternity Leave,Paternity Leave,Single Parent Leave,Credit Leave,Advise Slip,Others',
+        'mode_of_application' => 'required|in:Vacation Leave,Sick Leave,Maternity Leave,Paternity Leave,Single Parent Leave,Bearevement Leave,Credit Leave,Advise Slip,Others',
         // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'supervisor_email' => 'required|email',
         'reason' => 'required|string|max:500',
@@ -256,8 +256,6 @@ class LeaveRequestForm extends Component
             }
             // dd($leaverequestdata->earned_description , $this->earned_description);
 
-            
-            
             $leaverequestdata->reason = $this->reason;
 
             $leaverequestdata->save();

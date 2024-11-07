@@ -148,6 +148,8 @@ class ApproveLeaverequestForm extends Component
             $this->inclusive_end_date = Carbon::parse($leaverequest->inclusive_end_date)->format('Y-m-d');
             $this->deduct_to = $leaverequest->deduct_to;
             $this->full_half = $leaverequest->full_or_half;
+            $this->purpose_type = $leaverequest->purpose_type;
+
         }
 
         $this->reason = $leaverequest->reason;

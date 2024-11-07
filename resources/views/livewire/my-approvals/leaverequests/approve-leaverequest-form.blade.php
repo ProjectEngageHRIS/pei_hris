@@ -96,6 +96,7 @@
                             <option value="Maternity Leave">Maternity Leave</option>
                             <option value="Paternity Leave">Paternity Leave</option>
                             <option value="Single Parent Leave">Single Parent Leave</option>
+                            <option value="Bearevement Leave">Bearevement Leave</option>
                             <option value="Credit Leave">Credit Leave</option>
                             <option value="Advise Slip">Advise Slip</option>
                             <option value="Others">Others</option>
@@ -138,7 +139,7 @@
                     </div>
                 </div>
                 @if ($mode_of_application == "Credit Leave" || $mode_of_application == "Advise Slip" || $mode_of_application == "Vacation Leave" || $mode_of_application == "Sick Leave" || $mode_of_application == "Maternity Leave"
-                    || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave" || $mode_of_application == "Single Parent Leave" ||  $mode_of_application == "Others")
+                    || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave" || $mode_of_application == "Single Parent Leave" || $mode_of_application == "Bearevement Leave" ||  $mode_of_application == "Others")
                     <hr class="my-4 border-gray-300">
                     @if ($mode_of_application == "Credit Leave")
                         {{-- Time Frame --}}
@@ -240,7 +241,7 @@
                             </div>
                         </div>
                         <hr class="my-4 border-gray-300">
-                    @elseif ($mode_of_application == "Vacation Leave" || $mode_of_application == "Sick Leave" || $mode_of_application == "Maternity Leave"
+                    @elseif ($mode_of_application == "Vacation Leave" || $mode_of_application == "Sick Leave" || $mode_of_application == "Maternity Leave" || $mode_of_application == "Bearevement Leave"
                         || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave" || $mode_of_application == "Single Parent Leave" || $mode_of_application == "Others")
                         <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-7 gap-4">
                             <div class="col-span-4 grid grid-cols-1  gap-4">
@@ -276,7 +277,7 @@
                                                 <span class="text-red-600">*</span>
                                             </label>
                                             <select disabled id="purpose_type" name="full_half" wire:model.live="full_half"
-                                            class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                            class="bg-gray-50 shadow-inner border disabled-select border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
                                             <option value="" selected>Select</option>
                                             <option value="Full Day">Full Day</option>
                                             <option value="Half Day">Half Day</option>
@@ -349,7 +350,7 @@
                     @endif
 
                     @if ($mode_of_application == "Single Parent Leave" || $mode_of_application == "Sick Leave" || $mode_of_application == "Maternity Leave"
-                    || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave")
+                    || $mode_of_application == "Paternity Leave" || $mode_of_application == "Magna Carta Leave" || $mode_of_application == "Bearevement Leave")
                     <hr class="my-4 border-gray-300">
 
                         <div id="sick_leave_link_container" class="">
