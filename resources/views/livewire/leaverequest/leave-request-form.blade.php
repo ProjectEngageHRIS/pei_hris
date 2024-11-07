@@ -484,77 +484,38 @@
         </div>
     </section>
     <style>
-        .load-over {
-            position: fixed;
-            background: rgba(255, 255, 255, 0.8);
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-        .loading-overlay {
-            position: fixed;
-            top: 40%;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            font-family: Arial, sans-serif;
-            color: #AC0C2E;
-            pointer-events: none; /* Makes sure the overlay is not interactable */
-        }
-
-        .spinner {
-            border: 8px solid rgba(172, 12, 46, 0.3);
-            border-top: 8px solid #AC0C2E;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px; /* Adjust margin to add space between spinner and text */
-        }
-
-        @keyframes spin {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        .loading-overlay p {
-            margin: 0;
-            font-size: 18px;
-            font-weight: bold;
-        }
+    .swing-out-top-bck {
+        animation: swing-out-top-bck 1.5s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
+    }
+    @keyframes swing-out-top-bck {
+    0% {
+        transform: rotateX(0deg);
+        transform-origin: top;
+        opacity: 1;
+    }
+    100% {
+        transform: rotateX(-100deg);
+        transform-origin: top;
+        opacity: 0;
+    }
+    }
     </style>
+
     <script>
-    // // Add this script to hide the success alert after a delay
-    // document.addEventListener('livewire:load', function () {
-    //     Livewire.hook('message.processed', (message, component) => {
-    //         if (message.updateQueue && message.updateQueue.includes('showSuccess')) {
-    //             setTimeout(() => {
-    //                 component.set('showSuccess', false);
-    //             }, 5000); // Adjust the delay (in milliseconds) as needed
-    //         }
-    //     });
-    // });
+        document.addEventListener('livewire:init', function () {
+            Livewire.on('trigger-reroute', () => {
+                // Optional: Show a success message or animation here
+                setTimeout(() => {
+                    // document.body.classList.add('slide-out');
+                    // document.body.classList.add('zoom-out');
+                    // document.body.classList.add('fade-to-black');
+                    // document.body.classList.add('smooth-redirect');
+                    // document.body.classList.add('smooth-slide-out');
+                    document.body.classList.add('swing-out-top-bck');
+                    window.location.href = "{{ route('LeaveRequestTable') }}";
+                }, 3000); // Delay for 2000ms (2 seconds)
+            });
 
-    // document.addEventListener('livewire:init', function () {
-    //     Livewire.on('triggerNotification', () => {
-    //         // Show the modal
-    //         const modal = document.getElementById('toast-success');
-    //         if (modal) {
-    //             modal.classList.remove('hidden');
-    //         }
-    //     });
-    // });
-
-
+        });
     </script>
 </div>

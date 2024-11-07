@@ -271,7 +271,8 @@ class LeaveRequestForm extends Component
 
             $this->dispatch('trigger-success');
 
-            return redirect()->to(route('LeaveRequestTable'));
+            return $this->dispatch('trigger-reroute');
+
         } catch (\Exception $e) {
             $this->dispatch('trigger-error');
 
