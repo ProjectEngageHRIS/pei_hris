@@ -506,16 +506,16 @@
             Livewire.on('trigger-reroute', () => {
                 // Optional: Show a success message or animation here
                 setTimeout(() => {
-                    // document.body.classList.add('slide-out');
-                    // document.body.classList.add('zoom-out');
-                    // document.body.classList.add('fade-to-black');
-                    // document.body.classList.add('smooth-redirect');
-                    // document.body.classList.add('smooth-slide-out');
+                    // Add animation class for page transition
                     document.body.classList.add('swing-out-top-bck');
-                    window.location.href = "{{ route('LeaveRequestTable') }}";
-                }, 4000); // Delay for 2000ms (2 seconds)
+                    
+                    // Perform the actual redirect after the animation is done
+                    setTimeout(() => {
+                        window.location.href = "{{ route('LeaveRequestTable') }}";
+                    }, 3000); // Delay the redirect by 3000ms (to match animation duration)
+                }, 1500); // Initial delay before animation starts (to allow for any initial actions or messages)
             });
-
         });
     </script>
+
 </div>
