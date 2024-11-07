@@ -32,7 +32,7 @@
                                     </svg> Announcements
                                 </a>
                             @endif
-                            @if (!empty(array_intersect($permissions, [7, 9, 10, 11, 12, 13, 14, 15, 61024]))) 
+                            @if (!empty(array_intersect($permissions, [7, 9, 15, 61024]))) 
                                 <div class="relative group">
                                     <div id="approveBDropdownButton" class="block px-4 py-2 text-sm {{ request()->routeIs('ListLeaveRequestTable') || request()->routeIs('ListHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'text-customRed' : 'text-gray-600' }} cursor-pointer hover:bg-customRed hover:text-white">
                                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 18 18" fill="currentColor" class="inline-block w-5 h-5 mr-2">
@@ -48,7 +48,7 @@
                                             @if (!empty(array_intersect($permissions, [7, 61024]))) 
                                                 <a href="{{ route('ListLeaveRequestTable', ['type' => 'list'])  }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             @endif
-                                            @if (!empty(array_intersect($permissions, [9, 10, 11, 12, 13, 14, 61024]))) 
+                                            @if (!empty(array_intersect($permissions, [9, 61024]))) 
                                                 <a href="{{ route('ListHrTicketsTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                             @endif
                                             @if (!empty(array_intersect($permissions, [15, 61024]))) 
@@ -102,7 +102,7 @@
                         </button>
                     </a>
                 @endif
-                @if (!empty(array_intersect($permissions, [7, 9, 10, 11, 12, 13, 14, 15, 61024]))) 
+                @if (!empty(array_intersect($permissions, [7, 9, 15, 61024]))) 
                     <!-- Approval Button -->
                     <div class="relative inline-block text-left">
                         <button id="approveDropdownButton" class="w-32 font-sans text-sm font-medium shadow h-7 rounded-8px {{ request()->routeIs('ListLeaveRequestTable') || request()->routeIs('ListHrTicketsTable') || request()->routeIs('ApproveChangeInformationTable') ? 'bg-customRed text-white' : 'bg-navButton text-gray-600 hover:bg-customRed hover:text-white' }}">
@@ -117,7 +117,7 @@
                                 @if (!empty(array_intersect($permissions, [7, 61024]))) 
                                     <a href="{{ route('ListLeaveRequestTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
-                                @if (!empty(array_intersect($permissions, [9, 10, 11, 12, 13, 14, 61024]))) 
+                                @if (!empty(array_intersect($permissions, [9,  61024]))) 
                                     <a href="{{ route('ListHrTicketsTable', ['type' => 'list']) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                                 @if (!empty(array_intersect($permissions, [15, 61024]))) 
