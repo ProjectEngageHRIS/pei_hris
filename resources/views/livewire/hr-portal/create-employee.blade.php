@@ -554,119 +554,116 @@
                                 </div>
                              </div>
                              <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                <div class="grid grid-cols-1 col-span-3 gap-4  ">
-                                    <h2 class="font-bold text-customRed"> School Information</h2>
-                                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                            <p class="font-bold text-base text-customRed pb-4"> High School</p>
-                                            <div class="grid grid-cols-1 min-[902px]:grid-cols-2 gap-4 col-span-3 pb-4">
+                                <div class="col-span-3 space-y-4 ">
+                                    <h2 class="font-bold text-lg text-customRed"> School Information</h2>
+                                        <hr class="border-t-2 border-gray-400">
+                                        <p class="font-bold text-base ml-2 text-customRed"> High School</p>
+                                        <div class="grid grid-cols-1 ml-2 min-[902px]:grid-cols-2 gap-4 col-span-3 ">
+                                            <div class="w-full ">
+                                                <label for="high_school_school"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
+                                                <input type="text" name="high_school_school" id="high_school_school"  wire:model="high_school_school"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                    @error('high_school_school')
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('high_school_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('high_school_school').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                            </div>
+                                            <div class="w-full ">
+                                                <label for="middlename"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
+                                                <input type="date" name="high_school_date_graduated" id="high_school_date_graduated" wire:model="high_school_date_graduated"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                    @error('high_school_date_graduated')
+                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('high_school_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('high_school_date_graduated').focus();" >
+                                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                                </div>
+                                            @enderror
+                                            </div>
+                                        </div>
+                                        <hr class="border-t-2 border-gray-400">
+                                        <p class="font-bold ml-2 text-base text-customRed"> College School</p>
+                                        <div class="grid grid-cols-1 ml-2 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
+                                            <div class="w-full ">
+                                                <label for="college_school"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
+                                                <input type="text" name="college_school" id="college_school"  wire:model="college_school"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                                                @error('college_school')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('college_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('college_school').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                                                        </div>
+                                                                        <div class="w-full ">
+                                                                            <label for="college_course"
+                                                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course <span class="text-red-600">*</span></label>
+                                                                            <input type="text" name="college_course" id="college_course" wire:model="college_course"
+                                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                                                ntd="" >
+                                                                                @error('college_course')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('college_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('college_course').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                                                        </div>
+                                                                        <div class="w-full ">
+                                                                            <label for="college_date_graduated"
+                                                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
+                                                                            <input type="date" name="college_date_graduated" id="college_date_graduated" wire:model="college_date_graduated"
+                                                                                class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                                                ntd="" >
+                                                                                @error('college_date_graduated')
+                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('college_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('college_date_graduated').focus();" >
+                                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                        </div>
+                                        <hr class="border-t-2 border-gray-400">
+                                        <p class="font-bold text-base ml-2 text-customRed"> Vocational School</p>
+                                            <div class="grid grid-cols-1 ml-2 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
                                                 <div class="w-full ">
-                                                    <label for="high_school_school"
+                                                    <label for="vocational_school"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
-                                                    <input type="text" name="high_school_school" id="high_school_school"  wire:model="high_school_school"
+                                                    <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                         ntd="" >
-                                                        @error('high_school_school')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('high_school_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('high_school_school').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        @error('vocational_school')
+                                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_school').focus();" >
+                                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                                            </div>
+                                                        @enderror
                                                 </div>
                                                 <div class="w-full ">
-                                                    <label for="middlename"
+                                                    <label for="vocational_course"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course </label>
+                                                    <input type="text" name="vocational_course" id="vocational_course" wire:model="vocational_course"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                        @error('vocational_course')
+                                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_course').focus();" >
+                                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                                            </div>
+                                                        @enderror
+                                                </div>
+                                                <div class="w-full ">
+                                                    <label for="vocational_date_graduated"
                                                         class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
-                                                    <input type="date" name="high_school_date_graduated" id="high_school_date_graduated" wire:model="high_school_date_graduated"
+                                                    <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                         ntd="" >
-                                                        @error('high_school_date_graduated')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('high_school_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('high_school_date_graduated').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
+                                                        @error('vocational_date_graduated')
+                                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_date_graduated').focus();" >
+                                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                                            </div>
+                                                        @enderror
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                            <p class="font-bold text-base text-customRed pb-4"> College School</p>
-                                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
-                                                <div class="w-full ">
-                                                    <label for="college_school"
-                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
-                                                    <input type="text" name="college_school" id="college_school"  wire:model="college_school"
-                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                        ntd="" >
-                                                                                    @error('college_school')
-                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('college_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('college_school').focus();" >
-                                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                                        </div>
-                                                    @enderror
-                                                                            </div>
-                                                                            <div class="w-full ">
-                                                                                <label for="college_course"
-                                                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course <span class="text-red-600">*</span></label>
-                                                                                <input type="text" name="college_course" id="college_course" wire:model="college_course"
-                                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                                                    ntd="" >
-                                                                                    @error('college_course')
-                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('college_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('college_course').focus();" >
-                                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                                        </div>
-                                                    @enderror
-                                                                            </div>
-                                                                            <div class="w-full ">
-                                                                                <label for="college_date_graduated"
-                                                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
-                                                                                <input type="date" name="college_date_graduated" id="college_date_graduated" wire:model="college_date_graduated"
-                                                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                                                    ntd="" >
-                                                                                    @error('college_date_graduated')
-                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('college_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('college_date_graduated').focus();" >
-                                                            <span class="text-xs text-red-500">{{$message}}</span>
-                                                        </div>
-                                                    @enderror
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
-                                            <p class="font-bold text-base text-customRed pb-4"> Vocational School</p>
-                                                <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
-                                                    <div class="w-full ">
-                                                        <label for="vocational_school"
-                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">School <span class="text-red-600">*</span></label>
-                                                        <input type="text" name="vocational_school" id="vocational_school"  wire:model="vocational_school"
-                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            ntd="" >
-                                                            @error('vocational_school')
-                                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_school').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_school').focus();" >
-                                                                    <span class="text-xs text-red-500">{{$message}}</span>
-                                                                </div>
-                                                            @enderror
-                                                    </div>
-                                                    <div class="w-full ">
-                                                        <label for="vocational_course"
-                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Course </label>
-                                                        <input type="text" name="vocational_course" id="vocational_course" wire:model="vocational_course"
-                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            ntd="" >
-                                                            @error('vocational_course')
-                                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_course').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_course').focus();" >
-                                                                    <span class="text-xs text-red-500">{{$message}}</span>
-                                                                </div>
-                                                            @enderror
-                                                    </div>
-                                                    <div class="w-full ">
-                                                        <label for="vocational_date_graduated"
-                                                            class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Date Graduated <span class="text-red-600">*</span></label>
-                                                        <input type="date" name="middlename" id="vocational_date_graduated" wire:model="vocational_date_graduated"
-                                                            class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            ntd="" >
-                                                            @error('vocational_date_graduated')
-                                                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('vocational_date_graduated').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vocational_date_graduated').focus();" >
-                                                                    <span class="text-xs text-red-500">{{$message}}</span>
-                                                                </div>
-                                                            @enderror
-                                                    </div>
-                                                </div>
-                                        </div>
                                 </div>
                             </div>
                              </div>
@@ -817,336 +814,339 @@
                              </div>
                     <div class="grid grid-cols-1 w-full col-span-3 gap-4 min-[902px]:grid-cols-3 p-6 bg-white border border-gray-200 rounded-lg shadow  dark:bg-gray-800 dark:border-gray-700 ">
                                 <div class="grid grid-cols-1 col-span-3 gap-4 ">
-                                     <h2  class="font-bold text-customRed">Onboarding</h2>
-                                     <div>
-
-                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
-                                            <div class="w-full ">
-                                                <label for="start_of_employment"
-                                                    class  ="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Start of Employment<span class="text-red-600">*</span></label>
-                                                <input type="date" name="start_of_employment" id="start_of_employment"  wire:model="start_of_employment"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                                    @error('start_of_employment')
-                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('start_of_employment').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_of_employment').focus();" >
+                                    <h2  class="font-bold text-lg text-customRed">Onboarding</h2>
+                                    <hr class="border-t-2 border-gray-400">
+                                    <div class="space-y-4">
+                                            <h2  class="font-bold ml-2 text-customRed">Employment Information</h2>
+                                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3 ml-2  gap-4 col-span-3 pb-4">
+                                                <div class="w-full ">
+                                                    <label for="start_of_employment"
+                                                        class  ="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Start of Employment<span class="text-red-600">*</span></label>
+                                                    <input type="date" name="start_of_employment" id="start_of_employment"  wire:model="start_of_employment"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                                        @error('start_of_employment')
+                                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('start_of_employment').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('start_of_employment').focus();" >
+                                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                                            </div>
+                                                        @enderror
+                                                </div>
+                                                <div class="w-full ">
+                                                    <label for="current_position"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Position<span class="text-red-600">*</span></label>
+                                                    <input type="text" name="current_position" id="current_position"  wire:model="current_position"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                    @error('current_position')
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('current_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('current_position').focus();" >
                                                             <span class="text-xs text-red-500">{{$message}}</span>
                                                         </div>
                                                     @enderror
-                                            </div>
-                                            <div class="w-full ">
-                                                <label for="current_position"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Position<span class="text-red-600">*</span></label>
-                                                <input type="text" name="current_position" id="current_position"  wire:model="current_position"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                @error('current_position')
-                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('current_position').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('current_position').focus();" >
-                                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                                    </div>
-                                                @enderror
 
-                                            </div>
-                                            <div wire:ignore class="w-full relative">
-                                                <label for="permission" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Permissions <span class="text-red-600">*</span></label>
-                                                <select name="permission[]" id="permission" wire:model="permission" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
-                                                    <option disabled>Select Permissions</option>
-                                                    <option value="1">Employee</option>
-                                                    <option value="2">Supervisor</option>
-                                                    <option value="3">President</option>
-                                                    <option value="4">Employees Information Table (HR)</option>
-                                                    <option value="5">Daily Time Record (HR)</option>
-                                                    <option value="6">Announcements (HR)</option>
-                                                    <option value="7">Approve Leave Requests (HR)</option>
-                                                    <option value="8">Approve HR Tickets (Employee)</option>
-                                                    <option value="9">Approve HR Tickets (HR)</option>     
-                                                    <option value="10">Internal Control (HR)</option>
-                                                    <option value="11">Operations (HR)</option>
-                                                    <option value="12">Internal Tickets-HR (HR)</option>
-                                                    <option value="13">Internal Tickets-Office Admin (HR)</option>
-                                                    <option value="14">Internal Tickets-Procurement (HR)</option>
-                                                    <option value="15">Approve Update Information (HR)</option>
-                                                    <option value="16">Accounting</option>
-                                                    <option value="17">IT Tickets</option>
-                                                </select>
-                                                @error('permission')
-                                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('permission').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('permission').focus();">
-                                                        <span class="text-xs text-red-500">{{$message}}</span>
-                                                    </div>
-                                                @enderror
-                                            </div>
-                                            
-                                            <script>
-                                                $(document).ready(function() {
-                                                    $('.step-7-inputs').select2({
-                                                        placeholder: 'Select Permissions',
-                                                        closeOnSelect: false,
-                                                        dropdownAutoWidth: true, // Ensures dropdown uses available width
-                                                        width: '100%'            // Match Select2 to container width
-                                                    }).on('select2:open', function() {
-                                                        // Adjust dropdown styling when open
-                                                        $('.select2-dropdown').addClass('bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5');
-                                                    }).on('change', function() {
-                                                        let data = $(this).val();
-                                                        @this.set('permission', data);  // Bind selected roles to Livewire model
+                                                </div>
+                                                <div wire:ignore class="w-full relative">
+                                                    <label for="permission" class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Permissions <span class="text-red-600">*</span></label>
+                                                    <select name="permission[]" id="permission" wire:model="permission" class="step-7-inputs bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" multiple required>
+                                                        <option disabled>Select Permissions</option>
+                                                        <option value="1">Employee</option>
+                                                        <option value="2">Supervisor</option>
+                                                        <option value="3">President</option>
+                                                        <option value="4">Employees Information Table (HR)</option>
+                                                        <option value="5">Daily Time Record (HR)</option>
+                                                        <option value="6">Announcements (HR)</option>
+                                                        <option value="7">Approve Leave Requests (HR)</option>
+                                                        <option value="8">Approve HR Tickets (Employee)</option>
+                                                        <option value="9">Approve HR Tickets (HR)</option>     
+                                                        <option value="10">Internal Control (HR)</option>
+                                                        <option value="11">Operations (HR)</option>
+                                                        <option value="12">Internal Tickets-HR (HR)</option>
+                                                        <option value="13">Internal Tickets-Office Admin (HR)</option>
+                                                        <option value="14">Internal Tickets-Procurement (HR)</option>
+                                                        <option value="15">Approve Update Information (HR)</option>
+                                                        <option value="16">Accounting</option>
+                                                        <option value="17">IT Tickets</option>
+                                                    </select>
+                                                    @error('permission')
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('permission').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('permission').focus();">
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                
+                                                <script>
+                                                    $(document).ready(function() {
+                                                        $('.step-7-inputs').select2({
+                                                            placeholder: 'Select Permissions',
+                                                            closeOnSelect: false,
+                                                            dropdownAutoWidth: true, // Ensures dropdown uses available width
+                                                            width: '100%'            // Match Select2 to container width
+                                                        }).on('select2:open', function() {
+                                                            // Adjust dropdown styling when open
+                                                            $('.select2-dropdown').addClass('bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5');
+                                                        }).on('change', function() {
+                                                            let data = $(this).val();
+                                                            @this.set('permission', data);  // Bind selected roles to Livewire model
+                                                        });
+                                                
+                                                        // Additional styling for the Select2 container
+                                                        $('.select2-container--default .select2-selection--multiple').css({
+                                                            "background-color": "#F9FAFB",   // Tailwind's bg-gray-50
+                                                            "border": "1px solid #D1D5DB",   // Tailwind's border-gray-300
+                                                            "border-radius": "0.5rem",       // Tailwind's rounded-lg
+                                                            "padding": "0.625rem",           // Matches padding of p-2.5
+                                                            "min-height": "42px",            // Ensures consistent min-height
+                                                            "max-height": "150px",           // Optional max-height to prevent large dropdowns
+                                                            "overflow-y": auto,
+                                                        });
                                                     });
-                                            
-                                                    // Additional styling for the Select2 container
-                                                    $('.select2-container--default .select2-selection--multiple').css({
-                                                        "background-color": "#F9FAFB",   // Tailwind's bg-gray-50
-                                                        "border": "1px solid #D1D5DB",   // Tailwind's border-gray-300
-                                                        "border-radius": "0.5rem",       // Tailwind's rounded-lg
-                                                        "padding": "0.625rem",           // Matches padding of p-2.5
-                                                        "min-height": "42px",            // Ensures consistent min-height
-                                                        "max-height": "150px",           // Optional max-height to prevent large dropdowns
-                                                        "overflow-y": auto,
-                                                    });
-                                                });
-                                            </script>
-                                        </div>
-                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-3 gap-4 col-span-3 pb-4">
-                                             <div class="w-full" id="department">
-                                                 <label for="company"
-                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Company Name <span class="text-red-600">*</span></label>
-                                                 <select id="department" name="department" wire:model.live="department"
-                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                     <option selected>Select</option>
-                                                     <option value="PEI">PEI</option>
-                                                    <option value="SL SEARCH">SL SEARCH</option>
-                                                    <option value="SL Temps">SL TEMPS</option>
-                                                    <option value="WESEARCH">WESEARCH</option>
-                                                    <option value="PEI-Upskills">PEI-UPSKILLS</option>
-                                                 </select>
-                                                 @error('department')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('department').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-
-                                             </div>
-                                             <div class="w-full">
-                                                 <label for="department_name"
-                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Department Name <span class="text-red-600">*</span></label>
-                                                     <select id="inside_department" name="inside_department" wire:model.live="inside_department"
-                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                                     <option selected>Select</option>
-                                                     <option value="HR and Admin">HR and Admin</option>
-                                                     <option value="Recruitment">Recruitment</option>
-                                                     <option value="CXS">CXS</option>
-                                                     <option value="Overseas Recruitment">Overseas Recruitment</option>
-                                                     <option value="PEI/SL Temps DO-174">PEI/SL Temps DO-174</option>
-                                                     <option value="Corporate Accounting and Finance">Corporate Accounting and Finance</option>
-                                                     <option value="Accounting Operations">Accounting Operations</option>
-                                                 </select>
-                                                 @error('inside_department')
-                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('inside_department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('inside_department').focus();" >
-                                <span class="text-xs text-red-500">{{$message}}</span>
-                            </div>
-                        @enderror
-                                             </div>
-
-                                             <div class="w-full">
-                                                 <label for="employee_type"
-                                                     class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Type <span class="text-red-600">*</span></label>
-                                                 <select id="employee_type" name="employee_type" wire:model.live="employee_type"
-                                                     class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
-                                                     <option selected>Select</option>
-                                                     <option value="INDEPENDENT CONTRACTOR">Independent Contractor</option>
-                                                     <option value="INTERN">Intern</option>
-                                                     <option value="PROBATIONARY">Probationary</option>
-                                                     <option value="PROJECT BASED">Project Based</option>
-                                                     <option value="REGULAR">Regular</option>
-                                                     <option value="RELIEVER">Reliever</option>                                                     
-                                                 </select>
-                                                 @error('employee_type')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('employee_type').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employee_type').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
-                                             </div>
-                                         </div>
-                                         <div class="grid grid-cols-1 min-[902px]:grid-cols-4 gap-4 col-span-3 pb-4">
-                                            <div class="w-full ">
-                                                <label for="firstname"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
-                                                <input type="text" name="sss_num" id="sss_num"  wire:model="sss_num"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    @error('sss_num')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('sss_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sss_num').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
+                                                </script>
                                             </div>
-                                            <div class="w-full ">
-                                                <label for="tin_num"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
-                                                <input type="text" name="tin_num" id="tin_num" wire:model="tin_num"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    @error('tin_num')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('tin_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('tin_num').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
-                                            </div>
-                                            <div class="w-full">
-                                                <label for="phic_num"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">PHIC Number <span class="text-red-600">*</span></label>
-                                                <input type="text" name="phic_num" id="phic_num"  wire:model="phic_num"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    @error('phic_num')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('phic_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phic_num').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
-                                            </div>
-                                            <div class="w-full">
-                                                <label for="hdmf_num"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">HDMF Number <span class="text-red-600">*</span></label>
-                                                <input type="text" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    @error('hdmf_num')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('hdmf_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('hdmf_num').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
-                                            </div>
-                                            <div class="w-full">
-                                                <label for="employee_id"
-                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee_ID<span class="text-red-600">*</span></label>
-                                                <input type="text" name="employee_id" id="employee_id"  wire:model="employee_id"
-                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                    ntd="" >
-                                                    @error('employee_id')
-                                                     <div class="text-sm transition transform alert alert-danger"
-                                                     x-data x-init="document.getElementById('employee_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employee_id').focus();" >
-                                                         <span class="text-xs text-red-500" > {{$message}}</span>
-                                                     </div>
-                                                 @enderror
-                                            </div>
-                                            <div class="flex flex-row w-full relative">
-                                                <div class="flex flex-col w-full">
-                                                    <label for="password" class="block text-sm font-medium text-customGray1">Password <span class="text-red-600">*</span></label>
-                                                    <div x-data="{
-                                                            password: '',
-                                                            generatePassword() {
-                                                                const length = Math.floor(Math.random() * (20 - 8 + 1)) + 8; // Random length between 8 and 20
-                                                                const lowerCharset = 'abcdefghijklmnopqrstuvwxyz';
-                                                                const upperCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
-                                                                const numberCharset = '0123456789';
-                                                                const specialCharset = '@$!%*?&';
-                                                                const allCharset = lowerCharset + upperCharset + numberCharset + specialCharset;
+                                            <div class="grid grid-cols-1 min-[902px]:grid-cols-3 ml-2 gap-4 col-span-3 ">
+                                                <div class="w-full" id="department">
+                                                    <label for="company"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Company Name <span class="text-red-600">*</span></label>
+                                                    <select id="department" name="department" wire:model.live="department"
+                                                        class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        <option selected>Select</option>
+                                                        <option value="PEI">PEI</option>
+                                                        <option value="SL SEARCH">SL SEARCH</option>
+                                                        <option value="SL Temps">SL TEMPS</option>
+                                                        <option value="WESEARCH">WESEARCH</option>
+                                                        <option value="PEI-Upskills">PEI-UPSKILLS</option>
+                                                    </select>
+                                                    @error('department')
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('department').focus();" >
+                                                            <span class="text-xs text-red-500">{{$message}}</span>
+                                                        </div>
+                                                    @enderror
 
-                                                                let password = '';
-                                                                password += lowerCharset.charAt(Math.floor(Math.random() * lowerCharset.length));
-                                                                password += upperCharset.charAt(Math.floor(Math.random() * upperCharset.length));
-                                                                password += numberCharset.charAt(Math.floor(Math.random() * numberCharset.length));
-                                                                password += specialCharset.charAt(Math.floor(Math.random() * specialCharset.length));
-
-                                                                for (let i = password.length; i < length; i++) {
-                                                                    password += allCharset.charAt(Math.floor(Math.random() * allCharset.length));
-                                                                }
-
-                                                                // Shuffle the password to avoid predictable patterns
-                                                                this.password = password.split('').sort(() => 0.5 - Math.random()).join('');
-                                                                $wire.set('password', this.password); // Update Livewire component property
-                                                            }
-                                                        }"
-                                                        class="relative flex items-center w-full">
-                                                        <input type="password" name="password" id="password" x-model="password" wire:model.live="password" placeholder="••••••••"
-                                                            class="bg-gray-50 border border-gray-300 mt-4 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                                            required>
-                                                        <button type="button" class="absolute right-12 bottom-1 mb-1 text-customGray1 hover:text-customRed" @click="generatePassword()">
-                                                            Generate
-                                                        </button>
-                                                        <button type="button" class="absolute right-2 bottom-1 mb-2 text-customGray1 hover:text-customRed" onclick="togglePassword()">
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4" id="eyeopen">
-                                                                <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
-                                                                <path fillRule="evenodd" d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" clipRule="evenodd" />
-                                                            </svg>
-                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 hidden" id="eyeclose">
-                                                                <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
-                                                                <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
-                                                                <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
-                                                            </svg>
-                                                        </button>
-                                                    </div>
-                                                    @error('password')
-                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('password').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('password').focus();" >
+                                                </div>
+                                                <div class="w-full">
+                                                    <label for="department_name"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Department Name <span class="text-red-600">*</span></label>
+                                                        <select id="inside_department" name="inside_department" wire:model.live="inside_department"
+                                                        class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                                        <option selected>Select</option>
+                                                        <option value="HR and Admin">HR and Admin</option>
+                                                        <option value="Recruitment">Recruitment</option>
+                                                        <option value="CXS">CXS</option>
+                                                        <option value="Overseas Recruitment">Overseas Recruitment</option>
+                                                        <option value="PEI/SL Temps DO-174">PEI/SL Temps DO-174</option>
+                                                        <option value="Corporate Accounting and Finance">Corporate Accounting and Finance</option>
+                                                        <option value="Accounting Operations">Accounting Operations</option>
+                                                    </select>
+                                                    @error('inside_department')
+                                                        <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('inside_department').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('inside_department').focus();" >
                                                             <span class="text-xs text-red-500">{{$message}}</span>
                                                         </div>
                                                     @enderror
                                                 </div>
 
+                                                <div class="w-full">
+                                                    <label for="employee_type"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee Type <span class="text-red-600">*</span></label>
+                                                    <select id="employee_type" name="employee_type" wire:model.live="employee_type"
+                                                        class="-select bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
+                                                        <option selected>Select</option>
+                                                        <option value="INDEPENDENT CONTRACTOR">Independent Contractor</option>
+                                                        <option value="INTERN">Intern</option>
+                                                        <option value="PROBATIONARY">Probationary</option>
+                                                        <option value="PROJECT BASED">Project Based</option>
+                                                        <option value="REGULAR">Regular</option>
+                                                        <option value="RELIEVER">Reliever</option>                                                     
+                                                    </select>
+                                                    @error('employee_type')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employee_type').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employee_type').focus();" >
+                                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                            </div>
+                                        <hr class="border-t-2 border-gray-400">
 
-</div>
-
-<script>
-// function generatePassword() {
-//     const length = Math.floor(Math.random() * (20 - 8 + 1)) + 8; // Random length between 8 and 20
-//     const lowerCharset = "abcdefghijklmnopqrstuvwxyz";
-//     const upperCharset = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-//     const numberCharset = "0123456789";
-//     const specialCharset = "@$!%*?&";
-//     const allCharset = lowerCharset + upperCharset + numberCharset + specialCharset;
-
-//     let password = "";
-//     password += lowerCharset.charAt(Math.floor(Math.random() * lowerCharset.length));
-//     password += upperCharset.charAt(Math.floor(Math.random() * upperCharset.length));
-//     password += numberCharset.charAt(Math.floor(Math.random() * numberCharset.length));
-//     password += specialCharset.charAt(Math.floor(Math.random() * specialCharset.length));
-
-//     for (let i = password.length; i < length; i++) {
-//         password += allCharset.charAt(Math.floor(Math.random() * allCharset.length));
-//     }
-
-//     // Shuffle the password to avoid predictable patterns
-//     password = password.split('').sort(() => 0.5 - Math.random()).join('');
-
-//     document.getElementById('password').value = password;
-//     $wire.set('password', password);
-// }
-
-
-    function togglePassword() {
-        const passwordField = document.getElementById('password');
-        const eyeOpen = document.getElementById('eyeopen');
-        const eyeClose = document.getElementById('eyeclose');
-
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            eyeOpen.classList.add('hidden');
-            eyeClose.classList.remove('hidden');
-        } else {
-            passwordField.type = 'password';
-            eyeOpen.classList.remove('hidden');
-            eyeClose.classList.add('hidden');
-        }
-    }
-</script>
-</div>
-
-
-
-
+                                        <h2  class="font-bold ml-2 text-customRed">Leave Credits</h2>
+                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-2 ml-2 gap-4 col-span-3">
+                                            <div id="vacation_credits_container" class="w-full ">
+                                                <label for="vacation_credits"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">Vacation Credits <span class="text-red-600">*</span></label>
+                                                <input type="number" name="vacation_credits" step="any" id="vacation_credits"  wire:model="vacation_credits"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                    @error('vacation_credits')
+                                                    <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('vacation_credits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('vacation_credits_container').focus();" >
+                                                        <span class="text-xs text-red-500" > {{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
+                                            <div id="sick_credits_container" class="w-full ">
+                                                <label for="sick_credits"
+                                                    class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Sick Credits<span class="text-red-600">*</span></label>
+                                                <input type="number" name="sick_credits" step="any" id="sick_credits" wire:model="sick_credits"
+                                                    class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                    ntd="" >
+                                                    @error('sick_credits')
+                                                    <div class="text-sm transition transform alert alert-danger"
+                                                    x-data x-init="document.getElementById('sick_credits_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sick_credits_container').focus();" >
+                                                        <span class="text-xs text-red-500" > {{$message}}</span>
+                                                    </div>
+                                                @enderror
+                                            </div>
                                         </div>
+                                        <hr class="border-t-2 border-gray-400">
+                                        <h2  class="font-bold ml-2 text-customRed">Other Information</h2>
+                                        <div class="grid grid-cols-1 min-[902px]:grid-cols-4 ml-2 gap-4 col-span-3">
+                                                <div class="w-full ">
+                                                    <label for="sss_num"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap">SSS Number <span class="text-red-600">*</span></label>
+                                                    <input type="text" name="sss_num" id="sss_num"  wire:model="sss_num"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                        @error('sss_num')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('sss_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('sss_num').focus();" >
+                                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="w-full ">
+                                                    <label for="tin_num"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">TIN Number<span class="text-red-600">*</span></label>
+                                                    <input type="text" name="tin_num" id="tin_num" wire:model="tin_num"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                        @error('tin_num')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('tin_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('tin_num').focus();" >
+                                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="w-full">
+                                                    <label for="phic_num"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">PHIC Number <span class="text-red-600">*</span></label>
+                                                    <input type="text" name="phic_num" id="phic_num"  wire:model="phic_num"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                        @error('phic_num')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('phic_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('phic_num').focus();" >
+                                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="w-full">
+                                                    <label for="hdmf_num"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">HDMF Number <span class="text-red-600">*</span></label>
+                                                    <input type="text" name="hdmf_num" id="hdmf_num"  wire:model="hdmf_num"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                        @error('hdmf_num')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('hdmf_num').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('hdmf_num').focus();" >
+                                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="w-full">
+                                                    <label for="employee_id"
+                                                        class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Employee_ID<span class="text-red-600">*</span></label>
+                                                    <input type="text" name="employee_id" id="employee_id"  wire:model="employee_id"
+                                                        class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                        ntd="" >
+                                                        @error('employee_id')
+                                                        <div class="text-sm transition transform alert alert-danger"
+                                                        x-data x-init="document.getElementById('employee_id').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('employee_id').focus();" >
+                                                            <span class="text-xs text-red-500" > {{$message}}</span>
+                                                        </div>
+                                                    @enderror
+                                                </div>
+                                                <div class="flex flex-row w-full relative">
+                                                    <div class="flex flex-col w-full">
+                                                        <label for="password" class="block text-sm font-medium text-customGray1">Password <span class="text-red-600">*</span></label>
+                                                        <div x-data="{
+                                                                password: '',
+                                                                generatePassword() {
+                                                                    const length = Math.floor(Math.random() * (20 - 8 + 1)) + 8; // Random length between 8 and 20
+                                                                    const lowerCharset = 'abcdefghijklmnopqrstuvwxyz';
+                                                                    const upperCharset = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+                                                                    const numberCharset = '0123456789';
+                                                                    const specialCharset = '@$!%*?&';
+                                                                    const allCharset = lowerCharset + upperCharset + numberCharset + specialCharset;
 
-                                     </div>
-                                     <div class="items-center">
-                                        <label class="inline-flex items-center cursor-pointer">
-                                            <input type="checkbox" wire:model="active" class="sr-only peer" checked>
-                                            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
-                                            <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active?</span>
-                                        </label>
+                                                                    let password = '';
+                                                                    password += lowerCharset.charAt(Math.floor(Math.random() * lowerCharset.length));
+                                                                    password += upperCharset.charAt(Math.floor(Math.random() * upperCharset.length));
+                                                                    password += numberCharset.charAt(Math.floor(Math.random() * numberCharset.length));
+                                                                    password += specialCharset.charAt(Math.floor(Math.random() * specialCharset.length));
+
+                                                                    for (let i = password.length; i < length; i++) {
+                                                                        password += allCharset.charAt(Math.floor(Math.random() * allCharset.length));
+                                                                    }
+
+                                                                    // Shuffle the password to avoid predictable patterns
+                                                                    this.password = password.split('').sort(() => 0.5 - Math.random()).join('');
+                                                                    $wire.set('password', this.password); // Update Livewire component property
+                                                                }
+                                                            }"
+                                                            class="relative flex items-center w-full">
+                                                            <input type="password" name="password" id="password" x-model="password" wire:model.live="password" placeholder="••••••••"
+                                                                class="bg-gray-50 border border-gray-300 mt-2 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                                                                required>
+                                                            <button type="button" class="absolute right-12 bottom-1 mb-1 text-customGray1 hover:text-customRed" @click="generatePassword()">
+                                                                Generate
+                                                            </button>
+                                                            <button type="button" class="absolute right-2 bottom-1 mb-2 text-customGray1 hover:text-customRed" onclick="togglePassword()">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="size-4" id="eyeopen">
+                                                                    <path d="M8 9.5a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3Z" />
+                                                                    <path fillRule="evenodd" d="M1.38 8.28a.87.87 0 0 1 0-.566 7.003 7.003 0 0 1 13.238.006.87.87 0 0 1 0 .566A7.003 7.003 0 0 1 1.379 8.28ZM11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" clipRule="evenodd" />
+                                                                </svg>
+                                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="size-4 hidden" id="eyeclose">
+                                                                    <path d="M3.53 2.47a.75.75 0 0 0-1.06 1.06l18 18a.75.75 0 1 0 1.06-1.06l-18-18ZM22.676 12.553a11.249 11.249 0 0 1-2.631 4.31l-3.099-3.099a5.25 5.25 0 0 0-6.71-6.71L7.759 4.577a11.217 11.217 0 0 1 4.242-.827c4.97 0 9.185 3.223 10.675 7.69.12.362.12.752 0 1.113Z" />
+                                                                    <path d="M15.75 12c0 .18-.013.357-.037.53l-4.244-4.243A3.75 3.75 0 0 1 15.75 12ZM12.53 15.713l-4.243-4.244a3.75 3.75 0 0 0 4.244 4.243Z" />
+                                                                    <path d="M6.75 12c0-.619.107-1.213.304-1.764l-3.1-3.1a11.25 11.25 0 0 0-2.63 4.31c-.12.362-.12.752 0 1.114 1.489 4.467 5.704 7.69 10.675 7.69 1.5 0 2.933-.294 4.242-.827l-2.477-2.477A5.25 5.25 0 0 1 6.75 12Z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                        @error('password')
+                                                            <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('password').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('password').focus();" >
+                                                                <span class="text-xs text-red-500">{{$message}}</span>
+                                                            </div>
+                                                        @enderror
+                                                    </div>
+                                                </div>
+
+                                                    <script>
+                                                        function togglePassword() {
+                                                            const passwordField = document.getElementById('password');
+                                                            const eyeOpen = document.getElementById('eyeopen');
+                                                            const eyeClose = document.getElementById('eyeclose');
+
+                                                            if (passwordField.type === 'password') {
+                                                                passwordField.type = 'text';
+                                                                eyeOpen.classList.add('hidden');
+                                                                eyeClose.classList.remove('hidden');
+                                                            } else {
+                                                                passwordField.type = 'password';
+                                                                eyeOpen.classList.remove('hidden');
+                                                                eyeClose.classList.add('hidden');
+                                                            }
+                                                        }
+                                                    </script>
+                                                <div class="flex items-center w-full mt-2 min-[902px]:mt-6">
+                                                    <label class="inline-flex items-center cursor-pointer">
+                                                        <input type="checkbox" wire:model="active" class="sr-only peer" checked>
+                                                        <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Active?</span>
+                                                    </label>
+                                                </div>
+                                        </div>
                                     </div>
 
-</div>
+                                </div>
+
+
+                    </div>
 </div>
 
                 </div>

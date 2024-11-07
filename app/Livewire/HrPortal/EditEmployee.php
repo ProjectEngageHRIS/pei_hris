@@ -99,6 +99,10 @@ class EditEmployee extends Component
     public $start_of_employment;
     public $name_of_father;
     public $spouse;
+
+    public $vacation_credits;
+
+    public $sick_credits;
     public $showConfirmation = false;
     public $isEditable = true;
     public $showSubmitButton = true;
@@ -176,6 +180,8 @@ class EditEmployee extends Component
             $this->name_of_mother = $employeeRecord->name_of_mother;
             $this->name_of_father = $employeeRecord->name_of_father;
             $this->spouse = $employeeRecord->spouse;
+            $this->vacation_credits = $employeeRecord->vacation_credits;
+            $this->sick_credits = $employeeRecord->sick_credits;
 
             if ($employeeRecord->names_of_children) {
                 // Split the text by new lines and trim each line
@@ -302,6 +308,8 @@ class EditEmployee extends Component
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBATIONARY,PROJECT BASED,RELIEVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
+        'vacation_credits' => 'required|numeric|min:0|max:1000',
+        'sick_credits' => 'required|numeric|min:0|max:1000',
         'sss_num' => ['required', 'string',],
         'tin_num' => ['required', 'string',],
         'phic_num' => ['required', 'string', ],
@@ -524,6 +532,9 @@ class EditEmployee extends Component
         $employee_data->vocational_course = $this->vocational_course;
         $employee_data->vocational_date_graduated = $this->vocational_date_graduated;
         $employee_data->birth_place = $this->birth_place;
+        $employee_data->vacation_credits = $this->vacation_credits;
+        $employee_data->sick_credits = $this->sick_credits;
+
 
         $formattedNamesString = '';
 

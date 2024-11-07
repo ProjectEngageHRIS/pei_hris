@@ -102,6 +102,10 @@ class CreateEmployee extends Component
     public $start_of_employment;
     public $name_of_father;
     public $spouse;
+
+    public $vacation_credits = 15.0;
+
+    public $sick_credits = 15.0;
     public $showConfirmation = false;
     public $step = 1;
 
@@ -213,6 +217,8 @@ class CreateEmployee extends Component
         'department' => 'required|in:PEI,SL SEARCH,SL Temps,WESEARCH,PEI-Upskills',
         'inside_department' => 'required|in:HR and Admin,Recruitment,CXS,Overseas Recruitment,PEI/SL Temps DO-174,Corporate Accounting and Finance,Accounting Operations',
         'employee_type' => 'required|in:INTERNAL EMPLOYEE,PROBATIONARY,PROJECT BASED,RELIEVER,INTERN,REGULAR,INDEPENDENT CONTRACTOR',
+        'vacation_credits' => 'required|numeric|min:0|max:1000',
+        'sick_credits' => 'required|numeric|min:0|max:1000',
         'sss_num' => ['required', 'numeric',],
         'tin_num' => ['required', 'numeric',],
         'phic_num' => ['required', 'numeric', ],
@@ -450,6 +456,8 @@ class CreateEmployee extends Component
                 $add_employee->name_of_mother = $this->name_of_mother;
                 $add_employee->name_of_father = $this->name_of_father;
                 $add_employee->spouse = $this->spouse;
+                $add_employee->vacation_credits = $this->vacation_credits;
+                $add_employee->sick_credits = $this->sick_credits;
                 $formattedNamesString = '';
     
                 foreach ($this->names_of_children as $name) {
