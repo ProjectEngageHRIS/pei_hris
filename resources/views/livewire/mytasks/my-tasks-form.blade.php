@@ -261,4 +261,19 @@
             $('#crud-modal').modal('hide'); // Assuming you're using Bootstrap modal
         });
     });
+
+    document.addEventListener('livewire:init', function () {
+        Livewire.on('trigger-reroute', () => {
+            // Optional: Show a success message or animation here
+            setTimeout(() => {
+                // Add animation class for page transition
+                document.body.classList.add('swing-out-top-bck');
+                
+                // Perform the actual redirect after the animation is done
+                setTimeout(() => {
+                    window.location.href = "{{ route('AssignedTasksTable') }}";
+                }, 3000); // Delay the redirect by 3000ms (to match animation duration)
+            }, 800); // Initial delay before animation starts (to allow for any initial actions or messages)
+        });
+    });
 </script>

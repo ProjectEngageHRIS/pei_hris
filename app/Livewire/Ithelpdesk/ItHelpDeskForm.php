@@ -139,8 +139,11 @@ class ItHelpDeskForm extends Component
             // }
     
             $this->dispatch('trigger-success');
+
+            return $this->dispatch('trigger-reroute');
+
         
-            return redirect()->to(route('ItHelpDeskTable'));
+            // return redirect()->to(route('ItHelpDeskTable'));
         } catch (\Exception $e) {
 
             $this->dispatch('trigger-error');

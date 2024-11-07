@@ -149,7 +149,9 @@ class MyTasksForm extends Component
 
             $this->dispatch('trigger-success');
 
-            return redirect()->to(route('AssignedTasksTable'));
+            return $this->dispatch('trigger-reroute');
+
+            // return redirect()->to(route('AssignedTasksTable'));
         } catch (\Exception $e) {
             $this->dispatch('trigger-error');
 

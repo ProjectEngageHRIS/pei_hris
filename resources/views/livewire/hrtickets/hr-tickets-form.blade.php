@@ -2093,7 +2093,7 @@
                     // Perform the actual redirect after the animation is done
                     setTimeout(() => {
                         window.location.href = "{{ route('HrTicketsTable') }}";
-                    }, 2000); // Delay the redirect by 3000ms (to match animation duration)
+                    }, 3000); // Delay the redirect by 3000ms (to match animation duration)
                 }, 1000); // Initial delay before animation starts (to allow for any initial actions or messages)
             });
         });

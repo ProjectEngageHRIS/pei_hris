@@ -418,13 +418,12 @@ class ChangeInformation extends Component
             }
 
 
-            $this->dispatch('trigger-success');
     
             $employee->save();
 
-            return redirect()->to(route('ChangeInformationTable'));
+            $this->dispatch('trigger-success');
 
-
+            return $this->dispatch('trigger-reroute');
 
         } catch (\Exception $e) {
 
