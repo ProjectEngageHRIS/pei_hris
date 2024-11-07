@@ -246,7 +246,7 @@ class HrTicketsForm extends Component
 
     protected $rules = [
         'concerned_employee' => 'required|min:5|string',
-        'type_of_ticket' => 'required|in:HR Internal,Internal Control,HR Operations',
+        'type_of_ticket' => 'required|in:HR Internal,Internal Control,HR Operations,Overtime Form',
         // 'type_of_request' => 'required|in:HR,Office Admin,Procurement',
     ];
 
@@ -703,6 +703,28 @@ class HrTicketsForm extends Component
             }
         } 
 
+        else if($this->type_of_ticket == "Overtime Form"){
+            $this->validate([
+                'request_link' => 'required|min:2|max:10000',
+                'request_requested' => 'required|email',
+                'request_date' => 'required|date',
+            ], [
+                // Custom messages for request_link
+                'request_link.required' => 'The Request Link is required.',
+                'request_link.string' => 'The Request Link must be a valid string.',
+                'request_link.max' => 'The Request Link cannot exceed 10,000 characters.',
+                
+                // Custom messages for request_others
+                'request_others.required' => 'The Email of Supervisor is required.',
+                'request_others.email' => 'The Supervisor email must be a valid email address.',
+                
+                // Custom messages for request_date
+                'request_date.required' => 'The Request Date is required.',
+                'request_date.date' => 'The Request Date must be a valid date.',
+        ]);
+        
+        } 
+
         $this->validate();
        
 
@@ -881,6 +903,12 @@ class HrTicketsForm extends Component
                 $hrticketdata->request_requested = $this->request_requested;
             }
         } 
+        else if($this->type_of_ticket == "Overtime Form"){
+            $hrticketdata->type_of_request = 'null';
+            $hrticketdata->request_date = $this->request_date;
+            $hrticketdata->request_requested = $this->request_requested;
+            $hrticketdata->request_link = $this->request_link;
+        }
         else {
             throw new Exception('No Type of Ticket');
         }

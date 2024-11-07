@@ -77,6 +77,7 @@
                     <select  id="type_of_ticket" name="type_of_ticket" wire:model.live="type_of_ticket" id="type_of_ticket_container" required wire:change="resetTypeOfRequest" disabled
                         class="bg-gray-50 border border-gray-300 shadow-inner disabled-select text-sm rounded-lg block w-full p-2.5">
                         <option selected>Select</option>
+                        <option value="Overtime Form">Overtime Form</option>
                         <option value="HR Internal">HR Internal</option>
                         <option value="Internal Control">Internal Control</option>
                         <option value="HR Operations">HR Operations</option>
@@ -197,7 +198,7 @@
             </div>
         </div>
         {{-- Other Information  --}}
-        @if ((($type_of_ticket == "Internal Control" || $type_of_ticket == "HR Operations") && !is_null($type_of_request)) || ($type_of_ticket == "HR Internal" && !is_null($type_of_request) && !is_null($sub_type_of_request)))
+        @if (( ($type_of_ticket == "Overtime Form") || ($type_of_ticket == "Internal Control" || $type_of_ticket == "HR Operations") && !is_null($type_of_request)) || ($type_of_ticket == "HR Internal" && !is_null($type_of_request) && !is_null($sub_type_of_request)))
             <hr class="my-2 border-gray-300">
             <div class="flex flex-col gap-4">
                 <h2 class="font-bold text-customRed">Other Information</h2>
@@ -1502,6 +1503,81 @@
                                 @enderror
                             </div>
                         </div>
+                    </div>
+                @elseif ($type_of_ticket == "Overtime Form")
+                    {{-- @elseif ($type_of_ticket == "HR Operations" && $type_of_request == "Request for Employee Files") --}}
+                    <div class="mt-2 grid grid-cols-1 min-[902px]:grid-cols-6 gap-4">
+                        <div class="grid grid-cols-1 col-span-1 ">
+                        {{-- Date Earned --}}
+                            <div id="request_date_container" class="col-span-1">
+                                <label for="request_date" class="block mb-2 text-sm font-medium text-gray-900 ">Period
+                                    <span class="text-red-600">*</span>
+                                </label>
+                                <input type="date" name="request_date" id="request_date" wire:model.live="request_date" disabled
+                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5 "
+                                    required="">
+                                @error('request_date')
+                                    <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_date_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_date_container').focus();" >
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div id="request_requested_container" class=" col-span-1 min-[902px]:col-span-2">
+                            <label class="block mb-2 text-sm font-medium text-gray-900 ">Email of Supervisor
+                                <span class="text-red-600">*</span>
+                            </label>
+                            <select id="request_requested" name="request_requested" wire:model.live="request_requested" disabled
+                                class="bg-gray-50 shadow-inner border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-customRed focus:border-customRed block w-full p-2.5" required>
+                                <option value="" selected>Select</option>
+                                <option value="seal.projectengage@gmail.com">seal.projectengage@gmail.com</option>
+                                <option value="jsodsod@projectengage.com.ph">jsodsod@projectengage.com.ph</option>
+                                <option value="sherwinmalabanan@sltemps.com">sherwinmalabanan@sltemps.com</option>
+                                <option value="esalvador@projectengage.com.ph">esalvador@projectengage.com.ph</option>
+                                <option value="kcastro@projectengage.com.ph">kcastro@projectengage.com.ph</option>
+                                <option value="jazz@wesearch.com.ph">jazz@wesearch.com.ph</option>
+                                <option value="rmaubay@projectengage.com.ph">rmaubay@projectengage.com.ph</option>
+                                <option value="jmb@sltemps.com">jmb@sltemps.com</option>
+                                <option value="rb@sltemps.com">rb@sltemps.com</option>
+                                <option value="mbaniqued@projectengage.com.ph">mbaniqued@projectengage.com.ph</option>
+                                <option value="rosanne.espedido@sltemps.com">rosanne.espedido@sltemps.com</option>
+                                <option value="trishesporlas@wesearch.com.ph">trishesporlas@wesearch.com.ph</option>
+                                <option value="ecapistrano@projectengage.com.ph">ecapistrano@projectengage.com.ph</option>
+                                <option value="khriziemisenas@sltemps.com">khriziemisenas@sltemps.com</option>
+                                <option value="chisilva@sltemps.com">chisilva@sltemps.com</option>
+                            </select>
+                            @error('request_requested')
+                                <div class="text-sm transition transform alert alert-danger" x-data x-init="document.getElementById('request_requested_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_requested_container').focus();" >
+                                    <span class="text-xs text-red-500">{{$message}}</span>
+                                </div>
+                            @enderror
+                        </div>
+                        <div id="request_link_container" class="col-span-1 min-[902px]:col-span-3">
+                            <label for="request_link" class="block mb-2 text-sm font-medium text-gray-900">
+                                Overtime Form <span class="text-red-600">*</span>
+                                <span class="block mt-2">
+                                    Click the link to download the OT template:
+                                    <a href="https://docs.google.com/spreadsheets/d/1fzR_r9ENBKWZFHP3alkCXK-gzbvipSJg/edit?gid=987895688#gid=987895688" 
+                                       target="_blank" 
+                                       class="text-customRed hover:text-red-900 underline">
+                                        Download OT Template
+                                    </a>
+                                </span>
+                            </label>
+                            <div id="request_link" class="grid grid-cols-1">
+                                <textarea type="text" rows="2" id="request_link" name="request_link" wire:model="request_link" disabled
+                                          placeholder="Kindly input the link of the filled downloaded OT Form here"
+                                          class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-customRed focus:border-customRed" required>
+                                </textarea>
+                                @error('request_link')
+                                    <div class="text-sm transition transform alert alert-danger" x-data 
+                                         x-init="document.getElementById('request_link_container').scrollIntoView({ behavior: 'smooth', block: 'center' }); document.getElementById('request_link_container').focus();">
+                                        <span class="text-xs text-red-500">{{$message}}</span>
+                                    </div>
+                                @enderror
+                            </div>
+                        </div>
+
                     </div>
                 @endif
                 <div>

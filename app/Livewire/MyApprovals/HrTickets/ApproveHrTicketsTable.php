@@ -105,7 +105,7 @@ class ApproveHrTicketsTable extends Component
                     return redirect()->to(route('HumanResourceDashboard'));
                 }
             } else {
-                if (empty(array_intersect($permissions, [8, 10, 11, 12, 13, 14, 61024]))) {
+                if (empty(array_intersect($permissions, [2, 8, 10, 11, 12, 13, 14, 61024]))) {
                     return redirect()->to(route('HumanResourceDashboard'));
                 }
             }
@@ -148,6 +148,8 @@ class ApproveHrTicketsTable extends Component
                 $query->where('type_of_ticket', 'Internal Control');
             } elseif (in_array(11, $permissions)) {
                 $query->where('type_of_ticket', 'HR Operations');
+            } elseif (!empty(array_intersect($permissions, [2]))) {
+                $query->where('type_of_ticket', 'Overtime Form');
             } elseif (!empty(array_intersect($permissions, [61024]))) {
                 $this->permissions = true; 
             } 
@@ -384,7 +386,7 @@ class ApproveHrTicketsTable extends Component
         try {
             $form = Hrticket::find($this->currentFormId);
             if($form){
-                if (in_array(61024, $permissions) || in_array($loggedInUser->permissions, [9, 10, 11, 12, 13, 14, 61024])) {
+                if (in_array(61024, $permissions) || in_array($loggedInUser->permissions, [2, 9, 10, 11, 12, 13, 14, 61024])) {
                     if($this->status == "Cancelled"){
                         $dataToUpdate = ['status' => 'Cancelled',
                             'cancelled_at' => now()];

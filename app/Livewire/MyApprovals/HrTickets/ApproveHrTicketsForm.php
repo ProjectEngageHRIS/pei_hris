@@ -281,6 +281,11 @@ class ApproveHrTicketsForm extends Component
                 $this->request_requested = $hrticketdata->request_requested;
             }
         }
+        else if($this->type_of_ticket == "Overtime Form"){
+            $this->request_date = Carbon::parse($hrticketdata->request_date)->toDateString(); 
+            $this->request_requested = $hrticketdata->request_requested;
+            $this->request_link = $hrticketdata->request_link;
+        }
 
     }
 
@@ -355,10 +360,10 @@ class ApproveHrTicketsForm extends Component
             }
             
             $hr_ticket = Hrticket::where('uuid', $index)->first();
+            $loggedInEmail = Employee::where('employee_id', $loggedInUser->employee_id)->value('employee_email');
             if (!$hr_ticket) {
                 throw new \Exception('No Record Found');
             }
-            
             if($hr_ticket->type_of_ticket == "HR Internal"){
                 if($hr_ticket->type_of_request == "HR"){
                     if (empty(array_intersect($permissions, [12, 9, 61024]))) {
@@ -381,7 +386,14 @@ class ApproveHrTicketsForm extends Component
                 if (empty(array_intersect($permissions, [11, 9, 61024]))) {
                     throw new \Exception('Unauthorized Access');
                 }
-            } else {
+            } else if($hr_ticket->type_of_ticket == "Overtime Form") {
+                if (empty(array_intersect($permissions, [2, 9, 61024]))) {
+                    throw new \Exception('Unauthorized Access');
+                }
+                if($hr_ticket->request_requested != $loggedInEmail){
+                    throw new \Exception('Unauthorized Access');
+                }
+            } else{
                 throw new \Exception('Unknown Ticket Type');
             }
             return $hr_ticket;

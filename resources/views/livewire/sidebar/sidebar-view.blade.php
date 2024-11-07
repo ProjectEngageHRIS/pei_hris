@@ -70,8 +70,8 @@
                                             @if (!empty(array_intersect($permissions, [2, 3, 61024])))
                                                 <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve Leave</a>
                                             @endif
-                                            @if (!empty(array_intersect($permissions, [8, 10, 11, 12, 13, 14, 61024])))
-                                                <a href="{{ route('ApproveHrTicketsTable') }}"   class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Ticket</a>
+                                            @if (!empty(array_intersect($permissions, [2, 3, 8, 10, 11, 12, 13, 14, 61024])))
+                                                <a href="{{ route('ApproveHrTicketsTable') }}"   class="block px-4 py-2 text-sm text-gray-700 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                             @endif
                                         </div>
                                     </ul>
@@ -175,7 +175,7 @@
                                 @if (!empty(array_intersect($permissions, [2, 3, 61024])))
                                     <a href="{{ route('ApproveLeaveRequestTable') }}" wire:navigate.hover class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve Leave</a>
                                 @endif
-                                @if (!empty(array_intersect($permissions, [ 8, 10, 11, 12, 13, 14, 61024])))
+                                @if (!empty(array_intersect($permissions, [2, 3, 8, 10, 11, 12, 13, 14, 61024])))
                                     <a href="{{ route('ApproveHrTicketsTable') }}"  class="block px-4 py-2 text-sm text-gray-600 hover:bg-customRed hover:text-white">Approve HR Tickets</a>
                                 @endif
                             </div>

@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('application_date')->default(now());
             $table->string('concerned_employee', 500);
             $table->string('type_of_ticket', 50);
-            $table->string('type_of_request', 50);  
+            $table->string('type_of_request', 50)->nullable();  
             $table->string('sub_type_of_request', 50)->nullable();
             $table->string('type_of_pe_hr_ops', 50)->nullable();
             $table->string('account_client_hr_ops', 50)->nullable();

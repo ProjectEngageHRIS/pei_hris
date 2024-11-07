@@ -140,10 +140,7 @@ class ApproveLeaverequestForm extends Component
             $this->inclusive_end_date = Carbon::parse($leaverequest->inclusive_end_date)->format('Y-m-d');
             $this->deduct_to = $leaverequest->deduct_to;
             $this->full_half = $leaverequest->full_or_half;
-        } else if($this->mode_of_application == "Overtime Form"){
-            $this->date_earned = Carbon::parse($leaverequest->inclusive_start_date)->format('Y-m-d');;
-            $this->earned_description = $leaverequest->earned_description;
-        }
+        } 
         else{
             $formattedValue = str_replace(',', '', $leaverequest->num_of_days_work_days_applied);
             $this->num_of_days_work_days_applied = $formattedValue ;

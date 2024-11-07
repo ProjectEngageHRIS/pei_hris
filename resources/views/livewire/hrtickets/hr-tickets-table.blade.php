@@ -326,10 +326,18 @@
                                             {{$hrticket->type_of_ticket}}
                                         </td>
                                         <td class="px-6 py-4 text-center whitespace-nowrap">
-                                            {{$hrticket->type_of_request}}
+                                            @if($hrticket->type_of_request == "null" && $hrticket->type_of_ticket == "Overtime Form")
+                                                Not Applicable
+                                            @else
+                                                {{$hrticket->type_of_request}}
+                                            @endif
                                         </td>
                                         <td  class="px-6 py-4 text-center ">
-                                            @if($hrticket->type_of_request == "Reimbursements")
+                                            @if($hrticket->type_of_ticket == "Overtime Form")
+                                                <span class="font-semibold text-gray-700">Supervisor Email: </span> {{$hrticket->request_requested}} <br>
+                                                <span class="font-semibold text-gray-700">Period: </span>{{Carbon\Carbon::parse($hrticket->request_date)->format('F j, Y')}} <br>
+                                                <span class="font-semibold text-gray-700">OT Form Link: </span>{{$hrticket->request_link}}
+                                            @elseif($hrticket->type_of_request == "Reimbursements")
                                                 <span class="font-semibold text-gray-700">Cut-Off Date: </span> {{$hrticket->request_date}} <br>
                                                 <span class="font-semibold text-gray-700">Concern Description: </span>{{$hrticket->purpose}} <br>
                                                 <span class="font-semibold text-gray-700">Link Related: </span>{{$hrticket->request_link}}

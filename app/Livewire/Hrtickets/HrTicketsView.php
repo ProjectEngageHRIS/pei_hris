@@ -291,6 +291,13 @@ class HrTicketsView extends Component
                 $this->request_requested = $hrticketdata->request_requested;
             }
         }
+        else if($this->type_of_ticket == "Overtime Form"){
+            $this->request_date = Carbon::parse($hrticketdata->request_date)->toDateString(); 
+            $this->request_requested = $hrticketdata->request_requested;
+            $this->request_link = $hrticketdata->request_link;
+        }
+
+
     }
 
     public function editForm($index){

@@ -161,7 +161,7 @@ class LeaveRequestForm extends Component
 
 
      protected $rules = [
-        'mode_of_application' => 'required|in:Vacation Leave,Sick Leave,Maternity Leave,Paternity Leave,Single Parent Leave,Credit Leave,Advise Slip,Overtime Form,Others',
+        'mode_of_application' => 'required|in:Vacation Leave,Sick Leave,Maternity Leave,Paternity Leave,Single Parent Leave,Credit Leave,Advise Slip,Others',
         // 'num_of_days_work_days_applied' => 'required|lte:available_credits',
         'supervisor_email' => 'required|email',
         'reason' => 'required|string|max:500',
@@ -184,7 +184,7 @@ class LeaveRequestForm extends Component
             $this->validate([
                 'date_earned' => 'required|date',
                 'credit_application' => 'required|date',
-                'earned_description' => 'required|string|max:500',
+                'earned_description' => 'required|string|max:10000',
             ]);
             // dd($leaverequestdata->earned_description , $this->earned_description);
         } else if($this->mode_of_application == "Advise Slip"){
@@ -201,12 +201,6 @@ class LeaveRequestForm extends Component
                 'inclusive_end_date' => 'required|after_or_equal:inclusive_start_date',
                 'deduct_to'=> 'required|string|max:255|in:Bearevement Leave,Salary,Credits,Others',
                 'full_half' => 'required|string|in:Full Day,Half Day,Undertime',
-            ]);
-        }
-        else if($this->mode_of_application == "Overtime Form"){
-            $this->validate([
-                'date_earned' => 'required|date',
-                'earned_description' => 'required|min:1',
             ]);
         }
         else {
@@ -251,10 +245,6 @@ class LeaveRequestForm extends Component
                 $leaverequestdata->deduct_to = $this->deduct_to;
                 $leaverequestdata->full_or_half = $this->full_half;
             }   
-            else if($this->mode_of_application == "Overtime Form"){
-                $leaverequestdata->inclusive_start_date = $this->date_earned;
-                $leaverequestdata->earned_description = $this->earned_description;
-            } 
             else {
                 $formattedValue = str_replace(',', '', $this->num_of_days_work_days_applied);
                 $leaverequestdata->num_of_days_work_days_applied = $formattedValue ;
