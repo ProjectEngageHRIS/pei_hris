@@ -1192,7 +1192,7 @@
 const baseChartOptions = {
     chart: {
         height: 400,  // Fixed height for all charts
-        width: "100%", 
+        width: "80%", 
         type: "pie",
     },
     stroke: {
