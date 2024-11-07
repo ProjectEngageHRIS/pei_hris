@@ -178,8 +178,8 @@
                     // Perform the actual redirect after the animation is done
                     setTimeout(() => {
                         window.location.href = "{{ route('ItHelpDeskTable') }}";
-                    }, 2500); // Delay the redirect by 3000ms (to match animation duration)
-                }, 300); // Initial delay before animation starts (to allow for any initial actions or messages)
+                    }, 500); // Delay the redirect by 3000ms (to match animation duration)
+                }, 2500); // Initial delay before animation starts (to allow for any initial actions or messages)
             });
         });
     </script>
