@@ -419,8 +419,8 @@
                     // Perform the actual redirect after the animation is done
                     setTimeout(() => {
                         window.location.href = "{{ route('ChangeInformationTable') }}";
-                    }, 3000); // Delay the redirect by 3000ms (to match animation duration)
-                }, 1000); // Initial delay before animation starts (to allow for any initial actions or messages)
+                    }, 2500); // Delay the redirect by 3000ms (to match animation duration)
+                }, 300); // Initial delay before animation starts (to allow for any initial actions or messages)
             });
         });
     </script>

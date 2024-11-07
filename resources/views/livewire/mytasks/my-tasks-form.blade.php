@@ -273,7 +273,7 @@
                 setTimeout(() => {
                     window.location.href = "{{ route('AssignedTasksTable') }}";
                 }, 3000); // Delay the redirect by 3000ms (to match animation duration)
-            }, 800); // Initial delay before animation starts (to allow for any initial actions or messages)
+            }, 500); // Initial delay before animation starts (to allow for any initial actions or messages)
         });
     });
 </script>
