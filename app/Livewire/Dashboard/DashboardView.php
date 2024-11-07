@@ -108,7 +108,7 @@ class DashboardView extends Component
         $this->employeeImage = $employeeInformation->emp_image;
 
 
-        $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->select('attendance_date', 'type')->first();
+        $leaveIndicator = Dailytimerecord::where('attendance_date', now()->toDateString())->where('employee_id', $loggedInUser->employee_id)->select('attendance_date', 'type', 'employee_id')->first();
         if($leaveIndicator){
             if(!in_array($leaveIndicator->type, ['Undertime', 'Overtime', 'WholeDay', 'Half-Day', 'No Time in'])){
                 $this->leaveIndicator = $leaveIndicator->type;
