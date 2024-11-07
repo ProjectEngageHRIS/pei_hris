@@ -105,7 +105,7 @@ class ApproveHrTicketsTable extends Component
                     return redirect()->to(route('HumanResourceDashboard'));
                 }
             } else {
-                if (empty(array_intersect($permissions, [8, 10, 11, 12, 13, 61024]))) {
+                if (empty(array_intersect($permissions, [8, 10, 11, 12, 13, 14, 61024]))) {
                     return redirect()->to(route('HumanResourceDashboard'));
                 }
             }
@@ -137,16 +137,16 @@ class ApproveHrTicketsTable extends Component
         } else {
             if (!empty(array_intersect($permissions, [11, 12, 13]))) {
                 $query->where('type_of_ticket', 'HR Internal');
-                if (in_array(11, $permissions)) {
+                if (in_array(12, $permissions)) {
                     $query->where('type_of_request', 'HR');
-                } elseif (in_array(12, $permissions)) {
-                    $query->where('type_of_request', 'Office Admin');
                 } elseif (in_array(13, $permissions)) {
+                    $query->where('type_of_request', 'Office Admin');
+                } elseif (in_array(14, $permissions)) {
                     $query->where('type_of_ticket', 'Procurement');
                 }
-            } elseif (in_array(9, $permissions)) {
-                $query->where('type_of_ticket', 'Internal Control');
             } elseif (in_array(10, $permissions)) {
+                $query->where('type_of_ticket', 'Internal Control');
+            } elseif (in_array(11, $permissions)) {
                 $query->where('type_of_ticket', 'HR Operations');
             } elseif (!empty(array_intersect($permissions, [61024]))) {
                 $this->permissions = true; 
