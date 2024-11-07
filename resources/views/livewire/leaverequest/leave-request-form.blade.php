@@ -513,7 +513,7 @@
                     // document.body.classList.add('smooth-slide-out');
                     document.body.classList.add('swing-out-top-bck');
                     window.location.href = "{{ route('LeaveRequestTable') }}";
-                }, 3000); // Delay for 2000ms (2 seconds)
+                }, 4000); // Delay for 2000ms (2 seconds)
             });
 
         });
