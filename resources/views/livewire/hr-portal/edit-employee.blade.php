@@ -201,7 +201,7 @@
                                             </div>
                                         <div class="w-full" id="civil_status_container">
                                             <label for="civil_status" class="block mb-2 text-sm font-medium text-gray-900 whitespace-nowrap">
-                                                Civil Status
+                                                Civil Status <span class="text-red-600">*</span>
                                             </label>
                                             <select name="civil_status" id="civil_status" wire:model="civil_status"
                                                         class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
@@ -221,7 +221,7 @@
                                         </div>
                                         <div id="phone_number_container" class="w-full">
                                             <label for="lastname"
-                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Phone Number<span class="text-red-600">*</span></label>
+                                                class="block mb-2 text-sm font-medium text-customGray whitespace-nowrap dark:text-white">Phone Number <span class="text-red-600">*</span></label>
                                             <input type="tel" name="lastname" id="lastname"  wire:model="phone_number"
                                                 class="bg-gray-50 border border-gray-300 text-customGray text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                                                 ntd="">

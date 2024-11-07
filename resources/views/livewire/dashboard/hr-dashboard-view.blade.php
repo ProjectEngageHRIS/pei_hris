@@ -34,7 +34,7 @@
                     <span class="text-sm ml-2">Regular</span>
                 </div>
                 <div class="flex items-center mr-4 mb-2" style="flex: 0 0 auto; min-width: 120px;">
-                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #B345E7;"></div>
+                    <div class="w-4 h-4 rounded-full mr-1" style="background-color: #E74556;"></div>
                     <span class="text-sm ml-2">Reliever</span>
                 </div>
             </div>
@@ -621,10 +621,10 @@
                                                         @endif
                                                     </div>
                                                     <!-- Left Content Area -->
-                                                    <div class="w-3/4 space-y-4">
-                                                        <p class="flex items-center text-sm leading-relaxed text-customRed ">
+                                                    <div class="w-full md:w-3/4 space-y-4">
+                                                        <p class="flex items-center text-sm leading-relaxed text-customRed">
                                                             <span class="font-semibold">Employee ID:</span>
-                                                            <span class="ml-2 whitespace-nowrap">{{$employee->employee_id}}</span>
+                                                            <span class="ml-2">{{$employee->employee_id}}</span>
                                                         </p>
                                                         <p class="flex items-center text-sm leading-relaxed text-customGray1">
                                                             <span class="font-semibold">Name:</span>
@@ -651,6 +651,7 @@
                                                             <span class="ml-2">{{$employee->start_of_employment}}</span>
                                                         </p>
                                                     </div>
+                                                    
                                                 </div>
                                                 
                                             <!-- Modal Footer -->
@@ -1220,7 +1221,7 @@ const baseChartOptions = {
 const getChartOptions1 = () => ({
     ...baseChartOptions,
     series: @json($employee_type),
-    colors: ["#E7B145", "#E77945", "#45E7A1", "#45A5E7", "#A145E7", "#E745A5", "#E7E745", "#E7C745", "#B345E7"],
+    colors: ["#E7B145", "#45E7A1", "#45A5E7", "#A145E7", "#E745A5", "#E74556"],
     labels: ['Independent Contractor', 'Intern', 'Probationary', 'Project Based', 'Regular', 'Reliever'],
 });
 
