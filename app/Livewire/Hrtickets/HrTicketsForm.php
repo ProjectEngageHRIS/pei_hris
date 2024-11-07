@@ -918,7 +918,9 @@ class HrTicketsForm extends Component
 
         $this->dispatch('trigger-success');
 
-        return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
+        return $this->dispatch('trigger-reroute');
+           
+        // return redirect()->to(route('HrTicketsTable', ['type' => $this->type]));
         
         } catch (Exception $e) {
 

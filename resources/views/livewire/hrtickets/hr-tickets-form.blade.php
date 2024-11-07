@@ -2083,24 +2083,22 @@
     </style>
 
 <script>
-    // // Add this script to hide the success alert after a delay
-    // document.addEventListener('livewire:load', function () {
-    //     Livewire.hook('message.processed', (message, component) => {
-    //         if (message.updateQueue && message.updateQueue.includes('showSuccess')) {
-    //             setTimeout(() => {
-    //                 component.set('showSuccess', false);
-    //             }, 5000); // Adjust the delay (in milliseconds) as needed
-    //         }
-    //     });
-    // });
-
-    // document.addEventListener('livewire:init', function () {
-    //     Livewire.on('triggerSuccess', () => {
-    //         window.dispatchEvent(new CustomEvent('trigger-success'));
-    //     });
-    //     Livewire.on('triggerError', () => {
-    //         window.dispatchEvent(new CustomEvent('trigger-error'));
-    //     });
-    // });
+    document.addEventListener('livewire:init', function () {
+        Livewire.on('trigger-reroute', () => {
+            // Optional: Show a success message or animation here
+            setTimeout(() => {
+                // Add animation class for page transition
+                document.body.classList.add('swing-out-top-bck');
+                
+                // Perform the actual redirect after the animation is done
+                setTimeout(() => {
+                    window.location.href = "{{ route('HrTicketsTable') }}";
+                }, 3000); // Delay the redirect by 3000ms (to match animation duration)
+            }, 1200); // Initial delay before animation starts (to allow for any initial actions or messages)
+        });
+    });
 </script>
+
+
+
 </div>

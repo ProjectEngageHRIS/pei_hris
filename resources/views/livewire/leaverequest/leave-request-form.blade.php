@@ -483,23 +483,6 @@
             </div>
         </div>
     </section>
-    <style>
-    .swing-out-top-bck {
-        animation: swing-out-top-bck 1.5s cubic-bezier(0.600, -0.280, 0.735, 0.045) both;
-    }
-    @keyframes swing-out-top-bck {
-    0% {
-        transform: rotateX(0deg);
-        transform-origin: top;
-        opacity: 1;
-    }
-    100% {
-        transform: rotateX(-100deg);
-        transform-origin: top;
-        opacity: 0;
-    }
-    }
-    </style>
 
     <script>
         document.addEventListener('livewire:init', function () {
@@ -513,7 +496,7 @@
                     setTimeout(() => {
                         window.location.href = "{{ route('LeaveRequestTable') }}";
                     }, 3000); // Delay the redirect by 3000ms (to match animation duration)
-                }, 1500); // Initial delay before animation starts (to allow for any initial actions or messages)
+                }, 1200); // Initial delay before animation starts (to allow for any initial actions or messages)
             });
         });
     </script>
